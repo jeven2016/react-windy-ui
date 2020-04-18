@@ -26,3 +26,5 @@ yarn-error.log*
 yarn.lock
 package-lock.json
 /react-wui-modern.iml
+/src/components/dist/
+/src/components/node_modules/
