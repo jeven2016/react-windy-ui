@@ -342,7 +342,7 @@ module.exports = function(webpackEnv) {
               loader: require.resolve('eslint-loader'),
             },
           ],
-          exclude: [path.resolve(__dirname, "../src/components/node_modules"), path.resolve(__dirname, "../src/components/dist")],
+          exclude: paths.excludePaths,
           include: paths.appSrc,
         },
         {
