@@ -289,6 +289,7 @@ module.exports = function(webpackEnv) {
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
       alias: {
+        'react-windy-ui': path.resolve(__dirname, "../src/components/src"),
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
@@ -341,6 +342,7 @@ module.exports = function(webpackEnv) {
               loader: require.resolve('eslint-loader'),
             },
           ],
+          exclude: [path.resolve(__dirname, "../src/components/node_modules"), path.resolve(__dirname, "../src/components/dist")],
           include: paths.appSrc,
         },
         {
