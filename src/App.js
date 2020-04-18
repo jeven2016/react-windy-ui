@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Button} from 'react-windy-ui';
+import {Button} from './react-wui-modern';
 
 function App() {
   return (
