@@ -5,7 +5,9 @@ const useAsyncImport = (promiseGenerator, eagerLoad = false) => {
 
   const load = useCallback(() => {
     promiseGenerator().
-        then(module => setData(module.default ? module.default : module)).
+        then(module => {
+          console.log("loading....")
+          setData(module.default ? module.default : module);}).
         catch(e => {throw e;});
   }, [promiseGenerator]);
 

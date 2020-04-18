@@ -2,6 +2,7 @@ import React from 'react';
 import {HashRouter as Router, Route} from 'react-router-dom';
 import {RouteLoader, AsyncComponent} from 'react-windy-ui';
 
+const aaa = () => import('./test/TestMain');
 const progressStyle = {
   top: '4rem', height: '3px', zIndex: '1000',
 };
@@ -12,19 +13,10 @@ const barStyle = {
 
 export default function DocHome() {
 
-  const fun= ()=>"TestHome";
+  const fun = () => 'TestHome';
   const url = fun();
   return <>
     <Router>
-      <RouteLoader
-          exact
-          route={Route}
-          path={`/`}
-          component={AsyncComponent(() => import('./test/'+ url))}
-          progressStyle={progressStyle}
-          barStyle={barStyle}>
-      </RouteLoader>
-
       <RouteLoader
           exact
           route={Route}
@@ -32,6 +24,18 @@ export default function DocHome() {
           component={AsyncComponent(() => import('./test/TestMain'))}
           progressStyle={progressStyle}
           barStyle={barStyle}/>
+
+      <RouteLoader
+          exact
+          route={Route}
+          path={`/`}
+          component={AsyncComponent(() => import('./test/' + url))}
+          progressStyle={progressStyle}
+          barStyle={barStyle}>
+      </RouteLoader>
+
+
+
     </Router>
   </>;
 }

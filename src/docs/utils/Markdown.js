@@ -1,8 +1,15 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import Mk from '../my.md';
+import {AsyncComponent} from 'react-windy-ui';
 
-export default function Markdown(component, language = 'zh') {
-  return <ReactMarkdown source={Mk}/>;
+
+export default function Markdown({promiseGenerator, language = 'zh', component}) {
+  if(component){
+    return <ReactMarkdown source={component}/>;
+  }
+
+  if(importPromise){
+    return <ReactMarkdown source={AsyncComponent(promiseGenerator)}/>;
+  }
 
 }
