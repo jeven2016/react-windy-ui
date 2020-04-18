@@ -23,7 +23,7 @@ const Header = React.forwardRef((props, ref) => {
   const context = useContext(ModalContext);
   const onCancel = context.onCancel;
   // const onMove = context.onMove;
-  const headerRef = ref ? ref : useRef(null);
+  const headerRef = ref;
 
   // usePan(headerRef, onMove);
 

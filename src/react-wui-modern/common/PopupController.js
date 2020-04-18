@@ -116,8 +116,8 @@ const PopupController = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const rootElem = useContainer(ContainerId.popup);
-  const ctrlRef = controllerRef ? controllerRef : useRef(null);
-  const bodyRef = popupRef ? popupRef : useRef(null);
+  const ctrlRef = controllerRef;
+  const bodyRef = popupRef;
   const isControlledByOutside = !isNil(active);
 
   //by default, the popup is hidden,
@@ -304,18 +304,11 @@ const PopupController = React.forwardRef((props, ref) => {
 
   const paddingAttr = useMemo(() => getPaddingAttribute(position));
 
-  const springDefinition = useCallback(
-      () => usePopupAnimation(isCurrentActive, {
+  const springDefinition = usePopupAnimation(isCurrentActive, {
         transformOrigin: transformOrigin,
         // onStart: move,
-        mountedRef: mountedRef,
-      }),
-      [
-        isCurrentActive,
-        transformOrigin,
-        bodyOffset,
-        position,
-        mountedRef.current]);
+        mountedRef: mountedRef}
+  );
   const springProps = useSpring(springDefinition());//todo, 第一次不显示popup
 
   const getPopupBody = (popupBody, bdClsName) => {

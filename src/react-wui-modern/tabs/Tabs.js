@@ -48,7 +48,7 @@ const Tabs = React.forwardRef((props, ref) => {
   const direction = position === 'top' || position === 'bottom'
       ? Direction.horizontal
       : Direction.vertical;
-  const tabRef = ref ? ref : useRef(null);
+  const tabRef = ref;
   const scrollRef = useRef(null);
   const tabCntRef = useRef(null);
   const nextRef = useRef(null);

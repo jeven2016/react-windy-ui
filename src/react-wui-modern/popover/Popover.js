@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import {validateOneChild} from '../common/Validators';
 
 const Popover = React.forwardRef((props, ref) => {
-  const popRef = ref ? ref : useRef(null);
+  const popRef = ref;
   const {
     className = 'popover',
     extraClassName,

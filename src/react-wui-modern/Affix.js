@@ -21,7 +21,7 @@ const Affix = React.forwardRef((props, ref) => {
   const [status, setStatus] = useState(
       {affixed: false, width: 0, height: 0, isBlock: false});
   const preAffixedRef = useRef(status.affixed);
-  const affixRef = ref ? ref : useRef(null);
+  const affixRef = ref;
   const containerRef = useRef(null);
   const isTop = !isNil(top);
   const isBottom = !isNil(bottom);

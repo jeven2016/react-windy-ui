@@ -30,7 +30,7 @@ const DatePicker = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const columnCount = DataConfig.columnCount;
-  const popupCtrlRef = ref ? ref : useRef(null);
+  const popupCtrlRef = ref;
 
   const [state, dispatch] = useReducer(reducer, {
     date: null,

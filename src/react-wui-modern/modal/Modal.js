@@ -25,7 +25,7 @@ const Modal = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
 
-  const modalRef = ref ? ref : useRef(null);
+  const modalRef = ref;
   const contentRef = useRef(null);
   let containerRef = useRef(null);
 

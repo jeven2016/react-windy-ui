@@ -85,7 +85,7 @@ const NormalMenu = React.forwardRef(((props, ref) => {
     hasBackground,
     ...otherProps
   } = props;
-  const menuRef = !isNil(ref) ? ref : useRef(null);
+  const menuRef =  ref;
   //set padding-left property to items, only execute once
   useEffect(() => {
     if (!multiLevelMenus && setItemPaddingLeft) {

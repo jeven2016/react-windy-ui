@@ -30,7 +30,7 @@ const TabBar = React.forwardRef((props, ref) => {
   } = props;
 
   const context = useContext(TabsContext);
-  const tabBarRef = ref ? ref : useRef(null);
+  const tabBarRef = ref;
   const [config, setConfig] = useState({});
   const barPosition = useMemo(() => reversePosition(position), [position]);
   let barPos = isTabCard ? position : barPosition;

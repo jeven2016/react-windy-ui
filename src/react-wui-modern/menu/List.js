@@ -10,7 +10,7 @@ import {MenuContext} from './MenuUtils';
 const List = React.forwardRef((props, ref) => {
   const {className, extraClassName, children, justify, adjustPosition = false, adjustDelay = 500, ...otherProps} = props;
   let clsName = clsx(extraClassName, className);
-  let listRef = ref ? ref : useRef(null);
+  let listRef = ref;
   const menuCtx = useContext(MenuContext);
 
   useEffect(() => {

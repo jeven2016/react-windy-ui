@@ -7,7 +7,7 @@ import PopupController from '../common/PopupController';
 import Element from '../common/Element';
 
 const Dropdown = React.forwardRef((props, ref) => {
-  const dpRef = ref ? ref : useRef(null);
+  const dpRef = ref;
   const {
     disabled = false,
     selectable = false,

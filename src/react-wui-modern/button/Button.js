@@ -25,7 +25,7 @@ const Button = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
 
-  const btnRef = ref ? ref : useRef(null);
+  const btnRef = ref;
   const multipleRefs = useMultipleRefs(btnRef, directRef);
 
   useEffect(() => {

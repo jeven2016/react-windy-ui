@@ -42,7 +42,7 @@ const Select = React.forwardRef((props, ref) => {
     onActiveChange,
     ...otherProps
   } = props;
-  const inputRef = ref ? ref : useRef(null);
+  const inputRef = ref;
   const menuRef = useRef(null);
   const detectRef = useRef(null);
   const multipleSelectRef = useRef(null);

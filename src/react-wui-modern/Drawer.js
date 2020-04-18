@@ -13,7 +13,7 @@ const Drawer = React.forwardRef((props, ref) => {
     autoClose = true,
     position, children, ...otherProps
   } = props;
-  const dwRef = ref ? ref : useRef(null);
+  const dwRef = ref;
 
   // register window click event listener if no mask displays
   useEvent(EventListener.click, (evt) => {

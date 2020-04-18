@@ -21,7 +21,7 @@ const SubMenu = React.forwardRef((props, ref) => {
     id, ...otherProps
   } = props;
   const menuCtx = useContext(MenuContext);
-  const subMenuRef = ref ? ref : useRef(ref);
+  const subMenuRef = ref;
 
   //todo: if mualchanged check by activeItems else use default open menus
   //to display or close this menu
