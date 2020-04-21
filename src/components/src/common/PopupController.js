@@ -23,6 +23,7 @@ import {animated, useSpring} from 'react-spring';
 import {usePopupAnimation} from '../animation/PopupControllerAnimation';
 import useContainer from './UseContainer';
 import useMounted from './UseMounted';
+import useMultipleRefs from './UseMultipleRefs';
 
 const useCombinedListeners = (
     element, enterHandler, leaveHandler, dependencies) => {
@@ -117,7 +118,9 @@ const PopupController = React.forwardRef((props, ref) => {
   } = props;
   const rootElem = useContainer(ContainerId.popup);
   const ctrlRef = controllerRef;
-  const bodyRef = popupRef;
+
+  const bodyRef = useRef(null);
+  const bodyMultiRef = useMultipleRefs(popupRef, bodyRef);
   const isControlledByOutside = !isNil(active);
 
   //by default, the popup is hidden,
@@ -307,9 +310,9 @@ const PopupController = React.forwardRef((props, ref) => {
   const springDefinition = usePopupAnimation(isCurrentActive, {
         transformOrigin: transformOrigin,
         // onStart: move,
-        mountedRef: mountedRef}
-  );
-  const springProps = useSpring(springDefinition());//todo, 第一次不显示popup
+        mountedRef: mountedRef,
+      });
+  const springProps = useSpring(springDefinition);//todo, 第一次不显示popup
 
   const getPopupBody = (popupBody, bdClsName) => {
     if (disabled) {
@@ -322,7 +325,7 @@ const PopupController = React.forwardRef((props, ref) => {
         ? {...originStyle, ...springProps}
         : originStyle;
 
-    const popupBodyElem = <animated.div className={cls} ref={bodyRef}
+    const popupBodyElem = <animated.div className={cls} ref={bodyMultiRef}
                                         style={animatedStyle}>
       {popupBody}
     </animated.div>;

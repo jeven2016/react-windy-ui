@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import {execute, isNil, place} from '../Utils';
 import {JustifyContentType} from '../common/Constants';
 import {MenuContext} from './MenuUtils';
+import useMultipleRefs from '../common/UseMultipleRefs';
 
 /**
  * Menu List
@@ -10,7 +11,8 @@ import {MenuContext} from './MenuUtils';
 const List = React.forwardRef((props, ref) => {
   const {className, extraClassName, children, justify, adjustPosition = false, adjustDelay = 500, ...otherProps} = props;
   let clsName = clsx(extraClassName, className);
-  let listRef = ref;
+  let listRef = useRef(null);
+  var multiRefs = useMultipleRefs(ref, listRef);
   const menuCtx = useContext(MenuContext);
 
   useEffect(() => {
@@ -43,7 +45,7 @@ const List = React.forwardRef((props, ref) => {
     clsName = clsx(clsName, JustifyContentType[justify]);
   }
 
-  return <ul className={clsName} ref={listRef} {...otherProps}>
+  return <ul className={clsName} ref={multiRefs} {...otherProps}>
     {children}
   </ul>;
 });

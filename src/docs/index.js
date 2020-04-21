@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import * as serviceWorker from './serviceWorker';
-import './style/wui-modern-0.5.1.css';
+import './style/wui-modern-0.5.1.min.css';
+import './style/doc.scss';
 import DocHome from './DocHome';
+import {HashRouter as Router} from 'react-router-dom';
 
 ReactDOM.render(
     // <React.StrictMode>
-      <DocHome/>,
+    <Router><DocHome/></Router>,
     // </React.StrictMode>,
     document.getElementById('root'),
 );

@@ -1,9 +1,10 @@
 import React, {useRef, useState, useCallback, useMemo} from 'react';
-import {isNil} from './Utils';
+import {invoke, isNil} from './Utils';
 import {useEvent} from './index';
 import {EventListener} from './common/Constants';
 import clsx from 'clsx';
 import useResizeObserver from './common/UseResizeObserver';
+import useMultipleRefs from './common/UseMultipleRefs';
 
 const Affix = React.forwardRef((props, ref) => {
 
@@ -16,12 +17,15 @@ const Affix = React.forwardRef((props, ref) => {
     style,
     children,
     block = false,
+    onChange,
     ...otherProps
   } = props;
   const [status, setStatus] = useState(
       {affixed: false, width: 0, height: 0, isBlock: false});
   const preAffixedRef = useRef(status.affixed);
-  const affixRef = ref;
+  const affixRef = useRef(null);
+  const refs = useMultipleRefs(ref, affixRef);
+
   const containerRef = useRef(null);
   const isTop = !isNil(top);
   const isBottom = !isNil(bottom);
@@ -51,6 +55,7 @@ const Affix = React.forwardRef((props, ref) => {
         height: rect.height,
         isBlock: block,
       });
+      invoke(onChange, true);
       return;
     }
 
@@ -62,6 +67,7 @@ const Affix = React.forwardRef((props, ref) => {
         height: rect.height,
         isBlock: false,
       });
+      invoke(onChange, false);
     }
   };
 
@@ -91,14 +97,18 @@ const Affix = React.forwardRef((props, ref) => {
 
   const containerStyle = style;
   const clsName = clsx(className,
-      {'affix-fixed': canAffix, 'block': status.isBlock});
+      {'affix-fixed': canAffix, 'block': status.isBlock || block});
 
-  return <div className={extraClassName} style={containerStyle}
+  const containerClsName = clsx('affix-container', extraClassName, {
+    block: status.isBlock || block,
+  });
+
+  return <div className={containerClsName} style={containerStyle}
               ref={containerRef}>
     {canAffix ?
         <div style={{width: status.width, height: status.height}}/>
         : null}
-    <div className={clsName} ref={affixRef}
+    <div className={clsName} ref={refs}
          style={!disabled ? newStyle : null} {...otherProps}>
       {children}
     </div>

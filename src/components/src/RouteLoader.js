@@ -39,4 +39,15 @@ const RouteLoader = (props) => {
   </>;
 };
 
+/**
+ * A default props filter for react-router-dom
+ * @param routeProps
+ * @returns {{match: *, location: *, history: *}}
+ */
+RouteLoader.routeFilter = (routeProps) => ({
+  location: routeProps.location,
+  history: routeProps.history,
+  match: routeProps.match,
+});
+
 export default RouteLoader;

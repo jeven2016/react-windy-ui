@@ -50,8 +50,7 @@ export {default as Carousel} from './carousel/Carousel';
 export {default as Affix} from './Affix';
 export {default as useResizeObserver} from './common/UseResizeObserver';
 export {default as Tree} from './tree/Tree';
-export {default as useAsyncImport} from './common/UseAsyncImport';
-export {default as AsyncComponent} from './common/AsyncComponent';
+export {default as useLazyImport} from './common/UseLazyImport';
 
 export {
   IconInfo,

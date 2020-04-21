@@ -14,7 +14,6 @@ const Tooltip = React.forwardRef((props, ref) => {
     children,
     ...otherProps
   } = props;
-
   validateOneChild(props);
 
   let clsName = clsx(extraClassName, className);

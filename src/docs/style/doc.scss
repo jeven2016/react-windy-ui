@@ -1,0 +1,251 @@
+
+body {
+  height: 1600px;
+  background-color: #fff;
+  color: rgba(0, 0, 0, .8);
+}
+
+$header-height: 4rem;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.doc {
+
+  &.home-header {
+    //used
+    margin: 0 auto;
+
+    &.transparent {
+      > .navbar {
+        background: transparent;
+      }
+    }
+
+    > .navbar {
+      padding: 0 15%;
+      border-radius: 0;
+      transition: line-height .3s;
+
+      &.affix-fixed {
+        line-height: 5rem;
+        background: #333;
+        padding: 0 10%;
+      }
+
+      > .title {
+        text-shadow: 1px 1px 2px #333, 0 0 25px #fff, 0 0 5px #0ca0ff;
+      }
+    }
+  }
+
+  &.normal-panel {
+    //used
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 0;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  &.home-footer {
+    //used
+    background: #333;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 2rem 15%;
+    color: #fff;
+
+    .footer-panel {
+      min-width: 15rem;
+      //box-shadow: -1px 0 0 0 rgba(255, 255, 255, .2);
+      padding-left: 1rem;
+
+      .footer-title {
+        margin-bottom: 0.25rem;
+        color: #49b847;
+      }
+    }
+  }
+
+
+  &.home-link {
+    //used
+    list-style: none;
+    color: rgba(255, 255, 255, .6);
+
+    > li {
+      padding: 0.5rem 0;
+      font-size: 0.8rem;
+
+      &:focus, &:hover, &:active {
+        color: #fff;
+      }
+    }
+
+  }
+
+  h3, p {
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+  }
+
+
+  &.home {
+    width: 100%;
+    background: radial-gradient(circle at left top,
+            rgba(99, 65, 249, 0.9) 15%,
+            rgba(10, 95, 248, 0.9) 50%,
+            rgba(33, 180, 212, 0.9) 85%);
+    background-size: cover;
+  }
+
+  &.markdown {
+    margin-bottom: 2rem;
+    p{
+      margin: 0.5rem 0;
+    }
+    ul {
+      list-style: none;
+
+      > li, ll {
+        list-style: circle;
+        margin-left: 2rem;
+        padding: 0.25rem 0;
+      }
+    }
+  }
+
+  &.comp-container{
+    min-height: 5rem;
+  }
+
+  &.page-container{
+    padding: 3rem;
+  }
+}
+
+
+.banner-container {
+  //used
+  padding: 1rem 0 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner {
+  //used
+  display: block;
+  text-align: center;
+  width: 70%;
+  margin: 0 auto;
+  border: 0;
+  padding: 6rem 0;
+  color: #fff;
+
+  > * {
+    margin-top: 1.5rem;
+  }
+
+  .title {
+    //used
+    text-shadow: 1px 1px 2px #333, 0 0 25px #fff, 0 0 5px #0ca0ff;
+    font-size: 4.5rem;
+    font-weight: 500;
+  }
+
+  .banner-icon {
+    display: inline-block;
+    font-size: 2rem;
+    width: 5rem;
+    height: 5rem;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 4.5rem;
+    border-radius: 1rem;
+    border-top: 0.4rem solid #9935c8;
+    border-right: 0.4rem solid #f2791a;
+    border-bottom: 0.4rem solid #0ca0ff;
+    border-left: 0.4rem solid #06806C;
+    box-shadow: inset 1px 1px 6px 0 rgb(255, 255, 255),
+    -1px -1px 20px 0 #ffffffc9;
+    font-style: italic;
+  }
+
+  .content {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .line {
+    text-align: center;
+
+    > .button {
+      width: 10rem;
+
+      + .button {
+        margin-left: 1rem;
+      }
+    }
+  }
+}
+
+@media screen and ("min-width": "768px") {
+  .doc.left-nav-col, .doc.right-col {
+    display: block;
+  }
+}
+
+@media screen and ("max-width": "768px") {
+  .doc.left-nav-col, .doc.right-col {
+    display: none;
+  }
+
+  .doc.center-col {
+    padding: 7rem 1rem 0rem;
+    flex: 1 1 auto;
+  }
+
+  .doc .line > .button {
+    width: 8rem;
+  }
+
+  .doc .banner-container {
+    height: 30rem;
+  }
+
+  .doc .banner {
+    padding: 1rem 0;
+    width: 90%;
+
+    > .title {
+      font-size: 3rem;
+    }
+
+    > .content {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.site-icon {
+  color: rgb(73, 184, 71);
+  animation: rotation infinite 5s linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

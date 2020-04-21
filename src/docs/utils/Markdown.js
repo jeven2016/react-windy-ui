@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import {AsyncComponent} from 'react-windy-ui';
+import useLazyImport from '../../components/src/common/UseLazyImport';
 
+const MarkdownWrapper = ({importFunc}) => {
+  const [data] = useLazyImport(importFunc, true);
+  return <ReactMarkdown source={data}/>;
+};
 
-export default function Markdown({promiseGenerator, language = 'zh', component}) {
-  if(component){
-    return <ReactMarkdown source={component}/>;
-  }
+const markdown = ({importFunc, text}) => {
+  return () => text ? <ReactMarkdown source={text}/>
+      : <MarkdownWrapper importFunc={importFunc}/>;
+};
 
-  if(importPromise){
-    return <ReactMarkdown source={AsyncComponent(promiseGenerator)}/>;
-  }
-
-}
+export default markdown;

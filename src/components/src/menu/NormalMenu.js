@@ -6,6 +6,7 @@ import {useActiveItems, useMenuList} from './BaseMenu';
 import List from './List';
 import Header from './Header';
 import SubMenu from './SubMenu';
+import useMultipleRefs from '../common/UseMultipleRefs';
 
 const MenuDirection = {
   horizontal: 'horizontal',
@@ -85,7 +86,8 @@ const NormalMenu = React.forwardRef(((props, ref) => {
     hasBackground,
     ...otherProps
   } = props;
-  const menuRef =  ref;
+  const menuRef =  useRef(null);
+  const multiRefs = useMultipleRefs(ref, menuRef);
   //set padding-left property to items, only execute once
   useEffect(() => {
     if (!multiLevelMenus && setItemPaddingLeft) {
@@ -141,7 +143,7 @@ const NormalMenu = React.forwardRef(((props, ref) => {
               hasBorder={hasBorder}
               hasBackground={hasBackground}
               collapsible={collapsible}
-              ref={menuRef} showMenuList={isShow()}
+              ref={multiRefs} showMenuList={isShow()}
               {...otherProps}/>
   </MenuContext.Provider>;
   return content;

@@ -1,10 +1,15 @@
-import React from 'react';
-import {HashRouter as Router, Route} from 'react-router-dom';
-import {RouteLoader, AsyncComponent} from 'react-windy-ui';
+import React, {useState} from 'react';
+import {HashRouter as Router, Route, Switch} from 'react-router-dom';
+import {RouteLoader} from 'react-windy-ui';
+import {LanguageContext} from './utils/Context';
 
-const aaa = () => import('./test/TestMain');
+//Async modules to import
+const Home = React.lazy(() => import(`./home/Home`));
+const DocCenter = React.lazy(() => import('./main/DocCenter'));
+const Loading = () => null;//no need this feature
+
 const progressStyle = {
-  top: '4rem', height: '3px', zIndex: '1000',
+  top: '0', height: '3px', zIndex: '1000',
 };
 
 const barStyle = {
@@ -12,30 +17,35 @@ const barStyle = {
 };
 
 export default function DocHome() {
+  const [language, setLanguage] = useState('zh_CN');
+  const {Provider} = LanguageContext;
 
-  const fun = () => 'TestHome';
-  const url = fun();
   return <>
-    <Router>
-      <RouteLoader
-          exact
-          route={Route}
-          path={`/docs`}
-          component={AsyncComponent(() => import('./test/TestMain'))}
-          progressStyle={progressStyle}
-          barStyle={barStyle}/>
+    <React.Suspense fallback={<Loading/>}>
+      <Provider value={{language}}>
+        <Switch>
+          <RouteLoader
+              route={Route}
+              path="/docs"
+              render={() => <DocCenter/>}
+              progressStyle={progressStyle}
+              barStyle={barStyle}>
+          </RouteLoader>
+          <RouteLoader
+              exact
+              route={Route}
+              path="/"
+              render={() => <Home/>}
+              progressStyle={progressStyle}
+              barStyle={barStyle}>
+            <Home/>
+          </RouteLoader>
 
-      <RouteLoader
-          exact
-          route={Route}
-          path={`/`}
-          component={AsyncComponent(() => import('./test/' + url))}
-          progressStyle={progressStyle}
-          barStyle={barStyle}>
-      </RouteLoader>
+          <RouteLoader route={Route} render={() => <div>404, 页面不存在~~</div>}>
 
-
-
-    </Router>
+          </RouteLoader>
+        </Switch>
+      </Provider>
+    </React.Suspense>
   </>;
 }
