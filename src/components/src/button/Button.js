@@ -1,13 +1,9 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import Element from '../common/Element';
-import useMultipleRefs from '../common/UseMultipleRefs';
 
 const Button = React.forwardRef((props, ref) => {
   const {
-    className,
-    children,
     nativeType,
     type,
     block,
@@ -20,50 +16,50 @@ const Button = React.forwardRef((props, ref) => {
     hasMinWidth,
     onClick,
     disabled = false,
-    extraClassName,
-    elementType: ElementType,
     ...otherProps
   } = props;
 
-  const btnRef = ref;
-  const multipleRefs = useMultipleRefs(btnRef, directRef);
-
-  useEffect(() => {
-    // focus && btnRef.current.focus();
-  });
-
-  let clsName = clsx(extraClassName, className, {
+  let clsName = useMemo(() => ({
     [type]: type,
     [size]: size,
     [color]: color,
     block: block,
-    disabled: disabled,
     active: active,
     outline: outline,
     circle: circle,
     'min-width': hasMinWidth,
-  });
+  }), [type, size, color, block, active, outline, circle]);
+
+  let nativeTypeDef = useMemo(() => {
+    const nativeElemType = nativeType === 'a' ? 'a' : 'button';
+    const nativeBtnType = nativeType !== 'a' && nativeType !== 'button' ? {
+      type: nativeType,
+    } : {};
+    return {nativeElemType, nativeBtnType};
+  }, [nativeType]);
 
   return (
-      <Element className={clsName} onClick={onClick} disabled={disabled}
-               nativeType={nativeType ? nativeType : 'button'}
-               {...otherProps}
-               ref={multipleRefs}>
-        {children}
-      </Element>
+      <Element
+          moreClassSuffix={clsName}
+          onClick={onClick}
+          disabled={disabled}
+          setDisabledAttr={true}
+          nativeType={nativeTypeDef.nativeElemType}
+          {...nativeTypeDef.nativeBtnType}
+          {...otherProps}
+          ref={ref}/>
   );
 });
 
 Button.defaultProps = {
-  elementType: 'button',
+  nativeType: 'button',
   disabled: false,
   className: 'button',
   hasMinWidth: false,
 };
 
 Button.propTypes = {
-  elementType: PropTypes.oneOf(['a', 'button']), // 'a' or 'button'
-  type: PropTypes.string,   //it can only be blank or 'button' and it has nothing to do with native html type
+  type: PropTypes.string,   //it can only be 'primary', 'secondary', 'info', 'warning', 'error', etc.
   nativeType: PropTypes.oneOf(['button', 'reset', 'submit', 'a']), //the native html type, like 'button', 'reset' or 'submit'
   block: PropTypes.bool, //whether the button's width is '100%' and it occupies the whole row
   color: PropTypes.string, //the color, like "primary", "red"
