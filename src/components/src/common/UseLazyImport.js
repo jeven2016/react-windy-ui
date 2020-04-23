@@ -9,7 +9,6 @@ import React, {useCallback, useEffect, useState} from 'react';
  */
 const useLazyImport = (importFunc, eagerLoad = false) => {
   const [module, setModule] = useState(null);
-
   const load = useCallback(() => {
     importFunc().
         then(module => {

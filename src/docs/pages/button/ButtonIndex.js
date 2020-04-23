@@ -1,33 +1,61 @@
-import React, {useContext} from 'react';
-import markdown from '../../utils/Markdown';
-import {LanguageContext} from '../../utils/Context';
-import intl from 'react-intl-universal';
-import SampleBtn1 from './SampleBtn1';
-import {Card} from 'react-windy-ui';
+import React from 'react';
+import SampleBtn1 from './samples/SampleBtn1';
+import SampleBtn2 from './samples/SampleBtn2';
+import SampleBtn3 from './samples/SampleBtn3';
+import SampleBtn4 from './samples/SampleBtn4';
+import SampleBtn5 from './samples/SampleBtn5';
+import SampleBtn6 from './samples/SampleBtn6';
+import SampleBtn7 from './samples/SampleBtn7';
+import SampleBtn8 from './samples/SampleBtn8';
+import SampleBtn9 from './samples/SampleBtn9';
+import SampleBtn10 from './samples/SampleBtn10';
+import SampleBtn11 from './samples/SampleBtn11';
+import SampleBtn12 from './samples/SampleBtn12';
+import SampleBtn13 from './samples/SampleBtn13';
+import DocPage from '../../utils/DocPage';
+import SampleBtn14 from './samples/SampleBtn14';
+
+const mapping = {
+  Title: 'TITLE',
+  Footer: 'FOOTER',
+
+  SampleBtn1: 'SampleBtn1',
+  SampleBtn2: 'SampleBtn2',
+  SampleBtn3: 'SampleBtn3',
+  SampleBtn4: 'SampleBtn4',
+  SampleBtn5: 'SampleBtn5',
+  SampleBtn6: 'SampleBtn6',
+  SampleBtn7: 'SampleBtn7',
+  SampleBtn8: 'SampleBtn8',
+  SampleBtn9: 'SampleBtn9',
+  SampleBtn10: 'SampleBtn10',
+  SampleBtn11: 'SampleBtn11',
+  SampleBtn12: 'SampleBtn12',
+  SampleBtn13: 'SampleBtn13',
+  SampleBtn14: 'SampleBtn14',
+};
+
+const componentMapping = {
+  SampleBtn1: <SampleBtn1/>,
+  SampleBtn2: <SampleBtn2/>,
+  SampleBtn3: <SampleBtn3/>,
+  SampleBtn4: <SampleBtn4/>,
+  SampleBtn5: <SampleBtn5/>,
+  SampleBtn6: <SampleBtn6/>,
+  SampleBtn7: <SampleBtn7/>,
+  SampleBtn8: <SampleBtn8/>,
+  SampleBtn9: <SampleBtn9/>,
+  SampleBtn10: <SampleBtn10/>,
+  SampleBtn11: <SampleBtn11/>,
+  SampleBtn12: <SampleBtn12/>,
+  SampleBtn13: <SampleBtn13/>,
+  SampleBtn14: <SampleBtn14/>,
+};
 
 export default function ButtonIndex(props) {
-  const {language} = useContext(LanguageContext);
-  const Introduction = markdown({
-    importFunc: () =>
-        import(`./button-title-${language}.md`),
-  });
-  return <>
-    <section className="doc markdown">
-      <Introduction/>
-    </section>
-    <section onChange="doc sample-container">
-      <section>
-        <Card block hasBorder hasBox={false}>
-          <Card.Row>
-            <h3 id="s1">示例1: 普通按钮</h3>
-            <div className="doc comp-container">
-              <SampleBtn1/>
-            </div>
-          </Card.Row>
-        </Card>
-
-      </section>
-    </section>
-  </>;
-
+  return <DocPage
+      importFunc={() => import('./doc.md')}
+      componentMapping={componentMapping}
+      mapping={mapping}
+  />;
 }

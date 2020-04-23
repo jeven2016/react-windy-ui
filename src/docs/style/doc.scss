@@ -1,3 +1,19 @@
+@mixin set-border-width($left-bd-width,$top-bd-width,$right-bd-width,$bottom-bd-width) {
+  @if $left-bd-width != null {
+    border-left-width: $left-bd-width;
+  }
+  @if $top-bd-width!= null {
+    border-top-width: $top-bd-width;
+  }
+  @if $right-bd-width != null {
+    border-right-width: $right-bd-width;
+  }
+  @if $bottom-bd-width != null {
+    border-bottom-width: $bottom-bd-width;
+  }
+
+}
+
 
 body {
   height: 1600px;
@@ -5,7 +21,6 @@ body {
   color: rgba(0, 0, 0, .8);
 }
 
-$header-height: 4rem;
 
 .root {
   display: flex;
@@ -16,7 +31,6 @@ $header-height: 4rem;
 .doc {
 
   &.home-header {
-    //used
     margin: 0 auto;
 
     &.transparent {
@@ -108,9 +122,60 @@ $header-height: 4rem;
 
   &.markdown {
     margin-bottom: 2rem;
-    p{
+
+    &.footer {
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        border: 1px solid #ccc;
+        table-layout: fixed;
+        margin-bottom: 1rem;
+        font-size: .8em;
+        border-left-width: 0;
+        border-right-width: 0;
+
+        th {
+          white-space: nowrap;
+          text-align: left;
+          padding: 0.5rem;
+          color: #6c757d;
+          font-weight: 700;
+          background-color: #f5f5f5;
+
+          border: 0 solid #ccc;
+          border-bottom-width: 1px;
+
+          &:nth-of-type(1) {
+            width: 10rem;
+          }
+
+          &:nth-of-type(3) {
+            width: 8rem;
+          }
+
+          &:nth-of-type(4) {
+            width: 5rem;
+          }
+        }
+
+        td {
+          text-align: left;
+          padding: 0.5rem;
+          border: 0 solid #ccc;
+          border-bottom-width: 1px;
+
+          &:nth-of-type(1) {
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    p {
       margin: 0.5rem 0;
     }
+
     ul {
       list-style: none;
 
@@ -122,12 +187,38 @@ $header-height: 4rem;
     }
   }
 
-  &.comp-container{
+  &.comp-container {
     min-height: 5rem;
   }
 
-  &.page-container{
+  &.page-container {
     padding: 3rem;
+  }
+
+  &.btn-area {
+    > .button {
+      margin: 0.5rem 0.5rem 0.5rem 0;
+    }
+  }
+
+  &.sample-container {
+    > .card {
+      margin-bottom: 2rem;
+    }
+  }
+
+  &.desc {
+    border: none;
+    border-top: 1px dotted #cccccc;
+    font-size: 1em;
+
+    > legend {
+      padding: 0.5rem;
+    }
+
+    > .desc-area {
+      padding: 0.5rem;
+    }
   }
 }
 
@@ -152,32 +243,14 @@ $header-height: 4rem;
   color: #fff;
 
   > * {
+    //todo: verify
     margin-top: 1.5rem;
   }
 
   .title {
-    //used
     text-shadow: 1px 1px 2px #333, 0 0 25px #fff, 0 0 5px #0ca0ff;
     font-size: 4.5rem;
     font-weight: 500;
-  }
-
-  .banner-icon {
-    display: inline-block;
-    font-size: 2rem;
-    width: 5rem;
-    height: 5rem;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 4.5rem;
-    border-radius: 1rem;
-    border-top: 0.4rem solid #9935c8;
-    border-right: 0.4rem solid #f2791a;
-    border-bottom: 0.4rem solid #0ca0ff;
-    border-left: 0.4rem solid #06806C;
-    box-shadow: inset 1px 1px 6px 0 rgb(255, 255, 255),
-    -1px -1px 20px 0 #ffffffc9;
-    font-style: italic;
   }
 
   .content {

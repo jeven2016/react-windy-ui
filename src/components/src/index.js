@@ -51,6 +51,7 @@ export {default as Affix} from './Affix';
 export {default as useResizeObserver} from './common/UseResizeObserver';
 export {default as Tree} from './tree/Tree';
 export {default as useLazyImport} from './common/UseLazyImport';
+export {default as Collapse} from './collapse/Collapse';
 
 export {
   IconInfo,
@@ -71,6 +72,10 @@ export {
   IconList,
   IconSearch,
   IconHome,
+  IconCalendar,
+  IconTime,
+  IconNoData,
+  IconQuestion,
 } from './Icons';
 
 export {
