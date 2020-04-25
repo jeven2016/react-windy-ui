@@ -17,7 +17,9 @@ export default function DocMenu(props) {
             </Link>
           </Menu.Item>
           <Menu.Item id="input">
-            输入 Input
+            <Link to={`${url}/input`}>
+            输入框 Input
+            </Link>
           </Menu.Item>
           <Menu.Item id="radio">
             单选 Radio

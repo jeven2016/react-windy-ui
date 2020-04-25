@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Card, Col, Row} from 'react-windy-ui';
 import {Button, Collapse} from '../../components/src';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -17,6 +17,9 @@ import {
 export default function SamplePanel(props) {
   const {id, title, comp, code, desc} = props;
   const [collapse, setCollapse] = useState(true);
+
+  //the component don't need to render for multiple times
+  const renderComp = useMemo(() => comp, [comp]);
 
   const DescMarkDown = markdown({text: desc});
   const TitleMarkDwon = markdown({text: title});
@@ -48,7 +51,7 @@ export default function SamplePanel(props) {
       <Card.Row>
         <div className="doc comp-container" id="SampleBtn1">
           <div className="doc btn-area">
-            {comp}
+            {renderComp}
           </div>
         </div>
       </Card.Row>

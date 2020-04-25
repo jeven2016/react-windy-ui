@@ -39,6 +39,7 @@ const useMarkdownFile = ({importFunc, mapping = {/*key: prefixInFile*/}, languag
     }
     const text = data.substring(startKeyIndex + startKey.length, endKeyIndex);
     result.set(key, text);
+
   }
   return result;
 };

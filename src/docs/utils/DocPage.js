@@ -29,17 +29,12 @@ export default function DocPage(props) {
     <div className="doc sample-container">
       {
         Object.entries(compMapping).map(([key, comp], index) => {
-          if (!tagMapping.hasOwnProperty(key)) {
-            return null;
-          }
-
+          let title = '';
+          let desc = '';
+          let sourceCode = '';
+          let titleEndIndex = 0;
           const text = contentMap.get(key);
           if (text && !/^\s*$/.test(text)) {
-
-            let title = '';
-            let desc = '';
-            let sourceCode;
-            let titleEndIndex = 0;
 
             //parse the title
             const titleTagIndex = text.indexOf('###');
@@ -60,15 +55,14 @@ export default function DocPage(props) {
             desc = text.substring(titleEndIndex,
                 codeIndex < 0 ? text.lenght : codeIndex);
 
-            return <SamplePanel
-                key={`s-${index}`}
-                id={key}
-                title={title}
-                comp={comp}
-                code={sourceCode}
-                desc={desc}/>;
           }
-          return null;
+          return <SamplePanel
+              key={`s-${index}`}
+              id={key}
+              title={title}
+              comp={comp}
+              code={sourceCode}
+              desc={desc}/>;
         })
       }
 

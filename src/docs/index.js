@@ -11,15 +11,19 @@ import DocHome from './DocHome';
 import {HashRouter as Router} from 'react-router-dom';
 import {library} from '@fortawesome/fontawesome-svg-core';
 
-
 library.add();
 
+//{<!-- https://reactjs.org/docs/strict-mode.html -->}
+//When we use useState, component 2 time render.
+//That’s what Strict Mode does. It calls render phase code twice in development so that you can notice if it performs unexpected side effects. In production, there would be only one call.
+// https://github.com/facebook/react/issues/18422
+// https://reactjs.org/docs/strict-mode.html
 ReactDOM.render(
     <React.StrictMode>
       <Router>
         <DocHome/>
       </Router>
-      /</React.StrictMode>,
+    </React.StrictMode>,
     document.getElementById('root'),
 );
 

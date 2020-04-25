@@ -12,7 +12,7 @@ const useLazyImport = (importFunc, eagerLoad = false) => {
   const load = useCallback(() => {
     importFunc().
         then(module => {
-          setModule(module.default ? module.default : module);
+          setModule(module.default == null ? module : module.default);
         }).catch(e => {throw e;});
   }, [importFunc]);
 

@@ -5,6 +5,7 @@ import DocMenu from './DocMenu';
 import {Route, useRouteMatch, Switch} from 'react-router-dom';
 import InstallIndex from '../pages/install/InstallIndex';
 import ButtonIndex from '../pages/button/ButtonIndex';
+import InputIndex from '../pages/input/InputIndex';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -27,6 +28,9 @@ function DocCenter(props) {
             <Switch>
               <RouteLoader route={Route} path={`${url}/button`}>
                 <ButtonIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/input`}>
+                <InputIndex/>
               </RouteLoader>
               <RouteLoader exact route={Route} path={`${url}/`}>
                 <InstallIndex/>

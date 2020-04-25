@@ -1,8 +1,10 @@
-import React, {useImperativeHandle, useRef} from 'react';
+import React, {useContext} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {InputBorderType} from './common/Constants';
 import Element from './common/Element';
+import {InputGroupContext} from './common/Context';
+import {isNil} from './Utils';
 
 const IconInput = React.forwardRef((props, ref) => {
   const {
@@ -52,12 +54,14 @@ const Input = React.forwardRef((props, ref) => {
     disabled,
     ...otherProps
   } = props;
-
+  const ctx = useContext(InputGroupContext);
   let borderTypeCls = InputBorderType[borderType];
+  const inputSize = isNil(ctx.size) ? size : ctx.size;
 
-  let clsName = clsx(extraClassName, className, {
-    [size]: size,
+  let clsName = clsx(extraClassName, className, inputSize, {
+    'textarea': type === 'textarea',
     block: block,
+    'within-group': ctx.withinGroup,
     [borderTypeCls]: borderTypeCls,
   });
 
