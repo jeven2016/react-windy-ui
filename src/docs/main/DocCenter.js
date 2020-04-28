@@ -6,6 +6,9 @@ import {Route, useRouteMatch, Switch} from 'react-router-dom';
 import InstallIndex from '../pages/install/InstallIndex';
 import ButtonIndex from '../pages/button/ButtonIndex';
 import InputIndex from '../pages/input/InputIndex';
+import CheckboxIndex from '../pages/checkbox/CheckboxIndex';
+import RadioIndex from '../pages/radio/RadioIndex';
+import ToggleIndex from '../pages/toggle/ToggleIndex';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -32,7 +35,16 @@ function DocCenter(props) {
               <RouteLoader route={Route} path={`${url}/input`}>
                 <InputIndex/>
               </RouteLoader>
-              <RouteLoader exact route={Route} path={`${url}/`}>
+              <RouteLoader route={Route} path={`${url}/radio`}>
+                <RadioIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/checkbox`}>
+                <CheckboxIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/toggle`}>
+                <ToggleIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/`}>
                 <InstallIndex/>
               </RouteLoader>
               <RouteLoader route={Route}>

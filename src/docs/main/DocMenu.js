@@ -3,7 +3,7 @@ import {Menu} from 'react-windy-ui';
 import {Link, useRouteMatch} from 'react-router-dom';
 
 export default function DocMenu(props) {
-  const {url}= useRouteMatch();
+  const {url} = useRouteMatch();
 
   return <Menu hasBox={true} type="primary" block>
     <Menu.List>
@@ -18,14 +18,23 @@ export default function DocMenu(props) {
           </Menu.Item>
           <Menu.Item id="input">
             <Link to={`${url}/input`}>
-            输入框 Input
+              输入框 Input
             </Link>
           </Menu.Item>
           <Menu.Item id="radio">
-            单选 Radio
+            <Link to={`${url}/radio`}>
+              单选 Radio
+            </Link>
           </Menu.Item>
           <Menu.Item id="chk">
-            多选框 Checkbox
+            <Link to={`${url}/checkbox`}>
+              多选 Checkbox
+            </Link>
+          </Menu.Item>
+          <Menu.Item id="toggle">
+            <Link to={`${url}/toggle`}>
+              开关 Toggle
+            </Link>
           </Menu.Item>
         </Menu.List>
       </Menu.SubMenu>

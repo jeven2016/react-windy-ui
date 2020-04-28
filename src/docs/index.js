@@ -19,11 +19,11 @@ library.add();
 // https://github.com/facebook/react/issues/18422
 // https://reactjs.org/docs/strict-mode.html
 ReactDOM.render(
-    <React.StrictMode>
+    // <React.StrictMode>
       <Router>
         <DocHome/>
-      </Router>
-    </React.StrictMode>,
+      </Router>,
+    // </React.StrictMode>,
     document.getElementById('root'),
 );
 

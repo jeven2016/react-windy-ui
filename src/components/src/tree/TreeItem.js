@@ -79,7 +79,7 @@ const TreeItem = React.forwardRef((props, ref) => {
   const getCheckbox = () => {
     if (treeContext.checkable) {
       return <div className="icon-extra-column">
-        <Checkbox value={checked}
+        <Checkbox checked={checked}
                   showIndeterminateState={showIndeterminateState}
                   iconIndeterminateStyle={{color: '#0ca0ff'}}
                   onChange={(isChecked, e) => {

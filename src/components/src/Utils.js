@@ -4,7 +4,6 @@ import {
   isBoolean,
   isInteger,
   isFunction,
-  isNil,
   isObject,
   isString,
   random,
@@ -13,7 +12,6 @@ import {
 } from 'lodash';
 
 export {
-  isNil,
   isObject,
   inRange,
   isInteger,
@@ -25,6 +23,8 @@ export {
   without,
 };
 
+export const isNil = (value) => value == null;
+
 export const isArray = (value) => {
   // return Object.prototype.toString.call(value) === "[object Array]";
   return Array.isArray(value);
@@ -34,7 +34,8 @@ export const isBlank = (value) => {
   return isNil(value) || /^\s*$/.test(value);
 };
 
-export const RadioGroupContext = React.createContext({});
+export const startsWith = (first, next) => first.slice(0, next.length) === next;
+
 
 /**
  * Set padding property for a child node instead of setting margin property

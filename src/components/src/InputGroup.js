@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import {InputGroupContext} from './common/Context';
 
 const InputGroup = React.forwardRef((props, ref) => {
-  const {block, size, className = 'input-group', extraClassName, ...otherProps} = props;
+  const {block = false, size = 'medium', className = 'input-group', extraClassName, ...otherProps} = props;
 
-  let clsName = clsx(extraClassName, className, {block: block});
-  const ctx = useMemo(() => ({size, withinGroup: true}), [size]);
+  let clsName = clsx(extraClassName, className,
+      {block: block});
+  const ctx = useMemo(() => ({size, withinGroup: true}),
+      [size]);
 
   return <InputGroupContext.Provider value={ctx}>
     <span ref={ref} className={clsName} {...otherProps}/>
@@ -22,15 +24,18 @@ const Label = React.forwardRef((props, ref) => {
   return <div ref={ref} className={`${clsName} ${ctx.size}`} {...otherProps}/>;
 });
 
-InputGroup.Label = Label;
-
-InputGroup.defaultProps = {
-  size: 'medium',
-};
-
 InputGroup.propTypes = {
   block: PropTypes.bool, //whether to occupy the whole row
+  size: PropTypes.oneOf(['large', 'medium', 'small']),
+  className: PropTypes.string, //the class name of button
+  extraClassName: PropTypes.string, //the customized class need to add
+  disabled: PropTypes.bool,
+};
+
+Label.propTypes = {
   className: PropTypes.string, //the class name of button
   extraClassName: PropTypes.string, //the customized class need to add
 };
+
+InputGroup.Label = Label;
 export default InputGroup;

@@ -1,8 +1,12 @@
-import React, {useContext, useState} from 'react';
-import {isNil, RadioGroupContext} from './Utils';
+import React, {useCallback, useContext, useMemo} from 'react';
+import {isNil, startsWith} from './Utils';
 import {IconRadioChecked, IconRadioUnChecked} from './Icons';
-import BaseSwitch from './BaseSwitch';
 import PropTypes from 'prop-types';
+import useInternalState from './common/useInternalState';
+import clsx from 'clsx';
+import {preventEvent} from './event';
+import Element from './common/Element';
+import {RadioGroupContext} from './common/Context';
 
 /**
  * Radio Component
@@ -10,37 +14,130 @@ import PropTypes from 'prop-types';
  * @returns {*}
  * @constructor
  */
-function Radio(props) {
-  const {onChange, defaultValue, underControlled} = useContext(
-      RadioGroupContext);
-  const {value, onChange: radioChange, ...otherProps} = props;
+const Radio = React.forwardRef((props, ref) => {
+  const {
+    className = 'radio',
+    extraClassName,
+    disabled = false,
+    checked = false,
+    defaultChecked = false,
+    value,
+    onChange,
+    label,
+    children,
+    checkedColor,
+    uncheckedColor,
+    alignLabel = 'right',
+    checkedIcon = <IconRadioChecked/>,
+    uncheckedIcon = <IconRadioUnChecked/>,
+    ...otherProps
+  } = props;
+  const ctx = useContext(RadioGroupContext);
 
-  const callbacks = [onChange, radioChange];
-  const changeCallback = (radioValue, evt) => {
-    for (let elem in callbacks) {
-      if (!isNil(callbacks[elem])) {
-        callbacks[elem](radioValue, evt);
-        break;
-      }
-    }
-  };
+  //whether the radio is under controlled by a radio group
+  const existsGroup = ctx.existsGroup;
+  const isExternalControl = existsGroup || props.hasOwnProperty('checked');
 
-  return BaseSwitch({
-    baseClassName: 'radio',
-    iconChecked: IconRadioChecked,
-    iconUnchecked: IconRadioUnChecked,
-    inputType: 'radio',
-    canUnchecked: false,
-    checked: value === defaultValue,
-    value: value,
-    underControlled: isNil(underControlled) ? false : underControlled,
-    onChange: changeCallback,
-    ...otherProps,
+  const initChecked = useMemo(() => {
+    const ctxSelectedVal = ctx.selectedValue;
+    return existsGroup ? !isNil(value) && value === ctxSelectedVal : checked;
+  }, [existsGroup, ctx.selectedValue, checked, value]);
+
+  const {state: checkState, setState: setCheckState} = useInternalState(
+      isExternalControl,
+      defaultChecked, initChecked);
+
+  let realIcon = useMemo(() => {
+    return checkState ? checkedIcon : uncheckedIcon;
+  }, [checkedIcon, uncheckedIcon, checkState]);
+
+  const clsName = clsx(extraClassName, className, alignLabel, {
+    checked: checkState,
+    unchecked: !checkState,
   });
-}
+
+  const handleClick = useCallback((e) => {
+    if (disabled || ctx.disabled || checkState) {
+      preventEvent(e);
+      return;
+    }
+    const nextState = !checkState;
+    if (!isExternalControl) {
+      setCheckState(nextState);
+    }
+    if (existsGroup) {
+      //call radio group's callback
+      ctx.onChange && ctx.onChange(value, e);
+    } else {
+      onChange && onChange(value, e);
+    }
+  }, [
+    existsGroup,
+    value,
+    onChange,
+    checkState,
+    isExternalControl,
+    setCheckState,
+    disabled,
+    ctx]);
+
+  /*
+   * For internal used icon
+   */
+  const isColorValue = useCallback((val) => {
+        return !isNil(val) &&
+            (startsWith(val, '#') || startsWith(val, 'rgb'));
+      },
+      []);
+
+  const iconColorCls = useMemo(() => {
+    if (checkState && !isNil(checkedColor) && !isColorValue(checkedColor)) {
+      return 'text color-' + checkedColor;
+    }
+    if (!checkState && !isNil(uncheckedColor) &&
+        !isColorValue(uncheckedColor)) {
+      return 'text color-' + uncheckedColor;
+    }
+    return null;
+  }, [checkState, checkedColor, uncheckedColor, isColorValue]);
+
+  realIcon = useMemo(() => realIcon ? React.cloneElement(realIcon, {
+        onKeyDown: (e) => e.keyCode === 13 && handleClick(),
+        tabIndex: 0,
+        extraClassName: iconColorCls,
+      }) : null,
+      [iconColorCls, realIcon, handleClick]);
+
+  return <>
+    <Element className={clsName}
+             disabled={disabled || ctx.disabled} {...otherProps}
+             onClick={handleClick} ref={ref}>
+      {realIcon}
+      <input type="radio" value={checkState} disabled={disabled}
+             className="hidden-input" tabIndex="-1"/>
+      {
+        (label || children) && <span className="label">
+        {label}
+          {children}
+        </span>
+      }
+    </Element>
+  </>;
+});
 
 Radio.propTypes = {
-  value: PropTypes.any.isRequired,
+  className: PropTypes.string,
+  extraClassName: PropTypes.string, //the customized class need to add
+  disabled: PropTypes.bool,
+  checked: PropTypes.bool,
+  defaultChecked: PropTypes.bool,
+  onChange: PropTypes.func,
+  label: PropTypes.node,
+  children: PropTypes.node,
+  checkedIcon: PropTypes.node,
+  uncheckedIcon: PropTypes.node,
+  checkedColor: PropTypes.string,
+  uncheckedColor: PropTypes.string,
 };
 
 /**
@@ -49,22 +146,50 @@ Radio.propTypes = {
  * @returns {*}
  * @constructor
  */
-function RadioGroup(props) {
-  const {children, defaultValue, onChange, ...otherProps} = props;
-  const [selectedValue, setSelectedValue] = useState(null);
+const RadioGroup = React.forwardRef((props, ref) => {
+  const {
+    className,
+    extraClassName,
+    children,
+    defaultValue,
+    value,
+    onChange,
+    disabled,
+    ...otherProps
+  } = props;
+  const clsName = clsx(className, extraClassName);
+  const isExternalControl = props.hasOwnProperty('value');
+  const {state: selectedValue, setState: setSelectedValue} = useInternalState(
+      isExternalControl,
+      defaultValue, value);
 
-  const changeRadio = (value, evt) => {
-    setSelectedValue(value);
-    !isNil(onChange) && onChange(value, evt);
-  };
-  return <RadioGroupContext.Provider value={{
-    onChange: changeRadio,
-    defaultValue: isNil(selectedValue) ? defaultValue : selectedValue,
-    underControlled: true, //mark the raido components are under controlled by RadioGroup
-  }}>
-    <div {...otherProps}>{children}</div>
+  const handleChange = useCallback((radioValue, e) => {
+    setSelectedValue(radioValue);
+    onChange && onChange(radioValue, e);
+  }, [setSelectedValue, onChange]);
+
+  const ctx = useMemo(() => {
+    return {
+      onChange: handleChange,
+      isExternalControl,
+      disabled,
+      selectedValue,
+      existsGroup: true,
+    };
+  }, [handleChange, isExternalControl, disabled, selectedValue]);
+
+  return <RadioGroupContext.Provider value={ctx}>
+    <span className={clsName} ref={ref} {...otherProps}>{children}</span>
   </RadioGroupContext.Provider>;
-}
+});
+
+RadioGroup.propTypes = {
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func,
+  children: PropTypes.node,
+  defaultValue: PropTypes.any,
+  value: PropTypes.any,
+};
 
 export default Radio;
 export {RadioGroup};

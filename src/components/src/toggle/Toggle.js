@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {isNil} from '../Utils';
 import useInternalActive from '../common/useInternalActive';
 import clsx from 'clsx';
@@ -16,10 +16,16 @@ const Toggle = React.forwardRef((props, ref) => {
     defaultActive = false,
     onActiveChange, //a callback used to set the active state
     active,
-
-    disabled = false, className = 'toggle', extraClassName,
-    block = false, style,
-    children, type = 'normal', content, onChange, ...otherProps
+    disabled = false,
+    className = 'toggle',
+    extraClassName,
+    block = false,
+    style,
+    children,
+    type = 'normal',
+    content,
+    onChange,
+    ...otherProps
   } = props;
 
   const isExternalControl = props.hasOwnProperty('active');
@@ -35,7 +41,10 @@ const Toggle = React.forwardRef((props, ref) => {
     [type]: type,
   });
 
-  const getContent = (isBarContent, defaultValue = null) => {
+  const getContent = useCallback((isBarContent, defaultValue = null) => {
+    if (type === ToggleType.normal) {
+      return null;
+    }
     if (isNil(content)) {
       return defaultValue;
     }
@@ -49,9 +58,9 @@ const Toggle = React.forwardRef((props, ref) => {
     }
 
     return isOn ? content.on : content.off;
-  };
+  }, [isOn, content]);
 
-  const clickToggle = (e) => {
+  const clickToggle = useCallback((e) => {
     if (disabled) {
       return;
     }
@@ -64,20 +73,21 @@ const Toggle = React.forwardRef((props, ref) => {
 
     setActive(newActive);
     !isNil(onChange) && onChange(newActive, e);
-  };
+  }, [disabled, isActive, isExternalControl, onChange, setActive]);
 
-  const calcInitOffsetX = () => {
+  const calcInitOffsetX = useCallback(() => {
     if (type === ToggleType.normal) {
       return {leftOffset: '-5%', rightOffset: '-95%'};
     }
     if (type !== ToggleType.normal) {
       return {leftOffset: '0.2rem', rightOffset: '-1.7rem'};
     }
-  };
+  }, [type]);
 
   const {from, to, config} = useMemo(
       () => toggleAnimation(calcInitOffsetX()),
-      [type]);
+      [calcInitOffsetX]);
+
   const animationSetting = isOn ? {from: from, to: to} : {from: to, to: from};
   animationSetting.config = config;
 
@@ -93,11 +103,21 @@ const Toggle = React.forwardRef((props, ref) => {
     {getContent(true, '\u00A0')}
       </span> : null;
 
-  return <button style={{...btnStyle, ...style}}
-                 ref={ref}
-                 className="toggle-button"
-                 disabled={disabled}
-                 onClick={clickToggle} {...otherProps}>
+  const normalLabel = useMemo(() => {
+    if (type !== ToggleType.normal || isNil(content)) {
+      return null;
+    }
+    const text = isOn ? content.on : content.off;
+    const labelClsName = `toggle-label ${isOn ? 'on' : null}`;
+    return <span className={labelClsName}>{text}</span>;
+  }, [type, isOn, content]);
+
+  return <>
+    <button style={{...btnStyle, ...style}}
+            ref={ref}
+            className="toggle-button"
+            disabled={disabled}
+            onClick={clickToggle} {...otherProps}>
       <span className={clsName}>
         {barContent}
         {infoContent}
@@ -113,7 +133,9 @@ const Toggle = React.forwardRef((props, ref) => {
           }
           </Spring>
       </span>
-  </button>;
+    </button>
+    {normalLabel}
+  </>;
 
 });
 

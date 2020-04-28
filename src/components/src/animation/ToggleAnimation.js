@@ -15,6 +15,6 @@ export const toggleAnimation = ({leftOffset, rightOffset}) => {
   return {
     from: from,
     to: to,
-    config: config.default,
+    config: config.wobbly,
   };
 };

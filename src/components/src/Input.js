@@ -8,24 +8,34 @@ import {isNil} from './Utils';
 
 const IconInput = React.forwardRef((props, ref) => {
   const {
-    borderType, children, leftIcon, className = 'icon-input',
+    className = 'icon-input',
+    size = 'medium',
+    block = false,
+    leftIcon = false,
+    disabled = false,
+    borderType,
+    children,
     inputRef,
     extraClassName,
-    size = 'medium', block, ...otherProps
+    ...otherProps
   } = props;
+  const ctx = useContext(InputGroupContext);
+  const inputDisabled = isNil(ctx.disabled) ? disabled : ctx.disabled;
   let borderTypeCls = InputBorderType[borderType];
   let clsName = clsx(extraClassName, className, {
     'left-icon': leftIcon,
     [size]: size,
     block: block,
+    disabled: inputDisabled,
     [borderTypeCls]: borderTypeCls,
   });
 
   let newChildren = children;
-  if (inputRef) {
+  if (newChildren) {
     newChildren = React.Children.map(children, chd => {
       if (chd.type === Input) {
-        return React.cloneElement(chd, {ref: inputRef});
+        return React.cloneElement(chd,
+            {ref: inputRef, disabled: inputDisabled});
       }
       return chd;
     });
@@ -37,21 +47,24 @@ const IconInput = React.forwardRef((props, ref) => {
 });
 
 IconInput.propTypes = {
+  className: PropTypes.string,
   extraClassName: PropTypes.string, //the customized class need to add
   leftIcon: PropTypes.bool, // whether the icon is placed in left side of the input
   size: PropTypes.oneOf(['large', 'medium', 'small']),
   block: PropTypes.bool,
+  borderType: PropTypes.oneOf(['ok', 'warning', 'error']),
+  disabled: PropTypes.bool,
 };
 
 const Input = React.forwardRef((props, ref) => {
   const {
-    borderType,
+    className = 'input',
     size = 'medium',
     type = 'text',
-    block,
-    className = 'input',
+    disabled = false,
+    block = false,
+    borderType,
     extraClassName,
-    disabled,
     ...otherProps
   } = props;
   const ctx = useContext(InputGroupContext);
@@ -66,12 +79,16 @@ const Input = React.forwardRef((props, ref) => {
   });
 
   if (type.toLowerCase() === 'textarea') {
-    return <Element nativeType="textarea" className={clsName} {...otherProps}
-                    disabled={disabled}/>;
+    return <Element nativeType="textarea"
+                    className={clsName}
+                    setDisabledAttr={true}
+                    disabled={disabled}
+                    {...otherProps}/>;
   }
   const newProps = {type: type, ...otherProps};
   return (
       <Element nativeType="input" ref={ref} className={clsName}
+               setDisabledAttr={true}
                disabled={disabled}
                {...newProps}
       />
@@ -80,9 +97,10 @@ const Input = React.forwardRef((props, ref) => {
 });
 
 Input.propTypes = {
-  size: PropTypes.string,
+  borderType: PropTypes.oneOf(['ok', 'warning', 'error']),
+  size: PropTypes.oneOf(['large', 'medium', 'small']), //the size of the input
   type: PropTypes.string,//"text", "textarea", "password", "file", etc.
-  block: PropTypes.bool,
+  block: PropTypes.bool, //whether the input's width is '100%' and it occupies the whole row
   className: PropTypes.string,
   extraClassName: PropTypes.string, //the customized class need to add
   disabled: PropTypes.bool,

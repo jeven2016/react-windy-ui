@@ -5,6 +5,7 @@ import SampleInput2 from './samples/SampleInput2';
 import SampleInput3 from './samples/SampleInput3';
 import SampleInput4 from './samples/SampleInput4';
 import SampleInput5 from './samples/SampleInput5';
+import SampleInput6 from './samples/SampleInput6';
 
 const mapping = {
   Title: 'TITLE',
@@ -15,6 +16,7 @@ const mapping = {
   SampleInput3: 'SampleInput3',
   SampleInput4: 'SampleInput4',
   SampleInput5: 'SampleInput5',
+  SampleInput6: 'SampleInput6',
 };
 
 const componentMapping = {
@@ -23,6 +25,7 @@ const componentMapping = {
   SampleInput3: <SampleInput3/>,
   SampleInput4: <SampleInput4/>,
   SampleInput5: <SampleInput5/>,
+  SampleInput6: <SampleInput6/>,
 };
 
 export default function InputIndex(props) {
