@@ -9,16 +9,22 @@ import {isNil} from '../Utils';
  *     the state state cannot be changed automatically usually because it is controlled by outside.
  * 3. if both the defaultState and state are not set, the backupState will be the the candidate.
  */
-const useInternalState = (
-    isExternalControl, defaultState, state, backupState) => {
-  let initState = isExternalControl ? state : defaultState;
+const useInternalState = ({
+                            props, stateName, customizedFunction,
+                            defaultState, state, backupState,
+                          }) => {
+  const customized = customizedFunction
+      ? customizedFunction()
+      : props.hasOwnProperty(stateName);
+  let initState = customized ? state : defaultState;
   if (isNil(initState)) {
     initState = backupState;
   }
   const [internalState, setInternalState] = useState(initState);
   return {
-    state: isExternalControl ? state : internalState,
+    state: customized ? state : internalState,
     setState: setInternalState,
+    customized: customized,
   };
 };
 

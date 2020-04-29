@@ -21,6 +21,14 @@ export default function Toggle3() {
               }}/>
     </div>
     <div className="doc doc-row">
+      <Toggle defaultActive type="primary" style={{width: '4rem'}}
+              content={{
+                on: 'ON',
+                off: 'OFF',
+                showInBar: true,
+              }}/>
+    </div>
+    <div className="doc doc-row">
       <Toggle defaultActive type="secondary" style={{width: '4rem'}}
               content={{
                 on: <IconArrowRight/>,

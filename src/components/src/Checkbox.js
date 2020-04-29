@@ -27,10 +27,17 @@ const Checkbox = React.forwardRef((props, ref) => {
     iconIndeterminateStyle,
     ...otherProps
   } = props;
-  const isExternalControl = props.hasOwnProperty('checked');
-  const {state: checkState, setState: setCheckState} = useInternalState(
-      isExternalControl,
-      defaultChecked, checked);
+
+  const {
+    state: checkState,
+    setState: setCheckState,
+    customized,
+  } = useInternalState({
+    props,
+    stateName: 'checked',
+    defaultState: defaultChecked,
+    state: checked,
+  });
 
   let realIcon = useMemo(() => {
     let icon;
@@ -60,11 +67,11 @@ const Checkbox = React.forwardRef((props, ref) => {
       return;
     }
     const nextState = !checkState;
-    if (!isExternalControl) {
+    if (!customized) {
       setCheckState(nextState);
     }
     onChange && onChange(nextState);
-  }, [onChange, checkState, isExternalControl, setCheckState, disabled]);
+  }, [onChange, checkState, customized, setCheckState, disabled]);
 
   /*
    * For internal used icon
@@ -84,17 +91,6 @@ const Checkbox = React.forwardRef((props, ref) => {
     return null;
   }, [checkState, checkedColor, uncheckedColor, isColorValue]);
 
-  /* todo
-    const iconStyle = useMemo(() => {
-      if (checkState && !isNil(checkedColor) && isColorValue(checkedColor)) {
-        return {color: `${checkedColor}!important`};
-      }
-      if (!checkState && !isNil(uncheckedColor) && isColorValue(uncheckedColor)) {
-        return {color: `${uncheckedColor}!important`};
-      }
-      return null;
-    }, [checkState, checkedColor, uncheckedColor, isColorValue]);
-  */
   realIcon = useMemo(() => realIcon ? React.cloneElement(realIcon, {
         onKeyDown: (e) => e.keyCode === 13 && handleClick(),
         tabIndex: 0,

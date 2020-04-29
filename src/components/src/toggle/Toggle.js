@@ -1,9 +1,9 @@
 import React, {useCallback, useMemo} from 'react';
 import {isNil} from '../Utils';
-import useInternalActive from '../common/useInternalActive';
 import clsx from 'clsx';
 import {Spring} from 'react-spring/renderprops';
-import {toggleAnimation} from '../animation/ToggleAnimation';
+import PropTypes from 'prop-types';
+import useInternalState from '../common/useInternalState';
 
 const ToggleType = {
   normal: 'normal',
@@ -28,12 +28,14 @@ const Toggle = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
 
-  const isExternalControl = props.hasOwnProperty('active');
-  const {currentActive: isActive, setActive} = useInternalActive(
-      isExternalControl,
-      defaultActive, active);
+  const {state: isActive, setState: setActive, customized} = useInternalState({
+    props,
+    stateName: 'active',
+    defaultState: defaultActive,
+    state: active,
+  });
 
-  let isOn = isExternalControl ? active : isActive;
+  let isOn = customized ? active : isActive;
   let clsName = clsx(extraClassName, className, {
     on: isOn,
     off: !isOn,
@@ -58,7 +60,7 @@ const Toggle = React.forwardRef((props, ref) => {
     }
 
     return isOn ? content.on : content.off;
-  }, [isOn, content]);
+  }, [isOn, content, type]);
 
   const clickToggle = useCallback((e) => {
     if (disabled) {
@@ -66,30 +68,31 @@ const Toggle = React.forwardRef((props, ref) => {
     }
     const newActive = !isActive;
     //the active state is set by the other component
-    if (isExternalControl) {
+    if (customized) {
       !isNil(onChange) && onChange(newActive, e);
       return;
     }
 
     setActive(newActive);
     !isNil(onChange) && onChange(newActive, e);
-  }, [disabled, isActive, isExternalControl, onChange, setActive]);
+  }, [disabled, isActive, customized, onChange, setActive]);
 
-  const calcInitOffsetX = useCallback(() => {
-    if (type === ToggleType.normal) {
-      return {leftOffset: '-5%', rightOffset: '-95%'};
-    }
-    if (type !== ToggleType.normal) {
-      return {leftOffset: '0.2rem', rightOffset: '-1.7rem'};
-    }
-  }, [type]);
+  const to = useMemo(
+      () => {
+        let offset = type === ToggleType.normal ? {
+              leftOffset: '-5%',
+              rightOffset: '-95%',
+            }
+            : {leftOffset: '0.2rem', rightOffset: '-1.7rem'};
 
-  const {from, to, config} = useMemo(
-      () => toggleAnimation(calcInitOffsetX()),
-      [calcInitOffsetX]);
-
-  const animationSetting = isOn ? {from: from, to: to} : {from: to, to: from};
-  animationSetting.config = config;
+        return {
+          left: isOn ? '100%' : '0%',
+          transform: isOn
+              ? `translateX(${offset.rightOffset})`
+              : `translateX(${offset.leftOffset})`,
+        };
+      },
+      [isOn, type]);
 
   const btnStyle = {};
   if (block) {
@@ -115,16 +118,15 @@ const Toggle = React.forwardRef((props, ref) => {
   return <>
     <button style={{...btnStyle, ...style}}
             ref={ref}
-            className="toggle-button"
+            className={`toggle-button`}
             disabled={disabled}
             onClick={clickToggle} {...otherProps}>
       <span className={clsName}>
         {barContent}
         {infoContent}
         <Spring
-            from={animationSetting.from}
-            to={animationSetting.to}
-            config={animationSetting.config}
+            to={to}
+            config={{clamp: true, mass: 1, tesion: 100, friction: 15}}
         >
           {
             springProps => (<span className="ball" style={springProps}>
@@ -138,5 +140,20 @@ const Toggle = React.forwardRef((props, ref) => {
   </>;
 
 });
+
+Toggle.propTypes = {
+  className: PropTypes.string,
+  extraClassName: PropTypes.string, //the customized class need to add
+  disabled: PropTypes.bool,
+  active: PropTypes.bool,
+  onActiveChange: PropTypes.bool,
+  block: PropTypes.bool,
+  style: PropTypes.object,
+  type: PropTypes.string,
+  onChange: PropTypes.func,
+  content: PropTypes.shape(
+      {one: PropTypes.node, off: PropTypes.node, showInBar: PropTypes.bool}),
+  children: PropTypes.node,
+};
 
 export default Toggle;

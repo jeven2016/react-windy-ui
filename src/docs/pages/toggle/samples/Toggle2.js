@@ -7,10 +7,13 @@ export default function Toggle2() {
       <Toggle defaultActive style={{width: '5rem'}}/>
     </div>
     <div className="doc doc-row">
-      <Toggle defaultActive type="primary" style={{width: '5rem'}}/>
+      <Toggle defaultActive type="primary" style={{width: '8rem'}}/>
     </div>
     <div className="doc doc-row">
-      <Toggle defaultActive type="secondary" style={{width: '5rem'}}/>
+      <Toggle defaultActive type="secondary" style={{width: '10rem'}}/>
+    </div>
+    <div className="doc doc-row">
+      <Toggle defaultActive type="primary" block/>
     </div>
   </>;
 }

@@ -36,16 +36,23 @@ const Radio = React.forwardRef((props, ref) => {
 
   //whether the radio is under controlled by a radio group
   const existsGroup = ctx.existsGroup;
-  const isExternalControl = existsGroup || props.hasOwnProperty('checked');
+  const customizedFunction = useCallback(() => existsGroup ||
+      props.hasOwnProperty('checked'), [existsGroup, props]);
 
   const initChecked = useMemo(() => {
     const ctxSelectedVal = ctx.selectedValue;
     return existsGroup ? !isNil(value) && value === ctxSelectedVal : checked;
   }, [existsGroup, ctx.selectedValue, checked, value]);
 
-  const {state: checkState, setState: setCheckState} = useInternalState(
-      isExternalControl,
-      defaultChecked, initChecked);
+  const {
+    state: checkState,
+    setState: setCheckState,
+    customized,
+  } = useInternalState({
+    customizedFunction,
+    defaultState: defaultChecked,
+    state: initChecked,
+  });
 
   let realIcon = useMemo(() => {
     return checkState ? checkedIcon : uncheckedIcon;
@@ -62,7 +69,7 @@ const Radio = React.forwardRef((props, ref) => {
       return;
     }
     const nextState = !checkState;
-    if (!isExternalControl) {
+    if (!customized) {
       setCheckState(nextState);
     }
     if (existsGroup) {
@@ -76,7 +83,7 @@ const Radio = React.forwardRef((props, ref) => {
     value,
     onChange,
     checkState,
-    isExternalControl,
+    customized,
     setCheckState,
     disabled,
     ctx]);
@@ -158,10 +165,16 @@ const RadioGroup = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const clsName = clsx(className, extraClassName);
-  const isExternalControl = props.hasOwnProperty('value');
-  const {state: selectedValue, setState: setSelectedValue} = useInternalState(
-      isExternalControl,
-      defaultValue, value);
+  const {
+    state: selectedValue,
+    setState: setSelectedValue,
+    customized,
+  } = useInternalState({
+    props,
+    stateName: 'value',
+    defaultState: defaultValue,
+    state: value,
+  });
 
   const handleChange = useCallback((radioValue, e) => {
     setSelectedValue(radioValue);
@@ -171,12 +184,12 @@ const RadioGroup = React.forwardRef((props, ref) => {
   const ctx = useMemo(() => {
     return {
       onChange: handleChange,
-      isExternalControl,
+      customized,
       disabled,
       selectedValue,
       existsGroup: true,
     };
-  }, [handleChange, isExternalControl, disabled, selectedValue]);
+  }, [handleChange, customized, disabled, selectedValue]);
 
   return <RadioGroupContext.Provider value={ctx}>
     <span className={clsName} ref={ref} {...otherProps}>{children}</span>
