@@ -18,6 +18,7 @@ import NavBar from './navbar';
 export {default as Dropdown} from './dropdown';
 // export {default as WindowEventHandler} from "./event";
 export {default as Menu} from './menu';
+export {default as Menu2} from './menu2/Menu2';
 export {default as Divider} from './divider';
 export {default as Card} from './card';
 export {default as Popover} from './popover';

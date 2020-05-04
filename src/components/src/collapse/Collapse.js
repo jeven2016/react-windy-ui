@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import useInternalActive from '../common/useInternalActive';
 import {isNil, convertToArray} from '../Utils';
 import {CollapseContext} from '../common/Context';
+import useInternalState from '../common/useInternalState';
 
 const Collapse = React.forwardRef((props, ref) => {
   const {
@@ -27,48 +28,56 @@ const Collapse = React.forwardRef((props, ref) => {
     'with-border': hasBorder,
     'global-with-box': hasBox,
   });
-  const isExternalCtrl = props.hasOwnProperty('active');
-  const {currentActive, setActive} = useInternalActive(isExternalCtrl,
-      convertToArray(defaultActive), convertToArray(active));
+
+  const {
+    state: currentActive,
+    setState: setActive,
+    customized,
+  } = useInternalState({
+    props,
+    stateName: 'active',
+    defaultState: convertToArray(defaultActive),
+    state: convertToArray(active),
+  });
 
   const itemClickHandler = (value, isCollapsed) => {
-    if (isExternalCtrl) {
-      onChange && onChange(value, isCollapsed);
-      return;
-    }
+    if (!customized) {
+      if (isNil(currentActive)) {
+        if (!isCollapsed) {
+          setActive([value]);
+          return;
+        }
+      }
 
-    if (isNil(currentActive)) {
+      if (isCollapsed && currentActive.includes(value)) {
+        //collapse the item corresponding to this value
+        setActive(pre => currentActive.filter(v => v !== value));
+      }
       if (!isCollapsed) {
-        setActive([value]);
-        return;
+        if (accordion) {
+          setActive([value]);
+        } else if (!currentActive.includes(value)) {
+          setActive(pre => [...pre, value]);
+        }
       }
     }
+    onChange && onChange(value, isCollapsed);
+  };
 
-    if (isCollapsed && currentActive.includes(value)) {
-      //collapse the item corresponding to this value
-      setActive(pre => currentActive.filter(v => v !== value));
-    }
-    if (!isCollapsed) {
-      if (accordion) {
-        setActive([value]);
-      } else if (!currentActive.includes(value)) {
-        setActive(pre => [...pre, value]);
-      }
-    }
+  const ctx = {
+    accordion,
+    customized,
+    hasBorder,
+    hasCollapseIcon,
+    collapseIcon: null,
+    currentActive,
+    iconPosition,
+    clickItem: itemClickHandler,
   };
 
   return <div className={clsName} {...otherProps}>
     <CollapseContext.Provider
-        value={{
-          accordion,
-          isExternalCtrl,
-          hasBorder,
-          hasCollapseIcon,
-          collapseIcon: null,
-          currentActive,
-          iconPosition,
-          clickItem: itemClickHandler,
-        }}>
+        value={ctx}>
       {children}
     </CollapseContext.Provider>
   </div>;

@@ -9,6 +9,8 @@ import InputIndex from '../pages/input/InputIndex';
 import CheckboxIndex from '../pages/checkbox/CheckboxIndex';
 import RadioIndex from '../pages/radio/RadioIndex';
 import ToggleIndex from '../pages/toggle/ToggleIndex';
+import CollapseIndex from '../pages/collapse/CollapseIndex';
+import MenuIndex from '../pages/menu/MenuIndex';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -43,6 +45,12 @@ function DocCenter(props) {
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/toggle`}>
                 <ToggleIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/collapse`}>
+                <CollapseIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/menu`}>
+                <MenuIndex/>
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/`}>
                 <InstallIndex/>

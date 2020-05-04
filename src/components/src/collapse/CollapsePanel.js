@@ -1,23 +1,10 @@
-import React, {useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
 import {animated, useSpring} from 'react-spring';
 
 import useResizeObserver from '../common/UseResizeObserver';
-import usePrevious from '../common/UsePrevious';
+import {isNil} from '../Utils';
 
-function initAnimation(collapse, height) {
-  const from = {
-    opacity: 0,
-    height: 0,
-  };
-  const to = {
-    opacity: collapse ? 0 : 1,
-    height: collapse ? 0 : height,
-  };
-  return {from, to};
-}
-
-//todo: has performance issue
 const CollapsePanel = React.forwardRef((props, ref) => {
   const {
     extraClassName,
@@ -26,39 +13,61 @@ const CollapsePanel = React.forwardRef((props, ref) => {
     children,
     value,
     style,
+    innerStyle,
+    height: panelHeight,
+    heightIncrement = 0,
+    autoScaleHeight = true,
     ...otherProps
   } = props;
   const clsName = clsx(extraClassName, className);
   const panelRef = useRef(null);
-  const [panelRect, setPanelRect] = useState({height: 0});
-  const preCollapse = usePrevious(collapse);
 
-  useResizeObserver(panelRef, rect => setPanelRect({height: rect.height}));
+  const initHeight = useMemo(() => {
+    if (!autoScaleHeight) {
+      if (!isNil(panelHeight)) {
+        return panelHeight;
+      }
+    }
+    return 0;
+  }, [autoScaleHeight, panelHeight]);
 
-  let {from, to} = initAnimation(collapse, panelRect.height);
-  const {height, opacity} = useSpring({
-    from, to, config: {
-      tension: 180,
-      friction: 26,
+  const [panelRect, setPanelRect] = useState({height: initHeight});
+
+  useResizeObserver(panelRef, rect => setPanelRect({height: rect.height}),
+      autoScaleHeight);
+
+  const toHeight = useMemo(() => {
+    if (collapse) {
+      return 0;
+    }
+    return autoScaleHeight ? panelRect.height + heightIncrement : panelHeight;
+
+  }, [collapse, autoScaleHeight, panelHeight, panelRect, heightIncrement]);
+
+  const {height, opacity, maxHeight} = useSpring({
+    from: {
+      opacity: 0,
+      height: 0,
+      maxHeight: 0,
     },
+    to: {
+      opacity: collapse ? 0 : 1,
+      height: toHeight,
+      maxHeight: toHeight,
+    }, config: {clamp: true, mass: 1, tesion: 100, friction: 15},
   });
-
-  let realHeight = height;
-  // very important to solve a performance issue :
-  // if the it always expands, no need to update the height
-  if (preCollapse === collapse && !collapse) {
-    realHeight = 'auto';
-  }
 
   const newStyle = {
     ...style,
-    height: realHeight,
+    height: height,
     opacity: opacity,
+    maxHeight: maxHeight,
   };
+
   return <animated.div className={clsName}
                        ref={ref}
                        style={newStyle} {...otherProps}>
-    <div ref={panelRef}>
+    <div ref={panelRef} style={innerStyle}>
       {children}
     </div>
   </animated.div>;

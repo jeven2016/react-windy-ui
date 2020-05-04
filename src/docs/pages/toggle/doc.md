@@ -15,6 +15,24 @@ Toggle组件主要提供以下功能：
 
 ------------- Footer ---------------------
 [FOOTER_BEGIN_zh_CN]
+## API    
+
+Toggle的属性如下所示    
+
+
+| 属性 | 名称 | 类型 | 默认值 | 描述 |
+| --- | --- | --- | --- | --- |
+| ref | 根节点Dom对象的引用 | function \| ref | - | 当需要获取到根节点的dom对象时可设置此属性 |
+| className | 样式名称 | string | toggle-button |   |
+| extraClassName | 额外添加的样式名称 | string | - |  |
+| disabled | 是否禁用 | boolean | false |  |
+| active | 是否激活中 | boolean | false |  |
+| defaultActive | 初始是否激活中 | boolean | false |  |
+| onChange | 状态变化触发的回调 | function | - |  |
+| block | 将宽度设置为100%的行宽 | boolean | `false` |  |
+| type | Input的类型 | string | - | 值可以是：text, textarea, password, file等html中关于input可设置的类型 |
+| content | 显示内容 | object | - | content格式： {on: 'On': off: 'Off', showInbar: true}， on、off可以是文字或其他react组件对象 |
+
 [FOOTER_END_zh_CN]
 
 [FOOTER_BEGIN_en_US]
@@ -91,11 +109,13 @@ export default function Toggle2() {
 [Toggle2_END_en_US]
 ----------------------------------
 [Toggle3_BEGIN_zh_CN]
-### 示例2: 在Toggle中显示图标或文字描述
+### 示例2: 在Toggle中显示图标或文字
 <fieldset class="doc desc">
   <legend>提示</legend>
   <div class="doc desc-area">
-    
+    可以给Toggle添加简短的文字或图标， 在content属性中，on属性后对应开启状态的显示；off属性对应关闭
+    状态时的显示。on和off可以设置成字符串、文字或react对象。另外，通过showInBar属性，你可以控制文字或图标的显示位置。
+ 
   </div>
 </fieldset>
 
@@ -146,3 +166,51 @@ export default function Toggle3() {
 [Toggle3_BEGIN_en_US]
 [Toggle3_END_en_US]
 ----------------------------------
+
+[Toggle4_BEGIN_zh_CN]
+### 示例4: 禁用Toggle
+<fieldset class="doc desc">
+  <legend>提示</legend>
+  <div class="doc desc-area">
+   将disabled设置为true后，将禁用对应的Toggle。
+  </div>
+</fieldset>
+
+```jsx
+import React from 'react';
+import {
+  Toggle,
+  IconArrowLeft,
+  IconArrowRight,
+  IconClear,
+  IconChecked2,
+} from 'react-windy-ui';
+
+export default function Toggle4() {
+  return <>
+    <div className="doc doc-row">
+      <Toggle disabled defaultActive content={{on: 'ON', off: 'CLOSE'}}/>
+    </div>
+    <div className="doc doc-row">
+      <Toggle disabled type="primary" style={{width: '5rem'}}
+              content={{
+                on: <IconChecked2/>,
+                off: <IconClear/>,
+                showInBar: true,
+              }}/>
+    </div>
+    <div className="doc doc-row">
+      <Toggle disabled defaultActive type="secondary" style={{width: '4rem'}}
+              onChange={(v) => console.log(v)}
+              content={{
+                on: <IconArrowRight/>,
+                off: <IconArrowLeft/>,
+              }}/>
+    </div>
+  </>;
+}
+```
+[Toggle4_END_zh_CN]
+
+[Toggle4_BEGIN_en_US]
+[Toggle4_END_en_US]

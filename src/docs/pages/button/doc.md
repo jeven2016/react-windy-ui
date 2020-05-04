@@ -375,6 +375,13 @@ export default SampleBtn9;
 ----------------------------------
 [SampleBtn10_BEGIN_zh_CN]
 ### 示例10: 禁用按钮   
+<fieldset class="doc desc">
+  <legend>提示</legend>
+  <div class="doc desc-area">
+   将disabled设置为true后，将禁用对应的Button。
+  </div>
+</fieldset>
+
 
 ```jsx
 import React, {useState} from 'react';

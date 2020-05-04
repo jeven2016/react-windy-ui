@@ -17,21 +17,22 @@ const defaultRect = {
  * if onResize is passed into this hook, it means you want to handle the rect in your callback
  * instead of the returned rect object.
  * if no onResize is passed into this hook, it means you want the hook to return the rect object and
- * don't need to call the callback even the onResize is passed.
+ * don't need to call the callback even though the onResize is passed.
  *
  * note: you cannot get the latest state in ResizeObserver' callback that stored by useState hook,
  *       a alternative is to access the state using Ref
  * @param ref  Ref or function
  * @param onResize
+ * @param enabled whether to enable resize observer
  * @returns {{top: number, left: number, bottom: number, x: number, width: number, y: number, right: number, height: number}}
  */
-export default function useResizeObserver(ref, onResize) {
+export default function useResizeObserver(ref, onResize, enabled = true) {
   const [rect, setRect] = useState(defaultRect);
   const preRectRef = useRef(defaultRect);// a reference to previous rect data
 
   useLayoutEffect(() => {
     const node = isFunction(ref) ? ref() : ref.current;
-    if (isNil(node)) {
+    if (isNil(node) || !enabled) {
       return;
     }
 
@@ -59,8 +60,10 @@ export default function useResizeObserver(ref, onResize) {
     ro.observe(node);
 
     return () => {
-      window.cancelAnimationFrame(id);
-      ro.disconnect();
+      if (enabled) {
+        window.cancelAnimationFrame(id);
+        ro.disconnect();
+      }
     };
   }, []);
 

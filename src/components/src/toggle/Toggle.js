@@ -14,14 +14,12 @@ const ToggleType = {
 const Toggle = React.forwardRef((props, ref) => {
   const {
     defaultActive = false,
-    onActiveChange, //a callback used to set the active state
     active,
     disabled = false,
     className = 'toggle',
     extraClassName,
     block = false,
     style,
-    children,
     type = 'normal',
     content,
     onChange,
@@ -77,6 +75,12 @@ const Toggle = React.forwardRef((props, ref) => {
     !isNil(onChange) && onChange(newActive, e);
   }, [disabled, isActive, customized, onChange, setActive]);
 
+  const from = useMemo(()=>{
+    return {
+      left: '0%',
+    }
+  },[])
+
   const to = useMemo(
       () => {
         let offset = type === ToggleType.normal ? {
@@ -115,16 +119,21 @@ const Toggle = React.forwardRef((props, ref) => {
     return <span className={labelClsName}>{text}</span>;
   }, [type, isOn, content]);
 
+  const buttonClsName = clsx('toggle-button', {
+    disabled,
+  });
+
   return <>
     <button style={{...btnStyle, ...style}}
             ref={ref}
-            className={`toggle-button`}
+            className={buttonClsName}
             disabled={disabled}
             onClick={clickToggle} {...otherProps}>
       <span className={clsName}>
         {barContent}
         {infoContent}
         <Spring
+            from={from}
             to={to}
             config={{clamp: true, mass: 1, tesion: 100, friction: 15}}
         >
@@ -146,14 +155,12 @@ Toggle.propTypes = {
   extraClassName: PropTypes.string, //the customized class need to add
   disabled: PropTypes.bool,
   active: PropTypes.bool,
-  onActiveChange: PropTypes.bool,
   block: PropTypes.bool,
   style: PropTypes.object,
-  type: PropTypes.string,
+  type: PropTypes.oneOf(['normal', 'primary', 'secondary']),
   onChange: PropTypes.func,
   content: PropTypes.shape(
       {one: PropTypes.node, off: PropTypes.node, showInBar: PropTypes.bool}),
-  children: PropTypes.node,
 };
 
 export default Toggle;

@@ -7,13 +7,13 @@ import {
   IconChecked2,
 } from 'react-windy-ui';
 
-export default function Toggle3() {
+export default function Toggle4() {
   return <>
     <div className="doc doc-row">
-      <Toggle defaultActive content={{on: 'ON', off: 'CLOSE'}}/>
+      <Toggle disabled defaultActive content={{on: 'ON', off: 'CLOSE'}}/>
     </div>
     <div className="doc doc-row">
-      <Toggle defaultActive type="primary" style={{width: '5rem'}}
+      <Toggle disabled type="primary" style={{width: '5rem'}}
               content={{
                 on: <IconChecked2/>,
                 off: <IconClear/>,
@@ -21,16 +21,8 @@ export default function Toggle3() {
               }}/>
     </div>
     <div className="doc doc-row">
-      <Toggle defaultActive type="primary" style={{width: '5rem'}}
-              content={{
-                on: 'ON',
-                off: 'OFF',
-                showInBar: true,
-              }}/>
-    </div>
-    <div className="doc doc-row">
-      <Toggle defaultActive type="secondary" style={{width: '4rem'}}
-              onChange={(v)=>console.log(v)}
+      <Toggle disabled defaultActive type="secondary" style={{width: '4rem'}}
+              onChange={(v) => console.log(v)}
               content={{
                 on: <IconArrowRight/>,
                 off: <IconArrowLeft/>,

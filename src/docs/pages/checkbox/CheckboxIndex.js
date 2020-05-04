@@ -10,7 +10,7 @@ import Checkbox6 from './samples/Checkbox6';
 /**
  * It maps the text blocks in Markdown file
  */
-const mapping = {
+const markdownMapping = {
   Title: 'TITLE',
   Footer: 'FOOTER',
 
@@ -35,6 +35,6 @@ export default function CheckboxIndex(props) {
   return <DocPage
       importFunc={() => import('./checkbox.md')}
       componentMapping={componentMapping}
-      mapping={mapping}
+      mapping={markdownMapping}
   />;
 }

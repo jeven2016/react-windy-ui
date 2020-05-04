@@ -8,7 +8,7 @@ import Radio5 from './samples/Radio5';
 import Radio6 from './samples/Radio6';
 import Radio7 from './samples/Radio7';
 
-const mapping = {
+const markdownMapping = {
   Title: 'TITLE',
   Footer: 'FOOTER',
 
@@ -35,6 +35,6 @@ export default function RadioIndex() {
   return <DocPage
       importFunc={() => import('./doc.md')}
       componentMapping={componentMapping}
-      mapping={mapping}
+      mapping={markdownMapping}
   />;
 }

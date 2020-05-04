@@ -36,6 +36,16 @@ export default function DocMenu(props) {
               开关 Toggle
             </Link>
           </Menu.Item>
+          <Menu.Item id="collapse">
+            <Link to={`${url}/collapse`}>
+              折叠框 Collapse
+            </Link>
+          </Menu.Item>
+          <Menu.Item id="menu">
+            <Link to={`${url}/menu`}>
+              菜单 Menu
+            </Link>
+          </Menu.Item>
         </Menu.List>
       </Menu.SubMenu>
       <Menu.SubMenu>

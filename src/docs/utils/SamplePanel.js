@@ -59,12 +59,12 @@ export default function SamplePanel(props) {
         <DescMarkDown/>
       </Card.Row>
       <Card.Row>
-        <Collapse.Panel collapse={collapse}>
+        <Collapse.Panel collapse={collapse} heightIncrement={14}>
           <SyntaxHighlighter
-              customStyle={{borderRadius: '0.25rem', fontSize: '1rem'}}
+              customStyle={{fontSize: '.8rem'}}
               language="jsx"
               // showLineNumbers={true}
-              // startingLineNumber={0}
+              startingLineNumber={0}
               style={sty}
               wrapLines={true}>
             {code}

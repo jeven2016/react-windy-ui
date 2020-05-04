@@ -62,7 +62,7 @@ const Checkbox = React.forwardRef((props, ref) => {
   });
 
   const handleClick = useCallback((e) => {
-    if (disabled || showIndeterminateState) {
+    if (disabled) {
       preventEvent(e);
       return;
     }

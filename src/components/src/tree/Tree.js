@@ -174,10 +174,9 @@ const Tree = React.forwardRef((props, ref) => {
       }
     }
     onCheck && onCheck(checkedIds);
-
   }, [treeData, statusMap]);
 
-  return <TreeContext.Provider value={{
+  const ctx = {
     showLoading,
     loadJsonData,
     loader,
@@ -193,7 +192,9 @@ const Tree = React.forwardRef((props, ref) => {
     expandItem: expandHandler,
     checkItem: checkHandler,
     highlightLine,
-  }}>
+  };
+
+  return <TreeContext.Provider value={ctx}>
     <div className={clsName} {...otherProps} ref={ref}>
       {providedJsonData ? getNode(treeData) : children}
     </div>

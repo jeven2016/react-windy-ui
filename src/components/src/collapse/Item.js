@@ -18,7 +18,7 @@ const Item = React.forwardRef((props, ref) => {
   } = props;
   const activeContext = useContext(CollapseContext);
   const currentActive = activeContext.currentActive;
-console.log(activeContext)
+
   const items = useMemo(() => {
     return convertToArray(moreItems);
   }, [moreItems]);
@@ -49,10 +49,11 @@ console.log(activeContext)
         ? <IconArrowRight/>
         : activeContext.collapseIcon;
 
-    iconContent = <div
-        className={`icon-column ${isCollapsed ? '' : 'expand'}`}>
-      {icon}
-    </div>;
+    const contentClsName = clsx('icon-column', {
+      disabled,
+      expand: !isCollapsed,
+    });
+    iconContent = <div className={contentClsName}>{icon}</div>;
   }
 
   return <>
@@ -66,7 +67,7 @@ console.log(activeContext)
         <div className="header-row">
           <div className={innerClsName}>
             {iconContent}
-            <div className="header-info">
+            <div className={`header-info ${disabled ? 'disabled' : ''}`}>
               {header}
             </div>
           </div>
