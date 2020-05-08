@@ -15,10 +15,8 @@ const setDirectRef = (directRef, assignedRef) => {
 
 const useMultipleRefs = (forwardedRef, directRef) => {
   return (refElem) => {
+    setDirectRef(forwardedRef, refElem);
     setDirectRef(directRef, refElem);
-    if (!isNil(forwardedRef)) {
-      forwardedRef.current = refElem;
-    }
   };
 };
 

@@ -15,10 +15,10 @@ import {
 } from './event/EventFuntions';
 import NavBar from './navbar';
 
-export {default as Dropdown} from './dropdown';
+// export {default as Dropdown} from './dropdown';
 // export {default as WindowEventHandler} from "./event";
-export {default as Menu} from './menu';
-export {default as Menu2} from './menu2/Menu2';
+// export {default as Menu} from './menu';
+export {default as Menu} from './menu/Menu';
 export {default as Divider} from './divider';
 export {default as Card} from './card';
 export {default as Popover} from './popover';
@@ -38,7 +38,7 @@ export {default as Badge} from './Badge';
 export {default as Checkbox} from './Checkbox';
 export {default as Radio, RadioGroup} from './Radio';
 export {default as Breadcrumb} from './Breadcrumb';
-export {default as Select} from './select';
+// export {default as Select} from './select';
 export {default as Progress} from './progress';
 export {default as Layout} from './layout';
 export {default as RouteLoader} from './RouteLoader';

@@ -8,8 +8,8 @@ const Group = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const clsName = clsx('menu-group');
-  return <div className={clsName} {...otherProps}>
-    {header && <div className='group-header'>{header}</div>}
+  return <div className={clsName} {...otherProps} ref={ref}>
+    {<div className='group-header'>{header ? header : ' '}</div>}
     {children}
   </div>;
 });

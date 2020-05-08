@@ -1,132 +1,72 @@
-import React, {useContext, useState, useRef} from 'react';
-import PropTypes from 'prop-types';
-import {BaseMenu} from './NormalMenu';
-import {MenuContext, SubMenuContext} from './MenuUtils';
-import {isDisabledMenu, useMenuList} from './BaseMenu';
-import useEvent from '../common/UseEvent';
-import {EventListener} from '../common/Constants';
+import React, {useContext, useMemo} from 'react';
+import BaseMenu from './BaseMenu';
+import clsx from 'clsx';
+import {MenuContext} from '../common/Context';
 import {isNil} from '../Utils';
-import List from './List';
+import {MenuDirection, SubMenuDirection} from './MenuUtils';
 
 /**
  * SubMenu Component
  */
 const SubMenu = React.forwardRef((props, ref) => {
   const {
-    disabled,
-    className,
+    className = 'base-menu',
+    header,
     extraClassName,
-    isDirectChild,
-    children,
-    id, ...otherProps
+    collapsable = true,
+    directChild = false, //is this submenu the child of Menu
+    ...otherProps
   } = props;
-  const menuCtx = useContext(MenuContext);
-  const subMenuRef = ref;
-
-  //todo: if mualchanged check by activeItems else use default open menus
-  //to display or close this menu
-
-  //the submenu doesn't have default open menus
-  const {isShow, handleHeader, showMenuList, setShowMenuList} = useMenuList(id,
-      menuCtx.defaultOpenedMenus, disabled, menuCtx.onClickHeader);
-
-  //add a window event listener to close the popup submenu if this submenu is
-  const closeSubMenu = (e) => {
-    if (showMenuList.show && menuCtx.multiLevelMenus) {
-      let inside = subMenuRef.current.contains(e.target);
-      if (inside) {
-        return;
-      }
-      // if the header is one child of current sub-menu, the menu list cannot be closed
-      setShowMenuList({show: false, manualChang: true});
-    }
-  };
-
-//a direct child of menu
-  useEvent(EventListener.click, (evt) => {
-    closeSubMenu(evt);
-  }, menuCtx.multiLevelMenus);
-
-/*  useEvent(EventListener.mouseEnter, () => {
-        if (!showMenuList.show) {
-          setShowMenuList({show: true, manualChang: true});
-        }
-      }, menuCtx.multiLevelMenus,
-      () => subMenuRef.current);
-  useEvent(EventListener.mouseLeave, closeSubMenu, menuCtx.multiLevelMenus,
-      () => subMenuRef.current);*/
-
-  const parenSubMenuCtx = useContext(SubMenuContext);
-
-  //disable menu from three levels
-  const menuDisabled = menuCtx.menuDisabled;
-  const parentSubMenuDisabled = parenSubMenuCtx.subMenuDisabled;
-  let isDisabled = isDisabledMenu(disabled, parentSubMenuDisabled,
-      menuDisabled);
-
-  let clsName = className;
-  let subMenuMultiSelect = menuCtx.multiSelect;
-  let clickItem = menuCtx.clickItem;
-  let childrenElem = children;
-
-  if (menuCtx.multiLevelMenus) {
-    subMenuMultiSelect = false; //multi-level menus don't support multi-selection
-    clickItem = (itemInfo, e) => {
-      // debugger
-      const autoClose = menuCtx.clickItem(itemInfo, e);
-      if (isNil(autoClose) || autoClose) {
-        //close all submenus by triggering the click event on body
-        document.body.click();
-      }
-    };
-    if (isDirectChild) {
-      clsName = 'submenu direct-child';
-
-      //tell the menu list to adjust its position (to fixed)
-      childrenElem = React.Children.map(children, child => {
-        if (child.type === List) {
-          return React.cloneElement(child, {adjustPosition: true});
-        }
-        return child;
-      });
-    } else {
-      clsName = 'submenu non-direct-child';
-    }
+  if (isNil(header)) {
+    // throw new Error('The header is required for SubMenu.');
   }
 
-  return <MenuContext.Provider
-      value={{
-        ...menuCtx,
-        clickItem: clickItem,
-        disabled: props.disabled,
-        clickHeader: handleHeader,
-        defaultOpenedMenus: menuCtx.defaultOpenedMenus,
-      }}>
-    <SubMenuContext.Provider value={{
-      subMenuDisabled: isDisabled,
-      closeAllMultiLevelMenus: false,
-    }}>
-      <BaseMenu className={clsName}
-                ref={subMenuRef}
-                multiSelect={subMenuMultiSelect}
-                extraClassName={extraClassName} {...otherProps}
-                showMenuList={isShow()}
-                {...otherProps}>
-        {childrenElem}
-      </BaseMenu>
-    </SubMenuContext.Provider>
+  const ctx = useContext(MenuContext);
+  const clsName = clsx(extraClassName, className, {
+    'popup-menu': ctx.popupSubMenu,
+  });
+
+  const isCollapsable = useMemo(() => ctx.popupSubMenu ? false : collapsable,
+      [ctx, collapsable]);
+
+  const hasBox = useMemo(() => ctx.popupSubMenu, [ctx.popupSubMenu]);
+
+  const subCtx = {...ctx, direction: MenuDirection.vertical.key};
+
+  //the direct child of menu should align the botom of the menu, others should  align right
+  const popupSubMenuPostion = useMemo(() => {
+    if (!ctx.popupSubMenu) {
+      return null;
+    }
+
+    //for horizontal, the direct child should display under the header
+    if (!MenuDirection.isVertical(ctx.direction)
+        && directChild) {
+      return SubMenuDirection.bottom.key;
+    }
+    return SubMenuDirection.right.key;
+  }, [ctx, directChild]);
+
+  //if it is a direct child the width should be set to 'block' otherwise just ignore it
+  const blockList = SubMenuDirection.isBottom(popupSubMenuPostion);
+
+  return <MenuContext.Provider value={subCtx}>
+    <BaseMenu className={clsName}
+              ref={ref}
+              hasHeader={true}
+              hasBox={hasBox && !ctx.popupSubMenu}
+              direction="vertical"
+              collapsable={isCollapsable}
+              popupSubMenu={ctx.popupSubMenu} //the submenu can pops the items list
+              popupSubMenuPostion={popupSubMenuPostion}
+              hasArrow={ctx.hasArrow}
+              canCompact={directChild}
+              compact={ctx.compact}
+              type={ctx.type}
+              header={header}
+              blockList={blockList}
+              {...otherProps} />
   </MenuContext.Provider>;
 });
-
-SubMenu.defaultProps = {
-  disabled: null, //means unset
-  className: 'normal submenu',
-};
-
-SubMenu.propTypes = {
-  disabled: PropTypes.bool, //disable this Menu
-  className: PropTypes.string, //the class name of menu
-  id: PropTypes.string,
-};
 
 export default SubMenu;

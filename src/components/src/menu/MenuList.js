@@ -11,11 +11,11 @@ export default function MenuList(props) {
     collapsable,
     collapse,
     content,
-    innerPanelStyle,
     startOffset = 20,
     show = false,// pop the submenu
     handleMouseEnter,
     handleMouseLeave,
+    blockList = false,
     menuType,
   } = props;
   const listRef = useRef(null);
@@ -24,6 +24,7 @@ export default function MenuList(props) {
     'popup-list': popupSubMenu,
     [popupSubMenuPostion]: popupSubMenu && popupSubMenuPostion,
     [menuType]: popupSubMenu && menuType,
+    block: blockList,
   });
 
   const isBottomPos = SubMenuDirection.bottom.key === popupSubMenuPostion;
@@ -45,7 +46,7 @@ export default function MenuList(props) {
     from: {offset: startOffset, opacity: 0},
     to: {
       offset: show ? 0 : startOffset,
-      opacity: show || !popupSubMenu ? 1 : 0,
+      opacity: show ? 1 : 0,
     },
     onStart: preUpdate,
     onRest: postUpdate,
@@ -60,13 +61,6 @@ export default function MenuList(props) {
 
   return useMemo(
       () => {
-        if (collapsable) {
-          return <Collapse.Panel collapse={collapse}
-                                 innerStyle={innerPanelStyle}>
-            {content}
-          </Collapse.Panel>;
-        }
-
         if (popupSubMenu) {
           return <animated.div ref={listRef} className={itemListClsName}
                                onMouseEnter={handleMouseEnter}
@@ -77,7 +71,18 @@ export default function MenuList(props) {
                                  opacity: springProps.opacity,
                                }}>{content}</animated.div>;
         }
+
+        if (collapsable) {
+          return <Collapse.Panel collapse={collapse}>
+            {content}
+          </Collapse.Panel>;
+        }
         return content;
       },
-      [collapse, collapsable, innerPanelStyle, content, itemListClsName]);
+      [
+        popupSubMenu,
+        collapse,
+        collapsable,
+        content,
+        itemListClsName]);
 }

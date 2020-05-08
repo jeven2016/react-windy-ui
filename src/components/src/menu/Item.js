@@ -1,136 +1,80 @@
 import React, {useContext, useMemo} from 'react';
-import {isBlank, isNil, isString} from '../Utils';
-import {FloatMenuContext, MenuContext, SubMenuContext} from './MenuUtils';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import Element from '../common/Element';
-import {isDisabledMenu} from './BaseMenu';
+import {MenuContext} from '../common/Context';
+import {isNil} from '../Utils';
+import {MenuConst} from './MenuUtils';
+import PropTypes from 'prop-types';
 
 const Item = React.forwardRef((props, ref) => {
   const {
-    className,
+    className = 'menu-item',
     extraClassName,
-    active,
-    align,
-    hasBottomBar,
-    hasBox,
-    disabled,
     children,
-    paddingLeft,
+    disabled,
     id,
+    equitable = false,
+    align,
     hasBackground,
-    value,
-    text,
+    hasBottomBar,
+      icon,
     ...otherProps
   } = props;
+  const ctx = useContext(MenuContext);
+  const activeItemsList = !isNil(ctx.activeItemsList)
+      ? ctx.activeItemsList
+      : [];
 
-  const menuCtx = useContext(MenuContext);
-  const floatMenuCtx = useContext(FloatMenuContext);
-  const activeItems = !isNil(menuCtx.activeItems) ? menuCtx.activeItems : [];
-
-  const parenSubMenuCtx = useContext(SubMenuContext);
-
-  //disable menu from three levels
-  const menuDisabled = menuCtx.menuDisabled;
-  const parentSubMenuDisabled = parenSubMenuCtx.subMenuDisabled;
-
-  let isDisabled = isDisabledMenu(disabled, parentSubMenuDisabled,
-      menuDisabled);
-
-  const disabledItem = isDisabled;
-  const isActive = () => {
-    if (disabledItem) {
+  const isActive = useMemo(() => {
+    if (disabled) {
       return false;
     }
 
-    if (!isNil(props.id) && activeItems.includes(props.id)) {
-      return true;
-    }
-    if (!isNil(props.value) && activeItems.includes(props.value)) {
-      return true;
+    if (!isNil(id)) {
+      if (activeItemsList.includes(id) ||
+          activeItemsList.includes(MenuConst.all)) {
+        return true;
+      }
     }
     return false;
-  };
+  }, [disabled, activeItemsList, id]);
 
-  const clsName = clsx(extraClassName, className, {
-    [align]: align,
-    'with-box': hasBox,
-    'with-bg': hasBackground,
-    'with-bottom-bar': hasBottomBar,
-    active: isActive(),
-    disabled: disabledItem,
-  });
-
-  const onClick = (evt) => {
-    if (disabledItem) {
+  const clickHandler = (evt) => {
+    if (disabled) {
       return;
     }
     const itemInfo = {
-      id: props.id,
-      value: props.value,
-      text: !isNil(props.text) ? props.text : props.children,
+      id: id,
+      props: props,
     };
-    if (isNil(itemInfo.id)) {
-      delete itemInfo.id;
-    }
 
-    if (!menuCtx.clickItem) {
+    if (!ctx.clickItem) {
       return;
     }
-    let closeMenu = menuCtx.clickItem(itemInfo, evt);
+    let closeMenu = ctx.clickItem(itemInfo, evt);
 
-    if (floatMenuCtx.clickFloatMenuItem) {
-      floatMenuCtx.clickFloatMenuItem(props.id, closeMenu, evt);
-    }
+    //whether close the menu
   };
 
-  const displayChildren = useMemo(() => {
-    if (isNil(children)) {
-      return text;
-    }
-    if (isString(children) && isBlank(children)) {
-      return text;
-    }
-    return children;
-  }, [children, text]);
-  return <Element className={clsName}
-                  disabled={disabledItem}
-                  ref={ref}
-                  style={{paddingLeft: paddingLeft}}
-                  onClick={(evt) => onClick(evt)}
-                  {...otherProps}>
-    {displayChildren}
-  </Element>;
+  const clsName = clsx(extraClassName, className, {
+    [ctx.type]: ctx.type,
+    equitable: equitable,
+    [align]: align,
+    disabled: disabled,
+    active: isActive,
+    'with-bg': hasBackground,
+    'with-bottom-bar': hasBottomBar,
+  });
+
+  return <div className={clsName} {...otherProps} onClick={clickHandler}>
+    {icon}{children}
+  </div>;
 });
 
-Item.defaultProps = {
-  className: 'menu-item',
-  hasBox: false,
-  hasBackground: false,
-  hasBottomBar: false,
-  disabled: null,
-  align: null, //left or right
-};
-Item.propsType = {
-  className: PropTypes.string,
+Item.propTypes = {
+  equitable: PropTypes.bool,
+  hasBackground: PropTypes.bool,
   hasBottomBar: PropTypes.bool,
-  hasBox: PropTypes.bool, //make the item show a box
-  hasBackground: PropTypes.bool, // show a background for menu items
-  disabled: PropTypes.bool, //disable this Menu
-  align: PropTypes.oneOf(['left', 'right']), // align this item to left or right position
+  align: PropTypes.string,
 };
-
-Item.Left = React.forwardRef((props, ref) =>
-    <Element nativeType="span" className="left"
-             ref={ref} {...props}/>,
-);
-Item.Center = React.forwardRef((props, ref) =>
-    <Element nativeType="span" className="center"
-             ref={ref} {...props}/>,
-);
-Item.Right = React.forwardRef((props, ref) =>
-    <Element nativeType="span" className="right"
-             ref={ref} {...props}/>,
-);
 
 export default Item;

@@ -67,7 +67,7 @@ const CollapsePanel = React.forwardRef((props, ref) => {
   return <animated.div className={clsName}
                        ref={ref}
                        style={newStyle} {...otherProps}>
-    <div ref={panelRef} style={innerStyle}>
+    <div className="inner-container" ref={panelRef} style={innerStyle}>
       {children}
     </div>
   </animated.div>;

@@ -1,69 +1,116 @@
-import {isNil} from "../Utils";
-import {MenuClassName, MenuType} from "../common/Constants";
-import React from "react";
-import Header from "./Header";
+import {isNil} from '../Utils';
+
+export const MenuDirection = {
+  horizontal: {key: 'horizontal', className: 'menu-row'},
+  vertical: {key: 'vertical', className: 'menu-column'},
+
+  isVertical: (direction) => {
+    return direction === MenuDirection.vertical.key;
+  },
+};
+
+export const SubMenuDirection = {
+  bottom: {key: 'bottom', className: 'bottom'},
+  right: {key: 'right', className: 'right'},
+
+  isBottom: (direction) => {
+    return direction === SubMenuDirection.bottom.key;
+  },
+};
+
+export const MenuClassName = {
+  groupHeader: 'group-header',
+  group: 'menu-group',
+  header: 'menu-header',
+  item: 'menu-item ',
+  subMenu: 'base-menu',
+};
+
+export const MenuType = {
+  block: 'block',
+  primary: 'primary',
+  dark: 'dark',
+};
+
+export const MenuConst = {
+  all: 'all',
+};
+
+export const indentMenu = (
+    props,
+    index = 1) => {
+  const {popupSubMenu, rootDom, indentUnit, indentation} = props;
+
+  if (rootDom && rootDom.hasChildNodes()) {
+    let menuChildNodes = rootDom.childNodes;
+    menuChildNodes.forEach(childNode => {
+      if (hasClass(childNode, MenuClassName.item)) {
+        if (index > 1) {
+          childNode.style.paddingLeft = `${index * indentation}${indentUnit}`;
+        }
+        return;
+      }
+
+      if (hasClass(childNode, MenuClassName.header) ||
+          hasClass(childNode, MenuClassName.groupHeader)) {
+        const count = index - 1 > 0 ? index - 1 : 1;
+        childNode.style.paddingLeft = `${count *
+        indentation}${indentUnit}`;
+        return;
+      }
+
+      if (hasClass(childNode, MenuClassName.subMenu)) {
+        const next = popupSubMenu ? index : index + 1;
+        indentMenu({...props, rootDom: childNode}, next);
+        return;
+      }
+
+      //group
+      if (hasClass(childNode, MenuClassName.group)) {
+        const next = index + 1;
+        indentMenu({...props, rootDom: childNode}, next);
+        return;
+      }
+
+      //collapse-panel
+      var menuList = getItemParent(childNode);
+      if (menuList) {
+        indentMenu({...props, rootDom: menuList.node}, index);
+      }
+    });
+  }
+};
+
+export const cancelIndent = (props) => {
+  const {rootDom} = props;
+
+  if (rootDom) {
+    rootDom.getElementsByClassName('menu-header').forEach(header => {
+      const paddingLeft = header.style.paddingLeft;
+      if (!isNil(paddingLeft)) {
+        header.style.paddingLeft = '';
+      }
+    });
+  }
+};
+
+const getItemParent = (node) => {
+  if (node && node.hasChildNodes()) {
+    const childNodes = node.childNodes;
+    for (let i = 0; i < childNodes.length; i++) {
+      if (hasClass(childNodes[i], MenuClassName.item)) {
+        return {node, isGroup: false};
+      }
+      if (hasClass(childNodes[i], MenuClassName.group)) {
+        return {node, isGroup: true};
+      }
+      return getItemParent(childNodes[i]);
+    }
+
+  }
+  return null;
+
+};
 
 export const hasClass = (node, className) => !isNil(node.className) &&
     node.className.includes(className);
-
-export const updateItem = (props, itemNodes, next, index) => {
-  const {paddingLeftIncrement, paddingLeftUnit} = props;
-  for (let elem in itemNodes) {
-    let item = itemNodes[elem];
-    if (hasClass(item, MenuClassName.submenu)) {
-      setPadding(props, item, ++index);
-    }
-    if (hasClass(item, MenuClassName.item)
-        || hasClass(item, MenuClassName.header)) {
-      item.style.paddingLeft = `${next
-      * paddingLeftIncrement}${paddingLeftUnit}`;
-    }
-  }
-};
-
-export const setPadding = (props, menu, index = 0) => {
-  if (!props.setItemPaddingLeft) {
-    return;
-  }
-  if (menu.hasChildNodes()) {
-    let menuChildNodes = menu.childNodes;
-    for (let elem in menuChildNodes) {
-      let childNode = menuChildNodes[elem];
-      if (hasClass(childNode, MenuClassName.list)) {
-        updateItem(props, childNode.childNodes, index + 1, index);
-      }
-      if (hasClass(childNode, MenuClassName.header)) {
-        updateItem(props, [childNode], index === 0 ? 1 : index, index);
-      }
-      if (hasClass(childNode, MenuClassName.submenu)) {
-        setPadding(props, childNode, index + 1);
-      }
-    }
-  }
-};
-
-/**
- * Menu Context
- * @type {React.Context<{}>}
- */
-export const MenuContext = React.createContext({});
-export const SubMenuContext = React.createContext({});
-
-// https://github.com/facebook/react/issues/13969
-// context should be placed in a individual file
-export const FloatMenuContext = React.createContext({});
-
-export const isFloatMenu = (type) => {
-  return type === MenuType.float;
-};
-
-export const passHeaderHandler = (children, handler) => {
-  return React.Children.map(children, (child) => {
-    if (child.type === Header) {
-      return React.cloneElement(child, {
-        onClick: handler
-      });
-    }
-    return child;
-  })
-};
