@@ -10,6 +10,9 @@ import Menu6 from './samples/Menu6';
 import Menu7 from './samples/Menu7';
 import Menu8 from './samples/Menu8';
 import Menu9 from './samples/Menu9';
+import Menu_open from './samples/Menu_open';
+import TestReducer from './samples/TestReducer';
+import Store, {Store2} from './samples/Store';
 
 /**
  * It maps the text blocks in Markdown file
@@ -33,7 +36,10 @@ const componentMapping = {
   // Menu6: <Menu6/>,
   // Menu7: <Menu7/>,
   // Menu8: <Menu8/>,
-  Menu9: <Menu9/>,
+  Menu_open: <Menu_open/>,
+  // Menu9: <Menu9/>,
+  // Store: <Store/>,
+  // Store2: <Store2/>,
 };
 
 export default function MenuIndex(props) {

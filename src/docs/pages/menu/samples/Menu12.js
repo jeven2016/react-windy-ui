@@ -21,8 +21,8 @@ import {
 
 export default function Menu12() {
   const [hasArrow, setHasArrow] = useState(true);
+  const [hasBox, setHasBox] = useState(true);
   const [horizontal, setHorizontal] = useState(false);
-  const [block, setBlock] = useState(false);
   const [type, setType] = useState('normal');
   const [popupSubMenu, setPopupSubMenu] = useState(false);
   const [compact, setCompact] = useState(false);
@@ -35,10 +35,6 @@ export default function Menu12() {
     <div className="doc doc-row">
       <Toggle active={horizontal} onChange={active => setHorizontal(active)}
               content={{on: 'Horizontal', off: 'Horizontal'}}/>
-    </div>
-    <div className="doc doc-row">
-      <Toggle active={block} onChange={active => setBlock(active)}
-              content={{on: 'Block', off: 'Block'}}/>
     </div>
     <div className="doc doc-row">
       <span style={{marginRight: '1rem'}}>type:</span>
@@ -58,6 +54,10 @@ export default function Menu12() {
               onClick={() => setCompact(pre => !pre)}>
         Change
       </Button>
+    </div>
+    <div className="doc doc-row">
+      <Toggle active={hasBox} onChange={active => setHasBox(active)}
+              content={{on: 'Box Shadow', off: 'Box Shadow'}}/>
     </div>
 
     {/*<div className="doc doc-row">*/}
@@ -116,36 +116,36 @@ export default function Menu12() {
               compact={compact}
               popupSubMenu={popupSubMenu}
               type={type}
-              block={block}
-
+              hasBox={hasBox}
+              onOpenedMenu={(data) => console.log(`==${data}`)}
               hasArrow={hasArrow} icon={<IconHome/>}>
-          <Menu.SubMenu header="Navigation One"
+          <Menu.SubMenu header="Navigation One" id="sub1"
                         icon={<FontAwesomeIcon icon={faLaptop}/>}>
-            <Menu.Item>
+            <Menu.Item id="item1">
               Item1
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item id="item2">
               Item2
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item id="item3">
               Item3
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item id="item4">
               Item4
             </Menu.Item>
           </Menu.SubMenu>
-          <Menu.SubMenu header="Navigation Two"
+          <Menu.SubMenu header="Navigation Two" id="sub2"
                         icon={<FontAwesomeIcon icon={faLaptop}/>}>
-            <Menu.Item>
+            <Menu.Item id="item5">
               Item5
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item id="item6">
               Item6
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item id="item7">
               Item7
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item id="item8">
               Item8
             </Menu.Item>
           </Menu.SubMenu>

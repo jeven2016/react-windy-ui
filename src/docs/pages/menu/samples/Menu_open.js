@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import {IconList, Menu, Radio, RadioGroup, Toggle} from 'react-windy-ui';
 import {IconInfo, IconQuestion} from '../../../../components/src';
 
-export default function Menu9() {
+export default function Menu_open() {
   const [type, setType] = useState('normal');
   const [compact, setCompact] = useState(false);
+  const [openedMenus, setOpenedMenus] = useState([]);
   return <>
     <div className="doc doc-row">
       <span style={{marginRight: '1rem', fontWeight: '600'}}>Type:</span>
@@ -20,25 +21,20 @@ export default function Menu9() {
               content={{on: 'Compact', off: 'Compact'}}/>
     </div>
     <div className="doc doc-row" style={{width: '20rem'}}>
-      <Menu defaultActiveItems={['item7']}
-            direction="vertical"
-            compact={compact}
-            onOpenedMenu={(data) => console.log(`open==${data}`)}
-            onSelect={(data, e) => console.log(`select=${data.id}`)}
+      <Menu compact={compact}
+            openedMenus={openedMenus}
+            onOpenedMenu={(ids) => {
+              console.log(ids)
+              setOpenedMenus(ids.filter(id => id !== 'sub4'))
+            }}
             type={type}>
-        <Menu.Item id="item1" icon={<IconQuestion/>}>
-          Menu item1
+        <Menu.Item id="item45" icon={<IconQuestion/>}>
+          Menu item45
         </Menu.Item>
-        <Menu.Item id="item2" icon={<IconInfo/>}>
-          Menu item2
+        <Menu.Item id="item46" icon={<IconInfo/>}>
+          Menu item46
         </Menu.Item>
         <Menu.SubMenu header="SubMenu 1" id="sub1" icon={<IconList/>}>
-          <Menu.Item id="item3">
-            Menu item3
-          </Menu.Item>
-          <Menu.Item id="item4">
-            Menu item4
-          </Menu.Item>
           <Menu.Item id="item5">
             Menu item5
           </Menu.Item>
@@ -78,6 +74,12 @@ export default function Menu9() {
           </Menu.Item>
           <Menu.Item id="item16">
             Menu item16
+          </Menu.Item>
+        </Menu.SubMenu>
+        <Menu.SubMenu header="SubMenu 4" id="sub4" icon={<IconList/>}
+                      style={{opacity: 0.3}}>
+          <Menu.Item id="item17">
+            Disabled Menu
           </Menu.Item>
         </Menu.SubMenu>
       </Menu>

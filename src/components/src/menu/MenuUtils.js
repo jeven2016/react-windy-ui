@@ -32,6 +32,13 @@ export const MenuType = {
   dark: 'dark',
 };
 
+export const Action = {
+  clickItem: 'clickItem',
+  openMenu: 'openMenu',
+  closeMenu: 'closeMenu',
+  clickHeader: 'clickHeader',
+};
+
 export const MenuConst = {
   all: 'all',
 };

@@ -99,7 +99,12 @@ const Checkbox = React.forwardRef((props, ref) => {
             ? iconIndeterminateStyle
             : null,
       }) : null,
-      [iconColorCls, realIcon, showIndeterminateState, iconIndeterminateStyle]);
+      [
+        iconColorCls,
+        realIcon,
+        handleClick,
+        showIndeterminateState,
+        iconIndeterminateStyle]);
 
   return <>
     <Element className={clsName} disabled={disabled} {...otherProps}

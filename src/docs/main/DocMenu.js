@@ -4,9 +4,8 @@ import {Link, useRouteMatch} from 'react-router-dom';
 
 export default function DocMenu(props) {
   const {url} = useRouteMatch();
-
-  return <Menu type="primary" block>
-    <Menu.SubMenu header="基础组件">
+  return <Menu type="primary">
+    <Menu.SubMenu header="基础组件" id="basic">
       <Menu.Item id="btn">
         <Link to={`${url}/button`}>
           按钮 Button
@@ -43,11 +42,11 @@ export default function DocMenu(props) {
         </Link>
       </Menu.Item>
     </Menu.SubMenu>
-    <Menu.SubMenu header="布局组件">
-      <Menu.Item id="item4_1" disabled={false}>
+    <Menu.SubMenu header="布局组件" id="layout">
+      <Menu.Item id="card" disabled={false}>
         卡片 Card
       </Menu.Item>
-      <Menu.Item id="item4_2" disabled={false}>
+      <Menu.Item id="not_disabled" disabled={false}>
         Not disabled
       </Menu.Item>
     </Menu.SubMenu>

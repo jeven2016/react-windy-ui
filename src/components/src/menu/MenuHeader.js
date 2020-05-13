@@ -1,16 +1,15 @@
-import React, {useCallback, useContext, useMemo} from 'react';
+import React, {useContext, useMemo} from 'react';
 import clsx from 'clsx';
 import {IconArrowLeft, IconArrowRight} from '../Icons';
-import {useSpring, animated, useTransition} from 'react-spring';
+import {animated, useSpring} from 'react-spring';
 import {MenuContext} from '../common/Context';
+import {MenuDirection} from './MenuUtils';
 
 const MenuHeader = React.forwardRef((props, ref) => {
   const {
     className = 'menu-header',
     handleCollapse,
-    hasArrow,
     collapse,
-    header,
     headerType = 'normal',
     icon,//left icon
     arrowIcon = <IconArrowLeft/>,
@@ -18,22 +17,22 @@ const MenuHeader = React.forwardRef((props, ref) => {
     handleMouseEnter,
     handleMouseLeave,
     menuVisible,
-    canCompact,
-    compact,
   } = props;
+  const ctx = useContext(MenuContext);
 
   //the popupSubMenu is retrieved from parent that because Menu won't pop the items
   // and it directly passes false for header
   const {type, popupSubMenu} = useContext(MenuContext);
   const headerClsName = clsx(className, {
     [type]: type,
-    compact: canCompact && compact,
-    'non-compact': canCompact && !compact,
-    'with-arrow': hasArrow,
-    'no-arrow': !hasArrow,
+    compact: ctx.canCompact && ctx.compact,
+    'non-compact': ctx.canCompact && !ctx.compact,
+    'with-arrow': ctx.hasArrow,
+    'no-arrow': !ctx.hasArrow,
     'active': menuVisible,
     [headerType]: headerType,  //it should be normal / dark(color is white)
   });
+  const show = !ctx.compact && ctx.canCompact;
 
   const springSetting = useMemo(() => ({
     from: {rotation: 0},
@@ -44,10 +43,10 @@ const MenuHeader = React.forwardRef((props, ref) => {
   const springProps = useSpring(springSetting);
 
   const realIcon = useMemo(() => {
-    if (!hasArrow) {
+    if (!ctx.hasArrow) {
       return null;
     }
-    if (popupSubMenu) {
+    if (popupSubMenu && MenuDirection.isVertical(ctx.direction)) {
       return <div className="header-icon">{popArrowIcon}</div>;
     }
     return <animated.div className="header-icon"
@@ -57,9 +56,14 @@ const MenuHeader = React.forwardRef((props, ref) => {
                          }}>
       {arrowIcon}
     </animated.div>;
-  }, [hasArrow, popupSubMenu, popArrowIcon, springProps, arrowIcon]);
+  }, [
+    ctx.hasArrow,
+    popupSubMenu,
+    popArrowIcon,
+    springProps,
+    arrowIcon,
+    ctx.direction]);
 
-  const show = !compact && canCompact;
   const springConfig = useMemo(() => ({
     from: {opacity: 0, transform: 'scale(0)'},
     to: {opacity: show ? 1 : 0, transform: show ? 'scale(1)' : 'scale(0)'},
@@ -69,10 +73,10 @@ const MenuHeader = React.forwardRef((props, ref) => {
   const innerProps = useSpring(springConfig);
 
   const cnt = () => {
-    if (!canCompact) {
+    if (!ctx.canCompact) {
       return <>
         <div className='header-info'>
-          {header}
+          {ctx.header}
         </div>
         {realIcon}
       </>;
@@ -80,7 +84,7 @@ const MenuHeader = React.forwardRef((props, ref) => {
 
     return !show ? null : <>
       <animated.div className='header-info'
-                    style={innerProps}>  {header}</animated.div>
+                    style={innerProps}>  {ctx.header}</animated.div>
       {realIcon}</>;
   };
 

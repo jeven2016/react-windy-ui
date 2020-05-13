@@ -36,7 +36,6 @@ export const isBlank = (value) => {
 
 export const startsWith = (first, next) => first.slice(0, next.length) === next;
 
-
 /**
  * Set padding property for a child node instead of setting margin property
  * @param destComponent
@@ -326,4 +325,32 @@ export const convertToArray = (elems) => {
   } else {
     return [itemArray];
   }
+};
+
+/**
+ * Check whether a specific parameter is set that means the user
+ * has explicitly set the parameter.
+ * @param props
+ * @param name
+ * @returns {boolean}
+ */
+export const isCustomized = (props, name) => {
+  return props.hasOwnProperty(name);
+};
+
+/**
+ * Retrieve a defaultValue or value array from props
+ * @param props
+ * @param name
+ * @param defaultValue
+ * @param value
+ * @returns {[]|[*]}
+ */
+export const retrieveArray = (props, name, defaultValue, value) => {
+  const customized = isCustomized(props, name);
+  return customized ? convertToArray(value) : convertToArray(defaultValue);
+};
+
+export const includes = (array, value) => {
+  return array && array.includes(value);
 };

@@ -1,14 +1,14 @@
-import React, {useCallback, useMemo, useRef} from 'react';
+import React, {useCallback, useContext, useRef} from 'react';
 import Collapse from '../collapse/Collapse';
 import clsx from 'clsx';
 import {animated, useSpring} from 'react-spring';
 import {SubMenuDirection} from './MenuUtils';
+import {MenuContext} from '../common/Context';
 
 export default function MenuList(props) {
   const {
     popupSubMenu = false,
     popupSubMenuPostion,
-    collapsable,
     collapse,
     content,
     startOffset = 20,
@@ -16,14 +16,14 @@ export default function MenuList(props) {
     handleMouseEnter,
     handleMouseLeave,
     blockList = false,
-    menuType,
   } = props;
+  const ctx = useContext(MenuContext);
   const listRef = useRef(null);
 
   const itemListClsName = clsx('item-list', {
     'popup-list': popupSubMenu,
     [popupSubMenuPostion]: popupSubMenu && popupSubMenuPostion,
-    [menuType]: popupSubMenu && menuType,
+    [ctx.type]: popupSubMenu && ctx.type,
     block: blockList,
   });
 
@@ -59,30 +59,22 @@ export default function MenuList(props) {
         : `translate3d(${offset}px, 0, 0)`;
   };
 
-  return useMemo(
-      () => {
-        if (popupSubMenu) {
-          return <animated.div ref={listRef} className={itemListClsName}
-                               onMouseEnter={handleMouseEnter}
-                               onMouseLeave={handleMouseLeave}
-                               style={{
-                                 transform: springProps.offset.interpolate(
-                                     interpolateOffset),
-                                 opacity: springProps.opacity,
-                               }}>{content}</animated.div>;
-        }
+  if (popupSubMenu) {
+    return <animated.div ref={listRef} className={itemListClsName}
+                         onMouseEnter={handleMouseEnter}
+                         onMouseLeave={handleMouseLeave}
+                         style={{
+                           transform: springProps.offset.interpolate(
+                               interpolateOffset),
+                           opacity: springProps.opacity,
+                         }}>{content}</animated.div>;
+  }
 
-        if (collapsable) {
-          return <Collapse.Panel collapse={collapse}>
-            {content}
-          </Collapse.Panel>;
-        }
-        return content;
-      },
-      [
-        popupSubMenu,
-        collapse,
-        collapsable,
-        content,
-        itemListClsName]);
+  if (ctx.header && ctx.collapsable) {
+    return <Collapse.Panel collapse={collapse}>
+      {content}
+    </Collapse.Panel>;
+  }
+
+  return content;
 }
