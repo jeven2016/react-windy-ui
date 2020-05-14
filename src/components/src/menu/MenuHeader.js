@@ -20,8 +20,6 @@ const MenuHeader = React.forwardRef((props, ref) => {
   } = props;
   const ctx = useContext(MenuContext);
 
-  //the popupSubMenu is retrieved from parent that because Menu won't pop the items
-  // and it directly passes false for header
   const {type, popupSubMenu} = useContext(MenuContext);
   const headerClsName = clsx(className, {
     [type]: type,
@@ -29,7 +27,7 @@ const MenuHeader = React.forwardRef((props, ref) => {
     'non-compact': ctx.canCompact && !ctx.compact,
     'with-arrow': ctx.hasArrow,
     'no-arrow': !ctx.hasArrow,
-    'active': menuVisible,
+    'active': menuVisible && popupSubMenu,
     [headerType]: headerType,  //it should be normal / dark(color is white)
   });
   const show = !ctx.compact && ctx.canCompact;

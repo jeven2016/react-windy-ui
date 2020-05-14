@@ -24,10 +24,9 @@ const Item = React.forwardRef((props, ref) => {
   const ctx = useContext(MenuContext);
   const {attach, detach, getState} = ctx.store;
 
-  const [active, setActive] = useState(false);
-
-  //check if the parent node's state is changed
-  const isActive = active || includes(getState().activeItemsList, id);
+  const [active, setActive] = useState(null);
+  const isActive = isNil(active) ? includes(getState().activeItemsList, id)
+      : active;
 
   const show = !ctx.compact;
   const springConfig = useMemo(() => ({

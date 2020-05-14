@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {isNil} from '../Utils';
+import {isNil, random} from '../Utils';
 
 /**
  * A internal store implementation that make the child node be able to notify other child nodes
@@ -9,17 +9,31 @@ export const StoreContext = React.createContext(null);
 export const Provider = StoreContext.Provider;
 
 export const initStore = (initState = {}) => {
+  let id = random(1000, 9000);
   let internalState = initState;
   const callbacks = [];
 
-  const setState = (nextState) => {
+  /**
+   * Only update the state and not to notify any listeners
+   * @param nextState
+   */
+  const updateState = (nextState) => {
     internalState = {...internalState, ...nextState};
+  };
+
+  const notifyChanges = () => {
     callbacks.forEach(c => {
-      c(internalState)});
+      c(internalState);
+    });
   };
 
   const getState = () => {
     return internalState;
+  };
+
+  const setState = (nextState) => {
+    updateState(nextState);
+    notifyChanges();
   };
 
   const attach = (listener) => {
@@ -42,9 +56,12 @@ export const initStore = (initState = {}) => {
   return {
     getState,
     setState,
+    updateState,
     attach,
     detach,
     callbacks,
+    notifyChanges,
+    id,
   };
 };
 

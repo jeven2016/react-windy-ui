@@ -8,19 +8,11 @@ import BaseMenu from './BaseMenu';
 import {MenuContext} from '../common/Context';
 import {Action, cancelIndent, indentMenu, MenuDirection} from './MenuUtils';
 import useMultipleRefs from '../common/UseMultipleRefs';
-import useInternalState from '../common/useInternalState';
-import {
-  convertToArray,
-  includes,
-  isCustomized,
-  isNil,
-  retrieveArray,
-} from '../Utils';
+import {convertToArray, execute, includes, isCustomized, isNil} from '../Utils';
 import {EventListener, JustifyContentType} from '../common/Constants';
 import usePrevious from '../common/UsePrevious';
-import useEvent from '../common/UseEvent';
-import useInvoke from '../common/UseInvoke';
 import {initStore} from '../common/Store';
+import useEvent from '../common/UseEvent';
 
 //todo: refactor with Store to update open list
 const Menu = React.forwardRef((props, ref) => {
@@ -48,6 +40,7 @@ const Menu = React.forwardRef((props, ref) => {
     defaultOpenedMenus,
     openedMenus,
     onOpenedMenu, //invoked by opening / closing submenu
+    delayMouseOver,
 
     ...otherProps
   } = props;
@@ -57,12 +50,15 @@ const Menu = React.forwardRef((props, ref) => {
 
   const customActive = isCustomized(props, 'activeItems');
   const customOpen = isCustomized(props, 'openedMenus');
+  const preTimeoutRef = useRef(null); //previous close timer
 
   //init a internal store
   const store = useMemo(() => initStore({
     activeItemsList: convertToArray(defaultActiveItems),
     openList: convertToArray(defaultOpenedMenus),
-  }), []);
+  }), [defaultActiveItems, defaultOpenedMenus]);
+
+  console.log(`storeId=${store.id}`)
 
   //apply the customized properties
   useEffect(() => {
@@ -100,6 +96,13 @@ const Menu = React.forwardRef((props, ref) => {
     preCompact,
     compact]);
 
+  useEvent(EventListener.click, function() {
+    //clicking the document will cause the opened popup submenu to be closed
+    if (isPopup && store.getState().openList.length > 0) {
+      store.setState({openList: []});
+    }
+  }, isPopup);
+
   const newChildren = useMemo(() => {
     if (!children) {
       return null;
@@ -113,18 +116,19 @@ const Menu = React.forwardRef((props, ref) => {
   }, [children]);
 
   const dispatch = ({type: actionType, ...params}) => {
-    // console.log('type=' + actionType);
     switch (actionType) {
       case Action.clickHeader:
         clickItemHandler(params.itemInfo, params.e);
         break;
 
       case Action.openMenu:
-        openMenuHandler(params.id, params.e);
+        openMenuHandler(params);
         break;
 
       case Action.closeMenu:
-        closeMenuHandler(params.id, params.e);
+        closeMenuHandler(params);
+        break;
+      default:
         break;
     }
   };
@@ -141,20 +145,32 @@ const Menu = React.forwardRef((props, ref) => {
       }
       //update the store
       onSelect && onSelect(itemInfo, e);
-      // closePopSubMenu();
+
+      //close all popup submenus
+      if (isPopup) {
+        if (!customOpen) {
+          store.setState({openList: []});
+        }
+        onOpenedMenu && onOpenedMenu([]);
+      }
     }
   }, [onSelect, store]);
 
-  const openMenuHandler = useCallback((id, e) => {
-    if (isNil(id)) {
+  const openMenuHandler = useCallback(({id, e, directChild}) => {
+    if (isNil(id) || includes(store.getState().openList, id)) {
       return;
     }
-    const list = store.getState().openList;
-    if (includes(list, id)) {
-      return;
-    }
-    const nextList = store.getState().openList.concat(id);
+
     if (isPopup) {
+      const preTimer = preTimeoutRef.current;
+      if (!isNil(preTimer)) {
+        preTimeoutRef.current = null;
+        clearTimeout(preTimer);
+      }
+      //if this submenu is direct child of menu, that means only one submenu should
+      //open later
+      const nextList = directChild ? [id]
+          : store.getState().openList.concat(id);
       if (!customOpen) {
         store.setState({openList: nextList});
       }
@@ -163,24 +179,39 @@ const Menu = React.forwardRef((props, ref) => {
 
   }, [store, isPopup, customOpen, onOpenedMenu]);
 
-  const closeMenuHandler = (id, e) => {
-    const {setState, getState} = store;
-    const list = getState().openList;
-    if (isNil(id) || !includes(list, id)) {
+  /**
+   * multiple updates will cause a directly change made for the existing list of store, delay
+   * 50 mill-seconds to check whether need to notify the updates and rerender the nodes afterwards.
+   * If the mouse leaves from submenu1 and focus on submenu2, we don't want the callback invoked twice (one is due to mouse leaving,
+   * the other is due to mouse entering). Instead the callback should be invoked once and the opened list
+   * should only include the last focused submenu's id.
+   */
+  const closeMenuHandler = useCallback(({id, e}) => {
+    const {updateState, notifyChanges, getState} = store;
+    if (isNil(id) || !includes(getState().openList, id)) {
       return;
     }
-
-    //focust on submenu2 header and move, next both submenu1 and2 dispaly
-    //due to the restList is wrong TODO
-    const restList = [...list.filter(it => it !== id)];
+    const restList = [...getState().openList.filter(it => it !== id)];
     if (isPopup) {
-      if (!customOpen) {
-        setState({openList: restList});
+      //only update the store
+      updateState({openList: restList});
+
+      const preTimeout = preTimeoutRef.current;
+      if (!isNil(preTimeout)) {
+        //exits if there already be a timer running
+        return;
       }
-      onOpenedMenu && onOpenedMenu(restList);
-    } else {
+
+      //delay 50 mills to notify that the open list is changed
+      preTimeoutRef.current = execute(function() {
+        preTimeoutRef.current = null;
+        if (!customOpen) {
+          notifyChanges();
+        }
+        onOpenedMenu && onOpenedMenu(getState().openList);
+      }, 50);
     }
-  };
+  }, [store, isPopup, customOpen, onOpenedMenu]);
 
   const ctx = {
     store,
@@ -199,7 +230,7 @@ const Menu = React.forwardRef((props, ref) => {
   };
   return <MenuContext.Provider value={ctx}>
     <BaseMenu className={clsName}
-              popupSubMenu={false}//tells base menu to ignore the menu since it can't pop any items list
+              popupSubMenu={false}//tells base menu to ignore this menu since it can't pop up any items list
               ref={multiRef}
               rootMenu={true}
               {...otherProps} >

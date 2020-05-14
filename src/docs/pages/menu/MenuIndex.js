@@ -36,8 +36,8 @@ const componentMapping = {
   // Menu6: <Menu6/>,
   // Menu7: <Menu7/>,
   // Menu8: <Menu8/>,
-  Menu_open: <Menu_open/>,
-  // Menu9: <Menu9/>,
+  // Menu_open: <Menu_open/>,
+  Menu9: <Menu9/>,
   // Store: <Store/>,
   // Store2: <Store2/>,
 };

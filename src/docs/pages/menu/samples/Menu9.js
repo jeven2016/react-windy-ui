@@ -4,7 +4,7 @@ import {IconInfo, IconQuestion} from '../../../../components/src';
 
 export default function Menu9() {
   const [type, setType] = useState('normal');
-  const [compact, setCompact] = useState(false);
+  const [compact, setCompact] = useState(true);
   return <>
     <div className="doc doc-row">
       <span style={{marginRight: '1rem', fontWeight: '600'}}>Type:</span>
@@ -23,6 +23,7 @@ export default function Menu9() {
       <Menu defaultActiveItems={['item7']}
             direction="vertical"
             compact={compact}
+            defaultOpenedMenus={['sub1', 'sub2']}
             onOpenedMenu={(data) => console.log(`open==${data}`)}
             onSelect={(data, e) => console.log(`select=${data.id}`)}
             type={type}>
