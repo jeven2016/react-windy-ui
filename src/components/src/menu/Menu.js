@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import SubMenu from './SubMenu';
 import Item from './Item';
@@ -53,18 +53,17 @@ const Menu = React.forwardRef((props, ref) => {
   const preTimeoutRef = useRef(null); //previous close timer
 
   //init a internal store
-  const store = useMemo(() => initStore({
+  const [store] = useState(initStore({
     activeItemsList: convertToArray(defaultActiveItems),
     openList: convertToArray(defaultOpenedMenus),
-  }), [defaultActiveItems, defaultOpenedMenus]);
-
-  console.log(`storeId=${store.id}`)
+  }));
 
   //apply the customized properties
   useEffect(() => {
     if (customActive) {
       store.setState({activeItemsList: activeItems});
     }
+
     if (customOpen) {
       store.setState({openList: openedMenus});
     }

@@ -23,7 +23,6 @@ const Item = React.forwardRef((props, ref) => {
   } = props;
   const ctx = useContext(MenuContext);
   const {attach, detach, getState} = ctx.store;
-
   const [active, setActive] = useState(null);
   const isActive = isNil(active) ? includes(getState().activeItemsList, id)
       : active;
@@ -81,14 +80,15 @@ const Item = React.forwardRef((props, ref) => {
   });
 
   const content = useMemo(() => {
+    const iconCnt = icon ? <div className="item-icon">{icon}</div> : null;
     if (!directChild) {
-      return icon ? <>
-        <div className="item-icon">{icon}</div>
+      return <>
+        {iconCnt}
         <div className="item-info">{children}</div>
-      </> : children;
+      </>;
     }
-    return !show ? <div className="item-icon">{icon}</div> : <>
-      <div className="item-icon">{icon}</div>
+    return !show ? iconCnt : <>
+      {iconCnt}
       <animated.div className="item-info"
                     style={innerProps}>{children}</animated.div>
     </>;

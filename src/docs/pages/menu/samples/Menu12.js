@@ -60,58 +60,57 @@ export default function Menu12() {
               content={{on: 'Box Shadow', off: 'Box Shadow'}}/>
     </div>
 
-    {/*<div className="doc doc-row">*/}
-    {/*  <Menu direction={horizontal ? 'horizontal' : 'vertical'}*/}
-    {/*        popupSubMenu={popupSubMenu}*/}
-    {/*        type={type}*/}
-    {/*        block={block}*/}
-    {/*        hasArrow={hasArrow} icon={<IconHome/>}>*/}
-    {/*    <Menu.Group header={'Group'}>*/}
-    {/*      <Menu.Item>*/}
-    {/*        Item3*/}
-    {/*      </Menu.Item>*/}
-    {/*      <Menu.Item>*/}
-    {/*        Item4*/}
-    {/*      </Menu.Item>*/}
-    {/*    </Menu.Group>*/}
-    {/*    <Menu.Item>*/}
-    {/*      Item4*/}
-    {/*    </Menu.Item>*/}
-    {/*    <Menu.Item>*/}
-    {/*      Item5*/}
-    {/*    </Menu.Item>*/}
-    {/*    <Menu.SubMenu header="SubMenu">*/}
-    {/*      <Menu.Item>*/}
-    {/*        Item4*/}
-    {/*      </Menu.Item>*/}
-    {/*      <Menu.Item>*/}
-    {/*        Item5s*/}
-    {/*      </Menu.Item>*/}
-    {/*      <Menu.SubMenu header="SubMenu">*/}
-    {/*        <Menu.Item>*/}
-    {/*          Item4*/}
-    {/*        </Menu.Item>*/}
-    {/*        <Menu.Item>*/}
-    {/*          Item5s*/}
-    {/*        </Menu.Item>*/}
-    {/*      </Menu.SubMenu>*/}
-    {/*      <Menu.SubMenu header="SubMenu3">*/}
-    {/*        <Menu.Group header={'Group'}>*/}
-    {/*          <Menu.Item>*/}
-    {/*            Item3*/}
-    {/*          </Menu.Item>*/}
-    {/*          <Menu.Item>*/}
-    {/*            Item4*/}
-    {/*          </Menu.Item>*/}
-    {/*        </Menu.Group>*/}
-    {/*      </Menu.SubMenu>*/}
-    {/*    </Menu.SubMenu>*/}
-    {/*  </Menu>*/}
-    {/*</div>*/}
+    <div className="doc doc-row">
+      <Menu direction={horizontal ? 'horizontal' : 'vertical'}
+            popupSubMenu={popupSubMenu}
+            type={type}
+            hasArrow={hasArrow} icon={<IconHome/>}>
+        <Menu.Group header={'Group'}>
+          <Menu.Item>
+            Item3
+          </Menu.Item>
+          <Menu.Item>
+            Item4
+          </Menu.Item>
+        </Menu.Group>
+        <Menu.Item>
+          Item4
+        </Menu.Item>
+        <Menu.Item>
+          Item5
+        </Menu.Item>
+        <Menu.SubMenu header="SubMenu">
+          <Menu.Item>
+            Item4
+          </Menu.Item>
+          <Menu.Item>
+            Item5s
+          </Menu.Item>
+          <Menu.SubMenu header="SubMenu">
+            <Menu.Item>
+              Item4
+            </Menu.Item>
+            <Menu.Item>
+              Item5s
+            </Menu.Item>
+          </Menu.SubMenu>
+          <Menu.SubMenu header="SubMenu3">
+            <Menu.Group header={'Group'}>
+              <Menu.Item>
+                Item3
+              </Menu.Item>
+              <Menu.Item>
+                Item4
+              </Menu.Item>
+            </Menu.Group>
+          </Menu.SubMenu>
+        </Menu.SubMenu>
+      </Menu>
+    </div>
 
     <div className="doc doc-row">
       {/*for compact the width should set in parent node */}
-      <div style={{width: '250px'}}>
+      <div>
         <Menu direction={horizontal ? 'horizontal' : 'vertical'}
               compact={compact}
               popupSubMenu={popupSubMenu}

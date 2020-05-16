@@ -27,7 +27,6 @@ const markdownMapping = {
 
 const componentMapping = {
   // Menu12: <Menu12/>,
-  // // //
   // Menu1: <Menu1/>,
   // Menu2: <Menu2/>,
   // Menu3: <Menu3/>,
