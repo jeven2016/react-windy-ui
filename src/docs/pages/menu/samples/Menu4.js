@@ -18,7 +18,6 @@ export default function Menu4() {
     </div>
     <div className="doc doc-row">
       <Menu defaultActiveItems={['item1']}
-            block
             direction="horizontal"
             justify={justify}>
         <Menu.Item id="item1">Menu Item1</Menu.Item>

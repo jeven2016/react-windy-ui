@@ -69,8 +69,8 @@ export const createDateColumns = (
   let numberOfDays = momentDate.daysInMonth();
 
   //get the first day of the week within this month
-  let firstDay = moment({year: currentYear, month: currentMonth, day: 1}).
-      isoWeekday();
+  let firstDay = moment({year: currentYear, month: currentMonth, day: 1})
+      .isoWeekday();
 
   //-------for last month
   const lastMonthDate = momentDate.clone().add(-1, 'months');

@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import PropTypes from 'prop-types';
 
 const Group = React.forwardRef((props, ref) => {
   const {
@@ -13,5 +14,9 @@ const Group = React.forwardRef((props, ref) => {
     {children}
   </div>;
 });
+
+Group.propTypes = {
+  header: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+};
 
 export default Group;

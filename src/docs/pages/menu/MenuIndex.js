@@ -13,6 +13,7 @@ import Menu9 from './samples/Menu9';
 import Menu_open from './samples/Menu_open';
 import TestReducer from './samples/TestReducer';
 import Store, {Store2} from './samples/Store';
+import Menu13 from './samples/Menu13';
 
 /**
  * It maps the text blocks in Markdown file
@@ -26,17 +27,18 @@ const markdownMapping = {
 };
 
 const componentMapping = {
-  // Menu12: <Menu12/>,
-  // Menu1: <Menu1/>,
-  // Menu2: <Menu2/>,
-  // Menu3: <Menu3/>,
-  // Menu4: <Menu4/>,
-  // Menu5: <Menu5/>,
-  // Menu6: <Menu6/>,
-  // Menu7: <Menu7/>,
-  // Menu8: <Menu8/>,
-  // Menu_open: <Menu_open/>,
+  Menu12: <Menu12/>,
+  Menu1: <Menu1/>,
+  Menu2: <Menu2/>,
+  Menu3: <Menu3/>,
+  Menu4: <Menu4/>,
+  Menu5: <Menu5/>,
+  Menu6: <Menu6/>,
+  Menu7: <Menu7/>,
+  Menu8: <Menu8/>,
+  Menu_open: <Menu_open/>,
   Menu9: <Menu9/>,
+  Menu13: <Menu13/>,
   // Store: <Store/>,
   // Store2: <Store2/>,
 };

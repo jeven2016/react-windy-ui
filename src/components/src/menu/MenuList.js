@@ -4,6 +4,8 @@ import clsx from 'clsx';
 import {animated, useSpring} from 'react-spring';
 import {SubMenuDirection} from './MenuUtils';
 import {MenuContext} from '../common/Context';
+import usePrevious from '../common/UsePrevious';
+import PropTypes from 'prop-types';
 
 export default function MenuList(props) {
   const {
@@ -38,15 +40,28 @@ export default function MenuList(props) {
     }
   }, [listRef]);
 
-  const preUpdate = useCallback(() => change(show, 'flex'), [change, show]);
-  const postUpdate = useCallback(() => change(!show, 'none'), [change, show]);
+  //the criteria:
+  // 1. when the menu is compact:
+  //    not the first time switched from normal menu to compact menu
+  // 2. when is for pop submenu
+  //    just use show variable to represent
+  const preCompact = usePrevious(ctx.compact);
+  const isInitialCompact = preCompact !== ctx.compact && ctx.compact;
+  // const showPopup = ctx.compact ? show && !isInitialCompact : show;
+  const showPopup = popupSubMenu ? show : ctx.compact && show &&
+      !isInitialCompact;
+
+  const preUpdate = useCallback(() => change(showPopup, 'flex'),
+      [change, showPopup]);
+  const postUpdate = useCallback(() => change(!showPopup, 'none'),
+      [change, showPopup]);
 
   //this animation is only applied for popup submenu
   const springProps = useSpring({
     from: {offset: startOffset, opacity: 0},
     to: {
-      offset: show ? 0 : startOffset,
-      opacity: show ? 1 : 0,
+      offset: showPopup ? 0 : startOffset,
+      opacity: showPopup ? 1 : 0,
     },
     onStart: preUpdate,
     onRest: postUpdate,
@@ -78,3 +93,15 @@ export default function MenuList(props) {
 
   return content;
 }
+
+MenuList.propTypes = {
+  popupSubMenu: PropTypes.bool,
+  popupSubMenuPostion: PropTypes.string,
+  collapse: PropTypes.bool,
+  content: PropTypes.node,
+  startOffset: PropTypes.number,
+  show: PropTypes.bool,
+  handleMouseEnter: PropTypes.func,
+  handleMouseLeave: PropTypes.func,
+  blockList: PropTypes.bool,
+};

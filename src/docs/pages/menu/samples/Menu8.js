@@ -4,6 +4,7 @@ import {Menu, RadioGroup, Radio} from 'react-windy-ui';
 export default function Menu8() {
   const [type, setType] = useState('normal');
   return <>
+    Bug: 第一次点击无法展开
     <div className="doc doc-row">
       <span style={{marginRight: '1rem', fontWeight: '600'}}>Type:</span>
       <RadioGroup defaultValue={type}
@@ -29,7 +30,7 @@ export default function Menu8() {
         <Menu.Item id="item4">
           Menu item4
         </Menu.Item>
-        <Menu.SubMenu header="SubMenu 1">
+        <Menu.SubMenu header="SubMenu 1" id="sub1">
           <Menu.Item id="item5">
             Menu item5
           </Menu.Item>
@@ -42,7 +43,7 @@ export default function Menu8() {
           <Menu.Item id="item8">
             Menu item8
           </Menu.Item>
-          <Menu.SubMenu header="SubMenu 2">
+          <Menu.SubMenu header="SubMenu 2" id="sub2">
             <Menu.Item id="item9">
               Menu item9
             </Menu.Item>
@@ -57,7 +58,7 @@ export default function Menu8() {
             </Menu.Item>
           </Menu.SubMenu>
         </Menu.SubMenu>
-        <Menu.SubMenu header="SubMenu 3">
+        <Menu.SubMenu header="SubMenu 3" id="sub3">
           <Menu.Item id="item13">
             Menu item13
           </Menu.Item>

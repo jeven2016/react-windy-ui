@@ -3,7 +3,7 @@ import {Menu} from 'react-windy-ui';
 
 export default function Menu1() {
 
-  return <Menu defaultActiveItems={["item1","item2"]} onSelect={(itemInfo, e)=>{
+  return <Menu defaultActiveItems={"item1"} onSelect={(itemInfo, e)=>{
     console.log(itemInfo);
   }}>
     <Menu.Item id="item1">Menu Item1</Menu.Item>

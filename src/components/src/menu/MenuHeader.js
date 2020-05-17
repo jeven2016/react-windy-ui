@@ -4,6 +4,7 @@ import {IconArrowLeft, IconArrowRight} from '../Icons';
 import {animated, useSpring} from 'react-spring';
 import {MenuContext} from '../common/Context';
 import {MenuDirection} from './MenuUtils';
+import PropTypes from 'prop-types';
 
 const MenuHeader = React.forwardRef((props, ref) => {
   const {
@@ -17,19 +18,23 @@ const MenuHeader = React.forwardRef((props, ref) => {
     handleMouseEnter,
     handleMouseLeave,
     menuVisible,
+    hasBottomBar,
   } = props;
   const ctx = useContext(MenuContext);
-
   const {type, popupSubMenu} = useContext(MenuContext);
+
   const headerClsName = clsx(className, {
     [type]: type,
     compact: ctx.canCompact && ctx.compact,
     'non-compact': ctx.canCompact && !ctx.compact,
     'with-arrow': ctx.hasArrow,
+    'with-bottom-bar': hasBottomBar,
+    'active-bar': menuVisible,
     'no-arrow': !ctx.hasArrow,
     'active': menuVisible && popupSubMenu,
     [headerType]: headerType,  //it should be normal / dark(color is white)
   });
+
   const show = !ctx.compact && ctx.canCompact;
 
   const springSetting = useMemo(() => ({
@@ -74,7 +79,7 @@ const MenuHeader = React.forwardRef((props, ref) => {
     if (!ctx.canCompact) {
       return <>
         <div className='header-info'>
-          {ctx.header}
+          {ctx.header ? ctx.header : ' '}
         </div>
         {realIcon}
       </>;
@@ -100,7 +105,20 @@ const MenuHeader = React.forwardRef((props, ref) => {
       cnt()
     }
   </div>;
-
 });
+
+MenuHeader.propTypes = {
+  className: PropTypes.string,
+  handleCollapse: PropTypes.func,
+  collapse: PropTypes.bool,
+  headerType: PropTypes.string,
+  icon: PropTypes.node,
+  arrowIcon: PropTypes.node,
+  popArrowIcon: PropTypes.node,
+  handleMouseEnter: PropTypes.func,
+  handleMouseLeave: PropTypes.func,
+  menuVisible: PropTypes.bool,
+  hasBottomBar: PropTypes.bool,
+};
 
 export default MenuHeader;

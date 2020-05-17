@@ -5,7 +5,6 @@ export default function Menu7() {
   return <>
     <div className="doc doc-row">
       <Menu defaultActiveItems={['item1']}
-            block
             direction="horizontal">
         <Menu.Item id="item1" hasBackground hasBottomBar>
           Menu Item1
@@ -25,7 +24,6 @@ export default function Menu7() {
     <div className="doc doc-row">
       <Menu defaultActiveItems={['item1']}
             type="dark"
-            block
             direction="horizontal">
         <Menu.Item id="item1">
           Menu Item1

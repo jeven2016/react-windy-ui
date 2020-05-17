@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {IconList, Menu, Radio, RadioGroup, Toggle} from 'react-windy-ui';
-import {IconInfo, IconQuestion} from '../../../../components/src';
 
-export default function Menu9() {
+export default function Menu13() {
   const [type, setType] = useState('normal');
   const [compact, setCompact] = useState(false);
+  const [multiSelect, setMultiSelect] = useState(true);
+  const [bottomBar, setBottomBar] = useState(true);
   return <>
     <div className="doc doc-row">
       <span style={{marginRight: '1rem', fontWeight: '600'}}>Type:</span>
@@ -19,21 +20,25 @@ export default function Menu9() {
       <Toggle active={compact} onChange={active => setCompact(active)}
               content={{on: 'Compact', off: 'Compact'}}/>
     </div>
+    <div className="doc doc-row">
+      <Toggle active={multiSelect} onChange={active => setMultiSelect(active)}
+              content={{on: 'Multi-Select', off: 'Multi-Select'}}/>
+    </div>
+    <div className="doc doc-row">
+      <Toggle active={bottomBar} onChange={active => setBottomBar(active)}
+              content={{on: 'Bottom Bar', off: 'Bottom Bar'}}/>
+    </div>
     <div className="doc doc-row" style={{width: '20rem'}}>
-      <Menu defaultActiveItems={['item7']}
+      <Menu defaultActiveItems={['item1', 'item2']}
+            multiSelect={multiSelect}
             direction="vertical"
             compact={compact}
-            // defaultOpenedMenus={['sub1','sub2']}
+          // defaultOpenedMenus={['sub1','sub2']}
             onOpenedMenu={(data) => console.log(`open==${data}`)}
-            onSelect={(data, e) => console.log(`select=${data.id}`)}
+            onSelect={(data, e) => console.log(`select=${data}`)}
             type={type}>
-        <Menu.Item id="item1" icon={<IconQuestion/>}>
-          Menu item1
-        </Menu.Item>
-        <Menu.Item id="item2" icon={<IconInfo/>}>
-          Menu item2
-        </Menu.Item>
-        <Menu.SubMenu header="SubMenu 1" id="sub1" icon={<IconList/>}>
+        <Menu.SubMenu header="SubMenu 1" id="sub1" icon={<IconList/>}
+                      hasBottomBar={bottomBar}>
           <Menu.Item id="item3">
             Menu item3
           </Menu.Item>
@@ -67,7 +72,8 @@ export default function Menu9() {
             </Menu.Item>
           </Menu.SubMenu>
         </Menu.SubMenu>
-        <Menu.SubMenu header="SubMenu 3" id="sub3" icon={<IconList/>}>
+        <Menu.SubMenu header="SubMenu 3" id="sub3" icon={<IconList/>}
+                      hasBottomBar={bottomBar}>
           <Menu.Item id="item13">
             Menu item13
           </Menu.Item>

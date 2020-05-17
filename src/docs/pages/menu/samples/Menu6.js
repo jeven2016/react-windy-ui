@@ -5,7 +5,6 @@ export default function Menu6() {
   return <>
     <div className="doc doc-row">
       <Menu defaultActiveItems={['item1']}
-            block
             direction="horizontal">
         <Menu.Item id="item1" align="left">
           Menu Item1
@@ -21,7 +20,6 @@ export default function Menu6() {
 
     <div className="doc doc-row">
       <Menu defaultActiveItems={['item1']}
-            block
             direction="horizontal">
         <Menu.Item id="item1">
           Menu Item1
@@ -37,7 +35,6 @@ export default function Menu6() {
 
     <div className="doc doc-row">
       <Menu defaultActiveItems={['item1']}
-            block
             direction="horizontal">
         <Menu.Item id="item1">
           Menu Item1

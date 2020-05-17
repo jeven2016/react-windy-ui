@@ -84,7 +84,6 @@ const ProgressNotifier = React.forwardRef((props, ref) => {
   };
   const [progress, setProgress] = useState(defaultValue);
 
-  // console.log(progress);
   const stopped = !progress.active ? true : !progress.timerRunning;
 
   const updateLoadingState = () => {

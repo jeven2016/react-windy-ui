@@ -62,45 +62,46 @@ export default function Menu12() {
 
     <div className="doc doc-row">
       <Menu direction={horizontal ? 'horizontal' : 'vertical'}
+            compact={compact}
             popupSubMenu={popupSubMenu}
             type={type}
             hasArrow={hasArrow} icon={<IconHome/>}>
         <Menu.Group header={'Group'}>
-          <Menu.Item>
+          <Menu.Item id="item3">
             Item3
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item id="item4">
             Item4
           </Menu.Item>
         </Menu.Group>
-        <Menu.Item>
-          Item4
+        <Menu.Item id="item44">
+          Item44
         </Menu.Item>
         <Menu.Item>
           Item5
         </Menu.Item>
-        <Menu.SubMenu header="SubMenu">
-          <Menu.Item>
-            Item4
+        <Menu.SubMenu header="SubMenu" id="sub1">
+          <Menu.Item id="item6">
+            Item6
           </Menu.Item>
-          <Menu.Item>
-            Item5s
+          <Menu.Item id="item7">
+            Item7
           </Menu.Item>
-          <Menu.SubMenu header="SubMenu">
-            <Menu.Item>
-              Item4
+          <Menu.SubMenu header="SubMenu" id="sub2">
+            <Menu.Item id="item8">
+              Item8
             </Menu.Item>
-            <Menu.Item>
-              Item5s
+            <Menu.Item id="item9">
+              Item9
             </Menu.Item>
           </Menu.SubMenu>
-          <Menu.SubMenu header="SubMenu3">
+          <Menu.SubMenu header="SubMenu3" id="sub3">
             <Menu.Group header={'Group'}>
-              <Menu.Item>
-                Item3
+              <Menu.Item id="item10">
+                Item10
               </Menu.Item>
-              <Menu.Item>
-                Item4
+              <Menu.Item id="item11">
+                Item11
               </Menu.Item>
             </Menu.Group>
           </Menu.SubMenu>

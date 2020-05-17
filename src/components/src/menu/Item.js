@@ -40,7 +40,6 @@ const Item = React.forwardRef((props, ref) => {
       return;
     }
     const listener = ({activeItemsList}) => {
-      // console.log(`${id}=> notified`);
       if (!disabled && !isNil(id)) {
         const nextActive = includes(activeItemsList, id);
         //to active
@@ -52,21 +51,17 @@ const Item = React.forwardRef((props, ref) => {
         if (!nextActive && isActive) {
           setActive(false);
         }
-
       }
     };
     attach(listener);
     return () => detach(listener);
-  }, [isActive, id, disabled, setActive]);
+  }, [isActive, id, disabled, setActive, detach, attach]);
 
   const clickHandler = (e) => {
     if (disabled) {
       return;
     }
-    const itemInfo = {
-      id: id,
-    };
-    ctx.dispatch({type: Action.clickHeader, itemInfo, e});
+    ctx.dispatch({type: Action.clickHeader, id, e});
   };
 
   const clsName = clsx(extraClassName, className, {

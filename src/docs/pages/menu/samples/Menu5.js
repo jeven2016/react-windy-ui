@@ -6,7 +6,6 @@ export default function Menu5() {
     <div className="doc doc-row">
       <Menu defaultActiveItems={['item1']}
             type="primary"
-            block
             direction="horizontal">
         <Menu.Item id="item1" equitable>Menu Item1</Menu.Item>
         <Menu.Item id="item2" equitable>Menu Item2</Menu.Item>
@@ -15,7 +14,6 @@ export default function Menu5() {
     <div className="doc doc-row">
       <Menu defaultActiveItems={['item1']}
             type="primary"
-            block
             direction="horizontal">
         <Menu.Item id="item1" equitable style={{justifyContent: 'center'}}>
           Menu Item1

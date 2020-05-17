@@ -8,7 +8,6 @@ export function useCreateRootElement(id) {
   if (!rootRef.current) {
     let rootElem = document.querySelector(`#${id}`);
     if (!rootElem) {
-      console.log('create container...');
       rootElem = document.createElement('div');
       rootElem.setAttribute('id', id);
       document.body.insertBefore(
