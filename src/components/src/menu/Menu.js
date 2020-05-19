@@ -210,6 +210,7 @@ const Menu = React.forwardRef((props, ref) => {
    * should only include the last focused submenu's id.
    */
   const closeMenuHandler = useCallback(({id, e}) => {
+    console.log("closing....")
     const {updateState, notifyChanges, getState, setState} = store;
     if (isNil(id) || !includes(getState().openList, id)) {
       return;

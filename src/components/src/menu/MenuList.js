@@ -6,6 +6,7 @@ import {SubMenuDirection} from './MenuUtils';
 import {MenuContext} from '../common/Context';
 import usePrevious from '../common/UsePrevious';
 import PropTypes from 'prop-types';
+import {setDisplay} from '../Utils';
 
 export default function MenuList(props) {
   const {
@@ -31,15 +32,6 @@ export default function MenuList(props) {
 
   const isBottomPos = SubMenuDirection.bottom.key === popupSubMenuPostion;
 
-  const change = useCallback((condition, value) => {
-    if (condition) {
-      const div = listRef.current;
-      if (div) {
-        div.style.display = value;
-      }
-    }
-  }, [listRef]);
-
   //the criteria:
   // 1. when the menu is compact:
   //    not the first time switched from normal menu to compact menu
@@ -51,10 +43,10 @@ export default function MenuList(props) {
   const showPopup = popupSubMenu ? show : ctx.compact && show &&
       !isInitialCompact;
 
-  const preUpdate = useCallback(() => change(showPopup, 'flex'),
-      [change, showPopup]);
-  const postUpdate = useCallback(() => change(!showPopup, 'none'),
-      [change, showPopup]);
+  const preUpdate = useCallback(() => setDisplay(showPopup, 'flex', listRef),
+      [setDisplay, showPopup]);
+  const postUpdate = useCallback(() => setDisplay(!showPopup, 'none', listRef),
+      [setDisplay, showPopup]);
 
   //this animation is only applied for popup submenu
   const springProps = useSpring({

@@ -32,6 +32,8 @@ const useEvent = (
 
     if (isFunction(elem)) {
       elem = elem();
+    } else if (elem.current) {
+      elem = elem.current;
     }
 
     //only support IE >=11 and other modern browsers

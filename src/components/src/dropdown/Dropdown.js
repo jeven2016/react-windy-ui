@@ -1,95 +1,54 @@
-import React, {useCallback, useRef} from 'react';
+import React, {useRef} from 'react';
+import Popup from '../popup/Popup';
 import Menu from '../menu';
-import Title from './Title';
-import {isNil} from '../Utils';
-import Button from '../button';
-import PopupController from '../common/PopupController';
-import Element from '../common/Element';
+import {isString} from '../Utils';
+
+/*
+ <Dropdown title="<Button/> | String" position="leftTop" triggerBy="hover">
+            <Button color="red" outline={true}>LT</Button>
+            <Menu hasBorder>
+              <Menu.List>
+                <Menu.Item id={1} value={1} text="Action 1"/>
+                <Menu.Item id={2} value={2} text="Action 2"/>
+                <Menu.Item id={3} value={3} text="Action 3"/>
+                <Menu.Item id={4} value={4} text="Action 4"/>
+              </Menu.List>
+            </Menu>
+          </Dropdown>
+
+
+ */
+const menu = <Menu hasBox={false}>
+  <Menu.Item id="item1">Menu Item1</Menu.Item>
+  <Menu.Item id="item2">Menu Item2</Menu.Item>
+  <Menu.Item id="item3">Menu Item3</Menu.Item>
+  <Menu.Item id="item4">Menu Item4</Menu.Item>
+</Menu>;
+
+// const menu = <div style={{width: "300px", height: "200px"}}>
+//   <span>Item1</span>
+//   <span>Item1</span>
+//   <span>Item1</span>
+//   <span>Item1</span>
+//   <span>Item1</span>
+// </div>
+
+// const menu= <div style={{width: '300px', height: '200px'}}>div</div>
 
 const Dropdown = React.forwardRef((props, ref) => {
-  const dpRef = ref;
   const {
-    disabled = false,
-    selectable = false,
-    type,
-    onSelect,
-    ownerRef, //the owner of controller component that listens on a series of events(focus,blur,mouseEnter, mouseLeave, etc.)
-    active,
-    onDropdownAutoClose, //override the dropdown's auto close handler
-    bodyClassName = 'dropdown-menu',
+    title,
     ...otherProps
   } = props;
 
-  const handleSelect = useCallback((itemInfo, e) => {
-    if (!isNil(onSelect)) {
-      onSelect(itemInfo, e);
-    }
-  }, [onSelect]);
+  const ctrlRef = useRef();
 
-  //close the popup if the popup body is clicked
-  const handleAutoClose = (isPopupClicked, isCtrlClicked) => {
-    if (!isNil(onDropdownAutoClose)) {
-      return onDropdownAutoClose(isPopupClicked, isCtrlClicked);
-    }
-
-    //let PopupController to close the popup while menu item is clicked
-    if (isPopupClicked) {
-      return true; //auto close
-    }
-    if (isCtrlClicked) {
-      return false; //don't close
-    }
-  };
-
-  const getMenu = useCallback((child) => {
-    if (disabled) {
-      return null;
-    }
-    //add callback for menu items
-    let menuContent = React.cloneElement(child, {
-      onClickItem: handleSelect,
-      selectable: selectable,
-    });
-
-    return menuContent;
-  }, [disabled, handleSelect, selectable]);
-
-  const updateChildren = useCallback((chd) => {
-    const childObj = {bodyClassName: bodyClassName, ownerRef: ownerRef};
-    React.Children.forEach(chd, (child) => {
-      let childType = child.type;
-
-      if (childType === Menu) {
-        childObj.body = getMenu(child);
-        return;
-      }
-      if (childType === Title
-          || childType === Button) {
-        childObj.ctrl = React.cloneElement(child, {
-          disabled: disabled,
-        });
-        return;
-      }
-      if (childType === Element) {
-        childObj.body = child;
-        return;
-      }
-      debugger
-      throw new Error(
-          'the children of dropdown can only be Title, Button, Menu or Element.');
-    });
-    return childObj;
-  }, [props.children, disabled]);
-
-  return <PopupController
-      active={active}
-      ref={dpRef}
-      onAutoClose={handleAutoClose}
-      disabled={disabled}
-      handleChildren={updateChildren}
-      {...otherProps}/>;
-
+  return <Popup
+      ctrlRef={(domNode) => ctrlRef.current = domNode}
+      ctrlNode={title}
+      body={menu}
+      {...otherProps}
+  />;
 });
 
-Dropdown.Title = Title;
 export default Dropdown;

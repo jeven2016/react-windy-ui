@@ -41,6 +41,11 @@ export default function DocMenu(props) {
           菜单 Menu
         </Link>
       </Menu.Item>
+      <Menu.Item id="dropdown">
+        <Link to={`${url}/dropdown`}>
+          下拉框 Dropdown
+        </Link>
+      </Menu.Item>
     </Menu.SubMenu>
     <Menu.SubMenu header="布局组件" id="layout">
       <Menu.Item id="card" disabled={false}>

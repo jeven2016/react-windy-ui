@@ -1,7 +1,7 @@
 import React from 'react';
-import {isNil, isFunction} from '../Utils';
+import {isFunction, isNil} from '../Utils';
 
-const setDirectRef = (directRef, assignedRef) => {
+export const setDirectRef = (directRef, assignedRef) => {
   if (isNil(directRef)) {
     return;
   }

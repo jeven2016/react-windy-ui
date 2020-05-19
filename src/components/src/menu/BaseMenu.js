@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 const BaseMenu = React.forwardRef((props, ref) => {
   const {
     id,
+    extraClassName,
     className,
     children,
     icon,
@@ -105,7 +106,7 @@ const BaseMenu = React.forwardRef((props, ref) => {
       ? MenuDirection.vertical.className
       : MenuDirection.horizontal.className;
 
-  const clsName = clsx(className, directionCls, {
+  const clsName = clsx(extraClassName, className, directionCls, {
     compact: ctx.canCompact && ctx.compact,
     'non-compact': ctx.canCompact && !ctx.compact,
     'global-with-box': ctx.hasBox,

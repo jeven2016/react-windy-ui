@@ -223,6 +223,10 @@ export const place = (dest, ctrl, type, offset = 0) => {
   }
   dest.style.left = left;
   dest.style.top = top;
+
+  return {
+    ctrlRect: pos,
+  };
 };
 
 export const placeCenter = (dest, ctrl) => {
@@ -353,4 +357,19 @@ export const retrieveArray = (props, name, defaultValue, value) => {
 
 export const includes = (array, value) => {
   return array && array.includes(value);
+};
+
+/**
+ * set dom node's style attribute
+ * @param condition
+ * @param value
+ * @param ref
+ */
+export const setDisplay = (condition, value, ref) => {
+  if (condition) {
+    const div = ref.current;
+    if (div) {
+      div.style.display = value;
+    }
+  }
 };

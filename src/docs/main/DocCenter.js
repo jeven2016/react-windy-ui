@@ -1,8 +1,8 @@
 import React from 'react';
 import HomeHeader from '../home/HomeHeader';
-import {Col, Row, Card, Button, RouteLoader, Affix} from 'react-windy-ui';
+import {Affix, Card, Col, RouteLoader, Row} from 'react-windy-ui';
 import DocMenu from './DocMenu';
-import {Route, useRouteMatch, Switch} from 'react-router-dom';
+import {Route, Switch, useRouteMatch} from 'react-router-dom';
 import InstallIndex from '../pages/install/InstallIndex';
 import ButtonIndex from '../pages/button/ButtonIndex';
 import InputIndex from '../pages/input/InputIndex';
@@ -11,6 +11,7 @@ import RadioIndex from '../pages/radio/RadioIndex';
 import ToggleIndex from '../pages/toggle/ToggleIndex';
 import CollapseIndex from '../pages/collapse/CollapseIndex';
 import MenuIndex from '../pages/menu/MenuIndex';
+import DropdownIndex from '../pages/dropdown/DropdownIndex';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -51,6 +52,9 @@ function DocCenter(props) {
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/menu`}>
                 <MenuIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/dropdown`}>
+                <DropdownIndex/>
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/`}>
                 <InstallIndex/>
