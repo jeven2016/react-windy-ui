@@ -32,6 +32,7 @@ const Menu = React.forwardRef((props, ref) => {
     indentUnit = 'rem',
     indentation = 2,
     onSelect,
+    onClickItem,
     multiSelect = false,
     compact = false,
     defaultActiveItems,
@@ -40,6 +41,7 @@ const Menu = React.forwardRef((props, ref) => {
     openedMenus,
     onOpenedMenu, //invoked by opening / closing submenu
     delayMouseOver,
+    selectable = true,
     ...otherProps
   } = props;
   const clsName = clsx('menu', JustifyContentType[justify]);
@@ -210,7 +212,6 @@ const Menu = React.forwardRef((props, ref) => {
    * should only include the last focused submenu's id.
    */
   const closeMenuHandler = useCallback(({id, e}) => {
-    console.log("closing....")
     const {updateState, notifyChanges, getState, setState} = store;
     if (isNil(id) || !includes(getState().openList, id)) {
       return;
@@ -259,6 +260,8 @@ const Menu = React.forwardRef((props, ref) => {
     compact,
     hasHeader: false,
     collapsable,
+    selectable,
+    onClickItem,
   };
   return <MenuContext.Provider value={ctx}>
     <BaseMenu className={clsName}
@@ -284,6 +287,7 @@ Menu.propTypes = {
   indentUnit: PropTypes.string,
   indentation: PropTypes.number,
   onSelect: PropTypes.func,
+  onClickItem: PropTypes.func,
   multiSelect: PropTypes.bool,
   compact: PropTypes.bool,
   defaultActiveItems: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
@@ -291,6 +295,7 @@ Menu.propTypes = {
   defaultOpenedMenus: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   openedMenus: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   onOpenedMenu: PropTypes.func,
+  selectable: PropTypes.bool,
 };
 
 Menu.SubMenu = SubMenu;

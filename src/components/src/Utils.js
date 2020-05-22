@@ -2,14 +2,15 @@ import React from 'react';
 import {
   inRange,
   isBoolean,
-  isInteger,
   isFunction,
+  isInteger,
   isObject,
   isString,
   random,
   slice,
   without,
 } from 'lodash';
+import {PopupPosition} from './common/Constants';
 
 export {
   isObject,
@@ -133,7 +134,7 @@ export const place = (dest, ctrl, type, offset = 0) => {
   }
 
   let left = 0, top = 0;
-  if (type === 'bottom') {
+  if (type === PopupPosition.bottom) {
     left = scrollLeft + (pos.left
         - (dest.offsetWidth
             - ctrl.offsetWidth)
@@ -141,7 +142,7 @@ export const place = (dest, ctrl, type, offset = 0) => {
     top = (pos.bottom + offset) + scrollTop + 'px';
   }
 
-  if (type === 'top') {
+  if (type === PopupPosition.top) {
     left = scrollLeft + (pos.left
         - (dest.offsetWidth
             - ctrl.offsetWidth)
@@ -151,7 +152,7 @@ export const place = (dest, ctrl, type, offset = 0) => {
         + scrollTop + 'px';
   }
 
-  if (type === 'left') {
+  if (type === PopupPosition.left) {
     left = scrollLeft + pos.left - dest.offsetWidth
         - offset + 'px';
     top = pos.top - (dest.offsetHeight
@@ -160,20 +161,20 @@ export const place = (dest, ctrl, type, offset = 0) => {
         + 'px';
   }
 
-  if (type === 'leftTop') {
+  if (type === PopupPosition.leftTop) {
     left = scrollLeft + pos.left - dest.offsetWidth
         - offset + 'px';
     top = pos.top + scrollTop - dest.offsetHeight
         + pos.height + 'px';
   }
 
-  if (type === 'leftBottom') {
+  if (type === PopupPosition.leftBottom) {
     left = scrollLeft + pos.left - dest.offsetWidth
         - offset + 'px';
     top = pos.top + scrollTop + 'px';
   }
 
-  if (type === 'right') {
+  if (type === PopupPosition.right) {
     left = scrollLeft + pos.right + offset + 'px';
     top = pos.top - (dest.offsetHeight
         - ctrl.offsetHeight) / 2
@@ -181,25 +182,25 @@ export const place = (dest, ctrl, type, offset = 0) => {
         + 'px';
   }
 
-  if (type === 'rightTop') {
+  if (type === PopupPosition.rightTop) {
     left = scrollLeft + pos.right + offset + 'px';
     top = pos.top + scrollTop - dest.offsetHeight
         + pos.height + 'px';
   }
 
-  if (type === 'rightBottom') {
+  if (type === PopupPosition.rightBottom) {
     left = scrollLeft + pos.right + offset + 'px';
     top = pos.top + scrollTop + 'px';
   }
 
-  if (type === 'topLeft') {
+  if (type === PopupPosition.topLeft) {
     left = scrollLeft + pos.left + 'px';
     top = pos.top - dest.offsetHeight - offset
         + scrollTop
         + 'px';
   }
 
-  if (type === 'topRight') {
+  if (type === PopupPosition.topRight) {
     left = scrollLeft + pos.right
         - dest.offsetWidth + 'px';
     top = pos.top - dest.offsetHeight - offset
@@ -207,14 +208,14 @@ export const place = (dest, ctrl, type, offset = 0) => {
         + 'px';
   }
 
-  if (type === 'bottomLeft') {
+  if (type === PopupPosition.bottomLeft) {
     left = scrollLeft + pos.left + 'px';
     top = pos.bottom + offset
         + scrollTop
         + 'px';
   }
 
-  if (type === 'bottomRight') {
+  if (type === PopupPosition.bottomRight) {
     left = scrollLeft + pos.right
         - dest.offsetWidth + 'px';
     top = pos.bottom + offset

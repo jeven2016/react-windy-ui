@@ -19,17 +19,6 @@ export const MenuType = {
   dark: 'dark',
 };
 
-export const openMenuType = {
-  all: 'all',
-};
-
-export const MenuClassName = {
-  header: 'menu-header',
-  list: 'menu-list',
-  submenu: 'submenu',
-  item: 'item',
-};
-
 export const PopupCtrlType = {
   hover: 'hover',
   click: 'click',
@@ -75,6 +64,21 @@ export const Position = {
   leftBottom: 'left',
   rightTop: 'right',
   rightBottom: 'right',
+};
+
+export const PopupPosition = {
+  top: 'top',
+  bottom: 'bottom',
+  left: 'left',
+  right: 'right',
+  topLeft: 'topLeft',
+  topRight: 'topRight',
+  bottomLeft: 'bottomLeft',
+  bottomRight: 'bottomRight',
+  leftTop: 'leftTop',
+  leftBottom: 'leftBottom',
+  rightTop: 'rightTop',
+  rightBottom: 'rightBottom',
 };
 
 export const PopoverTriggerType = {

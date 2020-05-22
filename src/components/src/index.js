@@ -15,9 +15,8 @@ import {
 } from './event/EventFuntions';
 import NavBar from './navbar';
 
-// export {default as Dropdown} from './dropdown';
+export {default as Dropdown} from './dropdown';
 // export {default as WindowEventHandler} from "./event";
-// export {default as Menu} from './menu';
 export {default as Menu} from './menu/Menu';
 export {default as Divider} from './divider';
 export {default as Card} from './card';

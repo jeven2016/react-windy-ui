@@ -1,54 +1,53 @@
-import React, {useRef} from 'react';
+import React, {useCallback, useRef} from 'react';
 import Popup from '../popup/Popup';
 import Menu from '../menu';
-import {isString} from '../Utils';
+import {convertToArray} from '../Utils';
 
-/*
- <Dropdown title="<Button/> | String" position="leftTop" triggerBy="hover">
-            <Button color="red" outline={true}>LT</Button>
-            <Menu hasBorder>
-              <Menu.List>
-                <Menu.Item id={1} value={1} text="Action 1"/>
-                <Menu.Item id={2} value={2} text="Action 2"/>
-                <Menu.Item id={3} value={3} text="Action 3"/>
-                <Menu.Item id={4} value={4} text="Action 4"/>
-              </Menu.List>
-            </Menu>
-          </Dropdown>
-
-
- */
-const menu = <Menu hasBox={false}>
-  <Menu.Item id="item1">Menu Item1</Menu.Item>
-  <Menu.Item id="item2">Menu Item2</Menu.Item>
-  <Menu.Item id="item3">Menu Item3</Menu.Item>
-  <Menu.Item id="item4">Menu Item4</Menu.Item>
-</Menu>;
-
-// const menu = <div style={{width: "300px", height: "200px"}}>
-//   <span>Item1</span>
-//   <span>Item1</span>
-//   <span>Item1</span>
-//   <span>Item1</span>
-//   <span>Item1</span>
-// </div>
-
-// const menu= <div style={{width: '300px', height: '200px'}}>div</div>
+const DropdownMenu = React.forwardRef((props, ref) => {
+  return <Menu {...props} ref={ref}/>;
+});
 
 const Dropdown = React.forwardRef((props, ref) => {
   const {
+    extraClassName,
+    className = 'dropdown-menu popup',
     title,
+    children,
+    onSelect,
     ...otherProps
   } = props;
 
   const ctrlRef = useRef();
 
+  const selectHandler = useCallback((selectedIds) => {
+    const array = convertToArray(selectedIds);
+    let selectedId;
+    if (array.length > 0) {
+      selectedId = array[0];
+    }
+    onSelect && onSelect(selectedId);
+  }, [onSelect]);
+
+  const chd = React.Children.map(children, elem => {
+    if (elem.type === DropdownMenu) {
+      return React.cloneElement(elem,
+          {selectable: false, onClickItem: selectHandler});
+    }
+    return elem;
+  });
+
   return <Popup
+      extraClassName={extraClassName}
+      className={className}
       ctrlRef={(domNode) => ctrlRef.current = domNode}
       ctrlNode={title}
-      body={menu}
+      body={chd}
       {...otherProps}
   />;
 });
+
+Dropdown.Menu = DropdownMenu;
+Dropdown.Item = Menu.Item;
+Dropdown.SubMenu = Menu.SubMenu;
 
 export default Dropdown;

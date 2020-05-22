@@ -1,7 +1,7 @@
 import React from 'react';
 import DocPage from '../../utils/DocPage';
-import TransitionTest from './TransitionTest';
 import Dp1 from './Dp1';
+import Dp2 from './Dp2';
 
 /**
  * It maps the text blocks in Markdown file
@@ -14,6 +14,7 @@ const markdownMapping = {
 const componentMapping = {
   // TransitionTest: <TransitionTest/>,
   Dp1: <Dp1/>,
+  Dp2: <Dp2/>,
 };
 
 export default function DropdownIndex(props) {

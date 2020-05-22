@@ -19,6 +19,7 @@ const Item = React.forwardRef((props, ref) => {
     hasBottomBar,
     icon,
     directChild = false,
+    onClick,
     ...otherProps
   } = props;
   const ctx = useContext(MenuContext);
@@ -61,7 +62,13 @@ const Item = React.forwardRef((props, ref) => {
     if (disabled) {
       return;
     }
-    ctx.dispatch({type: Action.clickHeader, id, e});
+
+    if (!isNil(id) && ctx.selectable) {
+      ctx.dispatch({type: Action.clickHeader, id, e});
+    }
+
+    ctx.onClickItem && ctx.onClickItem(id, e);
+    onClick && onClick(e);
   };
 
   const clsName = clsx(extraClassName, className, {
@@ -99,6 +106,7 @@ Item.propTypes = {
   hasBackground: PropTypes.bool,
   hasBottomBar: PropTypes.bool,
   align: PropTypes.string,
+  selectable: PropTypes.func,
 };
 
 export default Item;
