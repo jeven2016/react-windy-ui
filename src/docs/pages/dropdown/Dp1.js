@@ -1,12 +1,15 @@
 import React from 'react';
-import Dropdown from '../../../components/src/dropdown';
-import {Button} from '../../../components/src';
-import Menu from '../../../components/src/menu';
+import {Dropdown, Button, IconArrowDown, Menu} from 'react-windy-ui';
 
 export default function Dp1() {
 
+  const title = <span
+      style={{color: '#0ca0ff', display: 'inline-flex', alignItems: 'center'}}>
+    Dropdown <IconArrowDown/>
+  </span>;
+
   return <>
-    <Dropdown title="dropdown" activeBy="hover"
+    <Dropdown title={title} activeBy="hover"
               hasBox={false} hasBorder={false}
               popupStyle={{background: 'transparent'}}>
       <Menu hasBox={false} type="dark" popupSubMenu>
@@ -23,7 +26,8 @@ export default function Dp1() {
       </Menu>
     </Dropdown>
 
-    <Dropdown activeBy="click" title={<Button color="primary">Button</Button>}>
+    <Dropdown activeBy="click" title={<Button style={{marginLeft: '2rem'}}
+                                              color="primary">Button</Button>}>
       <Menu>
         <Menu.Item id="item1">Menu Item1</Menu.Item>
         <Menu.Item id="item2">Menu Item2</Menu.Item>

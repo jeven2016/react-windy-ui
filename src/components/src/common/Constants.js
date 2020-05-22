@@ -51,7 +51,7 @@ export const DropdownPosition = {
   bottomRight: 'right',
 };
 
-export const Position = {
+export const PositionClass = {
   top: 'top',
   bottom: 'bottom',
   left: 'left',

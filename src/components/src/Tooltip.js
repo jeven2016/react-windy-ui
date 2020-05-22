@@ -1,5 +1,5 @@
 import React from 'react';
-import {PopupCtrlType, Position} from './common/Constants';
+import {PopupCtrlType, PositionClass} from './common/Constants';
 import clsx from 'clsx';
 import PopupController from './common/PopupController';
 import {validateOneChild} from './common/Validators';
@@ -17,7 +17,7 @@ const Tooltip = React.forwardRef((props, ref) => {
   validateOneChild(props);
 
   let clsName = clsx(extraClassName, className);
-  let positionClassName = `${Position[position]} popover-arrow`;
+  let positionClassName = `${PositionClass[position]} popover-arrow`;
 
   const updateChildren = (chd) => {
     const popupBody = <div className={clsName} ref={ref}>

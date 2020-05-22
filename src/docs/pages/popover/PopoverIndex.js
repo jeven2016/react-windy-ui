@@ -1,10 +1,6 @@
 import React from 'react';
 import DocPage from '../../utils/DocPage';
-import Dp1 from './Dp1';
-import Dp2 from './Dp2';
-import Dp3 from './Dp3';
-import Dp4 from './Dp4';
-import Dp5 from './Dp5';
+import Popover1 from './Popover1';
 
 /**
  * It maps the text blocks in Markdown file
@@ -16,14 +12,10 @@ const markdownMapping = {
 
 const componentMapping = {
   // TransitionTest: <TransitionTest/>,
-  Dp1: <Dp1/>,
-  Dp2: <Dp2/>,
-  Dp3: <Dp3/>,
-  Dp4: <Dp4/>,
-  Dp5: <Dp5/>,
+  Popover1: <Popover1/>,
 };
 
-export default function DropdownIndex(props) {
+export default function PopoverIndex(props) {
   return <DocPage
       importFunc={() => import('./doc.md')}
       componentMapping={componentMapping}

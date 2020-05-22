@@ -1,61 +1,53 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {isNil} from '../Utils';
-import {Position} from '../common/Constants';
-import PopupController from '../common/PopupController';
+import {PopupPosition, PositionClass} from '../common/Constants';
 import Card from '../card';
 import Divider from '../divider';
 import clsx from 'clsx';
-import {validateOneChild} from '../common/Validators';
+import Popup from '../popup/Popup';
 
 const Popover = React.forwardRef((props, ref) => {
-  const popRef = ref;
   const {
     className = 'popover',
     extraClassName,
     header,
     body,
-    position,
+    position = PopupPosition.bottom,
     children,
-    bodyOffset = '0.6rem',
+    hasBox = true,
+    hasBorder = false,
     ...otherProps
   } = props;
 
-  validateOneChild(props);
-
-  let positionClassName = `${Position[position]} popover-arrow`;
+  let positionClassName = clsx('popover-arrow', `${PositionClass[position]}`, {
+    'with-box': hasBox,
+  });
   let clsName = clsx(extraClassName, className);
 
-  const updateChildren = (chd) => {
-    const popupBody = <div className={clsName}
-                           ref={ref}>
-      <div className={positionClassName}/>
-      <Card>
-        {
-          isNil(header) ? null :
-              <>
-                <Card.Header>{header}</Card.Header>
-                <Divider/>
-              </>
-        }
-        <Card.Body>
-          {body}
-        </Card.Body>
-      </Card>
-    </div>;
+  const popupBody = <div className={clsName}
+                         ref={ref}>
+    <div className={positionClassName}/>
+    <Card hasBox={hasBox} hasBorder={hasBorder}>
+      {
+        isNil(header) ? null :
+            <>
+              <Card.Header>{header}</Card.Header>
+              <Divider/>
+            </>
+      }
+      <Card.Body>
+        {body}
+      </Card.Body>
+    </Card>
+  </div>;
 
-    return {body: popupBody, ctrl: children};
-  };
-
-  return <PopupController
-      ref={popRef}
+  return <Popup
       position={position}
-      bodyOffset={bodyOffset}
-      handleChildren={updateChildren}
-      setChildDisabled={false}
-      // margin={5}
-      {...otherProps}>
-    {children}
-  </PopupController>;
+      autoClose={false}
+      ctrlNode={children}
+      body={popupBody}
+      {...otherProps}
+  />;
 
 });
 

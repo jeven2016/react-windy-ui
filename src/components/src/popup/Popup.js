@@ -44,17 +44,14 @@ const Popup = React.forwardRef((props, ref) => {
     offset = 8,
     ctrlNode,
     body,
-
     ctrlRef,
-
     activeBy = 'click',
     defaultActive = false,
     active,
-
     disabled = false,
     delayClose = 100,
     position = PopupPosition.bottom,
-
+    autoClose = true, //auto close while clicking the body of the popup
     ...otherProps
   } = props;
   const rootElem = useContainer(ContainerId.popup);
@@ -143,7 +140,7 @@ const Popup = React.forwardRef((props, ref) => {
     'global-with-border': hasBorder,
   });
   const popup = <animated.div ref={multiRef} style={springProps}
-                              className={popupClsName}>
+                              className={popupClsName} {...otherProps}>
     <div className="popup-content" style={popupStyle}>
       {body}
     </div>
@@ -158,7 +155,6 @@ const Popup = React.forwardRef((props, ref) => {
       clearTimeout(preTimeout);
     }
   }, [preCloseRef]);
-
 
   const handleHover = (e, nextActive, eventType, forceUpdate = false) => {
     if (disabled || !isHover) {
@@ -197,14 +193,20 @@ const Popup = React.forwardRef((props, ref) => {
     }
   };
 
-  const handleDocumentClick = (e) => {
+  const handleBackgroundClick = useCallback((e) => {
     if (!activePopup || realCtrlRef.current.contains(e.target)) {
       return;
     }
-    setActive(false);
-  };
 
-  const handleClick = (e, nextActive) => {
+    //for autoClose is false, the popup cannot be closed while clicking the body of the popup
+    if (!autoClose && popupRef.current.contains(e.target)) {
+      return;
+    }
+
+    setActive(false);
+  }, [activePopup, setActive, realCtrlRef]);
+
+  const handleClick = useCallback((e, nextActive) => {
     if (disabled) {
       return;
     }
@@ -212,12 +214,13 @@ const Popup = React.forwardRef((props, ref) => {
       return;
     }
     setActive(nextActive);
-  };
+  }, [disabled, activePopup, setActive]);
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = useCallback((e) => {
     if (disabled) {
       return;
     }
+    console.log(e.keyCode);
     if (e.keyCode === 13) {
       //press the enter key
       handleClick(e, true);
@@ -226,11 +229,11 @@ const Popup = React.forwardRef((props, ref) => {
       //press the esc key
       setActive(false);
     }
-  };
+  }, [disabled, handleClick, setActive]);
 
-  //close the popup while clicking the document
-  useEvent(EventListener.click, (e) => handleDocumentClick(e),
-      true, window.document);
+  // close the popup while clicking the window (listens on window object instead of document)
+  useEvent(EventListener.click, (e) => handleBackgroundClick(e),
+      true, window);
 
   useEvent(EventListener.mouseEnter,
       (e) => handleHover(e, true, EventListener.mouseEnter, true),
@@ -271,11 +274,6 @@ const Popup = React.forwardRef((props, ref) => {
       (e) => handleHover(e, false, EventListener.mouseEnter),
       isHover,
       popupRef);
-
-  // useEvent(EventListener.click,
-  //     (e) => {handleClick(e, false);console.log("clicking....")},
-  //     true,
-  //     popupRef);
 
   const portal = ReactDOM.createPortal(popup, rootElem);
 

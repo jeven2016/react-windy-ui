@@ -12,6 +12,7 @@ import ToggleIndex from '../pages/toggle/ToggleIndex';
 import CollapseIndex from '../pages/collapse/CollapseIndex';
 import MenuIndex from '../pages/menu/MenuIndex';
 import DropdownIndex from '../pages/dropdown/DropdownIndex';
+import PopoverIndex from '../pages/popover/PopoverIndex';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -55,6 +56,9 @@ function DocCenter(props) {
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/dropdown`}>
                 <DropdownIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/popover`}>
+                <PopoverIndex/>
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/`}>
                 <InstallIndex/>

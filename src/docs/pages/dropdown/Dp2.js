@@ -1,6 +1,5 @@
 import React from 'react';
 import {Button, Dropdown} from 'react-windy-ui';
-import {preventEvent} from '../../../components/src';
 
 export default function Dp2() {
 
@@ -10,8 +9,10 @@ export default function Dp2() {
         <Dropdown.Item onClick={() => console.log('click item1')}>
           Menu Item1
         </Dropdown.Item>
-        {/*todo*/ }
-        <Dropdown.Item onClick={(e) => {console.log('click item2'); preventEvent(e)}}>
+        <Dropdown.Item onClick={(e) => {
+          console.log('click item2');
+          e.stopPropagation();
+        }}>
           Menu Item2
         </Dropdown.Item>
         <Dropdown.Item onClick={() => console.log('click item3')}>
