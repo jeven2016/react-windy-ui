@@ -4,7 +4,7 @@ import {Button, Popover} from 'react-windy-ui';
 const createPopover = (text, position, activeBy) => {
   const body = <span>
     I wanna show you what the popover component looks like and then you
-    can consider where you can rely on it to represent a good page for your customers.
+    can consider if you can rely on it to represent a good page for your customers.
   </span>;
   return <Popover body={body}
                   activeBy={'hover'}

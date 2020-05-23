@@ -174,17 +174,22 @@ const Popup = React.forwardRef((props, ref) => {
     if (disabled || !isHover) {
       return;
     }
-
+    console.log('forceUpdate=' + forceUpdate);
     if (!forceUpdate) {
       //the hover event should only be fired by controller or popup
       //the menu items or popover-arrow cannot trigger closing the popup
+      //the relatedTarget == fromElement, but firefox doesn't support this parameter,
+      //so using relatedTarget instead.
       const isValidOver = eventType === EventListener.mouseEnter &&
-          !popupRef.current.contains(e.fromElement) &&
-          popupRef.current.contains(e.toElement);
+          !popupRef.current.contains(e.relatedTarget) &&
+          popupRef.current.contains(e.target);
+      if (!isValidOver) {
+        console.log(e);
+      }
 
       const isValidOut = eventType === EventListener.mouseEnter &&
-          popupRef.current.contains(e.fromElement) &&
-          !popupRef.current.contains(e.toElement);
+          popupRef.current.contains(e.relatedTarget) &&
+          !popupRef.current.contains(e.target);
 
       if (!isValidOver && !isValidOut) {
         return;
