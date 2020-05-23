@@ -58,6 +58,7 @@ const Popup = React.forwardRef((props, ref) => {
     animationFunc,
     position = PopupPosition.bottom,
     autoClose = true, //auto close while clicking the body of the popup
+    onChange,
     ...otherProps
   } = props;
   const rootElem = useContainer(ContainerId.popup);
@@ -111,7 +112,7 @@ const Popup = React.forwardRef((props, ref) => {
   //----------------------------------------------
 
   const preUpdate = useCallback(() => {
-        setDisplay(activePopup, 'flex', popupRef);
+        setDisplay(activePopup, 'block', popupRef);
         updatePosition();
       },
       [activePopup, updatePosition, popupRef]);
@@ -170,11 +171,17 @@ const Popup = React.forwardRef((props, ref) => {
     }
   }, [preCloseRef]);
 
+  const changeActive = useCallback((state) => {
+    if (!customActive) {
+      setActive(state);
+    }
+    onChange && onChange(state);
+  }, [customActive, setActive, onChange]);
+
   const handleHover = (e, nextActive, eventType, forceUpdate = false) => {
     if (disabled || !isHover) {
       return;
     }
-    console.log('forceUpdate=' + forceUpdate);
     if (!forceUpdate) {
       //the hover event should only be fired by controller or popup
       //the menu items or popover-arrow cannot trigger closing the popup
@@ -183,9 +190,6 @@ const Popup = React.forwardRef((props, ref) => {
       const isValidOver = eventType === EventListener.mouseEnter &&
           !popupRef.current.contains(e.relatedTarget) &&
           popupRef.current.contains(e.target);
-      if (!isValidOver) {
-        console.log(e);
-      }
 
       const isValidOut = eventType === EventListener.mouseEnter &&
           popupRef.current.contains(e.relatedTarget) &&
@@ -201,14 +205,14 @@ const Popup = React.forwardRef((props, ref) => {
         return;
       }
       preCloseRef.current = execute(() => {
-        setActive(nextActive);
+        changeActive(nextActive);
       }, delayClose);
       return;
     }
 
     if (nextActive) {
       clearCloseTimer();
-      setActive(nextActive);
+      changeActive(nextActive);
     }
   };
 
@@ -222,8 +226,8 @@ const Popup = React.forwardRef((props, ref) => {
       return;
     }
 
-    setActive(false);
-  }, [activePopup, setActive, realCtrlRef]);
+    changeActive(false);
+  }, [activePopup, changeActive, realCtrlRef]);
 
   const handleClick = useCallback((e, nextActive) => {
     if (disabled) {
@@ -232,8 +236,8 @@ const Popup = React.forwardRef((props, ref) => {
     if (activePopup === nextActive) {
       return;
     }
-    setActive(nextActive);
-  }, [disabled, activePopup, setActive]);
+    changeActive(nextActive);
+  }, [disabled, activePopup, changeActive]);
 
   const handleKeyDown = useCallback((e) => {
     if (disabled) {
@@ -246,9 +250,9 @@ const Popup = React.forwardRef((props, ref) => {
     }
     if (e.keyCode === 27) {
       //press the esc key
-      setActive(false);
+      changeActive(false);
     }
-  }, [disabled, handleClick, setActive]);
+  }, [disabled, handleClick, changeActive]);
 
   // close the popup while clicking the window (listens on window object instead of document)
   useEvent(EventListener.click, (e) => handleBackgroundClick(e),

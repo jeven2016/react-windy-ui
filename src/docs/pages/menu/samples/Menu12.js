@@ -1,23 +1,14 @@
 import React, {useState} from 'react';
 import {
-  Menu,
-  Toggle,
-  IconHome,
-  RadioGroup,
-  Radio,
   Button,
+  IconHome,
+  Menu,
+  Radio,
+  RadioGroup,
+  Toggle,
 } from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {
-  faMailchimp,
-  faNapster,
-  faSellcast,
-} from '@fortawesome/free-brands-svg-icons';
-import {
-  faFolder,
-  faFolderMinus,
-  faLaptop,
-} from '@fortawesome/free-solid-svg-icons';
+import {faLaptop} from '@fortawesome/free-solid-svg-icons';
 
 export default function Menu12() {
   const [hasArrow, setHasArrow] = useState(true);

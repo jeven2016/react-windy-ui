@@ -132,9 +132,10 @@ export const place = (dest, ctrl, type, offset = 0) => {
         || document.body.scrollLeft;
   }
 
+  let posLeft = Math.floor(pos.left);
   let left = 0, top = 0;
   if (type === PopupPosition.bottom) {
-    left = scrollLeft + (pos.left
+    left = scrollLeft + (posLeft
         - (dest.offsetWidth
             - ctrl.offsetWidth)
         / 2) + 'px';
@@ -142,7 +143,7 @@ export const place = (dest, ctrl, type, offset = 0) => {
   }
 
   if (type === PopupPosition.top) {
-    left = scrollLeft + (pos.left
+    left = scrollLeft + (posLeft
         - (dest.offsetWidth
             - ctrl.offsetWidth)
         / 2) + 'px';
@@ -152,7 +153,7 @@ export const place = (dest, ctrl, type, offset = 0) => {
   }
 
   if (type === PopupPosition.left) {
-    left = scrollLeft + pos.left - dest.offsetWidth
+    left = scrollLeft + posLeft - dest.offsetWidth
         - offset + 'px';
     top = pos.top - (dest.offsetHeight
         - ctrl.offsetHeight) / 2
@@ -161,14 +162,14 @@ export const place = (dest, ctrl, type, offset = 0) => {
   }
 
   if (type === PopupPosition.leftTop) {
-    left = scrollLeft + pos.left - dest.offsetWidth
+    left = scrollLeft + posLeft - dest.offsetWidth
         - offset + 'px';
     top = pos.top + scrollTop - dest.offsetHeight
         + pos.height + 'px';
   }
 
   if (type === PopupPosition.leftBottom) {
-    left = scrollLeft + pos.left - dest.offsetWidth
+    left = scrollLeft + posLeft - dest.offsetWidth
         - offset + 'px';
     top = pos.top + scrollTop + 'px';
   }
@@ -193,7 +194,7 @@ export const place = (dest, ctrl, type, offset = 0) => {
   }
 
   if (type === PopupPosition.topLeft) {
-    left = scrollLeft + pos.left + 'px';
+    left = scrollLeft + posLeft + 'px';
     top = pos.top - dest.offsetHeight - offset
         + scrollTop
         + 'px';
@@ -208,7 +209,7 @@ export const place = (dest, ctrl, type, offset = 0) => {
   }
 
   if (type === PopupPosition.bottomLeft) {
-    left = scrollLeft + pos.left + 'px';
+    left = scrollLeft + posLeft + 'px';
     top = pos.bottom + offset
         + scrollTop
         + 'px';
