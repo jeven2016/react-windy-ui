@@ -52,33 +52,48 @@ export const DropdownPosition = {
 };
 
 export const PositionClass = {
-  top: 'top',
-  bottom: 'bottom',
-  left: 'left',
-  right: 'right',
-  topLeft: 'top-left',
-  topRight: 'top-right',
-  bottomLeft: 'bottom-left',
-  bottomRight: 'bottom-right',
-  leftTop: 'left',
-  leftBottom: 'left',
-  rightTop: 'right',
-  rightBottom: 'right',
+  top: 'top center',
+  topLeft: 'top top-left',
+  topRight: 'top top-right',
+  bottom: 'bottom center',
+  bottomLeft: 'bottom bottom-left',
+  bottomRight: 'bottom bottom-right',
+  left: 'left center',
+  leftTop: 'left left-top',
+  leftBottom: 'left left-bottom',
+  right: 'right center',
+  rightTop: 'right right-top',
+  rightBottom: 'right right-bottom',
 };
 
 export const PopupPosition = {
   top: 'top',
-  bottom: 'bottom',
-  left: 'left',
-  right: 'right',
   topLeft: 'topLeft',
   topRight: 'topRight',
+  bottom: 'bottom',
   bottomLeft: 'bottomLeft',
   bottomRight: 'bottomRight',
+  left: 'left',
   leftTop: 'leftTop',
   leftBottom: 'leftBottom',
+  right: 'right',
   rightTop: 'rightTop',
   rightBottom: 'rightBottom',
+};
+
+export const TooltipTransformOrigin = {
+  top: 'center bottom',
+  topLeft: 'left bottom',
+  topRight: 'right bottom',
+  bottom: 'center top',
+  bottomLeft: 'left top',
+  bottomRight: 'right top',
+  left: 'right center',
+  leftTop: 'right top',
+  leftBottom: 'right bottom',
+  right: 'left center',
+  rightTop: 'left top',
+  rightBottom: 'left bottom',
 };
 
 export const PopoverTriggerType = {

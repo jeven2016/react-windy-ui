@@ -1,10 +1,10 @@
-import React, {useCallback, useMemo, useRef} from 'react';
+import React, {useCallback, useImperativeHandle, useMemo, useRef} from 'react';
 import ReactDOM from 'react-dom';
 import useContainer from '../common/UseContainer';
 import {ContainerId, EventListener, PopupPosition} from '../common/Constants';
 import {animated, useSpring} from 'react-spring';
 import {execute, isNil, isString, place, setDisplay} from '../Utils';
-import useMultipleRefs, {setDirectRef} from '../common/UseMultipleRefs';
+import {setDirectRef} from '../common/UseMultipleRefs';
 import useResizeObserver from '../common/UseResizeObserver';
 import useEvent from '../common/UseEvent';
 import useInternalState from '../common/useInternalState';
@@ -33,6 +33,11 @@ function getTranslate(position, activePopup, startOffset) {
   };
 }
 
+/**
+ * Popup
+ *
+ * @param ref  used to reference the Popup instance
+ */
 const Popup = React.forwardRef((props, ref) => {
   const {
     hasBox = false,
@@ -50,6 +55,7 @@ const Popup = React.forwardRef((props, ref) => {
     active,
     disabled = false,
     delayClose = 100,
+    animationFunc,
     position = PopupPosition.bottom,
     autoClose = true, //auto close while clicking the body of the popup
     ...otherProps
@@ -70,7 +76,6 @@ const Popup = React.forwardRef((props, ref) => {
 
   //popup ref
   const popupRef = useRef(null);
-  const multiRef = useMultipleRefs(ref, popupRef);
 
   //ctrl node ref
   const realCtrlRef = useRef(null);
@@ -78,6 +83,10 @@ const Popup = React.forwardRef((props, ref) => {
     setDirectRef(realCtrlRef, ctrlDomNode);
     setDirectRef(ctrlRef, ctrlDomNode);
   };
+
+  useImperativeHandle(ref, () => ({
+    isActive: activePopup,
+  }), [activePopup]);
 
   //-------------update the popup's position------------------
   const updatePosition = useCallback(() => {
@@ -115,12 +124,17 @@ const Popup = React.forwardRef((props, ref) => {
     return getTranslate(position, activePopup, offset);
   }, [position, activePopup, offset]);
 
-  const springProps = useSpring({
+  const animationSetting = animationFunc ? animationFunc(activePopup) : {
     from: {transform: 'translate3d(0px, 0px, 0px)', opacity: 0},
     to: {
       transform: transform.transform,
       opacity: activePopup ? 1 : 0,
     },
+  };
+
+  const springProps = useSpring({
+    from: animationSetting.from,
+    to: animationSetting.to,
     onStart: preUpdate,
     onRest: postUpdate,
     config: {clamp: true, mass: 1, tesion: 100, friction: 15},
@@ -139,7 +153,7 @@ const Popup = React.forwardRef((props, ref) => {
     'with-border-radius': hasBorderRadius,
     'global-with-border': hasBorder,
   });
-  const popup = <animated.div ref={multiRef} style={springProps}
+  const popup = <animated.div ref={popupRef} style={springProps}
                               className={popupClsName} {...otherProps}>
     <div className="popup-content" style={popupStyle}>
       {body}

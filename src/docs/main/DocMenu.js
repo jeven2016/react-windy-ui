@@ -54,6 +54,11 @@ export default function DocMenu(props) {
           弹出框 Popover
         </Link>
       </Menu.Item>
+      <Menu.Item id="tooltip">
+        <Link to={`${url}/tooltip`}>
+          提示 Tooltip
+        </Link>
+      </Menu.Item>
     </Menu.SubMenu>
   </Menu>;
 }

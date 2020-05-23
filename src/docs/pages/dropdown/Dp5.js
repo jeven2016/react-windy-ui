@@ -1,15 +1,6 @@
 import React from 'react';
 import {Button, Dropdown} from 'react-windy-ui';
 
-const DocCol = (props) => <div
-    style={{marginRight: '1rem'}}>{props.children}</div>;
-
-const DocRow = (props) => <div
-    style={{
-      display: 'inline-flex',
-      marginTop: '.25rem',
-    }}>{props.children}</div>;
-
 const createDropdown = (text, position, activeBy) => {
   const title = <Button circle hasMinWidth={false} color="primary" outline
                         style={{margin: '1rem'}}>{text}</Button>;
@@ -35,6 +26,7 @@ export default function Dp5() {
   return <>
     <div>
       <table>
+        <tbody>
         <tr>
           <td/>
           <td>
@@ -70,6 +62,7 @@ export default function Dp5() {
           </td>
           <td/>
         </tr>
+        </tbody>
       </table>
     </div>
   </>;

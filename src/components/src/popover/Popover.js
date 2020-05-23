@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useRef} from 'react';
 import {isNil} from '../Utils';
 import {PopupPosition, PositionClass} from '../common/Constants';
 import Card from '../card';
@@ -14,19 +14,21 @@ const Popover = React.forwardRef((props, ref) => {
     body,
     position = PopupPosition.bottom,
     children,
+    hasArrow = true,
     hasBox = true,
     hasBorder = false,
+    offset = 15,
     ...otherProps
   } = props;
-
   let positionClassName = clsx('popover-arrow', `${PositionClass[position]}`, {
     'with-box': hasBox,
+    'with-border': hasBorder,
   });
   let clsName = clsx(extraClassName, className);
 
   const popupBody = <div className={clsName}
                          ref={ref}>
-    <div className={positionClassName}/>
+    {hasArrow && <div className={positionClassName}/>}
     <Card hasBox={hasBox} hasBorder={hasBorder}>
       {
         isNil(header) ? null :
@@ -42,6 +44,7 @@ const Popover = React.forwardRef((props, ref) => {
   </div>;
 
   return <Popup
+      offset={offset}
       position={position}
       autoClose={false}
       ctrlNode={children}

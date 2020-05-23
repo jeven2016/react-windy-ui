@@ -37,12 +37,11 @@ const Dropdown = React.forwardRef((props, ref) => {
   });
 
   return <Popup
-      ref={ref}
       extraClassName={extraClassName}
       className={className}
       ctrlRef={(domNode) => ctrlRef.current = domNode}
       ctrlNode={title}
-      body={chd}
+      body={<div ref={ref}>{chd}</div>}
       {...otherProps}
   />;
 });

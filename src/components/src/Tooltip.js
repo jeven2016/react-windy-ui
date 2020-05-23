@@ -1,43 +1,56 @@
 import React from 'react';
-import {PopupCtrlType, PositionClass} from './common/Constants';
+import {
+  PopupCtrlType,
+  PositionClass,
+  TooltipTransformOrigin,
+} from './common/Constants';
 import clsx from 'clsx';
-import PopupController from './common/PopupController';
-import {validateOneChild} from './common/Validators';
+import Popup from './popup/Popup';
 
 const Tooltip = React.forwardRef((props, ref) => {
   const {
     className = 'tooltip',
-    triggerBy = PopupCtrlType.hover,
     extraClassName,
     position = 'top',
     body,
+    offset = 10,
     children,
     ...otherProps
   } = props;
-  validateOneChild(props);
-
   let clsName = clsx(extraClassName, className);
-  let positionClassName = `${PositionClass[position]} popover-arrow`;
+  let positionClassName = `${PositionClass[position]} tooltip-arrow`;
 
-  const updateChildren = (chd) => {
-    const popupBody = <div className={clsName} ref={ref}>
-      <div className={positionClassName}/>
-      {body}
-    </div>;
+  const popupBody = <div className={clsName} ref={ref}>
+    <div className={positionClassName}/>
+    {body}
+  </div>;
 
-    return {body: popupBody, ctrl: children};
+  const animationFunc = (activeState) => {
+    return {
+      from: {
+        transform: 'scale(0.9)',
+        opacity: 0,
+        transformOrigin: TooltipTransformOrigin[position],
+      },
+      to: {
+        transform: activeState ? 'scale(1)' : 'scale(0.9)',
+        opacity: activeState ? 1 : 0,
+      },
+    };
   };
-  return <PopupController
-      controllerRef={ref}
-      bodyOffset="0.6rem"
+
+  return <Popup
+      {...otherProps}
+      animationFunc={animationFunc}
+      offset={offset}
+      activeBy={PopupCtrlType.hover}
       position={position}
-      defaultTransformOrigin="center center"
-      triggerBy={triggerBy}
-      setChildDisabled={false}
-      handleChildren={updateChildren}
-      {...otherProps}>
-    {children}
-  </PopupController>;
+      autoClose={false}
+      ctrlNode={children}
+      body={popupBody}
+      hasBorder={false}
+      hasBox={true}
+  />;
 
 });
 

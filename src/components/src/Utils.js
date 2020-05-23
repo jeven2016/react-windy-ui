@@ -49,12 +49,11 @@ export const placePadding = (
   place(destComponent, ctrl, type, margin);
 };
 
-//todo: transform : left , right not working
-export const setTransformOrigin = (destComponent, type) => {
-  const origin = getTransformOrigin(type);
-  destComponent.style.transformOrigin = origin;
-};
-
+/**
+ * Deprecated
+ * @param type
+ * @returns {null}
+ */
 export const getPaddingAttribute = (type) => {
   let paddingAttr = null;
   switch (type) {
@@ -230,16 +229,6 @@ export const place = (dest, ctrl, type, offset = 0) => {
   };
 };
 
-export const placeCenter = (dest, ctrl) => {
-  dest.style.left = getLeftIfCentered(dest, ctrl);
-  dest.style.top = getTopIfCentered(dest, ctrl);
-};
-
-export const placeVerticalCenter = (dest, ctrl) => {
-  const y = getTopIfCentered(dest, ctrl);
-  dest.style.transform = `translateY(${y})`;
-};
-
 export const getLeftIfCentered = (dest, ctrl) => {
   var ctrlPos = ctrl.getBoundingClientRect();
   var destPos = dest.getBoundingClientRect();
@@ -247,18 +236,6 @@ export const getLeftIfCentered = (dest, ctrl) => {
       dest.offsetWidth);
   let x = Math.floor((ctrlPos.width - destAvaliableWidth) / 2) + 'px';
   return x;
-};
-
-export const getTopIfCentered = (dest, ctrl) => {
-  var ctrlPos = ctrl.getBoundingClientRect();
-  var destPos = dest.getBoundingClientRect();
-
-  let destAvaliableHeight = Math.max(destPos.height,
-      dest.offsetHeight);
-
-  let y = Math.floor(
-      (ctrlPos.height - destAvaliableHeight) / 2) + 'px';
-  return y;
 };
 
 export const validate = (condition, message) => {
