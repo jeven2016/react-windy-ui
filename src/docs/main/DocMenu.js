@@ -59,6 +59,11 @@ export default function DocMenu(props) {
           提示 Tooltip
         </Link>
       </Menu.Item>
+      <Menu.Item id="select">
+        <Link to={`${url}/select`}>
+          选择 Select
+        </Link>
+      </Menu.Item>
     </Menu.SubMenu>
   </Menu>;
 }

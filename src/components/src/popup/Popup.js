@@ -1,7 +1,12 @@
 import React, {useCallback, useImperativeHandle, useMemo, useRef} from 'react';
 import ReactDOM from 'react-dom';
 import useContainer from '../common/UseContainer';
-import {ContainerId, EventListener, PopupPosition} from '../common/Constants';
+import {
+  ContainerId,
+  EventListener,
+  PopupCtrlType,
+  PopupPosition,
+} from '../common/Constants';
 import {animated, useSpring} from 'react-spring';
 import {execute, isNil, isString, place, setDisplay} from '../Utils';
 import {setDirectRef} from '../common/UseMultipleRefs';
@@ -9,6 +14,7 @@ import useResizeObserver from '../common/UseResizeObserver';
 import useEvent from '../common/UseEvent';
 import useInternalState from '../common/useInternalState';
 import clsx from 'clsx';
+import PropTypes from 'prop-types';
 
 function getTranslate(position, activePopup, startOffset) {
   const transOffset = startOffset + 5;
@@ -43,6 +49,7 @@ const Popup = React.forwardRef((props, ref) => {
     hasBox = false,
     hasBorderRadius = true,
     hasBorder = false,
+    popupExtraClassName,
     popupStyle,
     extraClassName,
     className = 'popup',
@@ -50,19 +57,20 @@ const Popup = React.forwardRef((props, ref) => {
     ctrlNode,
     body,
     ctrlRef,
+    popupRef,
     activeBy = 'click',
     defaultActive = false,
-    active,
+    active, //whether to show the popup
+    onChange, //for changing active state
     disabled = false,
     delayClose = 100,
     animationFunc,
     position = PopupPosition.bottom,
     autoClose = true, //auto close while clicking the body of the popup
-    onChange,
     ...otherProps
   } = props;
   const rootElem = useContainer(ContainerId.popup);
-  const isHover = activeBy === 'hover';
+  const isHover = activeBy === PopupCtrlType.hover;
 
   const {state: isActive, setState: setActive, customized: customActive}
       = useInternalState({
@@ -76,7 +84,11 @@ const Popup = React.forwardRef((props, ref) => {
   preActiveRef.current = activePopup;
 
   //popup ref
-  const popupRef = useRef(null);
+  const realPopupRef = useRef(null);
+  const setPopupRef = (domNode) => {
+    setDirectRef(realPopupRef, domNode);
+    setDirectRef(popupRef, domNode);
+  };
 
   //ctrl node ref
   const realCtrlRef = useRef(null);
@@ -87,20 +99,21 @@ const Popup = React.forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     isActive: activePopup,
-  }), [activePopup]);
+    changeActive: changeActive,
+  }), [activePopup, changeActive]);
 
   //-------------update the popup's position------------------
   const updatePosition = useCallback(() => {
     //cannot directly access the state in this method
     const ctrlDom = realCtrlRef.current;
-    const popupDom = popupRef.current;
+    const popupDom = realPopupRef.current;
     if (ctrlDom && popupDom && popupDom.style.display !== 'none') {
       place(popupDom, ctrlDom, position, offset);
       popupDom.getElementsByClassName('popup-mask').forEach(popupMask => {
         popupMask.style.top = -(offset + 3) + 'px';
       });
     }
-  }, [realCtrlRef, popupRef, offset]);
+  }, [position, realCtrlRef, realPopupRef, offset]);
 
   useResizeObserver(() => realCtrlRef.current,
       updatePosition
@@ -112,14 +125,14 @@ const Popup = React.forwardRef((props, ref) => {
   //----------------------------------------------
 
   const preUpdate = useCallback(() => {
-        setDisplay(activePopup, 'block', popupRef);
+        setDisplay(activePopup, 'block', realPopupRef);
         updatePosition();
       },
-      [activePopup, updatePosition, popupRef]);
+      [activePopup, updatePosition, realPopupRef]);
 
   const postUpdate = useCallback(
-      () => setDisplay(!activePopup, 'none', popupRef),
-      [activePopup, popupRef]);
+      () => setDisplay(!activePopup, 'none', realPopupRef),
+      [activePopup, realPopupRef]);
 
   const transform = useMemo(() => {
     return getTranslate(position, activePopup, offset);
@@ -154,9 +167,13 @@ const Popup = React.forwardRef((props, ref) => {
     'with-border-radius': hasBorderRadius,
     'global-with-border': hasBorder,
   });
-  const popup = <animated.div ref={popupRef} style={springProps}
-                              className={popupClsName} {...otherProps}>
-    <div className="popup-content" style={popupStyle}>
+
+  const popupCntClsName = clsx(popupExtraClassName, 'popup-content');
+
+  const mergedProps = {...otherProps, ...springProps};
+  const popup = <animated.div ref={setPopupRef}
+                              className={popupClsName} style={mergedProps}>
+    <div className={popupCntClsName} style={popupStyle}>
       {body}
     </div>
   </animated.div>;
@@ -183,17 +200,20 @@ const Popup = React.forwardRef((props, ref) => {
       return;
     }
     if (!forceUpdate) {
-      //the hover event should only be fired by controller or popup
-      //the menu items or popover-arrow cannot trigger closing the popup
-      //the relatedTarget == fromElement, but firefox doesn't support this parameter,
-      //so using relatedTarget instead.
+      //the hover event should only be fired by controller or popup.
+      //the menu items or popover-arrow cannot trigger closing the popup.
+      //
+      // but firefox doesn't support fromElement/toElement, so using relatedTarget instead.
+      //for mouseEnter : relatedTarget == fromElement
+      //for mouseEnter : relatedTarget == toElement
       const isValidOver = eventType === EventListener.mouseEnter &&
-          !popupRef.current.contains(e.relatedTarget) &&
-          popupRef.current.contains(e.target);
+          !realPopupRef.current.contains(e.relatedTarget) &&
+          realPopupRef.current.contains(e.target);
 
-      const isValidOut = eventType === EventListener.mouseEnter &&
-          popupRef.current.contains(e.relatedTarget) &&
-          !popupRef.current.contains(e.target);
+      //for mouse leave, the mouse should move from popup to outside
+      const isValidOut = eventType === EventListener.mouseLeave &&
+          realPopupRef.current.contains(e.target) &&
+          !realPopupRef.current.contains(e.relatedTarget);
 
       if (!isValidOver && !isValidOut) {
         return;
@@ -201,7 +221,8 @@ const Popup = React.forwardRef((props, ref) => {
     }
 
     if (!nextActive) {
-      if (!isNil(preCloseRef.current)) {
+      //if the popup is already closed or there's a closing timer running at this time
+      if (!isNil(preCloseRef.current) || !activePopup) {
         return;
       }
       preCloseRef.current = execute(() => {
@@ -212,6 +233,9 @@ const Popup = React.forwardRef((props, ref) => {
 
     if (nextActive) {
       clearCloseTimer();
+      if (activePopup) {
+        return;
+      }
       changeActive(nextActive);
     }
   };
@@ -221,13 +245,13 @@ const Popup = React.forwardRef((props, ref) => {
       return;
     }
 
-    //for autoClose is false, the popup cannot be closed while clicking the body of the popup
-    if (!autoClose && popupRef.current.contains(e.target)) {
+    //for autoClose is false, the popup cannot be closed while clicking the popup
+    if (!autoClose && realPopupRef.current.contains(e.target)) {
       return;
     }
 
     changeActive(false);
-  }, [activePopup, changeActive, realCtrlRef]);
+  }, [activePopup, realCtrlRef, autoClose, realPopupRef, changeActive]);
 
   const handleClick = useCallback((e, nextActive) => {
     if (disabled) {
@@ -236,14 +260,23 @@ const Popup = React.forwardRef((props, ref) => {
     if (activePopup === nextActive) {
       return;
     }
-    changeActive(nextActive);
+
+    changeActive(pre => !pre);
   }, [disabled, activePopup, changeActive]);
 
   const handleKeyDown = useCallback((e) => {
     if (disabled) {
       return;
     }
-    console.log(e.keyCode);
+
+    if (e.keyCode === 40) {
+      //press down
+    }
+
+    if (e.keyCode === 38) {
+      //press up
+    }
+
     if (e.keyCode === 13) {
       //press the enter key
       handleClick(e, true);
@@ -264,39 +297,43 @@ const Popup = React.forwardRef((props, ref) => {
       realCtrlRef);
 
   useEvent(EventListener.mouseLeave,
-      (e) => handleHover(e, false, EventListener.mouseEnter, true),
+      (e) => handleHover(e, false, EventListener.mouseLeave, true),
       isHover,
       realCtrlRef);
 
-  useEvent(EventListener.focus,
-      (e) => handleHover(e, true, EventListener.mouseEnter, true),
+  /*useEvent(EventListener.focus,
+      (e) => handleHover(e, true, EventListener.focus, true),
       isHover,
       realCtrlRef);
 
   useEvent(EventListener.blur,
-      (e) => handleHover(e, false, EventListener.mouseEnter, true),
+      (e) => handleHover(e, false, EventListener.blur, true),
       isHover,
-      realCtrlRef);
+      realCtrlRef);*/
 
   useEvent(EventListener.click,
-      (e) => handleClick(e, true),
+      (e) => handleClick(e),
       !isHover,
       realCtrlRef);
 
   useEvent(EventListener.keyDown,
       (e) => handleKeyDown(e),
-      !isHover,
+      true,
       realCtrlRef);
 
   useEvent(EventListener.mouseEnter,
-      (e) => handleHover(e, true, EventListener.mouseEnter),
+      (e) => {
+        handleHover(e, true, EventListener.mouseEnter);
+      },
       isHover,
-      popupRef);
+      realPopupRef);
 
   useEvent(EventListener.mouseLeave,
-      (e) => handleHover(e, false, EventListener.mouseEnter),
+      (e) => {
+        handleHover(e, false, EventListener.mouseLeave);
+      },
       isHover,
-      popupRef);
+      realPopupRef);
 
   const portal = ReactDOM.createPortal(popup, rootElem);
 
@@ -305,5 +342,26 @@ const Popup = React.forwardRef((props, ref) => {
     {portal}
   </>;
 });
+
+Popup.propTypes = {
+  hasBox: PropTypes.bool,
+  hasBorderRadius: PropTypes.bool,
+  hasBorder: PropTypes.bool,
+  popupStyle: PropTypes.object,
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  offset: PropTypes.number,
+  ctrlNode: PropTypes.node,
+  body: PropTypes.node,
+  activeBy: PropTypes.string,
+  defaultActive: PropTypes.bool,
+  active: PropTypes.bool,
+  onChange: PropTypes.func,
+  disabled: PropTypes.bool,
+  delayClose: PropTypes.number,
+  animationFunc: PropTypes.func,
+  position: PropTypes.string,
+  autoClose: PropTypes.bool,
+};
 
 export default Popup;

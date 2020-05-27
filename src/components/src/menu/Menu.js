@@ -30,7 +30,7 @@ const Menu = React.forwardRef((props, ref) => {
     children,
     autoIndent = true,
     indentUnit = 'rem',
-    indentation = 2,
+    indentation = 1,
     onSelect,
     onClickItem,
     multiSelect = false,

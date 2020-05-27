@@ -37,7 +37,7 @@ export {default as Badge} from './Badge';
 export {default as Checkbox} from './Checkbox';
 export {default as Radio, RadioGroup} from './Radio';
 export {default as Breadcrumb} from './Breadcrumb';
-// export {default as Select} from './select';
+export {default as Select} from './select/Select';
 export {default as Progress} from './progress';
 export {default as Layout} from './layout';
 export {default as RouteLoader} from './RouteLoader';

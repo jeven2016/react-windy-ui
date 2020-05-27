@@ -65,6 +65,7 @@ const Input = React.forwardRef((props, ref) => {
     block = false,
     borderType,
     extraClassName,
+    readOnly = false,
     ...otherProps
   } = props;
   const ctx = useContext(InputGroupContext);
@@ -72,6 +73,7 @@ const Input = React.forwardRef((props, ref) => {
   const inputSize = isNil(ctx.size) ? size : ctx.size;
 
   let clsName = clsx(extraClassName, className, inputSize, {
+    'read-only': readOnly,
     'textarea': type === 'textarea',
     block: block,
     'within-group': ctx.withinGroup,
@@ -83,12 +85,15 @@ const Input = React.forwardRef((props, ref) => {
                     className={clsName}
                     setDisabledAttr={true}
                     disabled={disabled}
+                    readOnly={readOnly}
                     {...otherProps}/>;
   }
   const newProps = {type: type, ...otherProps};
   return (
       <Element nativeType="input" ref={ref} className={clsName}
+               type="text"
                setDisabledAttr={true}
+               readOnly={readOnly}
                disabled={disabled}
                {...newProps}
       />

@@ -12,7 +12,7 @@ export default function Dp1() {
     <Dropdown title={title} activeBy="hover"
               hasBox={false} hasBorder={false}
               popupStyle={{background: 'transparent'}}>
-      <Menu hasBox={false} type="dark" popupSubMenu>
+      <Dropdown.Menu hasBox={false} type="dark" popupSubMenu>
         <Menu.Item id="item1">Menu Item1</Menu.Item>
         <Menu.Item id="item2">Menu Item2</Menu.Item>
         <Menu.Item id="item3">Menu Item3</Menu.Item>
@@ -23,17 +23,17 @@ export default function Dp1() {
           <Menu.Item id="item32">Menu Item32</Menu.Item>
           <Menu.Item id="item42">Menu Item42</Menu.Item>
         </Menu.SubMenu>
-      </Menu>
+      </Dropdown.Menu>
     </Dropdown>
 
     <Dropdown activeBy="click" title={<Button style={{marginLeft: '2rem'}}
                                               color="primary">Button</Button>}>
-      <Menu>
+      <Dropdown.Menu>
         <Menu.Item id="item1">Menu Item1</Menu.Item>
         <Menu.Item id="item2">Menu Item2</Menu.Item>
         <Menu.Item id="item3">Menu Item3</Menu.Item>
         <Menu.Item id="item4">Menu Item4</Menu.Item>
-      </Menu>
+      </Dropdown.Menu>
     </Dropdown>
   </>;
 

@@ -10,10 +10,10 @@ export default function Dp2() {
           Menu Item1
         </Dropdown.Item>
         <Dropdown.Item onClick={(e) => {
-          console.log('click item2');
+          console.log('hello....');
           e.stopPropagation();
         }}>
-          Menu Item2
+          Don't close
         </Dropdown.Item>
         <Dropdown.Item onClick={() => console.log('click item3')}>
           Menu Item3

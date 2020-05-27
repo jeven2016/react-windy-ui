@@ -1,61 +1,109 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-} from 'react';
-import {isBlank, isNil} from '../Utils';
-import Menu from '../menu';
-import {Badge, Dropdown, Row} from '../index';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import Popup from '../popup/Popup';
 import Input from '../Input';
-import {IconArrowDown, IconArrowUp, IconChecked2, IconNoData} from '../Icons';
+import Menu from '../menu';
+import {
+  containsIgnoreCase,
+  convertToArray,
+  execute,
+  isBlank,
+  isCustomized,
+  isNil,
+} from '../Utils';
 import Element from '../common/Element';
-import Col from '../grid/Col';
-import {ActionType, reducer} from './SelectReducer';
-import {DropdownTriggerType} from '../common/Constants';
+import {IconArrowDown, IconArrowUp, IconChecked2, IconNoData} from '../Icons';
+import useInternalState from '../common/useInternalState';
+import {PopupCtrlType} from '../common/Constants';
+import clsx from 'clsx';
+import useMultipleRefs from '../common/UseMultipleRefs';
+import {animated, useSpring} from 'react-spring';
+import Item from '../menu/Item';
+
+const Option = React.forwardRef((props, ref) => {
+  const {value, children, text, ...otherProps} = props;
+
+  return <Menu.Item id={value} hasBackground
+                    ref={ref} {...otherProps}>
+    {children ? children : text}
+  </Menu.Item>;
+});
+
+Option.Left = Item.Left;
+Option.Center = Item.Center;
+Option.Right = Item.Right;
 
 const Select = React.forwardRef((props, ref) => {
   const {
-    block,
-    defaultValue,
+    className = 'select-menu popup',
+    children,
     placeholder,
-    triggerBy = 'click',
+    inputStyle,
     size = 'medium',
     disabled = false,
-    searchable = true,
+    searchable = false,
     autoWidth = true,
     multiple = false,
-    hasBorder = true,
-    style,
-    searchDelay,
-    noDataText = 'No Data',
-    onChange = () => {},
-    preRemove, //only works for multi-select, before removing a item
-    handleSearch,//a callback to decide what items will display
-    onSearch,
-    onOpen,
-    onClose,
-    children,
-    popupStyle,
-    active,
-    onActiveChange,
+    hasBorder = false,
+    hasBox = true,
+    activeBy = PopupCtrlType.click,
+    block,
+    defaultValue,
+    value,
+    onSelect,
+    onSearch, //customized searching
+    searchDelay = 300,
+    noDataText = 'Not Found',
+
+    arrowIcon = <IconArrowDown/>,
+    removeIcon,
+
+    defaultActive = false,
+    active, //whether to show the popup
+    onChange, //for changing active state
+
+    popupExtraClassName,
+    menuProps = {},
+    removable = true, //whether the search text can be removed
     ...otherProps
   } = props;
-  const inputRef = ref;
-  const menuRef = useRef(null);
-  const detectRef = useRef(null);
-  const multipleSelectRef = useRef(null);
-  const popupRef = useRef();
 
-  const [state, dispatch] = useReducer(reducer, {
-    showFilteredItems: false,
-    activeIcon: false,
-    searchedValue: null,
-    selectedItems: [],
+  //use a internal state to host the active state
+  const {state: isActive, setState: setActive, customized: customActive}
+      = useInternalState({
+    props,
+    stateName: 'active',
+    defaultState: defaultActive,
+    state: active,
   });
 
-  let width = 0;
+  //the search value corresponds to item's text, it won't be exposed to outside caller
+  const [searchedValue, setSearchedValue] = useState(null);
+
+  const [activeIcon, setActiveIcon] = useState(false);
+  const customSearch = isCustomized(props, 'onSearch');
+
+  const popupInstanceRef = useRef();
+  const ctrlRef = useRef();
+  const inputRef = useRef();
+  const menuRef = useRef();
+  const detectRef = useRef();
+  const searchTimer = useRef(null);
+
+  const multipleSelectRef = useMultipleRefs(ref, ctrlRef);
+
+  const {
+    state: selectedValue,
+    setState: setValue,
+    customized: customValue,
+  } = useInternalState({
+    props,
+    stateName: 'value',
+    defaultState: convertToArray(defaultValue),
+    state: convertToArray(value),
+  });
+
+  const ctrlStyle = searchable ? null : {cursor: 'pointer', ...inputStyle};
+
   useEffect(() => {
     if (!autoWidth || disabled) {
       return;
@@ -63,18 +111,15 @@ const Select = React.forwardRef((props, ref) => {
 
     const inputDomNode = inputRef.current;
     //adjust the input's width
-    if (multiple && !isBlank(state.searchedValue)) {
+    if (multiple && !isBlank(searchedValue)) {
       inputDomNode.style.width = detectRef.current.offsetWidth + 'px';
     }
 
     //adjust the menu's width
-    let rect;
-    if (multiple) {
-      rect = multipleSelectRef.current.getBoundingClientRect();
-    } else {
-      rect = inputDomNode.getBoundingClientRect();
-    }
-    width = rect.width;
+    let rect = multiple ? ctrlRef.current.getBoundingClientRect()
+        : inputDomNode.getBoundingClientRect();
+
+    const width = rect.width;
     if (width <= 0) {
       return;
     }
@@ -86,284 +131,270 @@ const Select = React.forwardRef((props, ref) => {
     }
   }, [disabled, autoWidth, multiple]);
 
-  const handleItemClick = (item, e) => {
-    if (!popupRef.current.isActive()) {
-      return;
-    }
-    const data = {
-      searchedValue: item.value,
-      multiple: multiple,
-      clickItem: item,
-      callback: () => {
-        onChange(item, e);
-      },
-    };
-
-    if (multiple) {
-      dispatch({
-        type: ActionType.multipleClickItem,
-        isSelectedByValue: isSelectedByValue,
-        data: {
-          ...data,
-          callback: (items) => {
-            onChange(items, e);
-          },
-        },
-      });
-      return;
-    }
-
-    dispatch({
-      type: ActionType.clickItem,
-      data: data,
-    });
-  };
-
   //get all items information
   const allItemsInfo = useMemo(() => {
     return React.Children.map(children, child => {
+      if (child.type !== Option) {
+        return null;
+      }
       return {
         value: child.props.value,
         text: child.props.text,
         children: child.props.children,
       };
-    });
+    }).filter(elem => !isNil(elem));
   }, [children]);
 
-  const findItemInfoByValue = (val) => {
-    return allItemsInfo.find(v => v.value === val);
+  const findItemInfo = useCallback((val) => {
+    return allItemsInfo.find(item => item.value === val);
+  }, [allItemsInfo]);
+
+  const checkSelected = (val) => {
+    return selectedValue.find(item => item === val);
   };
 
-  const isSelectedByValue = (val) => {
-    return state.selectedItems.find(item => item.value === val);
-  };
-
-  let getDefaultText = useCallback(() => {
-    const selectedItemInfo = findItemInfoByValue(defaultValue);
-    if (!isNil(selectedItemInfo)) {
-      const itemText = selectedItemInfo.text;
-      return isNil(itemText) ? selectedItemInfo.children : itemText;
-    }
-    return null;
-  }, [children, defaultValue]);
-
-  const getSelectedMenuItem = () => {
+  //get selected text for single selection
+  const getSelectedText = () => {
     if (multiple) {
-      return state.selectedItems.map(item => item.value);
+      throw new Error(
+          'The method getSelectedText shouldn\'t be called for multiple selection.');
     }
-
-    if (state.selectedItems.length === 0) {
-      return isNil(defaultValue) ? [] : [defaultValue];
-    } else {
-      return state.selectedItems.map(item => item.value);
+    if (selectedValue.length === 0) {
+      return null;
     }
+    const itemInfo = findItemInfo(selectedValue[0]);
+    return getText(itemInfo);
   };
 
-  //only for multi-select
-  const removeItem = (val, e) => {
-    dispatch({
-      type: ActionType.removeItem,
-      data: {
-        value: val,
-        preRemove: (val) => {
-          preRemove && preRemove(val, e);
-        },
-        callback: (items, e) => {
-          onChange(items, e);
-        },
-      },
-    });
-  };
-
-  const displayedItems = getSelectedMenuItem().map((val, index) => {
-    return <Badge key={val + index} type="tag" color="gray">
-      <span>{val}</span>
-      <span className="remove-icon" onClick={(e) => removeItem(val, e)}>×</span>
-    </Badge>;
-  });
+  //get the value of an Option
+  const getText = useCallback((itemInfo) => {
+    if (!itemInfo) {
+      return null;
+    }
+    return isNil(itemInfo.text)
+        ? itemInfo.children
+        : itemInfo.text;
+  }, []);
 
   //get input value to display
-  const getText = () => {
-    if (multiple && isBlank(state.searchedValue)) {
-      return '';
+  const displayText = useMemo(() => {
+    if (selectedValue.length === 0 || (multiple && isBlank(searchedValue))) {
+      return null;
     }
-    if (!isNil(state.searchedValue)) {
-      return state.searchedValue;
+    if (!isNil(searchedValue)) {
+      return searchedValue;
     }
 
-    if (state.selectedItems.length === 0) {
-      return getDefaultText();
-    }
-    return state.selectedItems[0].text;
-  };
-  const displayText = getText();
-  const inputStyle = searchable ? null : {cursor: 'pointer', ...style};
+    return getSelectedText();
+  }, [selectedValue, multiple, searchedValue, getSelectedText]);
 
-  const searchText = (e) => {
-    dispatch({
-      type: ActionType.search, data: {
-        searchedValue: e.target.value, selectedItem: null,
-        callback: onSearch,
-      },
-    });
-  };
+  //check whether the value partially equals to any item's value
+  const getItemsBySearchValue = useCallback((itemValue) => {
+    const childInfo = findItemInfo(itemValue);
+    return isNil(childInfo) ? false : containsIgnoreCase(searchedValue,
+        getText(childInfo));
+  }, [findItemInfo, getText, searchedValue]);
 
-  const contains = (value, comparedValue) => {
-    if (isNil(value) || isNil(comparedValue)) {
-      return false;
-    }
-    return comparedValue.toLowerCase().includes(value.toLowerCase());
-  };
-
+  //filter the items base on the searchValue
   const filterItems = useCallback(() => {
-    //if onSearch is defined, call this function and return the children processed by this callback
-    if (handleSearch) {
-      return handleSearch(state.searchedValue, children);
-    }
-    const newChild = children.filter(
-        (chd) => {
-          const childInfo = findItemInfoByValue(chd.props.value);
-          return contains(state.searchedValue,
-              isNil(childInfo.text) ? childInfo.children : childInfo.text);
-        });
+    return children.filter(
+        (chd) => getItemsBySearchValue(chd.props.value));
+  }, [children, getItemsBySearchValue]);
 
-    if (newChild.length === 0) {
-      return [];
-    }
-    return newChild;
-  }, [state.searchedValue, children, onSearch]);
+  const getDisplayItems = () => {
+    let items;
 
-  const convertToMultipleItem = (chdren) => {
+    //if onSearch is specified or no search text exists,  the items should be injected from outside
+    if (customSearch || isBlank(searchedValue)) {
+      items = children;
+    } else {
+      items = filterItems();
+    }
+
     if (!multiple) {
-      return chdren;
+      return items;
     }
-    return React.Children.map(chdren, oneChild => {
-      const childText = isNil(oneChild.props.text)
-          ? oneChild.props.children
-          : oneChild.props.text;
-
-      const childProps = {
-        ...oneChild.props,
-        text: childText,
-      };
-
+    return React.Children.map(items, oneChild => {
       const newChild = <>
-        <Option.Center>{childText}</Option.Center>
+        <Option.Center>{oneChild.props.children}</Option.Center>
         {
-          isSelectedByValue(oneChild.props.value)
+          checkSelected(oneChild.props.value)
               ? <Option.Right><IconChecked2/></Option.Right>
               : null
         }
       </>;
-      return React.cloneElement(oneChild, childProps, newChild);
+      return React.cloneElement(oneChild,
+          {...oneChild.props, customizedChildren: true}, newChild);
     });
   };
 
-  const getDisplayItems = () => {
-    if (!state.showFilteredItems || isBlank(state.searchedValue)) {
-      return convertToMultipleItem(children);
-    }
-
-    return convertToMultipleItem(filterItems());
-  };
   const finalItems = getDisplayItems();
 
-  const canClickClose = (isClickPopup, isClickCtrl) => {
-    //if it display no data or the multiple is set, the list won't be closed while clicking the list item
-    if (multiple || finalItems.length === 0) {
-      return false;
+  //search by value
+  const handleSearch = (e) => {
+    const inputVal = e.target.value;
+    clearTimeout(searchTimer.current);
+    setSearchedValue(inputVal);
+
+    if (!isActive) {
+      changeActive(true);
     }
-    return !isClickCtrl;
+
+    searchTimer.current = execute(() => {
+      //notify to search
+      if (customSearch) {
+        onSearch && onSearch(inputVal);
+      }
+    }, searchDelay);
   };
 
-  const getInput = () => {
-    const realPlaceholder = multiple ? null : placeholder;
+  const realPlaceHolder = useMemo(() => {
+    if (multiple) {
+      return placeholder;
+    }
 
+    return getSelectedText() || placeholder;
+  }, [multiple, placeholder, getSelectedText]);
+
+  //check whether the searchedValue is exactly same with any item's value
+  const searchHits = useMemo(() => {
+    if (!multiple && !isBlank(searchedValue)) {
+      //check whether the searchedValue equals to one of the items
+      return allItemsInfo.includes(
+          itemInfo => getText(itemInfo) === searchedValue);
+    }
+    return true;
+  }, [multiple, searchedValue, allItemsInfo, getText]);
+
+  const changeSearchValue = useCallback((nextValue) => {
+    setSearchedValue(nextValue);
+    onSearch && onSearch(nextValue);
+  }, [setSearchedValue, onSearch]);
+
+  // arrow icon
+  const arrowSpring = useSpring({
+    from: {transform: 'rotate(0deg) translate3d(0, -50%, 0)'},
+    to: {
+      transform: isActive
+          ? 'rotate(-180deg) translate3d(0, 50%, 0)'
+          : 'rotate(0) translate3d(0, -50%, 0)',
+    },
+    config: {clamp: true, mass: 1, tesion: 100, friction: 15},
+  });
+
+  const realIcon = useMemo(() => {
+    if (multiple) {
+      return null;
+    }
+
+    if (removable && !isBlank(searchedValue)) {
+      return <div className="icon-column">X</div>;
+    }
+    return <animated.div className="icon-column" style={arrowSpring}>
+      {arrowIcon}
+    </animated.div>;
+  }, [multiple, removable, searchedValue, arrowIcon, arrowSpring]);
+
+  const handleBlur = useCallback(() => {
+    //if no item's text is same with searchedValue
+    if (!searchHits) {
+      //clear
+      //async execution in order not to firstly show the updated menu items and then
+      //close the popup while searchedValue is changed,
+      execute(() => {
+        changeSearchValue(null);
+      }, searchDelay);
+    }
+  }, [searchHits, changeSearchValue, searchDelay]);
+
+  const changeActive = useCallback((next) => {
+    if (isActive === next) {
+      return;
+    }
+    if (!customActive) {
+      setActive(next);
+    }
+    onChange && onChange(next);
+  }, [isActive, customActive, setActive, onChange]);
+
+  const getCtrl = () => {
     const input = <>
-      <Input placeholder={realPlaceholder} readOnly={!searchable}
+      <Input placeholder={realPlaceHolder} readOnly={!searchable}
              ref={inputRef}
-             style={inputStyle}
-             {...otherProps}
+             style={ctrlStyle}
              value={displayText || ''}
-             onChange={searchText}
-             disabled={disabled}/>
+             onChange={handleSearch}
+             onBlur={handleBlur}
+      />
     </>;
     if (multiple) {
-      return <Element nativeType="span" ref={multipleSelectRef}
-                      className={multiple ? 'select-multiple' : null}>
+      return <span className='select-multiple'>
         <span className="select-multiple-content">
         {
-          displayedItems
+          // displayedItems
         }
           {input}
           <span ref={detectRef} className="search-text-detector">
-        {/*this used to detect the width of the input value in pixel*/}
-            {state.searchedValue}
-      </span>
+            {/*this used to detect the width of the input value in pixel*/}
+            {searchedValue}
+           </span>
         </span>
-      </Element>;
+      </span>;
     }
     return <Input.IconInput inputRef={inputRef} disabled={disabled}
                             block={block} size={size}>
       {input}
-      {state.activeIcon ? <IconArrowUp/> : <IconArrowDown/>}
+      {realIcon}
     </Input.IconInput>;
   };
 
-  const suffix = 'dropdown-menu select-menu ';
-  const menuBodyCls = hasBorder ? suffix + ' global-with-border' : suffix;
+  const clickItemHandler = (itemsArray, e) => {
+    if (itemsArray.length > 0) {
+      if (multiple) {
 
-  return <Dropdown disabled={disabled}
-                   ref={popupRef}
-                   active={active}
-                   onActiveChange={onActiveChange}
-                   selectable={true}
-                   triggerBy={triggerBy}
-                   margin={5}
-                   onOpen={onOpen}
-                   onDropdownAutoClose={canClickClose} //don't automately close the list while no data filtered
-                   onClose={onClose}
-                   bodyClassName={menuBodyCls}
-                   popupStyle={popupStyle}
-                   ownerRef={multiple ? multipleSelectRef : inputRef}
-                   onSelect={handleItemClick}>
-    <Dropdown.Title block={block} onClick={() => {inputRef.current.focus();}}>
-      {getInput()}
-    </Dropdown.Title>
-    {
-      (finalItems.length === 0) ?
-          <Element className="no-data">
-            <div>
-              <Row justify="center" aligin="center">
-                <Col>
-                  <IconNoData extraClassName="no-data-icon"/>
-                </Col>
-              </Row>
-              <Row justify="center" aligin="center">
-                <Col><span className="no-data-label">{noDataText}</span></Col>
-              </Row>
-            </div>
-          </Element>
-          :
-          <Menu block ref={menuRef} autoSelectItem={false}
-                hasBackground={true}
-                activeItems={getSelectedMenuItem()}>
-            <Menu.List>
-              {finalItems}
-            </Menu.List>
-          </Menu>
+      } else {
+        if (!customValue) {
+          setValue(itemsArray);
+          setSearchedValue(null);
+        }
+        onSelect && onSelect(itemsArray[0], e);
+      }
     }
-  </Dropdown>;
+  };
+
+  const getPopupBody = () => {
+    return finalItems.length === 0 ?
+        <Element className="no-data">
+          <IconNoData extraClassName="no-data-icon"/>
+          <span className="no-data-label">{noDataText}</span>
+        </Element>
+        : <Menu ref={menuRef} activeItems={selectedValue}
+                hasBox={false}
+                onSelect={clickItemHandler}
+                {...menuProps}>
+          {finalItems}
+        </Menu>;
+  };
+
+  const popupCntExtraCls = clsx(popupExtraClassName, {
+    'global-with-border': hasBorder,
+    'global-with-box': hasBox,
+  });
+
+  return <Popup
+      active={isActive}
+      onChange={changeActive}
+      ref={popupInstanceRef}
+      activeBy={activeBy}
+      className={className}
+      ctrlRef={(domNode) => ctrlRef.current = domNode}
+      ctrlNode={getCtrl()}
+      body={getPopupBody()}
+      popupExtraClassName={popupCntExtraCls}
+      {...otherProps}
+  />;
 });
 
-const Option = React.forwardRef((props, ref) => {
-  const {id, value, text, ...otherProps} = props;
-
-  return <Menu.Item id={id} value={value} text={text} hasBackground
-                    ref={ref} {...otherProps}/>;
-});
-Option.Left = Menu.Item.Left;
-Option.Center = Menu.Item.Center;
-Option.Right = Menu.Item.Right;
 Select.Option = Option;
+
 export default Select;

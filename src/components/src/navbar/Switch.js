@@ -9,11 +9,12 @@ const Switch = React.forwardRef((props, ref) => {
     className = 'button navbar-switch bg-transparent',
     onClick,
     type,
+    extraClassName,
     ...otherProps
   } = props;
   const context = useContext(NavbarContext);
 
-  let clsName = clsx(className,
+  let clsName = clsx(extraClassName, className,
       {'text color-white-hover': type === 'primary'});
 
   const click = useCallback((e) => {
@@ -22,7 +23,7 @@ const Switch = React.forwardRef((props, ref) => {
     } else {
       context.toggleList(e);
     }
-  }, [onClick, context.toggleList]);
+  }, [onClick, context]);
 
   return <Button className={clsName}
                  ref={ref}

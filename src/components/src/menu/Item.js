@@ -5,12 +5,15 @@ import {includes, isNil} from '../Utils';
 import {Action} from './MenuUtils';
 import PropTypes from 'prop-types';
 import {animated, useSpring} from 'react-spring';
+import {preventEvent} from '../event';
+import Element from '../common/Element';
 
 const Item = React.forwardRef((props, ref) => {
   const {
     className = 'menu-item',
     extraClassName,
     children,
+    customizedChildren = false, //whether to show the customized children and ignore the children parameter
     disabled,
     id,
     equitable = false,
@@ -60,6 +63,7 @@ const Item = React.forwardRef((props, ref) => {
 
   const clickHandler = (e) => {
     if (disabled) {
+      preventEvent(e);
       return;
     }
 
@@ -67,8 +71,8 @@ const Item = React.forwardRef((props, ref) => {
       ctx.dispatch({type: Action.clickHeader, id, e});
     }
 
-    ctx.onClickItem && ctx.onClickItem(id, e);
     onClick && onClick(e);
+    ctx.onClickItem && ctx.onClickItem(id, e);
   };
 
   const clsName = clsx(extraClassName, className, {
@@ -82,6 +86,10 @@ const Item = React.forwardRef((props, ref) => {
   });
 
   const content = useMemo(() => {
+    if (customizedChildren) {
+      return children;
+    }
+
     const iconCnt = icon ? <div className="item-icon">{icon}</div> : null;
     if (!directChild) {
       return <>
@@ -96,10 +104,24 @@ const Item = React.forwardRef((props, ref) => {
     </>;
   }, [directChild, icon, children, innerProps, show]);
 
-  return <div className={clsName} {...otherProps} onClick={clickHandler}>
+  return <div ref={ref} className={clsName} {...otherProps}
+              onClick={clickHandler}>
     {content}
   </div>;
 });
+
+Item.Left = React.forwardRef((props, ref) =>
+    <Element nativeType="span" className="left"
+             ref={ref} {...props}/>,
+);
+Item.Center = React.forwardRef((props, ref) =>
+    <Element nativeType="span" className="item-info"
+             ref={ref} {...props}/>,
+);
+Item.Right = React.forwardRef((props, ref) =>
+    <Element nativeType="span" className="right"
+             ref={ref} {...props}/>,
+);
 
 Item.propTypes = {
   equitable: PropTypes.bool,

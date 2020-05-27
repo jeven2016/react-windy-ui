@@ -352,3 +352,16 @@ export const setDisplay = (condition, value, ref) => {
     }
   }
 };
+
+/**
+ * Check whether the comparedValue includes value
+ * @param value
+ * @param comparedValue
+ * @returns {boolean}
+ */
+export const containsIgnoreCase = (value, comparedValue) => {
+  if (isNil(value) || isNil(comparedValue)) {
+    return false;
+  }
+  return comparedValue.toLowerCase().includes(value.toLowerCase());
+};

@@ -153,6 +153,7 @@ export const EventListener = {
   resize: 'resize',
   keyDown: 'keydown',
   scroll: 'scroll',
+  select: 'select',
 };
 
 export const ContainerId = {

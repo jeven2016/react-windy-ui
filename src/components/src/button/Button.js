@@ -58,9 +58,9 @@ Button.propTypes = {
   nativeType: PropTypes.oneOf(['button', 'reset', 'submit', 'a']), //the native html type, like 'button', 'reset' or 'submit'
   block: PropTypes.bool, //whether the button's width is '100%' and it occupies the whole row
   color: PropTypes.string, //the color, like "primary", "red"
-  className: PropTypes.string.required, //the class name of button
+  className: PropTypes.string, //the class name of button
   extraClassName: PropTypes.string, //the customized class need to add
-  disabled: PropTypes.bool.required, //disable this button
+  disabled: PropTypes.bool, //disable this button
   active: PropTypes.bool, // active this button
   onClick: PropTypes.func, //the click callback provided
   size: PropTypes.oneOf(['large', 'medium', 'small', '']), //the size of the button

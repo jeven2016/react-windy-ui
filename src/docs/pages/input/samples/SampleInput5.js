@@ -10,9 +10,9 @@ export default function SampleInput5(props) {
     <div className="doc doc-row">
       <Input.IconInput block>
         <Input placeholder="Searching"/>
-        <i className="svg icon">
+        <div className="icon-column">
           <Loader size="small" active={true}/>
-        </i>
+        </div>
 
       </Input.IconInput>
     </div>

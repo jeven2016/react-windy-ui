@@ -5,6 +5,7 @@ import {EventListener} from './common/Constants';
 import clsx from 'clsx';
 import useResizeObserver from './common/UseResizeObserver';
 import useMultipleRefs from './common/UseMultipleRefs';
+import PropTypes from 'prop-types';
 
 const Affix = React.forwardRef((props, ref) => {
 
@@ -114,5 +115,17 @@ const Affix = React.forwardRef((props, ref) => {
     </div>
   </div>;
 });
+
+Affix.propTypes = {
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  top: PropTypes.number,
+  bottom: PropTypes.number,
+  disabled: PropTypes.bool,
+  style: PropTypes.object,
+  children: PropTypes.node,
+  block: PropTypes.bool,
+  onChange: PropTypes.func,
+};
 
 export default Affix;
