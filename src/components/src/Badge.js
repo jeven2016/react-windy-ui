@@ -53,7 +53,7 @@ function Badge(props) {
   }
 
   return (
-      <div className={clsName} style={style}>
+      <div className={clsName} style={style} {...otherProps}>
         <div className="content" style={{
           display: activeBadge ? 'inline-flex' : 'none', ...contentBackground,
         }}>{badgeContent}</div>

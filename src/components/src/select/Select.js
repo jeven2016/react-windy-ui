@@ -5,7 +5,7 @@ import Menu from '../menu';
 import {
   containsIgnoreCase,
   convertToArray,
-  execute,
+  execute, includes,
   isBlank,
   isCustomized,
   isNil,
@@ -16,8 +16,11 @@ import useInternalState from '../common/useInternalState';
 import {PopupCtrlType} from '../common/Constants';
 import clsx from 'clsx';
 import useMultipleRefs from '../common/UseMultipleRefs';
-import {animated, useSpring} from 'react-spring';
+import {animated, useSpring, useTransition} from 'react-spring';
 import Item from '../menu/Item';
+import {Trail} from 'react-spring/renderprops-universal';
+import Badge from '../Badge';
+import {preventEvent} from '../event';
 
 const Option = React.forwardRef((props, ref) => {
   const {value, children, text, ...otherProps} = props;
@@ -42,7 +45,7 @@ const Select = React.forwardRef((props, ref) => {
     disabled = false,
     searchable = false,
     autoWidth = true,
-    multiple = false,
+    multiSelect = false,
     hasBorder = false,
     hasBox = true,
     activeBy = PopupCtrlType.click,
@@ -60,6 +63,7 @@ const Select = React.forwardRef((props, ref) => {
     defaultActive = false,
     active, //whether to show the popup
     onChange, //for changing active state
+    onRemove,
 
     popupExtraClassName,
     menuProps = {},
@@ -111,12 +115,13 @@ const Select = React.forwardRef((props, ref) => {
 
     const inputDomNode = inputRef.current;
     //adjust the input's width
-    if (multiple && !isBlank(searchedValue)) {
-      inputDomNode.style.width = detectRef.current.offsetWidth + 'px';
+    if (multiSelect && !isBlank(searchedValue)) {
+      const width = detectRef.current.offsetWidth;
+      inputDomNode.style.width = width > 16 ? width + 3 + 'px' : 16;
     }
 
     //adjust the menu's width
-    let rect = multiple ? ctrlRef.current.getBoundingClientRect()
+    let rect = multiSelect ? ctrlRef.current.getBoundingClientRect()
         : inputDomNode.getBoundingClientRect();
 
     const width = rect.width;
@@ -129,7 +134,7 @@ const Select = React.forwardRef((props, ref) => {
         parentNode.style.width = `${width}px`;
       }
     }
-  }, [disabled, autoWidth, multiple]);
+  }, [searchedValue, disabled, autoWidth, multiSelect]);
 
   //get all items information
   const allItemsInfo = useMemo(() => {
@@ -153,19 +158,6 @@ const Select = React.forwardRef((props, ref) => {
     return selectedValue.find(item => item === val);
   };
 
-  //get selected text for single selection
-  const getSelectedText = () => {
-    if (multiple) {
-      throw new Error(
-          'The method getSelectedText shouldn\'t be called for multiple selection.');
-    }
-    if (selectedValue.length === 0) {
-      return null;
-    }
-    const itemInfo = findItemInfo(selectedValue[0]);
-    return getText(itemInfo);
-  };
-
   //get the value of an Option
   const getText = useCallback((itemInfo) => {
     if (!itemInfo) {
@@ -176,9 +168,22 @@ const Select = React.forwardRef((props, ref) => {
         : itemInfo.text;
   }, []);
 
+  //get selected text for single selection
+  const getSelectedText = useCallback(() => {
+    if (multiSelect) {
+      throw new Error(
+          'The method getSelectedText shouldn\'t be called for multiple selection.');
+    }
+    if (selectedValue.length === 0) {
+      return null;
+    }
+    const itemInfo = findItemInfo(selectedValue[0]);
+    return getText(itemInfo);
+  }, [multiSelect, selectedValue, findItemInfo, getText]);
+
   //get input value to display
   const displayText = useMemo(() => {
-    if (selectedValue.length === 0 || (multiple && isBlank(searchedValue))) {
+    if (selectedValue.length === 0 || (multiSelect && isBlank(searchedValue))) {
       return null;
     }
     if (!isNil(searchedValue)) {
@@ -186,7 +191,7 @@ const Select = React.forwardRef((props, ref) => {
     }
 
     return getSelectedText();
-  }, [selectedValue, multiple, searchedValue, getSelectedText]);
+  }, [selectedValue, multiSelect, searchedValue, getSelectedText]);
 
   //check whether the value partially equals to any item's value
   const getItemsBySearchValue = useCallback((itemValue) => {
@@ -211,7 +216,7 @@ const Select = React.forwardRef((props, ref) => {
       items = filterItems();
     }
 
-    if (!multiple) {
+    if (!multiSelect) {
       return items;
     }
     return React.Children.map(items, oneChild => {
@@ -249,22 +254,22 @@ const Select = React.forwardRef((props, ref) => {
   };
 
   const realPlaceHolder = useMemo(() => {
-    if (multiple) {
+    if (multiSelect) {
       return placeholder;
     }
 
     return getSelectedText() || placeholder;
-  }, [multiple, placeholder, getSelectedText]);
+  }, [multiSelect, placeholder, getSelectedText]);
 
   //check whether the searchedValue is exactly same with any item's value
   const searchHits = useMemo(() => {
-    if (!multiple && !isBlank(searchedValue)) {
+    if (!isBlank(searchedValue)) {
       //check whether the searchedValue equals to one of the items
       return allItemsInfo.includes(
           itemInfo => getText(itemInfo) === searchedValue);
     }
     return true;
-  }, [multiple, searchedValue, allItemsInfo, getText]);
+  }, [multiSelect, searchedValue, allItemsInfo, getText]);
 
   const changeSearchValue = useCallback((nextValue) => {
     setSearchedValue(nextValue);
@@ -283,7 +288,7 @@ const Select = React.forwardRef((props, ref) => {
   });
 
   const realIcon = useMemo(() => {
-    if (multiple) {
+    if (multiSelect) {
       return null;
     }
 
@@ -293,7 +298,7 @@ const Select = React.forwardRef((props, ref) => {
     return <animated.div className="icon-column" style={arrowSpring}>
       {arrowIcon}
     </animated.div>;
-  }, [multiple, removable, searchedValue, arrowIcon, arrowSpring]);
+  }, [multiSelect, removable, searchedValue, arrowIcon, arrowSpring]);
 
   const handleBlur = useCallback(() => {
     //if no item's text is same with searchedValue
@@ -317,7 +322,34 @@ const Select = React.forwardRef((props, ref) => {
     onChange && onChange(next);
   }, [isActive, customActive, setActive, onChange]);
 
+  const selectedItems = useMemo(() => {
+    return selectedValue.map(findItemInfo);
+  }, [selectedValue, findItemInfo]);
+
+  const tran = useTransition(selectedItems, item => item.value, {
+    from: {transform: 'scale(0.5)'},
+    enter: {transform: 'scale(1)'},
+    leave: {transform: 'scale(0.5)'},
+    config: {clamp: true, mass: 1, tesion: 100, friction: 15},
+  });
+
+  const BadgeTag = animated(Badge);
+
+  const focusInput = useCallback(() => {
+    inputRef.current.focus();
+  }, [inputRef]);
+
+  const removeItem = (value, e) => {
+    alert('what') //todo
+    if (!customValue) {
+      const rest = selectedValue.filter(val => val !== value);
+      setValue(rest);
+    }
+    onRemove && onRemove(value, e);
+  };
+
   const getCtrl = () => {
+
     const input = <>
       <Input placeholder={realPlaceHolder} readOnly={!searchable}
              ref={inputRef}
@@ -327,19 +359,28 @@ const Select = React.forwardRef((props, ref) => {
              onBlur={handleBlur}
       />
     </>;
-    if (multiple) {
-      return <span className='select-multiple'>
+    if (multiSelect) {
+      return <span className='select-multiple' onClick={focusInput}>
         <span className="select-multiple-content">
         {
-          // displayedItems
+          tran.map(({item, props: tranProps, key}) => (
+              <BadgeTag type="tag" color="gray"
+                        key={key}
+                        style={tranProps}>
+                <span onClick={()=>alert('fuck')}>{getText(item)}</span>
+                <span className="remove-icon"
+                      onClick={(e) => {removeItem(item.value, e);}}>×</span>
+              </BadgeTag>
+
+          ))
         }
           {input}
-          <span ref={detectRef} className="search-text-detector">
-            {/*this used to detect the width of the input value in pixel*/}
+          <span ref={detectRef} className='search-text-detector'>
+        {/*this used to detect the width of the input value in pixel*/}
             {searchedValue}
-           </span>
-        </span>
-      </span>;
+          </span>
+          </span>
+          </span>;
     }
     return <Input.IconInput inputRef={inputRef} disabled={disabled}
                             block={block} size={size}>
@@ -348,17 +389,21 @@ const Select = React.forwardRef((props, ref) => {
     </Input.IconInput>;
   };
 
-  const clickItemHandler = (itemsArray, e) => {
-    if (itemsArray.length > 0) {
-      if (multiple) {
-
-      } else {
-        if (!customValue) {
-          setValue(itemsArray);
-          setSearchedValue(null);
-        }
-        onSelect && onSelect(itemsArray[0], e);
+  const selectHandler = (itemsArray, e) => {
+    if (multiSelect) {
+      if (!isActive) {
+        changeActive(true);
       }
+      //prevent the popup from being closed
+      preventEvent(e);
+    }
+
+    if (itemsArray.length > 0) {
+      if (!customValue) {
+        setValue(itemsArray);
+        setSearchedValue(null);
+      }
+      onSelect && onSelect(itemsArray[0], e);
     }
   };
 
@@ -370,7 +415,8 @@ const Select = React.forwardRef((props, ref) => {
         </Element>
         : <Menu ref={menuRef} activeItems={selectedValue}
                 hasBox={false}
-                onSelect={clickItemHandler}
+                multiSelect={multiSelect}
+                onSelect={selectHandler}
                 {...menuProps}>
           {finalItems}
         </Menu>;
@@ -398,3 +444,4 @@ const Select = React.forwardRef((props, ref) => {
 Select.Option = Option;
 
 export default Select;
+;

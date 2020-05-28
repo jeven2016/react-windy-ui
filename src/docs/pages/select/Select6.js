@@ -4,7 +4,7 @@ import {Select, Divider} from 'react-windy-ui';
 export default function Select6() {
   return <Select style={{width: '10rem'}}
                  defaultValue="shanghai"
-                 multiple
+                 multiSelect={true}
                  searchable={true}
                  onChange={(next) => console.log(`state changed to : ${next}`)}>
     <Select.Option value="beijing">
