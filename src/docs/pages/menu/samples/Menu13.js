@@ -3,8 +3,8 @@ import {IconList, Menu, Radio, RadioGroup, Toggle} from 'react-windy-ui';
 
 export default function Menu13() {
   const [type, setType] = useState('normal');
-  const [compact, setCompact] = useState(false);
-  const [multiSelect, setMultiSelect] = useState(true);
+  const [hasBox, setHasBox] = useState(true);
+  const [hasArrow, setHasArrow] = useState(true);
   const [bottomBar, setBottomBar] = useState(true);
   return <>
     <div className="doc doc-row">
@@ -17,74 +17,55 @@ export default function Menu13() {
       </RadioGroup>
     </div>
     <div className="doc doc-row">
-      <Toggle active={compact} onChange={active => setCompact(active)}
-              content={{on: 'Compact', off: 'Compact'}}/>
+      <Toggle active={hasArrow} onChange={active => setHasArrow(active)}
+              content={{on: 'Arrow', off: 'Arrow'}}/>
     </div>
     <div className="doc doc-row">
-      <Toggle active={multiSelect} onChange={active => setMultiSelect(active)}
-              content={{on: 'Multi-Select', off: 'Multi-Select'}}/>
+      <Toggle active={hasBox} onChange={active => setHasBox(active)}
+              content={{on: 'Box Shadow', off: 'Box Shadow'}}/>
     </div>
+
+
     <div className="doc doc-row">
       <Toggle active={bottomBar} onChange={active => setBottomBar(active)}
               content={{on: 'Bottom Bar', off: 'Bottom Bar'}}/>
     </div>
-    <div className="doc doc-row" style={{width: '20rem'}}>
-      <Menu defaultActiveItems={['item1', 'item2']}
-            multiSelect={multiSelect}
-            direction="vertical"
-            compact={compact}
-          // defaultOpenedMenus={['sub1','sub2']}
-            onOpenedMenu={(data) => console.log(`open==${data}`)}
-            onSelect={(data, e) => console.log(`select=${data}`)}
+    <div className="doc doc-row" style={{width: '50%'}}>
+      <Menu hasBox={hasBox} hasArrow={hasArrow}
             type={type}>
         <Menu.SubMenu header="SubMenu 1" id="sub1" icon={<IconList/>}
                       hasBottomBar={bottomBar}>
-          <Menu.Item id="item3">
+          <Menu.Item id="item3" hasBottomBar={bottomBar}>
             Menu item3
           </Menu.Item>
-          <Menu.Item id="item4">
+          <Menu.Item id="item4" hasBottomBar={bottomBar}>
             Menu item4
           </Menu.Item>
-          <Menu.Item id="item5">
+          <Menu.Item id="item5" hasBottomBar={bottomBar}>
             Menu item5
           </Menu.Item>
-          <Menu.Item id="item6">
+          <Menu.Item id="item6" hasBottomBar={bottomBar}>
             Menu item6
           </Menu.Item>
-          <Menu.Item id="item7">
+          <Menu.Item id="item7" hasBottomBar={bottomBar}>
             Menu item7
           </Menu.Item>
-          <Menu.Item id="item8">
+          <Menu.Item id="item8" hasBottomBar={bottomBar}>
             Menu item8
           </Menu.Item>
-          <Menu.SubMenu header="SubMenu 2" id="sub2">
-            <Menu.Item id="item9">
-              Menu item9
-            </Menu.Item>
-            <Menu.Item id="item10">
-              Menu item10
-            </Menu.Item>
-            <Menu.Item id="item11">
-              Menu item11
-            </Menu.Item>
-            <Menu.Item id="item12">
-              Menu item12
-            </Menu.Item>
-          </Menu.SubMenu>
         </Menu.SubMenu>
-        <Menu.SubMenu header="SubMenu 3" id="sub3" icon={<IconList/>}
-                      hasBottomBar={bottomBar}>
-          <Menu.Item id="item13">
-            Menu item13
+        <Menu.SubMenu header="SubMenu 2" id="sub2" hasBottomBar={bottomBar}>
+          <Menu.Item id="item9" hasBottomBar={bottomBar}>
+            Menu item9
           </Menu.Item>
-          <Menu.Item id="item14">
-            Menu item14
+          <Menu.Item id="item10" hasBottomBar={bottomBar}>
+            Menu item10
           </Menu.Item>
-          <Menu.Item id="item15">
-            Menu item15
+          <Menu.Item id="item11" hasBottomBar={bottomBar}>
+            Menu item11
           </Menu.Item>
-          <Menu.Item id="item16">
-            Menu item16
+          <Menu.Item id="item12" hasBottomBar={bottomBar}>
+            Menu item12
           </Menu.Item>
         </Menu.SubMenu>
       </Menu>

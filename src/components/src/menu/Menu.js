@@ -19,18 +19,20 @@ import useEvent from '../common/UseEvent';
  */
 const Menu = React.forwardRef((props, ref) => {
   const {
+    className = 'menu',
+    extraClassName,
     hasBox = true,
     hasBorderRadius = true,
     hasArrow = true,
     collapsable = true,
-    justify = JustifyContentType.start,
+    justify = 'start',
     direction = MenuDirection.vertical.key,
     type = 'normal',
     popupSubMenu = false,
     children,
     autoIndent = true,
     indentUnit = 'rem',
-    indentation = 1,
+    indentation = 1.5,
     onSelect,
     onClickItem,
     multiSelect = false,
@@ -40,11 +42,10 @@ const Menu = React.forwardRef((props, ref) => {
     defaultOpenedMenus,
     openedMenus,
     onOpenedMenu, //invoked by opening / closing submenu
-    delayMouseOver,
     selectable = true,
     ...otherProps
   } = props;
-  const clsName = clsx('menu', JustifyContentType[justify]);
+  const clsName = clsx(extraClassName, className, JustifyContentType[justify]);
   const menuRef = useRef(null);
   const multiRef = useMultipleRefs(ref, menuRef);
 
@@ -275,6 +276,8 @@ const Menu = React.forwardRef((props, ref) => {
 });
 
 Menu.propTypes = {
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
   hasBox: PropTypes.bool,
   hasBorderRadius: PropTypes.bool,
   hasArrow: PropTypes.bool,

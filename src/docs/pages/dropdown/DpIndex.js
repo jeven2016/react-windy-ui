@@ -12,10 +12,15 @@ import Dp5 from './Dp5';
 const markdownMapping = {
   Title: 'TITLE',
   Footer: 'FOOTER',
+
+  Dp1: 'Dp1',
+  Dp2: 'Dp2',
+  Dp3: 'Dp3',
+  Dp4: 'Dp4',
+  Dp5: 'Dp5',
 };
 
 const componentMapping = {
-  // TransitionTest: <TransitionTest/>,
   Dp1: <Dp1/>,
   Dp2: <Dp2/>,
   Dp3: <Dp3/>,
@@ -23,7 +28,7 @@ const componentMapping = {
   Dp5: <Dp5/>,
 };
 
-export default function DropdownIndex(props) {
+export default function DpIndex(props) {
   return <DocPage
       importFunc={() => import('./doc.md')}
       componentMapping={componentMapping}

@@ -20,9 +20,9 @@ export const defaultComparator = (preRect, currentRect) => {
 
 /**
  * if onResize is passed into this hook, it means you want to handle the rect in your callback
- * instead of the returned rect object.
+ * instead of returning a rect object.
  * if no onResize is passed into this hook, it means you want the hook to return the rect object and
- * don't need to call the callback even though the onResize is passed.
+ * don't need to call the callback even though the onResize is passed in.
  *
  * note: you cannot get the latest state in ResizeObserver' callback that stored by useState hook,
  *       a alternative is to access the state using Ref

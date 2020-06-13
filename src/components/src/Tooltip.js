@@ -13,6 +13,7 @@ const Tooltip = React.forwardRef((props, ref) => {
     extraClassName,
     position = 'top',
     body,
+    zIndex = 2000,
     offset = 10,
     children,
     ...otherProps
@@ -50,6 +51,7 @@ const Tooltip = React.forwardRef((props, ref) => {
       body={popupBody}
       hasBorder={false}
       hasBox={true}
+      zIndex={zIndex}
   />;
 
 });

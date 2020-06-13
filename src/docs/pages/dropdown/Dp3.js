@@ -10,8 +10,7 @@ export default function Dp3() {
           position="bottomRight"
           title={<Button color="green"
                          hasMinWidth={false}><IconArrowDown/></Button>}
-          activeBy="click"
-          onSelect={(id, e) => console.log(`${id} is selected`)}>
+          activeBy="click">
         <Dropdown.Menu type="primary">
           <Dropdown.Item id="item1">Menu Item1</Dropdown.Item>
           <Dropdown.Item id="item2">Menu Item2</Dropdown.Item>
@@ -27,8 +26,7 @@ export default function Dp3() {
           position="bottomRight"
           title={<Button color="green"
                          hasMinWidth={false}><IconArrowDown/></Button>}
-          activeBy="click"
-          onSelect={(id, e) => console.log(`${id} is selected`)}>
+          activeBy="click">
         <Dropdown.Menu type="primary">
           <Dropdown.Item id="item1">Menu Item1</Dropdown.Item>
           <Dropdown.Item id="item2">Menu Item2</Dropdown.Item>

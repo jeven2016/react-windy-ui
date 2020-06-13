@@ -13,6 +13,7 @@ import useMultipleRefs from '../common/UseMultipleRefs';
 import {MenuContext} from '../common/Context';
 import {execute, includes, isNil} from '../Utils';
 import PropTypes from 'prop-types';
+import {preventEvent} from '../event';
 
 /**
  * SubMenu Component
@@ -25,7 +26,7 @@ const BaseMenu = React.forwardRef((props, ref) => {
     children,
     icon,
     popupSubMenu = false,
-    popupSubMenuPostion = 'right',
+    popupSubMenuPosition = 'right',
     blockList = false,
     rootMenu = false,
     hasBottomBar = false,
@@ -47,6 +48,12 @@ const BaseMenu = React.forwardRef((props, ref) => {
       setCollapse(pre => { setCollapse(!pre); });
       return;
     }
+
+    if (popupSubMenu && internalRef.current.contains(e.target)) {
+      preventEvent(e);//do not fire the document's event listener
+      return;
+    }
+
     //the id should exists in the list ,and then it can be removed that means to collapse the panel
     const toCollapse = getState().openList.includes(id);
 
@@ -129,7 +136,7 @@ const BaseMenu = React.forwardRef((props, ref) => {
 
       <MenuList
           popupSubMenu={popupSubMenu}
-          popupSubMenuPostion={popupSubMenuPostion}
+          popupSubMenuPosition={popupSubMenuPosition}
           collapse={isNil(collapse) ? !open : collapse}
           content={children}
           handleMouseEnter={mouseEnterHandler}
@@ -147,7 +154,7 @@ BaseMenu.propTypes = {
   className: PropTypes.string,
   icon: PropTypes.node,
   popupSubMenu: PropTypes.bool,
-  popupSubMenuPostion: PropTypes.string,
+  popupSubMenuPosition: PropTypes.string,
   blockList: PropTypes.bool,
   rootMenu: PropTypes.bool,
   hasBottomBar: PropTypes.bool,

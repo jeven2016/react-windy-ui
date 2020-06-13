@@ -1,38 +1,56 @@
-import React, {useRef, useState} from 'react';
-import {Select, Divider} from 'react-windy-ui';
+import React, {useMemo, useState} from 'react';
+import {Select} from 'react-windy-ui';
 
 export default function Select4() {
-  const [active, setActive] = useState(true);
-  const currentValue = useRef(1);
+  //the items count
+  const count = 15;
 
-  const change = (next) => {
-    console.log('changed to: ' + next);
-    if (!next && currentValue.current !== 1) {
+  //generate the items for selection
+  const items = useMemo(() => {
+    return [...Array(count).keys()].map((key, index) =>
+        <Select.Option key={key} value={key}>{`Option ${key}`}</Select.Option>,
+    );
+  }, [count]);
+
+  const [itemList, setItemList] = useState(items);
+  const [showLoader, setShowLoader] = useState(false);
+
+  //customized search function
+  const search = (value) => {
+    console.log('search ' + value);
+
+    //if the value is blank, show the original items
+    if (value == null || /^\s*$/.test(value)) {
+      setItemList(items);
       return;
     }
-    setActive(next);
-  };
 
-  const select = (value) => {
-    currentValue.current = value;
+    //let Select to show a loading indicator
+    setShowLoader(true);
+
+    setTimeout(() => {
+      //filter a list of items and ecch item's text should contain the searched value
+      let list = items.filter(
+          item => {
+            return item.props.children.toLowerCase().
+                includes(value.toLowerCase());
+
+          });
+      setItemList(list);
+      setShowLoader(false);
+    }, 1000);
+
   };
 
   return <>
-    <Select style={{width: '10rem'}}
+    <Select popupBodyStyle={{height: '20rem', overflow: 'auto'}}
             activeBy="hover"
-            defaultValue={currentValue.current}
-            active={active}
-            onChange={change}
-            onSelect={select}>
-      <Select.Option value={0}>Won't close1</Select.Option>
-      <Divider/>
-      <Select.Option value={1}>Close</Select.Option>
-      <Divider/>
-      <Select.Option value={2}>Won't close2</Select.Option>
-      <Divider/>
-      <Select.Option value={3}>Won't close3</Select.Option>
-      <Divider/>
-      <Select.Option value={4}>Won't close4</Select.Option>
+            defaultValue={0}
+            searchable
+            showLoader={showLoader}
+            onSearch={search}
+            onSelect={(val) => console.log(`You just selected ${val}`)}>
+      {itemList}
     </Select>
   </>;
 

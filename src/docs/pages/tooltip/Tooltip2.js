@@ -15,7 +15,7 @@ const createTooltip = (text, position) => {
   </Tooltip>;
 };
 
-export default function Tooltip_all() {
+export default function Tooltip2() {
 
   return <>
     <div>

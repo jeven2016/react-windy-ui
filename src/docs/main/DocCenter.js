@@ -11,10 +11,10 @@ import RadioIndex from '../pages/radio/RadioIndex';
 import ToggleIndex from '../pages/toggle/ToggleIndex';
 import CollapseIndex from '../pages/collapse/CollapseIndex';
 import MenuIndex from '../pages/menu/MenuIndex';
-import DropdownIndex from '../pages/dropdown/DropdownIndex';
 import PopoverIndex from '../pages/popover/PopoverIndex';
 import TooltipIndex from '../pages/tooltip/TooltipIndex';
 import SelectIndex from '../pages/select/SelectIndex';
+import DpIndex from '../pages/dropdown/DpIndex';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -25,7 +25,7 @@ function DocCenter(props) {
   return <>
 
     <HomeHeader/>
-    <Row style={{padding: '2rem 0 0'}}>
+    <Row style={{padding: '1rem 0 0 0'}}>
       <Col mdOffset={1} md={2}>
         <Affix top={90}>
           <DocMenu/>
@@ -57,7 +57,7 @@ function DocCenter(props) {
                 <MenuIndex/>
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/dropdown`}>
-                <DropdownIndex/>
+                <DpIndex/>
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/popover`}>
                 <PopoverIndex/>

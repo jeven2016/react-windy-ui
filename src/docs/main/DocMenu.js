@@ -46,7 +46,7 @@ export default function DocMenu(props) {
     <Menu.SubMenu header="弹出框" id="pop">
       <Menu.Item id="dropdown">
         <Link to={`${url}/dropdown`}>
-          下拉框 Dropdown
+          下拉菜单 Dropdown
         </Link>
       </Menu.Item>
       <Menu.Item id="popover">

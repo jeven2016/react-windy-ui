@@ -3,7 +3,7 @@ import {Collapse} from 'react-windy-ui';
 
 export default function Collapse2() {
   const comp = <>
-    <Collapse accordion={false} defaultActive={[1]}>
+    <Collapse defaultActive={[1]}>
       <Collapse.Item header="Header1" hasBackground value={1}>
         <div style={{padding: '1rem'}}>
           This is a panel....<br/>

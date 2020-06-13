@@ -11,7 +11,7 @@ import {setDisplay} from '../Utils';
 export default function MenuList(props) {
   const {
     popupSubMenu = false,
-    popupSubMenuPostion,
+    popupSubMenuPosition,
     collapse,
     content,
     startOffset = 20,
@@ -25,12 +25,12 @@ export default function MenuList(props) {
 
   const itemListClsName = clsx('item-list', {
     'popup-list': popupSubMenu,
-    [popupSubMenuPostion]: popupSubMenu && popupSubMenuPostion,
+    [popupSubMenuPosition]: popupSubMenu && popupSubMenuPosition,
     [ctx.type]: popupSubMenu && ctx.type,
     block: blockList,
   });
 
-  const isBottomPos = SubMenuDirection.bottom.key === popupSubMenuPostion;
+  const isBottomPos = SubMenuDirection.bottom.key === popupSubMenuPosition;
 
   //the criteria:
   // 1. when the menu is compact:
@@ -88,7 +88,7 @@ export default function MenuList(props) {
 
 MenuList.propTypes = {
   popupSubMenu: PropTypes.bool,
-  popupSubMenuPostion: PropTypes.string,
+  popupSubMenuPosition: PropTypes.string,
   collapse: PropTypes.bool,
   content: PropTypes.node,
   startOffset: PropTypes.number,

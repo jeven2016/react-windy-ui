@@ -4,6 +4,7 @@ import {animated, useSpring} from 'react-spring';
 
 import useResizeObserver from '../common/UseResizeObserver';
 import {isNil} from '../Utils';
+import PropTypes from 'prop-types';
 
 const CollapsePanel = React.forwardRef((props, ref) => {
   const {
@@ -11,7 +12,6 @@ const CollapsePanel = React.forwardRef((props, ref) => {
     collapse = true,
     className = 'collapse-panel',
     children,
-    value,
     style,
     innerStyle,
     height: panelHeight,
@@ -72,5 +72,17 @@ const CollapsePanel = React.forwardRef((props, ref) => {
     </div>
   </animated.div>;
 });
+
+CollapsePanel.propTypes = {
+  className: PropTypes.string, //the class name of button
+  extraClassName: PropTypes.string, //the customized class need to add
+  collapse: PropTypes.bool,
+  children: PropTypes.node,
+  style: PropTypes.object,
+  innerStyle: PropTypes.object,
+  height: PropTypes.number,
+  heightIncrement: PropTypes.number,
+  autoScaleHeight: PropTypes.bool,
+};
 
 export default CollapsePanel;

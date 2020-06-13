@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Tooltip, Button, Toggle} from 'react-windy-ui';
 
-export default function Tooltip_active() {
+export default function Tooltip3() {
   const [active, setActive] = useState(true);
   const [locked, setLocked] = useState(true);
 
@@ -15,7 +15,7 @@ export default function Tooltip_active() {
       <Tooltip position="top" header="Header" defaultActive={true}
                body={<span>This is a tooltip</span>}>
         <Button outline={true} color="blue"
-                style={{marginLeft: '1rem'}}>Top</Button>
+                style={{marginLeft: '1rem'}}>Default Active</Button>
       </Tooltip>
 
       <Tooltip position="top" header="Header"

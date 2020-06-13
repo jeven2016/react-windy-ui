@@ -192,7 +192,7 @@ body {
   }
 
   &.page-container {
-    padding: 3rem;
+    padding: 2rem;
   }
 
   &.btn-area {
@@ -318,6 +318,10 @@ body {
 .site-icon {
   color: rgb(73, 184, 71);
   animation: rotation infinite 5s linear;
+}
+
+ul{
+  list-style: none;
 }
 
 @keyframes rotation {

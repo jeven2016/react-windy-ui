@@ -1,44 +1,24 @@
 import React from 'react';
 import {Menu} from 'react-windy-ui';
 
+const ItemStyle = {
+  lineHeight: '3.2rem',
+};
+
 export default function Menu7() {
   return <>
-    <div className="doc doc-row">
-      <Menu defaultActiveItems={['item1']}
-            direction="horizontal">
-        <Menu.Item id="item1" hasBackground hasBottomBar>
-          Menu Item1
-        </Menu.Item>
-        <Menu.Item id="item2" hasBackground hasBottomBar>
-          Menu Item2
-        </Menu.Item>
-        <Menu.Item id="item3" hasBackground hasBottomBar>
-          Menu Item3
-        </Menu.Item>
-        <Menu.Item id="item4" hasBackground hasBottomBar>
-          Menu Item4
-        </Menu.Item>
-      </Menu>
-    </div>
-
-    <div className="doc doc-row">
-      <Menu defaultActiveItems={['item1']}
-            type="dark"
-            direction="horizontal">
-        <Menu.Item id="item1">
-          Menu Item1
-        </Menu.Item>
-        <Menu.Item id="item2">
-          Menu Item2
-        </Menu.Item>
-        <Menu.Item id="item3">
-          Menu Item3
-        </Menu.Item>
-        <Menu.Item id="item4">
-          Menu Item4
-        </Menu.Item>
-      </Menu>
-    </div>
+    <Menu type="dark"
+          direction="horizontal">
+      <Menu.Item id="item1" style={ItemStyle}>
+        Menu Item1
+      </Menu.Item>
+      <Menu.Item id="item2" style={ItemStyle}>
+        Menu Item2
+      </Menu.Item>
+      <Menu.Item id="item3" style={ItemStyle}>
+        Menu Item3
+      </Menu.Item>
+    </Menu>
   </>;
 
 }

@@ -3,9 +3,10 @@ import CollapsePanel from './CollapsePanel';
 import Item from './Item';
 import clsx from 'clsx';
 import useInternalActive from '../common/useInternalActive';
-import {isNil, convertToArray} from '../Utils';
+import {convertToArray, isNil} from '../Utils';
 import {CollapseContext} from '../common/Context';
 import useInternalState from '../common/useInternalState';
+import PropTypes from 'prop-types';
 
 const Collapse = React.forwardRef((props, ref) => {
   const {
@@ -82,6 +83,23 @@ const Collapse = React.forwardRef((props, ref) => {
     </CollapseContext.Provider>
   </div>;
 });
+
+Collapse.propTypes = {
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  defaultActive: PropTypes.arrayOf(PropTypes.number, PropTypes.string),
+  onChange: PropTypes.func,
+  active: PropTypes.arrayOf(PropTypes.number, PropTypes.string),
+  accordion: PropTypes.bool,
+  hasBorder: PropTypes.bool,
+  hasBox: PropTypes.bool,
+  hasCollapseIcon: PropTypes.bool,
+  collapseIcon: PropTypes.node,
+
+  children: PropTypes.node,
+  iconPosition: PropTypes.string,
+
+};
 
 Collapse.Panel = CollapsePanel;
 Collapse.Item = Item;

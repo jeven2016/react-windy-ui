@@ -4,7 +4,7 @@ import {Collapse, Divider, Toggle} from 'react-windy-ui';
 export default function Collapse5() {
   const [leftIcon, setLeftIcon] = useState('left');
 
-  const comp = <>
+  return <>
     <div className="doc doc-row">
       <Toggle onChange={active => setLeftIcon(active ? 'right' : 'left')}
               content={{on: 'Right Icon', off: 'Left Icon'}}/>
@@ -36,5 +36,4 @@ export default function Collapse5() {
       <Divider/>
     </Collapse>
   </>;
-  return comp;
 }

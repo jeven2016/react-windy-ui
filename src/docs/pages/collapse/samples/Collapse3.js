@@ -2,7 +2,7 @@ import React from 'react';
 import {Collapse} from 'react-windy-ui';
 
 export default function Collapse3() {
-  const comp = <>
+  return <>
     <Collapse accordion={true}>
       <Collapse.Item header="Header1" hasBackground value={1}>
         <div style={{padding: '1rem'}}>
@@ -24,5 +24,4 @@ export default function Collapse3() {
       </Collapse.Item>
     </Collapse>
   </>;
-  return comp;
 }

@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import {animated, useSpring} from 'react-spring';
 import {preventEvent} from '../event';
 import Element from '../common/Element';
+import Tooltip from '../Tooltip';
 
 const Item = React.forwardRef((props, ref) => {
   const {
@@ -104,10 +105,18 @@ const Item = React.forwardRef((props, ref) => {
     </>;
   }, [directChild, icon, children, innerProps, show]);
 
-  return <div ref={ref} className={clsName} {...otherProps}
-              onClick={clickHandler}>
+  const renderCnt = <div ref={ref} className={clsName} {...otherProps}
+                         onClick={clickHandler}>
     {content}
   </div>;
+
+  if (!show && directChild) {
+    return <Tooltip body={children} position="right">
+      {renderCnt}
+    </Tooltip>;
+  }
+
+  return renderCnt;
 });
 
 Item.Left = React.forwardRef((props, ref) =>
@@ -124,11 +133,20 @@ Item.Right = React.forwardRef((props, ref) =>
 );
 
 Item.propTypes = {
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
   equitable: PropTypes.bool,
   hasBackground: PropTypes.bool,
   hasBottomBar: PropTypes.bool,
-  align: PropTypes.string,
   selectable: PropTypes.func,
+  children: PropTypes.node,
+  customizedChildren: PropTypes.bool, //whether to show the customized children and ignore the children parameter
+  disabled: PropTypes.bool,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  align: PropTypes.string,
+  icon: PropTypes.node,
+  directChild: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 export default Item;

@@ -1,34 +1,12 @@
 import React, {useState} from 'react';
-import {
-  Button,
-  IconHome,
-  Menu,
-  Radio,
-  RadioGroup,
-  Toggle,
-} from 'react-windy-ui';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faLaptop} from '@fortawesome/free-solid-svg-icons';
+import {IconList, Menu, Radio, RadioGroup, Toggle} from 'react-windy-ui';
 
 export default function Menu12() {
-  const [hasArrow, setHasArrow] = useState(true);
-  const [hasBox, setHasBox] = useState(true);
-  const [horizontal, setHorizontal] = useState(false);
-  const [type, setType] = useState('normal');
-  const [popupSubMenu, setPopupSubMenu] = useState(false);
-  const [compact, setCompact] = useState(false);
-
+  const [type, setType] = useState('primary');
+  const [multiSelect, setMultiSelect] = useState(true);
   return <>
     <div className="doc doc-row">
-      <Toggle active={hasArrow} onChange={active => setHasArrow(active)}
-              content={{on: 'Arrow', off: 'Arrow'}}/>
-    </div>
-    <div className="doc doc-row">
-      <Toggle active={horizontal} onChange={active => setHorizontal(active)}
-              content={{on: 'Horizontal', off: 'Horizontal'}}/>
-    </div>
-    <div className="doc doc-row">
-      <span style={{marginRight: '1rem'}}>type:</span>
+      <span style={{marginRight: '1rem', fontWeight: '600'}}>Type:</span>
       <RadioGroup defaultValue={type}
                   onChange={(val) => setType(val)}>
         <Radio value="primary"> primary</Radio>
@@ -37,126 +15,76 @@ export default function Menu12() {
       </RadioGroup>
     </div>
     <div className="doc doc-row">
-      <Toggle active={popupSubMenu} onChange={active => setPopupSubMenu(active)}
-              content={{on: 'Popup SubMenu', off: 'Popup SubMenu'}}/>
-    </div>
-    <div className="doc doc-row">
-      <Button style={{marginLeft: '1rem'}}
-              onClick={() => setCompact(pre => !pre)}>
-        Change
-      </Button>
-    </div>
-    <div className="doc doc-row">
-      <Toggle active={hasBox} onChange={active => setHasBox(active)}
-              content={{on: 'Box Shadow', off: 'Box Shadow'}}/>
+      <Toggle active={multiSelect} onChange={active => setMultiSelect(active)}
+              content={{on: 'Multi-Select', off: 'Multi-Select'}}/>
     </div>
 
-    <div className="doc doc-row">
-      <Menu direction={horizontal ? 'horizontal' : 'vertical'}
-            compact={compact}
-            popupSubMenu={popupSubMenu}
-            type={type}
-            hasArrow={hasArrow} icon={<IconHome/>}>
-        <Menu.Group header={'Group'}>
+    <div className="doc doc-row" style={{width: '20rem'}}>
+      <Menu defaultActiveItems={['item1', 'item2']}
+            multiSelect={multiSelect}
+            onOpenedMenu={(data) => console.log(`open==${data}`)}
+            onSelect={(data, e) => console.log(`select=${data}`)}
+            type={type}>
+        <Menu.SubMenu header="SubMenu 1" id="sub1" icon={<IconList/>}>
+          <Menu.Item id="item1">
+            Menu item1
+          </Menu.Item>
+          <Menu.Item id="item2">
+            Menu item2
+          </Menu.Item>
           <Menu.Item id="item3">
-            Item3
+            Menu item3
           </Menu.Item>
           <Menu.Item id="item4">
-            Item4
+            Menu item4
           </Menu.Item>
-        </Menu.Group>
-        <Menu.Item id="item44">
-          Item44
-        </Menu.Item>
-        <Menu.Item>
-          Item5
-        </Menu.Item>
-        <Menu.SubMenu header="SubMenu" id="sub1">
+          <Menu.Item id="item5">
+            Menu item5
+          </Menu.Item>
           <Menu.Item id="item6">
-            Item6
+            Menu item6
           </Menu.Item>
           <Menu.Item id="item7">
-            Item7
+            Menu item7
           </Menu.Item>
-          <Menu.SubMenu header="SubMenu" id="sub2">
-            <Menu.Item id="item8">
-              Item8
-            </Menu.Item>
+          <Menu.Item id="item8">
+            Menu item8
+          </Menu.Item>
+          <Menu.SubMenu header="SubMenu 2" id="sub2">
             <Menu.Item id="item9">
-              Item9
+              Menu item9
+            </Menu.Item>
+            <Menu.Item id="item10">
+              Menu item10
+            </Menu.Item>
+            <Menu.Item id="item11">
+              Menu item11
+            </Menu.Item>
+            <Menu.Item id="item12">
+              Menu item12
             </Menu.Item>
           </Menu.SubMenu>
-          <Menu.SubMenu header="SubMenu3" id="sub3">
-            <Menu.Group header={'Group'}>
-              <Menu.Item id="item10">
-                Item10
-              </Menu.Item>
-              <Menu.Item id="item11">
-                Item11
-              </Menu.Item>
-            </Menu.Group>
-          </Menu.SubMenu>
+        </Menu.SubMenu>
+        <Menu.SubMenu header="SubMenu 3" id="sub3" icon={<IconList/>}>
+          <Menu.Item id="item13">
+            Menu item13
+          </Menu.Item>
+          <Menu.Item id="item14">
+            Menu item14
+          </Menu.Item>
+          <Menu.Item id="item15">
+            Menu item15
+          </Menu.Item>
+          <Menu.Item id="item16">
+            Menu item16
+          </Menu.Item>
         </Menu.SubMenu>
       </Menu>
     </div>
 
     <div className="doc doc-row">
-      {/*for compact the width should set in parent node */}
-      <div>
-        <Menu direction={horizontal ? 'horizontal' : 'vertical'}
-              compact={compact}
-              popupSubMenu={popupSubMenu}
-              type={type}
-              hasBox={hasBox}
-              onOpenedMenu={(data) => console.log(`==${data}`)}
-              hasArrow={hasArrow} icon={<IconHome/>}>
-          <Menu.SubMenu header="Navigation One" id="sub1"
-                        icon={<FontAwesomeIcon icon={faLaptop}/>}>
-            <Menu.Item id="item1">
-              Item1
-            </Menu.Item>
-            <Menu.Item id="item2">
-              Item2
-            </Menu.Item>
-            <Menu.Item id="item3">
-              Item3
-            </Menu.Item>
-            <Menu.Item id="item4">
-              Item4
-            </Menu.Item>
-          </Menu.SubMenu>
-          <Menu.SubMenu header="Navigation Two" id="sub2"
-                        icon={<FontAwesomeIcon icon={faLaptop}/>}>
-            <Menu.Item id="item5">
-              Item5
-            </Menu.Item>
-            <Menu.Item id="item6">
-              Item6
-            </Menu.Item>
-            <Menu.Item id="item7">
-              Item7
-            </Menu.Item>
-            <Menu.Item id="item8">
-              Item8
-            </Menu.Item>
-          </Menu.SubMenu>
-          {/*<Menu.SubMenu header="Navigation Three"*/}
-          {/*              icon={<FontAwesomeIcon icon={faLaptop}/>}>*/}
-          {/*  <Menu.Item>*/}
-          {/*    Item9*/}
-          {/*  </Menu.Item>*/}
-          {/*  <Menu.Item>*/}
-          {/*    Item10*/}
-          {/*  </Menu.Item>*/}
-          {/*  <Menu.Item>*/}
-          {/*    Item11*/}
-          {/*  </Menu.Item>*/}
-          {/*  <Menu.Item>*/}
-          {/*    Item12*/}
-          {/*  </Menu.Item>*/}
-          {/*</Menu.SubMenu>*/}
-        </Menu>
-      </div>
+
     </div>
   </>;
+
 }

@@ -18,7 +18,7 @@ const createPopover = (text, position, activeBy) => {
   </Popover>;
 };
 
-export default function Popover_all() {
+export default function Pop3() {
 
   return <>
     <div>

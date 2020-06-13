@@ -14,6 +14,7 @@ export default function Menu2() {
       </RadioGroup>
     </div>
     <Menu type={type}
+          style={{width: "20rem"}}
           defaultActiveItems={['item1']}
           onSelect={(itemInfo, e) => {
             console.log(itemInfo);

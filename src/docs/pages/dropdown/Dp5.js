@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Dropdown} from 'react-windy-ui';
 
 const createDropdown = (text, position, activeBy) => {
-  const title = <Button circle hasMinWidth={false} color="primary" outline
+  const title = <Button hasMinWidth={false} color="primary" outline
                         style={{margin: '1rem'}}>{text}</Button>;
   return <Dropdown position={position}
                    title={title}

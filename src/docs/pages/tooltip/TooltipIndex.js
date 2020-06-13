@@ -1,8 +1,8 @@
 import React from 'react';
 import DocPage from '../../utils/DocPage';
 import Tooltip1 from './Tooltip1';
-import Tooltip_all from './Tooltip_all';
-import Tooltip_active from './Tooltip_active';
+import Tooltip2 from './Tooltip2';
+import Tooltip3 from './Tooltip3';
 
 /**
  * It maps the text blocks in Markdown file
@@ -10,12 +10,16 @@ import Tooltip_active from './Tooltip_active';
 const markdownMapping = {
   Title: 'TITLE',
   Footer: 'FOOTER',
+
+  Tooltip1: 'Tooltip1',
+  Tooltip2: 'Tooltip2',
+  Tooltip3: 'Tooltip3',
 };
 
 const componentMapping = {
   Tooltip1: <Tooltip1/>,
-  Tooltip_all: <Tooltip_all/>,
-  Tooltip_active: <Tooltip_active/>,
+  Tooltip2: <Tooltip2/>,
+  Tooltip3: <Tooltip3/>,
 };
 
 export default function TooltipIndex(props) {

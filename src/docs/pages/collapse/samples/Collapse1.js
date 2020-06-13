@@ -3,10 +3,12 @@ import {Button, Collapse, Card} from 'react-windy-ui';
 
 export default function Collapse1() {
   const [collapse, setCollapse] = useState(false);
-  const comp = <>
+  return <>
     <Button type="primary"
             style={{marginBottom: '1rem'}}
-            onClick={() => setCollapse(col => !col)}>Toggle</Button>
+            onClick={() => setCollapse(col => !col)}>
+      Toggle
+    </Button>
     <Collapse.Panel collapse={collapse}>
       <Card>
         <Card.Body>
@@ -21,15 +23,8 @@ export default function Collapse1() {
           Card Body...
           Card Body...
           Card Body...
-          Card Body...
-          Card Body...
-          Card Body...
-          Card Body...
-          Card Body...
         </Card.Body>
       </Card>
-
     </Collapse.Panel>
   </>;
-  return comp;
 }

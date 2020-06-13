@@ -3,7 +3,7 @@ import {Button, Collapse, IconList, IconSearch} from 'react-windy-ui';
 
 export default function Collapse6() {
 
-  const comp = <>
+  return <>
     <Collapse
         accordion={true}
         iconPosition="left">
@@ -40,5 +40,4 @@ export default function Collapse6() {
       </Collapse.Item>
     </Collapse>
   </>;
-  return comp;
 }

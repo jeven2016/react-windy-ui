@@ -23,9 +23,8 @@ export default function Menu9() {
       <Menu defaultActiveItems={['item7']}
             direction="vertical"
             compact={compact}
-            // defaultOpenedMenus={['sub1','sub2']}
             onOpenedMenu={(data) => console.log(`open==${data}`)}
-            onSelect={(data, e) => console.log(`select=${data.id}`)}
+            onSelect={(data, e) => console.log(`select=${data}`)}
             type={type}>
         <Menu.Item id="item1" icon={<IconQuestion/>}>
           Menu item1

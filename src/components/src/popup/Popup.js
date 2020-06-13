@@ -46,11 +46,13 @@ function getTranslate(position, activePopup, startOffset) {
  */
 const Popup = React.forwardRef((props, ref) => {
   const {
+    zIndex = 200,
     hasBox = false,
     hasBorderRadius = true,
     hasBorder = false,
     popupExtraClassName,
     popupStyle,
+    popupBodyStyle,
     extraClassName,
     className = 'popup',
     offset = 8,
@@ -122,6 +124,8 @@ const Popup = React.forwardRef((props, ref) => {
   useResizeObserver(document.body,
       updatePosition, true, () => true);
 
+  useEvent(EventListener.scroll, updatePosition);
+
   //----------------------------------------------
 
   const preUpdate = useCallback(() => {
@@ -170,10 +174,13 @@ const Popup = React.forwardRef((props, ref) => {
 
   const popupCntClsName = clsx(popupExtraClassName, 'popup-content');
 
-  const mergedProps = {...otherProps, ...springProps};
+  const mergedProps = {
+    ...popupStyle, ...otherProps, ...springProps,
+    zIndex: zIndex,
+  };
   const popup = <animated.div ref={setPopupRef}
                               className={popupClsName} style={mergedProps}>
-    <div className={popupCntClsName} style={popupStyle}>
+    <div className={popupCntClsName} style={popupBodyStyle}>
       {body}
     </div>
   </animated.div>;
@@ -261,7 +268,7 @@ const Popup = React.forwardRef((props, ref) => {
       return;
     }
 
-    changeActive(pre => !pre);
+    changeActive(true);
   }, [disabled, activePopup, changeActive]);
 
   const handleKeyDown = useCallback((e) => {
@@ -301,12 +308,12 @@ const Popup = React.forwardRef((props, ref) => {
       isHover,
       realCtrlRef);
 
-  /*useEvent(EventListener.focus,
+  useEvent(EventListener.focus,
       (e) => handleHover(e, true, EventListener.focus, true),
       isHover,
       realCtrlRef);
 
-  useEvent(EventListener.blur,
+  /*useEvent(EventListener.blur,
       (e) => handleHover(e, false, EventListener.blur, true),
       isHover,
       realCtrlRef);*/

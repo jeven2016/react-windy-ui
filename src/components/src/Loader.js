@@ -82,7 +82,8 @@ const Loader = React.forwardRef((props, ref) => {
 
   let content = getContent();
 
-  const getSimpleBody = () => <span className={clsName} {...otherProps} >
+  const getSimpleBody = () => <span className={clsName} {...otherProps}
+                                    ref={ref}>
       {content}
     </span>;
 
@@ -98,7 +99,7 @@ const Loader = React.forwardRef((props, ref) => {
     if (!isNil(children)) {
       let wrapperStyle = block ? LoaderWrapperBlockStyle : LoaderWrapperStyle;
       return <>
-        <span style={wrapperStyle}>
+        <span style={wrapperStyle} ref={ref}>
           <Mask active={active} style={MaskStyle}/>
           {getTextBody()}
         </span>

@@ -1,7 +1,9 @@
 import React from 'react';
 import DocPage from '../../utils/DocPage';
-import Popover1 from './Popover1';
-import Popover_all from './Popover_all';
+import Pop1 from './Pop1';
+import Pop3 from './Pop3';
+import Pop2 from './Pop2';
+import Pop4 from './Pop4';
 
 /**
  * It maps the text blocks in Markdown file
@@ -9,12 +11,18 @@ import Popover_all from './Popover_all';
 const markdownMapping = {
   Title: 'TITLE',
   Footer: 'FOOTER',
+
+  Pop1: 'Pop1',
+  Pop2: 'Pop2',
+  Pop3: 'Pop3',
+  Pop4: 'Pop4',
 };
 
 const componentMapping = {
-  // TransitionTest: <TransitionTest/>,
-  Popover1: <Popover1/>,
-  Popover_all: <Popover_all/>,
+  Pop1: <Pop1/>,
+  Pop2: <Pop2/>,
+  Pop3: <Pop3/>,
+  Pop4: <Pop4/>,
 };
 
 export default function PopoverIndex(props) {

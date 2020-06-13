@@ -5,6 +5,7 @@ import {convertToArray, isNil} from '../Utils';
 import {CollapseContext} from '../common/Context';
 import {IconArrowRight} from '../Icons';
 import clsx from 'clsx';
+import PropTypes from 'prop-types';
 
 const Item = React.forwardRef((props, ref) => {
   const {
@@ -57,7 +58,7 @@ const Item = React.forwardRef((props, ref) => {
   }
 
   return <>
-    <Card block {...otherProps}
+    <Card block {...otherProps} ref={ref}
           hasBorder={activeContext.hasBorder}
           hasBox={false}>
       <Card.Header
@@ -86,5 +87,14 @@ const Item = React.forwardRef((props, ref) => {
     </Card>
   </>;
 });
+
+Item.propTypes = {
+  children: PropTypes.node,
+  header: PropTypes.node,
+  disabled: PropTypes.bool,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  hasBackground: PropTypes.bool,
+  moreItems: PropTypes.arrayOf(PropTypes.node),
+};
 
 export default Item;

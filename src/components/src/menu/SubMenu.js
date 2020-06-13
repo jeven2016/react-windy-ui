@@ -39,7 +39,7 @@ const SubMenu = React.forwardRef((props, ref) => {
   };
 
   //the direct child of menu should align the botom of the menu, others should  align right
-  const popupSubMenuPostion = useMemo(() => {
+  const popupSubMenuPosition = useMemo(() => {
     if (!ctx.popupSubMenu) {
       return null;
     }
@@ -53,7 +53,7 @@ const SubMenu = React.forwardRef((props, ref) => {
   }, [ctx, directChild]);
 
   //if it is a direct child the width should be set to 'block' otherwise just ignore it
-  const blockList = SubMenuDirection.isBottom(popupSubMenuPostion);
+  const blockList = SubMenuDirection.isBottom(popupSubMenuPosition);
 
   return <MenuContext.Provider value={subCtx}>
     <BaseMenu className={clsName}
@@ -62,18 +62,19 @@ const SubMenu = React.forwardRef((props, ref) => {
               id={id}
               rootMenu={false}
               popupSubMenu={ctx.popupSubMenu} //the submenu can pops the items list
-              popupSubMenuPostion={popupSubMenuPostion}
+              popupSubMenuPosition={popupSubMenuPosition}
               blockList={blockList}
               {...otherProps} />
   </MenuContext.Provider>;
 });
 
 SubMenu.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   className: PropTypes.string,
+  extraClassName: PropTypes.string,
   icon: PropTypes.node,
   popupSubMenu: PropTypes.bool,
-  popupSubMenuPostion: PropTypes.string,
+  popupSubMenuPosition: PropTypes.string,
   blockList: PropTypes.bool,
   rootMenu: PropTypes.bool,
   hasBottomBar: PropTypes.bool,
