@@ -5,22 +5,23 @@ import Menu from '../menu';
 import {
   containsIgnoreCase,
   convertToArray,
-  execute, includes,
+  execute,
   isBlank,
   isCustomized,
   isNil,
 } from '../Utils';
 import Element from '../common/Element';
-import {IconArrowDown, IconArrowUp, IconChecked2, IconNoData} from '../Icons';
+import {IconArrowDown, IconChecked2, IconNoData} from '../Icons';
 import useInternalState from '../common/useInternalState';
 import {PopupCtrlType} from '../common/Constants';
 import clsx from 'clsx';
-import useMultipleRefs from '../common/UseMultipleRefs';
-import {animated, useSpring, useTransition} from 'react-spring';
+import {animated, useTransition} from 'react-spring';
+import {Spring} from 'react-spring/renderprops';
 import Item from '../menu/Item';
-import {Trail} from 'react-spring/renderprops-universal';
 import Badge from '../Badge';
 import {preventEvent} from '../event';
+import Loader from '../Loader';
+import useMultipleRefs from '../common/UseMultipleRefs';
 
 const Option = React.forwardRef((props, ref) => {
   const {value, children, text, ...otherProps} = props;
@@ -40,6 +41,7 @@ const Select = React.forwardRef((props, ref) => {
     className = 'select-menu popup',
     children,
     placeholder,
+    style,
     inputStyle,
     size = 'medium',
     disabled = false,
@@ -68,6 +70,10 @@ const Select = React.forwardRef((props, ref) => {
     popupExtraClassName,
     menuProps = {},
     removable = true, //whether the search text can be removed
+
+    loaderType = 'primary',
+    showLoader = false,
+    ctrlRef,
     ...otherProps
   } = props;
 
@@ -82,18 +88,16 @@ const Select = React.forwardRef((props, ref) => {
 
   //the search value corresponds to item's text, it won't be exposed to outside caller
   const [searchedValue, setSearchedValue] = useState(null);
-
-  const [activeIcon, setActiveIcon] = useState(false);
   const customSearch = isCustomized(props, 'onSearch');
 
-  const popupInstanceRef = useRef();
-  const ctrlRef = useRef();
+  const internalCtrlRef = useRef();
   const inputRef = useRef();
   const menuRef = useRef();
   const detectRef = useRef();
   const searchTimer = useRef(null);
 
-  const multipleSelectRef = useMultipleRefs(ref, ctrlRef);
+  const multiSelectRef = useMultipleRefs(ref, inputRef);
+  const multiCtrlRef = useMultipleRefs(ctrlRef, internalCtrlRef);
 
   const {
     state: selectedValue,
@@ -115,13 +119,13 @@ const Select = React.forwardRef((props, ref) => {
 
     const inputDomNode = inputRef.current;
     //adjust the input's width
-    if (multiSelect && !isBlank(searchedValue)) {
-      const width = detectRef.current.offsetWidth;
-      inputDomNode.style.width = width > 16 ? width + 3 + 'px' : 16;
+    if (multiSelect) {
+      const {offsetWidth: width} = detectRef.current;
+      inputDomNode.style.width = width > 16 ? `${width + 3}px` : `16px`;
     }
 
     //adjust the menu's width
-    let rect = multiSelect ? ctrlRef.current.getBoundingClientRect()
+    let rect = multiSelect ? internalCtrlRef.current.getBoundingClientRect()
         : inputDomNode.getBoundingClientRect();
 
     const width = rect.width;
@@ -269,25 +273,19 @@ const Select = React.forwardRef((props, ref) => {
           itemInfo => getText(itemInfo) === searchedValue);
     }
     return true;
-  }, [multiSelect, searchedValue, allItemsInfo, getText]);
+  }, [searchedValue, allItemsInfo, getText]);
 
   const changeSearchValue = useCallback((nextValue) => {
     setSearchedValue(nextValue);
     onSearch && onSearch(nextValue);
   }, [setSearchedValue, onSearch]);
 
-  // arrow icon
-  const arrowSpring = useSpring({
-    from: {transform: 'rotate(0deg) translate3d(0, -50%, 0)'},
-    to: {
-      transform: isActive
-          ? 'rotate(-180deg) translate3d(0, 50%, 0)'
-          : 'rotate(0) translate3d(0, -50%, 0)',
-    },
-    config: {clamp: true, mass: 1, tesion: 100, friction: 15},
-  });
-
   const realIcon = useMemo(() => {
+    if (showLoader) {
+      return <div className="icon-column">
+        <Loader type={loaderType} active size="small"/>
+      </div>;
+    }
     if (multiSelect) {
       return null;
     }
@@ -295,12 +293,31 @@ const Select = React.forwardRef((props, ref) => {
     if (removable && !isBlank(searchedValue)) {
       return <div className="icon-column">X</div>;
     }
-    return <animated.div className="icon-column" style={arrowSpring}>
-      {arrowIcon}
-    </animated.div>;
-  }, [multiSelect, removable, searchedValue, arrowIcon, arrowSpring]);
+
+    return <Spring from={{transform: 'rotate(0deg) translate3d(0, -50%, 0)'}}
+                   to={{
+                     transform: isActive
+                         ? 'rotate(-180deg) translate3d(0, 50%, 0)'
+                         : 'rotate(0) translate3d(0, -50%, 0)',
+                   }}
+                   config={{clamp: true, mass: 1, tesion: 100, friction: 15}}>
+      {
+        spProps => <div className="icon-column" style={spProps}>
+          {arrowIcon}
+        </div>
+      }
+    </Spring>;
+  }, [
+    isActive,
+    showLoader,
+    loaderType,
+    multiSelect,
+    removable,
+    searchedValue,
+    arrowIcon]);
 
   const handleBlur = useCallback(() => {
+
     //if no item's text is same with searchedValue
     if (!searchHits) {
       //clear
@@ -310,7 +327,7 @@ const Select = React.forwardRef((props, ref) => {
         changeSearchValue(null);
       }, searchDelay);
     }
-  }, [searchHits, changeSearchValue, searchDelay]);
+  }, [isActive, searchHits, changeSearchValue, searchDelay]);
 
   const changeActive = useCallback((next) => {
     if (isActive === next) {
@@ -322,25 +339,19 @@ const Select = React.forwardRef((props, ref) => {
     onChange && onChange(next);
   }, [isActive, customActive, setActive, onChange]);
 
-  const selectedItems = useMemo(() => {
-    return selectedValue.map(findItemInfo);
-  }, [selectedValue, findItemInfo]);
-
-  const tran = useTransition(selectedItems, item => item.value, {
-    from: {transform: 'scale(0.5)'},
-    enter: {transform: 'scale(1)'},
-    leave: {transform: 'scale(0.5)'},
-    config: {clamp: true, mass: 1, tesion: 100, friction: 15},
-  });
-
-  const BadgeTag = animated(Badge);
+  const tran = useTransition(selectedValue.map(findItemInfo),
+      item => isNil(item) ? null : item.value, {
+        from: {transform: 'scale(0.5)'},
+        enter: {transform: 'scale(1)'},
+        leave: {transform: 'scale(0.5)'},
+        config: {clamp: true, mass: 1, tesion: 100, friction: 15},
+      });
 
   const focusInput = useCallback(() => {
     inputRef.current.focus();
   }, [inputRef]);
 
   const removeItem = (value, e) => {
-    alert('what') //todo
     if (!customValue) {
       const rest = selectedValue.filter(val => val !== value);
       setValue(rest);
@@ -349,7 +360,6 @@ const Select = React.forwardRef((props, ref) => {
   };
 
   const getCtrl = () => {
-
     const input = <>
       <Input placeholder={realPlaceHolder} readOnly={!searchable}
              ref={inputRef}
@@ -360,18 +370,20 @@ const Select = React.forwardRef((props, ref) => {
       />
     </>;
     if (multiSelect) {
-      return <span className='select-multiple' onClick={focusInput}>
+      return <span className='select-multiple' onClick={focusInput}
+                   style={style}
+                   ref={multiSelectRef}>
         <span className="select-multiple-content">
         {
           tran.map(({item, props: tranProps, key}) => (
-              <BadgeTag type="tag" color="gray"
-                        key={key}
-                        style={tranProps}>
-                <span onClick={()=>alert('fuck')}>{getText(item)}</span>
-                <span className="remove-icon"
-                      onClick={(e) => {removeItem(item.value, e);}}>×</span>
-              </BadgeTag>
-
+              <animated.span key={key} className="multi-item" style={tranProps}>
+                <Badge type="tag"
+                       color="gray">
+                  <span>{getText(item)}</span>
+                  <span className="remove-icon"
+                        onClick={(e) => {removeItem(item.value, e);}}>×</span>
+                </Badge>
+              </animated.span>
           ))
         }
           {input}
@@ -383,7 +395,8 @@ const Select = React.forwardRef((props, ref) => {
           </span>;
     }
     return <Input.IconInput inputRef={inputRef} disabled={disabled}
-                            block={block} size={size}>
+                            block={block} size={size} ref={multiSelectRef}
+                            style={style}>
       {input}
       {realIcon}
     </Input.IconInput>;
@@ -398,13 +411,11 @@ const Select = React.forwardRef((props, ref) => {
       preventEvent(e);
     }
 
-    if (itemsArray.length > 0) {
-      if (!customValue) {
-        setValue(itemsArray);
-        setSearchedValue(null);
-      }
-      onSelect && onSelect(itemsArray[0], e);
+    if (!customValue) {
+      setValue(itemsArray);
+      setSearchedValue(null);
     }
+    onSelect && onSelect(itemsArray[0], e);
   };
 
   const getPopupBody = () => {
@@ -430,10 +441,9 @@ const Select = React.forwardRef((props, ref) => {
   return <Popup
       active={isActive}
       onChange={changeActive}
-      ref={popupInstanceRef}
       activeBy={activeBy}
       className={className}
-      ctrlRef={(domNode) => ctrlRef.current = domNode}
+      ctrlRef={multiCtrlRef}
       ctrlNode={getCtrl()}
       body={getPopupBody()}
       popupExtraClassName={popupCntExtraCls}
@@ -444,4 +454,3 @@ const Select = React.forwardRef((props, ref) => {
 Select.Option = Option;
 
 export default Select;
-;
