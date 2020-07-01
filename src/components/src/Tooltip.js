@@ -6,6 +6,7 @@ import {
 } from './common/Constants';
 import clsx from 'clsx';
 import Popup from './popup/Popup';
+import * as PropTypes from 'prop-types';
 
 const Tooltip = React.forwardRef((props, ref) => {
   const {
@@ -55,5 +56,14 @@ const Tooltip = React.forwardRef((props, ref) => {
   />;
 
 });
+
+Tooltip.propTypes = {
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  position: PropTypes.string,
+  body: PropTypes.node,
+  zIndex: PropTypes.number,
+  offset: PropTypes.number,
+};
 
 export default Tooltip;

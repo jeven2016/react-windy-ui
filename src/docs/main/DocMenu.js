@@ -65,5 +65,27 @@ export default function DocMenu(props) {
         </Link>
       </Menu.Item>
     </Menu.SubMenu>
+    <Menu.SubMenu header="提示信息" id="info">
+      <Menu.Item id="badge">
+        <Link to={`${url}/badge`}>
+          标记 Badge
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="drawer">
+        <Link to={`${url}/drawer`}>
+          抽屉 Drawer
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="alert">
+        <Link to={`${url}/alert`}>
+          警告提醒 Alert
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="notification">
+        <Link to={`${url}/notification`}>
+          消息通知 Notification
+        </Link>
+      </Menu.Item>
+    </Menu.SubMenu>
   </Menu>;
 }

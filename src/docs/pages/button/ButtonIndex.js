@@ -15,26 +15,6 @@ import SampleBtn13 from './samples/SampleBtn13';
 import DocPage from '../../utils/DocPage';
 import SampleBtn14 from './samples/SampleBtn14';
 
-const markdownMapping = {
-  Title: 'TITLE',
-  Footer: 'FOOTER',
-
-  SampleBtn1: 'SampleBtn1',
-  SampleBtn2: 'SampleBtn2',
-  SampleBtn3: 'SampleBtn3',
-  SampleBtn4: 'SampleBtn4',
-  SampleBtn5: 'SampleBtn5',
-  SampleBtn6: 'SampleBtn6',
-  SampleBtn7: 'SampleBtn7',
-  SampleBtn8: 'SampleBtn8',
-  SampleBtn9: 'SampleBtn9',
-  SampleBtn10: 'SampleBtn10',
-  SampleBtn11: 'SampleBtn11',
-  SampleBtn12: 'SampleBtn12',
-  SampleBtn13: 'SampleBtn13',
-  SampleBtn14: 'SampleBtn14',
-};
-
 const componentMapping = {
   SampleBtn1: <SampleBtn1/>,
   SampleBtn2: <SampleBtn2/>,
@@ -56,6 +36,5 @@ export default function ButtonIndex(props) {
   return <DocPage
       importFunc={() => import('./doc.md')}
       componentMapping={componentMapping}
-      mapping={markdownMapping}
   />;
 }

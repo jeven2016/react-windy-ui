@@ -1,10 +1,11 @@
-import React, {useCallback, useRef} from 'react';
+import React from 'react';
 import {isNil} from '../Utils';
 import {PopupPosition, PositionClass} from '../common/Constants';
 import Card from '../card';
 import Divider from '../divider';
 import clsx from 'clsx';
 import Popup from '../popup/Popup';
+import * as PropTypes from 'prop-types';
 
 const Popover = React.forwardRef((props, ref) => {
   const {
@@ -53,5 +54,17 @@ const Popover = React.forwardRef((props, ref) => {
   />;
 
 });
+
+Popover.propTypes = {
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  header: PropTypes.node,
+  body: PropTypes.node,
+  position: PropTypes.string,
+  hasArrow: PropTypes.bool,
+  hasBox: PropTypes.bool,
+  hasBorder: PropTypes.bool,
+  offset: PropTypes.number,
+};
 
 export default Popover;

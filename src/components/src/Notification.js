@@ -1,9 +1,18 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
-import {createContainer, getLeftIfCentered, isString, random} from './Utils';
+import {
+  createContainer,
+  execute,
+  getLeftIfCentered,
+  isNil,
+  isString,
+  random,
+  validate,
+} from './Utils';
 import Alert from './Alert';
 import {EventListener} from './common/Constants';
 import useEvent from './common/UseEvent';
+import {Transition} from 'react-spring/renderprops';
 
 const SizeStyle = {
   small: 'alert-container-width-sm',
@@ -19,8 +28,8 @@ const PositionType = {
 
 let DEFAULT_CONFIG = {
   position: 'topRight',
-  duration: 5000,
-  showCloseIcon: false,
+  duration: 3000,
+  hasCloseIcon: true,
   top: '5rem',
 };
 
@@ -44,9 +53,36 @@ const Notification = (props) => {
   const sizeClassName = SizeStyle[size];
   const [queue, setQueue] = useState([]);
   const cntRef = useRef(null);
+  const timerMap = useRef(new Map());
+
+  validate(Object.keys(PositionType).includes(position),
+      `The value(${position}) of the position is invalid.`);
+
+  const lowerPosition = useMemo(() => position.toLowerCase(), [position]);
+  const positionResult = useMemo(() => {
+    const isLeft = lowerPosition.includes('left');
+    const isRight = lowerPosition.includes('right');
+    const isCenter = lowerPosition.includes('center');
+    return {isLeft, isCenter, isRight};
+  }, [lowerPosition]);
+
+  const move = useCallback(() => {
+    let cnt = cntRef.current;
+    if (!cnt) {
+      return;
+    }
+    cntRef.current.style.left = getLeftIfCentered(
+        cnt, document.documentElement);
+  }, [cntRef]);
 
   const addMsg = (msg) => {
-    setQueue(q => [msg, ...q]);
+    if (!isNil(DEFAULT_CONFIG.duration) && DEFAULT_CONFIG.duration > 0) {
+      const timer = execute(() => {
+        removeMsg(msg.key);
+      }, DEFAULT_CONFIG.duration);
+      timerMap.current.set(msg.key, timer);
+    }
+    setQueue(q => [...q, msg]);
   };
 
   if (!msgStore.initialized()) {
@@ -54,10 +90,17 @@ const Notification = (props) => {
   }
   useEvent(EventListener.resize, (evt) => {
     move();
-  }, position === 'topCenter');
+  }, positionResult.isCenter);
 
   useEffect(() => {
-    if (position === 'topCenter') {
+    console.log(DEFAULT_CONFIG.top);
+    if (!isNil(DEFAULT_CONFIG.top)) {
+      cntRef.current.style.top = DEFAULT_CONFIG.top;
+    }
+  });
+
+  useEffect(() => {
+    if (positionResult.isCenter) {
       move();
     } else {
       //remove {top, left} properties from style if position is not topCenter
@@ -68,34 +111,68 @@ const Notification = (props) => {
       let cnt = Notification.container;
       cnt && cnt.remove();
     };
-  }, [position]);
+  }, [positionResult, move]);
 
-  const move = () => {
-    let cnt = cntRef.current;
-    if (!cnt) {
-      return;
+  const removeMsg = useCallback((key) => {
+    const timer = timerMap.current.get(key);
+    if (!isNil(timer)) {
+      clearTimeout(timer);
+      timerMap.current.delete(key);
     }
-    cnt.style.left = getLeftIfCentered(
-        cnt, document.documentElement);
-    cnt.style.top = DEFAULT_CONFIG.top;
-  };
-  const removeMsg = (key) => {
-    const newQueue = [...queue.filter(msg => msg.key !== key)];
-    setQueue(newQueue);
-  };
+    setQueue(pre => [...pre.filter(msg => msg.key !== key)]);
+  }, [timerMap, setQueue]);
+
+  const animationFrom = useMemo(() => {
+    let x = '0%';//center
+
+    if (positionResult.isLeft) {
+      x = '-100%';
+    }
+    if (positionResult.isRight) {
+      x = '100%';
+    }
+    return {x: x, opacity: '0', scale: positionResult.isCenter ? 0 : 1};
+  }, [positionResult]);
+
+  const animationLeave = useMemo(() => {
+    let x = '0%';//center
+    if (positionResult.isLeft) {
+      x = '-100%';
+    }
+    if (positionResult.isRight) {
+      x = '100%';
+    }
+    return {x, opacity: 0, scale: positionResult.isCenter ? 0 : 1};
+  }, [positionResult]);
 
   return <div
       className={`alert-container ${sizeClassName} ${PositionType[position]}`}
       ref={cntRef}>
     {
-      queue.map(({key, ...other}) => {
-        return <Alert autoUnmout={false} key={key} {...other}
-                      showCloseIcon={DEFAULT_CONFIG.showCloseIcon}
-                      duration={DEFAULT_CONFIG.duration}
-                      onClose={() => removeMsg(key)}
-        />;
-      }).reverse()
+      //using <Transition> instead of useTransition, since useTransition always
+      //print react worning log regarding memory leak
     }
+    <Transition
+        config={{clamp: true, mass: 1, tesion: 100, friction: 15}}
+        items={queue}
+        keys={item => item.key}
+        from={animationFrom}
+        enter={{x: '0', opacity: '1', scale: 1}}
+        leave={animationLeave}
+    >
+      {
+        item => tranProps =>
+            <Alert {...item}
+                   animated={false}
+                   style={{
+                     opacity: tranProps.opacity,
+                     transform: `translate3d(${tranProps.x}, 0, 0) scaleY(${tranProps.scale})`,
+                   }}
+                   active={true}
+                   onClose={() => removeMsg(item.key)}
+                   hasCloseIcon={DEFAULT_CONFIG.hasCloseIcon}/>
+      }
+    </Transition>
   </div>;
 
 };
@@ -105,13 +182,13 @@ const Notification = (props) => {
  * @returns {string}
  */
 let generateKey = () => {
-  return `nf-key-${Date.now()}-${random(1000, 10000)}`;
+  return `nf-${Date.now()}-${random(1000, 10000)}`;
 };
 
 /**
  * Add a alert message to queue
  * @param type
- * @param message
+ * @param config
  */
 let send = (type, config) => {
   const key = generateKey();
@@ -129,8 +206,7 @@ let send = (type, config) => {
     return;
   }
   let containerObj = createContainer('wui-alert-cont');
-  let notification = ReactDOM.render(<Notification msgStore={proxy}/>,
-      containerObj.container);
+  ReactDOM.render(<Notification msgStore={proxy}/>, containerObj.container);
   proxy.add(msg);
 };
 

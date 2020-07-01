@@ -11,22 +11,22 @@ import {
   isNil,
 } from '../Utils';
 import Element from '../common/Element';
-import {IconArrowDown, IconChecked2, IconNoData} from '../Icons';
+import {IconArrowDown, IconArrowUp, IconChecked2, IconNoData} from '../Icons';
 import useInternalState from '../common/useInternalState';
 import {PopupCtrlType} from '../common/Constants';
 import clsx from 'clsx';
 import {animated, useTransition} from 'react-spring';
-import {Spring} from 'react-spring/renderprops';
 import Item from '../menu/Item';
 import Badge from '../Badge';
 import {preventEvent} from '../event';
 import Loader from '../Loader';
 import useMultipleRefs from '../common/UseMultipleRefs';
+import * as PropTypes from 'prop-types';
 
 const Option = React.forwardRef((props, ref) => {
-  const {value, children, text, ...otherProps} = props;
+  const {value, children, hasBackground = true, text, ...otherProps} = props;
 
-  return <Menu.Item id={value} hasBackground
+  return <Menu.Item id={value} hasBackground={hasBackground}
                     ref={ref} {...otherProps}>
     {children ? children : text}
   </Menu.Item>;
@@ -36,8 +36,15 @@ Option.Left = Item.Left;
 Option.Center = Item.Center;
 Option.Right = Item.Right;
 
+Option.propTypes = {
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  text: PropTypes.node,
+  hasBackground: PropTypes.bool,
+};
+
 const Select = React.forwardRef((props, ref) => {
   const {
+    extraClassName,
     className = 'select-menu popup',
     children,
     placeholder,
@@ -58,19 +65,17 @@ const Select = React.forwardRef((props, ref) => {
     onSearch, //customized searching
     searchDelay = 300,
     noDataText = 'Not Found',
-
+    searchInputWidth = 16,
     arrowIcon = <IconArrowDown/>,
+    activeArrowIcon = <IconArrowUp/>,
     removeIcon,
-
     defaultActive = false,
     active, //whether to show the popup
     onChange, //for changing active state
     onRemove,
-
     popupExtraClassName,
     menuProps = {},
     removable = true, //whether the search text can be removed
-
     loaderType = 'primary',
     showLoader = false,
     ctrlRef,
@@ -120,8 +125,11 @@ const Select = React.forwardRef((props, ref) => {
     const inputDomNode = inputRef.current;
     //adjust the input's width
     if (multiSelect) {
-      const {offsetWidth: width} = detectRef.current;
-      inputDomNode.style.width = width > 16 ? `${width + 3}px` : `16px`;
+      const decDomNode = detectRef.current;
+      inputDomNode.style.width = decDomNode.width > searchInputWidth
+          ? `${decDomNode.width +
+          3}px`
+          : `${searchInputWidth}px`;
     }
 
     //adjust the menu's width
@@ -138,7 +146,7 @@ const Select = React.forwardRef((props, ref) => {
         parentNode.style.width = `${width}px`;
       }
     }
-  }, [searchedValue, disabled, autoWidth, multiSelect]);
+  }, [searchInputWidth, searchedValue, disabled, autoWidth, multiSelect]);
 
   //get all items information
   const allItemsInfo = useMemo(() => {
@@ -187,14 +195,14 @@ const Select = React.forwardRef((props, ref) => {
 
   //get input value to display
   const displayText = useMemo(() => {
-    if (selectedValue.length === 0 || (multiSelect && isBlank(searchedValue))) {
-      return null;
-    }
     if (!isNil(searchedValue)) {
       return searchedValue;
     }
-
-    return getSelectedText();
+    if (selectedValue.length === 0 || (multiSelect && isBlank(searchedValue))) {
+      return '';
+    }
+    const selectedText = getSelectedText();
+    return isNil(selectedText) ? '' : selectedText;
   }, [selectedValue, multiSelect, searchedValue, getSelectedText]);
 
   //check whether the value partially equals to any item's value
@@ -294,19 +302,8 @@ const Select = React.forwardRef((props, ref) => {
       return <div className="icon-column">X</div>;
     }
 
-    return <Spring from={{transform: 'rotate(0deg) translate3d(0, -50%, 0)'}}
-                   to={{
-                     transform: isActive
-                         ? 'rotate(-180deg) translate3d(0, 50%, 0)'
-                         : 'rotate(0) translate3d(0, -50%, 0)',
-                   }}
-                   config={{clamp: true, mass: 1, tesion: 100, friction: 15}}>
-      {
-        spProps => <div className="icon-column" style={spProps}>
-          {arrowIcon}
-        </div>
-      }
-    </Spring>;
+    let icon = isActive ? activeArrowIcon : arrowIcon;
+    return <div className="icon-column">{icon}</div>;
   }, [
     isActive,
     showLoader,
@@ -314,7 +311,8 @@ const Select = React.forwardRef((props, ref) => {
     multiSelect,
     removable,
     searchedValue,
-    arrowIcon]);
+    arrowIcon,
+    activeArrowIcon]);
 
   const handleBlur = useCallback(() => {
 
@@ -351,12 +349,12 @@ const Select = React.forwardRef((props, ref) => {
     inputRef.current.focus();
   }, [inputRef]);
 
-  const removeItem = (value, e) => {
+  const removeItem = (v, e) => {
     if (!customValue) {
       const rest = selectedValue.filter(val => val !== value);
       setValue(rest);
     }
-    onRemove && onRemove(value, e);
+    onRemove && onRemove(v, e);
   };
 
   const getCtrl = () => {
@@ -364,7 +362,7 @@ const Select = React.forwardRef((props, ref) => {
       <Input placeholder={realPlaceHolder} readOnly={!searchable}
              ref={inputRef}
              style={ctrlStyle}
-             value={displayText || ''}
+             value={displayText}
              onChange={handleSearch}
              onBlur={handleBlur}
       />
@@ -442,7 +440,7 @@ const Select = React.forwardRef((props, ref) => {
       active={isActive}
       onChange={changeActive}
       activeBy={activeBy}
-      className={className}
+      className={clsx(extraClassName, className)}
       ctrlRef={multiCtrlRef}
       ctrlNode={getCtrl()}
       body={getPopupBody()}
@@ -452,5 +450,41 @@ const Select = React.forwardRef((props, ref) => {
 });
 
 Select.Option = Option;
+
+Popup.propTypes = {
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  placeholder: PropTypes.string,
+  style: PropTypes.object,
+  inputStyle: PropTypes.object,
+  size: PropTypes.string,
+  disabled: PropTypes.bool,
+  searchable: PropTypes.bool,
+  autoWidth: PropTypes.bool,
+  multiSelect: PropTypes.bool,
+  hasBorder: PropTypes.bool,
+  hasBox: PropTypes.bool,
+  activeBy: PropTypes.string,
+  block: PropTypes.bool,
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onSelect: PropTypes.func,
+  onSearch: PropTypes.func,
+  searchDelay: PropTypes.number,
+  noDataText: PropTypes.node,
+  searchInputWidth: PropTypes.number,
+  arrowIcon: PropTypes.node,
+  activeArrowIcon: PropTypes.node,
+  removeIcon: PropTypes.node,
+  defaultActive: PropTypes.bool,
+  active: PropTypes.bool,
+  onChange: PropTypes.func,
+  onRemove: PropTypes.func,
+  popupExtraClassName: PropTypes.string,
+  menuProps: PropTypes.object,
+  removable: PropTypes.bool,
+  loaderType: PropTypes.string,
+  showLoader: PropTypes.bool,
+};
 
 export default Select;

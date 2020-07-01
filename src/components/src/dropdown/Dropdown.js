@@ -2,6 +2,7 @@ import React, {useCallback, useRef} from 'react';
 import Popup from '../popup/Popup';
 import Menu from '../menu';
 import {convertToArray} from '../Utils';
+import * as PropTypes from 'prop-types';
 
 const DropdownMenu = React.forwardRef((props, ref) => {
   return <Menu {...props} ref={ref}/>;
@@ -49,5 +50,12 @@ const Dropdown = React.forwardRef((props, ref) => {
 Dropdown.Menu = DropdownMenu;
 Dropdown.Item = Menu.Item;
 Dropdown.SubMenu = Menu.SubMenu;
+
+Dropdown.propTypes = {
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  title: PropTypes.node,
+  onSelect: PropTypes.func,
+};
 
 export default Dropdown;

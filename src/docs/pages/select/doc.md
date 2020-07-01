@@ -445,55 +445,24 @@ export default function Select6() {
 </fieldset>
 
 ```jsx
-import React, {useEffect, useRef, useState} from 'react';
-import {Select, Divider} from 'react-windy-ui';
+import React from 'react';
+import {Select} from 'react-windy-ui';
 
 export default function Select7() {
-  const [active, setActive] = useState(true);
-  const currentValue = useRef(1);
-  const popupRef = useRef(null); //a reference to popup dom node
-
-  const change = (next) => {
-    console.log('changed to: ' + next);
-    if (!next && currentValue.current !== 1) {
-      return;
-    }
-    setActive(next);
-  };
-
-  const select = (value) => {
-    currentValue.current = value;
-  };
-
-  //add an event listener to window to close the popup
-  useEffect(() => {
-    const hanlder = (e) => {
-      //close the popup while not clicking the body of the popup
-      if (!popupRef.current.contains(e.target)) {
-        setActive(false);
-      }
-    };
-    window.addEventListener('click', hanlder);
-
-    return () => window.removeEventListener('click', hanlder);
-  }, []);
-
   return <>
-    <Select activeBy="hover"
-            popupRef={popupRef}
-            defaultValue={currentValue.current}
-            active={active}
-            onChange={change}
-            onSelect={select}>
-      <Select.Option value={0}>Won't close1</Select.Option>
-      <Divider/>
-      <Select.Option value={1}>Close</Select.Option>
-      <Divider/>
-      <Select.Option value={2}>Won't close2</Select.Option>
-      <Divider/>
-      <Select.Option value={3}>Won't close3</Select.Option>
-      <Divider/>
-      <Select.Option value={4}>Won't close4</Select.Option>
+    <Select style={{width: '20rem'}}
+            activeBy='hover'
+            defaultValue="sh"
+            multiSelect={true}
+            searchable={true}
+            onSelect={(val) => console.log(val)}
+            onChange={(next) => console.log(`state changed to : ${next}`)}>
+      <Select.Option value="bj">Beijing</Select.Option>
+      <Select.Option value="nj">Nanjing</Select.Option>
+      <Select.Option value="sh">Shanghai</Select.Option>
+      <Select.Option value="xian">XiAn</Select.Option>
+      <Select.Option value="ny">纽约</Select.Option>
+      <Select.Option value="hk">香港</Select.Option>
     </Select>
   </>;
 

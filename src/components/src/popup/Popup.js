@@ -351,10 +351,13 @@ const Popup = React.forwardRef((props, ref) => {
 });
 
 Popup.propTypes = {
+  zIndex: PropTypes.number,
   hasBox: PropTypes.bool,
   hasBorderRadius: PropTypes.bool,
   hasBorder: PropTypes.bool,
+  popupExtraClassName: PropTypes.string,
   popupStyle: PropTypes.object,
+  popupBodyStyle: PropTypes.object,
   extraClassName: PropTypes.string,
   className: PropTypes.string,
   offset: PropTypes.number,

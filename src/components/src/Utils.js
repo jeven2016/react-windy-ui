@@ -235,8 +235,7 @@ export const getLeftIfCentered = (dest, ctrl) => {
   var destPos = dest.getBoundingClientRect();
   let destAvaliableWidth = Math.max(destPos.width,
       dest.offsetWidth);
-  let x = Math.floor((ctrlPos.width - destAvaliableWidth) / 2) + 'px';
-  return x;
+  return Math.floor((ctrlPos.width - destAvaliableWidth) / 2) + 'px';
 };
 
 export const validate = (condition, message) => {
@@ -348,6 +347,7 @@ export const setDisplay = (condition, value, ref) => {
   if (condition) {
     const div = ref.current;
     if (div) {
+      console.log('display=' + value);
       div.style.display = value;
     }
   }

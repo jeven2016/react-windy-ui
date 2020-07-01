@@ -15,29 +15,6 @@ import Menu11 from './samples/Menu11';
 import Menu13 from './samples/Menu13';
 import Menu14 from './samples/Menu14';
 
-/**
- * It maps the text blocks in Markdown file
- */
-const markdownMapping = {
-  Title: 'TITLE',
-  Footer: 'FOOTER',
-
-  Menu1: 'Menu1',
-  Menu2: 'Menu2',
-  Menu3: 'Menu3',
-  Menu4: 'Menu4',
-  Menu5: 'Menu5',
-  Menu6: 'Menu6',
-  Menu7: 'Menu7',
-  Menu8: 'Menu8',
-  Menu9: 'Menu9',
-  Menu10: 'Menu10',
-  Menu11: 'Menu11',
-  Menu12: 'Menu12',
-  Menu13: 'Menu13',
-  Menu14: 'Menu14',
-};
-
 const componentMapping = {
   // Menu12: <Menu12/>,
   Menu1: <Menu1/>,
@@ -60,6 +37,5 @@ export default function MenuIndex(props) {
   return <DocPage
       importFunc={() => import('./doc.md')}
       componentMapping={componentMapping}
-      mapping={markdownMapping}
   />;
 }

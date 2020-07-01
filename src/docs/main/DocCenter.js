@@ -15,6 +15,10 @@ import PopoverIndex from '../pages/popover/PopoverIndex';
 import TooltipIndex from '../pages/tooltip/TooltipIndex';
 import SelectIndex from '../pages/select/SelectIndex';
 import DpIndex from '../pages/dropdown/DpIndex';
+import BadgeIndex from '../pages/badge/BadgeIndex';
+import DrawerIndex from '../pages/drawer/DrawerIndex';
+import AlertIndex from '../pages/alert/AlertIndex';
+import NotificationIndex from '../pages/notification/NotificationIndex';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -67,6 +71,18 @@ function DocCenter(props) {
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/select`}>
                 <SelectIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/badge`}>
+                <BadgeIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/drawer`}>
+                <DrawerIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/alert`}>
+                <AlertIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/notification`}>
+                <NotificationIndex/>
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/`}>
                 <InstallIndex/>

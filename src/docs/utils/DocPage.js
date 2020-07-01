@@ -3,25 +3,35 @@ import {LanguageContext} from './Context';
 import useMarkdownFile from './useMarkdownFile';
 import markdown from './Markdown';
 import SamplePanel from './SamplePanel';
+import {isNil} from '../../components/src/Utils';
+
+const defaultTitle = 'TITLE';
+const defaultFooter = 'FOOTER';
+const defaultDocKeys = [defaultTitle, defaultFooter];
 
 export default function DocPage(props) {
   const {language} = useContext(LanguageContext);
   const {
     importFunc,
     componentMapping: compMapping,
-    mapping: tagMapping,
     codePrefix = '```jsx',
     codeSuffix = '```',
   } = props;
+
+  if (isNil(compMapping)) {
+    throw new Error('the componentMapping should be specified');
+  }
+
+  const keyArray = [...defaultDocKeys, ...Object.keys(compMapping)];
 
   //import the markdown file and parse the text by the tags mapping relationship
   const contentMap = useMarkdownFile({
     importFunc,
     language,
-    mapping: tagMapping,
+    keys: keyArray,
   });
-  const Title = markdown({text: contentMap.get('Title')});
-  const Footer = markdown({text: contentMap.get('Footer')});
+  const Title = markdown({text: contentMap.get(defaultTitle)});
+  const Footer = markdown({text: contentMap.get(defaultFooter)});
   return <>
 
     {Title && <section className="doc markdown"><Title/></section>}

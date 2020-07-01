@@ -8,21 +8,6 @@ import Collapse5 from './samples/Collapse5';
 import Collapse6 from './samples/Collapse6';
 import Collapse7 from './samples/Collapse7';
 
-/**
- * It maps the text blocks in Markdown file
- */
-const markdownMapping = {
-  Title: 'TITLE',
-  Footer: 'FOOTER',
-
-  Collapse1: 'Collapse1',
-  Collapse2: 'Collapse2',
-  Collapse3: 'Collapse3',
-  Collapse4: 'Collapse4',
-  Collapse5: 'Collapse5',
-  Collapse6: 'Collapse6',
-  Collapse7: 'Collapse7',
-};
 
 const componentMapping = {
   Collapse1: <Collapse1/>,
@@ -38,6 +23,5 @@ export default function CollapseIndex(props) {
   return <DocPage
       importFunc={() => import('./doc.md')}
       componentMapping={componentMapping}
-      mapping={markdownMapping}
   />;
 }

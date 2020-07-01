@@ -44,9 +44,9 @@ export default function MenuList(props) {
       !isInitialCompact;
 
   const preUpdate = useCallback(() => setDisplay(showPopup, 'flex', listRef),
-      [setDisplay, showPopup]);
+      [showPopup]);
   const postUpdate = useCallback(() => setDisplay(!showPopup, 'none', listRef),
-      [setDisplay, showPopup]);
+      [showPopup]);
 
   //this animation is only applied for popup submenu
   const springProps = useSpring({
