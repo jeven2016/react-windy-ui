@@ -36,7 +36,6 @@ const Alert = React.forwardRef((props, ref) => {
     animated = true,//whether to show / close with animation
     ...otherProps
   } = props;
-
   validate(AlertType.hasOwnProperty(type),
       `The type '${type}' is not acceptable.`);
 

@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import clsx from 'clsx';
 import useMultipleRefs from './common/UseMultipleRefs';
 import * as PropTypes from 'prop-types';
-import {animated, useTransition} from 'react-spring';
+import {animated, config, useTransition} from 'react-spring';
 
 const Mask = React.forwardRef((props, ref) => {
   const {
@@ -10,17 +10,18 @@ const Mask = React.forwardRef((props, ref) => {
     extraClassName,
     active,
     onClick,
+    dark = false,
     ...otherProps
   } = props;
   let drawerRef = useRef();
   const multiRef = useMultipleRefs(drawerRef, ref);
 
-  let clsName = clsx(extraClassName, className);
+  let clsName = clsx(extraClassName, className, {dark: dark});
 
   //Transition used for mount/unount components, that means the dom node will be
   //removed & recreated
   const transition = useTransition(active, null, {
-    config: {clamp: true, mass: 1, tesion: 100, friction: 15},
+    config: config.friction,
     from: {display: 'none', opacity: 0},
     enter: item => async next => {
       await next({display: ''});

@@ -64,6 +64,11 @@ export default function DocMenu(props) {
           选择 Select
         </Link>
       </Menu.Item>
+      <Menu.Item id="modal">
+        <Link to={`${url}/modal`}>
+          对话框 Modal
+        </Link>
+      </Menu.Item>
     </Menu.SubMenu>
     <Menu.SubMenu header="提示信息" id="info">
       <Menu.Item id="badge">
@@ -78,12 +83,12 @@ export default function DocMenu(props) {
       </Menu.Item>
       <Menu.Item id="alert">
         <Link to={`${url}/alert`}>
-          警告提醒 Alert
+          警告 Alert
         </Link>
       </Menu.Item>
       <Menu.Item id="notification">
         <Link to={`${url}/notification`}>
-          消息通知 Notification
+          通知 Notification
         </Link>
       </Menu.Item>
     </Menu.SubMenu>

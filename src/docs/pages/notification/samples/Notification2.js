@@ -9,9 +9,6 @@ import {
 } from 'react-windy-ui';
 
 export default function Notification2() {
-  Notification.config({
-    position: 'topRight',
-  });
   return <>
     <Button onClick={() => Notification.info({
       title: 'Simple Message',
@@ -20,20 +17,17 @@ export default function Notification2() {
 
     <Button onClick={() => Notification.ok({
       title: 'Simple Message',
-      body: 'This is a info message.',
-      icon: <IconInfo/>,
+      body: 'This is a info message.'
     })}>ok</Button>
 
     <Button onClick={() => Notification.warning({
       title: 'Simple Message',
-      body: 'This is a ok message.',
-      icon: <IconOk style={{color: '#49b847'}}/>,
+      body: 'This is a ok message.'
     })}>warning</Button>
 
     <Button onClick={() => Notification.error({
       title: 'Simple Message',
-      body: 'This is a warning message.',
-      icon: <IconWarning style={{color: '#c88f3f'}}/>,
+      body: 'This is a warning message.'
     })}>error</Button>
 
     <Button onClick={() => Notification.simple({

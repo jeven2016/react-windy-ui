@@ -9,6 +9,19 @@ const defaultTitle = 'TITLE';
 const defaultFooter = 'FOOTER';
 const defaultDocKeys = [defaultTitle, defaultFooter];
 
+const prefix = '```';
+const convertCode = (text) => {
+  if (text.indexOf(prefix) > -1) {
+    var reg = /(`){3}[\n|\s]*(.*?)(`){3}/g;
+    var results = reg.exec(text);
+
+    if (results.length > 0 && !isNil(results[2])) {
+      return results[2];
+    }
+  }
+  return text;
+};
+
 export default function DocPage(props) {
   const {language} = useContext(LanguageContext);
   const {
@@ -78,7 +91,7 @@ export default function DocPage(props) {
 
     </div>
     <section className="doc markdown footer">
-      {Footer && <div style={{marginTop: '2rem'}}><Footer/></div>}
+      {Footer && <div style={{marginTop: '1rem'}}><Footer/></div>}
     </section>
   </>;
 

@@ -19,6 +19,7 @@ import BadgeIndex from '../pages/badge/BadgeIndex';
 import DrawerIndex from '../pages/drawer/DrawerIndex';
 import AlertIndex from '../pages/alert/AlertIndex';
 import NotificationIndex from '../pages/notification/NotificationIndex';
+import ModalIndex from '../pages/modal/ModalIndex';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -83,6 +84,9 @@ function DocCenter(props) {
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/notification`}>
                 <NotificationIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/modal`}>
+                <ModalIndex/>
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/`}>
                 <InstallIndex/>

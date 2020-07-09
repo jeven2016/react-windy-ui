@@ -1,17 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
-import {
-  createContainer,
-  execute,
-  getLeftIfCentered,
-  isNil,
-  isString,
-  random,
-  validate,
-} from './Utils';
+import {createContainer, execute, isNil, isString, validate} from './Utils';
 import Alert from './Alert';
-import {EventListener} from './common/Constants';
-import useEvent from './common/UseEvent';
 import {Transition} from 'react-spring/renderprops';
 
 const SizeStyle = {
@@ -28,12 +18,19 @@ const PositionType = {
 
 let DEFAULT_CONFIG = {
   position: 'topRight',
-  duration: 3000,
+  duration: 5000,
   hasCloseIcon: true,
-  top: '5rem',
+  onClose: null,
+  rect: {
+    left: '1.5rem',
+    right: '1.5rem',
+    bottom: '1.5rem',
+    top: '1.5rem',
+  },
+  alertProps: {style: {}},
 };
 
-const Proxy = (() => {
+const Proxy = () => {
   let add, initialized = false;
   const attachFunc = ({add: attachedAdd}) => {
     add = attachedAdd;
@@ -45,73 +42,33 @@ const Proxy = (() => {
     attach: attachFunc,
     add: (msg) => add(msg),
   };
-})();
+};
 
 const Notification = (props) => {
-  const {msgStore, position = DEFAULT_CONFIG.position} = props;
+  const {
+    msgStore,
+    position = DEFAULT_CONFIG.position,
+    onUnmount,
+    rect = DEFAULT_CONFIG.rect,
+  } = props;
+  validate(Object.keys(PositionType).includes(position),
+      `The value(${position}) of the position is invalid.`);
+
   const size = 'small'; //only one size provided
   const sizeClassName = SizeStyle[size];
   const [queue, setQueue] = useState([]);
   const cntRef = useRef(null);
   const timerMap = useRef(new Map());
 
-  validate(Object.keys(PositionType).includes(position),
-      `The value(${position}) of the position is invalid.`);
-
   const lowerPosition = useMemo(() => position.toLowerCase(), [position]);
   const positionResult = useMemo(() => {
     const isLeft = lowerPosition.includes('left');
     const isRight = lowerPosition.includes('right');
     const isCenter = lowerPosition.includes('center');
-    return {isLeft, isCenter, isRight};
+    const isTop = lowerPosition.includes('top');
+    const isBottom = lowerPosition.includes('bottom');
+    return {isLeft, isCenter, isRight, isTop, isBottom};
   }, [lowerPosition]);
-
-  const move = useCallback(() => {
-    let cnt = cntRef.current;
-    if (!cnt) {
-      return;
-    }
-    cntRef.current.style.left = getLeftIfCentered(
-        cnt, document.documentElement);
-  }, [cntRef]);
-
-  const addMsg = (msg) => {
-    if (!isNil(DEFAULT_CONFIG.duration) && DEFAULT_CONFIG.duration > 0) {
-      const timer = execute(() => {
-        removeMsg(msg.key);
-      }, DEFAULT_CONFIG.duration);
-      timerMap.current.set(msg.key, timer);
-    }
-    setQueue(q => [...q, msg]);
-  };
-
-  if (!msgStore.initialized()) {
-    msgStore.attach({add: addMsg});
-  }
-  useEvent(EventListener.resize, (evt) => {
-    move();
-  }, positionResult.isCenter);
-
-  useEffect(() => {
-    console.log(DEFAULT_CONFIG.top);
-    if (!isNil(DEFAULT_CONFIG.top)) {
-      cntRef.current.style.top = DEFAULT_CONFIG.top;
-    }
-  });
-
-  useEffect(() => {
-    if (positionResult.isCenter) {
-      move();
-    } else {
-      //remove {top, left} properties from style if position is not topCenter
-      cntRef.current.removeAttribute('style');
-    }
-
-    return () => {
-      let cnt = Notification.container;
-      cnt && cnt.remove();
-    };
-  }, [positionResult, move]);
 
   const removeMsg = useCallback((key) => {
     const timer = timerMap.current.get(key);
@@ -121,6 +78,42 @@ const Notification = (props) => {
     }
     setQueue(pre => [...pre.filter(msg => msg.key !== key)]);
   }, [timerMap, setQueue]);
+
+  const addMsg = useCallback((msg) => {
+    if (!isNil(msg.duration) && msg.duration > 0) {
+      const timer = execute(() => {
+        removeMsg(msg.key);
+      }, msg.duration);
+      timerMap.current.set(msg.key, timer);
+    }
+    setQueue(q => [...q, msg]);
+  }, [timerMap, setQueue, removeMsg]);
+
+  if (!msgStore.initialized()) {
+    msgStore.attach({add: addMsg});
+  }
+
+  useEffect(() => {
+    if (!isNil(rect)) {
+      if (positionResult.isTop) {
+        cntRef.current.style.top = rect.top;
+      } else {
+        cntRef.current.style.bottom = rect.bottom;
+      }
+
+      if (positionResult.isLeft) {
+        cntRef.current.style.left = rect.left;
+      } else {
+        cntRef.current.style.right = rect.right;
+      }
+    }
+  });
+
+  useEffect(() => {
+    return () => {
+      onUnmount && onUnmount(position);
+    };
+  }, [onUnmount, position]);
 
   const animationFrom = useMemo(() => {
     let x = '0%';//center
@@ -153,25 +146,31 @@ const Notification = (props) => {
       //print react worning log regarding memory leak
     }
     <Transition
-        config={{clamp: true, mass: 1, tesion: 100, friction: 15}}
+        config={{clamp: true, mass: 1, tesion: 150, friction: 15}}
         items={queue}
         keys={item => item.key}
         from={animationFrom}
         enter={{x: '0', opacity: '1', scale: 1}}
-        leave={animationLeave}
-    >
+        onDestroyed={(item) => {
+          item.onClose && item.onClose(item);
+        }}
+        leave={animationLeave}>
       {
-        item => tranProps =>
-            <Alert {...item}
-                   animated={false}
-                   style={{
-                     opacity: tranProps.opacity,
-                     transform: `translate3d(${tranProps.x}, 0, 0) scaleY(${tranProps.scale})`,
-                   }}
-                   active={true}
-                   onClose={() => removeMsg(item.key)}
-                   hasCloseIcon={DEFAULT_CONFIG.hasCloseIcon}/>
-      }
+        item => tranProps => {
+          delete item.rect;
+          const {alertProps: {style: alterSty, ...alterOthers}, ...others} = item;
+          const alertStyle = {
+            ...alterSty,
+            opacity: tranProps.opacity,
+            transform: `translate3d(${tranProps.x}, 0, 0) scaleY(${tranProps.scale})`,
+          };
+          const alertConfig = {...others, ...alterOthers};
+          return <Alert {...alertConfig}
+                        animated={false}
+                        style={alertStyle}
+                        active={true}
+                        onClose={() => removeMsg(item.key)}/>;
+        }}
     </Transition>
   </div>;
 
@@ -181,57 +180,72 @@ const Notification = (props) => {
  * Generate a key for inner Alert intances
  * @returns {string}
  */
-let generateKey = () => {
-  return `nf-${Date.now()}-${random(1000, 10000)}`;
+const generateKey = () => {
+  return `nf-${Date.now()}`;
 };
+
+const proxyMap = new Map();
 
 /**
  * Add a alert message to queue
  * @param type
- * @param config
+ * @param cfg
  */
-let send = (type, config) => {
+const send = (type, cfg) => {
   const key = generateKey();
-  let msg = isString(config) ? {
+  let msg = isString(cfg) ? {
+        ...DEFAULT_CONFIG,
         key: key,
-        duration: DEFAULT_CONFIG.duration,
         type: type,
-        body: config,
+        body: cfg,
       }
-      : {key: key, duration: DEFAULT_CONFIG.duration, type: type, ...config};
+      : {key: key, type: type, ...DEFAULT_CONFIG, ...cfg};
 
-  const proxy = Proxy;
-  if (proxy.initialized()) {
+  let proxy = proxyMap.get(msg.position);
+  if (!proxy) {
+    proxy = new Proxy();
+    proxyMap.set(msg.position, proxy);
+    let containerObj = createContainer('notify-' + msg.position);
+
+    //pass position into todo
+    ReactDOM.render(<Notification position={msg.position}
+                                  msgStore={proxy}
+                                  onUnmount={(k) => {
+                                    containerObj.remove();
+                                    proxyMap.delete(k);
+                                  }}/>,
+        containerObj.container);
     proxy.add(msg);
-    return;
+  } else {
+    proxy.add(msg);
   }
-  let containerObj = createContainer('wui-alert-cont');
-  ReactDOM.render(<Notification msgStore={proxy}/>, containerObj.container);
-  proxy.add(msg);
 };
 
 export default {
-  config(config) {
-    DEFAULT_CONFIG = {...DEFAULT_CONFIG, ...config};
+  getConfig() {
+    return DEFAULT_CONFIG;
+  },
+  config(cfg) {
+    DEFAULT_CONFIG = {...DEFAULT_CONFIG, ...cfg};
   },
 
-  info(config) {
-    send('info', config);
+  info(cfg) {
+    send('info', cfg);
   },
-  ok(config) {
-    send('ok', config);
+  ok(cfg) {
+    send('ok', cfg);
   },
-  warning(config) {
-    send('warning', config);
+  warning(cfg) {
+    send('warning', cfg);
   },
-  error(config) {
-    send('error', config);
+  error(cfg) {
+    send('error', cfg);
   },
 
-  simple(config) {
-    send('simple', config);
+  simple(cfg) {
+    send('simple', cfg);
   },
-  mini(config) {
-    send('mini', config);
+  mini(cfg) {
+    send('mini', cfg);
   },
 };

@@ -1,33 +1,41 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import {ModalContext} from '../common/Context';
 import clsx from 'clsx';
 import useEvent from '../common/UseEvent';
 import {EventListener} from '../common/Constants';
-import {isNil} from '../Utils';
-import {preventEvent} from '../event';
+import {isNil, setDisplay} from '../Utils';
+import Mask from '../Mask';
+import {animated, config, useSpring} from 'react-spring';
+import useMultipleRefs from '../common/UseMultipleRefs';
 
 const ModalSizeStyle = {
   small: 'width-sm',
   medium: 'width-md',
   large: 'width-lg',
-  extraLarge: 'width-xl',
+  xLarge: 'width-xl',
 };
 
 const Modal = React.forwardRef((props, ref) => {
   const {
     modalContainerDom, //internal use
     size = 'medium',
-    type, className = 'dialog',
+    type = 'primary',
+    className = 'dialog',
     hasMask = true,
-    extraClassName, onCancel,
-    active, autoClose = true,
-    children, alignCenter,
+    extraClassName,
+    onCancel,
+    active,
+    autoClose = true,
+    children,
+    style,
+    alignCenter = true,
+    allowOverflow = false,
     ...otherProps
   } = props;
 
   const modalRef = ref;
-  const contentRef = useRef(null);
-  let containerRef = useRef(null);
+  const internalRef = useRef(null);
+  const multiRef = useMultipleRefs(modalRef, internalRef);
 
   useEvent(EventListener.keyDown, (e) => {
     //add listener for esc key
@@ -46,19 +54,16 @@ const Modal = React.forwardRef((props, ref) => {
     body.style.paddingRight = '17px'; //避免滚动条造成的页面抖动
   }, [active]);
 
-  const clsName = clsx(className,
+  const clsName = clsx(extraClassName, className,
       alignCenter ? 'align-center' : 'align-top',
       {
         [type]: type,
-        active: active,
-        inactive: !active,
+        [ModalSizeStyle[size]]: ModalSizeStyle[size],
       },
   );
 
   const handleCancel = (e) => {
-    if (!autoClose || contentRef.current.contains(e.target)) {
-      preventEvent(e);
-      // don't close the modal if clicking the modal body instead of black background
+    if (!autoClose || internalRef.current.contains(e.target)) {
       return;
     }
 
@@ -67,31 +72,62 @@ const Modal = React.forwardRef((props, ref) => {
     }
   };
 
-  const sizeStyle = ModalSizeStyle[size];
-  let contentCls = clsx(extraClassName, 'content', [sizeStyle]);
+  const from = useMemo(() => {
+    return alignCenter ? {
+      top: '50%',
+      left: '50%',
+      opacity: 0,
+      transform: 'translate3D(-50%, -50%, 0) scale(0.8)',
+    } : {opacity: 0, transform: 'translate3D(-50%, -100%, 0)'};
+  }, [alignCenter]);
 
-  let modal = <ModalContext.Provider value={{
-    onMove: null,//useMove(containerRef, contentRef),
+  const to = useMemo(() => {
+    if (alignCenter) {
+      return active ? {
+            top: '50%',
+            left: '50%',
+            opacity: 1,
+            transform: 'translate3D(-50%, -50%, 0) scale(1)',
+          } :
+          {opacity: 0, transform: 'translate3D(-50%, -50%, 0) scale(0.8)'};
+    } else {
+      return active ? {opacity: 1, transform: 'translate3D(-50%, 0, 0)'}
+          : {opacity: 0, transform: 'translate3D(-50%, -100%, 0)'};
+    }
+  }, [alignCenter, active]);
+
+  const preUpdate = useCallback(() => setDisplay(active, 'flex', internalRef),
+      [active]);
+  const postUpdate = useCallback(
+      () => setDisplay(!active, 'none', internalRef),
+      [active]);
+
+  const springProps = useSpring({
+    // config: {clamp: true, mass: 1, tesion: 100, friction: 15},
+    config: config.friction,
+    from: from,
+    to: to,
+    onStart: preUpdate,
+    onRest: postUpdate,
+  });
+
+  const modalStyle = {...style, ...springProps};
+  return <ModalContext.Provider value={{
+    onMove: null,//useMove(internalRef),
     onCancel: onCancel,
+    allowOverflow,
   }}>
     <>
       {
-        hasMask ? <div className={active ? 'mask active' : 'mask inactive'}/>
-            : null
+        hasMask &&
+        <Mask active={active} onClick={handleCancel} dark={type === 'simple'}/>
       }
-
-      <div className={clsName} onClick={handleCancel} ref={modalRef}>
-        <div className="dialog-container" ref={containerRef}
-             onClick={handleCancel}>
-          <div className={contentCls} {...otherProps} ref={contentRef}>
-            {children}
-          </div>
-        </div>
-      </div>
+      <animated.div className={clsName} ref={multiRef}
+                    style={modalStyle} {...otherProps}>
+        {children}
+      </animated.div>
     </>
   </ModalContext.Provider>;
-  return modal;
-  // return ReactDOM.createPortal(modal, rootElem);
 });
 
 export default Modal;

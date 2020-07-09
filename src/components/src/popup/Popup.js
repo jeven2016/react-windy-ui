@@ -8,7 +8,7 @@ import {
   PopupPosition,
 } from '../common/Constants';
 import {animated, useSpring} from 'react-spring';
-import {execute, isNil, isString, place, setDisplay} from '../Utils';
+import {execute, isNil, isString, place, setDisplay, validate} from '../Utils';
 import {setDirectRef} from '../common/UseMultipleRefs';
 import useResizeObserver from '../common/UseResizeObserver';
 import useEvent from '../common/UseEvent';
@@ -46,7 +46,7 @@ function getTranslate(position, activePopup, startOffset) {
  */
 const Popup = React.forwardRef((props, ref) => {
   const {
-    zIndex = 200,
+    zIndex = 1200,
     hasBox = false,
     hasBorderRadius = true,
     hasBorder = false,
@@ -71,6 +71,9 @@ const Popup = React.forwardRef((props, ref) => {
     autoClose = true, //auto close while clicking the body of the popup
     ...otherProps
   } = props;
+  // validate(!isNil(ctrlNode) && ctrlNode.length <= 1,
+  //     'only one child can be set');
+
   const rootElem = useContainer(ContainerId.popup);
   const isHover = activeBy === PopupCtrlType.hover;
 

@@ -1,15 +1,18 @@
-import React, {useContext, useRef} from 'react';
+import React, {useContext} from 'react';
 import Modal from './Modal';
 import useElement from '../common/useElement';
 import {FlexAlign} from '../common/Constants';
 import {ModalContext} from '../common/Context';
 import {isNil} from '../Utils';
 import Element from '../common/Element';
-import usePan from '../common/usePan';
 import ModelExtension from './ModalExtension';
 
 const Body = React.forwardRef(
-    (props, ref) => useElement(props, ref, 'body'));
+    (props, ref) => {
+      const context = useContext(ModalContext);
+      const clsName = context.allowOverflow ? 'body overflow' : 'body';
+      return useElement(props, ref, clsName);
+    });
 
 const Footer = React.forwardRef((props, ref) => {
   const {align, ...otherProps} = props;
@@ -46,5 +49,6 @@ Modal.warning = ModelExtension.warning;
 Modal.error = ModelExtension.error;
 Modal.success = ModelExtension.success;
 Modal.confirm = ModelExtension.confirm;
+Modal.closeAll = ModelExtension.closeAll;
 
 export default Modal;

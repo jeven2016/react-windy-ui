@@ -256,7 +256,7 @@ export const getContainer = (id) => {
  */
 export const createContainer = (id) => {
   if (isNil(id)) {
-    id = `wui-container-${random(100, 10000)}`;
+    id = `windy-${random(100, 10000)}`;
   }
   let root = document.querySelector(`#${id}`);
 
@@ -347,7 +347,6 @@ export const setDisplay = (condition, value, ref) => {
   if (condition) {
     const div = ref.current;
     if (div) {
-      console.log('display=' + value);
       div.style.display = value;
     }
   }

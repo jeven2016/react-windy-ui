@@ -1,57 +1,37 @@
 import React from 'react';
-import {
-  Button,
-  IconError,
-  IconInfo,
-  IconOk,
-  IconWarning,
-  Notification,
-  Select,
-} from 'react-windy-ui';
+import {Button, Notification} from 'react-windy-ui';
 
 export default function Notification3() {
   return <>
-    <div className="doc doc-row">
-      <span style={{marginRight: '1rem', fontWeight: '600'}}>Position:</span>
-      <Select defaultValue="topRight"
-              onSelect={value => Notification.config({
-                position: value,
-              })}>
-        <Select.Option value="topLeft">topLeft</Select.Option>
-        <Select.Option value="topCenter">topCenter</Select.Option>
-        <Select.Option value="topRight">topRight</Select.Option>
-        <Select.Option value="bottomLeft">bottomLeft</Select.Option>
-        <Select.Option value="bottomRight">bottomRight</Select.Option>
-      </Select>
-    </div>
     <Button onClick={() => Notification.info({
       title: 'Simple Message',
       body: 'This is a simple message.',
-    })}>info</Button>
+      position: 'topLeft',
+    })}>topLeft</Button>
 
-    <Button onClick={() => Notification.ok({
+    <Button onClick={() => Notification.info({
       title: 'Simple Message',
-      body: 'This is a info message.',
-      icon: <IconInfo/>,
-    })}>ok</Button>
+      body: 'This is a simple message.',
+      position: 'topRight',
+    })}>topRight</Button>
 
-    <Button onClick={() => Notification.warning({
+    <Button onClick={() => Notification.info({
       title: 'Simple Message',
-      body: 'This is a ok message.',
-      icon: <IconOk style={{color: '#49b847'}}/>,
-    })}>warning</Button>
+      body: 'This is a simple message.',
+      position: 'topCenter',
+    })}>topCenter</Button>
 
-    <Button onClick={() => Notification.error({
+    <Button onClick={() => Notification.info({
       title: 'Simple Message',
-      body: 'This is a warning message.',
-      icon: <IconWarning style={{color: '#c88f3f'}}/>,
-    })}>error</Button>
+      body: 'This is a simple message.',
+      position: 'bottomLeft',
+    })}>bottomLeft</Button>
 
-    <Button onClick={() => Notification.simple({
+    <Button onClick={() => Notification.info({
       title: 'Simple Message',
-      body: 'This is a error message.',
-      icon: <IconError style={{color: '#d82b3a'}}/>,
-    })}>simple</Button>
+      body: 'This is a simple message.',
+      position: 'bottomRight',
+    })}>bottomRight</Button>
   </>;
 
 }
