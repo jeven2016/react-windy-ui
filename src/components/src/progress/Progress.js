@@ -59,7 +59,7 @@ const Progress = React.forwardRef((props, ref) => {
           : null
     }
 
-    {top && showLoading ? <Loader type="secondary" size="small"/> : null}
+    {<Loader active={top && showLoading} type="secondary" size="small"/>}
 
   </div>;
 });

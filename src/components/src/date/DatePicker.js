@@ -1,5 +1,4 @@
-import React, {useReducer, useRef, useMemo} from 'react';
-import PopupController from '../common/PopupController';
+import React, {useMemo, useReducer} from 'react';
 import {Button, Input} from '../index';
 import {IconCalendar} from '../Icons';
 import {isNil, slice} from '../Utils';
@@ -12,6 +11,7 @@ import {
 import moment from 'moment';
 import {DateActionType, reducer} from './Reducer';
 import clsx from 'clsx';
+import Popup from '../popup/Popup';
 
 const DatePicker = React.forwardRef((props, ref) => {
   const {
@@ -206,7 +206,7 @@ const DatePicker = React.forwardRef((props, ref) => {
     dispatch({type: DateActionType.close});
   };
 
-  return <PopupController
+  return <Popup
       ref={popupCtrlRef}
       margin={0}
       position={position}

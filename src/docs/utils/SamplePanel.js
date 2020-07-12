@@ -35,10 +35,10 @@ export default function SamplePanel(props) {
     <Card block hasBorder hasBox={false}>
       <Card.Row>
         <Row>
-          <Col sm={6}>
+          <Col sm={8}>
             <div id={id}><TitleMarkDwon/></div>
           </Col>
-          <Col sm={6} style={{display: 'flex', justifyContent: 'flex-end'}}>
+          <Col sm={4} style={{display: 'flex', justifyContent: 'flex-end'}}>
             <div>
               <Button outline type="blue" extraClassName="clear-border"
                       onClick={() => setCollapse(pre => !pre)}>

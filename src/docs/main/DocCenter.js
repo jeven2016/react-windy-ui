@@ -20,6 +20,8 @@ import DrawerIndex from '../pages/drawer/DrawerIndex';
 import AlertIndex from '../pages/alert/AlertIndex';
 import NotificationIndex from '../pages/notification/NotificationIndex';
 import ModalIndex from '../pages/modal/ModalIndex';
+import LoaderIndex from '../pages/loader/LoaderIndex';
+import ProgressIndex from '../pages/progress/ProgressIndex';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -87,6 +89,12 @@ function DocCenter(props) {
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/modal`}>
                 <ModalIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/loader`}>
+                <LoaderIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/progress`}>
+                <ProgressIndex/>
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/`}>
                 <InstallIndex/>

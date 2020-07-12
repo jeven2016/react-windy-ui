@@ -105,7 +105,7 @@ const Popup = React.forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     isActive: activePopup,
     changeActive: changeActive,
-  }), [activePopup, changeActive]);
+  }), [activePopup]);
 
   //-------------update the popup's position------------------
   const updatePosition = useCallback(() => {
@@ -322,7 +322,7 @@ const Popup = React.forwardRef((props, ref) => {
       realCtrlRef);*/
 
   useEvent(EventListener.click,
-      (e) => handleClick(e),
+      useCallback((e) => handleClick(e), [handleClick]),
       !isHover,
       realCtrlRef);
 

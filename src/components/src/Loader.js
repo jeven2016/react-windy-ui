@@ -1,31 +1,9 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {isNil} from './Utils';
 import Mask from './Mask';
 import clsx from 'clsx';
 import Modal from './modal';
-
-const LoaderWrapperStyle = {
-  position: 'relative',
-  display: 'inline-flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-};
-
-const LoaderWrapperBlockStyle = {
-  ...LoaderWrapperStyle,
-  display: 'flex',
-};
-
-const MaskStyle = {
-  position: 'absolute',
-  backgroundColor: 'rgba(0, 0, 0, 0.4)',
-  borderRadius: '0.25rem',
-};
-
-const LoaderStyle = {
-  position: 'absolute',
-  zIndex: '100',
-};
+import PropTypes from 'prop-types';
 
 const ModalBodyStyle = {
   display: 'flex',
@@ -34,29 +12,64 @@ const ModalBodyStyle = {
   justifyContent: 'center',
 };
 
-const Loader = React.forwardRef((props, ref) => {
+const LoaderType = {
+  primary: 'primary',
+  secondary: 'secondary',
+  third: 'third',
+};
 
+const LoaderColor = {
+  white: 'white',
+  blue: 'blue',
+  dark: 'dark',
+};
+
+const LoaderDirection = {
+  horizontal: 'horizontal',
+  vertical: 'vertical',
+};
+
+const Loader = React.forwardRef((props, ref) => {
   const {
-    text, block, color, active, type = 'primary', size = 'normal',
-    hasMask = true, hasBackground = true,
-    global = false, position = 'center',  //position only works with  global=true
-    children, className = 'loader', extraClassName, ...otherProps
+    className = 'loader',
+    extraClassName,
+    text,
+    block,
+    color,
+    active,
+    type = LoaderType.primary,
+    size = 'medium',
+    hasMask = true,
+    darkMask = true,
+    hasBackground = true,
+    direction = LoaderDirection.vertical,
+    modalStyle,
+    global = false,
+    children,
+    onMaskClick,
+    hasDefaultWidth = true, //only works with global type
+    ...otherProps
   } = props;
-  let clsName = clsx(extraClassName, className, {
+
+  const directionCls = useMemo(() => direction === LoaderDirection.horizontal
+      ? 'loader-row'
+      : 'loader-column', [direction]);
+
+  let clsName = clsx(extraClassName, className, directionCls, {
     active: active,
     [type]: type,
     [size]: size,
-    [color]: color,
+    [color]: color === LoaderColor.dark ? LoaderColor.white : color,
     block,
   });
 
-  const getContent = () => {
-    let content = null;
-    if (type === 'primary') {
-      content = <span className="content"/>;
+  const content = useMemo(() => {
+    let cnt = null;
+    if (type === LoaderType.primary) {
+      cnt = <span className="content"/>;
     }
-    if (type === 'secondary' || type === 'third') {
-      content = <span className="content">
+    if (type === LoaderType.secondary || LoaderType.third) {
+      cnt = <span className="content">
         {
           React.Children.map(Array.from(Array(12), (val, i) => i + 1),
               value => {
@@ -69,70 +82,104 @@ const Loader = React.forwardRef((props, ref) => {
       </span>;
     }
 
-    if (!isNil(text)) {
-      return <>
-        {content}
-        <span className="info">
-          {text}
-        </span>
-      </>;
-    }
-    return content;
-  };
-
-  let content = getContent();
-
-  const getSimpleBody = () => <span className={clsName} {...otherProps}
-                                    ref={ref}>
-      {content}
-    </span>;
-
-  const getTextBody = () => {
     return <>
-     <span className={clsName} {...otherProps} style={LoaderStyle}>
-            {content}
-          </span>
-      {children}
+      {cnt}
+      {!isNil(text) && <span className="info">
+          {text}
+        </span>}
     </>;
-  };
-  const getBodyWithChildren = () => {
+  }, [text, type]);
+
+  const simpleBody = useMemo(() => <span className={clsName} {...otherProps}
+                                         ref={ref}>
+      {content}
+    </span>, [clsName, content, otherProps, ref]);
+
+  //wrapper for children
+  const bodyWithChildren = useMemo(() => {
     if (!isNil(children)) {
-      let wrapperStyle = block ? LoaderWrapperBlockStyle : LoaderWrapperStyle;
+      const wrapperClsName = clsx('loader-wrapper',
+          {block, 'with-opacity': !darkMask, active});
       return <>
-        <span style={wrapperStyle} ref={ref}>
-          <Mask active={active} style={MaskStyle}/>
-          {getTextBody()}
+        <span className={wrapperClsName} ref={ref} {...otherProps}>
+          <Mask active={active} onClick={onMaskClick}
+                dark={darkMask}/>
+          {active && <span className={clsName}>{content}</span>}
+          {children}
         </span>
       </>;
     }
     return null;
-  };
+  }, [
+    active,
+    block,
+    children,
+    clsName,
+    content,
+    darkMask,
+    onMaskClick,
+    otherProps,
+    ref]);
 
-  const getModal = () => {
-    const modalStyle = hasBackground ? null : {
-      background: 'transparent',
-      boxShadow: 'none',
-    };
-    return <Modal alignCenter={true} active={active} style={modalStyle}
-                  hasMask={hasMask}>
+  const modal = useMemo(() => {
+    let mStyle = null;
+    if (hasBackground && !isNil(modalStyle)) {
+      mStyle = {...modalStyle};
+    }
+
+    if (!hasBackground) {
+      mStyle = {
+        background: 'transparent',
+        boxShadow: 'none',
+      };
+    }
+
+    return <Modal alignCenter={true} active={active} style={mStyle}
+                  type="secondary"
+                  hasDefaultWidth={hasDefaultWidth}
+                  hasMask={hasMask} onCancel={onMaskClick}>
       <Modal.Body>
         <div style={ModalBodyStyle}>
-          {getSimpleBody()}
+          {simpleBody}
         </div>
       </Modal.Body>
     </Modal>;
-  };
+  }, [
+    active,
+    hasBackground,
+    hasDefaultWidth,
+    hasMask,
+    modalStyle,
+    onMaskClick,
+    simpleBody]);
 
   if (global) {
-    return getModal();
+    return modal;
   }
 
-  const bodyWithChildren = getBodyWithChildren();
   if (!isNil(bodyWithChildren)) {
     return bodyWithChildren;
   }
-  return getSimpleBody();
-
+  return active && simpleBody;
 });
+
+Loader.propTypes = {
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
+  text: PropTypes.node,
+  block: PropTypes.bool,
+  color: PropTypes.string,
+  active: PropTypes.bool,
+  type: PropTypes.string,
+  size: PropTypes.string,
+  hasMask: PropTypes.bool,
+  darkMask: PropTypes.bool,
+  hasBackground: PropTypes.bool,
+  direction: PropTypes.string,
+  modalStyle: PropTypes.object,
+  global: PropTypes.bool,
+  onMaskClick: PropTypes.func,
+  hasDefaultWidth: PropTypes.bool,
+};
 
 export default Loader;

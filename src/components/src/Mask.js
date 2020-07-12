@@ -10,13 +10,13 @@ const Mask = React.forwardRef((props, ref) => {
     extraClassName,
     active,
     onClick,
-    dark = false,
+    dark = true,
     ...otherProps
   } = props;
   let drawerRef = useRef();
   const multiRef = useMultipleRefs(drawerRef, ref);
 
-  let clsName = clsx(extraClassName, className, {dark: dark});
+  let clsName = clsx(extraClassName, className, {dark});
 
   //Transition used for mount/unount components, that means the dom node will be
   //removed & recreated

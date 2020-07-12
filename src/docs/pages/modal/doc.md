@@ -11,6 +11,40 @@ Modal也即模态对话框。在当前页面额外弹出一个框体，比如确
 
 ------------- Footer ---------------------
 [FOOTER_BEGIN_zh_CN]
+## API
+Modal的属性如下所示：
+
+| 属性 | 名称 | 类型 | 默认值 | 描述 |
+| --- | --- | --- | --- | --- |
+| ref | Modal Dom对象的引用 | function \| ref | - | 当需要获取dom对象时可设置此属性 |
+| className | 样式名称 | string | dialog |  |
+| extraClassName | 额外添加的样式名称 | string | - |  |
+| type | 类型 | string | info | 值可以是：primary，secondary，simple |
+| hasMask | 是否显示黑色遮罩层 | boolean | true |  |
+| onCancel | 关闭时的回调函数 | function | - | 点击右上角的关闭图标或黑色遮罩层时会在内部自动调用  |
+| active | 激活显示 | boolean | - |  |
+| autoClose | 是否允许自动关闭 | boolean | - | 点击右上角的关闭图标或黑色遮罩层时是否自动关闭  |
+| alignCenter | 是否居中显示 | boolean | true | 如果设置成false时，会在距离顶部某处显示，此时需要通过style设置对应的top值  |
+| allowOverflow | 是否允许内容区域垂直滚动 | boolean | true | 如果设置为true时，请给Modal窗体设置一个高度，这样Body区域超出会自动滚动显示 |
+| hasDefaultWidth | 是否设置一个默认的宽度 | boolean | true | 如果设置为true时，Modal的宽度默认为90%；为false时，不设置宽度，宽度以内容的实际宽度为准。 |
+
+Mode.method()对应的方法如下所示：   
+
+| 方法名 | 名称 | 参数 | 返回值 | 描述 |
+| --- | --- | --- | --- | --- |
+| info | 显示info类型的Modal | object | modal | config: {type, header, title, body, okText, cancelText, onOk, onCancel}  |
+| warning | 显示warning类型的Modal | object | modal | config: 同上  |
+| error | 显示error类型的Modal | object | modal | config: 同上  |
+| success | 显示success类型的Modal | object | modal | config: 同上  |
+| confirm | 显示confirm类型的Modal | object | modal | config: 同上  |
+| closeAll | 关闭所有的Modal | - | - |  |
+
+通过上面Modal.method()方法返回的modal对象，其提供的方法如下所示：
+
+| 方法名 | 名称 | 参数 | 返回值 | 描述 |
+| --- | --- | --- | --- | --- |
+| close |  关闭当前的Modal   |  -   | -  |   |
+| update |  更新Modal的内容   | object | - | 可更新的内容：{header，title，body，okText，cancelText}  |
 
 [FOOTER_END_zh_CN]
 
@@ -513,47 +547,32 @@ export default function Modal8() {
 <fieldset class="doc desc">
   <legend>提示</legend>
   <div class="doc desc-area">
-     弹出多个Modal示例，点击Open按钮将会再打开一个新的Modal。
+     弹出多个Modal示例，点击Close All按钮后将调用Modal.closeAll()方法将所有Modal关闭。
   </div>
 </fieldset>
 
 ```jsx
-import React, {useState} from 'react';
-import {Button, Modal, Notification} from 'react-windy-ui';
+import React from 'react';
+import {Button, Modal} from 'react-windy-ui';
 
 export default function Modal9() {
-  const [active, setActive] = useState(false);
+  const open = () => {
 
-  const close = () => setActive(false);
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => Modal.info({
+        header: 'Info' + i,
+        type: 'primary',
+        body: <Button color="red" onClick={() => Modal.closeAll()}>
+          Close All
+        </Button>,
+        okText: 'OK',
+      }), i * 500);
+    }
 
-  const openNew = () => {
-    Modal.confirm({
-      header: 'Confirm',
-      type: 'primary',
-      body: 'Are you sure to exit?',
-      okText: 'OK',
-      cancelText: 'Cancel',
-      onOk: () => {Notification.info('OK');}
-    });
   };
 
   return <>
-    <Button type="primary" onClick={() => setActive(true)}>Open</Button>
-
-    <Modal active={active} type="primary" onCancel={close}
-           allowOverflow={true}>
-      <Modal.Header>
-        Modal Header
-      </Modal.Header>
-      <Modal.Body>
-        Modal Content....<br/>
-      </Modal.Body>
-      <Modal.Footer align="center">
-        <Button hasMinWidth={true} type="primary"
-                onClick={openNew}>Open</Button>
-        <Button hasMinWidth={true} onClick={close}>Close</Button>
-      </Modal.Footer>
-    </Modal>
+    <Button type="primary" onClick={open}>Open</Button>
 
   </>;
 }
@@ -562,4 +581,65 @@ export default function Modal9() {
 
 [Modal9_BEGIN_en_US]
 [Modal9_END_en_US]
+----------------------------------
+
+[Modal10_BEGIN_zh_CN]
+
+### 示例10: 关闭单个Modal以及更新Modal的内容
+<fieldset class="doc desc">
+  <legend>提示</legend>
+  <div class="doc desc-area">
+     对于通过Modal.info()这类方式打开的Modal，会返回一个对象，你可以调用其提供的close和update方法。
+     close可以关闭该Modal，update则用来更新Modal的header、title、body、ok按钮文字以及cancel按钮文字。
+  </div>
+</fieldset>
+
+```jsx
+import React, {useRef} from 'react';
+import {Button, Modal} from 'react-windy-ui';
+
+export default function Modal10() {
+  const timerRef = useRef(null);
+  const open = () => {
+    const modal = Modal.info({
+      header: 'Info',
+      type: 'primary',
+      body: 'Modal Content...',
+      okText: 'OK',
+      onOk: () => {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      },
+    });
+
+    let i = 0;
+    const seconds = 5;
+    timerRef.current = setInterval(() => {
+      if (i++ > seconds) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+        modal.close();
+        return;
+      }
+
+      //update the modal
+      modal.update({
+        header: `Waiting for ${seconds} seconds`,
+        title: 'A timer is running',
+        body: `There are ${seconds - i + 1} second(s) left.`,
+        okText: `${seconds - i + 1} second(s)`,
+      });
+    }, 1000);
+
+  };
+
+  return <>
+    <Button type="primary" onClick={open}>Open</Button>
+
+  </>;
+}
+```
+[Modal10_END_zh_CN]
+[Modal10_BEGIN_en_US]
+[Modal10_END_en_US]
 ----------------------------------

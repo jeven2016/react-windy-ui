@@ -1,7 +1,7 @@
 import {useEffect, useRef} from 'react';
-import {isFunction} from '../Utils';
+import {invoke, isFunction} from '../Utils';
 
-//Tipcally the handler combined with useCallback would be better
+//Typically the handler combined with useCallback would be better
 
 //refer to https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 //using window instead of document to stop propagation
@@ -30,23 +30,24 @@ const useEvent = (
       return;
     }
 
+    let elemNode = elem;
     if (isFunction(elem)) {
-      elem = elem();
+      elemNode = invoke(elem);
     } else if (elem.current) {
-      elem = elem.current;
+      elemNode = elem.current;
     }
 
     //only support IE >=11 and other modern browsers
-    const isSupportedBrowser = elem && elem.addEventListener;
+    const isSupportedBrowser = elemNode && elemNode.addEventListener;
     if (!isSupportedBrowser) {
       return;
     }
     // console.log('add a event listener: ' + name);
     const listener = event => handlerRef.current(event);
-    elem.addEventListener(name, listener);
+    elemNode.addEventListener(name, listener);
     return () => {
-      // console.log('remove a event listener: ' + name);
-      elem.removeEventListener(name, listener);
+      console.log('remove a event listener: ' + name);
+      elemNode.removeEventListener(name, listener);
     };
   }, [name, elem, listenable]);
 };

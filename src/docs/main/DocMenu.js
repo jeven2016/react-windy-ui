@@ -91,6 +91,16 @@ export default function DocMenu(props) {
           通知 Notification
         </Link>
       </Menu.Item>
+      <Menu.Item id="loader">
+        <Link to={`${url}/loader`}>
+          加载 Loader
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="progress">
+        <Link to={`${url}/progress`}>
+          进度 Progress
+        </Link>
+      </Menu.Item>
     </Menu.SubMenu>
   </Menu>;
 }

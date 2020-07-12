@@ -1,10 +1,10 @@
 import React, {
-  useEffect,
-  useState,
-  useRef,
-  useMemo,
   useCallback,
+  useEffect,
   useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
 } from 'react';
 import * as ReactDOM from 'react-dom';
 import Modal from './Modal';
@@ -76,8 +76,9 @@ const SubModal = React.forwardRef((props, ref) => {
     } else if (!isNil(header)) {
       realHeader = header;
     }
-    return realHeader && <Modal.Header>{header}</Modal.Header>;
+    return realHeader && <Modal.Header>{realHeader}</Modal.Header>;
   }, [header, content]);
+
 
   //focus on the ok button by default
   useEffect(() => {
@@ -195,6 +196,9 @@ const show = (infoType, config) => {
     ref: ref,
     update: (content) => {
       ref.current && ref.current.update(content);
+    },
+    close: () => {
+      ref.current && ref.current.close();
     },
   };
 };

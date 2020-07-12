@@ -7,7 +7,7 @@ export default function Modal10() {
     const modal = Modal.info({
       header: 'Info',
       type: 'primary',
-      body: 'Body',
+      body: 'Modal Content...',
       okText: 'OK',
       onOk: () => {
         clearInterval(timerRef.current);
@@ -21,14 +21,16 @@ export default function Modal10() {
       if (i++ > seconds) {
         clearInterval(timerRef.current);
         timerRef.current = null;
+        modal.close();
+        return;
       }
 
       //update the modal
       modal.update({
         header: `Waiting for ${seconds} seconds`,
         title: 'A timer is running',
-        body: `There are ${seconds - i} second(s) left.`,
-        okText: `Waiting`,
+        body: `There are ${seconds - i + 1} second(s) left.`,
+        okText: `${seconds - i + 1} second(s)`,
       });
     }, 1000);
 

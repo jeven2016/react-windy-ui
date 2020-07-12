@@ -7,6 +7,7 @@ import {isNil, setDisplay} from '../Utils';
 import Mask from '../Mask';
 import {animated, config, useSpring} from 'react-spring';
 import useMultipleRefs from '../common/UseMultipleRefs';
+import PropTypes from 'prop-types';
 
 const ModalSizeStyle = {
   small: 'width-sm',
@@ -17,7 +18,6 @@ const ModalSizeStyle = {
 
 const Modal = React.forwardRef((props, ref) => {
   const {
-    modalContainerDom, //internal use
     size = 'medium',
     type = 'primary',
     className = 'dialog',
@@ -30,12 +30,12 @@ const Modal = React.forwardRef((props, ref) => {
     style,
     alignCenter = true,
     allowOverflow = false,
+    hasDefaultWidth = true,
     ...otherProps
   } = props;
 
-  const modalRef = ref;
   const internalRef = useRef(null);
-  const multiRef = useMultipleRefs(modalRef, internalRef);
+  const multiRef = useMultipleRefs(ref, internalRef);
 
   useEvent(EventListener.keyDown, (e) => {
     //add listener for esc key
@@ -57,6 +57,7 @@ const Modal = React.forwardRef((props, ref) => {
   const clsName = clsx(extraClassName, className,
       alignCenter ? 'align-center' : 'align-top',
       {
+        'with-width': hasDefaultWidth,
         [type]: type,
         [ModalSizeStyle[size]]: ModalSizeStyle[size],
       },
@@ -120,7 +121,7 @@ const Modal = React.forwardRef((props, ref) => {
     <>
       {
         hasMask &&
-        <Mask active={active} onClick={handleCancel} dark={type === 'simple'}/>
+        <Mask active={active} onClick={handleCancel}/>
       }
       <animated.div className={clsName} ref={multiRef}
                     style={modalStyle} {...otherProps}>
@@ -129,5 +130,20 @@ const Modal = React.forwardRef((props, ref) => {
     </>
   </ModalContext.Provider>;
 });
+
+Modal.propTypes = {
+  size: PropTypes.string,
+  type: PropTypes.string,
+  className: PropTypes.string,
+  hasMask: PropTypes.bool,
+  extraClassName: PropTypes.string,
+  onCancel: PropTypes.func,
+  active: PropTypes.bool,
+  autoClose: PropTypes.bool,
+  style: PropTypes.object,
+  alignCenter: PropTypes.bool,
+  allowOverflow: PropTypes.bool,
+  hasDefaultWidth: PropTypes.bool
+};
 
 export default Modal;
