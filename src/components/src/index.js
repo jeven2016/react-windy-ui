@@ -13,7 +13,7 @@ import {
   preventEvent,
   removeWindowEventListener,
 } from './event/EventFuntions';
-import NavBar from './navbar';
+import Navbar from './navbar';
 
 export {default as Dropdown} from './dropdown';
 // export {default as WindowEventHandler} from "./event";
@@ -86,7 +86,7 @@ export {
   Input,
   Icon,
   InputGroup,
-  NavBar,
+  Navbar,
 
   addWindowEventListener,
   removeWindowEventListener,

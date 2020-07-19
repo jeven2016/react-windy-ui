@@ -8,3 +8,4 @@ CollapseContext.displayName = 'CollapseContext';
 
 export const RadioGroupContext = React.createContext({});
 export const MenuContext = React.createContext({});
+export const NavbarContext = React.createContext({});

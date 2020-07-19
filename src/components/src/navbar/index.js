@@ -1,14 +1,17 @@
 import React from 'react';
-import NavBar from './NavBar';
+import Navbar from './Navbar';
 import Switch from './Switch';
 import Element from '../common/Element';
-import {NavBarListAlign} from '../common/Constants';
+import {NavbarListAlign} from '../common/Constants';
 import clsx from 'clsx';
+import PropTypes from 'prop-types';
 
 const Title = React.forwardRef((props, ref) => {
   const {className = 'title', nativeType = 'li', ...otherProps} = props;
-  return <Element className={className} nativeType={nativeType} {...otherProps}
-                  ref={ref}/>;
+  return <div className="left-bar">
+    <Element className={className}
+             nativeType={nativeType} {...otherProps}
+             ref={ref}/></div>;
 });
 
 const List = React.forwardRef((props, ref) => {
@@ -17,33 +20,32 @@ const List = React.forwardRef((props, ref) => {
     nativeType = 'ul',
     extraClassName,
     align = 'left',
-    block,
     ...otherProps
   } = props;
-  let alignClsName = NavBarListAlign[align];
+  let alignClsName = NavbarListAlign[align];
 
-  let clsName = clsx(extraClassName, className,
-      {[alignClsName]: alignClsName, block});
+  let clsName = clsx(extraClassName, className, {
+    [alignClsName]: alignClsName,
+  });
 
-  return <Element nativeType={nativeType} className={clsName}
+  return <Element nativeType={nativeType} className={clsName} ref={ref}
                   {...otherProps}/>;
 });
 
 const Item = React.forwardRef((props, ref) => {
   const {
-    block,
-    className = 'item',
+    className = 'navbar-item',
+    extraClassName,
     nativeType = 'li',
-    hasBackground,
-    hasBar,
-    active,
+    hasBackground = false,
+    hasBar = false,
+    active=false,
     alignRight,
     ...otherProps
   } = props;
 
-  let extraClass = clsx({
+  let extraClass = clsx(extraClassName, {
     'with-bg': hasBackground,
-    block,
     'with-bar': hasBar,
     active: active,
     'pull-right': alignRight,
@@ -53,9 +55,33 @@ const Item = React.forwardRef((props, ref) => {
                   nativeType={nativeType} {...otherProps}/>;
 });
 
-NavBar.List = List;
-NavBar.Item = Item;
-NavBar.Title = Title;
-NavBar.Switch = Switch;
+Title.propTypes = {
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  nativeType: PropTypes.string,
+};
 
-export default NavBar;
+List.propTypes = {
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  nativeType: PropTypes.string,
+  alignRight: PropTypes.bool,
+};
+
+Item.propTypes = {
+  block: PropTypes.bool,
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  nativeType: PropTypes.string,
+  hasBackground: PropTypes.bool,
+  hasBar: PropTypes.bool,
+  active: PropTypes.bool,
+  alignRight: PropTypes.bool,
+};
+
+Navbar.List = List;
+Navbar.Item = Item;
+Navbar.Title = Title;
+Navbar.Switch = Switch;
+
+export default Navbar;

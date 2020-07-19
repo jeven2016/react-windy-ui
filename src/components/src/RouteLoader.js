@@ -26,7 +26,7 @@ const RouteLoader = (props) => {
         incrementStart: incrementStart,
         incrementEnd: incrementEnd,
         maxValue: maxValue,
-        progressStyle: progressStyle,
+        style: progressStyle,
         barStyle: barStyle,
       }), 50);
 

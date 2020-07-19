@@ -41,6 +41,11 @@ export default function DocMenu(props) {
           菜单 Menu
         </Link>
       </Menu.Item>
+      <Menu.Item id="navbar">
+        <Link to={`${url}/navbar`}>
+          导航条 Navbar
+        </Link>
+      </Menu.Item>
 
     </Menu.SubMenu>
     <Menu.SubMenu header="弹出框" id="pop">

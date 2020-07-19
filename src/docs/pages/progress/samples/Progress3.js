@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {ButtonGroup, Button, Progress, Toggle, Checkbox} from 'react-windy-ui';
+import {Button, ButtonGroup, Progress, Toggle} from 'react-windy-ui';
 
 export default function Progress3() {
   const [value, setValue] = useState(30);

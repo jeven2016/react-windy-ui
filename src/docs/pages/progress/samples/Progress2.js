@@ -6,6 +6,7 @@ export default function Progress2() {
   const [value, setValue] = useState(30);
   const [showAnimation, setShowAnimation] = useState(false);
   const [showStrip, setShowStrip] = useState(false);
+  const [showContent, setShowContent] = useState(false);
   const increment = 10;
   const increase = () => setValue(
       val => val + increment >= 100 ? 100 : val + increment);
@@ -23,19 +24,21 @@ export default function Progress2() {
     <div className="doc doc-row">
       <Checkbox onChange={val => setShowAnimation(val)}>Animation</Checkbox>
       <Checkbox onChange={val => setShowStrip(val)}>Striped</Checkbox>
+      <Checkbox onChange={val => setShowContent(val)}>Content</Checkbox>
     </div>
 
     <Card>
       <Card.Row>
-        <Progress percentValue={value} showDetail hasStripe={showStrip}
+        <Progress percentValue={value} hasContent={showContent}
+                  hasStripe={showStrip}
                   hasAnimation={showAnimation}/>
-        <Progress percentValue={value} type="info" showDetail
+        <Progress percentValue={value} type="info" hasContent={showContent}
                   hasStripe={showStrip} hasAnimation={showAnimation}/>
-        <Progress percentValue={value} type="ok" showDetail
+        <Progress percentValue={value} type="ok" hasContent={showContent}
                   hasStripe={showStrip} hasAnimation={showAnimation}/>
-        <Progress percentValue={value} type="warning" showDetail
+        <Progress percentValue={value} type="warning" hasContent={showContent}
                   hasStripe={showStrip} hasAnimation={showAnimation}/>
-        <Progress percentValue={value} type="error" showDetail
+        <Progress percentValue={value} type="error" hasContent={showContent}
                   hasStripe={showStrip} hasAnimation={showAnimation}/>
       </Card.Row>
     </Card>

@@ -43,12 +43,9 @@ Alert的属性如下所示：
 ------------- Samples ---------------------
 [Alert1_BEGIN_zh_CN]
 ### 示例1: 简单示例
-<fieldset class="doc desc">
-  <legend>提示</legend>
-  <div class="doc desc-area">
-    有五种类型的Alert可供使用，对应的type可以设置为： info、ok、warning、error、mini、simple。
-  </div>
-</fieldset>
+<DemoDesc title="提示">
+ 有五种类型的Alert可供使用，对应的type可以设置为： info、ok、warning、error、mini、simple。
+</DemoDesc>
 
 ```jsx
 import React from 'react';

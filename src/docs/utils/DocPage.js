@@ -4,6 +4,9 @@ import useMarkdownFile from './useMarkdownFile';
 import markdown from './Markdown';
 import SamplePanel from './SamplePanel';
 import {isNil} from '../../components/src/Utils';
+import DemoDesc from './DemoDesc';
+import Code from './Code';
+import Markdown from 'markdown-to-jsx';
 
 const defaultTitle = 'TITLE';
 const defaultFooter = 'FOOTER';
@@ -22,6 +25,13 @@ const convertCode = (text) => {
   return text;
 };
 
+const defaultOptions = {
+  overrides: {
+    Code: {component: Code},
+    DemoDesc: {component: DemoDesc},
+  },
+};
+
 export default function DocPage(props) {
   const {language} = useContext(LanguageContext);
   const {
@@ -29,10 +39,16 @@ export default function DocPage(props) {
     componentMapping: compMapping,
     codePrefix = '```jsx',
     codeSuffix = '```',
+    markdownOptions,
   } = props;
 
   if (isNil(compMapping)) {
     throw new Error('the componentMapping should be specified');
+  }
+
+  let mdOptions = defaultOptions;
+  if (!isNil(markdownOptions) && !isNil(markdownOptions.overrides)) {
+    mdOptions = {overrides: {...markdownOptions.overrides, ...mdOptions.overrides}};
   }
 
   const keyArray = [...defaultDocKeys, ...Object.keys(compMapping)];
@@ -43,11 +59,16 @@ export default function DocPage(props) {
     language,
     keys: keyArray,
   });
-  const Title = markdown({text: contentMap.get(defaultTitle)});
-  const Footer = markdown({text: contentMap.get(defaultFooter)});
+  const Title = markdown(
+      {text: contentMap.get(defaultTitle), markdownOptions: mdOptions});
+  const Footer = markdown(
+      {text: contentMap.get(defaultFooter), markdownOptions: mdOptions});
+
   return <>
 
-    {Title && <section className="doc markdown"><Title/></section>}
+    {Title && <section className="doc markdown">
+      <Title/>
+    </section>}
 
     <div className="doc sample-container">
       {
@@ -85,13 +106,16 @@ export default function DocPage(props) {
               title={title}
               comp={comp}
               code={sourceCode}
-              desc={desc}/>;
+              desc={desc}
+              markdownOptions={mdOptions}/>;
         })
       }
 
     </div>
     <section className="doc markdown footer">
-      {Footer && <div style={{marginTop: '1rem'}}><Footer/></div>}
+      {Footer && <div style={{marginTop: '1rem'}}>
+        <Footer/>
+      </div>}
     </section>
   </>;
 

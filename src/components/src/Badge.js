@@ -81,7 +81,7 @@ const Badge = React.forwardRef((props, ref) => {
             output: [1, 0.97, 0.9, 1.3, 0.9, 1.3, 1.03, 1],
           }).interpolate(val => type === BadgeType.tag
               ? `scale(${val})`
-              : `translate(100%, -50%) scale(${val})`),
+              : `translate(80%, -50%) scale(${val})`),
           display: active ? 'inline-flex' : 'none', ...contentBackground,
         }}>
           {badgeContent}

@@ -4,10 +4,10 @@ export const InputBorderType = {
   error: 'input-error',
 };
 
-export const NavBarFixedTypes = ['top', 'bottom'];
+export const NavbarFixedTypes = ['top', 'bottom'];
 export const FixedTypes = ['top', 'bottom'];
 
-export const NavBarListAlign = {
+export const NavbarListAlign = {
   left: 'align-left',
   right: 'align-right',
   center: 'align-center',

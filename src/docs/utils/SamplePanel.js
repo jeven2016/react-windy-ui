@@ -1,28 +1,41 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {Card, Col, Row} from 'react-windy-ui';
-import {Button, Collapse} from '../../components/src';
+import {Button, Card, Col, Collapse, Row, Tooltip} from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCode} from '@fortawesome/free-solid-svg-icons';
 import markdown from './Markdown';
 
 import {PrismLight as SyntaxHighlighter} from 'react-syntax-highlighter';
 import {okaidia as sty} from 'react-syntax-highlighter/dist/esm/styles/prism';
-import {
-  jsx,
-  javascript,
-  sass,
-  scss,
-} from 'react-syntax-highlighter/dist/esm/languages/prism';
+import {jsx} from 'react-syntax-highlighter/dist/esm/languages/prism';
 
+/**
+ * With markdownOptions , you can directly load a react component in markdwon file
+ * markdownOptions ={
+            overrides: {
+                h1: {
+                    component: MyParagraph,
+                    props: {
+                        className: 'foo',
+                    },
+                },
+                DatePicker: {
+                    component: DatePicker,
+                },
+            },
+        }
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function SamplePanel(props) {
-  const {id, title, comp, code, desc} = props;
+  const {id, title, comp, code, desc, markdownOptions} = props;
   const [collapse, setCollapse] = useState(true);
 
   //the component don't need to render for multiple times
   const renderComp = useMemo(() => comp, [comp]);
 
-  const DescMarkDown = markdown({text: desc});
-  const TitleMarkDwon = markdown({text: title});
+  const DescMarkDown = markdown({text: desc, markdownOptions});
+  const TitleMarkDwon = markdown({text: title, markdownOptions});
 
   useEffect(() => {
     SyntaxHighlighter.registerLanguage('jsx', jsx);
@@ -40,10 +53,12 @@ export default function SamplePanel(props) {
           </Col>
           <Col sm={4} style={{display: 'flex', justifyContent: 'flex-end'}}>
             <div>
-              <Button outline type="blue" extraClassName="clear-border"
-                      onClick={() => setCollapse(pre => !pre)}>
-                <FontAwesomeIcon icon={faCode}/>
-              </Button>
+              <Tooltip body="Source code">
+                <Button outline type="blue" extraClassName="clear-border"
+                        onClick={() => setCollapse(pre => !pre)}>
+                  <FontAwesomeIcon icon={faCode}/>
+                </Button>
+              </Tooltip>
             </div>
           </Col>
         </Row>

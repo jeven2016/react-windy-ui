@@ -1,19 +1,19 @@
 import React from 'react';
-import useLazyImport from '../../components/src/common/UseLazyImport';
-// import ReactMarkdown from 'react-markdown/with-html';
-import ReactMarkdown from 'react-markdown';
+import {useLazyImport} from 'react-windy-ui';
+import {compiler} from 'markdown-to-jsx';
 
-const MarkdownWrapper = ({importFunc}) => {
+const MarkdownWrapper = ({importFunc, markdownOptions}) => {
   const [data] = useLazyImport(importFunc, true);
-  return <ReactMarkdown source={data} escapeHtml={false}/>;
+  return () => compiler(data || '', markdownOptions);
 };
 
 const markdown = (props) => {
   if (props.hasOwnProperty('text')) {
     //parse the html code and don't show it as simple text
-    return () => <ReactMarkdown source={props.text} escapeHtml={false}/>;
+    return () => compiler(props.text || '', props.markdownOptions);
   }
-  return () => <MarkdownWrapper importFunc={props.importFunc}/>;
+  return () => <MarkdownWrapper importFunc={props.importFunc}
+                                markdownOptions={props.markdownOptions}/>;
 };
 
 export default markdown;

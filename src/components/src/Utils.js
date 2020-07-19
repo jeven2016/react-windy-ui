@@ -9,6 +9,7 @@ import {
   random,
   slice,
   without,
+  takeRightWhile,
 } from 'lodash';
 import {PopupPosition} from './common/Constants';
 

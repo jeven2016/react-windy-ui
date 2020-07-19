@@ -68,7 +68,7 @@ const useMediaQuery = (query, onChange) => {
     const isMatches = mq.matches;
     onChange && onChange(isMatches);
     setMatch(isMatches);
-  }, [query, onChange]);
+  }, [mq.matches, onChange]);
 
   useEffect(() => {
     if (moutedRef.current) {
@@ -76,7 +76,7 @@ const useMediaQuery = (query, onChange) => {
     }
     mq.addListener(listener);
     return () => mq.removeListener(listener);
-  }, [query, onChange]);
+  }, [query, onChange, moutedRef, mq, listener]);
 
   return {
     match,

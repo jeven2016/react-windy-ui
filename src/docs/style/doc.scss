@@ -14,12 +14,12 @@
 
 }
 
-html{
+html {
   font-size: 16px;
 }
 
 body {
-  height: 1600px;
+  //height: 1600px;
   background-color: #fff;
   color: rgba(0, 0, 0, .8);
 }
@@ -32,6 +32,21 @@ body {
 }
 
 .doc {
+
+  &.code {
+    margin: 0 2px;
+    padding: .2em .3em;
+    font-size: .9em;
+    background: #f2f4f5;
+    border: 1px solid #f0f0f0;
+    border-radius: 3px;
+    color: #e41f4d;
+
+    &.normal{
+      font-size: 1em;
+      font-weight: 400;
+    }
+  }
 
   &.home-header {
     margin: 0 auto;
@@ -199,6 +214,8 @@ body {
   }
 
   &.btn-area {
+    //overflow: hidden;
+
     > .button {
       margin: 0.5rem 0.5rem 0.5rem 0;
     }
@@ -329,7 +346,7 @@ body {
   animation: rotation infinite 5s linear;
 }
 
-ul{
+ul {
   list-style: none;
 }
 

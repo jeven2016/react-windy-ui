@@ -1,26 +1,24 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 /**
  * Async import a module
- * @param promiseGenerator
+ * @param importFunc
  * @param eagerLoad
- * @param props it only applies for React component
  * @returns [data, setData]
  */
 const useLazyImport = (importFunc, eagerLoad = false) => {
   const [module, setModule] = useState(null);
   const load = useCallback(() => {
-    importFunc()
-        .then(module => {
-          setModule(module.default == null ? module : module.default);
-        }).catch(e => {throw e;});
-  }, [importFunc]);
+    importFunc().then(md => {
+      setModule(md.default == null ? module : md.default);
+    }).catch(e => {throw e;});
+  }, [importFunc, module]);
 
   useEffect(() => {
     if (eagerLoad) {
       load();
     }
-  }, []);
+  }, [eagerLoad, load]);
 
   return [module, load];
 };

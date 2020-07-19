@@ -14,7 +14,7 @@
 ----------- Footer ------------
 [FOOTER_BEGIN_zh_CN]
 ## API
-Input的属性如下所示：
+* Input的属性如下所示：
 
 | 属性 | 名称 | 类型 | 默认值 | 描述 |
 | --- | --- | --- | --- | --- |
@@ -29,7 +29,7 @@ Input的属性如下所示：
 | onClick/onXX | Input的各类回调函数 | function | - | 比如onFocus, onBlur等 |
 
 
-IconInput的属性如下所示：
+* IconInput的属性如下所示：
 
 | 属性 | 名称 | 类型 | 默认值 | 描述 |
 | --- | --- | --- | --- | --- |
@@ -41,7 +41,7 @@ IconInput的属性如下所示：
 | disabled | 是否禁用此Input | boolean | false |  |
 
 
-InputGroup的属性如下所示：
+* InputGroup的属性如下所示：
 
 | 属性 | 名称 | 类型 | 默认值 | 描述 |
 | --- | --- | --- | --- | --- |

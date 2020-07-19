@@ -1,9 +1,17 @@
-import React, {useEffect, useState, useImperativeHandle} from 'react';
+import React, {useEffect, useImperativeHandle, useMemo, useState} from 'react';
 import clsx from 'clsx';
-import {createContainer, isNil, random, execute, getContainer} from '../Utils';
+import {
+  convertToArray,
+  createContainer,
+  execute,
+  getContainer,
+  isNil,
+  random,
+} from '../Utils';
 import Loader from '../Loader';
 import useMounted from '../common/UseUnmounted';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 const ProgressType = {
   info: 'info',
@@ -23,7 +31,7 @@ const TOP_DEFAULT_PROPS = {
   incrementStart: 2,
   incrementEnd: 5,
   maxValue: 100,
-  progressStyle: null,
+  style: null,
   barStyle: null,
 };
 
@@ -31,35 +39,74 @@ const Progress = React.forwardRef((props, ref) => {
   const {
     active = true,
     className = 'progress', extraClassName,
-    percentValue, type = 'info',
-    hasStripe, hasAnimation, top, showDetail, showLoading = false,
+    percentValue,
+    type = 'info',
+    hasStripe = false,
+    hasAnimation = false,
+    top = false,
+    hasContent = false,
+    showLoading = false,
     style,
     barStyle,
+    loaderType = 'secondary',
+    loaderSize = 'small',
+    config,// like: { percentValue: 10, type: 'error', content: (value)=> {}}
     ...otherProps
   } = props;
+
+  const configItem = useMemo(() => {
+    if (isNil(config)) {
+      return null;
+    }
+
+    let items = convertToArray(config);
+    if (items.length < 1) {
+      return null;
+    }
+    items = items.sort((pre, next) => pre.percentValue - next.percentValue);
+    let properItem = items.find(item => percentValue <= item.percentValue); //end item
+    if (isNil(properItem)) {
+      //find another item near by
+      for (let i = items.length - 1; i >= 0; i--) {
+        if (percentValue >= items[i].percentValue) {
+          properItem = items[i];
+          break;
+        }
+      }
+    }
+    return properItem;
+  }, [config, percentValue]);
+
+  const realType = useMemo(() => isNil(configItem) ? type : configItem.type,
+      [configItem, type]);
+
   const clsName = clsx(extraClassName, className, {
-    [ProgressType[type]]: ProgressType[type],
+    [ProgressType[realType]]: ProgressType[realType],
     'with-stripe': hasStripe,
     'animation': hasAnimation,
-    'without-info': !showDetail,
+    'without-info': !hasContent,
     top: top,
   });
 
   const newStyle = {...style, opacity: active ? '1' : '0'};
 
-  const infoContent = `${percentValue}%`;
   return <div ref={ref} className={clsName} style={newStyle} {...otherProps}>
     <div className="bar">
-      <div className="bg" style={{...barStyle, width: infoContent}}/>
+      <div className="bg" style={{
+        ...barStyle,
+        opacity: percentValue > 0 ? 1 : 0,
+        width: percentValue > 0 ? `${percentValue}%` : 0,
+      }}/>
     </div>
     {
-      showDetail ? <div className="info">
-            {infoContent}
+      hasContent ? <div className="info">
+            {isNil(configItem) ? `${percentValue}%` : configItem.content(
+                percentValue)}
           </div>
           : null
     }
 
-    {<Loader active={top && showLoading} type="secondary" size="small"/>}
+    {<Loader active={top && showLoading} type={loaderType} size={loaderSize}/>}
 
   </div>;
 });
@@ -73,8 +120,9 @@ const ProgressNotifier = React.forwardRef((props, ref) => {
     incrementStart,
     incrementEnd,
     maxValue,
-    progressStyle,
+    style,
     barStyle,
+    ...otherProps
   } = props;
   const unMountedRef = useMounted();
   const defaultValue = {
@@ -129,15 +177,16 @@ const ProgressNotifier = React.forwardRef((props, ref) => {
     return () => {
       clearTimer();
     };
-  }, []);
+  }, [clearTimer]);
 
   return <Progress top
                    active={progress.active}
                    percentValue={progress.percentValue}
                    showLoading={showLoading}
                    type={type}
-                   style={progressStyle}
-                   barStyle={barStyle}/>;
+                   style={style}
+                   barStyle={barStyle}
+                   {...otherProps}/>;
 });
 
 let currentRef = React.createRef();
@@ -165,6 +214,28 @@ Progress.closeTop = () => {
       ReactDOM.unmountComponentAtNode(container);
     }
   }, 500);
+};
+
+Progress.propTypes = {
+  active: PropTypes.bool,
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
+  percentValue: PropTypes.number,
+  type: PropTypes.string,
+  hasStripe: PropTypes.bool,
+  hasAnimation: PropTypes.bool,
+  top: PropTypes.bool,
+  hasContent: PropTypes.bool,
+  showLoading: PropTypes.bool,
+  style: PropTypes.object,
+  barStyle: PropTypes.object,
+  loaderType: PropTypes.string,
+  loaderSize: PropTypes.string,
+  config: PropTypes.arrayOf(PropTypes.shape({
+    percentValue: PropTypes.number,
+    type: PropTypes.string,
+    content: PropTypes.func,
+  })),
 };
 
 export default Progress;

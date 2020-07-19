@@ -46,7 +46,7 @@ const useEvent = (
     const listener = event => handlerRef.current(event);
     elemNode.addEventListener(name, listener);
     return () => {
-      console.log('remove a event listener: ' + name);
+      // console.log('remove a event listener: ' + name);
       elemNode.removeEventListener(name, listener);
     };
   }, [name, elem, listenable]);

@@ -6,8 +6,15 @@ export default function Progress4() {
 
   const showTop = () => {
     Progress.showTop({
-      progressStyle: {marginTop: '0px'},
-      barStyle: {background: 'red'},
+      style: {marginTop: '0px'},
+      type: 'warning',
+
+      //optional parameters
+      // barStyle: {background: 'red'},
+      showLoading: false,
+      initPercentValue: 5,
+      incrementStart: 2,
+      incrementEnd: 4,
     });
   };
 
