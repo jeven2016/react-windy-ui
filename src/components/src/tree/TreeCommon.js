@@ -34,14 +34,13 @@ export const updateParentsStatus = (map, parent, status) => {
   } else {
     //1. if any sibling nodes checked the parent node should be indeterminate
     //2. if all sibling nodes unchecked the parent node should be unchecked
-    const otherChdUnChecked = allChd.filter(chd => chd.getId())
-        .every(chd => {
-          let checkedNode = map.get(chd.getId());
-          if (isNil(checkedNode)) {
-            return true; // none checked
-          }
-          return checkedNode === CheckedStatus.unchecked;
-        });
+    const otherChdUnChecked = allChd.filter(chd => chd.getId()).every(chd => {
+      let checkedNode = map.get(chd.getId());
+      if (isNil(checkedNode)) {
+        return true; // none checked
+      }
+      return checkedNode === CheckedStatus.unchecked;
+    });
 
     map.set(parent.getId(),
         otherChdUnChecked ? status : CheckedStatus.indeterminate);
@@ -62,7 +61,6 @@ function parseChild(child, nodes, chdNode, providedJsonData) {
   let id = providedJsonData ? child.id : child.props['id'];
   if (isNil(id)) {
     throw new Error('The tree items should have \'id\' set.');
-    return;
   }
 
   let isLeaf;

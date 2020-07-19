@@ -9,11 +9,9 @@ export default function Navbar4() {
   const width = smallWindow ? '500px' : '100%';
   return <>
     <div className="doc doc-row">
-      <div className="doc doc-row">
-        <Toggle active={smallWindow}
-                content={{on: 'Small Window', off: 'Small Window'}}
-                onChange={(val) => setSmallWindow(val)}/>
-      </div>
+      <Toggle active={smallWindow}
+              content={{on: 'Small Window', off: 'Small Window'}}
+              onChange={(val) => setSmallWindow(val)}/>
     </div>
 
     <DocFrame width={width} height='270px'>

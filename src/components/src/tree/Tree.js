@@ -78,7 +78,12 @@ const Tree = React.forwardRef((props, ref) => {
       setSelectedItems(selectedIds);
     }
     onSelect && onSelect(selectedIds, e);
-  }, [currentSelectedItems, onSelect, selectMultipleItems]);
+  }, [
+    currentSelectedItems,
+    isExternalControl,
+    onSelect,
+    selectMultipleItems,
+    setSelectedItems]);
 
   const isChecked = useCallback((id) => {
     const checkedStatus = statusMap.get(id);
@@ -174,7 +179,12 @@ const Tree = React.forwardRef((props, ref) => {
       }
     }
     onCheck && onCheck(checkedIds);
-  }, [treeData, statusMap]);
+  }, [
+    treeData.treeNodeMap,
+    statusMap,
+    autoCheckLeafs,
+    isCheckControl,
+    onCheck]);
 
   const ctx = {
     showLoading,

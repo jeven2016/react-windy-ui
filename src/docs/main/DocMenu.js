@@ -107,5 +107,12 @@ export default function DocMenu(props) {
         </Link>
       </Menu.Item>
     </Menu.SubMenu>
+    <Menu.SubMenu header="数据" id="data">
+      <Menu.Item id="tree">
+        <Link to={`${url}/tree`}>
+          树控件 Tree
+        </Link>
+      </Menu.Item>
+    </Menu.SubMenu>
   </Menu>;
 }

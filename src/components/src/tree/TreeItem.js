@@ -1,4 +1,4 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useCallback, useContext, useMemo} from 'react';
 import clsx from 'clsx';
 import {IconArrowRightBlack} from '../Icons';
 import Checkbox from '../Checkbox';
@@ -48,15 +48,15 @@ const TreeItem = React.forwardRef((props, ref) => {
     'whole-line': treeContext.highlightLine,
   });
 
-  const expandItem = (evt) => {
+  const expandItem = useCallback((evt) => {
     treeContext.expandItem && treeContext.expandItem(id, !isExpanded, evt);
-  };
+  },[id, isExpanded, treeContext]);
 
   //check if the node is in loading
   const isAsyncLoading = useMemo(() =>
       treeContext.showLoading && isAsyncLoadItem &&
       treeContext.loadingIds.includes(id)
-      , [treeContext.showLoading, isAsyncLoadItem, treeContext.loadingIds]);
+      , [treeContext.showLoading, treeContext.loadingIds, isAsyncLoadItem, id]);
 
   const iconNode = useMemo(() => {
     let iconSpan;
@@ -74,7 +74,7 @@ const TreeItem = React.forwardRef((props, ref) => {
     }
 
     return iconSpan;
-  }, [expandItem, isLeaf, isAsyncLoading]);
+  }, [isLeaf, isAsyncLoading, treeContext.loader, expandItem, isExpanded]);
 
   const getCheckbox = () => {
     if (treeContext.checkable) {

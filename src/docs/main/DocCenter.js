@@ -23,6 +23,7 @@ import ModalIndex from '../pages/modal/ModalIndex';
 import LoaderIndex from '../pages/loader/LoaderIndex';
 import ProgressIndex from '../pages/progress/ProgressIndex';
 import NavbarIndex from '../pages/navbar/NavbarIndex';
+import TreeIndex from '../pages/tree/TreeIndex';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -99,6 +100,9 @@ function DocCenter(props) {
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/navbar`}>
                 <NavbarIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/tree`}>
+                <TreeIndex/>
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/`}>
                 <InstallIndex/>
