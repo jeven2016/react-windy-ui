@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, {element} from 'prop-types';
 import TreeItem from './TreeItem';
 import clsx from 'clsx';
 import {TreeContext} from '../common/Context';
@@ -9,7 +9,8 @@ import {
   CheckedStatus,
   getNode,
   mergeChildren,
-  parseChildren, RootId,
+  parseChildren,
+  RootId,
   updateChildrenStatus,
   updateParentsStatus,
 } from './TreeCommon';
@@ -17,24 +18,23 @@ import Loader from '../Loader';
 
 const Tree = React.forwardRef((props, ref) => {
   const {
-    showLoading,
+    showLoading = true,
     loadJsonData,
-    loader,
+    loader = <Loader type="primary" size="small" active/>,
     jsonData,
-    autoCheckLeafs,
-    selectMultipleItems,
-    expandMultipleItems,
-    onlySelectLeaf,
-    className,
+    autoCheckLeafs = true,
+    multiSelect = false,
+    onlySelectLeaf = true,
+    className = 'tree',
     extraClassName,
     checkable,
-    defaultExpandedItems,
+    defaultExpandedItems = [],
     expandedItems,
-    defaultSelectedItems,
+    defaultSelectedItems = [],
     selectedItems,
-    defaultCheckedItems,
+    defaultCheckedItems = [],
     checkedItems,
-    highlightLine,
+    highlightLine = false,
     children,
 
     onSelect,
@@ -70,9 +70,15 @@ const Tree = React.forwardRef((props, ref) => {
   /*
    * select handler
    */
-  const selectHandler = useCallback((id, e) => {
-    let selectedIds = selectMultipleItems ? [
-      ...currentSelectedItems.filter(i => i !== id), id] : [id];
+  const selectHandler = useCallback((id, e, selected) => {
+    let selectedIds;
+
+    if (selected) {
+      selectedIds = multiSelect ? [
+        ...currentSelectedItems.filter(i => i !== id), id] : [id];
+    } else {
+      selectedIds = [...currentSelectedItems.filter(i => i !== id)];
+    }
 
     if (!isExternalControl) {
       setSelectedItems(selectedIds);
@@ -82,7 +88,7 @@ const Tree = React.forwardRef((props, ref) => {
     currentSelectedItems,
     isExternalControl,
     onSelect,
-    selectMultipleItems,
+    multiSelect,
     setSelectedItems]);
 
   const isChecked = useCallback((id) => {
@@ -124,12 +130,7 @@ const Tree = React.forwardRef((props, ref) => {
         }
       }
 
-      if (expandMultipleItems) {
-        expandedIds = [...currentExpandedItems, id];
-      } else {
-        expandedIds = [id];
-        // setExpendedItems([id]);
-      }
+      expandedIds = [...currentExpandedItems, id];
     } else {
       expandedIds = [...currentExpandedItems.filter(elem => elem !== id)];
     }
@@ -187,6 +188,7 @@ const Tree = React.forwardRef((props, ref) => {
     onCheck]);
 
   const ctx = {
+    multiSelect,
     showLoading,
     loadJsonData,
     loader,
@@ -211,26 +213,27 @@ const Tree = React.forwardRef((props, ref) => {
   </TreeContext.Provider>;
 });
 
-Tree.defaultProps = {
-  showLoading: true,
-  loader: <Loader type="primary" size="small" active/>,
-  selectMultipleItems: false,
-  expandMultipleItems: true,
-  onlySelectLeaf: true,
-  className: 'tree',
-  checkable: false,
-  defaultExpandedItems: [],
-  defaultSelectedItems: [],
-  defaultCheckedItems: [],
-  highlightLine: false, //this parameter means whether to highlight the whole line while the item is selected
-  autoCheckLeafs: true, //whether to automatically check the leafs while the parent node is checked
-};
-
 Tree.propTypes = {
+  showLoading: PropTypes.bool,
+  loadJsonData: PropTypes.func,
+  loader: PropTypes.node,
+  jsonData: PropTypes.object,
+  autoCheckLeafs: PropTypes.bool,
+  multiSelect: PropTypes.bool,
+  onlySelectLeaf: PropTypes.bool,
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
+  checkable: PropTypes.bool,
+  defaultExpandedItems: PropTypes.arrayOf(PropTypes.string),
+  expandedItems: PropTypes.arrayOf(PropTypes.string),
+  defaultSelectedItems: PropTypes.arrayOf(PropTypes.string),
+  selectedItems: PropTypes.arrayOf(PropTypes.string),
+  defaultCheckedItems: PropTypes.arrayOf(PropTypes.string),
+  checkedItems: PropTypes.arrayOf(PropTypes.string),
+  highlightLine: PropTypes.bool,
   onSelect: PropTypes.func,
   onCheck: PropTypes.func,
   onExpand: PropTypes.func,
-  loadJsonData: PropTypes.func,
 };
 
 Tree.TreeItem = TreeItem;

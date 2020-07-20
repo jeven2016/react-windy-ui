@@ -7,6 +7,7 @@ import {isNil} from '../../components/src/Utils';
 import DemoDesc from './DemoDesc';
 import Code from './Code';
 import Markdown from 'markdown-to-jsx';
+import Blockquota from '../../components/src/Blockquota';
 
 const defaultTitle = 'TITLE';
 const defaultFooter = 'FOOTER';
@@ -29,6 +30,7 @@ const defaultOptions = {
   overrides: {
     Code: {component: Code},
     DemoDesc: {component: DemoDesc},
+    Blockquota: {component: Blockquota},
   },
 };
 

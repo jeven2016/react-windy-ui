@@ -14,3 +14,7 @@ Enhance:
 - 优化文档markdown的格式，使用新的markdown框架
 - Navbar里面的Input背景色已经Icon的颜色跟primary不匹配
 - Navbar10 sample， 无法在iframe中与Affix结合使用
+- icons redesign
+
+
+

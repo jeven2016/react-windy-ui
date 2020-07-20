@@ -1,17 +1,10 @@
-import React, {useState} from 'react';
-import {Toggle, Tree} from 'react-windy-ui';
+import React from 'react';
+import {Tree} from 'react-windy-ui';
 
-export default function Tree4() {
-  const [multipleSelect, setMultipleSelect] = useState(true);
+export default function Tree8() {
   return <>
-    <div className="doc doc-row">
-      <Toggle active={multipleSelect}
-              content={{on: 'Multi-Select', off: 'Multi-Select'}}
-              onChange={(val) => setMultipleSelect(val)}/>
-    </div>
-
-    <Tree multiSelect={multipleSelect}
-          onSelect={(ids, e) => console.log(ids)}>
+    <Tree defaultExpandedItems={['Parent-1', 'Child-1-5']}
+          onExpand={(ids) => console.log(ids)}>
       <Tree.TreeItem id="Parent-1" label="Parent-1">
         <Tree.TreeItem id="Child-1-1" label="Child-1-1"/>
         <Tree.TreeItem id="Child-1-2" label="Child-1-2"/>

@@ -9,7 +9,10 @@ export default function Tree6() {
       {
         id: 'Child-1-1',
         label: 'Child-1-1',
-        isLeaf: false, //it should not be represented as leaf node and asynchronously load it by calling loadJsonData() method
+
+        //it should not be represented as leaf node
+        //that means the the sub nodes would be asynchronously loaded  by calling loadJsonData() method
+        isLeaf: false,
       },
       {
         id: 'Child-1-2',
@@ -44,7 +47,7 @@ export default function Tree6() {
       }, 1000);
     });
   };
-  
+
   return <>
     <Tree jsonData={jsonData}
           loadJsonData={loadData}
