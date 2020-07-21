@@ -100,11 +100,9 @@ const TreeItem = React.forwardRef((props, ref) => {
 
   const clickItem = useCallback((evt) => {
     //unselect this item if clicking again while it has been selected for multi select scenario
-    const selected = treeContext.multiSelect && isSelected
-        ? false
-        : !isSelected;
+    const selected = !(treeContext.multiSelect && isSelected);
     treeContext.selectItem && treeContext.selectItem(id, evt, selected);
-  }, [id, treeContext]);
+  }, [id, isSelected, treeContext]);
 
   const getClickHandler = useCallback(() => {
     let spanClick = null;

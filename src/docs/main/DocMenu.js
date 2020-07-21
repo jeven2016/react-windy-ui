@@ -113,6 +113,11 @@ export default function DocMenu(props) {
           树控件 Tree
         </Link>
       </Menu.Item>
+      <Menu.Item id="blockquote">
+        <Link to={`${url}/blockquote`}>
+          引用 Blockquote
+        </Link>
+      </Menu.Item>
     </Menu.SubMenu>
   </Menu>;
 }
