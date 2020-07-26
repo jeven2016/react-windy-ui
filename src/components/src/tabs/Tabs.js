@@ -11,7 +11,6 @@ import {
   prePosition,
   TabsContext,
 } from './TabsCommon';
-import useInternalActive from '../common/useInternalActive';
 import {Direction, EventListener} from '../common/Constants';
 import {getRect, isNil} from '../Utils';
 import TabBar from './TabBar';
@@ -19,6 +18,8 @@ import {Spring} from 'react-spring/renderprops';
 import NextBtn from './NextBtn';
 import PreBtn from './PreBtn';
 import {useEvent} from '../index';
+import useInternalState from '../common/useInternalState';
+import PropTypes from 'prop-types';
 
 const defaultConfig = {
   visiblePre: true,
@@ -35,20 +36,19 @@ const Tabs = React.forwardRef((props, ref) => {
     onRemove,
     removable,
     className = 'tab',
+    equalWidth = false,
     extraClassName,
     position = 'top', //top, bottom, left, right
     hasBorder = true,
     cardBorder = 'full', //none, one, full
-
     type = 'normal', //card, secondary-card, normal
-    scrollable = false,
+    scrollable = true,
     children,
     ...otherProps
   } = props;
   const direction = position === 'top' || position === 'bottom'
       ? Direction.horizontal
       : Direction.vertical;
-  const tabRef = ref;
   const scrollRef = useRef(null);
   const tabCntRef = useRef(null);
   const nextRef = useRef(null);
@@ -74,25 +74,37 @@ const Tabs = React.forwardRef((props, ref) => {
       });
 
   const getFirstValue = useCallback(() => {
+    let firstItem;
     React.Children.forEach(children, child => {
-      if (child.type === Items) {
+      if (isNil(firstItem) && child.type === Items) {
         const itemsArray = React.Children.toArray(child.props.children);
         if (itemsArray.length > 0 && itemsArray[0].type === TabItem) {
-          return itemsArray[0].props.value;
+          firstItem = itemsArray[0];
         }
       }
     });
-  }, [tabItemsCount]);
+
+    return isNil(firstItem) ? null : firstItem.props.value;
+  }, [children]);
 
   const backupActive = isNil(defaultActive) && isNil(active)
       ? getFirstValue()
       : null;
-  const isExternalControl = props.hasOwnProperty('active');
-  const {currentActive, setActive} = useInternalActive(isExternalControl,
-      defaultActive, active, backupActive);
+
+  const {
+    state: currentActive,
+    setState: setActive,
+    customized,
+  } = useInternalState({
+    props,
+    stateName: 'active',
+    defaultState: defaultActive,
+    state: active,
+    backupState: backupActive,
+  });
 
   const change = (value) => {
-    if (!isExternalControl) {
+    if (!customized) {
       setActive(value);
     }
     onChange && onChange(value);
@@ -133,7 +145,6 @@ const Tabs = React.forwardRef((props, ref) => {
   };
 
   useEffect(() => {
-    console.log('update....'+tabItemsCount);
     scrollTo();
   }, [direction, position, removable, tabItemsCount]);
 
@@ -218,14 +229,18 @@ const Tabs = React.forwardRef((props, ref) => {
           to={scrlSpringConfig.to}>
         {
           sp =>
-              <div className={`tab-scroll ${direction}`} ref={scrollRef}
+              <div className={`tab-scroll ${direction} ${equalWidth
+                  ? 'equal-width'
+                  : ''}`} ref={scrollRef}
                    style={filterProps(sp, isHorizontal)}>
                 {tabItems}
                 {tabBarContent}
               </div>
         }
       </Spring>
-      : <div className={`tab-scroll ${direction}`} ref={scrollRef}>
+      : <div className={`tab-scroll ${direction} ${equalWidth
+          ? 'equal-width'
+          : ''}`} ref={scrollRef}>
         {tabItems}
         {tabBarContent}
       </div>;
@@ -237,19 +252,20 @@ const Tabs = React.forwardRef((props, ref) => {
 
   return <>
     <TabsContext.Provider value={{
+      equalWidth,
       removable,
       tabItemsCount,
       onRemove,
       active: currentActive,
       change,
-      autoChange: !isExternalControl,
+      autoChange: !customized,
       clickNext: clickNext,
       clickPre: clickPre,
       visiblePre: scrlSpringConfig.visiblePre,
       visibleNext: scrlSpringConfig.visibleNext,
     }}>
       <div className={`tabs ${position}`}>
-        <div className={clsName} {...otherProps} ref={tabRef}>
+        <div className={clsName} {...otherProps} ref={ref}>
           {
             scrollable && <PreBtn disabled={scrlSpringConfig.disablePre}
                                   scrollRef={scrollRef}
@@ -278,6 +294,22 @@ const Tabs = React.forwardRef((props, ref) => {
     </TabsContext.Provider>
   </>;
 });
+
+Tabs.propTypes = {
+  defaultActive: PropTypes.bool,
+  active: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  onChange: PropTypes.func,
+  onRemove: PropTypes.func,
+  removable: PropTypes.bool,
+  className: PropTypes.string,
+  equalWidth: PropTypes.bool,
+  extraClassName: PropTypes.string,
+  position: PropTypes.string,
+  hasBorder: PropTypes.bool,
+  cardBorder: PropTypes.string,
+  type: PropTypes.string,
+  scrollable: PropTypes.bool,
+};
 
 Tabs.Items = Items;
 Tabs.Panels = Panels;

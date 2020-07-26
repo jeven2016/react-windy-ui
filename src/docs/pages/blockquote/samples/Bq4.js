@@ -1,10 +1,10 @@
 import React from 'react';
-import {Blockquota} from 'react-windy-ui';
+import {Blockquote} from 'react-windy-ui';
 
-export default function Bq5() {
+export default function Bq4() {
   return <>
-    <Blockquota hasBorder hasBackground hasBox>
-      <Blockquota.Header>Blockquota Header</Blockquota.Header>
+    <Blockquote hasBorder hasBackground hasBox>
+      <Blockquote.Header>Blockquote Header</Blockquote.Header>
       <div>
         The HTML Element (or HTML Block Quotation Element)
         indicates that the enclosed text is an extended quotation.
@@ -14,13 +14,11 @@ export default function Bq5() {
         while a text representation of the source can be given using
         the &lt;cite&gt; element.
       </div>
-      <Blockquota.Footer align="end">-Blockquota Footer</Blockquota.Footer>
-    </Blockquota>
+      <Blockquote.Footer justify="start">-Blockquote Footer</Blockquote.Footer>
+    </Blockquote>
 
-    <Blockquota type="primary" hasBorder hasBackground hasBox
-                extraClassName="text color-white bg-color-purple">
-      <Blockquota.Header extraClassName="bold text color-white">Blockquota
-        Header</Blockquota.Header>
+    <Blockquote type="primary" hasBorder hasBackground hasBox>
+      <Blockquote.Header>Blockquote Header</Blockquote.Header>
       <div>
         The HTML Element (or HTML Block Quotation Element)
         indicates that the enclosed text is an extended quotation.
@@ -30,14 +28,11 @@ export default function Bq5() {
         while a text representation of the source can be given using
         the &lt;cite&gt; element.
       </div>
-      <Blockquota.Footer align="end" extraClassName="bold text color-white">-Blockquota
-        Footer</Blockquota.Footer>
-    </Blockquota>
+      <Blockquote.Footer justify="center">-Blockquote Footer</Blockquote.Footer>
+    </Blockquote>
 
-    <Blockquota type="secondary" hasBorder hasBackground hasBox
-                extraClassName="text color-white bg-color-black">
-      <Blockquota.Header extraClassName="bold text color-white">Blockquota
-        Header</Blockquota.Header>
+    <Blockquote type="secondary" hasBorder hasBackground hasBox>
+      <Blockquote.Header>Blockquote Header</Blockquote.Header>
       <div>
         The HTML Element (or HTML Block Quotation Element)
         indicates that the enclosed text is an extended quotation.
@@ -47,8 +42,7 @@ export default function Bq5() {
         while a text representation of the source can be given using
         the &lt;cite&gt; element.
       </div>
-      <Blockquota.Footer align="end" extraClassName="bold text color-white">-Blockquota
-        Footer</Blockquota.Footer>
-    </Blockquota>
+      <Blockquote.Footer justify="end">-Blockquote Footer</Blockquote.Footer>
+    </Blockquote>
   </>;
 }

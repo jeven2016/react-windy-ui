@@ -6,6 +6,8 @@ Bugs:
              this is due to the handler updated, and it cannot be added into dependencies because remove/register events
              happen every time.
 - popover在Tree7示例, 在moreElements中给Icon添加时，显示位置不正确。
+- TabBar的move方法无法useCallback, 使用后会出现max 调用的问题， 考虑store迁移; Tabs的useEffect-> scroll也有这个问题
+- Tabs6中当为left时，出现左侧蓝色条。
 
 Enhance:
 - Modal.info()，对话框每次打开后会连带container一起删除，是否可以考虑引入key,每次show都是设置active属性。
@@ -15,6 +17,10 @@ Enhance:
 - Navbar里面的Input背景色已经Icon的颜色跟primary不匹配
 - Navbar10 sample， 无法在iframe中与Affix结合使用
 - icons redesign
+
+
+- free pic: https://pixabay.com/photos/bay-beach-boat-exotic-idyllic-1867798/
+https://pixabay.com/photos/girl-teenager-dancing-outdoor-5391785/
 
 
 

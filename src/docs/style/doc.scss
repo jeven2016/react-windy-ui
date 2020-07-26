@@ -252,6 +252,22 @@ body {
     margin-right: 1rem;
   }
 
+  .sample-grid {
+    .row {
+      border: 1px solid rgba(86, 61, 124, 0.2);
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+
+      > div[class^=col] {
+        padding: .5rem;
+        background-color: #ccc;
+        border: 1px solid rgba(86, 61, 124, 0.2);
+        background-color: rgba(86, 61, 124, 0.15);
+      }
+
+    }
+
+  }
 }
 
 

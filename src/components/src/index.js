@@ -26,7 +26,7 @@ export {default as Modal} from './modal';
 export {default as Toggle} from './toggle';
 export {default as Drawer} from './Drawer';
 export {default as Accordion} from './Accordion';
-export {default as Blockquota} from './Blockquota';
+export {default as Blockquote} from './Blockquote';
 export {default as Loader} from './Loader';
 export {default as Row} from './grid/Row';
 export {default as Col} from './grid/Col';

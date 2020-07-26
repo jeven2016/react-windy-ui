@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import {TabsContext} from './TabsCommon';
 import {isNil} from '../Utils';
 import {preventEvent} from '../event';
+import PropTypes from 'prop-types';
 
 const TabItem = React.forwardRef((props, ref) => {
   const {
@@ -11,6 +12,7 @@ const TabItem = React.forwardRef((props, ref) => {
     disabled,
     children,
     value,
+    removable,
     ...otherProps
   } = props;
   const context = useContext(TabsContext);
@@ -28,18 +30,28 @@ const TabItem = React.forwardRef((props, ref) => {
     context.onRemove && context.onRemove(value);
   };
 
+  const isRemovable = isNil(removable) ? context.removable : removable;
+
   return <div className={clsName}
               ref={ref}
               onClick={() => !disabled && context.change(value)}
               {...otherProps}>
     <div className="item-label">{children}</div>
     {
-      context.removable ? <div className={deleteIconClsName}
-                               onClick={remove}>
+      isRemovable ? <div className={deleteIconClsName}
+                         onClick={remove}>
         x
       </div> : null
     }
   </div>;
 });
+
+TabItem.propTypes = {
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
+  disabled: PropTypes.bool,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  removable: PropTypes.bool,
+};
 
 export default TabItem;

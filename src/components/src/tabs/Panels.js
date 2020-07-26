@@ -8,7 +8,6 @@ const Panels = ((props) => {
     children,
   } = props;
 
-  const count = React.Children.count(children);
   //map-key: value
   //map-value: index
   const mappingMap = useMemo(() => {
@@ -21,7 +20,7 @@ const Panels = ((props) => {
       }
     });
     return map;
-  }, [count]);
+  }, [children]);
 
   const context = useContext(TabsContext);
   const activeIndex = mappingMap[context.active];

@@ -1,9 +1,9 @@
 import React from 'react';
-import {Blockquota} from 'react-windy-ui';
+import {Blockquote} from 'react-windy-ui';
 
-export default function Bq1() {
+export default function Bq3() {
   return <>
-    <Blockquota>
+    <Blockquote hasBox>
       The HTML Element (or HTML Block Quotation Element)
       indicates that the enclosed text is an extended quotation.
       Usually, this is rendered visually by indentation
@@ -11,9 +11,9 @@ export default function Bq1() {
       the quotation may be given using the cite attribute,
       while a text representation of the source can be given using
       the &lt;cite&gt; element.
-    </Blockquota>
+    </Blockquote>
 
-    <Blockquota type="primary">
+    <Blockquote type="primary" hasBox>
       The HTML Element (or HTML Block Quotation Element)
       indicates that the enclosed text is an extended quotation.
       Usually, this is rendered visually by indentation
@@ -21,9 +21,9 @@ export default function Bq1() {
       the quotation may be given using the cite attribute,
       while a text representation of the source can be given using
       the &lt;cite&gt; element.
-    </Blockquota>
+    </Blockquote>
 
-    <Blockquota type="secondary">
+    <Blockquote type="secondary" hasBox>
       The HTML Element (or HTML Block Quotation Element)
       indicates that the enclosed text is an extended quotation.
       Usually, this is rendered visually by indentation
@@ -31,6 +31,6 @@ export default function Bq1() {
       the quotation may be given using the cite attribute,
       while a text representation of the source can be given using
       the &lt;cite&gt; element.
-    </Blockquota>
+    </Blockquote>
   </>;
 }

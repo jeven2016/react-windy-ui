@@ -82,7 +82,7 @@ export function nextPosition({tabCntRect, scrlRect, against, orientation, axis})
     }
     to = scrlRect[axis] - tabCntRect[axis] - move + 2; //margin-right: 2px
   } else {
-    to = -(scrlRect.width - tabCntRect.width) + 2;
+    to = -(scrlRect[against] - tabCntRect[against]) + 2;
   }
   return {to};
 }

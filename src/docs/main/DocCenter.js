@@ -24,7 +24,12 @@ import LoaderIndex from '../pages/loader/LoaderIndex';
 import ProgressIndex from '../pages/progress/ProgressIndex';
 import NavbarIndex from '../pages/navbar/NavbarIndex';
 import TreeIndex from '../pages/tree/TreeIndex';
-import BqIndex from '../pages/blockquota/BqIndex';
+import BqIndex from '../pages/blockquote/BqIndex';
+import GridIndex from '../pages/grid/GridIndex';
+import CrIndex from '../pages/carousel/CrIndex';
+import TabsIndex from '../pages/tabs/TabsIndex';
+import BcIndex from '../pages/breadcumb/BcIndex';
+import CardIndex from '../pages/card/CardIndex';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -107,6 +112,21 @@ function DocCenter(props) {
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/tree`}>
                 <TreeIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/grid`}>
+                <GridIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/carousel`}>
+                <CrIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/tabs`}>
+                <TabsIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/breadcrumb`}>
+                <BcIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/card`}>
+                <CardIndex/>
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/`}>
                 <InstallIndex/>

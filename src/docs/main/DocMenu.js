@@ -118,6 +118,33 @@ export default function DocMenu(props) {
           引用 Blockquote
         </Link>
       </Menu.Item>
+      <Menu.Item id="carousel">
+        <Link to={`${url}/carousel`}>
+          轮播 Carousel
+        </Link>
+      </Menu.Item>
+    </Menu.SubMenu>
+    <Menu.SubMenu header="布局" id="layoutIndex">
+      <Menu.Item id="grid">
+        <Link to={`${url}/grid`}>
+          栅格 Grid
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="tab">
+        <Link to={`${url}/tabs`}>
+          选项卡 Tabs
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="breadcrumb">
+        <Link to={`${url}/breadcrumb`}>
+          面包屑 Breadcrumb
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="card">
+        <Link to={`${url}/card`}>
+          卡片 Card
+        </Link>
+      </Menu.Item>
     </Menu.SubMenu>
   </Menu>;
 }

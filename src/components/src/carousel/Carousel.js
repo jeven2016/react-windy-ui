@@ -33,7 +33,7 @@ const Carousel = React.forwardRef((props, ref) => {
     setActive(index);
   };
 
-  const comp = <div className={clsName}>
+ return <div className={clsName}>
     <ul className={`indicators ${position}`}>
       {hasIndicators && React.Children.map(children, (chd, i) =>
           <li className={`${indicatorType} ${i === currentActive
@@ -45,13 +45,13 @@ const Carousel = React.forwardRef((props, ref) => {
                             enableMouseEvents
                             animateTransitions={true}
                             axis={axis}
+                            ignoreNativeScroll={true}
                             onChangeIndex={onChange}
                             resistance
                             {...otherProps}>
       {children}
     </AutoPlaySwipeableViews>
   </div>;
-  return comp;
 });
 
 export default Carousel;

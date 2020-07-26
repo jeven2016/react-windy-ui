@@ -108,18 +108,18 @@ export const FlexAlign = {
 };
 
 export const JustifyContentType = {
-  start: 'justify-start',
-  end: 'justify-end',
-  center: 'justify-center',
-  around: 'justify-around',
-  between: 'justify-between',
-  evenly: 'justify-evenly',
+  start: 'flex-adjust justify-start',
+  end: 'flex-adjust justify-end',
+  center: 'flex-adjust justify-center',
+  around: 'flex-adjust justify-around',
+  between: 'flex-adjust justify-between',
+  evenly: 'flex-adjust justify-evenly',
 };
 
 export const AlignItemsType = {
-  start: 'align-start',
-  end: 'align-end',
-  center: 'align-center',
+  start: 'flex-adjust align-start',
+  end: 'flex-adjust align-end',
+  center: 'flex-adjust align-center',
 };
 
 export const FormItemType = {
