@@ -9,9 +9,10 @@ const Slider = React.forwardRef((props, ref) => {
     hasBox = false,
     extraClassName,
     collapse = false,
-    width = '15rem',
-    minWidth = '5rem',
+    width = '240px',
+    minWidth = '88px',
     style = {},
+    children,
     ...otherProps
   } = props;
   let clsName = clsx(extraClassName, className, {
@@ -31,7 +32,11 @@ const Slider = React.forwardRef((props, ref) => {
     {
       springProps => {
         const newProps = {...style, ...springProps};
-        return <div className={clsName} style={newProps} {...otherProps}/>;
+        return <div className={clsName} style={newProps} {...otherProps}>
+          <div className="slider-inner">
+            {children}
+          </div>
+        </div>;
       }
     }
   </Spring>;

@@ -2,6 +2,12 @@ import React from 'react';
 import {Card, Col, Row} from 'react-windy-ui';
 import pic from './girl1.jpg';
 
+const ColStyle = {
+  minWidth: '10rem',
+  maxWidth: '10rem',
+  margin: ' .5rem',
+};
+
 const MyCard = function() {
   return <>
     <Card block autoScale={true}>
@@ -20,21 +26,14 @@ const MyCard = function() {
 export default function Card11() {
   return <>
     <Row>
-      <Col style={{
-        minWidth: '15rem',
-        maxWidth: '15rem',
-        margin: ' 1rem',
-      }}><MyCard/></Col>
-      <Col style={{
-        minWidth: '15rem',
-        maxWidth: '15rem',
-        margin: '1rem',
-      }}><MyCard/></Col>
-      <Col style={{
-        minWidth: '15rem',
-        maxWidth: '15rem',
-        margin: '1rem',
-      }}><MyCard/></Col>
+      <Col style={ColStyle}><MyCard/></Col>
+      <Col style={ColStyle}><MyCard/></Col>
+      <Col style={ColStyle}><MyCard/></Col>
+      <Col style={ColStyle}><MyCard/></Col>
+      <Col style={ColStyle}><MyCard/></Col>
+      <Col style={ColStyle}><MyCard/></Col>
+      <Col style={ColStyle}><MyCard/></Col>
+      <Col style={ColStyle}><MyCard/></Col>
     </Row>
   </>;
 }

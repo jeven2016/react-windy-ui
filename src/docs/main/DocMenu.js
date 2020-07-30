@@ -145,6 +145,11 @@ export default function DocMenu(props) {
           卡片 Card
         </Link>
       </Menu.Item>
+      <Menu.Item id="layout">
+        <Link to={`${url}/layout`}>
+          布局 Layout
+        </Link>
+      </Menu.Item>
     </Menu.SubMenu>
   </Menu>;
 }

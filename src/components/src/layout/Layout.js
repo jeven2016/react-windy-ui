@@ -23,13 +23,13 @@ const Layout = React.forwardRef((props, ref) => {
     style,
     ...otherProps
   } = props;
+
   let clsName = clsx(extraClassName, className);
   if (isNil(collapse)) {
-    return <div ref={ref} className={clsName} {...otherProps}/>;
+    return <div style={style} ref={ref} className={clsName} {...otherProps}/>;
   }
 
-
-  const from= {
+  const from = {
     [collapseAttribute.attr]: collapse
         ? collapseAttribute.minValue
         : collapseAttribute.maxValue,
@@ -45,7 +45,8 @@ const Layout = React.forwardRef((props, ref) => {
         [collapseAttribute.attr]: collapse
             ? collapseAttribute.maxValue
             : collapseAttribute.minValue,
-      }}>
+      }}
+      config={{clamp: true, mass: 1, tesion: 100, friction: 15}}>
     {
       springProps => {
         const newStyle = {...style, ...springProps};

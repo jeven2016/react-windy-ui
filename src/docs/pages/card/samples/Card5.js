@@ -1,11 +1,7 @@
 import React from 'react';
-import {Card, ButtonGroup, Button, Divider, Dropdown} from 'react-windy-ui';
+import {Button, Card, Dropdown} from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {
-  faMailBulk,
-  faPhone,
-  faUmbrella,
-} from '@fortawesome/free-solid-svg-icons';
+import {faUmbrella} from '@fortawesome/free-solid-svg-icons';
 
 export default function Card5() {
   return <>
@@ -22,9 +18,8 @@ export default function Card5() {
         The tomato is the edible, often red, berry of the plant Solanum
         lycopersicum, commonly known as a tomato plant.
       </Card.Body>
-      <Divider/>
       <Card.Footer>
-        <Dropdown position="rightBottom" title={<Button outline color="blue"
+        <Dropdown position="rightBottom" title={<Button outline color="dark"
                                                         extraClassName="clear-border">
           Phone
         </Button>}>

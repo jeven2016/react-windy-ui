@@ -1,9 +1,21 @@
-import React from 'react';
-import {Card} from 'react-windy-ui';
+import React, {useState} from 'react';
+import {Card, Toggle} from 'react-windy-ui';
 
 export default function Card1() {
+  const [hasBorder, enableBorder] = useState(false);
+  const [hasBox, enableBox] = useState(true);
+
   return <>
-    <Card>
+    <div className="doc doc-row">
+      <Toggle active={hasBorder} onChange={val => enableBorder(val)}
+              content={{on: 'Border', off: 'Border'}}/>
+    </div>
+    <div className="doc doc-row">
+      <Toggle active={hasBox} onChange={val => enableBox(val)}
+              content={{on: 'Box shadow', off: 'Box shadow'}}/>
+    </div>
+
+    <Card hasBox={hasBox} hasBorder={hasBorder}>
       <Card.Header>
         Header
       </Card.Header>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Divider} from 'react-windy-ui';
+import {Card} from 'react-windy-ui';
 
 export default function Card2() {
   return <>
@@ -7,7 +7,6 @@ export default function Card2() {
       <Card.Header hasBackground>
         Header
       </Card.Header>
-      <Divider/>
       <Card.Body>
         Body
       </Card.Body>

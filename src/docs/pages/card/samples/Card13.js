@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Card, Col, Toggle, Loader} from 'react-windy-ui';
+import {Card, Loader, Toggle} from 'react-windy-ui';
 import pic from './girl1.jpg';
 
 export default function Card13() {
@@ -17,8 +17,7 @@ export default function Card13() {
     <div style={{width: '15rem'}}>
       <Loader type="primary" color="blue"
               darkMask={showMask}
-              active={active}
-              block>
+              active={active}>
         <Card block>
           <Card.CardImage autoScale>
             <Card.Image src={pic}>

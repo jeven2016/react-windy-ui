@@ -55,11 +55,11 @@ Grid主要有以下功能：
 | md | md尺寸下占据的列数 | number | - |  |
 | lg | lg尺寸下占据的列数 | number | - |  |
 | xl | xl尺寸下占据的列数 | number | - |  |
-| xsOffset | xsOffset尺寸下占据的列数 | number | - |  |
-| smOffset | smOffset尺寸下占据的列数 | number | - |  |
-| mdOffset | mdOffset尺寸下占据的列数 | number | - |  |
-| lgOffset | lgOffset尺寸下占据的列数 | number | - |  |
-| xlOffset | xlOffset尺寸下占据的列数 | number | - |  |
+| xsOffset | xsOffset尺寸下偏移的列数 | number | - |  |
+| smOffset | smOffset尺寸下偏移的列数 | number | - |  |
+| mdOffset | mdOffset尺寸下偏移的列数 | number | - |  |
+| lgOffset | lgOffset尺寸下偏移的列数 | number | - |  |
+| xlOffset | xlOffset尺寸下偏移的列数 | number | - |  |
 | order | 顺序 | number | - | 值越小排列越靠前 |
 
 
@@ -216,7 +216,7 @@ export default function Grid3() {
 [Grid3_END_en_US]
 ----------------------------------
 [Grid4_BEGIN_zh_CN]
-### 示例4 水平排列
+### 示例4 垂直排列
 <DemoDesc title="提示">
     通过<Code>Row</Code>的<Code>align</Code>属性可以指定列在垂直方向的排列方式，可以将其设置为：<Code>start</Code>、<Code>center</Code>、
     <Code>end</Code>。

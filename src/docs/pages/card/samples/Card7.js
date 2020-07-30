@@ -9,8 +9,8 @@ export default function Card7() {
         <Card.Image src={pic}>
         </Card.Image>
         <Card.OverlayTitle>
-          <h2>A Picture</h2>
-          <h6>The description for this picture</h6>
+          <h4>A Picture</h4>
+          <h5>The description for this picture</h5>
         </Card.OverlayTitle>
       </Card.CardImage>
     </Card>

@@ -50,9 +50,9 @@ const MenuHeader = React.forwardRef((props, ref) => {
       return null;
     }
     if (popupSubMenu && MenuDirection.isVertical(ctx.direction)) {
-      return <div className="header-icon">{popArrowIcon}</div>;
+      return <div className="header-icon icon-arrow">{popArrowIcon}</div>;
     }
-    return <animated.div className="header-icon"
+    return <animated.div className="header-icon icon-arrow"
                          style={{
                            transform: springProps.rotation.interpolate(
                                r => `rotate(${r}deg)`),

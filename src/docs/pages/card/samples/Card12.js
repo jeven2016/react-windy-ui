@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Col, Row} from 'react-windy-ui';
+import {Card} from 'react-windy-ui';
 import pic from './girl1.jpg';
 
 export default function Card12() {

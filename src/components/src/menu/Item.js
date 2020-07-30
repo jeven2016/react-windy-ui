@@ -8,6 +8,7 @@ import {animated, useSpring} from 'react-spring';
 import {preventEvent} from '../event';
 import Element from '../common/Element';
 import Tooltip from '../Tooltip';
+import {MenuType} from '../common/Constants';
 
 const Item = React.forwardRef((props, ref) => {
   const {
@@ -84,6 +85,9 @@ const Item = React.forwardRef((props, ref) => {
     active: isActive,
     'with-bg': hasBackground,
     'with-bottom-bar': hasBottomBar,
+    'left-bar': ctx.type === MenuType.primary && ctx.primaryBarPosition === 'left',
+    'right-bar': ctx.type === MenuType.primary && ctx.primaryBarPosition ===
+        'right',
   });
 
   const content = useMemo(() => {

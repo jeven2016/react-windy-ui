@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, ButtonGroup, Button, Divider} from 'react-windy-ui';
+import {Button, ButtonGroup, Card} from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
   faMailBulk,
@@ -11,18 +11,17 @@ export default function Card4() {
   return <>
     <Card>
       <Card.Header>
-        <h2 className="text color-blue">
+        <h2 className="text color-dark">
           <FontAwesomeIcon icon={faUmbrella} style={{marginRight: '0.5rem'}}/>
           <span>Tomato</span>
         </h2>
         <h5 className="text comment">This article is about the plant and the
           fruit.</h5>
       </Card.Header>
-      <Card.Body>
+      <Card.Body extraClassName="text color-dark">
         The tomato is the edible, often red, berry of the plant Solanum
         lycopersicum, commonly known as a tomato plant.
       </Card.Body>
-      <Divider/>
       <Card.Footer>
         <ButtonGroup block>
           <Button style={{width: '50%'}} color="green">

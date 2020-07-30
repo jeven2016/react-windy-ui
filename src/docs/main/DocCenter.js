@@ -30,6 +30,7 @@ import CrIndex from '../pages/carousel/CrIndex';
 import TabsIndex from '../pages/tabs/TabsIndex';
 import BcIndex from '../pages/breadcumb/BcIndex';
 import CardIndex from '../pages/card/CardIndex';
+import LayoutIndex from '../pages/layout/LayoutIndex';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -42,9 +43,9 @@ function DocCenter(props) {
     <HomeHeader/>
     <Row style={{padding: '1rem 0 0 0'}}>
       <Col mdOffset={1} md={2}>
-        <Affix top={90}>
+        {/*<Affix top={90}>*/}
           <DocMenu/>
-        </Affix>
+        {/*</Affix>*/}
       </Col>
       <Col md={7}>
         <Card block>
@@ -127,6 +128,9 @@ function DocCenter(props) {
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/card`}>
                 <CardIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/layout`}>
+                <LayoutIndex/>
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/`}>
                 <InstallIndex/>

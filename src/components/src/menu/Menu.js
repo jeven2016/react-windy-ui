@@ -41,6 +41,7 @@ const Menu = React.forwardRef((props, ref) => {
     activeItems,
     defaultOpenedMenus,
     openedMenus,
+    primaryBarPosition = 'right', //'left' or 'right
     onOpenedMenu, //invoked by opening / closing submenu
     selectable = true,
     ...otherProps
@@ -263,6 +264,7 @@ const Menu = React.forwardRef((props, ref) => {
     collapsable,
     selectable,
     onClickItem,
+    primaryBarPosition,
   };
   return <MenuContext.Provider value={ctx}>
     <BaseMenu className={clsName}
@@ -299,6 +301,7 @@ Menu.propTypes = {
   openedMenus: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   onOpenedMenu: PropTypes.func,
   selectable: PropTypes.bool,
+  primaryBarPosition: PropTypes.oneOf(['left', 'right']),
 };
 
 Menu.SubMenu = SubMenu;
