@@ -1,7 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
 import {Spring} from 'react-spring/renderprops';
-import {isNil} from '../Utils';
+import {isNil, isNumber} from '../Utils';
+import PropTypes from 'prop-types';
+import Layout from './Layout';
 
 const Slider = React.forwardRef((props, ref) => {
   const {
@@ -20,19 +22,26 @@ const Slider = React.forwardRef((props, ref) => {
     // 'collapsed': collapse,
   });
 
+  let realWidth = isNumber(width) ? `${width}px` : width;
+  let realMinWidth = isNumber(minWidth) ? `${minWidth}px` : minWidth;
+
   const {width: styleWidth} = style;
-  const initWidth = isNil(styleWidth) ? width : styleWidth;
+  const initWidth = isNil(styleWidth) ? realWidth : styleWidth;
   return <Spring
+      config={{clamp: true, mass: 1, tesion: 100, friction: 15}}
       from={{
-        width: collapse ? initWidth : minWidth,
+        width: collapse ? initWidth : realMinWidth,
+        opacity: collapse ? 0 : 1,
       }}
       to={{
-        width: collapse ? minWidth : initWidth,
+        width: collapse ? realMinWidth : initWidth,
+        opacity: collapse ? 0 : 1,
       }}>
     {
       springProps => {
         const newProps = {...style, ...springProps};
-        return <div className={clsName} style={newProps} {...otherProps}>
+        return <div ref={ref} className={clsName}
+                    style={newProps} {...otherProps}>
           <div className="slider-inner">
             {children}
           </div>
@@ -41,5 +50,15 @@ const Slider = React.forwardRef((props, ref) => {
     }
   </Spring>;
 });
+
+Slider.propTypes = {
+  className: PropTypes.string, //the class name of button
+  extraClassName: PropTypes.string, //the class name of button
+  hasBox: PropTypes.bool,
+  collapse: PropTypes.bool,
+  width: PropTypes.string,
+  minWidth: PropTypes.string,
+  style: PropTypes.object,
+};
 
 export default Slider;

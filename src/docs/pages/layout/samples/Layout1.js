@@ -3,7 +3,7 @@ import {Breadcrumb, IconHome, IconList, Layout, Navbar} from 'react-windy-ui';
 
 export default function Layout1() {
   return <>
-    <div style={{background: '#f5f6f7'}}>
+    <Layout style={{background: '#f5f6f7'}}>
       <Layout.Header>
         <Navbar type="primary"
                 hasBorder={false}
@@ -53,6 +53,6 @@ export default function Layout1() {
           Your Content
         </Layout.Content>
       </Layout>
-    </div>
+    </Layout>
   </>;
 }

@@ -1,10 +1,18 @@
 import React, {useState} from 'react';
-import {Breadcrumb, IconHome, Layout, Menu, Toggle} from 'react-windy-ui';
+import {
+  Breadcrumb,
+  Button,
+  IconHome,
+  IconList,
+  Layout,
+  Menu,
+} from 'react-windy-ui';
 import DocFrame from '../../../utils/DocFrame';
 
-function getMenu() {
+function getMenu(collapse) {
   return <Menu defaultOpenedMenus={['sub1', 'sub3']}
                hasBox={false}
+               compact={collapse}
                type="dark">
     <Menu.SubMenu header="SubMenu 1" id="sub1">
       <Menu.Item id="item5">
@@ -37,12 +45,22 @@ function getMenu() {
   </Menu>;
 }
 
+const collapseAttribute = {
+  attr: 'marginLeft',
+  minValue: '0px',
+  maxValue: '240px',
+};
+
 export default function Layout6() {
+  const [collapse, setCollapse] = useState(false);
+
   return <>
     <DocFrame width="100%" height='330px'>
       <div style={{background: '#f5f6f7'}}>
         <Layout.Split>
           <Layout.Slider
+              minWidth="0px"
+              collapse={collapse}
               style={{
                 background: '#000',
                 position: 'fixed',
@@ -56,15 +74,18 @@ export default function Layout6() {
               color: 'white',
               padding: '1rem 0',
             }}>Web Title</h2>
-            {getMenu()}
+            {getMenu(collapse)}
           </Layout.Slider>
 
-          <Layout style={{
-            padding: '0 2rem',
-            marginLeft: '240px',
-            overflowY: 'auto',
-          }}>
+          <Layout collapseAttribute={collapseAttribute} collapse={!collapse}
+                  style={{padding: '0 2rem', overflowY: 'auto'}}>
             <Breadcrumb style={{margin: '0.5rem 0'}}>
+              <Breadcrumb.Item>
+                <Button size="small" extraClassName="clear-border"
+                        onClick={() => setCollapse(pre => !pre)}>
+                  <IconList/>
+                </Button>
+              </Breadcrumb.Item>
               <Breadcrumb.Item>
                 <IconHome style={{fontSize: '1.25em'}}/>
               </Breadcrumb.Item>

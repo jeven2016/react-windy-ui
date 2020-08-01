@@ -7,6 +7,7 @@ import Split from './Split';
 import Footer from './Footer';
 import {Spring} from 'react-spring/renderprops';
 import {isNil} from '../Utils';
+import PropTypes from 'prop-types';
 
 const Layout = React.forwardRef((props, ref) => {
   const {
@@ -16,8 +17,8 @@ const Layout = React.forwardRef((props, ref) => {
     collapse,
     collapseAttribute = {
       attr: 'marginLeft',
-      minValue: '5rem',
-      maxValue: '15rem',
+      minValue: '80px',
+      maxValue: '240px',
     },
 
     style,
@@ -28,12 +29,6 @@ const Layout = React.forwardRef((props, ref) => {
   if (isNil(collapse)) {
     return <div style={style} ref={ref} className={clsName} {...otherProps}/>;
   }
-
-  const from = {
-    [collapseAttribute.attr]: collapse
-        ? collapseAttribute.minValue
-        : collapseAttribute.maxValue,
-  };
 
   return <Spring
       from={{
@@ -56,6 +51,17 @@ const Layout = React.forwardRef((props, ref) => {
     }
   </Spring>;
 });
+
+Layout.propTypes = {
+  className: PropTypes.string, //the class name of button
+  extraClassName: PropTypes.string, //the class name of button
+  collapse: PropTypes.bool,
+  collapseAttribute: PropTypes.shape({
+    attr: PropTypes.string,
+    minValue: PropTypes.string,
+    maxValue: PropTypes.string,
+  }),
+};
 
 Layout.Header = Header;
 Layout.Slider = Slider;

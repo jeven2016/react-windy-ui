@@ -7,7 +7,6 @@ import {
   Menu,
   Navbar,
   Toggle,
-  Button,
 } from 'react-windy-ui';
 
 function getMenu(position, collapse) {
