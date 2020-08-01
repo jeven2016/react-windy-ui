@@ -7,6 +7,7 @@ import {isNil} from '../../components/src/Utils';
 import DemoDesc from './DemoDesc';
 import Code from './Code';
 import Blockquote from '../../components/src/Blockquote';
+import Hcode from './Hcode';
 
 const defaultTitle = 'TITLE';
 const defaultFooter = 'FOOTER';
@@ -29,7 +30,8 @@ const defaultOptions = {
   overrides: {
     Code: {component: Code},
     DemoDesc: {component: DemoDesc},
-    Blockquote: {component: Blockquote},
+    Blockquote: {component: Blockquote, props: {hasBox: true}},
+    Hcode: {component: Hcode},
   },
 };
 

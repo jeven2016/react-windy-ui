@@ -9,7 +9,6 @@ import {
   random,
   slice,
   without,
-  takeRightWhile,
 } from 'lodash';
 import {PopupPosition} from './common/Constants';
 
@@ -364,4 +363,8 @@ export const containsIgnoreCase = (value, comparedValue) => {
     return false;
   }
   return comparedValue.toLowerCase().includes(value.toLowerCase());
+};
+
+export const isNumber = (value) => {
+  return !isNil(value) && /^\d+$/.test(value);
 };

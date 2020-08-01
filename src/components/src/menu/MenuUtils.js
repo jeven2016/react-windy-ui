@@ -90,14 +90,14 @@ export const indentMenu = (
 
 export const cancelIndent = (props) => {
   const {rootDom} = props;
-
   if (rootDom) {
-    rootDom.getElementsByClassName('menu-header').forEach(header => {
+    var headers = rootDom.getElementsByClassName('menu-header');
+    for (let header of headers) {
       const paddingLeft = header.style.paddingLeft;
       if (!isNil(paddingLeft)) {
         header.style.paddingLeft = '';
       }
-    });
+    }
   }
 };
 

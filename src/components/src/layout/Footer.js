@@ -1,27 +1,14 @@
 import React from 'react';
-import clsx from 'clsx';
-import {FixedTypes} from '../common/Constants';
-import {isNil} from '../Utils';
+import PropTypes from 'prop-types';
+import Header from './Header';
 
 const Footer = React.forwardRef((props, ref) => {
-  const {
-    className = 'layout-footer',
-    extraClassName,
-    fixed,
-    ...otherProps
-  } = props;
-  const computeFixedType = (fixed) => {
-    const type = FixedTypes.filter(type => type === fixed);
-    return isNil(type) || type.length === 0 ? '' : 'fixed '
-        + type[0];
-  };
-
-  const fixedType = computeFixedType(fixed);
-  let clsName = clsx(extraClassName, className, {
-    [fixedType]: fixedType,
-  });
-
-  return <div className={clsName} {...otherProps}/>;
+  return <Header ref={ref} className='layout-footer' {...props}/>;
 });
+
+Footer.propTypes = {
+  className: PropTypes.string, //the class name of button
+  extraClassName: PropTypes.string, //the class name of button
+};
 
 export default Footer;

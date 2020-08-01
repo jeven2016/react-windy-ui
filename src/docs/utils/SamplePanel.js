@@ -3,10 +3,7 @@ import {Button, Card, Col, Collapse, Row, Tooltip} from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCode} from '@fortawesome/free-solid-svg-icons';
 import markdown from './Markdown';
-
-import {PrismLight as SyntaxHighlighter} from 'react-syntax-highlighter';
-import {okaidia as sty} from 'react-syntax-highlighter/dist/esm/styles/prism';
-import {jsx} from 'react-syntax-highlighter/dist/esm/languages/prism';
+import Hcode from './Hcode';
 
 /**
  * With markdownOptions , you can directly load a react component in markdwon file
@@ -36,13 +33,6 @@ export default function SamplePanel(props) {
 
   const DescMarkDown = markdown({text: desc, markdownOptions});
   const TitleMarkDwon = markdown({text: title, markdownOptions});
-
-  useEffect(() => {
-    SyntaxHighlighter.registerLanguage('jsx', jsx);
-    // SyntaxHighlighter.registerLanguage('javascript', javascript);
-    // SyntaxHighlighter.registerLanguage('sass', sass);
-    // SyntaxHighlighter.registerLanguage('scss', scss);
-  }, []);
 
   return <>
     <Card block hasBorder hasBox={false}>
@@ -75,15 +65,7 @@ export default function SamplePanel(props) {
       </Card.Row>
       <Card.Row>
         <Collapse.Panel collapse={collapse} heightIncrement={14}>
-          <SyntaxHighlighter
-              customStyle={{fontSize: '.8rem'}}
-              language="jsx"
-              // showLineNumbers={true}
-              startingLineNumber={0}
-              style={sty}
-              wrapLines={true}>
-            {code}
-          </SyntaxHighlighter>
+          <Hcode>{code}</Hcode>
         </Collapse.Panel>
       </Card.Row>
       <Card.Row>
