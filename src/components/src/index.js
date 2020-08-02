@@ -52,6 +52,8 @@ export {default as useResizeObserver} from './common/UseResizeObserver';
 export {default as Tree} from './tree/Tree';
 export {default as useLazyImport} from './common/UseLazyImport';
 export {default as Collapse} from './collapse/Collapse';
+export {default as Table} from './table/Table';
+
 
 export {
   IconInfo,

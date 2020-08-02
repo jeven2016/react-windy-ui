@@ -123,6 +123,11 @@ export default function DocMenu(props) {
           轮播 Carousel
         </Link>
       </Menu.Item>
+      <Menu.Item id="table">
+        <Link to={`${url}/table`}>
+          表格 Table
+        </Link>
+      </Menu.Item>
     </Menu.SubMenu>
     <Menu.SubMenu header="布局" id="layoutIndex">
       <Menu.Item id="grid">

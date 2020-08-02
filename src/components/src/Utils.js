@@ -365,6 +365,13 @@ export const containsIgnoreCase = (value, comparedValue) => {
   return comparedValue.toLowerCase().includes(value.toLowerCase());
 };
 
+export const contains = (value, comparedValue) => {
+  if (isNil(value) || isNil(comparedValue)) {
+    return false;
+  }
+  return comparedValue.includes(value);
+};
+
 export const isNumber = (value) => {
   return !isNil(value) && /^\d+$/.test(value);
 };

@@ -59,6 +59,7 @@ const Checkbox = React.forwardRef((props, ref) => {
   const clsName = clsx(extraClassName, className, alignLabel, {
     checked: checkState,
     unchecked: !checkState,
+    indeterminate: showIndeterminateState,
   });
 
   const handleClick = useCallback((e) => {

@@ -31,6 +31,7 @@ import TabsIndex from '../pages/tabs/TabsIndex';
 import BcIndex from '../pages/breadcumb/BcIndex';
 import CardIndex from '../pages/card/CardIndex';
 import LayoutIndex from '../pages/layout/LayoutIndex';
+import TableIndex from '../pages/table/TableIndex';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -131,6 +132,9 @@ function DocCenter(props) {
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/layout`}>
                 <LayoutIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/table`}>
+                <TableIndex/>
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/`}>
                 <InstallIndex/>
