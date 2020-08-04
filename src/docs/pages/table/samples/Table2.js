@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, Tooltip, Badge} from 'react-windy-ui';
+import {Table, Tooltip} from 'react-windy-ui';
 
 const loadData = () => {
   return [

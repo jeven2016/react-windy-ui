@@ -71,7 +71,7 @@ const Checkbox = React.forwardRef((props, ref) => {
     if (!customized) {
       setCheckState(nextState);
     }
-    onChange && onChange(nextState);
+    onChange && onChange(nextState, e);
   }, [onChange, checkState, customized, setCheckState, disabled]);
 
   /*

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Table, Select, Toggle} from 'react-windy-ui';
+import {Select, Table, Toggle} from 'react-windy-ui';
 
 export default function Table1() {
   const [type, setType] = useState('normal');

@@ -116,6 +116,26 @@ export const IconArrowDown = React.forwardRef((props, ref) => {
   </svg>;
 });
 
+export const IconArrowDropDown = React.forwardRef((props, ref) => {
+  const [clsName, otherProps] = useIcon(props);
+  return <svg ref={ref} className={clsName} {...otherProps}
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+              fill="black" width="24px" height="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M7 10l5 5 5-5H7z"/>
+  </svg>;
+});
+
+export const IconArrowDropUp = React.forwardRef((props, ref) => {
+  const [clsName, otherProps] = useIcon(props);
+  return <svg ref={ref} className={clsName} {...otherProps}
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+              fill="black" width="24px" height="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M7 14l5-5 5 5H7z"/>
+  </svg>;
+});
+
 //wrong
 export const IconStar = React.forwardRef((props, ref) => {
   const [clsName, otherProps] = useIcon(props);

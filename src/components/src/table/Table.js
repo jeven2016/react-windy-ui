@@ -17,6 +17,13 @@ const CheckType = {
   radio: 'radio',
 };
 
+const SortOrder = {
+  ascend: 'ascend',
+  descend: 'descend',
+};
+
+const SortComparator = (a, b) => a < b;
+
 const Table = React.forwardRef((props, ref) => {
   const {
     extraClassName,
@@ -30,13 +37,22 @@ const Table = React.forwardRef((props, ref) => {
     hasBox = false,
 
     checkable = false,
-    canCheckAll = true,
     checkType = CheckType.checkbox,
+    canCheckAll = checkType === CheckType.checkbox,
     onCheckChange,
     onCheckAll,
     defaultCheckedRows,
     checkedRows,
     highlightCheckedRow = true,
+
+    sortComparator = SortComparator,
+
+    //define in cells
+    // onSort,
+
+    // sortComparator,//function
+    // defaultSortOrder,
+    // sortOrder,
 
     ...otherProps
   } = props;
@@ -55,9 +71,18 @@ const Table = React.forwardRef((props, ref) => {
       = useInternalState({
     props,
     stateName: 'checkedRows',
-    defaultState: defaultCheckedRows,
-    state: checkedRows,
+    defaultState: convertToArray(defaultCheckedRows),
+    state: convertToArray(checkedRows),
   });
+
+/*  const {state: sortOrderState, setState: setSortOrder, customized: customSort}
+      = useInternalState({
+    props,
+    stateName: 'sortOrder',
+    defaultState: defaultSortOrder,
+    state: sortOrder,
+    backupState: SortOrder.descend,
+  });*/
 
   const checkAllHandler = useCallback((nextCheck, e) => {
     if (!customCheck) {
@@ -68,12 +93,22 @@ const Table = React.forwardRef((props, ref) => {
 
   const checkOneHandler = useCallback((row, nextCheck, e) => {
     if (!customCheck) {
-      setChecked(pre => nextCheck
-          ? [...pre.filter(k => k !== row.key), row.key]
-          : [...pre.filter(k => k !== row.key)]);
+      if (nextCheck) {
+        if (isCheckbox) {
+          setChecked(pre => [...pre.filter(k => k !== row.key), row.key]);
+        } else {
+          setChecked(pre => [row.key]);
+        }
+      } else {
+        if (isCheckbox) {
+          setChecked(pre => [...pre.filter(k => k !== row.key)]);
+        } else {
+          setChecked(pre => []);
+        }
+      }
     }
     onCheckChange && onCheckChange(row, nextCheck, e);
-  }, [customCheck, onCheckChange, setChecked]);
+  }, [customCheck, isCheckbox, onCheckChange, setChecked]);
 
   const checkResult = useMemo(() => {
     if (!checkable || !canCheckAll) {
@@ -98,11 +133,13 @@ const Table = React.forwardRef((props, ref) => {
     };
   }, [canCheckAll, checkable, checkedRowKeys, rowData]);
 
-  const head = useMemo(() => {
-    let selectTh;
-    if (checkable) {
+  const sortHandler = useCallback((cellData, e) => {
+    console.log(cellData);
+  }, []);
 
-      selectTh = <th className="cell-check">
+  const checkTh = useMemo(() => {
+    if (checkable) {
+      return <th className="cell-check">
         {canCheckAll &&
         (isCheckbox ?
             <Checkbox checked={checkResult.checkedAll}
@@ -113,24 +150,40 @@ const Table = React.forwardRef((props, ref) => {
                      onChange={checkAllHandler}/>)}
       </th>;
     }
+    return null;
+  }, [
+    canCheckAll,
+    checkAllHandler,
+    checkResult.atLeastOneChecked,
+    checkResult.checkedAll,
+    checkable,
+    isCheckbox]);
 
+  const head = useMemo(() => {
     return <thead>
     <tr>
-      {selectTh}
+      {checkTh}
       {
         cellsData.map(cell => {
-          return <th key={cell.key}>{cell.head}</th>;
+          return <th key={cell.key}>
+            <div className="td-content"
+                 onClick={(e) => sortHandler(cell.key, e)}>
+              <span>{cell.head}</span>
+              {
+                cell.sortable && <div className="sort-column">
+                  <span className="arrow-icon up-arrow"/>
+                  <span className="arrow-icon down-arrow"/>
+                </div>
+              }
+
+            </div>
+
+          </th>;
         })
       }
     </tr>
     </thead>;
-  }, [
-    checkable,
-    cellsData,
-    canCheckAll,
-    isCheckbox,
-    checkResult,
-    checkAllHandler]);
+  }, [checkTh, cellsData, sortHandler]);
 
   const getCheckForRow = useCallback((row, isRowChecked) => {
     if (checkable) {
@@ -139,9 +192,9 @@ const Table = React.forwardRef((props, ref) => {
       }
 
       return <td className="cell-check">
-        {isCheckbox ? <Checkbox checked={isRowChecked}
-                                onChange={checkRow}/> : <Radio
-            checked={isRowChecked} onChange={checkRow}/>}</td>;
+        {isCheckbox ? <Checkbox checked={isRowChecked} onChange={checkRow}/>
+            : <Radio value={true} checked={isRowChecked} onChange={checkRow}/>}
+      </td>;
     }
     return null;
   }, [checkOneHandler, checkable, isCheckbox]);
@@ -174,7 +227,13 @@ const Table = React.forwardRef((props, ref) => {
       })
     }
     </tbody>;
-  }, [cellsData, checkedRowKeys, getCheckForRow, rowData]);
+  }, [
+    cellsData,
+    checkable,
+    checkedRowKeys,
+    getCheckForRow,
+    highlightCheckedRow,
+    rowData]);
 
   const colGroups = useMemo(() => {
     return <>

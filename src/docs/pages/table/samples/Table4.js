@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, Tooltip, Badge} from 'react-windy-ui';
+import {Table, Tooltip} from 'react-windy-ui';
 
 const loadData = () => {
   return [
@@ -23,11 +23,18 @@ const cells = [
     head: 'ID',
     showParam: 'key',
     key: 'key',
+
   },
   {
     head: 'Name',
     showParam: 'name',
     key: 'name',
+
+    sortable: true,
+
+    //onSort: (pre, next) => true,
+    //sortOrder
+    defaultSortOrder: 'ascend',
   },
   {
     head: 'Age',
@@ -47,18 +54,12 @@ const cells = [
   },
 ];
 
-export default function Table3() {
-  return <>
-    <Table type="simple"
-           hover={true}
+export default function Table4() {
 
-           loadData={loadData}
-           cells={cells}
-           checkable={true}
-           checkType="radio"
-           onCheckAll={(next) => console.log('check all: ' + next)}
-           onCheckChange={(jsonData, next) => console.log(
-               'check one: ' + jsonData + next)}
-           defaultCheckedRows={'2'}/>
+  return <>
+
+    <Table loadData={loadData} cells={cells} hover={true}
+           hasBorder={true}/>
+
   </>;
 }
