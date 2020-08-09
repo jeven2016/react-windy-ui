@@ -1,13 +1,12 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import clsx from 'clsx';
-import {
-  contains,
-  convertToArray,
-  includes,
-  invoke,
-  isNil,
-  validate,
-} from '../Utils';
+import {contains, convertToArray, invoke, isNil, validate} from '../Utils';
 import Checkbox from '../Checkbox';
 import Radio from '../Radio';
 import useInternalState from '../common/useInternalState';
@@ -38,11 +37,18 @@ const SortOrder = {
 
 const SortComparator = (a, b) => a === b ? 0 : (a < b ? 1 : -1); //by desc
 
-const FilterComparator = (filteredValues, row, cell) => includes(filteredValues,
-    row[cell.showParam]);
+const FilterComparator = (filteredValues, row, cell) => {
+  for (let value of filteredValues) {
+    if (row[cell.showParam].includes(value)) {
+      return true;
+    }
+  }
+  return false;
+};
 
 const Table = React.forwardRef((props, ref) => {
   const {
+    instanceRef,
     extraClassName,
     className = 'table',
     children,
@@ -74,17 +80,6 @@ const Table = React.forwardRef((props, ref) => {
     filteredItems, //[value]
     onFilter,
 
-    //define in cells
-    //sortable
-
-    //defaultSortOrder
-    //sortOrder
-    //sortComparator
-
-    // sortComparator,//function
-    // defaultSortOrder,
-    // sortOrder,
-
     ...otherProps
   } = props;
   const isLoadDataDefined = !isNil(loadData);
@@ -95,24 +90,57 @@ const Table = React.forwardRef((props, ref) => {
     validate(isCellsDefined, 'the cells should be provided');
   }
 
+  //a reference to popup so that we can close the popup by calling the instance's method
   const popupRef = useRef(null);
-  const [sortedState, setSortedState] = useState();//{key: paramName, order: asc/desc}
 
-  const [checkedItems, setCheckedItems] = useState([]);
+  //The sort details of the columns, {key: paramName, order: asc/desc, sorter: (data)=>{...]}
+  const [sortedState, setSortedState] = useState();
+
+  //active the filter popup, the format is {key: paramName}, only one filter popup can display at same time
+  const [activeFilter, setActiveFilter] = useState(null);
+
+  //[{filterValue: v, fc}}], fc means filterComparator
+  const [filterParams, setFilterParams] = useState([]);
 
   //init a internal store
+  //{ checkedValues: {key: [values]} , the key corresponds the showParam
   const [store] = useState(initStore({
-    checkedValues: [],
+    checkedValues: {},
   }));
 
-  const [sortedRowData, setSortedRowData] = useState(null);
-  const cellsData = useMemo(() => convertToArray(cells), [cells]);
-  const rowData = useMemo(
-      () => sortedRowData ? sortedRowData : convertToArray(loadData),
-      [sortedRowData, loadData]);
-  const isCheckbox = checkType === CheckType.checkbox;
+  useImperativeHandle(instanceRef, () => ({
+    clearSort: () => {
+      setSortedState(null);
+    },
+    clearFilter: () => {
+      setActiveFilter(null);
+      setFilterParams([]);
+      store.setState({checkedValues: {}});
+    },
+    clearAll: ()=>{
+      instanceRef.current.clearSort();
+      instanceRef.current.clearFilter();
+    }
+  }), [instanceRef, store]);
 
-  const [currentFilter, setFilter] = useState(null);//{key: paramName, }
+  //for cells definition
+  const cellsData = useMemo(() => convertToArray(cells), [cells]);
+
+  //the table data
+  const rowData = useMemo(() => {
+    var data = convertToArray(loadData);
+    if (sortedState) {
+      data = sortedState.sorter(data);
+    }
+    if (filterParams.length > 0) {
+      filterParams.forEach(param => {
+        data = data.filter(param.fc);
+      });
+    }
+    return [...data];
+  }, [filterParams, loadData, sortedState]);
+
+  const isCheckbox = checkType === CheckType.checkbox;
 
   const {state: checkedRowKeys, setState: setChecked, customized: customCheck}
       = useInternalState({
@@ -201,7 +229,7 @@ const Table = React.forwardRef((props, ref) => {
           : cell.defaultSortOrder === SortOrder.desc;
     })();
 
-    const sortedData = rowData.sort(
+    const sorter = data => data.sort(
         (next, pre) => {
           if (isDefaultSc) {
             const result = sc(next[cell.showParam], pre[cell.showParam]);
@@ -212,32 +240,46 @@ const Table = React.forwardRef((props, ref) => {
         });
 
     setSortedState(
-        {key: cell.showParam, order: isDesc ? SortOrder.desc : SortOrder.asc});
-    setSortedRowData([...sortedData]);
-  }, [defaultSortComparator, defaultSortOrder, onSort, rowData, sortedState]);
+        {
+          key: cell.showParam,
+          order: isDesc ? SortOrder.desc : SortOrder.asc,
+          sorter: sorter,
+        });
+  }, [defaultSortComparator, defaultSortOrder, onSort, sortedState]);
 
   const showFilter = useCallback((cell, e) => {
-    setFilter({key: cell.showParam});
+    setActiveFilter({key: cell.showParam});
   }, []);
 
   //filter the rows after clicking the OK Button
   const filter = useCallback((cell, e) => {
-    var filteredValues = store.getState().checkedValues;
-    let nextData = convertToArray(loadData);
-    if (filteredValues.length > 0) {
-      var fc = isNil(cell.filterComparator)
+    var values = store.getState().checkedValues[cell.showParam];
+    let others = [...filterParams.filter(f => f.key !== cell.showParam)];
+    let params = others;
+
+    if (values) {
+      //get the filter comparator
+      let fc = isNil(cell.filterConfig.onFilter)
           ? defaultFilterComparator
-          : cell.filterComparator;
-      nextData = nextData.filter((row) => fc(filteredValues, row, cell));
+          : cell.filterConfig.onFilter;
+
+      const filterFunc = (row) => fc(values, row, cell);
+      const current = values.map(
+          v => ({key: cell.showParam, filterValue: v, fc: filterFunc}));
+      params = [...current, ...others];
     }
-
-    setSortedRowData([...nextData]);
     popupRef.current.changeActive(false);
-  }, [defaultFilterComparator, loadData, store]);
+    // console.log(params);
+    setFilterParams(params);
+  }, [defaultFilterComparator, filterParams, store]);
 
-  console.log('changing...');
-  const resetFilter = useCallback((e) => {
-    store.setState({checkedValues: []});
+  const resetFilter = useCallback((cell, e) => {
+    const values = store.getState().checkedValues;
+
+    if (!isNil(values[cell.showParam])) {
+      values[cell.showParam] = [];
+    }
+    store.setState({checkedValues: values});
   }, [store]);
 
   const checkTh = useMemo(() => {
@@ -283,14 +325,15 @@ const Table = React.forwardRef((props, ref) => {
           {
             items.map((item, index) => {
               return <Card.Row key={item.value + index}>
-                <CheckComponent label={item.text} value={item.value} store={store}/>
+                <CheckComponent label={item.text} value={item.value}
+                                paramName={cell.showParam} store={store}/>
               </Card.Row>;
             })
           }
           <Divider/>
           <Card.Footer justify="center">
             <Button size="small" hasMinWidth={true}
-                    onClick={resetFilter}>{resetText}</Button>&nbsp;
+                    onClick={(e) => resetFilter(cell, e)}>{resetText}</Button>&nbsp;
             <Button size="small" hasMinWidth={true} color="primary"
                     onClick={(e) => filter(cell, e)}
                     style={{marginLeft: '.5rem'}}>{okText}</Button>
@@ -299,24 +342,26 @@ const Table = React.forwardRef((props, ref) => {
         : null;
 
     const filterCls = clsx('filter', {
-      active: !isNil(currentFilter) && currentFilter.key === cell.showParam,
+      active: !isNil(activeFilter) && activeFilter.key === cell.showParam,
+      'with-items': filterParams.find(p => p.key === cell.showParam),
     });
 
-    //todo
     return <Popover popupInstanceRef={popupRef} autoWidth hasArrow={false}
                     offset={5}
                     extraClassName="table-filter"
-                    onChange={popActive => !popActive && setFilter(null)}
+                    onChange={popActive => !popActive && setActiveFilter(null)}
                     body={list} position="bottomRight">
       <div className={filterCls} onClick={(e) => showFilter(cell, e)}>
         <IconFilter/>
       </div>
     </Popover>;
   }, [
-    currentFilter,
+    activeFilter,
     defaultOkText,
     defaultResetText,
     filter,
+    filterParams,
+    resetFilter,
     showFilter,
     store]);
 
@@ -325,7 +370,7 @@ const Table = React.forwardRef((props, ref) => {
     <tr>
       {checkTh}
       {
-        cellsData.map(cell => {
+        cellsData.map((cell, i) => {
           let isDesc, isAsc;
           if (!isNil(sortOrder) && sortOrder.key === cell.key) {
             isDesc = sortOrder.order === SortOrder.desc;
@@ -338,7 +383,7 @@ const Table = React.forwardRef((props, ref) => {
 
           const hasWrapper = cell.sortable || cell.filterable;
           return <th className={hasWrapper ? 'with-wrapper' : null}
-                     key={cell.key}>
+                     key={cell.showParam + '-' + i}>
             {!hasWrapper && cell.head}
             {
               hasWrapper &&
@@ -428,7 +473,7 @@ const Table = React.forwardRef((props, ref) => {
   });
 
   return <>
-    <table className={clsName} {...otherProps}>
+    <table className={clsName} {...otherProps} ref={ref}>
       {colGroups}
       {isJsonData && head}
       {isJsonData && body}

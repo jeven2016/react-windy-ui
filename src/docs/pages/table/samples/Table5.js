@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Table, Toggle, Loader} from 'react-windy-ui';
+import {Loader, Table} from 'react-windy-ui';
 
 const cellsData = [
   {
@@ -26,23 +26,19 @@ const cells = [
   {
     head: 'ID',
     showParam: 'key',
-    key: 'key',
     sortable: true,
   },
   {
     head: 'Name',
     showParam: 'name',
-    key: 'name',
   },
   {
     head: 'Age',
     showParam: 'age',
-    key: 'age',
   },
   {
     head: 'Address',
     showParam: 'address',
-    key: 'address',
   },
 ];
 
@@ -52,7 +48,7 @@ export default function Table5() {
   const [loading, setLoading] = useState(false);
 
   const sort = (cell) => {
-    if (cell.key === 'key') {
+    if (cell.showParam === 'key') {
       const nextOrder = order ? order.order === 'asc' ? 'desc' : 'asc'
           : 'desc';
 
@@ -73,7 +69,7 @@ export default function Table5() {
   };
   return <>
     <Loader type="primary"
-            darkMask={true}
+            darkMask={false}
             active={loading}>
       <Table onSort={sort} sortOrder={order} loadData={data} cells={cells}
              hover={true}

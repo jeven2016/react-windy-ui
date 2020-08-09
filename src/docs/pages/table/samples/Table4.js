@@ -28,7 +28,6 @@ const cells = [
   {
     head: 'ID',
     showParam: 'key',
-    key: 'key',
     sortable: true,
     sortComparator: (a, b, order) => order === 'asc' ? a - b : b - a,
     defaultSortOrder: 'asc',
@@ -36,20 +35,17 @@ const cells = [
   {
     head: 'Name',
     showParam: 'name',
-    key: 'name',
     sortable: true,
     defaultSortOrder: 'asc',
   },
   {
     head: 'Age',
     showParam: 'age',
-    key: 'age',
     sortable: true,
   },
   {
     head: 'Address',
     showParam: 'address',
-    key: 'address',
     sortable: true,
     defaultSortOrder: 'desc',
 

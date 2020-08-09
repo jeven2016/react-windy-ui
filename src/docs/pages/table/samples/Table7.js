@@ -60,17 +60,15 @@ const cells = [
           text: '上海',
           value: 'Shanghai',
         }],
-      resetText: '重 置',
-      okText: '确 定',
-      onFilter: (filterValues, rowData) => {
-        for (let value of filterValues) {
-          if (rowData.name.includes(value)) {
-            return true;
-          }
-        }
-        return false;
-      },
     },
+    headElements: {
+      key: 'search',
+      body: (props)=>{
+        return <div>
+          <Button/>
+        </div>
+      }
+    }
   },
   {
     head: 'Place',
@@ -94,22 +92,14 @@ const cells = [
   },
 ];
 
-export default function Table6() {
+export default function Table7() {
   const instanceRef = useRef(null);
 
   return <>
     <div className="doc doc-row">
-      <ButtonGroup>
-        <Button onClick={() => instanceRef.current.clearSort()}>
-          Clear Sort
-        </Button>
-        <Button onClick={() => instanceRef.current.clearFilter()}>
-          Clear Filter
-        </Button>
-        <Button onClick={() => instanceRef.current.clearAll()}>
-          Clear All
-        </Button>
-      </ButtonGroup>
+      <Button onClick={() => instanceRef.current.clearAll()}>
+        Clear All
+      </Button>
     </div>
     <Table instanceRef={instanceRef} loadData={loadData} cells={cells}
            hover={true}

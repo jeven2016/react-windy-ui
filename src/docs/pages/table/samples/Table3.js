@@ -22,22 +22,18 @@ const cells = [
   {
     head: 'ID',
     showParam: 'key',
-    key: 'key',
   },
   {
     head: 'Name',
     showParam: 'name',
-    key: 'name',
   },
   {
     head: 'Age',
     showParam: 'age',
-    key: 'age',
   },
   {
     head: 'Address',
     showParam: 'address',
-    key: 'address',
 
     format: (addressText) => {
       return <Tooltip body={`The address is ${addressText}`}>
