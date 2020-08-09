@@ -19,7 +19,6 @@ const CheckComponent = React.forwardRef((props, ref) => {
 
   useEffect(() => {
     const listener = () => {
-      console.log("trigger....")
       const isCheckedValue = isChecked();
       if (!checked && isCheckedValue) {
         setChecked(true);

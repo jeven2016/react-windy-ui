@@ -117,10 +117,10 @@ const Table = React.forwardRef((props, ref) => {
       setFilterParams([]);
       store.setState({checkedValues: {}});
     },
-    clearAll: ()=>{
+    clearAll: () => {
       instanceRef.current.clearSort();
       instanceRef.current.clearFilter();
-    }
+    },
   }), [instanceRef, store]);
 
   //for cells definition
@@ -365,6 +365,24 @@ const Table = React.forwardRef((props, ref) => {
     showFilter,
     store]);
 
+  const headElements = useCallback((cell) => {
+    if (cell.elements) {
+      return cell.elements.map((elem,index) => {
+        return <Popover autoWidth hasArrow={false} key={`popover-${elem.key}`}
+                        offset={5}
+                        onChange={popActive => !popActive &&
+                            setActiveFilter(null)}
+                        body={"what's wrong with you?"} position="bottomRight">
+          <div className="head-elem"
+               onClick={(e) => setActiveFilter({key: `elem-${elem.key}`})}>
+            {elem.head}
+          </div>
+        </Popover>;
+      });
+    }
+    return null;
+  }, []);
+
   const head = useMemo(() => {
     return <thead>
     <tr>
@@ -403,6 +421,7 @@ const Table = React.forwardRef((props, ref) => {
                     </div>
                   }
                 </div>
+                {headElements(cell)}
                 {filterContent(cell)}
               </div>
             }

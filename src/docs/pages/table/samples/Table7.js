@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {Table, ButtonGroup, Button} from 'react-windy-ui';
 
 const loadData = () => {
@@ -61,14 +61,13 @@ const cells = [
           value: 'Shanghai',
         }],
     },
-    headElements: {
-      key: 'search',
-      body: (props)=>{
-        return <div>
-          <Button/>
-        </div>
-      }
-    }
+    elements: [
+      {
+        key: 'search',
+        head: <div>H</div>,
+        body: Element,
+      },
+    ],
   },
   {
     head: 'Place',
@@ -91,6 +90,13 @@ const cells = [
     },
   },
 ];
+
+const Element = (props) => {
+  const [value, setValue] = useState();
+  return <div>
+    <Button>What the fuck?</Button>
+  </div>;
+};
 
 export default function Table7() {
   const instanceRef = useRef(null);
