@@ -8,7 +8,7 @@ import {
   PopupPosition,
 } from '../common/Constants';
 import {animated, useSpring} from 'react-spring';
-import {execute, isNil, isString, place, setDisplay, validate} from '../Utils';
+import {execute, isNil, isString, place, setDisplay} from '../Utils';
 import {setDirectRef} from '../common/UseMultipleRefs';
 import useResizeObserver from '../common/UseResizeObserver';
 import useEvent from '../common/UseEvent';
@@ -105,7 +105,7 @@ const Popup = React.forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     isActive: activePopup,
     changeActive: changeActive,
-  }), [activePopup]);
+  }), [activePopup, changeActive]);
 
   //-------------update the popup's position------------------
   const updatePosition = useCallback(() => {

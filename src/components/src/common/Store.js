@@ -4,6 +4,10 @@ import {isNil, random} from '../Utils';
 /**
  * A internal store implementation that make the child node be able to notify other child nodes
  * to check or update its state not through the parent node. And the parent node
+ *
+ * The advantage of using store:
+ * 1. you don't have to updating the child components by changing the parent's state.
+ *    this is a performance improvement.
  */
 export const StoreContext = React.createContext(null);
 export const Provider = StoreContext.Provider;

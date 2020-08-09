@@ -19,6 +19,8 @@ const Popover = React.forwardRef((props, ref) => {
     hasBox = true,
     hasBorder = false,
     offset = 15,
+    autoWidth = false,
+    popupInstanceRef,
     ...otherProps
   } = props;
   let positionClassName = clsx('popover-arrow', `${PositionClass[position]}`, {
@@ -30,7 +32,7 @@ const Popover = React.forwardRef((props, ref) => {
   const popupBody = <div className={clsName}
                          ref={ref}>
     {hasArrow && <div className={positionClassName}/>}
-    <Card hasBox={hasBox} hasBorder={hasBorder}>
+    <Card hasBox={hasBox} hasBorder={hasBorder} hasWidth={!autoWidth}>
       {
         isNil(header) ? null :
             <>
@@ -45,6 +47,7 @@ const Popover = React.forwardRef((props, ref) => {
   </div>;
 
   return <Popup
+      ref={popupInstanceRef} //todo: need to update doc
       offset={offset}
       position={position}
       autoClose={false}

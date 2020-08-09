@@ -17,6 +17,7 @@ const Tooltip = React.forwardRef((props, ref) => {
     zIndex = 2000,
     offset = 10,
     children,
+    popupInstanceRef,
     ...otherProps
   } = props;
   let clsName = clsx(extraClassName, className);
@@ -42,6 +43,7 @@ const Tooltip = React.forwardRef((props, ref) => {
   };
 
   return <Popup
+      ref={popupInstanceRef}
       {...otherProps}
       animationFunc={animationFunc}
       offset={offset}

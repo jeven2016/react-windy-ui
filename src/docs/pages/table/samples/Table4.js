@@ -6,14 +6,20 @@ const loadData = () => {
     {
       key: '1',
       name: 'Joe1',
-      age: 22,
+      age: 12,
       address: 'address1',
     },
     {
       key: '2',
       name: 'Joe2',
       age: 22,
-      address: 'address1',
+      address: 'address2',
+    },
+    {
+      key: '3',
+      name: 'Joe3',
+      age: 12,
+      address: 'address3',
     },
   ];
 };
@@ -23,28 +29,29 @@ const cells = [
     head: 'ID',
     showParam: 'key',
     key: 'key',
-
+    sortable: true,
+    sortComparator: (a, b, order) => order === 'asc' ? a - b : b - a,
+    defaultSortOrder: 'asc',
   },
   {
     head: 'Name',
     showParam: 'name',
     key: 'name',
-
     sortable: true,
-
-    //onSort: (pre, next) => true,
-    //sortOrder
-    defaultSortOrder: 'ascend',
+    defaultSortOrder: 'asc',
   },
   {
     head: 'Age',
     showParam: 'age',
     key: 'age',
+    sortable: true,
   },
   {
     head: 'Address',
     showParam: 'address',
     key: 'address',
+    sortable: true,
+    defaultSortOrder: 'desc',
 
     format: (addressText) => {
       return <Tooltip body={`The address is ${addressText}`}>

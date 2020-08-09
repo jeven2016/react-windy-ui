@@ -15,6 +15,7 @@ const Dropdown = React.forwardRef((props, ref) => {
     title,
     children,
     onSelect,
+    popupInstanceRef,
     ...otherProps
   } = props;
 
@@ -38,6 +39,7 @@ const Dropdown = React.forwardRef((props, ref) => {
   });
 
   return <Popup
+      ref={popupInstanceRef}
       extraClassName={extraClassName}
       className={className}
       ctrlRef={(domNode) => ctrlRef.current = domNode}

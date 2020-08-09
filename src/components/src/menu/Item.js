@@ -85,7 +85,8 @@ const Item = React.forwardRef((props, ref) => {
     active: isActive,
     'with-bg': hasBackground,
     'with-bottom-bar': hasBottomBar,
-    'left-bar': ctx.type === MenuType.primary && ctx.primaryBarPosition === 'left',
+    'left-bar': ctx.type === MenuType.primary && ctx.primaryBarPosition ===
+        'left',
     'right-bar': ctx.type === MenuType.primary && ctx.primaryBarPosition ===
         'right',
   });
