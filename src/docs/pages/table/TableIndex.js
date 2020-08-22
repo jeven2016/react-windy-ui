@@ -7,6 +7,10 @@ import Table4 from './samples/Table4';
 import Table5 from './samples/Table5';
 import Table6 from './samples/Table6';
 import Table7 from './samples/Table7';
+import Table8 from './samples/Table8';
+import Table9 from './samples/Table9';
+import Table10 from './samples/Table10';
+import Table11 from './samples/Table11';
 
 const componentMapping = {
   Table1: <Table1/>,
@@ -16,6 +20,10 @@ const componentMapping = {
   Table5: <Table5/>,
   Table6: <Table6/>,
   Table7: <Table7/>,
+  Table8: <Table8/>,
+  Table9: <Table9/>,
+  Table10: <Table10/>,
+  Table11: <Table11/>,
 };
 
 export default function TableIndex(props) {

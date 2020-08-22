@@ -2,7 +2,6 @@ import React from 'react';
 import {
   PopupCtrlType,
   PositionClass,
-  TooltipTransformOrigin,
 } from './common/Constants';
 import clsx from 'clsx';
 import Popup from './popup/Popup';
@@ -16,6 +15,7 @@ const Tooltip = React.forwardRef((props, ref) => {
     body,
     zIndex = 2000,
     offset = 10,
+    hasArrow = true,
     children,
     popupInstanceRef,
     ...otherProps
@@ -24,19 +24,19 @@ const Tooltip = React.forwardRef((props, ref) => {
   let positionClassName = `${PositionClass[position]} tooltip-arrow`;
 
   const popupBody = <div className={clsName} ref={ref}>
-    <div className={positionClassName}/>
+    {hasArrow && <div className={positionClassName}/>}
     {body}
   </div>;
 
   const animationFunc = (activeState) => {
     return {
       from: {
-        transform: 'scale(0.9)',
+        transform: 'scaleY(0.9)',
         opacity: 0,
-        transformOrigin: TooltipTransformOrigin[position],
+        transformOrigin: 'center',
       },
       to: {
-        transform: activeState ? 'scale(1)' : 'scale(0.9)',
+        transform: activeState ? 'scaleY(1)' : 'scaleY(0.9)',
         opacity: activeState ? 1 : 0,
       },
     };
@@ -64,6 +64,7 @@ Tooltip.propTypes = {
   className: PropTypes.string,
   position: PropTypes.string,
   body: PropTypes.node,
+  hasArrow: PropTypes.bool,
   zIndex: PropTypes.number,
   offset: PropTypes.number,
 };
