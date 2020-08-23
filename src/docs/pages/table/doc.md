@@ -425,3 +425,300 @@ export default function Table5() {
 [Table5_BEGIN_en_US]
 [Table5_END_en_US]
 ----------------------------------
+[Table6_BEGIN_zh_CN]
+### 示例6: 过滤表格行
+<DemoDesc title="提示">
+   要使表格列支持过滤功能，需要将<Code>filterable</Code>属性设置为<Code>true</Code>,同时需要提供一个<Code>filterConfig</Code>对象。
+   其中<Code>filterItems</Code>属性提供可供过滤的选项，而<Code>onFilter</Code>
+   用来判断选中值是否符合标准。另外过滤弹出框提供了<Code>reset</Code>和<Code>ok</Code>按钮，您可以设置对应的显示文字。
+</DemoDesc>
+
+```jsx
+import React from 'react';
+import {Table} from 'react-windy-ui';
+
+const loadData = () => {
+  return [
+    {
+      key: '1',
+      name: 'Nanjing',
+      place: 'Zhonghua Gate',
+    },
+    {
+      key: '2',
+      name: 'Nanjing',
+      place: 'Qinhuai River',
+    },
+    {
+      key: '3',
+      name: 'Shanghai',
+      place: 'The Bund Shanghai',
+    },
+    {
+      key: '4',
+      name: 'Shanghai',
+      place: 'Jade Buddha Temple',
+    },
+    {
+      key: '5',
+      name: 'Beijing',
+      place: 'Forbidden City',
+    },
+    {
+      key: '6',
+      name: 'Beijing',
+      place: 'Badaling Great Wall',
+    },
+  ];
+};
+
+const cells = [
+  {
+    head: 'ID',
+    showParam: 'key',
+    sortable: true,
+  },
+  {
+    head: 'City',
+    showParam: 'name',
+    filterable: true,
+    filterConfig: {
+      filterItems: [
+        {
+          text: '南京',
+          value: 'Nanjing',
+        },
+        {
+          text: '北京',
+          value: 'Beijing',
+        },
+        {
+          text: '上海',
+          value: 'Shanghai',
+        }],
+      resetText: '重 置',
+      okText: '确 定',
+      onFilter: (filterValues, rowData) => {
+        for (let value of filterValues) {
+          if (rowData.name.includes(value)) {
+            return true;
+          }
+        }
+        return false;
+      },
+    },
+  },
+  {
+    head: 'Place',
+    showParam: 'place',
+    filterable: true,
+    filterConfig: {
+      filterItems: [
+        {
+          text: '秦淮河',
+          value: 'Qinhuai',
+        },
+        {
+          text: '故宫',
+          value: 'Forbidden',
+        },
+        {
+          text: '外滩',
+          value: 'Bund',
+        }],
+    },
+  },
+];
+
+export default function Table6() {
+
+  return <>
+
+    <Table loadData={loadData} cells={cells}
+           hover={true}
+           hasBorder={true}/>
+
+  </>;
+}
+```
+[Table6_END_zh_CN]
+
+[Table6_BEGIN_en_US]
+[Table6_END_en_US]
+----------------------------------
+[Table7_BEGIN_zh_CN]
+### 示例7: 在表格列中添加自定义的元素
+<DemoDesc title="提示">
+   Table中某列允许过滤时，会在表头对应的列上显示一个过滤的图标。如果还需要实现其他的功能，比如需要点击后弹出搜索框的功能，则可以参照此例
+   添加一个elements数组属性。
+</DemoDesc>
+
+```jsx
+import React, {useCallback, useMemo, useRef, useState} from 'react';
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  Col,
+  IconSearch,
+  Input,
+  Row,
+  Table,
+} from 'react-windy-ui';
+
+const tableData = [
+  {
+    key: '1',
+    name: 'Nanjing',
+    place: 'Zhonghua Gate',
+  },
+  {
+    key: '2',
+    name: 'Nanjing',
+    place: 'Qinhuai River',
+  },
+  {
+    key: '3',
+    name: 'Shanghai',
+    place: 'The Bund Shanghai',
+  },
+  {
+    key: '4',
+    name: 'Shanghai',
+    place: 'Jade Buddha Temple',
+  },
+  {
+    key: '5',
+    name: 'Beijing',
+    place: 'Forbidden City',
+  },
+  {
+    key: '6',
+    name: 'Beijing',
+    place: 'Badaling Great Wall',
+  },
+];
+
+const Element = ({onSearch, tableProps}) => {
+//todo: the value always be cleared
+  const [value, setValue] = useState('');
+  return <Card hasBox={false} block>
+    <Card.Header><h5>Enter the value to search:</h5></Card.Header>
+    <Card.Row>
+      <Input placeholder="Search Value" value={value}
+             onChange={e => {
+               setValue(e.target.value);
+             }}/>
+    </Card.Row>
+    <Card.Row>
+      <Row>
+        <Col xs={6} justify="center">
+          <Button block onClick={(e) => setValue('')}>Reset</Button>
+        </Col>
+        <Col xs={6} justify="center">
+          <Button type="primary" block onClick={() => {
+            //to close the popup
+            document.body.click();
+            onSearch(value);
+          }}>
+            <IconSearch/><span>Search</span>
+          </Button>
+        </Col>
+      </Row>
+    </Card.Row>
+
+  </Card>;
+};
+
+export default function Table7() {
+  const [data, setData] = useState(tableData);
+  const instanceRef = useRef(null);
+
+  const onSearch = useCallback((value) => {
+    var newData = tableData.filter(d => d.name.includes(value));
+    setData(newData);
+  });
+
+  const cells = useMemo(() => [
+    {
+      head: 'ID',
+      showParam: 'key',
+      sortable: true,
+    },
+    {
+      head: 'City',
+      showParam: 'name',
+      filterable: true,
+      filterConfig: {
+        filterItems: [
+          {
+            text: '南京',
+            value: 'Nanjing',
+          },
+          {
+            text: '北京',
+            value: 'Beijing',
+          },
+          {
+            text: '上海',
+            value: 'Shanghai',
+          }],
+      },
+      elements: [
+        {
+          key: 'search',
+          head: <IconSearch/>,
+          body: ({tableProps}) => <Element tableProps={tableProps}
+                                           onSearch={onSearch}/>,
+        },
+      ],
+    },
+    {
+      head: 'Place',
+      showParam: 'place',
+      filterable: true,
+      filterConfig: {
+        filterItems: [
+          {
+            text: '秦淮河',
+            value: 'Qinhuai',
+          },
+          {
+            text: '故宫',
+            value: 'Forbidden',
+          },
+          {
+            text: '外滩',
+            value: 'Bund',
+          }],
+      },
+    },
+  ], [onSearch]);
+
+  return <>
+    <div className="doc doc-row">
+      <ButtonGroup>
+        <Button onClick={() => instanceRef.current.clearSort()}>
+          Clear Sort
+        </Button>
+        <Button onClick={() => instanceRef.current.clearFilter()}>
+          Clear Filter
+        </Button>
+        <Button onClick={() => instanceRef.current.clearAll()}>
+          Clear All
+        </Button>
+      </ButtonGroup>
+    </div>
+    <Table instanceRef={instanceRef}
+           loadData={data} cells={cells}
+           hover={true}
+           hasBorder={true}/>
+
+  </>;
+}
+```
+[Table7_END_zh_CN]
+
+[Table7_BEGIN_en_US]
+[Table7_END_en_US]
+----------------------------------

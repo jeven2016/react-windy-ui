@@ -124,6 +124,7 @@ const Table = React.forwardRef((props, ref) => {
   const scrollBodyRef = useRef();
   const scrollBarWidthRef = useRef(getScrollbarWidth());
 
+  console.log(sortedState)
   useImperativeHandle(instanceRef, () => ({
     clearSort: () => {
       setSortedState(null);

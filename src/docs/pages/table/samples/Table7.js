@@ -1,6 +1,14 @@
 import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {Table, Row, Button, Input, Col, Card} from 'react-windy-ui';
-import {IconSearch} from '../../../../components/src';
+import {
+  Table,
+  Row,
+  Button,
+  Input,
+  Col,
+  Card,
+  IconSearch,
+  ButtonGroup,
+} from 'react-windy-ui';
 
 const tableData = [
   {
@@ -68,6 +76,7 @@ const Element = ({onSearch, tableProps}) => {
 
 export default function Table7() {
   const [data, setData] = useState(tableData);
+  const instanceRef = useRef(null);
 
   const onSearch = useCallback((value) => {
     var newData = tableData.filter(d => d.name.includes(value));
@@ -131,7 +140,21 @@ export default function Table7() {
   ], [onSearch]);
 
   return <>
-    <Table loadData={data} cells={cells}
+    <div className="doc doc-row">
+      <ButtonGroup>
+        <Button onClick={() => instanceRef.current.clearSort()}>
+          Clear Sort
+        </Button>
+        <Button onClick={() => instanceRef.current.clearFilter()}>
+          Clear Filter
+        </Button>
+        <Button onClick={() => instanceRef.current.clearAll()}>
+          Clear All
+        </Button>
+      </ButtonGroup>
+    </div>
+    <Table instanceRef={instanceRef}
+           loadData={data} cells={cells}
            hover={true}
            hasBorder={true}/>
 
