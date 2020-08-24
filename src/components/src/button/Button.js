@@ -15,7 +15,7 @@ const Button = React.forwardRef((props, ref) => {
     outline = false,
     circle,
     hasMinWidth = false,
-    invented = false,
+    invented = false, //todo: new field
     onClick,
     disabled = false,
     ...otherProps
