@@ -81,21 +81,6 @@ export const PopupPosition = {
   rightBottom: 'rightBottom',
 };
 
-export const TooltipTransformOrigin = {
-  top: 'center bottom',
-  topLeft: 'left bottom',
-  topRight: 'right bottom',
-  bottom: 'center top',
-  bottomLeft: 'left top',
-  bottomRight: 'right top',
-  left: 'right center',
-  leftTop: 'right top',
-  leftBottom: 'right bottom',
-  right: 'left center',
-  rightTop: 'left top',
-  rightBottom: 'left bottom',
-};
-
 export const PopoverTriggerType = {
   hover: 'hover',
   click: 'click',

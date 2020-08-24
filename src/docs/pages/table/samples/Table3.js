@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Table, Tooltip, Badge, Select} from 'react-windy-ui';
+import {Select, Table} from 'react-windy-ui';
 
 const loadData = () => {
   return [
@@ -34,12 +34,6 @@ const cells = [
   {
     head: 'Address',
     showParam: 'address',
-
-    format: (addressText) => {
-      return <Tooltip body={`The address is ${addressText}`}>
-        {addressText}
-      </Tooltip>;
-    },
   },
 ];
 

@@ -1,5 +1,5 @@
-import React, {useRef} from 'react';
-import {Table, ButtonGroup, Button} from 'react-windy-ui';
+import React from 'react';
+import {Table} from 'react-windy-ui';
 
 const loadData = () => {
   return [
@@ -95,23 +95,10 @@ const cells = [
 ];
 
 export default function Table6() {
-  const instanceRef = useRef(null);
 
   return <>
-    <div className="doc doc-row">
-      <ButtonGroup>
-        <Button onClick={() => instanceRef.current.clearSort()}>
-          Clear Sort
-        </Button>
-        <Button onClick={() => instanceRef.current.clearFilter()}>
-          Clear Filter
-        </Button>
-        <Button onClick={() => instanceRef.current.clearAll()}>
-          Clear All
-        </Button>
-      </ButtonGroup>
-    </div>
-    <Table instanceRef={instanceRef} loadData={loadData} cells={cells}
+
+    <Table loadData={loadData} cells={cells}
            hover={true}
            hasBorder={true}/>
 

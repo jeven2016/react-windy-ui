@@ -25,7 +25,6 @@ export default function Table1() {
       <span style={{marginRight: '1rem', fontWeight: '600'}}>Type:</span>
       <Select value={type} onSelect={value => setType(value)}>
         <Select.Option value="normal">normal</Select.Option>
-        <Select.Option value="responsive">responsive</Select.Option>
         <Select.Option value="striped">striped</Select.Option>
         <Select.Option value="simple">simple</Select.Option>
       </Select>

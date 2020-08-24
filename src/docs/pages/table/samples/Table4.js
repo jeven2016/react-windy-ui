@@ -1,28 +1,26 @@
 import React from 'react';
-import {Table, Tooltip} from 'react-windy-ui';
+import {Table} from 'react-windy-ui';
 
-const loadData = () => {
-  return [
-    {
-      key: '1',
-      name: 'Joe1',
-      age: 12,
-      address: 'address1',
-    },
-    {
-      key: '2',
-      name: 'Joe2',
-      age: 22,
-      address: 'address2',
-    },
-    {
-      key: '3',
-      name: 'Joe3',
-      age: 12,
-      address: 'address3',
-    },
-  ];
-};
+const loadData = [
+  {
+    key: '1',
+    name: 'Joe1',
+    age: 12,
+    address: 'address1',
+  },
+  {
+    key: '2',
+    name: 'Joe2',
+    age: 22,
+    address: 'address2',
+  },
+  {
+    key: '3',
+    name: 'Joe3',
+    age: 12,
+    address: 'address3',
+  },
+];
 
 const cells = [
   {
@@ -48,12 +46,6 @@ const cells = [
     showParam: 'address',
     sortable: true,
     defaultSortOrder: 'desc',
-
-    format: (addressText) => {
-      return <Tooltip body={`The address is ${addressText}`}>
-        {addressText}
-      </Tooltip>;
-    },
   },
 ];
 

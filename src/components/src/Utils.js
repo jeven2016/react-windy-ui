@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   inRange,
   isBoolean,
@@ -6,6 +5,7 @@ import {
   isInteger,
   isObject,
   isString,
+  max,
   random,
   slice,
   without,
@@ -22,6 +22,7 @@ export {
   random,
   slice,
   without,
+  max,
 };
 
 export const isNil = (value) => value == null;
@@ -375,3 +376,52 @@ export const contains = (value, comparedValue) => {
 export const isNumber = (value) => {
   return !isNil(value) && /^\d+$/.test(value);
 };
+
+/**
+ * Get scroll bar width
+ */
+let barWidth;
+
+export default function getScrollbarWidth() {
+  if (!isNil(barWidth)) {
+    return barWidth;
+  }
+
+  const outerDiv = document.createElement('div');
+
+  const innerDiv = document.createElement('div');
+  innerDiv.style.width = '100%';
+  innerDiv.style.height = '200px';
+
+  const oStyle = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '200px',
+    height: '100px',
+    overflow: 'hidden',
+    visibility: 'hidden',
+  };
+
+  for (let key in oStyle) {
+    outerDiv.style[key] = oStyle[key];
+  }
+  outerDiv.appendChild(innerDiv);
+
+  document.body.appendChild(outerDiv);
+
+  const preInnerWidth = innerDiv.offsetWidth;
+
+  //change to scroll
+  outerDiv.style.overflow = 'scroll';
+
+  let currentInnerWidth = innerDiv.offsetWidth;
+
+  if (preInnerWidth === currentInnerWidth) {
+    currentInnerWidth = outerDiv.clientWidth;
+  }
+  barWidth = preInnerWidth - currentInnerWidth;
+
+  document.body.removeChild(outerDiv);
+  return barWidth;
+}
