@@ -12,15 +12,18 @@ const Button = React.forwardRef((props, ref) => {
     directRef,
     active = false,
     size,
-    outline,
+    outline = false,
     circle,
     hasMinWidth = false,
+    invented = false,
     onClick,
     disabled = false,
     ...otherProps
   } = props;
 
   let clsName = useMemo(() => ({
+    normal: !outline && !invented,
+    invented: invented,
     [type]: type,
     [size]: size,
     [color]: color,
