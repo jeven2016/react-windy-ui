@@ -59,10 +59,8 @@ export default function Table8() {
            cells={cells}
            hover={true}
            checkable={true}
-        // type="striped"
            scrollY={true}
-           bodyHeight="10rem"
-
+           bodyHeight={160}
     />
   </>;
 }

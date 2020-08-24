@@ -246,6 +246,9 @@ const SampleBtn6 = () => {
     <Button circle>G</Button>
     <Button type="info" circle>OK</Button>
     <Button type="success" circle>NO</Button>
+    <span style={{color: 'red'}}>
+      <Button inverted type="success" circle>B</Button>
+    </span>
   </>;
 };
 
@@ -498,14 +501,13 @@ export default SampleBtn12;
 [SampleBtn12_END_en_US]
 ----------------------------------
 [SampleBtn13_BEGIN_zh_CN]
-### 示例13: 自定义按钮和extraClassName属性 
+### 示例13: Inverted按钮
 
 <fieldset class="doc desc">
   <legend>提示</legend>
   <div class="doc desc-area">
-    这里需要介绍一下extraClassName属性，extraClassName是用于给组件根节点额外添加class的入口。正常情况下，组件都会默认设置一个class，
-    如果需要添加其他css属性值时，你将不得不覆盖style中的属性。但有了extraClassName后，你可以在组件根节点已有class的情况下，再额外添加你所需要
-    的class。比如在这个例子中，额外使用了'clear-border'样式去强制将边框去除以便达到我们所需要的效果。
+    普通的按钮会有背景色和边框，如果将<Code>inverted</Code>属性设置为<Code>true</Code>, 
+    则一开始按钮不会显示边框和背景色。只有当获取鼠标光标或点击后才会有对应的变化。
   </div>
 </fieldset>
 
@@ -515,46 +517,47 @@ import {
   Button,
   IconArrowLeft,
   IconArrowRight,
-  IconList,
-  NavBar,
   IconCalendar,
+  IconList,
+  Navbar,
 } from 'react-windy-ui';
 
 const SampleBtn13 = () => {
   return <>
-    <Button outline type="info" extraClassName="clear-border">OK</Button>
-    <Button outline type="success" extraClassName="clear-border">NO</Button>
+    <div style={{color: '#0ca0ff'}}>
+      <Button inverted type="info">OK</Button>
+      &nbsp;
+      <Button inverted type="success">NO</Button>
+    </div>
 
-    <NavBar type="primary" style={{marginTop: '2rem', background: '#000'}}>
-      <NavBar.Title>
+    <Navbar type="primary"
+            style={{marginTop: '2rem', background: '#000', color: '#fff'}}>
+      <Navbar.Title>
         My Site
-      </NavBar.Title>
-      <NavBar.List>
-        <NavBar.Item>
-          <Button outline circle color="green" extraClassName="clear-border"
-                  style={{color: '#fff'}}>
+      </Navbar.Title>
+      <Navbar.List>
+        <Navbar.Item>
+          <Button inverted circle color="green">
             <IconArrowLeft/>
           </Button>
-        </NavBar.Item>
-        <NavBar.Item>
-          <Button outline color="blue" extraClassName="clear-border"
-                  style={{color: '#fff'}}>
+        </Navbar.Item>
+        <Navbar.Item>
+          <Button inverted color="blue">
             <IconList/>
           </Button>
-        </NavBar.Item>
-        <NavBar.Item>
-          <Button outline circle color="red" extraClassName="clear-border"
-                  style={{color: '#fff'}}>
+        </Navbar.Item>
+        <Navbar.Item>
+          <Button inverted circle color="red">
             <IconArrowRight/>
           </Button>
-        </NavBar.Item>
-        <NavBar.Item>
-          <Button outline color="blue" extraClassName="clear-border">
+        </Navbar.Item>
+        <Navbar.Item>
+          <Button inverted color="blue">
             <IconCalendar/>
           </Button>
-        </NavBar.Item>
-      </NavBar.List>
-    </NavBar>
+        </Navbar.Item>
+      </Navbar.List>
+    </Navbar>
   </>;
 };
 

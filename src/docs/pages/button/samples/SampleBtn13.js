@@ -3,41 +3,42 @@ import {
   Button,
   IconArrowLeft,
   IconArrowRight,
+  IconCalendar,
   IconList,
   Navbar,
-  IconCalendar,
 } from 'react-windy-ui';
 
 const SampleBtn13 = () => {
   return <>
-    <Button outline type="info" extraClassName="clear-border">OK</Button>
-    <Button outline type="success" extraClassName="clear-border">NO</Button>
+    <div style={{color: '#0ca0ff'}}>
+      <Button inverted>Default</Button>
+      <Button inverted type="info">OK</Button>
+      <Button inverted type="success">NO</Button>
+    </div>
 
-    <Navbar type="primary" style={{marginTop: '2rem', background: '#000'}}>
+    <Navbar type="primary"
+            style={{marginTop: '2rem', background: '#000', color: '#fff'}}>
       <Navbar.Title>
         My Site
       </Navbar.Title>
       <Navbar.List>
         <Navbar.Item>
-          <Button outline circle color="green" extraClassName="clear-border"
-                  style={{color: '#fff'}}>
+          <Button inverted circle color="green">
             <IconArrowLeft/>
           </Button>
         </Navbar.Item>
         <Navbar.Item>
-          <Button outline color="blue" extraClassName="clear-border"
-                  style={{color: '#fff'}}>
+          <Button inverted color="blue">
             <IconList/>
           </Button>
         </Navbar.Item>
         <Navbar.Item>
-          <Button outline circle color="red" extraClassName="clear-border"
-                  style={{color: '#fff'}}>
+          <Button inverted circle color="red">
             <IconArrowRight/>
           </Button>
         </Navbar.Item>
         <Navbar.Item>
-          <Button outline color="blue" extraClassName="clear-border">
+          <Button inverted color="blue">
             <IconCalendar/>
           </Button>
         </Navbar.Item>

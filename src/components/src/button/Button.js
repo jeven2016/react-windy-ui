@@ -15,15 +15,17 @@ const Button = React.forwardRef((props, ref) => {
     outline = false,
     circle,
     hasMinWidth = false,
-    invented = false, //todo: new field
+    inverted = false, //todo: new field
+    hasBackground = true, //todo : new field
+    initOutlineColor = false, //todo : new field
     onClick,
     disabled = false,
     ...otherProps
   } = props;
 
   let clsName = useMemo(() => ({
-    normal: !outline && !invented,
-    invented: invented,
+    normal: !outline && !inverted,
+    inverted: inverted,
     [type]: type,
     [size]: size,
     [color]: color,
@@ -31,8 +33,21 @@ const Button = React.forwardRef((props, ref) => {
     active: active,
     outline: outline,
     circle: circle,
+    'with-bg': hasBackground,
     'min-width': hasMinWidth,
-  }), [type, size, color, block, active, outline, circle, hasMinWidth]);
+    'with-default-color': initOutlineColor,
+  }), [
+    outline,
+    inverted,
+    type,
+    size,
+    color,
+    block,
+    active,
+    circle,
+    hasBackground,
+    hasMinWidth,
+    initOutlineColor]);
 
   let nativeTypeDef = useMemo(() => {
     const nativeElemType = nativeType === 'a' ? 'a' : 'button';

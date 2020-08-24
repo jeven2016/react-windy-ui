@@ -140,19 +140,6 @@ export default function Table7() {
   ], [onSearch]);
 
   return <>
-    <div className="doc doc-row">
-      <ButtonGroup>
-        <Button onClick={() => instanceRef.current.clearSort()}>
-          Clear Sort
-        </Button>
-        <Button onClick={() => instanceRef.current.clearFilter()}>
-          Clear Filter
-        </Button>
-        <Button onClick={() => instanceRef.current.clearAll()}>
-          Clear All
-        </Button>
-      </ButtonGroup>
-    </div>
     <Table instanceRef={instanceRef}
            loadData={data} cells={cells}
            hover={true}

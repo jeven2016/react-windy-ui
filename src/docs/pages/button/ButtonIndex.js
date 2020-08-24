@@ -14,6 +14,7 @@ import SampleBtn12 from './samples/SampleBtn12';
 import SampleBtn13 from './samples/SampleBtn13';
 import DocPage from '../../utils/DocPage';
 import SampleBtn14 from './samples/SampleBtn14';
+import SampleBtn15 from './samples/SampleBtn15';
 
 const componentMapping = {
   SampleBtn1: <SampleBtn1/>,
@@ -30,6 +31,7 @@ const componentMapping = {
   SampleBtn12: <SampleBtn12/>,
   SampleBtn13: <SampleBtn13/>,
   SampleBtn14: <SampleBtn14/>,
+  SampleBtn15: <SampleBtn15/>,
 };
 
 export default function ButtonIndex(props) {

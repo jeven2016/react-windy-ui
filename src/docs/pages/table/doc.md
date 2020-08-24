@@ -434,8 +434,8 @@ export default function Table5() {
 </DemoDesc>
 
 ```jsx
-import React from 'react';
-import {Table} from 'react-windy-ui';
+import React, {useRef} from 'react';
+import {Button, Table} from 'react-windy-ui';
 
 const loadData = () => {
   return [
@@ -531,10 +531,20 @@ const cells = [
 ];
 
 export default function Table6() {
+  const instanceRef = useRef(null);
 
   return <>
-
-    <Table loadData={loadData} cells={cells}
+    <Button onClick={() => instanceRef.current.clearSort()}>
+      Clear Sort
+    </Button>
+    <Button onClick={() => instanceRef.current.clearFilter()}>
+      Clear Filter
+    </Button>
+    <Button onClick={() => instanceRef.current.clearAll()}>
+      Clear All
+    </Button>
+    <Table instanceRef={instanceRef}
+           loadData={loadData} cells={cells}
            hover={true}
            hasBorder={true}/>
 
@@ -550,20 +560,20 @@ export default function Table6() {
 ### 示例7: 在表格列中添加自定义的元素
 <DemoDesc title="提示">
    Table中某列允许过滤时，会在表头对应的列上显示一个过滤的图标。如果还需要实现其他的功能，比如需要点击后弹出搜索框的功能，则可以参照此例
-   添加一个elements数组属性。
+   添加一个<Code>elements</Code>数组属性。
 </DemoDesc>
 
 ```jsx
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {
-  Button,
-  ButtonGroup,
-  Card,
-  Col,
-  IconSearch,
-  Input,
-  Row,
   Table,
+  Row,
+  Button,
+  Input,
+  Col,
+  Card,
+  IconSearch,
+  ButtonGroup,
 } from 'react-windy-ui';
 
 const tableData = [
@@ -696,19 +706,6 @@ export default function Table7() {
   ], [onSearch]);
 
   return <>
-    <div className="doc doc-row">
-      <ButtonGroup>
-        <Button onClick={() => instanceRef.current.clearSort()}>
-          Clear Sort
-        </Button>
-        <Button onClick={() => instanceRef.current.clearFilter()}>
-          Clear Filter
-        </Button>
-        <Button onClick={() => instanceRef.current.clearAll()}>
-          Clear All
-        </Button>
-      </ButtonGroup>
-    </div>
     <Table instanceRef={instanceRef}
            loadData={data} cells={cells}
            hover={true}
@@ -721,4 +718,84 @@ export default function Table7() {
 
 [Table7_BEGIN_en_US]
 [Table7_END_en_US]
+----------------------------------
+[Table8_BEGIN_zh_CN]
+### 示例8: 固定表头并垂直滚动显示
+<DemoDesc title="提示">
+   要固定表头，并且在表格高度超出后可以垂直滚动时，可以同时设置<Code>scrollY</Code>和<Code>bodyHeight</Code>属性，同时将<Code>scrollY</Code>设置为<Code>true</Code>后，并设定一个高度，通常
+   这个高度要比表格实际高度要小。
+</DemoDesc>
+
+```jsx
+import React from 'react';
+import {Table} from 'react-windy-ui';
+
+const data = [
+  {
+    key: '1',
+    name: 'Nanjing',
+    place: 'Zhonghua Gate',
+  },
+  {
+    key: '2',
+    name: 'Nanjing',
+    place: 'Qinhuai River',
+  },
+  {
+    key: '3',
+    name: 'Shanghai',
+    place: 'The Bund Shanghai',
+  },
+  {
+    key: '4',
+    name: 'Shanghai',
+    place: 'Jade Buddha Temple',
+  },
+  {
+    key: '5',
+    name: 'Beijing',
+    place: 'Forbidden City',
+  },
+  {
+    key: '6',
+    name: 'Beijing',
+    place: 'Badaling Great Wall',
+  },
+];
+
+const cells = [
+  {
+    head: 'ID',
+    showParam: 'key',
+    sortable: true,
+  },
+  {
+    head: 'City',
+    showParam: 'name',
+    sortable: true,
+  },
+  {
+    head: 'Place',
+    showParam: 'place',
+    sortable: true,
+  },
+];
+
+export default function Table8() {
+  return <>
+
+    <Table loadData={data}
+           cells={cells}
+           hover={true}
+           checkable={true}
+           scrollY={true}
+           bodyHeight={160}
+    />
+  </>;
+}
+```
+[Table8_END_zh_CN]
+
+[Table8_BEGIN_en_US]
+[Table8_END_en_US]
 ----------------------------------

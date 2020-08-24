@@ -6,6 +6,9 @@ const SampleBtn6 = () => {
     <Button circle>G</Button>
     <Button type="info" circle>OK</Button>
     <Button type="success" circle>NO</Button>
+    <span style={{color: 'red'}}>
+      <Button inverted type="success" circle>B</Button>
+    </span>
   </>;
 };
 
