@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import Element from '../common/Element';
+import {isNil} from '../Utils';
 
 const Button = React.forwardRef((props, ref) => {
   const {
@@ -24,6 +25,7 @@ const Button = React.forwardRef((props, ref) => {
   } = props;
 
   let clsName = useMemo(() => ({
+    default: isNil(type) && isNil(color),
     normal: !outline && !inverted,
     inverted: inverted,
     [type]: type,
@@ -34,6 +36,7 @@ const Button = React.forwardRef((props, ref) => {
     outline: outline,
     circle: circle,
     'with-outline-bg': outline && hasOutlineBackground,
+    'no-outline-bg': outline && !hasOutlineBackground,
     'min-width': hasMinWidth,
     'with-default-color': initOutlineColor,
   }), [
