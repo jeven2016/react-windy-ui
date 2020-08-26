@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {Button, Card, Col, Collapse, Row, Tooltip} from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCode} from '@fortawesome/free-solid-svg-icons';
@@ -44,10 +44,12 @@ export default function SamplePanel(props) {
           <Col sm={4} style={{display: 'flex', justifyContent: 'flex-end'}}>
             <div>
               <Tooltip body="Source code">
-                <Button outline type="blue" extraClassName="clear-border"
+                <span style={{color: "rgb(158, 155, 155)"}}>
+                <Button inverted type="blue" extraClassName="clear-border"
                         onClick={() => setCollapse(pre => !pre)}>
                   <FontAwesomeIcon icon={faCode}/>
                 </Button>
+                  </span>
               </Tooltip>
             </div>
           </Col>

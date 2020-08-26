@@ -15,6 +15,7 @@ import SampleBtn13 from './samples/SampleBtn13';
 import DocPage from '../../utils/DocPage';
 import SampleBtn14 from './samples/SampleBtn14';
 import SampleBtn15 from './samples/SampleBtn15';
+import SampleBtn16 from "./samples/SampleBtn16";
 
 const componentMapping = {
   SampleBtn1: <SampleBtn1/>,
@@ -32,9 +33,10 @@ const componentMapping = {
   SampleBtn13: <SampleBtn13/>,
   SampleBtn14: <SampleBtn14/>,
   SampleBtn15: <SampleBtn15/>,
+  SampleBtn16: <SampleBtn16/>,
 };
 
-export default function ButtonIndex(props) {
+export default function ButtonIndex() {
   return <>
     <DocPage
         importFunc={() => import('./doc.md')}

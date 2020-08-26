@@ -16,7 +16,7 @@ const Button = React.forwardRef((props, ref) => {
     circle,
     hasMinWidth = false,
     inverted = false, //todo: new field
-    hasBackground = true, //todo : new field
+    hasOutlineBackground = true, //todo : new field
     initOutlineColor = false, //todo : new field
     onClick,
     disabled = false,
@@ -33,7 +33,7 @@ const Button = React.forwardRef((props, ref) => {
     active: active,
     outline: outline,
     circle: circle,
-    'with-bg': hasBackground,
+    'with-outline-bg': outline && hasOutlineBackground,
     'min-width': hasMinWidth,
     'with-default-color': initOutlineColor,
   }), [
@@ -45,8 +45,8 @@ const Button = React.forwardRef((props, ref) => {
     block,
     active,
     circle,
-    hasBackground,
     hasMinWidth,
+    hasOutlineBackground,
     initOutlineColor]);
 
   let nativeTypeDef = useMemo(() => {
@@ -85,6 +85,9 @@ Button.propTypes = {
   outline: PropTypes.bool, //whether to display as outlined button
   circle: PropTypes.bool, //whether to display as a Circular button
   hasMinWidth: PropTypes.bool, // whether to set min width of the button
+  inverted: PropTypes.bool,
+  hasOutlineBackground: PropTypes.bool,
+  initOutlineColor: PropTypes.bool,
 };
 
 export default Button;
