@@ -1,75 +1,86 @@
-import React, {Component} from 'react';
+import React from 'react';
+import Button from "./button";
+import {IconArrowLeft, IconArrowRight} from "./Icons";
+import Select from "./select";
 
-export default class Pagination extends Component {
-  generateButtons() {
-    const {visiblePages, totalPages, currentPage, goTo} = this.props;
+const Pagination = React.forwardRef((props, ref) => {
 
-    let startPosition, endPosition;
+  return <>
+    <div className="pagination">
+      <span className="item">
+        <Button outline initOutlineColor hasOutlineBackground={false}
+                type="primary">
+            <IconArrowLeft/>
+        </Button>
+      </span>
 
-    //calculate how may partitions we got
-    let partition = parseInt(currentPage / visiblePages) + 1;
-    let buttons = [];
+      <span className="item">
+        <Button outline initOutlineColor hasOutlineBackground={false}
+                type="primary">
+            1
+        </Button>
+      </span>
 
-    if (currentPage % visiblePages == 0) {
-      startPosition = currentPage - visiblePages + 1;
-      endPosition = currentPage;
-    } else {
-      //the index that the first page has
-      startPosition = (partition - 1) * visiblePages + 1;
-      endPosition = partition * visiblePages;
-    }
+      <span className="item">
+        <Button outline initOutlineColor hasOutlineBackground={false}
+                type="primary">
+            2
+        </Button>
+      </span>
 
-    let btnClass;
-    for (let i = startPosition; i <= endPosition; i++) {
-      if (i > totalPages) {
-        break;
-      }
-      btnClass = 'button';
-      if (i == currentPage) {
-        btnClass = 'active primary button';
-      }
-      buttons.push(<button key={`pagination-btn-${i}`} className={btnClass}
-                           onClick={goTo.bind(this, i)}>{i}</button>);
-    }
+      <span className="item">
+        <Button outline initOutlineColor hasOutlineBackground={false}
+                type="primary">
+            3
+        </Button>
+      </span>
 
-    return buttons;
-  }
+      <span className="item">
+        <Button outline initOutlineColor hasOutlineBackground={false}
+                type="primary">
+            4
+        </Button>
+      </span>
 
-  render() {
-    const {totalPages, goTo, goPrevious, goNext} = this.props;
-    if (totalPages <= 0) {
-      return '';
-    }
-    let buttons = this.generateButtons();
+      <span className="item">
+        <Button outline initOutlineColor hasOutlineBackground={false}
+                type="primary">
+            5
+        </Button>
+      </span>
 
-    return (
-        <div className="pagination">
-          <div className="button-group clear-border">
-            <button className="button"
-                    onClick={goTo.bind(this, 1)}>|&lt;</button>
-            <button className="button"
-                    onClick={goPrevious.bind(this)}>&lt;</button>
-            {buttons}
-            <button className="button" onClick={goNext.bind(this)}>&gt;</button>
-            <button className="button"
-                    onClick={goTo.bind(this, totalPages)}>&gt;|
-            </button>
-          </div>
-        </div>
-    );
-  }
+      <span className="item">
+        <Button outline initOutlineColor hasOutlineBackground={false}
+                type="primary">
+            •••
+        </Button>
+      </span>
 
-}
+      <span className="item">
+        <Button outline initOutlineColor hasOutlineBackground={false}
+                type="primary">
+            <IconArrowRight/>
+        </Button>
+      </span>
 
-/*Pagination.propTypes = {
-    visiblePages: PropTypes.number,
-    totalPages: PropTypes.number.isRequired,
-    currentPage: PropTypes.number.isRequired,
-    goTo: PropTypes.func,
-    goPrevious: PropTypes.func,
-    goNext: PropTypes.func
-};*/
+      <Select defaultValue="10"
+              onSelect={(value) => console.log(value)}>
+        <Select.Option value="10">
+          10条/页
+        </Select.Option>
+        <Select.Option value="20">
+          20条/页
+        </Select.Option>
+        <Select.Option value="50">
+          50条/页
+        </Select.Option>
+        <Select.Option value="100">
+          100条/页
+        </Select.Option>
+      </Select>
+    </div>
+  </>;
 
-Pagination.defaultProps = {
-  visiblePages: 5,
-};
+});
+
+export default Pagination;

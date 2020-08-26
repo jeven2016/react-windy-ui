@@ -32,6 +32,7 @@ import BcIndex from '../pages/breadcumb/BcIndex';
 import CardIndex from '../pages/card/CardIndex';
 import LayoutIndex from '../pages/layout/LayoutIndex';
 import TableIndex from '../pages/table/TableIndex';
+import PaginationIndex from "../pages/pagination/PaginationIndex";
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -45,7 +46,7 @@ function DocCenter(props) {
     <Row style={{padding: '1rem 0 0 0'}}>
       <Col mdOffset={1} md={2}>
         {/*<Affix top={90}>*/}
-          <DocMenu/>
+        <DocMenu/>
         {/*</Affix>*/}
       </Col>
       <Col md={7}>
@@ -135,6 +136,9 @@ function DocCenter(props) {
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/table`}>
                 <TableIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/pagination`}>
+                <PaginationIndex/>
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/`}>
                 <InstallIndex/>
