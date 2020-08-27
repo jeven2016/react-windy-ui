@@ -1,18 +1,18 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import Button from "./button";
+import Button from './button';
 import {
   IconArrowLeft,
   IconArrowRight,
   IconLeftDoubleArrows,
   IconMore,
-  IconRightDoubleArrows
-} from "./Icons";
-import Select from "./select";
-import {isInteger, isNil} from "./Utils";
-import useInternalState from "./common/useInternalState";
+  IconRightDoubleArrows,
+} from './Icons';
+import Select from './select';
+import {isInteger, isNil} from './Utils';
+import useInternalState from './common/useInternalState';
 
 const PageButton = React.forwardRef((props, ref) => {
-  const {left = true} = props;
+  const {left = true, onClick} = props;
   const [showIcon, setShow] = useState(false);
 
   const toggle = useCallback((value) => {
@@ -26,6 +26,7 @@ const PageButton = React.forwardRef((props, ref) => {
       <IconRightDoubleArrows style={{fontSize: '1em'}}/>;
 
   return <Button outline initOutlineColor hasOutlineBackground={false}
+                 onClick={onClick}
                  onMouseOver={focus}
                  onMouseLeave={blur}
                  onFocus={focus}
@@ -33,7 +34,7 @@ const PageButton = React.forwardRef((props, ref) => {
                  type="primary">
     {!showIcon && <IconMore/>}
     {showIcon && arrowIcon}
-  </Button>
+  </Button>;
 });
 
 const Pagination = React.forwardRef((props, ref) => {
@@ -44,7 +45,6 @@ const Pagination = React.forwardRef((props, ref) => {
     defaultPage,
     hasPrevButton = true,
     hasNextButton = true,
-    visiblePageCount = 5,
   } = props;
 
   const {
@@ -58,7 +58,7 @@ const Pagination = React.forwardRef((props, ref) => {
     state: page,
   });
 
-  const [basePage,setBasePage] = useState(currentPage); //the base page for calculate the number items to display
+  const [basePage, setBasePage] = useState(currentPage); //the base page for calculate the number items to display
 
   const firstPageItem = useMemo(() => {
     return <span className="item">
@@ -81,7 +81,7 @@ const Pagination = React.forwardRef((props, ref) => {
   const otherPageItems = useMemo(() => {
     const items = [];
 
-    if (isNil(currentPage)) {
+    if (isNil(basePage)) {
       const occupy = (2 * siblingCount + 1);
       const lastNumber = occupy > pageCount ? pageCount : occupy + 1;
       for (let i = 2; i < lastNumber; i++) {
@@ -115,31 +115,23 @@ const Pagination = React.forwardRef((props, ref) => {
       }
     }
 
-    /*
-          let leftPageCount = 0;
-          for (let i = siblingCount; i >= 1; i--) {
-            const prePage = currentPage - i;
-            if (prePage > 1) {
-              leftPageCount++;
-              items.push({value: prePage, active: false});
-            }
-          }
-          items.push({value: currentPage, active: true});
-
-          let rightPageCount = leftPageCount === siblingCount ? siblingCount
-              : siblingCount - leftPageCount;
-          for (let j = 1; j <= rightPageCount; j++) {
-            const nextPage = currentPage + j;
-            if (nextPage < pageCount) {
-              items.push({value: nextPage, active: false});
-            }
-          }
-
-        }
-        console.log(items)*/
-
     return items;
   }, [basePage, siblingCount, currentPage, pageCount]);
+
+  const showPrePages = useCallback(() => {
+    if (otherPageItems.length === 0) {
+      return;
+    }
+
+    const startItem = otherPageItems[0];
+    let nextBasePage = startItem.value - 2 * siblingCount + 1;
+    if (nextBasePage <= 1) {
+      setBasePage(1);
+    } else {
+      setBasePage(nextBasePage);
+    }
+
+  }, [otherPageItems, siblingCount]);
 
   const prePagesItem = useMemo(() => {
     if (otherPageItems.length === 0 || otherPageItems[0].value - 1 === 1) {
@@ -147,9 +139,24 @@ const Pagination = React.forwardRef((props, ref) => {
     }
 
     return <span className="item">
-         <PageButton left={true}/>
+         <PageButton left={true} onClick={showPrePages}/>
         </span>;
-  }, [otherPageItems]);
+  }, [otherPageItems, showPrePages]);
+
+  const showNextPages = useCallback(() => {
+    if (otherPageItems.length === 0) {
+      return;
+    }
+
+    const startItem = otherPageItems[otherPageItems.length - 1];
+    let nextBasePage = startItem.value + 2 * siblingCount - 1;
+    if (nextBasePage >= pageCount) {
+      setBasePage(pageCount - siblingCount);
+    } else {
+      setBasePage(nextBasePage);
+    }
+
+  }, [otherPageItems, pageCount, siblingCount]);
 
   const nextPagesItem = useMemo(() => {
     if (otherPageItems.length === 0
@@ -158,9 +165,9 @@ const Pagination = React.forwardRef((props, ref) => {
     }
 
     return <span className="item">
-           <PageButton left={false}/>
+           <PageButton left={false} onClick={showNextPages}/>
         </span>;
-  }, [otherPageItems]);
+  }, [otherPageItems, pageCount, showNextPages]);
 
   if (isInteger(pageCount) && pageCount <= 0) {
     return null;
@@ -187,7 +194,7 @@ const Pagination = React.forwardRef((props, ref) => {
                     type="primary">
               {item.value}
             </Button>
-          </span>
+          </span>;
         })
       }
 
