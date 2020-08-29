@@ -8,11 +8,15 @@ import {
   IconRightDoubleArrows,
 } from './Icons';
 import Select from './select';
-import {isInteger, isNil} from './Utils';
+import {invoke, isBlank, isInteger, isNil, isNumber, validate} from './Utils';
 import useInternalState from './common/useInternalState';
+import InputGroup from './InputGroup';
+import Input from './Input';
+import Tooltip from './Tooltip';
+import clsx from 'clsx';
 
 const PageButton = React.forwardRef((props, ref) => {
-  const {left = true, onClick} = props;
+  const {left = true, onClick, buttonProps} = props;
   const [showIcon, setShow] = useState(false);
 
   const toggle = useCallback((value) => {
@@ -26,12 +30,14 @@ const PageButton = React.forwardRef((props, ref) => {
       <IconRightDoubleArrows style={{fontSize: '1em'}}/>;
 
   return <Button outline initOutlineColor hasOutlineBackground={false}
+                 hasBox={false}
                  onClick={onClick}
                  onMouseOver={focus}
                  onMouseLeave={blur}
                  onFocus={focus}
                  onBlur={blur}
-                 type="primary">
+                 type="primary"
+                 {...buttonProps}>
     {!showIcon && <IconMore/>}
     {showIcon && arrowIcon}
   </Button>;
@@ -42,10 +48,28 @@ const Pagination = React.forwardRef((props, ref) => {
     siblingCount = 2,
     pageCount,
     page,
-    defaultPage,
+    defaultPage = 1,
     hasPrevButton = true,
     hasNextButton = true,
+    hasPageLimits = true,
+    pageLimits = [10, 20, 50],
+    renderPageLimitItem,
+    defaultLimitRows = 10,
+    limitRows,
+    onChange, //onChange(e, value, limitRows)
+    onChangeRows,
+    hasGo = false,
+    buttonProps,
+    leftItems = [],
+    rightItems = [],
+    simple = false,
+    compact = true,
+    renderPre,
+    renderNext,
+    ...otherProps
   } = props;
+
+  validate(!isNil(pageCount), 'Invalid value of pageCount');
 
   const {
     state: currentPage,
@@ -58,25 +82,82 @@ const Pagination = React.forwardRef((props, ref) => {
     state: page,
   });
 
+  const {
+    state: limit,
+    setState: setLimit,
+    customizedLimit,
+  } = useInternalState({
+    props,
+    stateName: 'limitRows',
+    defaultState: defaultLimitRows,
+    state: limitRows,
+  });
+
   const [basePage, setBasePage] = useState(currentPage); //the base page for calculate the number items to display
+  const [disablePreBtn, setDisablePreBtn] = useState(currentPage === 1);
+  const [disableNextBtn, setDisableNextBtn] = useState(
+      currentPage === pageCount);
+
+  const [directPage, setDirectPage] = useState('');
+
+  const goTo = useCallback((selectedValue, e) => {
+    if (!isNumber(selectedValue)) {
+      return;
+    }
+    if (!customized) {
+      if (selectedValue >= pageCount) {
+        //disable the button
+        !disableNextBtn && setDisableNextBtn(true);
+        disablePreBtn && setDisablePreBtn(false);
+      } else if (selectedValue > 1) {
+        disableNextBtn && setDisableNextBtn(false);
+        disablePreBtn && setDisablePreBtn(false);
+      } else {
+        disableNextBtn && setDisableNextBtn(false);
+        !disablePreBtn && setDisablePreBtn(true);
+      }
+
+      if (selectedValue <= pageCount && selectedValue >= 1) {
+        selectedValue = parseInt(selectedValue);
+        setPage(selectedValue);
+        setBasePage(selectedValue);
+      }
+    }
+    onChange && onChange(selectedValue, limit, e);
+  }, [
+    customized,
+    disableNextBtn,
+    disablePreBtn,
+    limit,
+    onChange,
+    pageCount,
+    setPage]);
 
   const firstPageItem = useMemo(() => {
     return <span className="item">
         <Button outline initOutlineColor hasOutlineBackground={false}
-                type="primary">
-          1
+                hasBox={false}
+                onClick={(e) => goTo(1, e)}
+                active={currentPage === 1}
+                type="primary"
+                {...buttonProps}>
+          <span className="page-text">1</span>
         </Button>
       </span>;
-  }, []);
+  }, [buttonProps, currentPage, goTo]);
 
   const lastPageItem = useMemo(() => {
     return <span className="item">
         <Button outline initOutlineColor hasOutlineBackground={false}
-                type="primary">
-          {pageCount}
+                hasBox={false}
+                onClick={(e) => goTo(pageCount, e)}
+                active={!isNil(pageCount) && currentPage === pageCount}
+                type="primary"
+                {...buttonProps}>
+          <span className="page-text">{pageCount}</span>
         </Button>
       </span>;
-  }, [pageCount]);
+  }, [buttonProps, currentPage, goTo, pageCount]);
 
   const otherPageItems = useMemo(() => {
     const items = [];
@@ -90,20 +171,23 @@ const Pagination = React.forwardRef((props, ref) => {
     } else {
 
       //start
+      const firstPage = 1;
       let start = 1;
-      if (basePage - 1 > siblingCount) {
+      if (basePage - firstPage > siblingCount) {
         start = basePage - siblingCount;
       }
 
-      let end = 0;
-      if (start === 1) {
-        end = 2 * siblingCount + 1;
-      } else {
-        end = 2 * siblingCount + 1 + start;
-      }
-
+      let end = start + 2 * siblingCount + 1;
       if (end > pageCount) {
         end = pageCount;
+      }
+
+      if (end - start < 2 * siblingCount + 1) {
+        let newStart = end - 2 * siblingCount;
+        if (newStart < 1) {
+          newStart = 1;
+        }
+        start = newStart;
       }
 
       for (let i = start; i < end; i++) {
@@ -114,7 +198,6 @@ const Pagination = React.forwardRef((props, ref) => {
             {value: i, active: !isNil(currentPage) && i === currentPage});
       }
     }
-
     return items;
   }, [basePage, siblingCount, currentPage, pageCount]);
 
@@ -139,9 +222,10 @@ const Pagination = React.forwardRef((props, ref) => {
     }
 
     return <span className="item">
-         <PageButton left={true} onClick={showPrePages}/>
+         <PageButton left={true} onClick={showPrePages}
+                     buttonProps={buttonProps}/>
         </span>;
-  }, [otherPageItems, showPrePages]);
+  }, [buttonProps, otherPageItems, showPrePages]);
 
   const showNextPages = useCallback(() => {
     if (otherPageItems.length === 0) {
@@ -165,34 +249,134 @@ const Pagination = React.forwardRef((props, ref) => {
     }
 
     return <span className="item">
-           <PageButton left={false} onClick={showNextPages}/>
+           <PageButton left={false} onClick={showNextPages}
+                       buttonProps={buttonProps}/>
         </span>;
-  }, [otherPageItems, pageCount, showNextPages]);
+  }, [buttonProps, otherPageItems, pageCount, showNextPages]);
+
+  const enterPage = useCallback((e) => {
+    setDirectPage(e.target.value);
+  }, []);
+
+  const updateDirectPage = useCallback((e) => {
+    if (!isNumber(directPage) || directPage < 1 || directPage > pageCount) {
+      setDirectPage('');
+    }
+  }, [directPage, pageCount]);
+
+  const changePageLimit = useCallback((value, e) => {
+    if (!customizedLimit) {
+      setLimit(value);
+    }
+    onChangeRows && onChangeRows(value, e);
+  }, [customizedLimit, onChangeRows, setLimit]);
+
+  const preBtn = useMemo(() => {
+    return hasPrevButton &&
+        <span className="item">
+          <Button outline initOutlineColor hasOutlineBackground={false}
+                  hasBox={false}
+                  disabled={disablePreBtn}
+                  onClick={(e) => goTo(currentPage - 1, e)}
+                  type="primary"
+                  {...buttonProps}>
+            {renderPre ? renderPre() : <IconArrowLeft/>}
+          </Button>
+        </span>;
+  }, [buttonProps, currentPage, disablePreBtn, goTo, hasPrevButton, renderPre]);
+
+  const nextBtn = useMemo(() => {
+    return hasNextButton &&
+        <span className="item">
+          <Button outline initOutlineColor hasOutlineBackground={false}
+                  hasBox={false}
+                  disabled={disableNextBtn}
+                  onClick={(e) => goTo(currentPage + 1, e)}
+                  type="primary"
+                  {...buttonProps}>
+             {renderPre ? renderPre() : <IconArrowRight/>}
+          </Button>
+        </span>;
+  }, [
+    buttonProps,
+    currentPage,
+    disableNextBtn,
+    goTo,
+    hasNextButton,
+    renderPre]);
+
+  console.log('update.....');
+  const jumpTo = useCallback((e) => {
+    if (e.keyCode !== 13) {
+      return;
+    }
+    if (!isNumber(directPage)) {
+      setDirectPage('');
+      return;
+    }
+
+    let targetPage = -1;
+    if (directPage > pageCount) {
+      targetPage = pageCount;
+    }
+    if (directPage <= 1) {
+      targetPage = 1;
+    }
+
+    if (targetPage > -1) {
+      setDirectPage(targetPage);
+      goTo(targetPage, e);
+    }
+  }, [directPage, goTo, pageCount]);
 
   if (isInteger(pageCount) && pageCount <= 0) {
     return null;
   }
 
+  if (simple) {
+    const simpleClsName = clsx('simple-content', {compact: compact});
+    return <div className="pagination" {...otherProps}>
+      {preBtn}
+      <div className={simpleClsName}>
+        {
+          hasGo &&
+          <Tooltip body={directPage} disabled={isBlank(directPage)}>
+            <Input value={isBlank(directPage) ? currentPage : directPage}
+                   onChange={enterPage}
+                   onKeyDown={jumpTo}
+                   onBlur={updateDirectPage}/>
+          </Tooltip>
+        }
+        {!hasGo && <span className="label">{currentPage}</span>}
+
+        <span className="label">/</span>
+        <span className="label">{pageCount}</span>
+      </div>
+      {nextBtn}
+    </div>;
+  }
+
   return <>
-    <div className="pagination">
+    <div className="pagination" {...otherProps}>
       {
-        hasPrevButton &&
-        <span className="item">
-          <Button outline initOutlineColor hasOutlineBackground={false}
-                  type="primary">
-              <IconArrowLeft/>
-          </Button>
-        </span>
+        leftItems.map((item, index) => {
+          return <span className="item" key={`left-${index}`}>
+            {item}
+          </span>;
+        })
       }
+      {preBtn}
       {firstPageItem}
       {prePagesItem}
       {
         otherPageItems.map((item, index) => {
           return <span className="item" key={`${item.value}-${index}`}>
-            <Button active={item.active} outline initOutlineColor
+            <Button active={item.active} outline initOutlineColor hasBox={false}
                     hasOutlineBackground={false}
-                    type="primary">
-              {item.value}
+                    onClick={(e) => goTo(item.value, e)}
+                    type="primary"
+                    {...buttonProps}>
+              <span className="page-text">{item.value}</span>
             </Button>
           </span>;
         })
@@ -200,32 +384,43 @@ const Pagination = React.forwardRef((props, ref) => {
 
       {nextPagesItem}
       {lastPageItem}
+      {nextBtn}
+
       {
-        hasNextButton &&
-        <span className="item">
-          <Button outline initOutlineColor hasOutlineBackground={false}
-                  type="primary">
-              <IconArrowRight/>
-          </Button>
-        </span>
+        hasPageLimits &&
+        <Select defaultValue={limit} onSelect={changePageLimit}>
+          {
+            pageLimits.map((value, index) => {
+              const itemText = isNil(renderPageLimitItem) ? `${value}条 / 页` :
+                  invoke(renderPageLimitItem, value);
+              return <Select.Option value={value} key={`${value}-${index}`}
+                                    text={itemText}/>;
+            })
+          }
+        </Select>
       }
 
-
-      <Select defaultValue="10"
-              onSelect={(value) => console.log(value)}>
-        <Select.Option value="10">
-          10条/页
-        </Select.Option>
-        <Select.Option value="20">
-          20条/页
-        </Select.Option>
-        <Select.Option value="50">
-          50条/页
-        </Select.Option>
-        <Select.Option value="100">
-          100条/页
-        </Select.Option>
-      </Select>
+      {
+        hasGo &&
+        <span className="go-item">
+          <InputGroup>
+           <Button inverted type="primary"
+                   onClick={(e) => goTo(directPage, e)}>跳至</Button>
+            <Tooltip body={directPage} disabled={isBlank(directPage)}>
+            <Input value={directPage} onChange={enterPage}
+                   onKeyDown={jumpTo}
+                   onBlur={updateDirectPage}/>
+            </Tooltip>
+          </InputGroup>
+        </span>
+      }
+      {
+        rightItems.map((item, index) => {
+          return <span className="item" key={`right-${index}`}>
+            {item}
+          </span>;
+        })
+      }
     </div>
   </>;
 

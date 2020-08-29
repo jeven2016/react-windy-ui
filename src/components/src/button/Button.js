@@ -19,6 +19,8 @@ const Button = React.forwardRef((props, ref) => {
     inverted = false, //todo: new field
     hasOutlineBackground = true, //todo : new field
     initOutlineColor = false, //todo : new field
+    hasBox = true, //todo : new field
+    hasBorder = true, //todo : new field
     onClick,
     disabled = false,
     ...otherProps
@@ -39,18 +41,22 @@ const Button = React.forwardRef((props, ref) => {
     'no-outline-bg': outline && !hasOutlineBackground,
     'min-width': hasMinWidth,
     'with-default-color': initOutlineColor,
+    'without-box': !hasBox,
+    'without-border': !hasBorder,
   }), [
+    type,
+    color,
     outline,
     inverted,
-    type,
     size,
-    color,
     block,
     active,
     circle,
-    hasMinWidth,
     hasOutlineBackground,
-    initOutlineColor]);
+    hasMinWidth,
+    initOutlineColor,
+    hasBox,
+    hasBorder]);
 
   let nativeTypeDef = useMemo(() => {
     const nativeElemType = nativeType === 'a' ? 'a' : 'button';
