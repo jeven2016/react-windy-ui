@@ -33,6 +33,7 @@ import CardIndex from '../pages/card/CardIndex';
 import LayoutIndex from '../pages/layout/LayoutIndex';
 import TableIndex from '../pages/table/TableIndex';
 import PaginationIndex from "../pages/pagination/PaginationIndex";
+import DatePickerIndex from '../pages/datepicker/DatePickerIndex';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -139,6 +140,9 @@ function DocCenter(props) {
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/pagination`}>
                 <PaginationIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/datepicker`}>
+                <DatePickerIndex/>
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/`}>
                 <InstallIndex/>

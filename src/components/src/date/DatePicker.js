@@ -1,17 +1,19 @@
-import React, {useMemo, useReducer} from 'react';
-import {Button, Input} from '../index';
-import {IconCalendar} from '../Icons';
-import {isNil, slice} from '../Utils';
-import {
-  createDateColumns,
-  DataConfig,
-  validate,
-  validateProps,
-} from './DateConfig';
-import moment from 'moment';
-import {DateActionType, reducer} from './Reducer';
-import clsx from 'clsx';
+import React, {useMemo} from 'react';
+import {createDateColumns, DataConfig, validate} from './DateConfig';
 import Popup from '../popup/Popup';
+import {PopupCtrlType} from '../common/Constants';
+import {
+  Button,
+  IconArrowLeft,
+  IconArrowRight,
+  IconCalendar,
+  Input,
+} from '../index';
+import clsx from 'clsx';
+import {DateActionType} from './Reducer';
+import moment from 'moment';
+import {slice} from '../Utils';
+import {IconLeftDoubleArrows, IconRightDoubleArrows} from '../Icons';
 
 const DatePicker = React.forwardRef((props, ref) => {
   const {
@@ -27,45 +29,11 @@ const DatePicker = React.forwardRef((props, ref) => {
     onChange,
     onClose,
     onOpen,
+    zIndex = 2000,
+    config = DataConfig,
+    columnCount = DataConfig.columnCount,
     ...otherProps
   } = props;
-  const columnCount = DataConfig.columnCount;
-  const popupCtrlRef = ref;
-
-  const [state, dispatch] = useReducer(reducer, {
-    date: null,
-    displayDate: null,
-  });
-  const defaultDate = isNil(defaultValue) ? null : moment(defaultValue);
-  const config = DataConfig;
-
-  validateProps(props, defaultDate);
-
-  const initialDate = useMemo(() => {
-    if (!isNil(state.date)) {
-      return state.date;
-    }
-    return defaultDate;
-  }, [state.date, defaultDate]);
-
-  // get current date
-  // clone the origin data and don't change its value
-  const getDate = () => {
-    const date = initialDate;
-    if (!isNil(date)) {
-      return date.clone();
-    }
-    return moment();
-  };
-
-  const formattedDate = !isNil(initialDate)
-      ? initialDate.format(dateFormat)
-      : '';
-
-  //this date is used to calculate the the date of the next year/next month
-  const getDisplayDate = () => !isNil(state.displayDate)
-      ? state.displayDate.clone()
-      : getDate();
 
   const generateTtitle = (momentDate) => {
     if (!hasTitle) {
@@ -91,11 +59,9 @@ const DatePicker = React.forwardRef((props, ref) => {
     );
   };
 
-  const close = () => popupCtrlRef.current.close();
-
   const generateDays = (momentDate) => {
-    let columns = createDateColumns(momentDate, columnCount, dispatch, state,
-        initialDate, autoClose, close);
+    let columns = createDateColumns(momentDate, columnCount, () => {}, null,
+        momentDate, autoClose, () => {});
 
     return (
         <tbody>
@@ -122,44 +88,26 @@ const DatePicker = React.forwardRef((props, ref) => {
       <div className="body">
         <div className="info">
           <span className="previous">
-             <Button size="small" circle onClick={() => dispatch(
-                 {
-                   type: DateActionType.preYear,
-                   data: {date: getDisplayDate()},
-                 })}>
-                 &lt;&lt;
+             <Button size="small" inverted circle>
+                 <IconLeftDoubleArrows/>
               </Button>
-              <Button size="small" circle
-                      onClick={() => dispatch(
-                          {
-                            type: DateActionType.preMonth,
-                            data: {date: getDisplayDate()},
-                          })}>
-               &lt;
+              <Button size="small" inverted circle>
+               <IconArrowLeft/>
               </Button>
           </span>
           <span className="content">
           {config.locale.monthDetails[month]} {year}
         </span>
           <span className="next">
-              <Button size="small" circle
-                      onClick={() => dispatch(
-                          {
-                            type: DateActionType.nextMonth,
-                            data: {date: getDisplayDate()},
-                          })}>
-                &gt;
+              <Button size="small" inverted circle>
+                <IconArrowRight/>
               </Button>
-              <Button size="small" circle onClick={() => dispatch(
-                  {
-                    type: DateActionType.nextYear,
-                    data: {date: getDisplayDate()},
-                  })}>
-                &gt;&gt;
+              <Button size="small" inverted circle>
+                <IconRightDoubleArrows/>
               </Button>
           </span>
         </div>
-        <table className="data-picker-table">
+        <table className="date-picker-table">
           <thead>
           <tr>
             {config.locale.days.map(
@@ -176,8 +124,7 @@ const DatePicker = React.forwardRef((props, ref) => {
           </div>
           <div className="right">
             {!autoClose ?
-                <Button type="primary" outline size="small"
-                        onClick={close}>OK</Button>
+                <Button type="primary" size="small" inverted circle>OK</Button>
                 : null
             }
           </div>
@@ -186,34 +133,31 @@ const DatePicker = React.forwardRef((props, ref) => {
     </div>;
   };
 
-  const updateChildren = () => {
+  const popupCtrl = useMemo(() => {
     const ctrl = <Input.IconInput size="medium">
-      <Input placeholder={placeholder} value={formattedDate}
-             onChange={(e) => {
-             }}/>
+      <Input placeholder={placeholder}/>
       <IconCalendar/>
     </Input.IconInput>;
+    return ctrl;
+  }, [placeholder]);
 
-    const popupBody = getCalendar(getDisplayDate());
+  const popupBody = useMemo(() => {
 
-    return {
-      body: popupBody,
-      ctrl: ctrl,
-    };
-  };
-
-  const handleClose = () => {
-    dispatch({type: DateActionType.close});
-  };
+    return getCalendar(moment());
+  }, [getCalendar]);
 
   return <Popup
-      ref={popupCtrlRef}
-      margin={0}
+      {...otherProps}
+      // offset={offset}
+      activeBy={PopupCtrlType.click}
       position={position}
-      setChildDisabled={false}
-      onClose={handleClose}
-      handleChildren={updateChildren}
-      {...otherProps}/>;
+      autoClose={false}
+      ctrlNode={popupCtrl}
+      body={popupBody}
+      hasBorder={false}
+      hasBox={true}
+      zIndex={zIndex}/>
+      ;
 });
 
 export default DatePicker;

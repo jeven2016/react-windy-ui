@@ -74,6 +74,11 @@ export default function DocMenu(props) {
           对话框 Modal
         </Link>
       </Menu.Item>
+      <Menu.Item id="datepicker">
+        <Link to={`${url}/datepicker`}>
+          DataPicker 日期选择
+        </Link>
+      </Menu.Item>
     </Menu.SubMenu>
     <Menu.SubMenu header="提示信息" id="info">
       <Menu.Item id="badge">

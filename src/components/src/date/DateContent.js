@@ -14,7 +14,7 @@ const DateContent = {
 
 export default  DateContent;
 
-createDateColumns = (
+export const createDateColumns = (
     momentDate, columnCount, dispatch, state, initialDate, autoClose,
     closePopupCallback) => {
   //for current month

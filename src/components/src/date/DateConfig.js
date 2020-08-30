@@ -10,7 +10,7 @@ export const DataConfig = {
   columnCount: 7 * 6,
   dateFormat: 'YYYY-MM-DD',
   locale: {
-    days: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+    days: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
     dayOfWeek: {
       '0': 'Sun',
       '1': 'Mon',
@@ -101,9 +101,7 @@ export const createDateColumns = (
   for (let i = firstDay - 2; i >= 0; i--) {
     key = `${currentMonth - 1}-${i}`;
     td = (<td key={key}>
-      <Button
-          extraClassName="text comment clear-border"
-          circle
+      <Button size="small" inverted circle color="blue"
           onClick={selectPre.bind(this, daysOfLastMonth - i)}>
         {daysOfLastMonth - i}
       </Button>
@@ -147,10 +145,12 @@ export const createDateColumns = (
 
     td = (<td key={key}>
       <Button key={i - firstDay + 1}
+              extraClassName="day"
               active={active}
-              color="info"
+              color="blue"
+              size="small"
+              inverted
               circle
-              outline
               onClick={selectItem.bind(null,
                   dateToProcess)}>{dateToProcess}</Button>
     </td>);
@@ -178,7 +178,7 @@ export const createDateColumns = (
   for (let i = 0; i < leftLen; i++) {
     key = `${momentDate.month() + 1}-${i}`;
     td = (<td key={key}>
-      <Button extraClassName={'text comment clear-border'} key={i + 1} circle
+      <Button  key={i + 1} inverted circle size="small" color="blue"
               onClick={selectNextMonth.bind(this, i + 1)}>{i + 1}</Button>
     </td>);
     columns.push(td);
