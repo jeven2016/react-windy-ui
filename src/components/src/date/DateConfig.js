@@ -1,10 +1,12 @@
 import React from 'react';
-import {validate, isNil} from '../Utils';
-import moment from 'moment';
+import {isNil, validate} from '../Utils';
 import Button from '../button';
 import {DateActionType} from './Reducer';
 import {preventEvent} from '../event';
-import Element from '../common/Element';
+import dayjs from "dayjs";
+
+var isoWeek = require('dayjs/plugin/isoWeek')
+dayjs.extend(isoWeek)
 
 export const DataConfig = {
   columnCount: 7 * 6,
@@ -62,21 +64,20 @@ export const validateProps = (props, defaultDate) => {
 export const createDateColumns = (
     momentDate, columnCount, dispatch, state, initialDate, autoClose,
     closePopupCallback) => {
-  console.log("autoClose="+autoClose)
   //for current month
   const currentYear = momentDate.year();
   const currentMonth = momentDate.month();
   let numberOfDays = momentDate.daysInMonth();
 
   //get the first day of the week within this month
-  let firstDay = moment({year: currentYear, month: currentMonth, day: 1})
-      .isoWeekday();
+  let firstDay = dayjs({year: currentYear, month: currentMonth, day: 1})
+  .isoWeekday();
 
   //-------for last month
   const lastMonthDate = momentDate.clone().add(-1, 'months');
   let daysOfLastMonth = lastMonthDate.daysInMonth();
 
-  //the data picker has 7row and 6 columns/row
+  //the data picker has 7row and 6 columns for each row
   let columns = [];
   let td, key;
 
@@ -102,7 +103,7 @@ export const createDateColumns = (
     key = `${currentMonth - 1}-${i}`;
     td = (<td key={key}>
       <Button size="small" inverted circle color="blue"
-          onClick={selectPre.bind(this, daysOfLastMonth - i)}>
+              onClick={selectPre.bind(this, daysOfLastMonth - i)}>
         {daysOfLastMonth - i}
       </Button>
     </td>);
@@ -178,7 +179,7 @@ export const createDateColumns = (
   for (let i = 0; i < leftLen; i++) {
     key = `${momentDate.month() + 1}-${i}`;
     td = (<td key={key}>
-      <Button  key={i + 1} inverted circle size="small" color="blue"
+      <Button key={i + 1} inverted circle size="small" color="blue"
               onClick={selectNextMonth.bind(this, i + 1)}>{i + 1}</Button>
     </td>);
     columns.push(td);
