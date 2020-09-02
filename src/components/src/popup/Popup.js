@@ -260,6 +260,7 @@ const Popup = React.forwardRef((props, ref) => {
       return;
     }
 
+    console.log(realPopupRef.current)
     changeActive(false);
   }, [activePopup, realCtrlRef, autoClose, realPopupRef, changeActive]);
 

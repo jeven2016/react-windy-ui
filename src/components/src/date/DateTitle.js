@@ -6,6 +6,7 @@ export default function DateTitle(props) {
     config,
     date,
     leftTitle,
+    ...otherProps
   } = props;
 
   if (!hasTitle) {
@@ -22,7 +23,7 @@ export default function DateTitle(props) {
                   </span>;
 
   return (
-      <div className="date-picker-title">
+      <div className="date-picker-title" {...otherProps}>
         <span className="year-info">{date.year()}</span>
         <div className="detail-info">
           {txtContent}

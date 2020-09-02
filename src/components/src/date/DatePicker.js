@@ -1,10 +1,19 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {DataConfig, validate} from './DateConfig';
 import Popup from '../popup/Popup';
 import {PopupCtrlType} from '../common/Constants';
 import {IconCalendar, Input} from '../index';
 import DayBody from './DayBody';
 import dayjs from 'dayjs';
+import useInternalState from '../common/useInternalState';
+import {initStore} from '../common/Store';
+import {convertToArray} from '../Utils';
+
+const PanelType = {
+  year: 'year',
+  month: 'month',
+  day: 'day',
+};
 
 const DatePicker = React.forwardRef((props, ref) => {
   const {
@@ -12,6 +21,7 @@ const DatePicker = React.forwardRef((props, ref) => {
     extraClassName,
     hasTitle = true,
     defaultValue,
+    value,
     leftTitle = false,
     autoClose = false,
     dateFormat = 'YYYY-MM-DD',
@@ -26,6 +36,28 @@ const DatePicker = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
 
+  const {
+    state: date,
+    setState: setDate,
+    customized,
+  } = useInternalState({
+    props,
+    stateName: 'value',
+    defaultState: defaultValue,
+    state: value,
+    backupState: dayjs(),
+  });
+
+  const initialDate = useMemo(() => {
+    return date;
+  }, [date]);
+
+  //init a internal store
+  const [store] = useState(initStore({
+    activeDate: initialDate,
+    panelType: PanelType.day,
+  }));
+
   const popupCtrl = useMemo(() => {
     const ctrl = <Input.IconInput size="medium">
       <Input placeholder={placeholder}/>
@@ -35,10 +67,10 @@ const DatePicker = React.forwardRef((props, ref) => {
   }, [placeholder]);
 
   const popupBody = useMemo(() => {
-    return <DayBody date={dayjs()} leftTitle={leftTitle} config={config}
+    return <DayBody store={store} leftTitle={leftTitle} config={config}
                     columnCount={columnCount} autoClose={autoClose}
                     hasTitle={hasTitle}/>;
-  }, [autoClose, columnCount, config, hasTitle, leftTitle]);
+  }, [autoClose, columnCount, config, hasTitle, leftTitle, store]);
 
   return <Popup
       {...otherProps}

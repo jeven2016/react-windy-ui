@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {isNil, validate} from '../Utils';
 import Button from '../button';
 import {DateActionType} from './Reducer';
 import {preventEvent} from '../event';
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
-var isoWeek = require('dayjs/plugin/isoWeek')
-dayjs.extend(isoWeek)
+var isoWeek = require('dayjs/plugin/isoWeek');
+dayjs.extend(isoWeek);
 
 export const DataConfig = {
   columnCount: 7 * 6,
@@ -61,127 +61,108 @@ export const validateProps = (props, defaultDate) => {
 
 };
 
-export const createDateColumns = (
-    momentDate, columnCount, dispatch, state, initialDate, autoClose,
-    closePopupCallback) => {
+const isActiveDay = (activeDate, displayDate, selectedDate) => {
+  if (isNil(activeDate)) {
+    return false;
+  }
+
+  //check whether the year and month are same
+  if (isNil(displayDate) || !activeDate.isSame(displayDate, 'month') ||
+      !activeDate.isSame(displayDate, 'year')) {
+    return false;
+  }
+  return activeDate.date() === selectedDate;
+};
+
+const selectDay = (
+    store, displayDate, day, autoClose, closePopupCallback, e) => {
+  const selectedDate = displayDate.date(day);
+  console.log(selectedDate);
+  store.setState({activeDate: selectedDate});
+
+  if (autoClose) {
+    closePopupCallback();
+  } else {
+    // preventEvent(e);
+  }
+};
+
+const getKey = (date, suffix) => {
+  return `${date.year()}-${date.month()}-${suffix}`;
+};
+
+export const createDateColumns = (displayDate,
+                                  columnCount, store, autoClose,
+                                  closePopupCallback) => {
+
   //for current month
-  const currentYear = momentDate.year();
-  const currentMonth = momentDate.month();
-  let numberOfDays = momentDate.daysInMonth();
+  const momentDate = store.getState().activeDate;
+  let numberOfDays = displayDate.daysInMonth();
 
   //get the first day of the week within this month
-  let firstDay = dayjs({year: currentYear, month: currentMonth, day: 1})
-  .isoWeekday();
+  let firstDay = displayDate.date(1).isoWeekday();
 
   //-------for last month
-  const lastMonthDate = momentDate.clone().add(-1, 'months');
+  const lastMonthDate = displayDate.add(-1, 'months');
   let daysOfLastMonth = lastMonthDate.daysInMonth();
 
   //the data picker has 7row and 6 columns for each row
   let columns = [];
   let td, key;
 
-  //append the days of last month
-  const selectPre = (d, e) => {
-    dispatch({
-      type: DateActionType.selectDay,
-      data: {
-        date: lastMonthDate.date(d),
-      },
-    });
-
-    if (!autoClose) {
-      //don't close the popup and stop propagation to window click listener,
-      //because the listener cannot distinguish the event fired by a old button
-      //and disappeared while the popup content is updated. (that means
-      //the contains() method always return false)
-      preventEvent(e);
-    }
-  };
-
   for (let i = firstDay - 2; i >= 0; i--) {
-    key = `${currentMonth - 1}-${i}`;
+    key = `prev-${getKey(displayDate, i)}`;
     td = (<td key={key}>
       <Button size="small" inverted circle color="blue"
-              onClick={selectPre.bind(this, daysOfLastMonth - i)}>
+              onClick={selectDay.bind(null, store, lastMonthDate,
+                  daysOfLastMonth - i,
+                  autoClose, closePopupCallback)}>
+        {/*onClick={selectPre.bind(this, daysOfLastMonth - i)}>*/}
         {daysOfLastMonth - i}
       </Button>
     </td>);
     columns.push(td);
   }
 
-  const selectItem = (dd) => {
-    dispatch({
-      type: DateActionType.selectDay,
-      day: dd,
-      data: {
-        date: momentDate.date(dd),
-      },
-    });
-
-    if (autoClose) {
-      closePopupCallback();
-    }
-  };
-
   //--------- append the days of this month
-  const isActiveDay = (loopDate, selectedDate) => {
-    if (isNil(momentDate)) {
-      return false;
-    }
-
-    //check whether the year and month are same
-    if (!isNil(initialDate) && !momentDate.isSame(initialDate, 'month')) {
-      return false;
-    }
-    return momentDate.date() === selectedDate;
-  };
 
   let active;
   let dateToProcess;
   for (let i = firstDay; i < numberOfDays + firstDay; i++) {
     dateToProcess = i - firstDay + 1;
-    key = `${momentDate.month()}-${dateToProcess}`;
-    active = isActiveDay(momentDate, dateToProcess);
+    key = `current-${getKey(displayDate, dateToProcess)}`;
+    active = isActiveDay(momentDate, displayDate, dateToProcess);
 
     td = (<td key={key}>
-      <Button key={i - firstDay + 1}
-              extraClassName="day"
-              active={active}
-              color="blue"
-              size="small"
-              inverted
-              circle
-              onClick={selectItem.bind(null,
-                  dateToProcess)}>{dateToProcess}</Button>
+      <Button
+          key={`day-${dateToProcess}`}
+          extraClassName="day"
+          active={active}
+          color="blue"
+          size="small"
+          inverted
+          circle
+          onClick={selectDay.bind(null, store, displayDate, dateToProcess,
+              autoClose, closePopupCallback)}>
+        {dateToProcess}
+      </Button>
     </td>);
     columns.push(td);
   }
 
   //------- append the days of next month
   let leftLen = columnCount - columns.length;
-  const nextMonthDate = momentDate.clone().add(1, 'months');
-
-  const selectNextMonth = (dd, e) => {
-    dispatch({
-      type: DateActionType.selectDay,
-      day: dd,
-      data: {
-        date: nextMonthDate.date(dd),
-      },
-    });
-
-    if (!autoClose) {
-      preventEvent(e);
-    }
-  };
 
   for (let i = 0; i < leftLen; i++) {
-    key = `${momentDate.month() + 1}-${i}`;
-    td = (<td key={key}>
+    key = `next-${getKey(displayDate, i)}`;
+    td = <td key={'next-' + key}>
       <Button key={i + 1} inverted circle size="small" color="blue"
-              onClick={selectNextMonth.bind(this, i + 1)}>{i + 1}</Button>
-    </td>);
+              onClick={selectDay.bind(null, store, displayDate.add(1, 'months'),
+                  i + 1,
+                  autoClose, closePopupCallback)}>
+        {i + 1}
+      </Button>
+    </td>;
     columns.push(td);
   }
 
