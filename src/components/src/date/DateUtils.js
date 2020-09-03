@@ -1,3 +1,5 @@
+import {isNil} from "../Utils";
+
 export const DpDirection = {
   horizontal: 'horizontal',
   vertical: 'vertical'
@@ -13,3 +15,10 @@ export const DateActionType = {
   open: 'open',
 
 };
+
+export const formatDate = (date, dateFormat) => {
+  if (isNil(date) || isNil(dateFormat)) {
+    return "";
+  }
+  return date.format(dateFormat)
+}

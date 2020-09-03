@@ -83,7 +83,7 @@ const selectDay = (
   if (autoClose) {
     closePopupCallback();
   } else {
-    // preventEvent(e);
+    preventEvent(e);
   }
 };
 

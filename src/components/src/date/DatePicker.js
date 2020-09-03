@@ -2,12 +2,11 @@ import React, {useMemo, useState} from 'react';
 import {DataConfig, validate} from './DateConfig';
 import Popup from '../popup/Popup';
 import {PopupCtrlType} from '../common/Constants';
-import {IconCalendar, Input} from '../index';
 import DayBody from './DayBody';
 import dayjs from 'dayjs';
 import useInternalState from '../common/useInternalState';
 import {initStore} from '../common/Store';
-import {convertToArray} from '../Utils';
+import InputCtrl from "./InputCtrl";
 
 const PanelType = {
   year: 'year',
@@ -58,13 +57,7 @@ const DatePicker = React.forwardRef((props, ref) => {
     panelType: PanelType.day,
   }));
 
-  const popupCtrl = useMemo(() => {
-    const ctrl = <Input.IconInput size="medium">
-      <Input placeholder={placeholder}/>
-      <IconCalendar/>
-    </Input.IconInput>;
-    return ctrl;
-  }, [placeholder]);
+  const popupCtrl = <InputCtrl store={store} placeholder={placeholder}/>
 
   const popupBody = useMemo(() => {
     return <DayBody store={store} leftTitle={leftTitle} config={config}
