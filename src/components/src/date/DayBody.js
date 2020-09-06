@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import clsx from 'clsx';
 import Card from '../card';
 import {Button, IconArrowLeft, IconArrowRight} from '../index';
@@ -7,23 +7,31 @@ import {createDateColumns} from './DateConfig';
 import {isNil, slice} from '../Utils';
 import DateTitle from './DateTitle';
 import {DateActionType} from './DateUtils';
+import dayjs from 'dayjs';
+import {DateContext} from '../common/Context';
 
 export default function DayBody(props) {
   const {
-    leftTitle,
-    config,
-    autoClose,
-    columnCount,
-    hasTitle,
-    store,
+    activePopup,
   } = props;
+  const ctx = useContext(DateContext);
+  const store = ctx.store;
   const {attach, detach, getState} = store;
-  const [date, setDate] = useState(getState().activeDate);
+  const activeDate = getState().activeDate;
+
+  //init a date while no date is selected
+  const validDate = isNil(activeDate)
+      ? getState().initialDate
+      : activeDate;
+
+  //using for rendering the days of this month in GUI
+  const [date, setDate] = useState(validDate);
+
   const month = date.month();
   const year = date.year();
 
   const dataPickerClsName = clsx('date-picker', {
-    'left-title': leftTitle,
+    'left-title': ctx.leftTitle,
   });
 
   useEffect(() => {
@@ -35,8 +43,16 @@ export default function DayBody(props) {
   }, [attach, detach, getState]);
 
   const generateDays = useCallback(() => {
-    let columns = createDateColumns(date, columnCount, store,
-        autoClose, () => {});
+    let columns = createDateColumns({
+      displayDate: date,
+      columnCount: ctx.columnCount,
+      store,
+      autoClose: ctx.autoClose,
+      activePopup,
+      onChange: ctx.onChange,
+      dateFormat: ctx.dateFormat,
+      customizedDate: ctx.customizedDate,
+    });
 
     return <tbody>
     <tr>{slice(columns, 0, 7)}</tr>
@@ -46,41 +62,53 @@ export default function DayBody(props) {
     <tr>{slice(columns, 28, 35)}</tr>
     <tr>{slice(columns, 35, 42)}</tr>
     </tbody>;
-  }, [autoClose, columnCount, date, store]);
+  }, [
+    activePopup,
+    ctx.autoClose,
+    ctx.columnCount,
+    ctx.customizedDate,
+    ctx.dateFormat,
+    ctx.onChange,
+    date,
+    store]);
 
   const change = useCallback((type, e) => {
-    const cloneDate = date.clone();
-    let nextDate = cloneDate;
+    let nextDate = date;
     switch (type) {
       case DateActionType.preMonth:
-        nextDate = cloneDate.add(-1, 'months');
+        nextDate = nextDate.add(-1, 'months');
         break;
       case DateActionType.preYear:
-        nextDate = cloneDate.add(-1, 'years');
+        nextDate = nextDate.add(-1, 'years');
         break;
       case DateActionType.nextMonth:
-        nextDate = cloneDate.add(1, 'months');
+        nextDate = nextDate.add(1, 'months');
         break;
       case DateActionType.nextYear:
-        nextDate = cloneDate.add(1, 'years');
+        nextDate = nextDate.add(1, 'years');
         break;
+      case DateActionType.today:
+        store.setState({activeDate: dayjs()});
+        activePopup(false);
+        return;
       default:
         break;
     }
 
     !isNil(nextDate) && setDate(nextDate);
-  }, [date]);
+  }, [activePopup, date, store]);
 
   return <Card extraClassName={dataPickerClsName}>
     <Card.Header extraClassName="date-picker-header">
-      <DateTitle hasTitle={hasTitle}
-                 config={config}
-                 date={getState().activeDate}
-                 leftTitle={leftTitle}/>
+      <DateTitle hasTitle={ctx.hasTitle}
+                 config={ctx.config}
+                 date={validDate}
+                 leftTitle={ctx.leftTitle}/>
     </Card.Header>
 
     <Card.Row>
-      <div className="date-picker-info">
+      <div className="dp-body">
+        <div className="date-picker-info">
           <span className="previous">
              <Button size="small" inverted circle
                      onClick={(e) => change(DateActionType.preYear, e)}>
@@ -91,10 +119,10 @@ export default function DayBody(props) {
                <IconArrowLeft/>
               </Button>
           </span>
-        <span className="content">
-          {config.locale.monthDetails[month]} {year}
+          <span className="content">
+          {ctx.config.locale.monthDetails[month]} {year}
         </span>
-        <span className="next">
+          <span className="next">
               <Button size="small" inverted circle
                       onClick={(e) => change(DateActionType.nextMonth, e)}>
                 <IconArrowRight/>
@@ -104,28 +132,34 @@ export default function DayBody(props) {
                 <IconRightDoubleArrows/>
               </Button>
           </span>
+        </div>
+        <div className="date-picker-body">
+          <table className="date-picker-table">
+            <thead>
+            <tr>
+              {ctx.config.locale.days.map(
+                  (day, index) => <th key={day + index}>{day}</th>)}
+            </tr>
+            </thead>
+            {
+              generateDays()
+            }
+          </table>
+        </div>
       </div>
     </Card.Row>
-    <Card.Body extraClassName="date-picker-body">
-      <table className="date-picker-table">
-        <thead>
-        <tr>
-          {config.locale.days.map(
-              (day, index) => <th key={day + index}>{day}</th>)}
-        </tr>
-        </thead>
-        {
-          generateDays(date)
-        }
-      </table>
-    </Card.Body>
+
     <Card.Footer extraClassName="date-picker-footer">
       <div className="left">
-        Select Time
+        <Button extraClassName="today-btn" type="primary"
+                size="small" inverted
+                onClick={(e) => change(DateActionType.today)}>
+          Today
+        </Button>
       </div>
       <div className="right">
-        {!autoClose ?
-            <Button type="primary" size="small" inverted circle>OK</Button>
+        {!ctx.autoClose ?
+            <Button type="primary" size="small" inverted>OK</Button>
             : null
         }
       </div>

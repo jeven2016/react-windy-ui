@@ -1,12 +1,6 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {isNil, validate} from '../Utils';
 import Button from '../button';
-import {DateActionType} from './Reducer';
-import {preventEvent} from '../event';
-import dayjs from 'dayjs';
-
-var isoWeek = require('dayjs/plugin/isoWeek');
-dayjs.extend(isoWeek);
 
 export const DataConfig = {
   columnCount: 7 * 6,
@@ -53,50 +47,52 @@ export const DataConfig = {
   },
 };
 
-export const validateProps = (props, defaultDate) => {
-  if (!isNil(defaultDate)) {
-    validate(defaultDate.isValid(),
-        `the defaultValue(${props.defaultValue}) is invalid.`);
-  }
-
-};
-
 const isActiveDay = (activeDate, displayDate, selectedDate) => {
-  if (isNil(activeDate)) {
+  if (isNil(activeDate) && isNil(displayDate)) {
     return false;
   }
 
   //check whether the year and month are same
-  if (isNil(displayDate) || !activeDate.isSame(displayDate, 'month') ||
-      !activeDate.isSame(displayDate, 'year')) {
-    return false;
+  if (!isNil(activeDate)) {
+    if (!activeDate.isSame(displayDate, 'month') ||
+        !activeDate.isSame(displayDate, 'year')) {
+      return false;
+    }
   }
   return activeDate.date() === selectedDate;
 };
 
 const selectDay = (
-    store, displayDate, day, autoClose, closePopupCallback, e) => {
+    store, displayDate, day, autoClose, activePopup, onChange, dateFormat,
+    customizedDate) => {
   const selectedDate = displayDate.date(day);
-  console.log(selectedDate);
-  store.setState({activeDate: selectedDate});
+  if (!customizedDate) {
+    store.setState({activeDate: selectedDate});
+  }
 
   if (autoClose) {
-    closePopupCallback();
-  } else {
-    // preventEvent(e);
+    activePopup(false);
   }
+
+  onChange && onChange(selectedDate.format(dateFormat), selectedDate);
 };
 
 const getKey = (date, suffix) => {
   return `${date.year()}-${date.month()}-${suffix}`;
 };
 
-export const createDateColumns = (displayDate,
-                                  columnCount, store, autoClose,
-                                  closePopupCallback) => {
+export const createDateColumns = ({
+                                    displayDate,
+                                    columnCount, store, autoClose,
+                                    activePopup, onChange, dateFormat, customizedDate,
+                                  }) => {
 
   //for current month
-  const momentDate = store.getState().activeDate;
+  const state = store.getState();
+  const validDate = state.isInitialDate()
+      ? state.initialDate
+      : state.activeDate;
+
   let numberOfDays = displayDate.daysInMonth();
 
   //get the first day of the week within this month
@@ -116,7 +112,8 @@ export const createDateColumns = (displayDate,
       <Button size="small" inverted circle color="blue"
               onClick={selectDay.bind(null, store, lastMonthDate,
                   daysOfLastMonth - i,
-                  autoClose, closePopupCallback)}>
+                  autoClose, activePopup, onChange, dateFormat,
+                  customizedDate)}>
         {/*onClick={selectPre.bind(this, daysOfLastMonth - i)}>*/}
         {daysOfLastMonth - i}
       </Button>
@@ -131,8 +128,8 @@ export const createDateColumns = (displayDate,
   for (let i = firstDay; i < numberOfDays + firstDay; i++) {
     dateToProcess = i - firstDay + 1;
     key = `current-${getKey(displayDate, dateToProcess)}`;
-    active = isActiveDay(momentDate, displayDate, dateToProcess);
-
+    active = isActiveDay(validDate, displayDate, dateToProcess);
+    const isOutlineStyle = active && state.isInitialDate();
     td = (<td key={key}>
       <Button
           key={`day-${dateToProcess}`}
@@ -140,10 +137,13 @@ export const createDateColumns = (displayDate,
           active={active}
           color="blue"
           size="small"
-          inverted
+          inverted={!active || !isOutlineStyle}
+          outline={isOutlineStyle}
+          initOutlineColor={isOutlineStyle}
+          hasOutlineBackground={!isOutlineStyle}
           circle
           onClick={selectDay.bind(null, store, displayDate, dateToProcess,
-              autoClose, closePopupCallback)}>
+              autoClose, activePopup, onChange, dateFormat, customizedDate)}>
         {dateToProcess}
       </Button>
     </td>);
@@ -159,7 +159,8 @@ export const createDateColumns = (displayDate,
       <Button key={i + 1} inverted circle size="small" color="blue"
               onClick={selectDay.bind(null, store, displayDate.add(1, 'months'),
                   i + 1,
-                  autoClose, closePopupCallback)}>
+                  autoClose, activePopup, onChange, dateFormat,
+                  customizedDate)}>
         {i + 1}
       </Button>
     </td>;

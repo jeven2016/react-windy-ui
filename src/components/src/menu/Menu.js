@@ -58,7 +58,7 @@ const Menu = React.forwardRef((props, ref) => {
   const preTimeoutRef = useRef(null); //previous close timer
 
   //init a internal store
-  const [store] = useState(initStore({
+  const [store] = useState(() => initStore({
     activeItemsList: convertToArray(defaultActiveItems),
     openList: defaultOpenList,
   }));

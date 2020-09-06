@@ -24,7 +24,7 @@ export default function DateTitle(props) {
 
   return (
       <div className="date-picker-title" {...otherProps}>
-        <span className="year-info">{date.year()}</span>
+        <div><span className="year-info">{date.year()}</span></div>
         <div className="detail-info">
           {txtContent}
         </div>

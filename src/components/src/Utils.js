@@ -239,7 +239,10 @@ export const getLeftIfCentered = (dest, ctrl) => {
   return Math.floor((ctrlPos.width - destAvaliableWidth) / 2) + 'px';
 };
 
-export const validate = (condition, message) => {
+export const validate = (condition, message, ignore) => {
+  if (ignore) {
+    return;
+  }
   if (!condition) {
     throw new Error(message);
   }

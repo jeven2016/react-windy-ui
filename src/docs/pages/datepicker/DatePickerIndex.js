@@ -1,9 +1,11 @@
 import React from 'react';
 import DocPage from '../../utils/DocPage';
 import DatePicker1 from './samples/DatePicker1';
+import DatePicker2 from './samples/DatePicker2';
 
 const componentMapping = {
   DatePicker1: <DatePicker1/>,
+  // DatePicker2: <DatePicker2/>,
 };
 
 export default function DatePickerIndex(props) {

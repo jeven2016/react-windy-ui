@@ -260,7 +260,6 @@ const Popup = React.forwardRef((props, ref) => {
       return;
     }
 
-    console.log(realPopupRef.current)
     changeActive(false);
   }, [activePopup, realCtrlRef, autoClose, realPopupRef, changeActive]);
 
@@ -299,7 +298,8 @@ const Popup = React.forwardRef((props, ref) => {
   }, [disabled, handleClick, changeActive]);
 
   // close the popup while clicking the window (listens on window object instead of document)
-  useEvent(EventListener.click, (e) => handleBackgroundClick(e),
+  //this works better for DateTimePicker while clicking the day of
+  useEvent('mouseup', (e) => handleBackgroundClick(e),
       true, window);
 
   useEvent(EventListener.mouseEnter,

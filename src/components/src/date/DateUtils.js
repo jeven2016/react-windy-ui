@@ -1,6 +1,6 @@
 export const DpDirection = {
   horizontal: 'horizontal',
-  vertical: 'vertical'
+  vertical: 'vertical',
 };
 
 export const DateActionType = {
@@ -9,7 +9,19 @@ export const DateActionType = {
   preYear: 'preYear',
   preMonth: 'preMonth',
   selectDay: 'selectDay',
+  today: 'today',
   close: 'close',
   open: 'open',
 
+};
+
+export const PopupType = {
+  popup: 'popup',
+  modal: 'modal',
+};
+
+export const BodyType = {
+  day: 'day',
+  month: 'month',
+  year: 'year',
 };

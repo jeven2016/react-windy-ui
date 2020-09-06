@@ -1,9 +1,19 @@
 import React from 'react';
-import {DatePicker} from 'react-windy-ui';
+import {DatePicker, Notification} from 'react-windy-ui';
 
 export default function DatePicker1() {
+  const change = (textFormat, date) => {
+    Notification.info(
+        `textFormat=${textFormat}, date=${date}`);
+  };
+
   return <>
-    {/*<DatePicker hasTitle={true} direction="horizontal" leftTitle/>*/}
-    <DatePicker hasTitle={true} direction="vertical"/>
+    <div className="doc doc-row">
+      <DatePicker onChange={change}/>
+    </div>
+    <div className="doc doc-row">
+      <DatePicker defaultValue="2018-10-11" hasTitle={true} direction="vertical"
+                  onChange={change}/>
+    </div>
   </>;
 }
