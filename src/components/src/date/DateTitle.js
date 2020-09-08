@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {DateContext} from '../common/Context';
+import {BodyType} from './DateUtils';
 
 export default function DateTitle(props) {
   const {
@@ -8,7 +10,7 @@ export default function DateTitle(props) {
     leftTitle,
     ...otherProps
   } = props;
-
+  const ctx = useContext(DateContext);
   if (!hasTitle) {
     return null;
   }
@@ -24,7 +26,8 @@ export default function DateTitle(props) {
 
   return (
       <div className="date-picker-title" {...otherProps}>
-        <div><span className="year-info">{date.year()}</span></div>
+        <div><span className="year-info" onClick={() => ctx.setBodyType(
+            BodyType.year)}>{date.year()}</span></div>
         <div className="detail-info">
           {txtContent}
         </div>

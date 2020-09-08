@@ -37,13 +37,14 @@ const DatePicker = React.forwardRef((props, ref) => {
     config = DataConfig,
     columnCount = DataConfig.columnCount,
     popupType = PopupType.modal,
+    type = BodyType.day,
 
     ...otherProps
   } = props;
   const popupRef = useRef(null);
   const [activeModal, setActiveModal] = useState(false);
   const [realPopupType, setRealPopupType] = useState(popupType);
-  const [bodyType, setBodyType] = useState(BodyType.year);
+  const [bodyType, setBodyType] = useState(type);
 
   const isModalType = realPopupType === PopupType.modal;
 
@@ -107,7 +108,7 @@ const DatePicker = React.forwardRef((props, ref) => {
   const popupBody = useMemo(() => {
     switch (bodyType) {
       case BodyType.day:
-        return <DayBody  modal={isModalType}
+        return <DayBody modal={isModalType}
                         activePopup={activePopup}/>;
 
       case BodyType.year:
@@ -154,7 +155,7 @@ const DatePicker = React.forwardRef((props, ref) => {
     customizedDate: customized,
     bodyType,
     setBodyType,
-    leftTitle
+    leftTitle,
   }}>
     {pickerBody}
   </DateContext.Provider>;
