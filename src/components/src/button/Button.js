@@ -20,7 +20,8 @@ const Button = React.forwardRef((props, ref) => {
     hasOutlineBackground = true, //todo : new field
     initOutlineColor = false, //todo : new field
     hasBox = true, //todo : new field
-    hasBorder = true, //todo : new field
+    hasBorder = true, //todo : new field,
+    invertedOutline = false, //todo
     onClick,
     disabled = false,
     ...otherProps
@@ -43,6 +44,7 @@ const Button = React.forwardRef((props, ref) => {
     'with-default-color': initOutlineColor,
     'without-box': !hasBox,
     'without-border': !hasBorder,
+    'inverted-outline': invertedOutline,
   }), [
     type,
     color,

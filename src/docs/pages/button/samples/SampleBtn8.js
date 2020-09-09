@@ -2,8 +2,9 @@ import React from 'react';
 import {Button} from 'react-windy-ui';
 
 const SampleBtn8 = () => {
+  //todo: should update the doc
   return <>
-
+    <Button color="gray" outline hasMinWidth>gray</Button>
     <Button color="black" outline hasMinWidth>black</Button>
     <Button color="brown" outline hasMinWidth>brown</Button>
     <Button color="pink" outline hasMinWidth>pink</Button>
