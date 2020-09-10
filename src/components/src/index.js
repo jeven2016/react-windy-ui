@@ -53,7 +53,7 @@ export {default as Tree} from './tree/Tree';
 export {default as useLazyImport} from './common/UseLazyImport';
 export {default as Collapse} from './collapse/Collapse';
 export {default as Table} from './table/Table';
-
+export {default as PopConfirm} from './popconfirm'
 
 export {
   IconInfo,
