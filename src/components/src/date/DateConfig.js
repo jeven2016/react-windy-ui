@@ -109,7 +109,7 @@ export const createDateColumns = ({
   for (let i = firstDay - 2; i >= 0; i--) {
     key = `prev-${getKey(displayDate, i)}`;
     td = (<td key={key}>
-      <Button size="small" inverted circle color="blue"
+      <Button size="small" inverted circle={true} color="blue"
               onClick={selectDay.bind(null, store, lastMonthDate,
                   daysOfLastMonth - i,
                   autoClose, activePopup, onChange, dateFormat,
@@ -141,7 +141,7 @@ export const createDateColumns = ({
           outline={isOutlineStyle}
           initOutlineColor={isOutlineStyle}
           hasOutlineBackground={!isOutlineStyle}
-          circle
+          circle={true}
           onClick={selectDay.bind(null, store, displayDate, dateToProcess,
               autoClose, activePopup, onChange, dateFormat, customizedDate)}>
         {dateToProcess}
@@ -156,7 +156,7 @@ export const createDateColumns = ({
   for (let i = 0; i < leftLen; i++) {
     key = `next-${getKey(displayDate, i)}`;
     td = <td key={'next-' + key}>
-      <Button key={i + 1} inverted circle size="small" color="blue"
+      <Button key={i + 1} inverted circle={true} size="small" color="blue"
               onClick={selectDay.bind(null, store, displayDate.add(1, 'months'),
                   i + 1,
                   autoClose, activePopup, onChange, dateFormat,

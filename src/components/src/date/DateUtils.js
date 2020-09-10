@@ -25,3 +25,9 @@ export const BodyType = {
   month: 'month',
   year: 'year',
 };
+
+export const YearPanelType = {
+  year: 'year',
+  yearRange: 'yearRange',
+  month: 'month',
+};

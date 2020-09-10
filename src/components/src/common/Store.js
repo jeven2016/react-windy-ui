@@ -13,7 +13,6 @@ export const StoreContext = React.createContext(null);
 export const Provider = StoreContext.Provider;
 
 export const initStore = (initState = {}) => {
-  console.log('init store....')
   let id = random(1000, 9000);
   let internalState = initState;
   const callbacks = [];

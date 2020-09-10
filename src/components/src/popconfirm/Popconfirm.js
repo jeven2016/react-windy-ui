@@ -1,17 +1,20 @@
-import React, {useCallback, useRef} from "react";
-import Popover from "../popover";
-import {IconWarning2} from "../Icons";
-import Button from "../button";
-import {JustifyContentType, PopupPosition} from "../common/Constants";
-import clsx from "clsx";
+import React, {useCallback, useRef} from 'react';
+import Popover from '../popover';
+import {IconWarning2} from '../Icons';
+import Button from '../button';
+import {JustifyContentType, PopupPosition} from '../common/Constants';
+import clsx from 'clsx';
+import * as PropTypes from 'prop-types';
 
 const PopConfirm = React.forwardRef((props, ref) => {
   const {
     className = 'pop-confirm',
     extraClassName,
     body,
-    okText = "Yes",
-    cancelText = "No",
+    okText = 'Ok',
+    cancelText = 'No',
+    okButtonProps,
+    cancelButtonProps,
     children,
     onOk,
     onCancel,
@@ -36,12 +39,12 @@ const PopConfirm = React.forwardRef((props, ref) => {
   const handleOk = useCallback((e) => {
     onOk && onOk(e);
     closePopover();
-  }, [closePopover]);
+  }, [closePopover, onOk]);
 
   const handleCancel = useCallback((e) => {
     onCancel && onCancel(e);
     closePopover();
-  }, [closePopover]);
+  }, [closePopover, onCancel]);
 
   const bodyCnt = <div className={clsName}>
     <div className="pop-row">
@@ -54,10 +57,11 @@ const PopConfirm = React.forwardRef((props, ref) => {
     </div>
     <div className={footerClsName}>
       <span>
-        <Button color="primary" size="small" onClick={handleOk}>
+        <Button color="primary" size="small"
+                onClick={handleOk} {...okButtonProps}>
           {okText}
         </Button>
-        <Button size="small" onClick={handleCancel}>
+        <Button size="small" onClick={handleCancel} {...cancelButtonProps}>
           {cancelText}
         </Button>
       </span>
@@ -67,8 +71,24 @@ const PopConfirm = React.forwardRef((props, ref) => {
   return <Popover popupInstanceRef={popupRef} body={bodyCnt} position={position}
                   autoWidth={true} {...otherProps}>
     {children}
-  </Popover>
+  </Popover>;
 
 });
+
+Popover.propTypes = {
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  body: PropTypes.node,
+  okText: PropTypes.string,
+  cancelText: PropTypes.string,
+  okButtonProps: PropTypes.object,
+  cancelButtonProps: PropTypes.object,
+  onOk: PropTypes.func,
+  onCancel: PropTypes.func,
+  icon: PropTypes.node,
+  justifyFooter: PropTypes.oneOf(
+      ['start', 'end', 'center', 'around', 'between', 'between']),
+  position: PropTypes.string,
+};
 
 export default PopConfirm;
