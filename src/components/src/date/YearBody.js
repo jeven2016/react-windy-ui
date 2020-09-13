@@ -8,11 +8,11 @@ import {DateContext} from '../common/Context';
 import {isNil, isNumber} from '../Utils';
 import clsx from 'clsx';
 import {IconArrowLeft, IconArrowRight} from '../Icons';
-import {YearPanelType} from './DateUtils';
+import {BodyType, YearPanelType} from './DateUtils';
 
 const YearBody = React.forwardRef((props, ref) => {
   const ctx = useContext(DateContext);
-  const {getState} = ctx.store;
+  const {getState, setState} = ctx.store;
   const activeDate = getState().activeDate;
 
   const validDate = isNil(activeDate)
@@ -28,6 +28,17 @@ const YearBody = React.forwardRef((props, ref) => {
   const dataPickerClsName = clsx('date-picker', {
     'left-title': ctx.leftTitle,
   });
+
+  const selectYear = useCallback((year, e) => {
+    // setStartYear(year);
+    setState({selectedYm: {...getState().selectedYm, year: year}});
+    setPanelType(YearPanelType.month);
+  }, [getState, setState]);
+
+  const selectMonth = useCallback((i, e) => {
+    setState({selectedYm: {...getState().selectedYm, month: i}});
+    ctx.setBodyType(BodyType.day);
+  }, [ctx, getState, setState]);
 
   const yearRange = useMemo(() => {
     const stringYear = startYear + '';
@@ -55,7 +66,8 @@ const YearBody = React.forwardRef((props, ref) => {
                              ? 'other-year'
                              : null}>
           <Button inverted initOutlineColor type="primary"
-                  active={year === currentYear}>
+                  active={year === currentYear}
+                  onClick={(e) => selectYear(year, e)}>
             {year}
           </Button>
         </Col>;
@@ -68,7 +80,7 @@ const YearBody = React.forwardRef((props, ref) => {
       rows.push(row);
     }
     return rows;
-  }, [currentYear, startYear, yearRange.begin, yearRange.end]);
+  }, [currentYear, selectYear, startYear, yearRange.begin, yearRange.end]);
 
   //todo
   const yearRangeCnt = useCallback(() => {
@@ -97,6 +109,34 @@ const YearBody = React.forwardRef((props, ref) => {
       rows.push(row);
     }
   }, [currentYear, startYear, yearRange.begin, yearRange.end]);
+
+  const monthCnt = useMemo(() => {
+    if (panelType !== YearPanelType.month) {
+      return null;
+    }
+    const rows = [];
+
+    let cols = [];
+    for (let i = 0; i < 12; i++) {
+      if (i !== 0 && i % 3 === 0) {
+        rows.push(<Row key={'row-' + i}>{cols}</Row>);
+        cols = [];
+      }
+      const col = <Col justify="center" key={`col-${i}`}
+                       extraClassName={'other-year'}>
+        <Button inverted initOutlineColor type="primary"
+                onClick={(e) => selectMonth(i, e)}>
+          {ctx.config.locale.month[i]}
+        </Button>
+      </Col>;
+      cols.push(col);
+
+      if (i === 11) {
+        rows.push(<Row key={'row-' + i}>{cols}</Row>);
+      }
+    }
+    return rows;
+  }, [ctx.config.locale.month, panelType, selectMonth]);
 
   const setPreYear = useCallback((type) => {
     if (panelType === YearPanelType.year) {
@@ -128,7 +168,8 @@ const YearBody = React.forwardRef((props, ref) => {
           </span>
             <span className="content">
              <span className="year-range">
-               {yearRange.begin} - {yearRange.end}
+               {panelType === YearPanelType.month? getState().selectedYm.year:
+                `${yearRange.begin} - ${yearRange.end}`}
              </span>
            </span>
             <span className="next">
@@ -140,6 +181,7 @@ const YearBody = React.forwardRef((props, ref) => {
           <div className="year-cols">
             {panelType === YearPanelType.year && yearsCnt}
             {panelType === YearPanelType.yearRange && yearRangeCnt}
+            {monthCnt}
           </div>
         </div>
       </Card.Row>

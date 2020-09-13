@@ -36,7 +36,7 @@ const DatePicker = React.forwardRef((props, ref) => {
     zIndex = 2000,
     config = DataConfig,
     columnCount = DataConfig.columnCount,
-    popupType = PopupType.modal,
+    popupType = PopupType.popup,
     type = BodyType.day,
 
     ...otherProps
@@ -75,6 +75,7 @@ const DatePicker = React.forwardRef((props, ref) => {
       isInitialDate: function() {
         return isNil(this.activeDate);
       },
+      selectedYm: {year: null, month: null},
     });
   });
 
@@ -113,6 +114,9 @@ const DatePicker = React.forwardRef((props, ref) => {
 
       case BodyType.year:
         return <YearBody/>;
+
+      default:
+        return null;
     }
 
   }, [activePopup, bodyType, isModalType]);

@@ -1,4 +1,10 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import clsx from 'clsx';
 import Card from '../card';
 import {Button, IconArrowLeft, IconArrowRight} from '../index';
@@ -26,9 +32,6 @@ export default function DayBody(props) {
 
   //using for rendering the days of this month in GUI
   const [date, setDate] = useState(validDate);
-
-  const month = date.month();
-  const year = date.year();
 
   const dataPickerClsName = clsx('date-picker', {
     'left-title': ctx.leftTitle,
@@ -98,6 +101,16 @@ export default function DayBody(props) {
     !isNil(nextDate) && setDate(nextDate);
   }, [activePopup, date, store]);
 
+  const currentTitleInfo = useMemo(() => {
+    const selectedYm = store.getState().selectedYm;
+    if (isNil(selectedYm.year) || isNil(selectedYm.month)) {
+      return {year: validDate.year, month: validDate.month};
+    }
+    return {year: selectedYm.year, month: selectedYm.month};
+  }, [store, validDate]);
+
+  console.log(currentTitleInfo)
+
   return <Card extraClassName={dataPickerClsName}>
     <Card.Header extraClassName="date-picker-header">
       <DateTitle hasTitle={ctx.hasTitle}
@@ -120,7 +133,7 @@ export default function DayBody(props) {
               </Button>
           </span>
           <span className="content">
-          {ctx.config.locale.monthDetails[month]} {year}
+          {ctx.config.locale.monthDetails[currentTitleInfo.month]} {currentTitleInfo.year}
         </span>
           <span className="next">
               <Button size="small" inverted circle
