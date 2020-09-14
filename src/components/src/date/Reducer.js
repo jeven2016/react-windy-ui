@@ -23,7 +23,6 @@ export const reducer = (state, action) => {
       return {...state, displayDate: getDateByYear(1, action.data.date)};
 
     case DateActionType.nextMonth:
-      console.log(state);
       return {...state, displayDate: getDateByMonth(1, action.data.date)};
 
     case DateActionType.preYear:
@@ -33,7 +32,6 @@ export const reducer = (state, action) => {
       return {...state, displayDate: getDateByMonth(-1, action.data.date)};
 
     case DateActionType.selectDay:
-      console.log(action.data.date.format("YYYY-MM-DD"))
       return {...state, displayDate: null, date: action.data.date};
 
     case DateActionType.close:

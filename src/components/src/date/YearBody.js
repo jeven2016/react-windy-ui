@@ -1,23 +1,27 @@
-import React, {useCallback, useContext, useMemo, useState} from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import Card from '../card';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
 import Button from '../button';
 import DateTitle from './DateTitle';
 import {DateContext} from '../common/Context';
-import {isNil, isNumber} from '../Utils';
+import {isNumber} from '../Utils';
 import clsx from 'clsx';
 import {IconArrowLeft, IconArrowRight} from '../Icons';
 import {BodyType, YearPanelType} from './DateUtils';
 
 const YearBody = React.forwardRef((props, ref) => {
   const ctx = useContext(DateContext);
-  const {getState, setState} = ctx.store;
+  const {getState, setState, attach, detach} = ctx.store;
   const activeDate = getState().activeDate;
 
-  const validDate = isNil(activeDate)
-      ? getState().initialDate
-      : activeDate;
+  const validDate = getState().getValidDate();
 
   const currentYear = validDate.get('year');
 
@@ -25,18 +29,32 @@ const YearBody = React.forwardRef((props, ref) => {
   const [startYear, setStartYear] = useState(currentYear);
   const [panelType, setPanelType] = useState(YearPanelType.year);
 
+  //used to refresh this component
+  const [refresh, setRefresh] = useState(false);
+
   const dataPickerClsName = clsx('date-picker', {
     'left-title': ctx.leftTitle,
   });
 
+  useEffect(() => {
+    const listener = () => {
+      const storedDate = getState().getValidDate();
+      //force this component to refresh while the date is changed in store
+      if (!storedDate.isSame(validDate)) {
+        setRefresh(pre => !pre);
+      }
+    };
+    attach(listener);
+    return () => detach(listener);
+  }, [attach, detach, getState, validDate]);
+
   const selectYear = useCallback((year, e) => {
-    // setStartYear(year);
-    setState({selectedYm: {...getState().selectedYm, year: year}});
+    setState({initialDate: {...getState().initialDate, year: year, date: 1}});
     setPanelType(YearPanelType.month);
   }, [getState, setState]);
 
   const selectMonth = useCallback((i, e) => {
-    setState({selectedYm: {...getState().selectedYm, month: i}});
+    setState({initialDate: {...getState().initialDate, month: i, date: 1}});
     ctx.setBodyType(BodyType.day);
   }, [ctx, getState, setState]);
 
@@ -142,11 +160,20 @@ const YearBody = React.forwardRef((props, ref) => {
     if (panelType === YearPanelType.year) {
       setStartYear(pre => pre - 10 < 0 ? 0 : pre - 10);
     }
+
+    if (panelType === YearPanelType.month) {
+      const preInitDate = getState().initialDate;
+      setState({initialDate: {...preInitDate, year: preInitDate.year - 1}});
+    }
   }, [panelType]);
 
-  const setNextYear = useCallback((type) => {
+  const setNextYear = useCallback(() => {
     if (panelType === YearPanelType.year) {
       setStartYear(pre => pre + 10 < 0 ? 0 : pre + 10);
+    }
+    if (panelType === YearPanelType.month) {
+      const preInitDate = getState().initialDate;
+      setState({initialDate: {...preInitDate, year: preInitDate.year + 1}});
     }
   }, [panelType]);
 
@@ -155,7 +182,7 @@ const YearBody = React.forwardRef((props, ref) => {
       <Card.Header extraClassName="date-picker-header">
         <DateTitle hasTitle={ctx.hasTitle}
                    config={ctx.config}
-                   date={validDate}
+                   date={getState().activeDate}
                    leftTitle={ctx.leftTitle}/>
       </Card.Header>
       <Card.Row>
@@ -168,8 +195,9 @@ const YearBody = React.forwardRef((props, ref) => {
           </span>
             <span className="content">
              <span className="year-range">
-               {panelType === YearPanelType.month? getState().selectedYm.year:
-                `${yearRange.begin} - ${yearRange.end}`}
+               {panelType === YearPanelType.month
+                   ? getState().getValidDate().year() :
+                   `${yearRange.begin} - ${yearRange.end}`}
              </span>
            </span>
             <span className="next">

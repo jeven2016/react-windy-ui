@@ -1,6 +1,8 @@
 import React, {useContext} from 'react';
 import {DateContext} from '../common/Context';
 import {BodyType} from './DateUtils';
+import {isNil} from "../Utils";
+import dayjs from "dayjs";
 
 export default function DateTitle(props) {
   const {
@@ -14,20 +16,21 @@ export default function DateTitle(props) {
   if (!hasTitle) {
     return null;
   }
-  let currentDayOfWeek = config.locale.dayOfWeek[date.day()];
-  let currentMonth = config.locale.month[date.month()];
+  const displayDate = isNil(date) ? dayjs() : date;//display the active date or today
+  let currentDayOfWeek = config.locale.dayOfWeek[displayDate.day()];
+  let currentMonth = config.locale.month[displayDate.month()];
 
   let txtContent = leftTitle ? <div>
         <div>{currentDayOfWeek},</div>
-        <div>{currentMonth} {date.date()}</div>
+        <div>{currentMonth} {displayDate.date()}</div>
       </div>
-      : <span>{currentDayOfWeek}, {currentMonth} {date.date()}
+      : <span>{currentDayOfWeek}, {currentMonth} {displayDate.date()}
                   </span>;
 
   return (
       <div className="date-picker-title" {...otherProps}>
         <div><span className="year-info" onClick={() => ctx.setBodyType(
-            BodyType.year)}>{date.year()}</span></div>
+            BodyType.year)}>{displayDate.year()}</span></div>
         <div className="detail-info">
           {txtContent}
         </div>

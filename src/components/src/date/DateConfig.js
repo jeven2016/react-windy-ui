@@ -1,6 +1,7 @@
 import React from 'react';
-import {isNil, validate} from '../Utils';
+import {isNil} from '../Utils';
 import Button from '../button';
+import dayjs from "dayjs";
 
 export const DataConfig = {
   columnCount: 7 * 6,
@@ -48,16 +49,14 @@ export const DataConfig = {
 };
 
 const isActiveDay = (activeDate, displayDate, selectedDate) => {
-  if (isNil(activeDate) && isNil(displayDate)) {
+  if (isNil(activeDate) || isNil(displayDate)) {
     return false;
   }
 
   //check whether the year and month are same
-  if (!isNil(activeDate)) {
-    if (!activeDate.isSame(displayDate, 'month') ||
-        !activeDate.isSame(displayDate, 'year')) {
-      return false;
-    }
+  if (!activeDate.isSame(displayDate, 'month') ||
+      !activeDate.isSame(displayDate, 'year')) {
+    return false;
   }
   return activeDate.date() === selectedDate;
 };
@@ -67,7 +66,14 @@ const selectDay = (
     customizedDate) => {
   const selectedDate = displayDate.date(day);
   if (!customizedDate) {
-    store.setState({activeDate: selectedDate});
+    store.setState({
+      activeDate: selectedDate,
+      initialDate: {
+        year: selectedDate.year(),
+        month: selectedDate.month(),
+        date: selectedDate.date()
+      }
+    });
   }
 
   if (autoClose) {
@@ -82,17 +88,16 @@ const getKey = (date, suffix) => {
 };
 
 export const createDateColumns = ({
-                                    displayDate,
-                                    columnCount, store, autoClose,
-                                    activePopup, onChange, dateFormat, customizedDate,
-                                  }) => {
+  columnCount, store, autoClose,
+  activePopup, onChange, dateFormat, customizedDate,
+}) => {
 
   //for current month
   const state = store.getState();
-  const validDate = state.isInitialDate()
-      ? state.initialDate
-      : state.activeDate;
+  const validDate = state.getValidDate();
+  const activeDate = isNil(state.activeDate) ? dayjs() : state.activeDate;
 
+  const displayDate = state.getValidDate();//the predefined date or just today
   let numberOfDays = displayDate.daysInMonth();
 
   //get the first day of the week within this month
@@ -102,7 +107,7 @@ export const createDateColumns = ({
   const lastMonthDate = displayDate.add(-1, 'months');
   let daysOfLastMonth = lastMonthDate.daysInMonth();
 
-  //the data picker has 7row and 6 columns for each row
+  //the data picker has 7row and 6 columns per row
   let columns = [];
   let td, key;
 
@@ -128,7 +133,7 @@ export const createDateColumns = ({
   for (let i = firstDay; i < numberOfDays + firstDay; i++) {
     dateToProcess = i - firstDay + 1;
     key = `current-${getKey(displayDate, dateToProcess)}`;
-    active = isActiveDay(validDate, displayDate, dateToProcess);
+    active = isActiveDay(activeDate, displayDate, dateToProcess);
     const isOutlineStyle = active && state.isInitialDate();
     td = (<td key={key}>
       <Button

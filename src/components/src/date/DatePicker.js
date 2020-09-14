@@ -18,6 +18,40 @@ var customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(isoWeek);
 dayjs.extend(customParseFormat);
 
+const initData = (temporaryDate, predefinedDate) => {
+  return {
+    //the initial date to display, it could be the activeDate or
+    //a temporary date changed from GUI
+    initialDate: {
+      year: temporaryDate.year(),
+      month: temporaryDate.month(),
+      date: temporaryDate.date()
+    },
+
+    //explicitly set by value or defaultValue parameter
+    activeDate: predefinedDate,
+
+    isInitialDate: function () {
+      return isNil(this.activeDate);
+    },
+
+    //get current valid date
+    getValidDate: function () {
+      return dayjs().year(this.initialDate.year).month(this.initialDate.month)
+      .date(this.initialDate.date);
+    },
+
+    getValidStringDate: function () {
+      const validDate = this.getValidDate();
+      return {
+        year: validDate.year(),
+        month: validDate.month(),
+        date: validDate.date()
+      }
+    },
+  }
+}
+
 const DatePicker = React.forwardRef((props, ref) => {
   const {
     className,
@@ -67,17 +101,12 @@ const DatePicker = React.forwardRef((props, ref) => {
     state: !isNil(value) ? dayjs(value) : null,
   });
 
+  const temporaryDate = date || dayjs();
+
   //init a internal store
-  const [store] = useState(() => {
-    return initStore({
-      initialDate: date || dayjs(),
-      activeDate: isNil(date) ? null : date,
-      isInitialDate: function() {
-        return isNil(this.activeDate);
-      },
-      selectedYm: {year: null, month: null},
-    });
-  });
+  const [store] = useState(() =>
+      initStore(initData(temporaryDate, date))
+  );
 
   //apply the value of customized properties for store
   useEffect(() => {
@@ -101,9 +130,8 @@ const DatePicker = React.forwardRef((props, ref) => {
       }, [activeModal, isModalType]);
 
   const popupCtrl = useMemo(() => {
-    const ctrl = <DateInput isPopupActive={isPopupActive}
-                            activePopup={activePopup}/>;
-    return ctrl;
+    return <DateInput isPopupActive={isPopupActive}
+                      activePopup={activePopup}/>;
   }, [activePopup, isPopupActive]);
 
   const popupBody = useMemo(() => {

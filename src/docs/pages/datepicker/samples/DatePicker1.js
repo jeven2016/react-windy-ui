@@ -12,8 +12,8 @@ export default function DatePicker1() {
       <DatePicker onChange={change}/>
     </div>
     <div className="doc doc-row">
-      <DatePicker defaultValue="2018-10-11" hasTitle={true} direction="vertical"
-                  onChange={change}/>
+    {/*  <DatePicker defaultValue="2018-10-11" hasTitle={true} direction="vertical"
+                  onChange={change}/>*/}
     </div>
   </>;
 }

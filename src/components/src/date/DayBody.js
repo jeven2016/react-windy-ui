@@ -1,16 +1,10 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, {useCallback, useContext, useEffect, useState,} from 'react';
 import clsx from 'clsx';
 import Card from '../card';
 import {Button, IconArrowLeft, IconArrowRight} from '../index';
 import {IconLeftDoubleArrows, IconRightDoubleArrows} from '../Icons';
 import {createDateColumns} from './DateConfig';
-import {isNil, slice} from '../Utils';
+import {slice} from '../Utils';
 import DateTitle from './DateTitle';
 import {DateActionType} from './DateUtils';
 import dayjs from 'dayjs';
@@ -22,32 +16,36 @@ export default function DayBody(props) {
   } = props;
   const ctx = useContext(DateContext);
   const store = ctx.store;
-  const {attach, detach, getState} = store;
+  const {attach, detach, getState, setState} = store;
   const activeDate = getState().activeDate;
 
   //init a date while no date is selected
-  const validDate = isNil(activeDate)
-      ? getState().initialDate
-      : activeDate;
+  const validDate = getState().getValidDate();
 
-  //using for rendering the days of this month in GUI
+  console.log(validDate.format("YYYY-MM-DD"));
+
+  //using for rendering the days of this month in GUI, it's an internal copy of initialDate
+  //only used to sync with store
   const [date, setDate] = useState(validDate);
 
   const dataPickerClsName = clsx('date-picker', {
     'left-title': ctx.leftTitle,
   });
 
+  // console.log(validDate.format("YYYY-MM-DD"))
   useEffect(() => {
     const listener = () => {
-      setDate(getState().activeDate);
+      const storedDate = getState().getValidDate();
+      if (!storedDate.isSame(date)) {
+        setDate(getState().getValidDate());
+      }
     };
     attach(listener);
     return () => detach(listener);
-  }, [attach, detach, getState]);
+  }, [date, attach, detach, getState, setDate]);
 
   const generateDays = useCallback(() => {
     let columns = createDateColumns({
-      displayDate: date,
       columnCount: ctx.columnCount,
       store,
       autoClose: ctx.autoClose,
@@ -75,6 +73,7 @@ export default function DayBody(props) {
     date,
     store]);
 
+  // console.log(date.format('YYYY-MM-DD'));
   const change = useCallback((type, e) => {
     let nextDate = date;
     switch (type) {
@@ -98,24 +97,20 @@ export default function DayBody(props) {
         break;
     }
 
-    !isNil(nextDate) && setDate(nextDate);
-  }, [activePopup, date, store]);
-
-  const currentTitleInfo = useMemo(() => {
-    const selectedYm = store.getState().selectedYm;
-    if (isNil(selectedYm.year) || isNil(selectedYm.month)) {
-      return {year: validDate.year, month: validDate.month};
-    }
-    return {year: selectedYm.year, month: selectedYm.month};
-  }, [store, validDate]);
-
-  console.log(currentTitleInfo)
+    setState({
+      initialDate: {
+        ...getState().initialDate,
+        year: nextDate.year(),
+        month: nextDate.month()
+      }
+    });
+  }, [date, getState, setState, activePopup, store]);
 
   return <Card extraClassName={dataPickerClsName}>
     <Card.Header extraClassName="date-picker-header">
       <DateTitle hasTitle={ctx.hasTitle}
                  config={ctx.config}
-                 date={validDate}
+                 date={getState().activeDate}
                  leftTitle={ctx.leftTitle}/>
     </Card.Header>
 
@@ -133,7 +128,7 @@ export default function DayBody(props) {
               </Button>
           </span>
           <span className="content">
-          {ctx.config.locale.monthDetails[currentTitleInfo.month]} {currentTitleInfo.year}
+          {ctx.config.locale.monthDetails[date.month()]} {date.year()}
         </span>
           <span className="next">
               <Button size="small" inverted circle

@@ -124,7 +124,6 @@ const Table = React.forwardRef((props, ref) => {
   const scrollBodyRef = useRef();
   const scrollBarWidthRef = useRef(getScrollbarWidth());
 
-  console.log(sortedState);
   useImperativeHandle(instanceRef, () => ({
     clearSort: () => {
       setSortedState(null);
@@ -149,7 +148,6 @@ const Table = React.forwardRef((props, ref) => {
     if (sortedState) {
       data = sortedState.sorter(data);
     }
-    console.log(convertToArray(loadData));
     if (filterParams.length > 0) {
       filterParams.forEach(param => {
         data = data.filter(param.fc);
