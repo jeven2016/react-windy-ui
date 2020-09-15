@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import {IconCalendar, Input} from '../index';
-import {isBlank, isNil} from '../Utils';
+import {isNil} from '../Utils';
 import * as dayjs from 'dayjs';
 import {DateContext} from '../common/Context';
 

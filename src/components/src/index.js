@@ -1,4 +1,3 @@
-import DateTimePicker from './DateTimePicker';
 import TimePicker from './TimePicker';
 import DatePicker from './date/DatePicker';
 import Pagination from './Pagination.js';
@@ -53,7 +52,7 @@ export {default as Tree} from './tree/Tree';
 export {default as useLazyImport} from './common/UseLazyImport';
 export {default as Collapse} from './collapse/Collapse';
 export {default as Table} from './table/Table';
-export {default as PopConfirm} from './popconfirm'
+export {default as PopConfirm} from './popconfirm';
 
 export {
   IconInfo,
@@ -93,7 +92,6 @@ export {
   addWindowEventListener,
   removeWindowEventListener,
   preventEvent,
-  DateTimePicker,
   DatePicker,
   TimePicker,
   Pagination,

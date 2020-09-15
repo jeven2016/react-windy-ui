@@ -20,14 +20,9 @@ export const PopupType = {
   modal: 'modal',
 };
 
-export const BodyType = {
-  day: 'day',
-  month: 'month',
-  year: 'year',
-};
-
-export const YearPanelType = {
+export const PickerPanel = {
   year: 'year',
   yearRange: 'yearRange',
   month: 'month',
+  date: 'date',
 };

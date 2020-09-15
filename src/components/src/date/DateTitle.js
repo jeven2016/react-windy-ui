@@ -1,39 +1,39 @@
 import React, {useContext} from 'react';
 import {DateContext} from '../common/Context';
-import {BodyType} from './DateUtils';
-import {isNil} from "../Utils";
-import dayjs from "dayjs";
+import {isNil} from '../Utils';
+import dayjs from 'dayjs';
+import {PickerPanel} from './DateUtils';
 
 export default function DateTitle(props) {
   const {
-    hasTitle,
-    config,
     date,
-    leftTitle,
+    setPanelType,
     ...otherProps
   } = props;
   const ctx = useContext(DateContext);
-  if (!hasTitle) {
+  if (!ctx.hasTitle) {
     return null;
   }
   const displayDate = isNil(date) ? dayjs() : date;//display the active date or today
-  let currentDayOfWeek = config.locale.dayOfWeek[displayDate.day()];
-  let currentMonth = config.locale.month[displayDate.month()];
+  let currentDayOfWeek = ctx.config.locale.dayOfWeek[displayDate.day()];
+  let currentMonth = ctx.config.locale.month[displayDate.month()];
 
-  let txtContent = leftTitle ? <div>
+  let txtContent = ctx.leftTitle ? <div>
         <div>{currentDayOfWeek},</div>
         <div>{currentMonth} {displayDate.date()}</div>
       </div>
       : <span>{currentDayOfWeek}, {currentMonth} {displayDate.date()}
                   </span>;
 
-  return (
-      <div className="date-picker-title" {...otherProps}>
-        <div><span className="year-info" onClick={() => ctx.setBodyType(
-            BodyType.year)}>{displayDate.year()}</span></div>
-        <div className="detail-info">
-          {txtContent}
-        </div>
-      </div>
-  );
+  return <div className="date-picker-title" {...otherProps}>
+    <div>
+      <span className="year-info"
+            onClick={() => setPanelType(PickerPanel.year)}>
+      {displayDate.year()}
+      </span>
+    </div>
+    <div className="detail-info">
+      {txtContent}
+    </div>
+  </div>;
 }

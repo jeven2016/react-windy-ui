@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState,} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import clsx from 'clsx';
 import Card from '../card';
 import {Button, IconArrowLeft, IconArrowRight} from '../index';
@@ -10,19 +10,16 @@ import {DateActionType} from './DateUtils';
 import dayjs from 'dayjs';
 import {DateContext} from '../common/Context';
 
-export default function DayBody(props) {
-  const {
-    activePopup,
-  } = props;
+export default function DayPanel(props) {
+  const {setPanelType} = props;
   const ctx = useContext(DateContext);
   const store = ctx.store;
   const {attach, detach, getState, setState} = store;
-  const activeDate = getState().activeDate;
 
   //init a date while no date is selected
   const validDate = getState().getValidDate();
 
-  console.log(validDate.format("YYYY-MM-DD"));
+  console.log(validDate.format('YYYY-MM-DD'));
 
   //using for rendering the days of this month in GUI, it's an internal copy of initialDate
   //only used to sync with store
@@ -49,7 +46,7 @@ export default function DayBody(props) {
       columnCount: ctx.columnCount,
       store,
       autoClose: ctx.autoClose,
-      activePopup,
+      activePopup: ctx.activePopup,
       onChange: ctx.onChange,
       dateFormat: ctx.dateFormat,
       customizedDate: ctx.customizedDate,
@@ -64,13 +61,12 @@ export default function DayBody(props) {
     <tr>{slice(columns, 35, 42)}</tr>
     </tbody>;
   }, [
-    activePopup,
+    ctx.activePopup,
     ctx.autoClose,
     ctx.columnCount,
     ctx.customizedDate,
     ctx.dateFormat,
     ctx.onChange,
-    date,
     store]);
 
   // console.log(date.format('YYYY-MM-DD'));
@@ -91,7 +87,7 @@ export default function DayBody(props) {
         break;
       case DateActionType.today:
         store.setState({activeDate: dayjs()});
-        activePopup(false);
+        ctx.activePopup(false);
         return;
       default:
         break;
@@ -101,17 +97,14 @@ export default function DayBody(props) {
       initialDate: {
         ...getState().initialDate,
         year: nextDate.year(),
-        month: nextDate.month()
-      }
+        month: nextDate.month(),
+      },
     });
-  }, [date, getState, setState, activePopup, store]);
+  }, [date, setState, getState, store, ctx]);
 
   return <Card extraClassName={dataPickerClsName}>
     <Card.Header extraClassName="date-picker-header">
-      <DateTitle hasTitle={ctx.hasTitle}
-                 config={ctx.config}
-                 date={getState().activeDate}
-                 leftTitle={ctx.leftTitle}/>
+      <DateTitle date={getState().activeDate} setPanelType={setPanelType}/>
     </Card.Header>
 
     <Card.Row>

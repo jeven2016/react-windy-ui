@@ -2,13 +2,12 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {DataConfig} from './DateConfig';
 import Popup from '../popup/Popup';
 import {PopupCtrlType} from '../common/Constants';
-import DayBody from './DayBody';
 import dayjs from 'dayjs';
 import useInternalState from '../common/useInternalState';
 import {initStore} from '../common/Store';
 import {isNil, validate} from '../Utils';
 import DateInput from './DateInput';
-import {BodyType, PopupType} from './DateUtils';
+import {PickerPanel, PopupType} from './DateUtils';
 import Modal from '../modal';
 import {DateContext} from '../common/Context';
 import YearBody from './YearBody';
@@ -25,36 +24,37 @@ const initData = (temporaryDate, predefinedDate) => {
     initialDate: {
       year: temporaryDate.year(),
       month: temporaryDate.month(),
-      date: temporaryDate.date()
+      date: temporaryDate.date(),
     },
 
     //explicitly set by value or defaultValue parameter
     activeDate: predefinedDate,
 
-    isInitialDate: function () {
+    isInitialDate: function() {
       return isNil(this.activeDate);
     },
 
     //get current valid date
-    getValidDate: function () {
-      return dayjs().year(this.initialDate.year).month(this.initialDate.month)
-      .date(this.initialDate.date);
+    getValidDate: function() {
+      return dayjs().
+          year(this.initialDate.year).
+          month(this.initialDate.month).
+          date(this.initialDate.date);
     },
 
-    getValidStringDate: function () {
+    getValidStringDate: function() {
       const validDate = this.getValidDate();
       return {
         year: validDate.year(),
         month: validDate.month(),
-        date: validDate.date()
-      }
+        date: validDate.date(),
+      };
     },
-  }
-}
+  };
+};
 
 const DatePicker = React.forwardRef((props, ref) => {
   const {
-    className,
     extraClassName,
     hasTitle = true,
     defaultValue,
@@ -71,14 +71,13 @@ const DatePicker = React.forwardRef((props, ref) => {
     config = DataConfig,
     columnCount = DataConfig.columnCount,
     popupType = PopupType.popup,
-    type = BodyType.day,
+    type = PickerPanel.date,
 
     ...otherProps
   } = props;
   const popupRef = useRef(null);
   const [activeModal, setActiveModal] = useState(false);
   const [realPopupType, setRealPopupType] = useState(popupType);
-  const [bodyType, setBodyType] = useState(type);
 
   const isModalType = realPopupType === PopupType.modal;
 
@@ -92,7 +91,6 @@ const DatePicker = React.forwardRef((props, ref) => {
 
   const {
     state: date,
-    // setState: setDate,
     customized,
   } = useInternalState({
     props,
@@ -105,7 +103,7 @@ const DatePicker = React.forwardRef((props, ref) => {
 
   //init a internal store
   const [store] = useState(() =>
-      initStore(initData(temporaryDate, date))
+      initStore(initData(temporaryDate, date)),
   );
 
   //apply the value of customized properties for store
@@ -135,19 +133,8 @@ const DatePicker = React.forwardRef((props, ref) => {
   }, [activePopup, isPopupActive]);
 
   const popupBody = useMemo(() => {
-    switch (bodyType) {
-      case BodyType.day:
-        return <DayBody modal={isModalType}
-                        activePopup={activePopup}/>;
-
-      case BodyType.year:
-        return <YearBody/>;
-
-      default:
-        return null;
-    }
-
-  }, [activePopup, bodyType, isModalType]);
+    return <YearBody type={type}/>;
+  }, [type]);
 
   let pickerBody = null;
   if (realPopupType === PopupType.popup) {
@@ -161,6 +148,7 @@ const DatePicker = React.forwardRef((props, ref) => {
         ctrlNode={popupCtrl}
         body={popupBody}
         hasBorder={false}
+        activePopup={activePopup}
         hasBox={true}
         zIndex={zIndex}/>;
   } else {
@@ -184,9 +172,8 @@ const DatePicker = React.forwardRef((props, ref) => {
     store,
     config,
     placeholder,
+    activePopup,
     customizedDate: customized,
-    bodyType,
-    setBodyType,
     leftTitle,
   }}>
     {pickerBody}
