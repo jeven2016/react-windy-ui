@@ -70,14 +70,15 @@ const DateInput = React.forwardRef((props, ref) => {
     showClear && setShowClear(false);
   }, [showClear, setShowClear]);
 
-  return <Input.IconInput size="medium" ref={ref}>
-    <Input value={textDate} onChange={change} placeholder={placeholder}
-           onClick={showPopup}
-           onMouseEnter={mouseEnter}
-           onMouseLeave={mouseLeave}
-           onBlur={handleValue}/>
-    {showClear ? <IconClear/> : <IconCalendar/>}
-  </Input.IconInput>;
+  return <Input.IconInput placeholder={placeholder} size="medium" ref={ref}
+                          inputProps={{
+                            value: textDate, onChange: change,
+                            onClick: showPopup,
+                            onMouseEnter: mouseEnter,
+                            onMouseLeave: mouseLeave,
+                            onBlur: handleValue,
+                          }}
+                          icon={showClear ? <IconClear/> : <IconCalendar/>}/>;
 });
 
 export default DateInput;

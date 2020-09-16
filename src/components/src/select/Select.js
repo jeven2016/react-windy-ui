@@ -134,7 +134,7 @@ const Select = React.forwardRef((props, ref) => {
 
     //adjust the menu's width
     let rect = multiSelect ? internalCtrlRef.current.getBoundingClientRect()
-        : inputDomNode.getBoundingClientRect();
+        : inputDomNode.parentNode.getBoundingClientRect();
 
     const width = rect.width;
     if (width <= 0) {
@@ -358,15 +358,15 @@ const Select = React.forwardRef((props, ref) => {
   };
 
   const getCtrl = () => {
-    const input = <>
-      <Input placeholder={realPlaceHolder} readOnly={!searchable}
-             ref={inputRef}
-             style={ctrlStyle}
-             value={displayText}
-             onChange={handleSearch}
-             onBlur={handleBlur}
-      />
-    </>;
+    const inputProps = {
+      placeholder: realPlaceHolder,
+      readOnly: !searchable,
+      ref: inputRef,
+      style: ctrlStyle,
+      value: displayText,
+      onChange: handleSearch,
+      onBlur: handleBlur,
+    };
     if (multiSelect) {
       return <span className='select-multiple' onClick={focusInput}
                    style={style}
@@ -384,7 +384,7 @@ const Select = React.forwardRef((props, ref) => {
               </animated.span>
           ))
         }
-          {input}
+          <Input {...inputProps}/>
           <span ref={detectRef} className='search-text-detector'>
         {/*this used to detect the width of the input value in pixel*/}
             {searchedValue}
@@ -394,10 +394,8 @@ const Select = React.forwardRef((props, ref) => {
     }
     return <Input.IconInput inputRef={inputRef} disabled={disabled}
                             block={block} size={size} ref={multiSelectRef}
-                            style={style}>
-      {input}
-      {realIcon}
-    </Input.IconInput>;
+                            style={style} inputProps={inputProps}
+                            icon={realIcon}/>;
   };
 
   const selectHandler = (itemsArray, e) => {

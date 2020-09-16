@@ -39,8 +39,8 @@ export const usePanelHead = (content, onClick, isNode = false) => {
 
   return <Spring
       reset
-      from={{opacity: 0, transform: 'translate3d(50%, 0, 0)'}}
-      to={{opacity: 1, transform: 'translate3d(0%, 0, 0)'}}>
+      from={{opacity: 0, transform: 'translate3d(4rem, 0, 0)'}}
+      to={{opacity: 1, transform: 'translate3d(0rem, 0, 0)'}}>
     {props => React.cloneElement(cnt, {style: props})}
   </Spring>
 };

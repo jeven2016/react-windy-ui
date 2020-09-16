@@ -1,10 +1,12 @@
-import React, {useContext} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import {InputBorderType} from './common/Constants';
+import {EventListener, InputBorderType} from './common/Constants';
 import Element from './common/Element';
 import {InputGroupContext} from './common/Context';
 import {isNil} from './Utils';
+import useMultipleRefs from './common/UseMultipleRefs';
+import {useEvent} from './index';
 
 const IconInput = React.forwardRef((props, ref) => {
   const {
@@ -12,6 +14,9 @@ const IconInput = React.forwardRef((props, ref) => {
     size = 'medium',
     block = false,
     leftIcon = false,
+    icon,//todo
+    inputProps,//todo
+    placeholder,//todo
     disabled = false,
     borderType,
     children,
@@ -19,6 +24,10 @@ const IconInput = React.forwardRef((props, ref) => {
     extraClassName,
     ...otherProps
   } = props;
+  const [active, setActive] = useState(false);
+  const interInputRef = useRef(null);
+  const multiInputRef = useMultipleRefs(inputRef, interInputRef);
+
   const ctx = useContext(InputGroupContext);
   const inputDisabled = isNil(ctx.disabled) ? disabled : ctx.disabled;
   let borderTypeCls = InputBorderType[borderType];
@@ -28,33 +37,23 @@ const IconInput = React.forwardRef((props, ref) => {
     block: block,
     disabled: inputDisabled,
     [borderTypeCls]: borderTypeCls,
+    active: active,
   });
 
-  let newChildren = children;
-  if (newChildren) {
-    newChildren = React.Children.map(children, chd => {
-      if (chd.type === Input) {
-        return React.cloneElement(chd,
-            {ref: inputRef, disabled: inputDisabled});
-      }
-      return chd;
-    });
-  }
+  useEvent(EventListener.focus, function() {
+    !active && setActive(true);
+  }, true, () => interInputRef.current);
+
+  useEvent(EventListener.blur, function() {
+    active && setActive(false);
+  }, true, () => interInputRef.current);
 
   return <span className={clsName} {...otherProps} ref={ref}>
-    {newChildren}
+    <Input ref={multiInputRef} canFocus={false}
+           disabled={inputDisabled} {...inputProps}/>
+   <span className="icon-column">{icon}</span>
   </span>;
 });
-
-IconInput.propTypes = {
-  className: PropTypes.string,
-  extraClassName: PropTypes.string, //the customized class need to add
-  leftIcon: PropTypes.bool, // whether the icon is placed in left side of the input
-  size: PropTypes.oneOf(['large', 'medium', 'small']),
-  block: PropTypes.bool,
-  borderType: PropTypes.oneOf(['ok', 'warning', 'error']),
-  disabled: PropTypes.bool,
-};
 
 const Input = React.forwardRef((props, ref) => {
   const {
@@ -66,6 +65,7 @@ const Input = React.forwardRef((props, ref) => {
     borderType,
     extraClassName,
     readOnly = false,
+    canFocus = true,//todo
     ...otherProps
   } = props;
   const ctx = useContext(InputGroupContext);
@@ -78,6 +78,7 @@ const Input = React.forwardRef((props, ref) => {
     block: block,
     'within-group': ctx.withinGroup,
     [borderTypeCls]: borderTypeCls,
+    'with-focus': canFocus,
   });
 
   if (type.toLowerCase() === 'textarea') {
@@ -100,6 +101,16 @@ const Input = React.forwardRef((props, ref) => {
   );
 
 });
+
+IconInput.propTypes = {
+  className: PropTypes.string,
+  extraClassName: PropTypes.string, //the customized class need to add
+  leftIcon: PropTypes.bool, // whether the icon is placed in left side of the input
+  size: PropTypes.oneOf(['large', 'medium', 'small']),
+  block: PropTypes.bool,
+  borderType: PropTypes.oneOf(['ok', 'warning', 'error']),
+  disabled: PropTypes.bool,
+};
 
 Input.propTypes = {
   borderType: PropTypes.oneOf(['ok', 'warning', 'error']),

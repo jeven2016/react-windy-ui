@@ -13,10 +13,7 @@ export default function Navbar7() {
           <Button color="green">Button</Button>
         </Navbar.Item>
         <Navbar.Item active={true}>
-          <Input.IconInput>
-            <Input placeholder="Message..."/>
-            <IconSearch/>
-          </Input.IconInput>
+          <Input.IconInput placeholder="Message..." icon={<IconSearch/>}/>
         </Navbar.Item>
         <Navbar.Item>
           <Dropdown title={<Button style={{marginLeft: '2rem'}}

@@ -1,6 +1,7 @@
 import {useEffect, useRef} from 'react';
 import {invoke, isFunction} from '../Utils';
 
+//todo: performance test
 //Typically the handler combined with useCallback would be better
 
 //refer to https://overreacted.io/making-setinterval-declarative-with-react-hooks/

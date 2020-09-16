@@ -7,13 +7,8 @@ export default function SampleInput6(props) {
       <Input disabled placeholder="Username"/>
     </div>
     <div className="doc doc-row">
-      <Input.IconInput block disabled>
-        <Input placeholder="Searching"/>
-        <i className="svg icon">
-          <Loader size="small" active={true}/>
-        </i>
-
-      </Input.IconInput>
+      <Input.IconInput block disabled placeholder="Searching"
+                       icon={<Loader size="small" active={true}/>}/>
     </div>
     <div className="doc doc-row">
       <InputGroup block>
