@@ -30,19 +30,17 @@ const initData = (temporaryDate, predefinedDate) => {
     //explicitly set by value or defaultValue parameter
     activeDate: predefinedDate,
 
-    isInitialDate: function() {
+    isInitialDate: function () {
       return isNil(this.activeDate);
     },
 
     //get current valid date
-    getValidDate: function() {
-      return dayjs().
-          year(this.initialDate.year).
-          month(this.initialDate.month).
-          date(this.initialDate.date);
+    getValidDate: function () {
+      return dayjs().year(this.initialDate.year).month(
+          this.initialDate.month).date(this.initialDate.date);
     },
 
-    getValidStringDate: function() {
+    getValidStringDate: function () {
       const validDate = this.getValidDate();
       return {
         year: validDate.year(),
@@ -72,6 +70,7 @@ const DatePicker = React.forwardRef((props, ref) => {
     columnCount = DataConfig.columnCount,
     popupType = PopupType.popup,
     type = PickerPanel.date,
+    clearable = true,
 
     ...otherProps
   } = props;
@@ -128,9 +127,8 @@ const DatePicker = React.forwardRef((props, ref) => {
       }, [activeModal, isModalType]);
 
   const popupCtrl = useMemo(() => {
-    return <DateInput isPopupActive={isPopupActive}
-                      activePopup={activePopup}/>;
-  }, [activePopup, isPopupActive]);
+    return <DateInput/>;
+  }, []);
 
   const popupBody = useMemo(() => {
     return <YearBody type={type}/>;
@@ -175,6 +173,8 @@ const DatePicker = React.forwardRef((props, ref) => {
     activePopup,
     customizedDate: customized,
     leftTitle,
+    isPopupActive,
+    clearable,
   }}>
     {pickerBody}
   </DateContext.Provider>;

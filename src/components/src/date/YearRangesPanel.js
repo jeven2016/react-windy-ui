@@ -14,7 +14,7 @@ import Col from '../grid/Col';
 import {DateContext} from '../common/Context';
 import clsx from 'clsx';
 import {isNumber} from '../Utils';
-import {PickerPanel} from './DateUtils';
+import {PickerPanel, usePanel, usePanelHead} from './DateUtils';
 
 const YearRangesPanel = React.forwardRef((props, ref) => {
   const {setPanelType} = props;
@@ -68,14 +68,13 @@ const YearRangesPanel = React.forwardRef((props, ref) => {
         const year = yearRange.begin + j;
         j = j + 10;
         const col = <Col justify="center" key={`col-${year}`}
-                         extraClassName={year > yearRange.end
+                         extraClassName={year >= yearRange.begin + 100
                              ? 'other-year'
                              : null}>
           <Button inverted initOutlineColor type="primary"
                   extraClassName="range-btn"
-                  onClick={selectRange.bind(null, year)}
-                  active={year === currentYear}>
-            {year}-{year + 10}
+                  onClick={selectRange.bind(null, year)}>
+            {year}-{year + 9}
           </Button>
         </Col>;
         cols.push(col);
@@ -114,7 +113,7 @@ const YearRangesPanel = React.forwardRef((props, ref) => {
           </span>
             <span className="content">
              <span className="year-range">
-              {yearRange.begin} - {yearRange.end}
+                  {usePanelHead(`${yearRange.begin} - ${yearRange.end}`)}
              </span>
            </span>
             <span className="next">
@@ -123,9 +122,7 @@ const YearRangesPanel = React.forwardRef((props, ref) => {
               </Button>
           </span>
           </div>
-          <div className="year-cols">
-            {yearRangeCnt}
-          </div>
+          {usePanel(yearRangeCnt)}
         </div>
       </Card.Row>
       <Card.Row>

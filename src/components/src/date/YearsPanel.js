@@ -3,7 +3,7 @@ import {isNumber} from '../Utils';
 import Col from '../grid/Col';
 import Button from '../button';
 import Row from '../grid/Row';
-import {PickerPanel} from './DateUtils';
+import {PickerPanel, usePanel, usePanelHead} from './DateUtils';
 import Card from '../card';
 import DateTitle from './DateTitle';
 import {IconArrowLeft, IconArrowRight} from '../Icons';
@@ -99,8 +99,9 @@ const YearsPanel = React.forwardRef((props, ref) => {
               </Button>
           </span>
             <span className="content">
-             <span className="year-range" onClick={switchYear}>
-               {yearRange.begin} - {yearRange.end}
+             <span className="year-range">
+               {usePanelHead(`${yearRange.begin} - ${yearRange.end}`,
+                   switchYear)}
              </span>
            </span>
             <span className="next">
@@ -109,9 +110,7 @@ const YearsPanel = React.forwardRef((props, ref) => {
               </Button>
           </span>
           </div>
-          <div className="year-cols">
-            {yearsCnt}
-          </div>
+          {usePanel(yearsCnt)}
         </div>
       </Card.Row>
       <Card.Row>

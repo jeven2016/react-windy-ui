@@ -5,18 +5,16 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import {IconCalendar, Input} from '../index';
-import {isNil} from '../Utils';
+import {IconCalendar, IconClear, Input} from '../index';
+import {isBlank, isNil} from '../Utils';
 import * as dayjs from 'dayjs';
 import {DateContext} from '../common/Context';
 
 const DateInput = React.forwardRef((props, ref) => {
-  const {
-    isPopupActive,
-    activePopup,
-  } = props;
-  const {store, dateFormat, placeholder} = useContext(DateContext);
+  const {store, dateFormat, placeholder, isPopupActive, activePopup} = useContext(
+      DateContext);
   const {attach, detach, getState, setState} = store;
+  const [showClear, setShowClear] = useState(false);
   const activeDate = getState().activeDate;
 
   //used to display the initial input value
@@ -46,7 +44,7 @@ const DateInput = React.forwardRef((props, ref) => {
       setState({activeDate: date});
     }
     setTextDate(value);
-    if (!isPopupActive) {
+    if (!isPopupActive()) {
       activePopup(true);
     }
   }, [activePopup, dateFormat, isPopupActive, setState]);
@@ -62,11 +60,23 @@ const DateInput = React.forwardRef((props, ref) => {
     !isPopupActive() && activePopup(true);
   }, [activePopup, isPopupActive]);
 
+  const mouseEnter = useCallback(() => {
+    if (!isBlank(textDate)) {
+      !showClear && setShowClear(true);
+    }
+  }, [textDate, showClear, setShowClear]);
+
+  const mouseLeave = useCallback(() => {
+    showClear && setShowClear(false);
+  }, [showClear, setShowClear]);
+
   return <Input.IconInput size="medium" ref={ref}>
     <Input value={textDate} onChange={change} placeholder={placeholder}
            onClick={showPopup}
+           onMouseEnter={mouseEnter}
+           onMouseLeave={mouseLeave}
            onBlur={handleValue}/>
-    <IconCalendar/>
+    {showClear ? <IconClear/> : <IconCalendar/>}
   </Input.IconInput>;
 });
 

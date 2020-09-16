@@ -7,7 +7,7 @@ import {DateContext} from '../common/Context';
 import clsx from 'clsx';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
-import {PickerPanel} from './DateUtils';
+import {PickerPanel, usePanel, usePanelHead} from './DateUtils';
 
 const MonthsPanel = React.forwardRef((props, ref) => {
   const {
@@ -38,8 +38,7 @@ const MonthsPanel = React.forwardRef((props, ref) => {
         rows.push(<Row key={'row-' + i}>{cols}</Row>);
         cols = [];
       }
-      const col = <Col justify="center" key={`col-${i}`}
-                       extraClassName={'other-year'}>
+      const col = <Col justify="center" key={`col-${i}`}>
         <Button inverted initOutlineColor type="primary"
                 onClick={(e) => selectMonth(i, e)}>
           {ctx.config.locale.month[i]}
@@ -79,7 +78,7 @@ const MonthsPanel = React.forwardRef((props, ref) => {
           </span>
             <span className="content">
              <span className="year-range">
-               {validDate.year()}
+               {usePanelHead(validDate.year())}
              </span>
            </span>
             <span className="next">
@@ -88,9 +87,7 @@ const MonthsPanel = React.forwardRef((props, ref) => {
               </Button>
           </span>
           </div>
-          <div className="year-cols">
-            {monthCnt}
-          </div>
+          {usePanel(monthCnt)}
         </div>
       </Card.Row>
       <Card.Row>

@@ -30,7 +30,9 @@ export const IconWarning = React.forwardRef((props, ref) => {
 
 export const IconWarning2 = React.forwardRef((props, ref) => {
   const [clsName, otherProps] = useIcon(props);
-  return <svg ref={ref} className={clsName}  xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...otherProps}>
+  return <svg ref={ref} className={clsName} xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24" aria-hidden="true"
+              focusable="false" {...otherProps}>
     <path
         d="M11 15h2v2h-2v-2zm0-8h2v6h-2V7zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
   </svg>
@@ -103,18 +105,8 @@ export const IconRightDoubleArrows = React.forwardRef((props, ref) => {
   return <svg ref={ref} className={clsName} xmlns="http://www.w3.org/2000/svg"
               width="1em" height="1em"
               viewBox="0 0 24 24" {...otherProps}>
-    <g>
-      <rect fill="none" height="24" width="24"/>
-      <rect fill="none" height="24" width="24"/>
-    </g>
-    <g>
-      <g>
-        <path
-            d="M20.08,11.42l-4.04-5.65C15.7,5.29,15.15,5,14.56,5h0c-1.49,0-2.35,1.68-1.49,2.89L16,12l-2.93,4.11 c-0.87,1.21,0,2.89,1.49,2.89h0c0.59,0,1.15-0.29,1.49-0.77l4.04-5.65C20.33,12.23,20.33,11.77,20.08,11.42z"/>
-        <path
-            d="M13.08,11.42L9.05,5.77C8.7,5.29,8.15,5,7.56,5h0C6.07,5,5.2,6.68,6.07,7.89L9,12l-2.93,4.11C5.2,17.32,6.07,19,7.56,19h0 c0.59,0,1.15-0.29,1.49-0.77l4.04-5.65C13.33,12.23,13.33,11.77,13.08,11.42z"/>
-      </g>
-    </g>
+    <path fill="currentColor"
+          d="M5.59,7.41L7,6L13,12L7,18L5.59,16.59L10.17,12L5.59,7.41M11.59,7.41L13,6L19,12L13,18L11.59,16.59L16.17,12L11.59,7.41Z"/>
   </svg>
 });
 
