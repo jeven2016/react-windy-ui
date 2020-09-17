@@ -1,6 +1,7 @@
-import React from "react";
-import {Spring} from "react-spring/renderprops";
-import {Button} from "../index";
+import React from 'react';
+import {Spring} from 'react-spring/renderprops';
+import {Button} from '../index';
+import {DataConfig} from './DateConfig';
 
 export const DpDirection = {
   horizontal: 'horizontal',
@@ -42,7 +43,7 @@ export const usePanelHead = (content, onClick, isNode = false) => {
       from={{opacity: 0, transform: 'translate3d(4rem, 0, 0)'}}
       to={{opacity: 1, transform: 'translate3d(0rem, 0, 0)'}}>
     {props => React.cloneElement(cnt, {style: props})}
-  </Spring>
+  </Spring>;
 };
 
 export const usePanel = (content, isNode = false) => {
@@ -53,5 +54,9 @@ export const usePanel = (content, isNode = false) => {
       from={{opacity: 0, transform: 'scale(0.9)'}}
       to={{opacity: 1, transform: 'scale(1)'}}>
     {props => React.cloneElement(cnt, {style: props})}
-  </Spring>
-}
+  </Spring>;
+};
+
+export const getFormatter = (type) => {
+  return DataConfig.format[type];
+};

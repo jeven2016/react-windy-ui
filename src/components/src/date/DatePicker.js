@@ -7,7 +7,7 @@ import useInternalState from '../common/useInternalState';
 import {initStore} from '../common/Store';
 import {isNil, validate} from '../Utils';
 import DateInput from './DateInput';
-import {PickerPanel, PopupType} from './DateUtils';
+import {getFormatter, PickerPanel, PopupType} from './DateUtils';
 import Modal from '../modal';
 import {DateContext} from '../common/Context';
 import YearBody from './YearBody';
@@ -30,17 +30,17 @@ const initData = (temporaryDate, predefinedDate) => {
     //explicitly set by value or defaultValue parameter
     activeDate: predefinedDate,
 
-    isInitialDate: function () {
+    isInitialDate: function() {
       return isNil(this.activeDate);
     },
 
     //get current valid date
-    getValidDate: function () {
+    getValidDate: function() {
       return dayjs().year(this.initialDate.year).month(
           this.initialDate.month).date(this.initialDate.date);
     },
 
-    getValidStringDate: function () {
+    getValidStringDate: function() {
       const validDate = this.getValidDate();
       return {
         year: validDate.year(),
@@ -59,7 +59,6 @@ const DatePicker = React.forwardRef((props, ref) => {
     value,
     leftTitle = false,
     autoClose = true,
-    dateFormat = 'YYYY-MM-DD',
     placeholder = 'Year-Month-Day',
     position = 'bottomLeft',
     onChange,
@@ -80,12 +79,16 @@ const DatePicker = React.forwardRef((props, ref) => {
 
   const isModalType = realPopupType === PopupType.modal;
 
+  const getDateFormat = useCallback(() => {
+    return getFormatter(type);
+  }, [type]);
+
   validate(!isNil(defaultValue) && dayjs(defaultValue).isValid(),
-      `the defaultValue '${defaultValue}' should be in valid date format ${dateFormat}`,
+      `the defaultValue '${defaultValue}' should be in valid date format ${getDateFormat()}`,
       isNil(defaultValue));
 
   validate(!isNil(value) && dayjs(value).isValid(),
-      `the value '${value}' should be in valid date format ${dateFormat}`,
+      `the value '${value}' should be in valid date format ${getDateFormat()}`,
       isNil(value));
 
   const {
@@ -126,6 +129,18 @@ const DatePicker = React.forwardRef((props, ref) => {
         return isModalType ? activeModal : popupRef.current.isActive;
       }, [activeModal, isModalType]);
 
+  const tryClosePopup = useCallback(() => {
+    if (!autoClose) {
+      return;
+    }
+
+    isPopupActive() && activePopup(false);
+  });
+
+  const tryShowPopup = useCallback(() => {
+    !isPopupActive() && activePopup(true);
+  });
+
   const popupCtrl = useMemo(() => {
     return <DateInput/>;
   }, []);
@@ -162,9 +177,9 @@ const DatePicker = React.forwardRef((props, ref) => {
   }
 
   return <DateContext.Provider value={{
-    dateFormat,
     onChange,
     autoClose,
+    getDateFormat,
     columnCount,
     hasTitle,
     store,
@@ -174,7 +189,10 @@ const DatePicker = React.forwardRef((props, ref) => {
     customizedDate: customized,
     leftTitle,
     isPopupActive,
+    tryClosePopup,
+    tryShowPopup,
     clearable,
+    type,
   }}>
     {pickerBody}
   </DateContext.Provider>;

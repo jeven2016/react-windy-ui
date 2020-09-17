@@ -9,6 +9,7 @@ import DateTitle from './DateTitle';
 import {IconArrowLeft, IconArrowRight} from '../Icons';
 import {DateContext} from '../common/Context';
 import clsx from 'clsx';
+import dayjs from 'dayjs';
 
 const YearsPanel = React.forwardRef((props, ref) => {
   const {
@@ -17,8 +18,7 @@ const YearsPanel = React.forwardRef((props, ref) => {
 
   const ctx = useContext(DateContext);
   const {getState, setState} = ctx.store;
-  const validDate = getState().getValidDate();
-  const currentYear = validDate.get('year');
+  const currentYear = getState().getValidDate().get('year');
   const [startYear, setStartYear] = useState(currentYear);
 
   const dataPickerClsName = clsx('date-picker', {
@@ -41,9 +41,28 @@ const YearsPanel = React.forwardRef((props, ref) => {
   }, [startYear]);
 
   const selectYear = useCallback((year, e) => {
-    setState({initialDate: {...getState().initialDate, year: year, date: 1}});
-    setPanelType(PickerPanel.month);
-  }, [getState, setPanelType, setState]);
+    const newDate = {
+      initialDate: {
+        ...getState().initialDate,
+        year: year,
+      },
+    };
+
+    if (ctx.type !== PickerPanel.year) {
+      setPanelType(PickerPanel.month);
+      setState(newDate);
+    } else {
+      const newActiveDate = dayjs().year(year);
+      if (!ctx.customizedDate) {
+        setState({
+          activeDate: newActiveDate,
+          ...newDate,
+        });
+      }
+      ctx.tryClosePopup();
+      ctx.onChange && ctx.onChange(year, newActiveDate);
+    }
+  }, [ctx, getState, setPanelType, setState]);
 
   const yearsCnt = useMemo(() => {
     const rows = [];
@@ -58,7 +77,7 @@ const YearsPanel = React.forwardRef((props, ref) => {
                              : null}>
           <Button inverted initOutlineColor type="primary"
                   active={year === currentYear}
-                  onClick={(e) => selectYear(year, e)}>
+                  onClick={selectYear.bind(null, year)}>
             {year}
           </Button>
         </Col>;
@@ -87,9 +106,7 @@ const YearsPanel = React.forwardRef((props, ref) => {
 
   return <>
     <Card extraClassName={dataPickerClsName}>
-      <Card.Header extraClassName="date-picker-header">
-        <DateTitle date={getState().activeDate} setPanelType={setPanelType}/>
-      </Card.Header>
+      <DateTitle date={getState().activeDate} setPanelType={setPanelType}/>
       <Card.Row>
         <div className="dp-body">
           <div className="date-picker-info">

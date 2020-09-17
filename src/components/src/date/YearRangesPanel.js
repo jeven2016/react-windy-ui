@@ -100,9 +100,7 @@ const YearRangesPanel = React.forwardRef((props, ref) => {
 
   return <>
     <Card extraClassName={dataPickerClsName}>
-      <Card.Header extraClassName="date-picker-header">
-        <DateTitle date={getState().activeDate} setPanelType={setPanelType}/>
-      </Card.Header>
+      <DateTitle date={getState().activeDate} setPanelType={setPanelType}/>
       <Card.Row>
         <div className="dp-body">
           <div className="date-picker-info">

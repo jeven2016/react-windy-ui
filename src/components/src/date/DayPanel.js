@@ -9,6 +9,7 @@ import DateTitle from './DateTitle';
 import {DateActionType, PickerPanel, usePanel, usePanelHead} from './DateUtils';
 import dayjs from 'dayjs';
 import {DateContext} from '../common/Context';
+import Divider from '../divider';
 
 export default function DayPanel(props) {
   const {setPanelType} = props;
@@ -102,17 +103,14 @@ export default function DayPanel(props) {
 
   const changeYearPanel = useCallback(() => {
     setPanelType(PickerPanel.year);
-  }, []);
+  }, [setPanelType]);
 
   const changeMonthPanel = useCallback(() => {
     setPanelType(PickerPanel.month);
-  }, []);
+  }, [setPanelType]);
 
   return <Card extraClassName={dataPickerClsName}>
-    <Card.Header extraClassName="date-picker-header">
-      <DateTitle date={getState().activeDate} setPanelType={setPanelType}/>
-    </Card.Header>
-
+    <DateTitle date={date} setPanelType={setPanelType}/>
     <Card.Row>
       <div className="dp-body">
         <div className="date-picker-info">
@@ -167,7 +165,7 @@ export default function DayPanel(props) {
         </div>
       </div>
     </Card.Row>
-
+    <Divider/>
     <Card.Footer extraClassName="date-picker-footer">
       <div className="left">
         <Button extraClassName="today-btn" type="primary"

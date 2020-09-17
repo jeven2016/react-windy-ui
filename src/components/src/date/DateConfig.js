@@ -1,11 +1,15 @@
 import React from 'react';
 import {isNil} from '../Utils';
 import Button from '../button';
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 export const DataConfig = {
   columnCount: 7 * 6,
-  dateFormat: 'YYYY-MM-DD',
+  format: {
+    year: 'YYYY',
+    month: 'YYYY-MM',
+    date: 'YYYY-MM-DD',
+  },
   locale: {
     days: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
     dayOfWeek: {
@@ -71,8 +75,8 @@ const selectDay = (
       initialDate: {
         year: selectedDate.year(),
         month: selectedDate.month(),
-        date: selectedDate.date()
-      }
+        date: selectedDate.date(),
+      },
     });
   }
 
@@ -88,9 +92,9 @@ const getKey = (date, suffix) => {
 };
 
 export const createDateColumns = ({
-  columnCount, store, autoClose,
-  activePopup, onChange, dateFormat, customizedDate,
-}) => {
+                                    columnCount, store, autoClose,
+                                    activePopup, onChange, dateFormat, customizedDate,
+                                  }) => {
 
   //for current month
   const state = store.getState();

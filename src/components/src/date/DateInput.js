@@ -11,7 +11,7 @@ import * as dayjs from 'dayjs';
 import {DateContext} from '../common/Context';
 
 const DateInput = React.forwardRef((props, ref) => {
-  const {store, dateFormat, placeholder, isPopupActive, activePopup} = useContext(
+  const {store, getDateFormat, placeholder, tryShowPopup} = useContext(
       DateContext);
   const {attach, detach, getState, setState} = store;
   const [showClear, setShowClear] = useState(false);
@@ -20,45 +20,40 @@ const DateInput = React.forwardRef((props, ref) => {
   //used to display the initial input value
   const stringDate = useMemo(() => {
     if (!isNil(activeDate)) {
-      return activeDate.format(dateFormat);
+      return activeDate.format(getDateFormat());
     }
     return '';
-  }, [activeDate, dateFormat]);
+  }, [activeDate, getDateFormat]);
 
   const [textDate, setTextDate] = useState(stringDate);
 
   useEffect(() => {
     const listener = ({activeDate}) => {
       if (!isNil(activeDate)) {
-        setTextDate(activeDate.format(dateFormat));
+        setTextDate(activeDate.format(getDateFormat()));
       }
     };
     attach(listener);
     return () => detach(listener);
-  }, [attach, detach, dateFormat]);
+  }, [attach, detach, getDateFormat]);
 
   const change = useCallback((e) => {
     const value = e.target.value;
-    const date = dayjs(value, dateFormat);
+    const date = dayjs(value, getDateFormat());
     if (date.isValid()) {
       setState({activeDate: date});
     }
     setTextDate(value);
-    if (!isPopupActive()) {
-      activePopup(true);
-    }
-  }, [activePopup, dateFormat, isPopupActive, setState]);
+    tryShowPopup();
+    // eslint-disable-next-line no-undef
+  }, [getDateFormat, setState, tryShowPopup]);
 
   const handleValue = useCallback((e) => {
-    const date = dayjs(textDate, dateFormat);
+    const date = dayjs(textDate, getDateFormat());
     if (!date.isValid()) {
       setTextDate('');
     }
-  }, [textDate, dateFormat]);
-
-  const showPopup = useCallback(() => {
-    !isPopupActive() && activePopup(true);
-  }, [activePopup, isPopupActive]);
+  }, [textDate, getDateFormat]);
 
   const mouseEnter = useCallback(() => {
     if (!isBlank(textDate)) {
@@ -73,7 +68,7 @@ const DateInput = React.forwardRef((props, ref) => {
   return <Input.IconInput placeholder={placeholder} size="medium" ref={ref}
                           inputProps={{
                             value: textDate, onChange: change,
-                            onClick: showPopup,
+                            onClick: tryShowPopup,
                             onMouseEnter: mouseEnter,
                             onMouseLeave: mouseLeave,
                             onBlur: handleValue,

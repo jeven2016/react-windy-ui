@@ -3,6 +3,7 @@ import {DateContext} from '../common/Context';
 import {isNil} from '../Utils';
 import dayjs from 'dayjs';
 import {PickerPanel} from './DateUtils';
+import Card from '../card';
 
 export default function DateTitle(props) {
   const {
@@ -25,15 +26,17 @@ export default function DateTitle(props) {
       : <span>{currentDayOfWeek}, {currentMonth} {displayDate.date()}
                   </span>;
 
-  return <div className="date-picker-title" {...otherProps}>
-    <div>
+  return <Card.Header extraClassName="date-picker-header">
+    <div className="date-picker-title" {...otherProps}>
+      <div>
       <span className="year-info"
             onClick={() => setPanelType(PickerPanel.year)}>
       {displayDate.year()}
       </span>
+      </div>
+      <div className="detail-info">
+        {txtContent}
+      </div>
     </div>
-    <div className="detail-info">
-      {txtContent}
-    </div>
-  </div>;
+  </Card.Header>;
 }
