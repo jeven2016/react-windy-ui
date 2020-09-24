@@ -74,7 +74,6 @@ const MonthsPanel = React.forwardRef((props, ref) => {
     if (isNil(activeDate)) {
       return false;
     }
-    console.log("="+month+", "+activeDate.month())
     return startYear === activeDate.year() && month === activeDate.month();
   }, [ctx.activeDate, startYear]);
 

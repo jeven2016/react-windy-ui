@@ -1,4 +1,10 @@
-import React, {useCallback, useContext, useMemo, useState} from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import {isNumber} from '../Utils';
 import Col from '../grid/Col';
 import Button from '../button';
@@ -17,9 +23,21 @@ const YearsPanel = React.forwardRef((props, ref) => {
   } = props;
 
   const ctx = useContext(DateContext);
-  const {getState, setState} = ctx.store;
+  const {getState, setState, attach, detach} = ctx.store;
   const currentYear = getState().getValidDate().get('year');
   const [startYear, setStartYear] = useState(currentYear);
+
+  //once the store updated, sync the year with the local state variable startYear
+  useEffect(() => {
+    const listener = () => {
+      const activeDate = getState().activeDate;
+      if (activeDate != null && activeDate.year() !== startYear) {
+        setStartYear(activeDate.year());
+      }
+    }
+    attach(listener);
+    return () => detach(listener);
+  }, []);
 
   const dataPickerClsName = clsx('date-picker', {
     'left-title': ctx.leftTitle,
