@@ -27,11 +27,12 @@ const MonthsPanel = React.forwardRef((props, ref) => {
   const currentYear = getState().getValidDate().get('year');
   const [startYear, setStartYear] = useState(currentYear);
 
-  console.log(startYear)
+  console.log("updating....")
   useEffect(() => {
     const listener = ({activeDate}) => {
       if (!isNil(activeDate)) {
         setStartYear(activeDate.year());
+        console.log("setStartYear....")
       }
     };
     attach(listener);
@@ -53,9 +54,8 @@ const MonthsPanel = React.forwardRef((props, ref) => {
       setPanelType(PickerPanel.date);
       setState(newInitDate);
     } else {
-      const newActiveDate = dayjs().
-          year(getState().initialDate.year).
-          month(month);
+      const newActiveDate = dayjs().year(getState().initialDate.year).month(
+          month);
 
       if (!ctx.customizedDate) {
         setState({
@@ -63,18 +63,18 @@ const MonthsPanel = React.forwardRef((props, ref) => {
           ...newInitDate,
         });
       }
-      ctx.tryClosePopup();
+      // ctx.tryClosePopup();
       ctx.onChange &&
       ctx.onChange(newActiveDate.format(ctx.getDateFormat()), newActiveDate);
     }
   }, [ctx, getState, setPanelType, setState]);
 
   const checkMonth = useCallback((month) => {
+    console.log("checking startYear")
     const activeDate = ctx.activeDate;
     if (isNil(activeDate)) {
       return false;
     }
-    console.log("="+month+", "+activeDate.month())
     return startYear === activeDate.year() && month === activeDate.month();
   }, [ctx.activeDate, startYear]);
 

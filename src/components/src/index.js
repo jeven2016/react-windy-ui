@@ -29,7 +29,7 @@ export {default as Blockquote} from './Blockquote';
 export {default as Loader} from './Loader';
 export {default as Row} from './grid/Row';
 export {default as Col} from './grid/Col';
-export {default as Form} from './Form';
+export {default as Form} from './form';
 export {default as Alert} from './Alert';
 export {default as Notification} from './Notification';
 export {default as Badge} from './Badge';

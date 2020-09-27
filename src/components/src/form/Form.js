@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormItemType} from './common/Constants';
+import {FormItemType} from '../common/Constants';
 import clsx from 'clsx';
 
 const Label = React.forwardRef((props, ref) => {
