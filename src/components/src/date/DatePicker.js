@@ -20,7 +20,8 @@ dayjs.extend(customParseFormat);
 const initData = (temporaryDate, predefinedDate) => {
   return {
     //the initial date to display, it could be the activeDate or
-    //a temporary date changed from GUI
+    //a temporary date changed from GUI, this date can be changed in GUI.
+    //But if the activeDate is set the initialDate should be in consistent with it //todo
     initialDate: {
       year: temporaryDate.year(),
       month: temporaryDate.month(),

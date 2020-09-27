@@ -5,7 +5,7 @@ import DatePicker2 from './samples/DatePicker2';
 import DatePicker3 from './samples/DatePicker3';
 
 const componentMapping = {
-  // DatePicker1: <DatePicker1/>,
+  DatePicker1: <DatePicker1/>,
   // DatePicker2: <DatePicker2/>,
   DatePicker3: <DatePicker3/>,
 };
