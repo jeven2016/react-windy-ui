@@ -19,6 +19,31 @@ export const IconInfo = React.forwardRef((props, ref) => {
   </svg>;
 });
 
+export const IconLock = React.forwardRef((props, ref) => {
+  const [clsName, otherProps] = useIcon(props);
+  return <svg ref={ref} className={clsName} xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24">
+    <g fill="none">
+      <path d="M0 0h24v24H0V0z"/>
+      <path d="M0 0h24v24H0V0z" opacity=".87"/>
+    </g>
+    <path
+        d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/>
+  </svg>;
+
+});
+
+export const IconAccount = React.forwardRef((props, ref) => {
+  const [clsName, otherProps] = useIcon(props);
+  return <svg ref={ref} className={clsName} xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path
+        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM7.07 18.28c.43-.9 3.05-1.78 4.93-1.78s4.51.88 4.93 1.78C15.57 19.36 13.86 20 12 20s-3.57-.64-4.93-1.72zm11.29-1.45c-1.43-1.74-4.9-2.33-6.36-2.33s-4.93.59-6.36 2.33C4.62 15.49 4 13.82 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.82-.62 3.49-1.64 4.83zM12 6c-1.94 0-3.5 1.56-3.5 3.5S10.06 13 12 13s3.5-1.56 3.5-3.5S13.94 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z"/>
+  </svg>;
+
+});
+
 export const IconWarning = React.forwardRef((props, ref) => {
   const [clsName, otherProps] = useIcon(props);
   return <svg ref={ref} className={clsName} xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +60,7 @@ export const IconWarning2 = React.forwardRef((props, ref) => {
               focusable="false" {...otherProps}>
     <path
         d="M11 15h2v2h-2v-2zm0-8h2v6h-2V7zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
-  </svg>
+  </svg>;
 });
 
 export const IconError = React.forwardRef((props, ref) => {
@@ -107,14 +132,14 @@ export const IconRightDoubleArrows = React.forwardRef((props, ref) => {
               viewBox="0 0 24 24" {...otherProps}>
     <path fill="currentColor"
           d="M5.59,7.41L7,6L13,12L7,18L5.59,16.59L10.17,12L5.59,7.41M11.59,7.41L13,6L19,12L13,18L11.59,16.59L16.17,12L11.59,7.41Z"/>
-  </svg>
+  </svg>;
 });
 
 export const IconLeftDoubleArrows = React.forwardRef((props, ref) => {
   const {style} = props;
-  const newStyle = {...style, transform: 'rotate(180deg)'}
+  const newStyle = {...style, transform: 'rotate(180deg)'};
 
-  return <IconRightDoubleArrows style={newStyle}/>
+  return <IconRightDoubleArrows style={newStyle}/>;
 });
 
 export const IconArrowLeft = React.forwardRef((props, ref) => {

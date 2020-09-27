@@ -8,7 +8,7 @@ export default function Form1() {
   };
 
   return <>
-    <Card style={{width: '60%'}} hasBox={false} hasBorder={true}>
+    <Card style={{maxWidth: '500px', minWidth: '350px'}} hasBox={false} hasBorder={true}>
       <Card.Row>
         <Form ref={formRef} onSubmit={()=>console.log("hello")}>
           <Form.Item type="block">

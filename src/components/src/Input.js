@@ -16,6 +16,7 @@ const IconInput = React.forwardRef((props, ref) => {
     leftIcon = false,
     icon,//todo
     inputProps,//todo
+    iconProps,//todo
     placeholder,//todo
     disabled = false,
     borderType,
@@ -49,9 +50,9 @@ const IconInput = React.forwardRef((props, ref) => {
   }, true, () => interInputRef.current);
 
   return <span className={clsName} {...otherProps} ref={ref}>
-    <Input ref={multiInputRef} canFocus={false}
+    <Input ref={multiInputRef} canFocus={false} placeholder={placeholder}
            disabled={inputDisabled} {...inputProps}/>
-   <span className="icon-column">{icon}</span>
+   <span className="icon-column" {...iconProps}>{icon}</span>
   </span>;
 });
 
