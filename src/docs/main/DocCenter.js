@@ -35,6 +35,7 @@ import TableIndex from '../pages/table/TableIndex';
 import PaginationIndex from "../pages/pagination/PaginationIndex";
 import DatePickerIndex from '../pages/datepicker/DatePickerIndex';
 import PcIndex from "../pages/popconfirm/PcIndex";
+import FormIndex from "../pages/form/FormIndex";
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -147,6 +148,9 @@ function DocCenter(props) {
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/popConfirm`}>
                 <PcIndex/>
+              </RouteLoader>
+              <RouteLoader route={Route} path={`${url}/form`}>
+                <FormIndex/>
               </RouteLoader>
               <RouteLoader route={Route} path={`${url}/`}>
                 <InstallIndex/>

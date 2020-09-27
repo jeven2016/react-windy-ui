@@ -3,11 +3,9 @@ import {inRange, isBlank, isInteger, isNil} from '../Utils';
 import Element from '../common/Element';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import {JustifyContentType} from '../common/Constants';
 
 const Col = React.forwardRef((props, ref) => {
   const {
-    justify = JustifyContentType.start,
     extraClassName,
     className,
     col,
@@ -16,7 +14,6 @@ const Col = React.forwardRef((props, ref) => {
     order,
     ...otherProps
   } = props;
-  let justifyCls = JustifyContentType[justify];
 
   [
     col,
@@ -63,7 +60,6 @@ const Col = React.forwardRef((props, ref) => {
 
   let clsName = clsx(extraClassName, className, {
     [cls]: cls,
-    [justifyCls]: justifyCls,
   });
 
   return <Element ref={ref} className={clsName} {...otherProps}/>;
