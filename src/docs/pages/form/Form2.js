@@ -6,7 +6,7 @@ export default function Form2() {
     <Card block hasBox={false}>
       <Card.Row>
         <Form>
-          <Form.Item type="inline" hasMessage={false}>
+          <Form.Item inline hasMessage={false}>
             <label>Name</label>
             <Input placeholder="..."/>
             <label>City</label>

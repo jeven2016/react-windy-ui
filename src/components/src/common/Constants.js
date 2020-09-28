@@ -107,12 +107,6 @@ export const AlignItemsType = {
   center: 'flex-adjust align-center',
 };
 
-export const FormItemType = {
-  inline: 'form-item inline',
-  block: 'form-item',
-  grid: 'form-item row',
-};
-
 export const Active = {
   na: 'na',
   active: 'active',

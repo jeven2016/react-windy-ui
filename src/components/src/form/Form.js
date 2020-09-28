@@ -17,12 +17,11 @@ const Item = React.forwardRef((props, ref) => {
     className = 'form-item',
     hasMessage = true,//todo
     extraClassName,
-    type,
+    inline = false,
     ...otherProps
   } = props;
-  const formCls = FormItemType[type];
   let clsName = clsx(extraClassName, className, {
-    [formCls]: formCls,
+    inline,
     'with-msg': hasMessage,
     'normal': !hasMessage,
   });
