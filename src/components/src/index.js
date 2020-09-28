@@ -79,6 +79,8 @@ export {
   IconTime,
   IconNoData,
   IconQuestion,
+  IconAccount,
+  IconLock,
 } from './Icons';
 
 export {

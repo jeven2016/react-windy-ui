@@ -1,21 +1,35 @@
 import React from 'react';
-import {Button, Card, Checkbox, Col, Form, Input, Row} from 'react-windy-ui';
-import {IconAccount, IconLock} from '../../../components/src/Icons';
+import {
+  Button,
+  Card,
+  Checkbox,
+  Col,
+  Form,
+  Input,
+  Row,
+  Tooltip,
+  IconAccount,
+  IconLock,
+} from 'react-windy-ui';
 
 export default function Form3() {
   return <>
     <Card style={{maxWidth: '500px', minWidth: '350px'}} hasBox={false}>
       <Card.Row>
         <Form>
-          <Form.Item type="row">
-            <Input.IconInput leftIcon block placeholder="Username"
-                             icon={<IconAccount/>}/>
+          <Form.Item>
+            <Tooltip body="The username is required">
+              <Input.IconInput leftIcon block placeholder="Username"
+                               icon={<IconAccount/>}/>
+            </Tooltip>
           </Form.Item>
-          <Form.Item type="row">
-            <Input.IconInput leftIcon block placeholder="Password"
-                             icon={<IconLock/>}/>
+          <Form.Item>
+            <Tooltip body="The password is required">
+              <Input.IconInput leftIcon block placeholder="Password"
+                               icon={<IconLock/>}/>
+            </Tooltip>
           </Form.Item>
-          <Form.Item type="row">
+          <Form.Item hasMessage={false}>
             <Row>
               <Col col={6}>
                 <Checkbox label="Remember me" defaultChecked/>
@@ -25,7 +39,7 @@ export default function Form3() {
               </Col>
             </Row>
           </Form.Item>
-          <Form.Item type="row">
+          <Form.Item hasMessage={false}>
             <Row>
               <Col col={12}>
                 <Button block color="blue">Sign In</Button>

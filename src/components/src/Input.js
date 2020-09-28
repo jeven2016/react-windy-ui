@@ -7,6 +7,7 @@ import {InputGroupContext} from './common/Context';
 import {isNil} from './Utils';
 import useMultipleRefs from './common/UseMultipleRefs';
 import {useEvent} from './index';
+import useErrorStyle from './common/useErrorStyle';
 
 const IconInput = React.forwardRef((props, ref) => {
   const {
@@ -18,8 +19,8 @@ const IconInput = React.forwardRef((props, ref) => {
     inputProps,//todo
     iconProps,//todo
     placeholder,//todo
+    errorType, //todo
     disabled = false,
-    borderType,
     children,
     inputRef,
     extraClassName,
@@ -31,13 +32,11 @@ const IconInput = React.forwardRef((props, ref) => {
 
   const ctx = useContext(InputGroupContext);
   const inputDisabled = isNil(ctx.disabled) ? disabled : ctx.disabled;
-  let borderTypeCls = InputBorderType[borderType];
-  let clsName = clsx(extraClassName, className, {
+  let clsName = clsx(extraClassName, className, useErrorStyle(errorType), {
     'left-icon': leftIcon,
     [size]: size,
     block: block,
     disabled: inputDisabled,
-    [borderTypeCls]: borderTypeCls,
     active: active,
   });
 
@@ -67,20 +66,22 @@ const Input = React.forwardRef((props, ref) => {
     extraClassName,
     readOnly = false,
     canFocus = true,//todo
+    errorType,//todo
     ...otherProps
   } = props;
   const ctx = useContext(InputGroupContext);
   let borderTypeCls = InputBorderType[borderType];
   const inputSize = isNil(ctx.size) ? size : ctx.size;
 
-  let clsName = clsx(extraClassName, className, inputSize, {
-    'read-only': readOnly,
-    'textarea': type === 'textarea',
-    block: block,
-    'within-group': ctx.withinGroup,
-    [borderTypeCls]: borderTypeCls,
-    'with-focus': canFocus,
-  });
+  let clsName = clsx(extraClassName, className, inputSize, useErrorStyle(errorType),
+      {
+        'read-only': readOnly,
+        'textarea': type === 'textarea',
+        block: block,
+        'within-group': ctx.withinGroup,
+        [borderTypeCls]: borderTypeCls,
+        'with-focus': canFocus,
+      });
 
   if (type.toLowerCase() === 'textarea') {
     return <Element nativeType="textarea"
@@ -109,12 +110,12 @@ IconInput.propTypes = {
   leftIcon: PropTypes.bool, // whether the icon is placed in left side of the input
   size: PropTypes.oneOf(['large', 'medium', 'small']),
   block: PropTypes.bool,
-  borderType: PropTypes.oneOf(['ok', 'warning', 'error']),
+  errorType: PropTypes.oneOf([null, '', 'ok', 'warning', 'error']),
   disabled: PropTypes.bool,
 };
 
 Input.propTypes = {
-  borderType: PropTypes.oneOf(['ok', 'warning', 'error']),
+  errorType: PropTypes.oneOf([null, '', 'ok', 'warning', 'error']),
   size: PropTypes.oneOf(['large', 'medium', 'small']), //the size of the input
   type: PropTypes.string,//"text", "textarea", "password", "file", etc.
   block: PropTypes.bool, //whether the input's width is '100%' and it occupies the whole row
