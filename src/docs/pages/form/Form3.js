@@ -5,11 +5,11 @@ import {
   Checkbox,
   Col,
   Form,
+  IconAccount,
+  IconLock,
   Input,
   Row,
   Tooltip,
-  IconAccount,
-  IconLock,
 } from 'react-windy-ui';
 
 export default function Form3() {
@@ -29,7 +29,7 @@ export default function Form3() {
                                icon={<IconLock/>}/>
             </Tooltip>
           </Form.Item>
-          <Form.Item hasMessage={false}>
+          <Form.Item compact={true}>
             <Row>
               <Col col={6}>
                 <Checkbox label="Remember me" defaultChecked/>
@@ -39,7 +39,7 @@ export default function Form3() {
               </Col>
             </Row>
           </Form.Item>
-          <Form.Item hasMessage={false}>
+          <Form.Item compact={true}>
             <Row>
               <Col col={12}>
                 <Button block color="blue">Sign In</Button>

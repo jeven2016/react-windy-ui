@@ -9,12 +9,12 @@ export default function Pagination5() {
     </div>
 
     <div className="doc doc-row" style={{width: '400px'}}>
-      <Pagination pageCount={10} simple compact={false} hasGo={true}
+      <Pagination pageCount={10} simple compact={true} hasGo={true}
                   onChange={(page) => console.log(page)}/>
     </div>
 
     <div className="doc doc-row" style={{width: '400px'}}>
-      <Pagination pageCount={10} simple compact={false}/>
+      <Pagination pageCount={10} simple compact={true}/>
     </div>
 
     <div className="doc doc-row"
@@ -24,7 +24,7 @@ export default function Pagination5() {
            padding: '1rem',
            borderRadius: '.25rem',
          }}>
-      <Pagination pageCount={10} simple compact={false}
+      <Pagination pageCount={10} simple compact={true}
                   buttonProps={{
                     inverted: true,
                     outline: false,

@@ -10,11 +10,10 @@ import {
   Input,
   Row,
 } from 'react-windy-ui';
-import {useForm} from 'react-hook-form';
 
 export default function Form4() {
   //for more information of the form validation, refer to https://react-hook-form.com/api/
-  const {register, errors, handleSubmit} = useForm({
+  const {register, errors, handleSubmit} = Form.useForm({
     //Validation will trigger on the submit event and invalid inputs will attach onChange event listeners to re-validate them.
     mode: 'onSubmit',
     shouldFocusError: false,
@@ -41,9 +40,9 @@ export default function Form4() {
                 icon={<IconAccount/>}/>
 
             {/*show the error messages */}
-            <Form.ErrorMessage error={errors.username} validationType="required"
+            <Form.Message error={errors.username} validationType="required"
                                message="The username is required"/>
-            <Form.ErrorMessage error={errors.username}
+            <Form.Message error={errors.username}
                                validationType="minLength"
                                message="The length should be greater than 5"/>
 
@@ -59,11 +58,11 @@ export default function Form4() {
                 block
                 placeholder="Password"
                 icon={<IconLock/>}/>
-            <Form.ErrorMessage error={errors.password} validationType="required"
+            <Form.Message error={errors.password} validationType="required"
                                message="The password is required"/>
           </Form.Item>
 
-          <Form.Item hasMessage={false}>
+          <Form.Item compact={true}>
             <Row>
               <Col col={6}>
                 <Checkbox label="Remember me" defaultChecked/>
@@ -73,7 +72,7 @@ export default function Form4() {
               </Col>
             </Row>
           </Form.Item>
-          <Form.Item hasMessage={false}>
+          <Form.Item compact={true}>
             <Row>
               <Col col={12}>
                 <Button nativeType="submit" block color="blue">Sign In</Button>

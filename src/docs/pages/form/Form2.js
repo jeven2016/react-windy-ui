@@ -6,10 +6,10 @@ export default function Form2() {
     <Card block hasBox={false}>
       <Card.Row>
         <Form>
-          <Form.Item inline hasMessage={false}>
-            <label>Name</label>
+          <Form.Item inline compact={true}>
+            <Form.Label>Name</Form.Label>
             <Input placeholder="..."/>
-            <label>City</label>
+            <Form.Label>City</Form.Label>
             <Input placeholder="..."/>
             <Button nativeType="submit" color="blue">Update</Button>
           </Form.Item>

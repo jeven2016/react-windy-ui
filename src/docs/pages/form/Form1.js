@@ -11,17 +11,17 @@ export default function Form1() {
     <Card style={{maxWidth: '500px', minWidth: '350px'}} hasBox={false} hasBorder={true}>
       <Card.Row>
         <Form ref={formRef} onSubmit={()=>console.log("hello")}>
-          <Form.Item hasMessage={false}>
-            <label>Username</label>
-            <Input placeholder="..." block/>
-            <h5 className="text comment">Please enter your username</h5>
+          <Form.Item>
+            <Form.Label>Username</Form.Label>
+            <Input placeholder="" block/>
+            <Form.Message type="comment" message="The username is required"/>
           </Form.Item>
-          <Form.Item hasMessage={false}>
-            <label>Password</label>
-            <Input type="password" block placeholder="..."/>
-            <h5 className="text comment">Please enter your password</h5>
+          <Form.Item>
+            <Form.Label>Password</Form.Label>
+            <Input type="password" block placeholder=""/>
+            <Form.Message type="comment" message="The password is required"/>
           </Form.Item>
-          <Form.Item hasMessage={false}>
+          <Form.Item>
             <Button nativeType="submit" color="blue">Sign In</Button>
             <Button nativeType="reset" onClick={resetForm}>Reset</Button>
           </Form.Item>
