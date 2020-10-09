@@ -9,25 +9,22 @@ import {
   IconLock,
   Input,
   Row,
-  Tooltip,
 } from 'react-windy-ui';
 
 export default function Form3() {
   return <>
     <Card style={{maxWidth: '500px', minWidth: '350px'}} hasBox={false}>
       <Card.Row>
-        <Form>
+        <Form direction="horizontal" labelCol={{col: 3}} controlCol={{col: 9}}>
           <Form.Item>
-            <Tooltip body="The username is required">
-              <Input.IconInput leftIcon block placeholder="Username"
-                               icon={<IconAccount/>}/>
-            </Tooltip>
+            <Form.Label>Username</Form.Label>
+            <Input.IconInput leftIcon block placeholder="Username"
+                             icon={<IconAccount/>}/>
           </Form.Item>
           <Form.Item>
-            <Tooltip body="The password is required">
-              <Input.IconInput leftIcon block placeholder="Password"
-                               icon={<IconLock/>}/>
-            </Tooltip>
+            <Form.Label>Password</Form.Label>
+            <Input.IconInput leftIcon block placeholder="Password"
+                             icon={<IconLock/>}/>
           </Form.Item>
           <Form.Item compact={true}>
             <Row>

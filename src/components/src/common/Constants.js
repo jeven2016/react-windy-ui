@@ -122,6 +122,11 @@ export const Direction = {
   vertical: 'vertical',
 };
 
+export const FormDirection = {
+  ...Direction,
+  inline: 'inline'
+}
+
 //=================================
 export const EventListener = {
   click: 'click',

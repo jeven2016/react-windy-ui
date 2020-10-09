@@ -18,6 +18,7 @@ Enhance:
 - Navbar里面的Input背景色已经Icon的颜色跟primary不匹配
 - Navbar10 sample， 无法在iframe中与Affix结合使用
 - icons redesign
+- replacing with scroll-into-view-if-needed
 
 
 - free pic: https://pixabay.com/photos/bay-beach-boat-exotic-idyllic-1867798/

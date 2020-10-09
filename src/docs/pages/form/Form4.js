@@ -16,7 +16,7 @@ export default function Form4() {
   const {register, errors, handleSubmit} = Form.useForm({
     //Validation will trigger on the submit event and invalid inputs will attach onChange event listeners to re-validate them.
     mode: 'onSubmit',
-    shouldFocusError: false,
+    shouldFocusError: true,
   });
 
   const onSubmit = (data, e) => {
@@ -34,17 +34,17 @@ export default function Form4() {
             <Input.IconInput
                 inputProps={{name: 'username', defaultValue: 'Me'}}
                 errorType={errors.username ? 'error' : null}
-                inputRef={register({required: true})}
+                inputRef={register({required: true, minLength: 5})}
                 leftIcon
                 block placeholder="Username"
                 icon={<IconAccount/>}/>
 
             {/*show the error messages */}
             <Form.Message error={errors.username} validationType="required"
-                               message="The username is required"/>
+                          message="The username is required"/>
             <Form.Message error={errors.username}
-                               validationType="minLength"
-                               message="The length should be greater than 5"/>
+                          validationType="minLength"
+                          message="The length should be greater than 5"/>
 
           </Form.Item>
           <Form.Item>
@@ -58,8 +58,9 @@ export default function Form4() {
                 block
                 placeholder="Password"
                 icon={<IconLock/>}/>
+
             <Form.Message error={errors.password} validationType="required"
-                               message="The password is required"/>
+                          message="The password is required"/>
           </Form.Item>
 
           <Form.Item compact={true}>
