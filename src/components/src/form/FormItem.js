@@ -1,9 +1,11 @@
-import React, {useContext, useMemo} from "react";
-import clsx from "clsx";
-import {isNil} from "../Utils";
-import {FormDirection, JustifyContentType} from "../common/Constants";
-import {FormContext} from "../common/Context";
-import FormLabel from "./FormLabel";
+import React, {useContext, useMemo} from 'react';
+import clsx from 'clsx';
+import {isNil} from '../Utils';
+import {FormDirection, JustifyContentType} from '../common/Constants';
+import {FormContext} from '../common/Context';
+import FormLabel from './FormLabel';
+import Row from '../grid/Row';
+import Col from '../grid/Col';
 
 /*const findWidget = (children) => {
   const found = React.Children.toArray(children).find(chd => {
@@ -26,40 +28,48 @@ const FormItem = React.forwardRef((props, ref) => {
     justify = JustifyContentType.start,
     labelCol,
     controlCol,
+    name,
 
     children,
     ...otherProps
   } = props;
-
   const ctx = useContext(FormContext);
   const itemDirection = isNil(direction) ? ctx.direction : direction;
   const itemLabelCol = isNil(labelCol) ? ctx.labelCol : labelCol;
   const itemControlCol = isNil(controlCol) ? ctx.controlCol : controlCol;
+  const hasErrors = !isNil(name) && ctx.form && ctx.form.errors
+      && ctx.form.errors[name];
 
   const isHorizontal = itemDirection === FormDirection.horizontal;
 
   let justifyCls = JustifyContentType[justify];
   let clsName = clsx(extraClassName, className, itemDirection, justifyCls, {
     'with-msg': !compact,
-    'normal': compact,
-    'row': isHorizontal
+    'non-compact': !compact && !hasErrors,
+    'row': isHorizontal,
+
   });
 
   let chd = useMemo(() => {
-    if (!isHorizontal) {
+    if (!isHorizontal || React.Children.count(children) === 0) {
       return children;
     }
-    //update labelCol and others todo
-    const updatedChd = React.Children.map(children, (child => {
-      if (child.type === FormLabel) {
-        return React.cloneElement(child, {...itemLabelCol});
-      }
-      return child;
-    }));
-  }, [children]);
+
+    const chdArray = React.Children.toArray(children);
+    const labeIndex = chdArray.findIndex(elem => elem.type === FormLabel);
+    if (labeIndex > -1) {
+      const labelChd = chdArray.splice(labeIndex, 1);
+      return <Row>
+        <Col extraClassName="item-label" {...itemLabelCol}>{labelChd}</Col>
+        <Col {...itemControlCol}>{chdArray}</Col>
+      </Row>;
+    }
+
+    return children;
+  }, [children, isHorizontal, itemControlCol, itemLabelCol]);
 
   return <div ref={ref} className={clsName} {...otherProps}>
-
+    {chd}
   </div>;
 });
 

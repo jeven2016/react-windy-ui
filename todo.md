@@ -24,6 +24,3 @@ Enhance:
 - free pic: https://pixabay.com/photos/bay-beach-boat-exotic-idyllic-1867798/
 https://pixabay.com/photos/girl-teenager-dancing-outdoor-5391785/
 
-
-
-hello

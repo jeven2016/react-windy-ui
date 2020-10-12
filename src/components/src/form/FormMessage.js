@@ -1,5 +1,5 @@
 import React from "react";
-import {animated, useTransition} from "react-spring";
+import {useTransition} from "react-spring";
 
 const FormMessage = React.forwardRef((props, ref) => {
   const {
@@ -9,17 +9,21 @@ const FormMessage = React.forwardRef((props, ref) => {
     message,
     children,
   } = props;
-  const transition = useTransition(error?.type === validationType, null, {
+/*  const transition = useTransition(error?.type === validationType, null, {
     from: {opacity: 0},
     enter: {opacity: 1},
     leave: {opacity: 0},
     config: {clamp: true, mass: 1, tesion: 100, friction: 15},
-  });
+  });*/
 
-  return transition.map(({item, key, props: tranProps}) => {
-    return item && <animated.h5 key={key} style={tranProps}
-                                className={`form-msg text ${type}`}>{message}{children}</animated.h5>;
-  });
+  //get some flashing or flickering where the margin-bottom get involved
+  /* return transition.map(({item, key, props: tranProps}) => {
+     return item && <animated.div key={key} style={tranProps}
+                                  className={`form-msg text ${type}`}>{message}{children}</animated.div>;
+   });*/
+
+  return error?.type === validationType
+      && <div className={`form-msg text ${type}`}>{message}{children}</div>
 });
 
 export default FormMessage;
