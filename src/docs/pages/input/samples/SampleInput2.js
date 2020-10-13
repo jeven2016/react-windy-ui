@@ -1,28 +1,28 @@
 import React from 'react';
-import {Input, IconSearch} from 'react-windy-ui';
+import {IconSearch, Input} from 'react-windy-ui';
 
 //todo  update the document
 export default function SampleInput2(props) {
   return <>
     <div className="doc doc-row">
-      <Input.IconInput size="small" placeholder="This is a input" icon={<IconSearch/>}/>
+      <Input size="small" placeholder="This is a input" icon={<IconSearch/>}/>
     </div>
     <div className="doc doc-row">
-      <Input.IconInput placeholder="This is a input" icon={<IconSearch/>}/>
+      <Input placeholder="This is a input" icon={<IconSearch/>}/>
     </div>
     <div className="doc doc-row">
-      <Input.IconInput size="large" placeholder="This is a input" icon={<IconSearch/>}/>
+      <Input size="large" placeholder="This is a input" icon={<IconSearch/>}/>
     </div>
     <div className="doc doc-row">
-      <Input.IconInput size="small" leftIcon placeholder="This is a input" icon={<IconSearch/>}/>
+      <Input size="small" leftIcon placeholder="This is a input" icon={<IconSearch/>}/>
     </div>
     <div className="doc doc-row">
-      <Input.IconInput size="medium" leftIcon placeholder="This is a input"
+      <Input size="medium" leftIcon placeholder="This is a input"
                        icon={<IconSearch/>}/>
     </div>
 
     <div className="doc doc-row">
-      <Input.IconInput size="large" leftIcon placeholder="This is a input"
+      <Input size="large" leftIcon placeholder="This is a input"
                        icon={<IconSearch/>}/>
     </div>
   </>;

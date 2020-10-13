@@ -42,6 +42,7 @@ Option.propTypes = {
   hasBackground: PropTypes.bool,
 };
 
+//todo select proptypes
 const Select = React.forwardRef((props, ref) => {
   const {
     extraClassName,
@@ -95,14 +96,15 @@ const Select = React.forwardRef((props, ref) => {
   const [searchedValue, setSearchedValue] = useState(null);
   const customSearch = isCustomized(props, 'onSearch');
 
-  const internalCtrlRef = useRef();
   const inputRef = useRef();
+  const inputMultiRef = useMultipleRefs(inputRef, ctrlRef);
+
   const menuRef = useRef();
   const detectRef = useRef();
   const searchTimer = useRef(null);
 
-  const multiSelectRef = useMultipleRefs(ref, inputRef);
-  const multiCtrlRef = useMultipleRefs(ctrlRef, internalCtrlRef);
+  const rootRef = useRef();
+  const multiSelectRef = useMultipleRefs(ref, rootRef);
 
   const {
     state: selectedValue,
@@ -133,8 +135,7 @@ const Select = React.forwardRef((props, ref) => {
     }
 
     //adjust the menu's width
-    let rect = multiSelect ? internalCtrlRef.current.getBoundingClientRect()
-        : inputDomNode.parentNode.getBoundingClientRect();
+    let rect = rootRef.current.getBoundingClientRect();
 
     const width = rect.width;
     if (width <= 0) {
@@ -361,7 +362,6 @@ const Select = React.forwardRef((props, ref) => {
     const inputProps = {
       placeholder: realPlaceHolder,
       readOnly: !searchable,
-      ref: inputRef,
       style: ctrlStyle,
       value: displayText,
       onChange: handleSearch,
@@ -379,12 +379,14 @@ const Select = React.forwardRef((props, ref) => {
                        color="gray">
                   <span>{getText(item)}</span>
                   <span className="remove-icon"
-                        onClick={(e) => {removeItem(item.value, e);}}>×</span>
+                        onClick={(e) => {
+                          removeItem(item.value, e);
+                        }}>×</span>
                 </Badge>
               </animated.span>
           ))
         }
-          <Input {...inputProps}/>
+          <Input ref={inputMultiRef} {...inputProps}/>
           <span ref={detectRef} className='search-text-detector'>
         {/*this used to detect the width of the input value in pixel*/}
             {searchedValue}
@@ -392,10 +394,12 @@ const Select = React.forwardRef((props, ref) => {
           </span>
           </span>;
     }
-    return <Input.IconInput inputRef={inputRef} disabled={disabled}
-                            block={block} size={size} ref={multiSelectRef}
-                            style={style} inputProps={inputProps}
-                            icon={realIcon}/>;
+    return <Input ref={inputMultiRef} disabled={disabled}
+                  block={block} size={size}
+                  style={style}
+                  {...inputProps}
+                  rootRef={multiSelectRef}
+                  icon={realIcon}/>;
   };
 
   const selectHandler = (itemsArray, e) => {
@@ -439,7 +443,7 @@ const Select = React.forwardRef((props, ref) => {
       onChange={changeActive}
       activeBy={activeBy}
       className={clsx(extraClassName, className)}
-      ctrlRef={multiCtrlRef}
+      ctrlRef={rootRef}
       ctrlNode={getCtrl()}
       body={getPopupBody()}
       popupExtraClassName={popupCntExtraCls}
@@ -448,41 +452,5 @@ const Select = React.forwardRef((props, ref) => {
 });
 
 Select.Option = Option;
-
-Popup.propTypes = {
-  extraClassName: PropTypes.string,
-  className: PropTypes.string,
-  placeholder: PropTypes.string,
-  style: PropTypes.object,
-  inputStyle: PropTypes.object,
-  size: PropTypes.string,
-  disabled: PropTypes.bool,
-  searchable: PropTypes.bool,
-  autoWidth: PropTypes.bool,
-  multiSelect: PropTypes.bool,
-  hasBorder: PropTypes.bool,
-  hasBox: PropTypes.bool,
-  activeBy: PropTypes.string,
-  block: PropTypes.bool,
-  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onSelect: PropTypes.func,
-  onSearch: PropTypes.func,
-  searchDelay: PropTypes.number,
-  noDataText: PropTypes.node,
-  searchInputWidth: PropTypes.number,
-  arrowIcon: PropTypes.node,
-  activeArrowIcon: PropTypes.node,
-  removeIcon: PropTypes.node,
-  defaultActive: PropTypes.bool,
-  active: PropTypes.bool,
-  onChange: PropTypes.func,
-  onRemove: PropTypes.func,
-  popupExtraClassName: PropTypes.string,
-  menuProps: PropTypes.object,
-  removable: PropTypes.bool,
-  loaderType: PropTypes.string,
-  showLoader: PropTypes.bool,
-};
 
 export default Select;

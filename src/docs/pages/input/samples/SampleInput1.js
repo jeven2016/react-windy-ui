@@ -1,9 +1,13 @@
 import React from 'react';
 import {Input} from 'react-windy-ui';
+import {IconUnChecked} from "../../../../components/src";
 
 export default function SampleInput1(props) {
+  const fun=(elem)=>{
+    console.log("==",elem)
+  }
   return <>
-    <Input placeholder="default"/>
+    <Input icon={<IconUnChecked/>} placeholder="default" ref={fun}/>
     <br/> <br/>
     <Input placeholder="large input" size='large'/>
     <br/> <br/>

@@ -26,6 +26,8 @@ export {
 };
 
 export const isNil = (value) => value == null;
+export const nonNil = (value) => !isNil(value);
+
 
 export const isArray = (value) => {
   // return Object.prototype.toString.call(value) === "[object Array]";

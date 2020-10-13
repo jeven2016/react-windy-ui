@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {isFunction, isNil} from '../Utils';
 
 export const setDirectRef = (directRef, assignedRef) => {
@@ -14,10 +14,11 @@ export const setDirectRef = (directRef, assignedRef) => {
 };
 
 const useMultipleRefs = (forwardedRef, directRef) => {
-  return (refElem) => {
+  //refer to: https://github.com/facebook/react/issues/4533
+  return useCallback((refElem) => {
     setDirectRef(forwardedRef, refElem);
     setDirectRef(directRef, refElem);
-  };
+  },[]);
 };
 
 export default useMultipleRefs;

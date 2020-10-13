@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Select, Divider} from 'react-windy-ui';
 
+//todo: update doc
 export default function Select6() {
   const [active, setActive] = useState(false);
   const currentValue = useRef(1);
@@ -26,7 +27,7 @@ export default function Select6() {
       const isPopupClicked = popupRef.current.contains(e.target);
 
       if (isInputClicked) {
-        //show the popup if clicking the input
+        //show the popup if clicking the input itself
         setActive(true);
       } else if (!isPopupClicked) {
         //close the popup if neither the input nor the popup body is clicked

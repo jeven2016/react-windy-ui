@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import {EventListener, InputBorderType} from './common/Constants';
 import Element from './common/Element';
 import {InputGroupContext} from './common/Context';
-import {isNil} from './Utils';
+import {isNil, nonNil} from './Utils';
 import useMultipleRefs from './common/UseMultipleRefs';
 import {useEvent} from './index';
 import useErrorStyle from './common/useErrorStyle';
 
+//todo: update doc
 const IconInput = React.forwardRef((props, ref) => {
   const {
     className = 'icon-input',
@@ -16,19 +17,19 @@ const IconInput = React.forwardRef((props, ref) => {
     block = false,
     leftIcon = false,
     icon,//todo
-    inputProps,//todo
+    // inputProps,//todo
+    rootProps,//todo
+    rootRef,
     iconProps,//todo
     placeholder,//todo
     errorType, //todo
     disabled = false,
-    children,
-    inputRef,
     extraClassName,
     ...otherProps
   } = props;
   const [active, setActive] = useState(false);
   const interInputRef = useRef(null);
-  const multiInputRef = useMultipleRefs(inputRef, interInputRef);
+  const multiInputRef = useMultipleRefs(ref, interInputRef);
 
   const ctx = useContext(InputGroupContext);
   const inputDisabled = isNil(ctx.disabled) ? disabled : ctx.disabled;
@@ -40,17 +41,17 @@ const IconInput = React.forwardRef((props, ref) => {
     active: active,
   });
 
-  useEvent(EventListener.focus, function() {
+  useEvent(EventListener.focus, function () {
     !active && setActive(true);
   }, true, () => interInputRef.current);
 
-  useEvent(EventListener.blur, function() {
+  useEvent(EventListener.blur, function () {
     active && setActive(false);
   }, true, () => interInputRef.current);
 
-  return <span className={clsName} {...otherProps} ref={ref}>
+  return <span className={clsName} {...rootProps} ref={rootRef}>
     <Input ref={multiInputRef} canFocus={false} placeholder={placeholder}
-           disabled={inputDisabled} {...inputProps}/>
+           disabled={inputDisabled} {...otherProps}/>
    <span className="icon-column" {...iconProps}>{icon}</span>
   </span>;
 });
@@ -73,7 +74,8 @@ const Input = React.forwardRef((props, ref) => {
   let borderTypeCls = InputBorderType[borderType];
   const inputSize = isNil(ctx.size) ? size : ctx.size;
 
-  let clsName = clsx(extraClassName, className, inputSize, useErrorStyle(errorType),
+  let clsName = clsx(extraClassName, className, inputSize,
+      useErrorStyle(errorType),
       {
         'read-only': readOnly,
         'textarea': type === 'textarea',
@@ -104,6 +106,14 @@ const Input = React.forwardRef((props, ref) => {
 
 });
 
+const InputHoc = React.forwardRef((props, ref) => {
+  const {rootRef, ...otherProps} = props;
+  if (nonNil(props.icon)) {
+    return <IconInput rootRef={rootRef} ref={ref}  {...otherProps}/>;
+  }
+  return <Input ref={ref} {...otherProps}/>
+})
+
 IconInput.propTypes = {
   className: PropTypes.string,
   extraClassName: PropTypes.string, //the customized class need to add
@@ -123,6 +133,6 @@ Input.propTypes = {
   extraClassName: PropTypes.string, //the customized class need to add
   disabled: PropTypes.bool,
 };
-Input.IconInput = IconInput;
+InputHoc.IconInput = IconInput;
 
-export default Input;
+export default InputHoc;

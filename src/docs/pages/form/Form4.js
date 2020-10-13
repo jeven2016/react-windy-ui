@@ -30,8 +30,9 @@ export default function Form4() {
       <Card.Row>
         <Form form={form} onSubmit={onSubmit} onError={onError}>
           <Form.Item name="username" resource={{}}>
-            <Input.IconInput
-                inputProps={{name: 'username', defaultValue: 'Me'}}
+            <Input
+                name='username'
+                defaultValue='Me'
                 errorType={errors.username ? 'error' : null}
                 inputRef={register({required: true, minLength: 5})}
                 leftIcon
@@ -50,7 +51,6 @@ export default function Form4() {
             <Input.IconInput
                 type="password"
                 name="password"
-                inputProps={{name: 'password'}}
                 errorType={errors.password ? 'error' : null}
                 inputRef={register({required: true})}
                 leftIcon
@@ -69,7 +69,10 @@ export default function Form4() {
                         defaultChecked/>
             </Form.Label>
             <Button inverted size="small"
-                    onClick={() => console.log("reset password")}>
+                    onClick={(e) => {
+                      console.log("reset password");
+                      e.preventDefault();
+                    }}>
               Forget password?
             </Button>
           </Form.Item>
