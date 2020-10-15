@@ -114,6 +114,10 @@ const InputHoc = React.forwardRef((props, ref) => {
   return <Input ref={ref} {...otherProps}/>
 })
 
+InputHoc.isIconInput = (comp) => {
+  return nonNil(comp) && nonNil(comp.props.icon);
+}
+
 IconInput.propTypes = {
   className: PropTypes.string,
   extraClassName: PropTypes.string, //the customized class need to add

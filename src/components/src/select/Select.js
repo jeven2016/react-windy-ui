@@ -255,7 +255,7 @@ const Select = React.forwardRef((props, ref) => {
     setSearchedValue(inputVal);
 
     if (!isActive) {
-      changeActive(true);
+      changeActive(true, e);
     }
 
     searchTimer.current = execute(() => {
@@ -328,14 +328,14 @@ const Select = React.forwardRef((props, ref) => {
     }
   }, [isActive, searchHits, changeSearchValue, searchDelay]);
 
-  const changeActive = useCallback((next) => {
+  const changeActive = useCallback((next, e) => {
     if (isActive === next) {
       return;
     }
     if (!customActive) {
       setActive(next);
     }
-    onChange && onChange(next);
+    onChange && onChange(next, e);
   }, [isActive, customActive, setActive, onChange]);
 
   const tran = useTransition(selectedValue.map(findItemInfo),
@@ -405,7 +405,7 @@ const Select = React.forwardRef((props, ref) => {
   const selectHandler = (itemsArray, e) => {
     if (multiSelect) {
       if (!isActive) {
-        changeActive(true);
+        changeActive(true, e);
       }
       //prevent the popup from being closed
       preventEvent(e);

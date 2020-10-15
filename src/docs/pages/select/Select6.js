@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Select, Divider} from 'react-windy-ui';
+import {Divider, Select} from 'react-windy-ui';
 
 //todo: update doc
 export default function Select6() {
@@ -8,12 +8,13 @@ export default function Select6() {
   const popupRef = useRef(null); //a reference to popup dom node
   const inputRef = useRef(null);//a reference to input dom node
 
-  const change = (next) => {
+  const change = (next, e) => {
     console.log('changed to: ' + next);
     if (!next && currentValue.current !== 1) {
       return;
     }
     setActive(next);
+    e.stopPropagation();
   };
 
   const select = (value) => {
@@ -40,7 +41,7 @@ export default function Select6() {
   }, []);
 
   return <>
-    <Select activeBy="hover"
+    <Select activeBy="click"
             popupRef={popupRef}
             ctrlRef={inputRef}
             defaultValue={currentValue.current}

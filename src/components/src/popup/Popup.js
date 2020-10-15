@@ -9,12 +9,13 @@ import {
 } from '../common/Constants';
 import {animated, useSpring} from 'react-spring';
 import {execute, isNil, isString, place, setDisplay} from '../Utils';
-import {setDirectRef} from '../common/UseMultipleRefs';
+import useMultipleRefs from '../common/UseMultipleRefs';
 import useResizeObserver from '../common/UseResizeObserver';
 import useEvent from '../common/UseEvent';
 import useInternalState from '../common/useInternalState';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import Input from '../Input';
 
 function getTranslate(position, activePopup, startOffset) {
   const transOffset = startOffset + 5;
@@ -90,17 +91,11 @@ const Popup = React.forwardRef((props, ref) => {
 
   //popup ref
   const realPopupRef = useRef(null);
-  const setPopupRef = (domNode) => {
-    setDirectRef(realPopupRef, domNode);
-    setDirectRef(popupRef, domNode);
-  };
+  const multiPopupRef = useMultipleRefs(realPopupRef, popupRef);
 
   //ctrl node ref
   const realCtrlRef = useRef(null);
-  const setCtrlRef = (ctrlDomNode) => {
-    setDirectRef(realCtrlRef, ctrlDomNode);
-    setDirectRef(ctrlRef, ctrlDomNode);
-  };
+  const multiCtrlRef = useMultipleRefs(realCtrlRef, ctrlRef);
 
   useImperativeHandle(ref, () => ({
     isActive: activePopup,
@@ -162,11 +157,19 @@ const Popup = React.forwardRef((props, ref) => {
   });
 
   //get the controller node
-  const ctrl = isString(ctrlNode) ? <div className="popup-title"
-                                         ref={setCtrlRef}>{ctrlNode}</div>
-      : React.cloneElement(ctrlNode, {
-        ref: setCtrlRef,
-      });
+  const ctrl = useMemo(() => {
+    if (isString(ctrlNode)) {
+      return <div className="popup-title" ref={multiCtrlRef}>{ctrlNode}</div>;
+    }
+
+    //for normal components we only set the ref property, but for IconInput
+    //we have to set via rootRef
+    let elemProps = ctrlNode.type === Input && Input.isIconInput(ctrlNode)
+        ? {rootRef: multiCtrlRef}
+        : {ref: multiCtrlRef};
+
+    return React.cloneElement(ctrlNode, elemProps)
+  }, [multiCtrlRef, ctrlNode]);
 
   //get the popup node
   const popupClsName = clsx(extraClassName, className, {
@@ -181,7 +184,7 @@ const Popup = React.forwardRef((props, ref) => {
     ...popupStyle, ...otherProps, ...springProps,
     zIndex: zIndex,
   };
-  const popup = <animated.div ref={setPopupRef}
+  const popup = <animated.div ref={multiPopupRef}
                               className={popupClsName} style={mergedProps}>
     <div className={popupCntClsName} style={popupBodyStyle}>
       {body}
@@ -198,11 +201,11 @@ const Popup = React.forwardRef((props, ref) => {
     }
   }, [preCloseRef]);
 
-  const changeActive = useCallback((state) => {
+  const changeActive = useCallback((state, e) => {
     if (!customActive) {
       setActive(state);
     }
-    onChange && onChange(state);
+    onChange && onChange(state, e);
   }, [customActive, setActive, onChange]);
 
   const handleHover = (e, nextActive, eventType, forceUpdate = false) => {
@@ -236,7 +239,7 @@ const Popup = React.forwardRef((props, ref) => {
         return;
       }
       preCloseRef.current = execute(() => {
-        changeActive(nextActive);
+        changeActive(nextActive, e);
       }, delayClose);
       return;
     }
@@ -246,7 +249,7 @@ const Popup = React.forwardRef((props, ref) => {
       if (activePopup) {
         return;
       }
-      changeActive(nextActive);
+      changeActive(nextActive, e);
     }
   };
 
@@ -260,7 +263,7 @@ const Popup = React.forwardRef((props, ref) => {
       return;
     }
 
-    changeActive(false);
+    changeActive(false, e);
   }, [activePopup, realCtrlRef, autoClose, realPopupRef, changeActive]);
 
   const handleClick = useCallback((e, nextActive) => {
@@ -271,7 +274,7 @@ const Popup = React.forwardRef((props, ref) => {
       return;
     }
 
-    changeActive(true);
+    changeActive(true, e);
   }, [disabled, activePopup, changeActive]);
 
   const handleKeyDown = useCallback((e) => {
@@ -293,7 +296,7 @@ const Popup = React.forwardRef((props, ref) => {
     }
     if (e.keyCode === 27) {
       //press the esc key
-      changeActive(false);
+      changeActive(false, e);
     }
   }, [disabled, handleClick, changeActive]);
 

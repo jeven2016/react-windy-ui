@@ -1,24 +1,23 @@
 import React, {useCallback} from 'react';
 import {isFunction, isNil} from '../Utils';
 
-export const setDirectRef = (directRef, assignedRef) => {
-  if (isNil(directRef)) {
+export const setDirectRef = (ref, elem) => {
+  if (isNil(ref)) {
     return;
   }
 
-  if (isFunction(directRef)) {
-    directRef(assignedRef);
+  if (isFunction(ref)) {
+    ref(elem);
   } else {
-    directRef.current = assignedRef;
+    ref.current = elem;
   }
 };
 
-const useMultipleRefs = (forwardedRef, directRef) => {
+const useMultipleRefs = (...refs) => {
   //refer to: https://github.com/facebook/react/issues/4533
   return useCallback((refElem) => {
-    setDirectRef(forwardedRef, refElem);
-    setDirectRef(directRef, refElem);
-  },[]);
+    refs.forEach(ref => setDirectRef(ref, refElem))
+  }, []);
 };
 
 export default useMultipleRefs;

@@ -34,7 +34,7 @@ export default function Form4() {
                 name='username'
                 defaultValue='Me'
                 errorType={errors.username ? 'error' : null}
-                inputRef={register({required: true, minLength: 5})}
+                ref={register({required: true, minLength: 5})}
                 leftIcon
                 block placeholder="Username"
                 icon={<IconAccount/>}/>
@@ -52,7 +52,7 @@ export default function Form4() {
                 type="password"
                 name="password"
                 errorType={errors.password ? 'error' : null}
-                inputRef={register({required: true})}
+                ref={register({required: true})}
                 leftIcon
                 block
                 placeholder="Password"
