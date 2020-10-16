@@ -29,7 +29,7 @@ const FormItem = React.forwardRef((props, ref) => {
     labelCol,
     controlCol,
     name,
-
+    renderMessage,
     children,
     ...otherProps
   } = props;
