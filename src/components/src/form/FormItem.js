@@ -1,11 +1,11 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import clsx from 'clsx';
 import {isNil} from '../Utils';
 import {FormDirection, JustifyContentType} from '../common/Constants';
-import {FormContext} from '../common/Context';
 import FormLabel from './FormLabel';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
+import {useFormContext} from "react-hook-form";
 
 /*const findWidget = (children) => {
   const found = React.Children.toArray(children).find(chd => {
@@ -33,13 +33,13 @@ const FormItem = React.forwardRef((props, ref) => {
     children,
     ...otherProps
   } = props;
-  const ctx = useContext(FormContext);
+  const ctx = useFormContext();
   const itemDirection = isNil(direction) ? ctx.direction : direction;
   const itemLabelCol = isNil(labelCol) ? ctx.labelCol : labelCol;
   const itemControlCol = isNil(controlCol) ? ctx.controlCol : controlCol;
   const hasErrors = !isNil(name) && ctx.form && ctx.form.errors
       && ctx.form.errors[name];
-
+  console.log(ctx.register)
   const isHorizontal = itemDirection === FormDirection.horizontal;
 
   let justifyCls = JustifyContentType[justify];
@@ -65,7 +65,7 @@ const FormItem = React.forwardRef((props, ref) => {
       </Row>;
     }
 
-    return children;
+    return null;
   }, [children, isHorizontal, itemControlCol, itemLabelCol]);
 
   return <div ref={ref} className={clsName} {...otherProps}>

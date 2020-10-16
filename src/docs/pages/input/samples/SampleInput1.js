@@ -7,7 +7,7 @@ export default function SampleInput1(props) {
     console.log("==",elem)
   }
   return <>
-    <Input icon={<IconUnChecked/>} placeholder="default" ref={fun}/>
+    <Input placeholder="default" ref={fun}/>
     <br/> <br/>
     <Input placeholder="large input" size='large'/>
     <br/> <br/>

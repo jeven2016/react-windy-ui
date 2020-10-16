@@ -9,11 +9,11 @@ import SampleInput6 from './samples/SampleInput6';
 
 const componentMapping = {
   SampleInput1: <SampleInput1/>,
-  // SampleInput2: <SampleInput2/>,
-  // SampleInput3: <SampleInput3/>,
-  // SampleInput4: <SampleInput4/>,
-  // SampleInput5: <SampleInput5/>,
-  // SampleInput6: <SampleInput6/>,
+  SampleInput2: <SampleInput2/>,
+  SampleInput3: <SampleInput3/>,
+  SampleInput4: <SampleInput4/>,
+  SampleInput5: <SampleInput5/>,
+  SampleInput6: <SampleInput6/>,
 };
 
 export default function InputIndex(props) {

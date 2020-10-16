@@ -29,7 +29,7 @@ export default function Form4() {
     <Card style={{maxWidth: '500px', minWidth: '350px'}} hasBox={false}>
       <Card.Row>
         <Form form={form} onSubmit={onSubmit} onError={onError}>
-          <Form.Item name="username" resource={{}}>
+          <Form.Item name="username">
             <Input
                 name='username'
                 defaultValue='Me'

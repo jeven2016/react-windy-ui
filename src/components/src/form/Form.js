@@ -1,8 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
 import {isNil} from "../Utils";
-import {FormContext} from "../common/Context";
 import {FormDirection} from "../common/Constants";
+import {FormProvider} from "react-hook-form";
 
 const Form = React.forwardRef((props, ref) => {
   const {
@@ -25,11 +25,11 @@ const Form = React.forwardRef((props, ref) => {
     submit = form.handleSubmit(onSubmit, onError);
   }
 
-  return <FormContext.Provider value={{form, direction, labelCol, controlCol}}>
+  return <FormProvider {...form} direction labelCol controlCol>
     <RootElement onSubmit={submit}
                  className={clsName} {...otherProps}
                  ref={ref}/>
-  </FormContext.Provider>;
+  </FormProvider>;
 });
 
 export default Form;

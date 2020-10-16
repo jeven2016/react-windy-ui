@@ -22,6 +22,11 @@ const FormMessage = React.forwardRef((props, ref) => {
                                   className={`form-msg text ${type}`}>{message}{children}</animated.div>;
    });*/
 
+/*  return  <ErrorMessage
+      errors={errors}
+      name="singleErrorInput"
+      render={({ message }) => <p>{message}</p>}
+  />;*/
   return error?.type === validationType
       && <div className={`form-msg text ${type}`}>{message}{children}</div>
 });
