@@ -7,9 +7,9 @@ import Form4 from './Form4';
 // import Form5 from "./Form5";
 
 const componentMapping = {
-  Form1: <Form1/>,
-  Form2: <Form2/>,
-  Form3: <Form3/>,
+  // Form1: <Form1/>,
+  // Form2: <Form2/>,
+  // Form3: <Form3/>,
   Form4: <Form4/>,
   // Form5: <Form5/>
 };

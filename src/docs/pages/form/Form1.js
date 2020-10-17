@@ -9,13 +9,13 @@ export default function Form1() {
       <Card.Row>
         <Form>
           <Form.Item compact={true}>
-            <Form.Label>Username</Form.Label>
+            <Form.Label required>Username</Form.Label>
             <Input placeholder="Please enter your name" block/>
             <Form.Message type="comment" message="The username is required"/>
           </Form.Item>
 
           <Form.Item compact={true}>
-            <Form.Label>Password</Form.Label>
+            <Form.Label required>Password</Form.Label>
             <Input type="password" block
                    placeholder="Please enter your password"/>
             <Form.Message type="comment" message="The password is required"/>

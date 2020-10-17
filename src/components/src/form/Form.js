@@ -1,8 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
-import {isNil} from "../Utils";
-import {FormDirection} from "../common/Constants";
-import {FormProvider} from "react-hook-form";
+import {isNil} from '../Utils';
+import {FormDirection} from '../common/Constants';
+import {FormProvider} from 'react-hook-form';
 
 const Form = React.forwardRef((props, ref) => {
   const {
@@ -25,7 +25,8 @@ const Form = React.forwardRef((props, ref) => {
     submit = form.handleSubmit(onSubmit, onError);
   }
 
-  return <FormProvider {...form} direction labelCol controlCol>
+  return <FormProvider {...form} direction={direction} labelCol={labelCol}
+                       controlCol={controlCol}>
     <RootElement onSubmit={submit}
                  className={clsName} {...otherProps}
                  ref={ref}/>

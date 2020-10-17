@@ -29,7 +29,16 @@ export default function Form4() {
     <Card style={{maxWidth: '500px', minWidth: '350px'}} hasBox={false}>
       <Card.Row>
         <Form form={form} onSubmit={onSubmit} onError={onError}>
-          <Form.Item name="username">
+          <Form.Item name="username" rules={[
+            required:{
+              value: true,
+              message: 'The username is required'
+            },
+            minLength:{
+              value: 5,
+              message: 'The length should be greater than 5'
+            }
+          ]}>
             <Input
                 name='username'
                 defaultValue='Me'
@@ -38,14 +47,6 @@ export default function Form4() {
                 leftIcon
                 block placeholder="Username"
                 icon={<IconAccount/>}/>
-
-            {/*show the error messages */}
-            <Form.Message error={errors.username} validationType="required"
-                          message="The username is required"/>
-            <Form.Message error={errors.username}
-                          validationType="minLength"
-                          message="The length should be greater than 5"/>
-
           </Form.Item>
           <Form.Item name="password">
             <Input.IconInput
@@ -57,9 +58,6 @@ export default function Form4() {
                 block
                 placeholder="Password"
                 icon={<IconLock/>}/>
-
-            <Form.Message error={errors.password} validationType="required"
-                          message="The password is required"/>
           </Form.Item>
 
           <Form.Item direction="horizontal" compact={true} labelCol={{col: 6}}

@@ -1,11 +1,12 @@
 import React, {useMemo} from 'react';
 import clsx from 'clsx';
-import {isNil} from '../Utils';
+import {convertToArray, isNil, nonNil} from '../Utils';
 import {FormDirection, JustifyContentType} from '../common/Constants';
 import FormLabel from './FormLabel';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
-import {useFormContext} from "react-hook-form";
+import {useFormContext} from 'react-hook-form';
+import FormMessage from './FormMessage';
 
 /*const findWidget = (children) => {
   const found = React.Children.toArray(children).find(chd => {
@@ -29,6 +30,11 @@ const FormItem = React.forwardRef((props, ref) => {
     labelCol,
     controlCol,
     name,
+    label,
+    rules,
+    required = false,
+    hasRequiredIcon,
+    iconPosition,
     renderMessage,
     children,
     ...otherProps
@@ -37,9 +43,8 @@ const FormItem = React.forwardRef((props, ref) => {
   const itemDirection = isNil(direction) ? ctx.direction : direction;
   const itemLabelCol = isNil(labelCol) ? ctx.labelCol : labelCol;
   const itemControlCol = isNil(controlCol) ? ctx.controlCol : controlCol;
-  const hasErrors = !isNil(name) && ctx.form && ctx.form.errors
-      && ctx.form.errors[name];
-  console.log(ctx.register)
+  const hasErrors = !isNil(name) && ctx.errors && ctx.errors[name];
+
   const isHorizontal = itemDirection === FormDirection.horizontal;
 
   let justifyCls = JustifyContentType[justify];
@@ -51,25 +56,61 @@ const FormItem = React.forwardRef((props, ref) => {
   });
 
   let chd = useMemo(() => {
-    if (!isHorizontal || React.Children.count(children) === 0) {
-      return children;
+    const lableComp = nonNil(label) ? <FormLabel required={required}
+                                                 hasRequiredIcon={hasRequiredIcon}
+                                                 iconPosition={iconPosition}>
+      {label}
+    </FormLabel> : null;
+
+    if (!isHorizontal) {
+      return nonNil(label)
+          ? <>lableComp{children} </>
+          : children;
     }
 
-    const chdArray = React.Children.toArray(children);
-    const labeIndex = chdArray.findIndex(elem => elem.type === FormLabel);
-    if (labeIndex > -1) {
-      const labelChd = chdArray.splice(labeIndex, 1);
+    let realLabel = lableComp;
+    let chdArray = children;
+    if (isNil(realLabel)) {
+      chdArray = React.Children.toArray(children);
+      const labeIndex = chdArray.findIndex(elem => elem.type === FormLabel);
+      if (labeIndex > -1) {
+        realLabel = chdArray.splice(labeIndex, 1);
+      }
+    }
+
+    if (nonNil(realLabel)) {
       return <Row>
-        <Col extraClassName="item-label" {...itemLabelCol}>{labelChd}</Col>
+        <Col extraClassName="item-label" {...itemLabelCol}>{realLabel}</Col>
         <Col {...itemControlCol}>{chdArray}</Col>
       </Row>;
     }
 
-    return null;
-  }, [children, isHorizontal, itemControlCol, itemLabelCol]);
+    return children;
+  }, [
+    children,
+    hasRequiredIcon,
+    iconPosition,
+    isHorizontal,
+    itemControlCol,
+    itemLabelCol,
+    label,
+    required]);
+
+  const msg = useMemo(() => {
+    return hasErrors && <> {
+      convertToArray(rules).map(rule => {
+        var vType = Object.keys(rule).shift();
+        return vType && <FormMessage key={`m-${vType}`} error={ctx.errors[name]}
+                                     validationType={vType}
+                                     message={rule}/>;
+
+      })};
+    </>;
+  }, [ctx.errors, hasErrors, name, rules]);
 
   return <div ref={ref} className={clsName} {...otherProps}>
     {chd}
+    {msg}
   </div>;
 });
 
