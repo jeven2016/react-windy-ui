@@ -1,15 +1,17 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import clsx from 'clsx';
-import {convertToArray, isNil, nonNil} from '../Utils';
+import {get, isNil, nonNil, set} from '../Utils';
 import {FormDirection, JustifyContentType} from '../common/Constants';
 import FormLabel from './FormLabel';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
 import {useFormContext} from 'react-hook-form';
-import FormMessage from './FormMessage';
+import FormMessage from "./FormMessage";
+import Widget from "./Widget";
 
-/*const findWidget = (children) => {
-  const found = React.Children.toArray(children).find(chd => {
+const findWidget = (children, path = []) => {
+  const found = React.Children.toArray(children).find((chd, index) => {
+    path.push(index + '');
     if (chd.type === Widget) {
       return chd;
     } else {
@@ -17,8 +19,8 @@ import FormMessage from './FormMessage';
     }
   });
 
-  return found;
-}*/
+  return {found: found, path: nonNil(found) ? path : []};
+}
 
 const FormItem = React.forwardRef((props, ref) => {
   const {
@@ -54,6 +56,26 @@ const FormItem = React.forwardRef((props, ref) => {
     'row': isHorizontal,
 
   });
+
+  //todo
+  const updateWidgetRef = useCallback((chdArray) => {
+    if (nonNil(name)) {
+      if (chdArray.length === 0) {
+        set(chdArray, ['0'], React.cloneElement(chdArray[0], {
+          // ref:null
+          name: 'hello'
+        }));
+      } else {
+        const {found, path} = findWidget(children);
+        const formComp = React.Children.only(found.children);
+        set(chdArray, path, React.cloneElement(found, {
+          name: 'hello'
+          // ref:null
+        }));
+      }
+    }
+    return chdArray;
+  }, []);
 
   let chd = useMemo(() => {
     const lableComp = nonNil(label) ? <FormLabel required={required}
@@ -97,14 +119,22 @@ const FormItem = React.forwardRef((props, ref) => {
     required]);
 
   const msg = useMemo(() => {
-    return hasErrors && <> {
-      convertToArray(rules).map(rule => {
-        var vType = Object.keys(rule).shift();
-        return vType && <FormMessage key={`m-${vType}`} error={ctx.errors[name]}
-                                     validationType={vType}
-                                     message={rule}/>;
+    if (!hasErrors || isNil(rules)) {
+      return null;
+    }
+    const globalMsg = rules.message;
+    return <> {
+      Object.entries(rules).map(([key, value]) => {
+        const msg = get(value, 'message');
+        const hasMsg = !isNil(msg);
+        const errorMsg = hasMsg ? msg : globalMsg;
 
-      })};
+        return nonNil(errorMsg) && <FormMessage key={`m-${key}`}
+                                                error={ctx.errors[name]}
+                                                validationType={key}
+                                                message={errorMsg}/>
+      })
+    }
     </>;
   }, [ctx.errors, hasErrors, name, rules]);
 

@@ -29,19 +29,19 @@ export default function Form4() {
     <Card style={{maxWidth: '500px', minWidth: '350px'}} hasBox={false}>
       <Card.Row>
         <Form form={form} onSubmit={onSubmit} onError={onError}>
-          <Form.Item name="username" rules={[
-            required:{
+          <Form.Item name="username" rules={{
+            required: {
               value: true,
               message: 'The username is required'
             },
-            minLength:{
+            minLength: {
               value: 5,
               message: 'The length should be greater than 5'
             }
-          ]}>
+          }}>
             <Input
                 name='username'
-                defaultValue='Me'
+                defaultValue='Name'
                 errorType={errors.username ? 'error' : null}
                 ref={register({required: true, minLength: 5})}
                 leftIcon
