@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useCallback, useContext, useRef, useState} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {EventListener, InputBorderType} from './common/Constants';
@@ -8,6 +8,7 @@ import {isNil, nonNil} from './Utils';
 import useMultipleRefs from './common/UseMultipleRefs';
 import {useEvent} from './index';
 import useErrorStyle from './common/useErrorStyle';
+import {IconPwdVisible} from "./Icons";
 
 //todo: update doc
 const IconInput = React.forwardRef((props, ref) => {
@@ -16,6 +17,7 @@ const IconInput = React.forwardRef((props, ref) => {
     size = 'medium',
     block = false,
     leftIcon = false,
+    rightIcons = [],//format: [<Icon/>]
     icon,//todo
     // inputProps,//todo
     rootProps,//todo
@@ -49,10 +51,20 @@ const IconInput = React.forwardRef((props, ref) => {
     active && setActive(false);
   }, true, () => interInputRef.current);
 
+  const restIcons = useCallback(() => {
+    return React.Children.map(rightIcons,
+        node => <span className="icon-column" style={{
+          margin: '0',
+          padding: '0 .25rem'
+        }}>{node}</span>);
+  }, [rightIcons]);
+
   return <span className={clsName} {...rootProps} ref={rootRef}>
+    {leftIcon && restIcons()}
     <Input ref={multiInputRef} canFocus={false} placeholder={placeholder}
            disabled={inputDisabled} {...otherProps}/>
    <span className="icon-column" {...iconProps}>{icon}</span>
+    {!leftIcon && restIcons()}
   </span>;
 });
 
@@ -106,12 +118,31 @@ const Input = React.forwardRef((props, ref) => {
 
 });
 
-const InputHoc = React.forwardRef((props, ref) => {
-  const {rootRef, ...otherProps} = props;
-  if (nonNil(props.icon)) {
-    return <IconInput rootRef={rootRef} ref={ref}  {...otherProps}/>;
+//todo
+const Password = React.forwardRef((props, ref) => {
+  const {
+    rootRef,
+    hasToggleIcon = true,
+    toggleIcon = <IconPwdVisible/>,
+    ...otherProps
+  } = props;
+
+  if (hasToggleIcon) {
+    return <IconInput rootRef={rootRef} ref={ref}
+                      rightIcons={[toggleIcon]}  {...otherProps}/>;
   }
   return <Input ref={ref} {...otherProps}/>
+});
+
+const InputHoc = React.forwardRef((props, ref) => {
+  const {rootRef, type, icon, ...otherProps} = props;
+  const isPwd = nonNil(type) && type.toLowerCase() === 'password';
+  if (nonNil(icon) || isPwd) {
+    let TagName = isPwd ? Password : IconInput;
+    return <TagName type={type} rootRef={rootRef} icon={icon}
+                    ref={ref}  {...otherProps}/>;
+  }
+  return <Input type={type} ref={ref} {...otherProps}/>
 })
 
 InputHoc.isIconInput = (comp) => {

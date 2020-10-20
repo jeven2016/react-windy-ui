@@ -40,20 +40,17 @@ export default function Form4() {
             }
           }}>
             <Input
-                name='username'
                 defaultValue='Name'
-                errorType={errors.username ? 'error' : null}
-                ref={register({required: true, minLength: 5})}
                 leftIcon
                 block placeholder="Username"
                 icon={<IconAccount/>}/>
           </Form.Item>
-          <Form.Item name="password">
-            <Input.IconInput
+          <Form.Item name="username" rules={{
+            message: 'The length should be greater than 5',
+            required: true, minLength: 5
+          }}>
+            <Input
                 type="password"
-                name="password"
-                errorType={errors.password ? 'error' : null}
-                ref={register({required: true})}
                 leftIcon
                 block
                 placeholder="Password"
