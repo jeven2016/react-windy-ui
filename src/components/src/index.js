@@ -4,7 +4,6 @@ import Pagination from './Pagination.js';
 //new
 import Button from './button/Button';
 import ButtonGroup from './ButtonGroup';
-import Input from './Input';
 import Icon from './Icon';
 import InputGroup from './InputGroup.js';
 import {
@@ -53,6 +52,7 @@ export {default as useLazyImport} from './common/UseLazyImport';
 export {default as Collapse} from './collapse/Collapse';
 export {default as Table} from './table/Table';
 export {default as PopConfirm} from './popconfirm';
+export {default as Input} from './Input';
 
 export {
   IconInfo,
@@ -86,7 +86,6 @@ export {
 export {
   Button,
   ButtonGroup,
-  Input,
   Icon,
   InputGroup,
   Navbar,

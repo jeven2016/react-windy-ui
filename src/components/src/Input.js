@@ -1,14 +1,14 @@
-import React, {useCallback, useContext, useRef, useState} from 'react';
+import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {EventListener, InputBorderType} from './common/Constants';
 import Element from './common/Element';
 import {InputGroupContext} from './common/Context';
-import {isNil, nonNil} from './Utils';
+import {isNil, nonNil, validate} from './Utils';
 import useMultipleRefs from './common/UseMultipleRefs';
 import {useEvent} from './index';
 import useErrorStyle from './common/useErrorStyle';
-import {IconPwdVisible} from "./Icons";
+import {IconPwdInvisible, IconPwdVisible} from "./Icons";
 
 //todo: update doc
 const IconInput = React.forwardRef((props, ref) => {
@@ -53,15 +53,13 @@ const IconInput = React.forwardRef((props, ref) => {
 
   const restIcons = useCallback(() => {
     return React.Children.map(rightIcons,
-        node => <span className="icon-column" style={{
-          margin: '0',
-          padding: '0 .25rem'
-        }}>{node}</span>);
+        node => <span className="icon-column right">{node}</span>);
   }, [rightIcons]);
 
   return <span className={clsName} {...rootProps} ref={rootRef}>
     {leftIcon && restIcons()}
     <Input ref={multiInputRef} canFocus={false} placeholder={placeholder}
+           size={size}
            disabled={inputDisabled} {...otherProps}/>
    <span className="icon-column" {...iconProps}>{icon}</span>
     {!leftIcon && restIcons()}
@@ -123,15 +121,35 @@ const Password = React.forwardRef((props, ref) => {
   const {
     rootRef,
     hasToggleIcon = true,
-    toggleIcon = <IconPwdVisible/>,
+    toggleIcons = [<IconPwdVisible/>, <IconPwdInvisible/>],
+    type = 'password',
+    leftIcon,
     ...otherProps
   } = props;
+  validate(type === 'password', 'The type can only be password');
 
-  if (hasToggleIcon) {
-    return <IconInput rootRef={rootRef} ref={ref}
-                      rightIcons={[toggleIcon]}  {...otherProps}/>;
+  validate(toggleIcons.length === 2, "There should be two icons for switching.")
+  const [visible, setVisible] = useState(false);
+
+  const change = useCallback((e) => {
+    setVisible(pre => !pre);
+  }, [setVisible]);
+
+  const validIcon = useMemo(() => {
+    const rightIcon = visible ? toggleIcons[0] : toggleIcons[1];
+    return React.cloneElement(rightIcon, {
+      onClick: change
+    })
+  }, [visible, toggleIcons, change]);
+
+  const inputType = visible ? 'text' : type;
+  if (nonNil(props.icon)) {
+    const rightIcons = hasToggleIcon ? [validIcon] : [];
+    return <IconInput leftIcon={leftIcon} rootRef={rootRef} ref={ref}
+                      type={inputType}
+                      rightIcons={rightIcons}  {...otherProps}/>;
   }
-  return <Input ref={ref} {...otherProps}/>
+  return <Input ref={ref} type={inputType} {...otherProps}/>
 });
 
 const InputHoc = React.forwardRef((props, ref) => {

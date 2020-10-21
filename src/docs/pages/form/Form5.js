@@ -21,17 +21,17 @@ export default function Form4() {
       <Card.Row>
         <Form form={form} onSubmit={onSubmit} onError={onError}>
           <Form.Item
-              name="username"
-              errorType="error"
+              name="name"
+              label="Name"
               rules={[{
                 required: true,
                 message: 'The username is required'
               }]}>
-            hellow
+            Input:
             <Form.Widget>
               <Input/>
             </Form.Widget>
-            ??
+            Need Help?
 
           </Form.Item>
         </Form>

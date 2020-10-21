@@ -7,19 +7,36 @@ import Row from '../grid/Row';
 import Col from '../grid/Col';
 import {useFormContext} from 'react-hook-form';
 import FormMessage from "./FormMessage";
-import Widget from "./Widget";
 
-const findWidget = (children, path = []) => {
-  const found = React.Children.toArray(children).find((chd, index) => {
-    path.push(index + '');
-    if (chd.type === Widget) {
-      return chd;
-    } else {
-      findWidget(chd.children);
+const traverse = (node, path) => {
+  if (node.type === Widget) {
+    return {foundSub: node, subPath: path};
+  }
+  //todo
+}
+
+const findWidget = (children) => {
+  let found, path = [];
+  const chdArray = React.Children.toArray(children);
+  for (let [index, nodde] of chdArray.entries()) {
+    const {foundSub, subPath} = traverse(node, [index + '']);
+    if (nonNil(foundSub)) {
+      found = foundSub;
+      path = subPath;
+      break;
     }
-  });
+  }
 
-  return {found: found, path: nonNil(found) ? path : []};
+  /* const found = React.Children.toArray(children).find((chd, index) => {
+     path.push(index + '');
+     if (chd.type === Widget) {
+       return chd;
+     } else {
+       findWidget(chd.children);
+     }
+   });
+ */
+  return {found: found, path: path};
 }
 
 const FormItem = React.forwardRef((props, ref) => {
@@ -83,8 +100,11 @@ const FormItem = React.forwardRef((props, ref) => {
       set(chdArray, ['0'], React.cloneElement(chdArray[0], cloneProps));
     } else {
       const {found, path} = findWidget(children);
+      console.log(path);
+      console.log(get(chdArray, path))
       set(chdArray, path, React.cloneElement(found, cloneProps));
     }
+    console.log(chdArray)
     return chdArray;
   }, [formControlled, getPureRules, hasErrors]);
 
@@ -99,7 +119,7 @@ const FormItem = React.forwardRef((props, ref) => {
     if (!isHorizontal) {
       const updatedChd = updateWidget(chdArray);
       return nonNil(label)
-          ? <>lableComp{updatedChd} </>
+          ? <>{lableComp}{updatedChd} </>
           : updatedChd;
     }
 

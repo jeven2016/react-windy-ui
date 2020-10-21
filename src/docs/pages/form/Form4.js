@@ -29,6 +29,7 @@ export default function Form4() {
     <Card style={{maxWidth: '500px', minWidth: '350px'}} hasBox={false}>
       <Card.Row>
         <Form form={form} onSubmit={onSubmit} onError={onError}>
+
           <Form.Item name="username" rules={{
             required: {
               value: true,
@@ -46,8 +47,9 @@ export default function Form4() {
                 icon={<IconAccount/>}/>
           </Form.Item>
           <Form.Item name="username" rules={{
-            message: 'The length should be greater than 5',
-            required: true, minLength: 5
+            message: 'The value is invalid',
+            required: true,
+            minLength: 5
           }}>
             <Input
                 type="password"
@@ -71,6 +73,7 @@ export default function Form4() {
               Forget password?
             </Button>
           </Form.Item>
+
           <Form.Item direction="horizontal" compact={true}>
             <Button nativeType="submit" block color="blue">Sign In</Button>
             <div className="text color-blue" style={{
@@ -79,6 +82,7 @@ export default function Form4() {
             }}>Or sign up?
             </div>
           </Form.Item>
+
         </Form>
       </Card.Row>
     </Card>
