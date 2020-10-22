@@ -46,8 +46,10 @@ export default function Form4() {
                 block placeholder="Username"
                 icon={<IconAccount/>}/>
           </Form.Item>
-          <Form.Item name="username" rules={{
-            message: 'The value is invalid',
+
+          {/*only display one same message*/}
+          <Form.Item name="password" rules={{
+            message: 'The password is invalid',
             required: true,
             minLength: 5
           }}>

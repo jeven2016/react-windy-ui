@@ -1,42 +1,38 @@
 import React, {useCallback, useMemo} from 'react';
 import clsx from 'clsx';
-import {get, isNil, nonNil, set, validate} from '../Utils';
+import {get, isNil, nonNil, validate} from '../Utils';
 import {FormDirection, JustifyContentType} from '../common/Constants';
 import FormLabel from './FormLabel';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
 import {useFormContext} from 'react-hook-form';
 import FormMessage from "./FormMessage";
+import Widget from "./Widget";
 
-const traverse = (node, path) => {
-  if (node.type === Widget) {
-    return {foundSub: node, subPath: path};
-  }
-  //todo
+const cloneWidget = (widget, props) => {
+  const formCtrlNode = widget.props.children;
+
+  validate(React.Children.count(formCtrlNode) === 1,
+      'There should only be one child in "Form.Widget"');
+
+  return React.cloneElement(widget, {
+    children: React.cloneElement(formCtrlNode, props)
+  });
 }
 
-const findWidget = (children) => {
-  let found, path = [];
-  const chdArray = React.Children.toArray(children);
-  for (let [index, nodde] of chdArray.entries()) {
-    const {foundSub, subPath} = traverse(node, [index + '']);
-    if (nonNil(foundSub)) {
-      found = foundSub;
-      path = subPath;
-      break;
+const mapWidget = (chdArray, props) => {
+  return React.Children.map(chdArray, chd => {
+    if (chd.type === Widget) {
+      return cloneWidget(chd, props);
     }
-  }
 
-  /* const found = React.Children.toArray(children).find((chd, index) => {
-     path.push(index + '');
-     if (chd.type === Widget) {
-       return chd;
-     } else {
-       findWidget(chd.children);
-     }
-   });
- */
-  return {found: found, path: path};
+    const count = React.Children.count(chd.children);
+    if (count <= 0) {
+      return chd;
+    }
+
+    return mapWidget(chd.children, props);
+  });
 }
 
 const FormItem = React.forwardRef((props, ref) => {
@@ -63,6 +59,7 @@ const FormItem = React.forwardRef((props, ref) => {
     validate(nonNil(name),
         "The name is required while the rules is configured");
   }
+
   const itemDirection = isNil(direction) ? ctx.direction : direction;
   const itemLabelCol = isNil(labelCol) ? ctx.labelCol : labelCol;
   const itemControlCol = isNil(controlCol) ? ctx.controlCol : controlCol;
@@ -86,27 +83,25 @@ const FormItem = React.forwardRef((props, ref) => {
     return restRules;
   }, []);
 
+  const getCloneProps = useCallback(() => ({
+    ref: ctx.register(getPureRules()),
+    name: name,
+    errorType: hasErrors ? 'error' : null
+  }), [name, getPureRules, hasErrors, ctx.register]);
+
   const updateWidget = useCallback((chdArray) => {
     if (!formControlled || chdArray.length <= 0) {
       return chdArray;
     }
-    const pureRules = getPureRules();
-    const cloneProps = {
-      ref: ctx.register(pureRules),
-      name: name,
-      errorType: hasErrors ? 'error' : null
-    };
+    let finalChd;
     if (chdArray.length === 1) {
-      set(chdArray, ['0'], React.cloneElement(chdArray[0], cloneProps));
+      finalChd = chdArray[0].type === Widget ? cloneWidget(chdArray[0],
+          getCloneProps()) : React.cloneElement(chdArray[0], getCloneProps());
     } else {
-      const {found, path} = findWidget(children);
-      console.log(path);
-      console.log(get(chdArray, path))
-      set(chdArray, path, React.cloneElement(found, cloneProps));
+      finalChd = mapWidget(children, getCloneProps());
     }
-    console.log(chdArray)
-    return chdArray;
-  }, [formControlled, getPureRules, hasErrors]);
+    return finalChd;
+  }, [formControlled, getCloneProps, children]);
 
   let chd = useMemo(() => {
     const lableComp = nonNil(label) ? <FormLabel required={required}
@@ -125,9 +120,9 @@ const FormItem = React.forwardRef((props, ref) => {
 
     let realLabel = lableComp;
     if (isNil(realLabel)) {
-      const labeIndex = chdArray.findIndex(elem => elem.type === FormLabel);
-      if (labeIndex > -1) {
-        realLabel = chdArray.splice(labeIndex, 1);
+      const labelIndex = chdArray.findIndex(elem => elem.type === FormLabel);
+      if (labelIndex > -1) {
+        realLabel = chdArray.splice(labelIndex, 1);
       }
     }
 
@@ -148,6 +143,7 @@ const FormItem = React.forwardRef((props, ref) => {
     itemLabelCol,
     label,
     required,
+    getCloneProps,
     updateWidget]);
 
   const msg = useMemo(() => {

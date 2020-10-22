@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Form, Input} from 'react-windy-ui';
+import {Button, Card, Form, Input} from 'react-windy-ui';
 
 export default function Form4() {
   //for more information of the form validation, refer to https://react-hook-form.com/api/
@@ -23,16 +23,18 @@ export default function Form4() {
           <Form.Item
               name="name"
               label="Name"
-              rules={[{
+              rules={{
                 required: true,
-                message: 'The username is required'
-              }]}>
-            Input:
+                message: 'The name is required'
+              }}>
+            hello
             <Form.Widget>
               <Input/>
             </Form.Widget>
             Need Help?
-
+          </Form.Item>
+          <Form.Item direction="horizontal" compact={true}>
+            <Button nativeType="submit" block color="blue">Submit</Button>
           </Form.Item>
         </Form>
       </Card.Row>
