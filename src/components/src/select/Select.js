@@ -59,7 +59,7 @@ const Select = React.forwardRef((props, ref) => {
     hasBorder = false,
     hasBox = true,
     activeBy = PopupCtrlType.click,
-    block,
+    block = false,
     defaultValue,
     value,
     onSelect,
@@ -386,7 +386,8 @@ const Select = React.forwardRef((props, ref) => {
               </animated.span>
           ))
         }
-          <Input ref={inputMultiRef} {...inputProps}/>
+          <Input extraClassName="select-input"
+                 ref={inputMultiRef} {...inputProps}/>
           <span ref={detectRef} className='search-text-detector'>
         {/*this used to detect the width of the input value in pixel*/}
             {searchedValue}
@@ -394,7 +395,9 @@ const Select = React.forwardRef((props, ref) => {
           </span>
           </span>;
     }
-    return <Input ref={inputMultiRef} disabled={disabled}
+    return <Input extraClassName="select-input"
+                  ref={inputMultiRef}
+                  disabled={disabled}
                   block={block} size={size}
                   style={style}
                   {...inputProps}

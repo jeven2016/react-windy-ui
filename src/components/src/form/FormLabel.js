@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import {JustifyContentType} from "../common/Constants";
 
 const FormLabel = React.forwardRef((props, ref) => {
   const {
@@ -12,7 +13,6 @@ const FormLabel = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const clsName = clsx(extraClassName, className);
-
   const existsIcon = required && hasRequiredIcon;
   const isLeftPos = iconPosition === 'left';
   return <label className={clsName} {...otherProps} ref={ref}>

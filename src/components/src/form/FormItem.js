@@ -20,18 +20,26 @@ const cloneWidget = (widget, props) => {
   });
 }
 
+//An alternative is using lodash get & set functions to update the widget by
+// path
 const mapWidget = (chdArray, props) => {
+  let found = false;
   return React.Children.map(chdArray, chd => {
     if (chd.type === Widget) {
+      found = true;
       return cloneWidget(chd, props);
     }
 
-    const count = React.Children.count(chd.children);
+    if (found) {
+      return chd;
+    }
+    const count = React.Children.count(chd.props?.children);
     if (count <= 0) {
       return chd;
     }
 
-    return mapWidget(chd.children, props);
+    return React.cloneElement(chd,
+        {children: mapWidget(chd.props.children, props)});
   });
 }
 
@@ -42,6 +50,7 @@ const FormItem = React.forwardRef((props, ref) => {
     extraClassName,
     direction,
     justify = JustifyContentType.start,
+    justifyLabel = JustifyContentType.start,
     labelCol,
     controlCol,
     name,
@@ -103,49 +112,6 @@ const FormItem = React.forwardRef((props, ref) => {
     return finalChd;
   }, [formControlled, getCloneProps, children]);
 
-  let chd = useMemo(() => {
-    const lableComp = nonNil(label) ? <FormLabel required={required}
-                                                 hasRequiredIcon={hasRequiredIcon}
-                                                 iconPosition={iconPosition}>
-      {label}
-    </FormLabel> : null;
-
-    const chdArray = React.Children.toArray(children);
-    if (!isHorizontal) {
-      const updatedChd = updateWidget(chdArray);
-      return nonNil(label)
-          ? <>{lableComp}{updatedChd} </>
-          : updatedChd;
-    }
-
-    let realLabel = lableComp;
-    if (isNil(realLabel)) {
-      const labelIndex = chdArray.findIndex(elem => elem.type === FormLabel);
-      if (labelIndex > -1) {
-        realLabel = chdArray.splice(labelIndex, 1);
-      }
-    }
-
-    if (nonNil(realLabel)) {
-      return <Row>
-        <Col extraClassName="item-label" {...itemLabelCol}>{realLabel}</Col>
-        <Col {...itemControlCol}>{updateWidget(chdArray)}</Col>
-      </Row>;
-    }
-
-    return children;
-  }, [
-    children,
-    hasRequiredIcon,
-    iconPosition,
-    isHorizontal,
-    itemControlCol,
-    itemLabelCol,
-    label,
-    required,
-    getCloneProps,
-    updateWidget]);
-
   const msg = useMemo(() => {
     if (!hasErrors || isNil(rules)) {
       return null;
@@ -166,9 +132,61 @@ const FormItem = React.forwardRef((props, ref) => {
     </>;
   }, [ctx.errors, hasErrors, name, rules]);
 
+  let chd = useMemo(() => {
+    const lableComp = nonNil(label) ? <FormLabel required={required}
+                                                 hasRequiredIcon={hasRequiredIcon}
+                                                 iconPosition={iconPosition}>
+      {label}
+    </FormLabel> : null;
+
+    const chdArray = React.Children.toArray(children);
+    if (!isHorizontal) {
+      const updatedChd = updateWidget(chdArray);
+      return nonNil(label)
+          ? <>{lableComp}{updatedChd}{msg} </>
+          : <>{updatedChd}{msg}</>;
+    }
+
+    let realLabel = lableComp;
+    if (isNil(realLabel)) {
+      const labelIndex = chdArray.findIndex(elem => elem.type === FormLabel);
+      if (labelIndex > -1) {
+        realLabel = chdArray.splice(labelIndex, 1);
+      }
+    }
+
+    if (nonNil(realLabel)) {
+      const labelJustifyCls = JustifyContentType[justifyLabel];
+      const labelCls = clsx("item-label", labelJustifyCls);
+      return <><Row>
+        <Col extraClassName={labelCls} {...itemLabelCol}>{realLabel}</Col>
+        <Col {...itemControlCol}>{updateWidget(chdArray)}</Col>
+      </Row>
+        {hasErrors &&
+        <Row>
+          <Col extraClassName="item-label" {...itemLabelCol}> </Col>
+          <Col {...itemControlCol}>{msg}</Col>
+        </Row>
+        }
+      </>;
+    }
+
+    return children;
+  }, [
+    children,
+    hasRequiredIcon,
+    iconPosition,
+    isHorizontal,
+    itemControlCol,
+    itemLabelCol,
+    label,
+    required,
+    getCloneProps,
+    msg,
+    updateWidget]);
+
   return <div ref={ref} className={clsName} {...otherProps}>
     {chd}
-    {msg}
   </div>;
 });
 

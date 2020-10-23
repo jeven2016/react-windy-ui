@@ -1,7 +1,14 @@
 import React from 'react';
-import {Input} from 'react-windy-ui';
-import {IconSearch, InputGroup, Checkbox, Button, Loader} from 'react-windy-ui';
+import {
+  Button,
+  Checkbox,
+  IconSearch,
+  Input,
+  InputGroup,
+  Loader
+} from 'react-windy-ui';
 
+//todo
 export default function SampleInput5(props) {
   return <>
     <div className="doc doc-row">
@@ -22,12 +29,16 @@ export default function SampleInput5(props) {
     </div>
     <div className="doc doc-row">
       <InputGroup block>
-        <Button color="green">Search</Button>
+        <InputGroup.Item autoScale={false}>
+          <Button color="green">Search</Button>
+        </InputGroup.Item>
         <Input placeholder="place......"/>
         <Input placeholder="next......"/>
-        <Button color="blue">Go</Button>
+        <InputGroup.Item autoScale={false}>
+          <Button color="blue">Go</Button>
+        </InputGroup.Item>
         <InputGroup.Label>
-          ---
+          Other
         </InputGroup.Label>
       </InputGroup>
     </div>
@@ -35,7 +46,9 @@ export default function SampleInput5(props) {
       <InputGroup block>
         <Input.IconInput leftIcon placeholder="This is a input"
                          icon={<IconSearch/>}/>
-        <Button color="green">Search</Button>
+        <InputGroup.Item autoScale={false}>
+          <Button color="green">Search</Button>
+        </InputGroup.Item>
         <Input placeholder="next......"/>
       </InputGroup>
     </div>

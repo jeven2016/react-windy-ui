@@ -3,25 +3,69 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {InputGroupContext} from './common/Context';
 
+//todo
 const InputGroup = React.forwardRef((props, ref) => {
-  const {block = false, size = 'medium', className = 'input-group', extraClassName, ...otherProps} = props;
+  const {
+    block = false,
+    size = 'medium',
+    className = 'input-group',
+    extraClassName,
+    children,  //todo
+    ...otherProps
+  } = props;
 
-  let clsName = clsx(extraClassName, className,
-      {block: block});
+  let clsName = clsx(extraClassName, className, {block: block});
   const ctx = useMemo(() => ({size, withinGroup: true}),
       [size]);
 
+  const updatedChd = useMemo(() => {
+    return React.Children.map(children, (chd) => {
+      console.log(children)
+      if (chd.type === Item || chd.type === Label) {
+        return chd;
+      }
+
+      return <Item autoScale={true} compact={false}>
+        {chd}
+      </Item>
+    })
+  }, [children]);
+
   return <InputGroupContext.Provider value={ctx}>
-    <span ref={ref} className={clsName} {...otherProps}/>
+    <span ref={ref} className={clsName} {...otherProps}>
+      {updatedChd}
+    </span>
   </InputGroupContext.Provider>;
 });
 
-const Label = React.forwardRef((props, ref) => {
-  const {className = 'label', extraClassName, ...otherProps} = props;
-  const ctx = useContext(InputGroupContext);
-  let clsName = clsx(extraClassName, className);
+const Item = React.forwardRef((props, ref) => {
+  const {children, autoScale = true,  ...rest} = props;
+  const clsName = clsx("item", {
+    'auto-scale': autoScale,
+    'no-scale': !autoScale
+  })
+  return <div className={clsName} {...rest}>
+    {children}
+  </div>
+});
 
-  return <div ref={ref} className={`${clsName} ${ctx.size}`} {...otherProps}/>;
+const Label = React.forwardRef((props, ref) => {
+  const {
+    className = 'label',
+    extraClassName,
+    hasBackground = true,//todo
+    compact = false,//todo
+    children,
+    ...otherProps
+  } = props;
+  const ctx = useContext(InputGroupContext);
+  const labelCls=  clsx(extraClassName, className);
+  let cntClsName = clsx('content',
+      {'with-bg': hasBackground, compact: compact});
+
+  return <div ref={ref} className={labelCls} {...otherProps}>
+    <div className={cntClsName}>{children}</div>
+  </div>;
 });
 
 InputGroup.propTypes = {
@@ -38,4 +82,5 @@ Label.propTypes = {
 };
 
 InputGroup.Label = Label;
+InputGroup.Item = Item;
 export default InputGroup;

@@ -14,12 +14,12 @@ export default function Form3() {
       <Card.Row>
         <Form direction="horizontal" labelCol={{col: 3}} controlCol={{col: 9}}>
           <Form.Item label="username" required>
-            <Input.IconInput leftIcon block placeholder="Username"
-                             icon={<IconAccount/>}/>
+            <Input leftIcon block placeholder="Username"
+                   icon={<IconAccount/>}/>
           </Form.Item>
           <Form.Item label="Password" required>
-            <Input.IconInput leftIcon block placeholder="Password"
-                             icon={<IconLock/>}/>
+            <Input leftIcon block placeholder="Password"
+                   icon={<IconLock/>}/>
           </Form.Item>
           <Form.Item compact={true}>
             <Button block color="blue">Sign In</Button>
