@@ -6,8 +6,32 @@ import FormLabel from './FormLabel';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
 import {useFormContext} from 'react-hook-form';
-import FormMessage from "./FormMessage";
-import Widget from "./Widget";
+import FormMessage from './FormMessage';
+import Widget from './Widget';
+import Select from '../select';
+
+const cloneElement = (elem, props) => {
+  let newProps;
+  let originExCls = elem.props.extraClassName;
+  if (elem.type === Select) {
+    originExCls = elem.props.inputProps?.extraClassName;
+    const extraCls = clsx(originExCls, 'form-control');
+    newProps = {
+      ...props,
+      inputProps: {
+        ...elem.props.inputProps,
+        extraClassName: extraCls,
+      },
+    };
+  } else {
+    const extraCls = clsx(originExCls, 'form-control');
+    newProps = {
+      ...props,
+      extraClassName: extraCls,
+    };
+  }
+  return React.cloneElement(elem, newProps);
+};
 
 const cloneWidget = (widget, props) => {
   const formCtrlNode = widget.props.children;
@@ -16,9 +40,9 @@ const cloneWidget = (widget, props) => {
       'There should only be one child in "Form.Widget"');
 
   return React.cloneElement(widget, {
-    children: React.cloneElement(formCtrlNode, props)
+    children: cloneElement(formCtrlNode, props),
   });
-}
+};
 
 //An alternative is using lodash get & set functions to update the widget by
 // path
@@ -41,7 +65,7 @@ const mapWidget = (chdArray, props) => {
     return React.cloneElement(chd,
         {children: mapWidget(chd.props.children, props)});
   });
-}
+};
 
 const FormItem = React.forwardRef((props, ref) => {
   const {
@@ -66,7 +90,7 @@ const FormItem = React.forwardRef((props, ref) => {
   const ctx = useFormContext();
   if (nonNil(rules)) {
     validate(nonNil(name),
-        "The name is required while the rules is configured");
+        'The name is required while the rules is configured');
   }
 
   const itemDirection = isNil(direction) ? ctx.direction : direction;
@@ -90,13 +114,13 @@ const FormItem = React.forwardRef((props, ref) => {
     }
     const {message, ...restRules} = rules;
     return restRules;
-  }, []);
+  }, [formControlled, rules]);
 
   const getCloneProps = useCallback(() => ({
     ref: ctx.register(getPureRules()),
     name: name,
-    errorType: hasErrors ? 'error' : null
-  }), [name, getPureRules, hasErrors, ctx.register]);
+    errorType: hasErrors ? 'error' : null,
+  }), [ctx, getPureRules, name, hasErrors]);
 
   const updateWidget = useCallback((chdArray) => {
     if (!formControlled || chdArray.length <= 0) {
@@ -105,7 +129,7 @@ const FormItem = React.forwardRef((props, ref) => {
     let finalChd;
     if (chdArray.length === 1) {
       finalChd = chdArray[0].type === Widget ? cloneWidget(chdArray[0],
-          getCloneProps()) : React.cloneElement(chdArray[0], getCloneProps());
+          getCloneProps()) : cloneElement(chdArray[0], getCloneProps());
     } else {
       finalChd = mapWidget(children, getCloneProps());
     }
@@ -126,7 +150,7 @@ const FormItem = React.forwardRef((props, ref) => {
         return nonNil(errorMsg) && <FormMessage key={`m-${key}`}
                                                 error={ctx.errors[name]}
                                                 validationType={key}
-                                                message={errorMsg}/>
+                                                message={errorMsg}/>;
       })
     }
     </>;
@@ -157,7 +181,7 @@ const FormItem = React.forwardRef((props, ref) => {
 
     if (nonNil(realLabel)) {
       const labelJustifyCls = JustifyContentType[justifyLabel];
-      const labelCls = clsx("item-label", labelJustifyCls);
+      const labelCls = clsx('item-label', labelJustifyCls);
       return <><Row>
         <Col extraClassName={labelCls} {...itemLabelCol}>{realLabel}</Col>
         <Col {...itemControlCol}>{updateWidget(chdArray)}</Col>
@@ -173,17 +197,18 @@ const FormItem = React.forwardRef((props, ref) => {
 
     return children;
   }, [
-    children,
-    hasRequiredIcon,
-    iconPosition,
-    isHorizontal,
-    itemControlCol,
-    itemLabelCol,
     label,
     required,
-    getCloneProps,
+    hasRequiredIcon,
+    iconPosition,
+    children,
+    isHorizontal,
+    updateWidget,
     msg,
-    updateWidget]);
+    justifyLabel,
+    itemLabelCol,
+    itemControlCol,
+    hasErrors]);
 
   return <div ref={ref} className={clsName} {...otherProps}>
     {chd}

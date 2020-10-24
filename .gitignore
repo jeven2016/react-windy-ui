@@ -29,3 +29,4 @@ package-lock.json
 /src/components/node_modules/
 /src/components/dist/
 /dist/
+/.gradle/

@@ -51,6 +51,8 @@ const Select = React.forwardRef((props, ref) => {
     placeholder,
     style,
     inputStyle,
+    inputProps,//todo, need to evaluate using props instead of input props( for form item)
+    errorType='error', //for form
     size = 'medium',
     disabled = false,
     searchable = false,
@@ -326,7 +328,7 @@ const Select = React.forwardRef((props, ref) => {
         changeSearchValue(null);
       }, searchDelay);
     }
-  }, [isActive, searchHits, changeSearchValue, searchDelay]);
+  }, [searchHits, changeSearchValue, searchDelay]);
 
   const changeActive = useCallback((next, e) => {
     if (isActive === next) {
@@ -359,13 +361,15 @@ const Select = React.forwardRef((props, ref) => {
   };
 
   const getCtrl = () => {
-    const inputProps = {
+    const copiedProps = {
+      ...inputProps,
       placeholder: realPlaceHolder,
       readOnly: !searchable,
       style: ctrlStyle,
       value: displayText,
       onChange: handleSearch,
       onBlur: handleBlur,
+      extraClassName: clsx('select-input', inputProps?.extraClassName),
     };
     if (multiSelect) {
       return <span className='select-multiple' onClick={focusInput}
@@ -386,8 +390,7 @@ const Select = React.forwardRef((props, ref) => {
               </animated.span>
           ))
         }
-          <Input extraClassName="select-input"
-                 ref={inputMultiRef} {...inputProps}/>
+          <Input ref={inputMultiRef} {...copiedProps}/>
           <span ref={detectRef} className='search-text-detector'>
         {/*this used to detect the width of the input value in pixel*/}
             {searchedValue}
@@ -395,12 +398,12 @@ const Select = React.forwardRef((props, ref) => {
           </span>
           </span>;
     }
-    return <Input extraClassName="select-input"
+    return <Input errorType={errorType}
                   ref={inputMultiRef}
                   disabled={disabled}
                   block={block} size={size}
                   style={style}
-                  {...inputProps}
+                  {...copiedProps}
                   rootRef={multiSelectRef}
                   icon={realIcon}/>;
   };
