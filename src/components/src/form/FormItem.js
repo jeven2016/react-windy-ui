@@ -1,57 +1,73 @@
 import React, {useCallback, useMemo} from 'react';
 import clsx from 'clsx';
-import {get, isNil, nonNil, validate} from '../Utils';
+import {get, isBlank, isNil, nonNil, validate} from '../Utils';
 import {FormDirection, JustifyContentType} from '../common/Constants';
 import FormLabel from './FormLabel';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
-import {useFormContext} from 'react-hook-form';
+import {Controller, useFormContext} from 'react-hook-form';
 import FormMessage from './FormMessage';
 import Widget from './Widget';
 import Select from '../select';
 
-const cloneElement = (elem, props) => {
+const cloneElement = (elem, props, control) => {
   let newProps;
   let originExCls = elem.props.extraClassName;
-  if (elem.type === Select) {
-    originExCls = elem.props.inputProps?.extraClassName;
-    const extraCls = clsx(originExCls, 'form-control');
-    newProps = {
-      ...props,
-      inputProps: {
-        ...elem.props.inputProps,
+
+  //for Controller, the pureRules is used by controller and the ref should be excluded in this case
+  const {pureRules, ref, ...restProps} = props;
+
+  let extraCls;
+  switch (elem.type) {
+    case Select :
+      originExCls = elem.props.inputProps?.extraClassName;
+      extraCls = clsx(originExCls, 'form-control');
+      newProps = {
+        ...elem.props,
+        ...restProps,
+        inputProps: {
+          ...elem.props.inputProps,
+          extraClassName: extraCls,
+        },
+      };
+      //while the Controller is used, the rules should be moved from ref and
+      //set via rules property of controller
+      return <Controller as={Select}
+                         rules={pureRules}
+                         control={control} {...newProps}/>;
+
+    default:
+      extraCls = clsx(originExCls, 'form-control');
+      newProps = {
+        ref: ref,
+        ...elem.props,
+        ...restProps,
         extraClassName: extraCls,
-      },
-    };
-  } else {
-    const extraCls = clsx(originExCls, 'form-control');
-    newProps = {
-      ...props,
-      extraClassName: extraCls,
-    };
+      };
+      return React.cloneElement(elem, newProps);
   }
-  return React.cloneElement(elem, newProps);
+
 };
 
-const cloneWidget = (widget, props) => {
+const cloneWidget = (widget, props, control) => {
   const formCtrlNode = widget.props.children;
 
   validate(React.Children.count(formCtrlNode) === 1,
       'There should only be one child in "Form.Widget"');
 
   return React.cloneElement(widget, {
-    children: cloneElement(formCtrlNode, props),
+    children: cloneElement(formCtrlNode, props, control),
   });
 };
 
 //An alternative is using lodash get & set functions to update the widget by
 // path
-const mapWidget = (chdArray, props) => {
+const mapWidget = (chdArray, props, control) => {
   let found = false;
   return React.Children.map(chdArray, chd => {
     if (chd.type === Widget) {
       found = true;
-      return cloneWidget(chd, props);
+      return cloneWidget(chd, props, control);
     }
 
     if (found) {
@@ -63,7 +79,7 @@ const mapWidget = (chdArray, props) => {
     }
 
     return React.cloneElement(chd,
-        {children: mapWidget(chd.props.children, props)});
+        {children: mapWidget(chd.props.children, props, control)});
   });
 };
 
@@ -85,6 +101,7 @@ const FormItem = React.forwardRef((props, ref) => {
     iconPosition,
     renderMessage,
     children,
+    simple,
     ...otherProps
   } = props;
   const ctx = useFormContext();
@@ -97,8 +114,10 @@ const FormItem = React.forwardRef((props, ref) => {
   const itemLabelCol = isNil(labelCol) ? ctx.labelCol : labelCol;
   const itemControlCol = isNil(controlCol) ? ctx.controlCol : controlCol;
   const hasErrors = !isNil(name) && ctx.errors && ctx.errors[name];
-  const formControlled = nonNil(name) || nonNil(rules);
+  const formControlled = !isBlank(name) || nonNil(rules);
   const isHorizontal = itemDirection === FormDirection.horizontal;
+
+  console.log(`name=${name}, isBlank=${isBlank(name)}`)
 
   let justifyCls = JustifyContentType[justify];
   let clsName = clsx(extraClassName, className, itemDirection, justifyCls, {
@@ -120,6 +139,7 @@ const FormItem = React.forwardRef((props, ref) => {
     ref: ctx.register(getPureRules()),
     name: name,
     errorType: hasErrors ? 'error' : null,
+    pureRules: getPureRules()
   }), [ctx, getPureRules, name, hasErrors]);
 
   const updateWidget = useCallback((chdArray) => {
@@ -129,9 +149,10 @@ const FormItem = React.forwardRef((props, ref) => {
     let finalChd;
     if (chdArray.length === 1) {
       finalChd = chdArray[0].type === Widget ? cloneWidget(chdArray[0],
-          getCloneProps()) : cloneElement(chdArray[0], getCloneProps());
+          getCloneProps()) : cloneElement(chdArray[0], getCloneProps(),
+          ctx.control);
     } else {
-      finalChd = mapWidget(children, getCloneProps());
+      finalChd = mapWidget(children, getCloneProps(), ctx.control);
     }
     return finalChd;
   }, [formControlled, getCloneProps, children]);
@@ -179,23 +200,26 @@ const FormItem = React.forwardRef((props, ref) => {
       }
     }
 
+    const finalChd = updateWidget(chdArray);
+
+    const errorRow = hasErrors &&
+        <Row>
+          <Col extraClassName="item-label" {...itemLabelCol}> </Col>
+          <Col {...itemControlCol}>{msg}</Col>
+        </Row>;
+
     if (nonNil(realLabel)) {
       const labelJustifyCls = JustifyContentType[justifyLabel];
       const labelCls = clsx('item-label', labelJustifyCls);
       return <><Row>
         <Col extraClassName={labelCls} {...itemLabelCol}>{realLabel}</Col>
-        <Col {...itemControlCol}>{updateWidget(chdArray)}</Col>
+        <Col {...itemControlCol}>{finalChd}</Col>
       </Row>
-        {hasErrors &&
-        <Row>
-          <Col extraClassName="item-label" {...itemLabelCol}> </Col>
-          <Col {...itemControlCol}>{msg}</Col>
-        </Row>
-        }
+        {errorRow}
       </>;
     }
 
-    return children;
+    return <>{finalChd} {errorRow}</>;
   }, [
     label,
     required,
@@ -210,7 +234,7 @@ const FormItem = React.forwardRef((props, ref) => {
     itemControlCol,
     hasErrors]);
 
-  return <div ref={ref} className={clsName} {...otherProps}>
+  return simple ? chd : <div ref={ref} className={clsName} {...otherProps}>
     {chd}
   </div>;
 });

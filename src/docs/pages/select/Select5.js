@@ -80,7 +80,7 @@ export default function Select5() {
             defaultValue="shanghai"
             position="bottomLeft"
             autoWidth={false}
-            onChange={(item) => console.log(item)}>
+            onActiveChange={(item) => console.log(item)}>//todo
       <Select.Option value="park" text="Central Park"
                      style={{borderBottom: '1px solid #ccc'}}>
         <Template title="Central Park"

@@ -29,7 +29,7 @@ export default function Form6() {
         <Form form={form} onSubmit={onSubmit} direction="horizontal"
               labelCol={{col: 3}} controlCol={{col: 9}}>
 
-          <Form.Item label="username" required name="username" rules={{
+         {/* <Form.Item label="username" required name="username" rules={{
             required: true,
             message: 'The username is required'
           }} justifyLabel="end">
@@ -63,25 +63,31 @@ export default function Form6() {
               <Select.Option value="other">Other </Select.Option>
             </Select>
           </Form.Item>
-
-          <Form.Item label="Phone Number" name="phone" rules={{
-            required: true,
-            message: 'The phone number is required'
-          }} justifyLabel="end">
-            <Tooltip body="Phone Number: +86 13344666343">
+*/}
+          <Form.Item label="Phone Number" justifyLabel="end">
+            {/*<Tooltip body="Phone Number: +86 13344666343">*/}
               <InputGroup block>
                 <InputGroup.Item autoScale={false} style={{flex: '0 1 5rem'}}>
-                  <Select onSelect={(value) => console.log(value)}>
-                    <Select.Option value="+86">+86</Select.Option>
-                    <Select.Option value="+87">+87</Select.Option>
-                    <Select.Option value="+88">+88</Select.Option>
-                  </Select>
+                  <Form.Item
+                      name="countryCode"
+                      simple={true}
+                      rules={{
+                        required: true,
+                        message: 'The country code is required'
+                      }}>
+                    <Select onSelect={(value) => console.log(value)}>
+                      <Select.Option value="+86">+86</Select.Option>
+                      <Select.Option value="+87">+87</Select.Option>
+                      <Select.Option value="+88">+88</Select.Option>
+                    </Select>
+                  </Form.Item>
                 </InputGroup.Item>
                 <Input placeholder="Phone Number"/>
               </InputGroup>
-            </Tooltip>
+            {/*</Tooltip>*/}
           </Form.Item>
 
+{/*
           <Form.Item label="Nationality" required name="nationality" rules={{
             required: true,
             message: 'The nationality is required'
@@ -98,6 +104,7 @@ export default function Form6() {
               </Radio>
             </RadioGroup>
           </Form.Item>
+*/}
 
           <Form.Item compact={true}>
             <Button color="blue">Save</Button>

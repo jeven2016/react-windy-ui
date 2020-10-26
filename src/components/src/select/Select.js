@@ -9,6 +9,7 @@ import {
   isBlank,
   isCustomized,
   isNil,
+  nonNil,
 } from '../Utils';
 import Element from '../common/Element';
 import {IconArrowDown, IconArrowUp, IconChecked2, IconNoData} from '../Icons';
@@ -47,12 +48,13 @@ const Select = React.forwardRef((props, ref) => {
   const {
     extraClassName,
     className = 'select-menu popup',
+    name,
     children,
     placeholder,
     style,
     inputStyle,
     inputProps,//todo, need to evaluate using props instead of input props( for form item)
-    errorType='error', //for form
+    errorType, //for form
     size = 'medium',
     disabled = false,
     searchable = false,
@@ -74,7 +76,8 @@ const Select = React.forwardRef((props, ref) => {
     removeIcon,
     defaultActive = false,
     active, //whether to show the popup
-    onChange, //for changing active state
+    onChange, //for changing value, same as onSelect
+    onActiveChange, //todo
     onRemove,
     popupExtraClassName,
     menuProps = {},
@@ -153,6 +156,10 @@ const Select = React.forwardRef((props, ref) => {
 
   //get all items information
   const allItemsInfo = useMemo(() => {
+    if (React.Children.count(children) === 0) {
+      return [];
+    }
+
     return React.Children.map(children, child => {
       if (child.type !== Option) {
         return null;
@@ -222,7 +229,7 @@ const Select = React.forwardRef((props, ref) => {
   }, [children, getItemsBySearchValue]);
 
   const getDisplayItems = () => {
-    let items;
+    let items = [];
 
     //if onSearch is specified or no search text exists,  the items should be injected from outside
     if (customSearch || isBlank(searchedValue)) {
@@ -337,8 +344,8 @@ const Select = React.forwardRef((props, ref) => {
     if (!customActive) {
       setActive(next);
     }
-    onChange && onChange(next, e);
-  }, [isActive, customActive, setActive, onChange]);
+    onActiveChange && onActiveChange(next, e);
+  }, [isActive, customActive, setActive, onActiveChange]);
 
   const tran = useTransition(selectedValue.map(findItemInfo),
       item => isNil(item) ? null : item.value, {
@@ -390,7 +397,7 @@ const Select = React.forwardRef((props, ref) => {
               </animated.span>
           ))
         }
-          <Input ref={inputMultiRef} {...copiedProps}/>
+          <Input name={name} ref={inputMultiRef} {...copiedProps}/>
           <span ref={detectRef} className='search-text-detector'>
         {/*this used to detect the width of the input value in pixel*/}
             {searchedValue}
@@ -398,7 +405,7 @@ const Select = React.forwardRef((props, ref) => {
           </span>
           </span>;
     }
-    return <Input errorType={errorType}
+    return <Input name={name} errorType={errorType}
                   ref={inputMultiRef}
                   disabled={disabled}
                   block={block} size={size}
@@ -421,11 +428,13 @@ const Select = React.forwardRef((props, ref) => {
       setValue(itemsArray);
       setSearchedValue(null);
     }
-    onSelect && onSelect(itemsArray[0], e);
+
+    onSelect && onSelect(multiSelect ? itemsArray : itemsArray[0], e);
+    onChange && onChange(multiSelect ? itemsArray : itemsArray[0], e);
   };
 
   const getPopupBody = () => {
-    return finalItems.length === 0 ?
+    return nonNil(finalItems) && finalItems.length === 0 ?
         <Element className="no-data">
           <IconNoData extraClassName="no-data-icon"/>
           <span className="no-data-label">{noDataText}</span>

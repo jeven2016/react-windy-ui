@@ -46,7 +46,7 @@ export default function Select6() {
             ctrlRef={inputRef}
             defaultValue={currentValue.current}
             active={active}
-            onChange={change}
+            onActiveChange={change}//todo
             onSelect={select}>
       <Select.Option value={0}>Won't close1</Select.Option>
       <Divider/>

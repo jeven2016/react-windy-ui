@@ -10,13 +10,13 @@ import Select6 from './Select6';
 
 
 const componentMapping = {
-  // Select1: <Select1/>,
-  // Select2: <Select2/>,
-  // Select3: <Select3/>,
-  // Select4: <Select4/>,
-  // Select5: <Select5/>,
+  Select1: <Select1/>,
+  Select2: <Select2/>,
+  Select3: <Select3/>,
+  Select4: <Select4/>,
+  Select5: <Select5/>,
   Select6: <Select6/>,
-  // Select7: <Select7/>,
+  Select7: <Select7/>,
 };
 
 export default function SelectIndex() {

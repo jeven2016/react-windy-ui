@@ -20,7 +20,6 @@ const InputGroup = React.forwardRef((props, ref) => {
 
   const updatedChd = useMemo(() => {
     return React.Children.map(children, (chd) => {
-      console.log(children)
       if (chd.type === Item || chd.type === Label) {
         return chd;
       }
