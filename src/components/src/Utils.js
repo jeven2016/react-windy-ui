@@ -11,6 +11,7 @@ import {
   set,
   slice,
   without,
+  flattenDeep,
 } from 'lodash';
 import {PopupPosition} from './common/Constants';
 
@@ -27,6 +28,7 @@ export {
   max,
   get,
   set,
+  flattenDeep
 };
 
 export const isNil = (value) => value == null;

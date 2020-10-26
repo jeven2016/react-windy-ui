@@ -1,6 +1,5 @@
-import React from "react";
-import clsx from "clsx";
-import {JustifyContentType} from "../common/Constants";
+import React from 'react';
+import clsx from 'clsx';
 
 const FormLabel = React.forwardRef((props, ref) => {
   const {

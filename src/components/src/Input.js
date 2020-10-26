@@ -8,7 +8,7 @@ import {isNil, nonNil, validate} from './Utils';
 import useMultipleRefs from './common/UseMultipleRefs';
 import {useEvent} from './index';
 import useErrorStyle from './common/useErrorStyle';
-import {IconPwdInvisible, IconPwdVisible} from "./Icons";
+import {IconPwdInvisible, IconPwdVisible} from './Icons';
 
 //todo: update doc
 const IconInput = React.forwardRef((props, ref) => {
@@ -43,11 +43,11 @@ const IconInput = React.forwardRef((props, ref) => {
     active: active,
   });
 
-  useEvent(EventListener.focus, function () {
+  useEvent(EventListener.focus, function() {
     !active && setActive(true);
   }, true, () => interInputRef.current);
 
-  useEvent(EventListener.blur, function () {
+  useEvent(EventListener.blur, function() {
     active && setActive(false);
   }, true, () => interInputRef.current);
 
@@ -128,7 +128,7 @@ const Password = React.forwardRef((props, ref) => {
   } = props;
   validate(type === 'password', 'The type can only be password');
 
-  validate(toggleIcons.length === 2, "There should be two icons for switching.")
+  validate(toggleIcons.length === 2, 'There should be two icons for switching.');
   const [visible, setVisible] = useState(false);
 
   const change = useCallback((e) => {
@@ -138,18 +138,15 @@ const Password = React.forwardRef((props, ref) => {
   const validIcon = useMemo(() => {
     const rightIcon = visible ? toggleIcons[0] : toggleIcons[1];
     return React.cloneElement(rightIcon, {
-      onClick: change
-    })
+      onClick: change,
+    });
   }, [visible, toggleIcons, change]);
 
   const inputType = visible ? 'text' : type;
-  if (nonNil(props.icon)) {
-    const rightIcons = hasToggleIcon ? [validIcon] : [];
-    return <IconInput leftIcon={leftIcon} rootRef={rootRef} ref={ref}
-                      type={inputType}
-                      rightIcons={rightIcons}  {...otherProps}/>;
-  }
-  return <Input ref={ref} type={inputType} {...otherProps}/>
+  const rightIcons = hasToggleIcon ? [validIcon] : [];
+  return <IconInput leftIcon={leftIcon} rootRef={rootRef} ref={ref}
+                    type={inputType}
+                    rightIcons={rightIcons}  {...otherProps}/>;
 });
 
 const InputHoc = React.forwardRef((props, ref) => {
@@ -160,12 +157,12 @@ const InputHoc = React.forwardRef((props, ref) => {
     return <TagName type={type} rootRef={rootRef} icon={icon}
                     ref={ref}  {...otherProps}/>;
   }
-  return <Input type={type} ref={ref} {...otherProps}/>
-})
+  return <Input type={type} ref={ref} {...otherProps}/>;
+});
 
 InputHoc.isIconInput = (comp) => {
   return nonNil(comp) && nonNil(comp.props.icon);
-}
+};
 
 IconInput.propTypes = {
   className: PropTypes.string,

@@ -3,8 +3,12 @@ import {
   Button,
   Card,
   Form,
+  IconAccount,
+  IconLock,
   Input,
   InputGroup,
+  Radio,
+  RadioGroup,
   Select,
   Tooltip,
 } from 'react-windy-ui';
@@ -12,7 +16,6 @@ import {
 export default function Form16() {
   const {form} = Form.useForm({
     mode: 'onSubmit',
-    shouldFocusError: false,
   });
 
   const onSubmit = (data, e) => {
@@ -27,14 +30,34 @@ export default function Form16() {
         <Form form={form} onSubmit={onSubmit} direction="horizontal"
               labelCol={{col: 3}} controlCol={{col: 9}}>
 
-          <Form.Item label="Gender"
-                     name="gender"
-                     required={true}
-                     rules={{
-                       required: true,
-                       message: 'The gender is required',
-                     }} justifyLabel="end">
-            <Select block placeholder="Please select the gender" defaultValue=""
+          <Form.Item label="username" required name="username" rules={{
+            required: true,
+            message: 'The username is required',
+          }} justifyLabel="end">
+            <Input leftIcon block placeholder="Username"
+                   icon={<IconAccount/>}/>
+          </Form.Item>
+
+          <Form.Item label="Password" required name="pwd" rules={{
+            required: true,
+            message: 'The password is required',
+          }} justifyLabel="end">
+            <Input leftIcon block placeholder="Password"
+                   icon={<IconLock/>}/>
+          </Form.Item>
+
+          <Form.Item label="Age" name="age" rules={{
+            required: true,
+            message: 'The age is required',
+          }} justifyLabel="end">
+            <Input block placeholder="Age"/>
+          </Form.Item>
+
+          <Form.Item label="Gender" name="gender" rules={{
+            required: true,
+            message: 'The gender is required',
+          }} justifyLabel="end">
+            <Select block placeholder="Please select the gender"
                     onSelect={(value) => console.log(value)}>
               <Select.Option value="nj">Female</Select.Option>
               <Select.Option value="sh">Male</Select.Option>
@@ -42,11 +65,10 @@ export default function Form16() {
             </Select>
           </Form.Item>
 
-          <Form.Item rootItem={true} label="Phone Number" required={true}
-                     justifyLabel="end">
+          <Form.Item rootItem={true} label="Phone Number" justifyLabel="end">
             <Tooltip body="Phone Number: +86 13344666343">
               <InputGroup block>
-                <InputGroup.Item autoScale={false} style={{flex: '0 1 6rem'}}>
+                <InputGroup.Item autoScale={false} style={{flex: '0 1 5rem'}}>
                   <Form.Item
                       name="countryCode"
                       simple={true}
@@ -54,8 +76,7 @@ export default function Form16() {
                         required: true,
                         message: 'The country code is required',
                       }}>
-                    <Select placeholder="Code" defaultValue=""
-                            onSelect={(value) => console.log(value)}>
+                    <Select onSelect={(value) => console.log(value)}>
                       <Select.Option value="+86">+86</Select.Option>
                       <Select.Option value="+87">+87</Select.Option>
                       <Select.Option value="+88">+88</Select.Option>
@@ -70,14 +91,33 @@ export default function Form16() {
                       required: true,
                       message: 'The phone number is required',
                     }}>
-                  <Input placeholder="Phone Number" defaultValue=""/>
+                  <Input placeholder="Phone Number"/>
                 </Form.Item>
               </InputGroup>
             </Tooltip>
           </Form.Item>
 
+
+          {/*   <Form.Item label="Nationality" required name="nationality" rules={{
+            required: true,
+            message: 'The nationality is required'
+          }} justifyLabel="end">
+            <RadioGroup onChange={(val) => console.log(val)}>
+              <Radio value="China">
+                China
+              </Radio>
+              <Radio value="US">
+                US
+              </Radio>
+              <Radio value="UK">
+                UK
+              </Radio>
+            </RadioGroup>
+          </Form.Item>*/}
+
+
           <Form.Item compact={true}>
-            <Button color="blue" nativeType="submit">Save</Button>
+            <Button color="blue">Save</Button>
           </Form.Item>
         </Form>
       </Card.Row>
