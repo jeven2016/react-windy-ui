@@ -1,14 +1,15 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useContext, useMemo} from 'react';
 import clsx from 'clsx';
-import {get, isBlank, isNil, nonNil, validate} from '../Utils';
+import {isBlank, isNil, nonNil, validate} from '../Utils';
 import {FormDirection, JustifyContentType} from '../common/Constants';
-import FormLabel from './FormLabel';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
 import {Controller, useFormContext} from 'react-hook-form';
-import FormMessage from './FormMessage';
 import Widget from './Widget';
 import Select from '../select';
+import RootItem from './RootItem';
+import {createErrorMessages, filterLabel, useLabel} from './FormUtils';
+import {FormItemContext} from '../common/Context';
 
 const cloneElement = (elem, props, control) => {
   let newProps;
@@ -105,6 +106,7 @@ const FormItem = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const ctx = useFormContext();
+  const rootItemCtx = useContext(FormItemContext);
   if (nonNil(rules)) {
     validate(nonNil(name),
         'The name is required while the rules is configured');
@@ -116,8 +118,6 @@ const FormItem = React.forwardRef((props, ref) => {
   const hasErrors = !isNil(name) && ctx.errors && ctx.errors[name];
   const formControlled = !isBlank(name) || nonNil(rules);
   const isHorizontal = itemDirection === FormDirection.horizontal;
-
-  console.log(`name=${name}, isBlank=${isBlank(name)}`)
 
   let justifyCls = JustifyContentType[justify];
   let clsName = clsx(extraClassName, className, itemDirection, justifyCls, {
@@ -139,7 +139,7 @@ const FormItem = React.forwardRef((props, ref) => {
     ref: ctx.register(getPureRules()),
     name: name,
     errorType: hasErrors ? 'error' : null,
-    pureRules: getPureRules()
+    pureRules: getPureRules(),
   }), [ctx, getPureRules, name, hasErrors]);
 
   const updateWidget = useCallback((chdArray) => {
@@ -155,52 +155,36 @@ const FormItem = React.forwardRef((props, ref) => {
       finalChd = mapWidget(children, getCloneProps(), ctx.control);
     }
     return finalChd;
-  }, [formControlled, getCloneProps, children]);
+  }, [formControlled, getCloneProps, ctx.control, children]);
 
   const msg = useMemo(() => {
     if (!hasErrors || isNil(rules)) {
       return null;
     }
     const globalMsg = rules.message;
-    return <> {
-      Object.entries(rules).map(([key, value]) => {
-        const msg = get(value, 'message');
-        const hasMsg = !isNil(msg);
-        const errorMsg = hasMsg ? msg : globalMsg;
-
-        return nonNil(errorMsg) && <FormMessage key={`m-${key}`}
-                                                error={ctx.errors[name]}
-                                                validationType={key}
-                                                message={errorMsg}/>;
-      })
-    }
+    return <> {createErrorMessages(ctx, name, globalMsg, rules)}
     </>;
-  }, [ctx.errors, hasErrors, name, rules]);
+  }, [ctx, hasErrors, name, rules]);
+
+  const labelComp = useLabel(props);
 
   let chd = useMemo(() => {
-    const lableComp = nonNil(label) ? <FormLabel required={required}
-                                                 hasRequiredIcon={hasRequiredIcon}
-                                                 iconPosition={iconPosition}>
-      {label}
-    </FormLabel> : null;
-
     const chdArray = React.Children.toArray(children);
-    if (!isHorizontal) {
-      const updatedChd = updateWidget(chdArray);
-      return nonNil(label)
-          ? <>{lableComp}{updatedChd}{msg} </>
-          : <>{updatedChd}{msg}</>;
-    }
-
-    let realLabel = lableComp;
-    if (isNil(realLabel)) {
-      const labelIndex = chdArray.findIndex(elem => elem.type === FormLabel);
-      if (labelIndex > -1) {
-        realLabel = chdArray.splice(labelIndex, 1);
-      }
-    }
-
     const finalChd = updateWidget(chdArray);
+    //if this item is within a root item, just render the origin children
+    if (rootItemCtx.rootItemControl) {
+      return finalChd;
+    }
+    if (!isHorizontal) {
+      return nonNil(label)
+          ? <>{labelComp}{finalChd}{msg} </>
+          : <>{finalChd}{msg}</>;
+    }
+
+    let realLabel = labelComp;
+    if (isNil(realLabel)) {
+      realLabel = filterLabel(chdArray);
+    }
 
     const errorRow = hasErrors &&
         <Row>
@@ -208,35 +192,45 @@ const FormItem = React.forwardRef((props, ref) => {
           <Col {...itemControlCol}>{msg}</Col>
         </Row>;
 
-    if (nonNil(realLabel)) {
-      const labelJustifyCls = JustifyContentType[justifyLabel];
-      const labelCls = clsx('item-label', labelJustifyCls);
-      return <><Row>
-        <Col extraClassName={labelCls} {...itemLabelCol}>{realLabel}</Col>
-        <Col {...itemControlCol}>{finalChd}</Col>
-      </Row>
-        {errorRow}
-      </>;
-    }
+    const labelJustifyCls = JustifyContentType[justifyLabel];
+    const labelCls = clsx('item-label', labelJustifyCls);
 
-    return <>{finalChd} {errorRow}</>;
+    return <><Row>
+      <Col extraClassName={labelCls} {...itemLabelCol}>{realLabel}</Col>
+      <Col {...itemControlCol}>{finalChd}</Col>
+    </Row>
+      {errorRow}
+    </>;
+
   }, [
-    label,
-    required,
-    hasRequiredIcon,
-    iconPosition,
+    rootItemCtx.rootItemControl,
     children,
     isHorizontal,
+    labelComp,
     updateWidget,
-    msg,
-    justifyLabel,
+    hasErrors,
     itemLabelCol,
     itemControlCol,
-    hasErrors]);
+    msg,
+    justifyLabel,
+    label]);
 
   return simple ? chd : <div ref={ref} className={clsName} {...otherProps}>
     {chd}
   </div>;
 });
 
-export default FormItem;
+const FormItemHoc = React.forwardRef((props, ref) => {
+  const {
+    rootItem = false,
+    ...rest
+  } = props;
+
+  if (rootItem) {
+    return <RootItem {...rest}/>;
+  }
+
+  return <FormItem {...rest}/>;
+});
+
+export default FormItemHoc;

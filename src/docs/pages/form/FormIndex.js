@@ -6,6 +6,8 @@ import Form3 from "./Form3";
 import Form4 from './Form4';
 import Form5 from "./Form5";
 import Form6 from "./Form6";
+import Form16 from "./Form16";
+import Form7 from './Form7';
 
 const componentMapping = {
   // Form1: <Form1/>,
@@ -14,6 +16,8 @@ const componentMapping = {
   // Form4: <Form4/>,
   // Form5: <Form5/>,
   Form6: <Form6/>,
+  Form7: <Form7/>,
+  // Form16: <Form16/>,
 };
 
 export default function FormIndex(props) {
