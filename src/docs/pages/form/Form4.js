@@ -16,7 +16,6 @@ export default function Form4() {
     mode: 'onSubmit',
   });
 
-  const {register, errors, handleSubmit} = form;
 
   const onSubmit = (data, e) => {
     console.log("onSubmit", data, e);
@@ -49,9 +48,7 @@ export default function Form4() {
 
           {/*only display one same message*/}
           <Form.Item name="password" rules={{
-            message: 'The password is invalid',
-            required: true,
-            minLength: 5
+            required: 'The password is invalid',
           }}>
             <Input
                 type="password"

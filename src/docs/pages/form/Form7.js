@@ -1,23 +1,18 @@
 import React from 'react';
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  InputGroup,
-  Select,
-  Tooltip,
-} from 'react-windy-ui';
-import {IconLock} from '../../../components/src';
+import {Button, Card, Form, Input, Notification} from 'react-windy-ui';
 
 export default function Form7() {
-  const {form} = Form.useForm({
+  const {form, watch} = Form.useForm({
     mode: 'onSubmit',
     shouldFocusError: false,
   });
 
   const onSubmit = (data, e) => {
-    console.log(data, e);
+    Notification.mini({
+      position: 'topCenter',
+      title: 'The form data:',
+      body: `${JSON.stringify(data)}`
+    });
     //then call the api to save the data
   };
 
@@ -43,8 +38,12 @@ export default function Form7() {
                      required={true}
                      justifyLabel="end"
                      rules={{
-                       required: true,
-                       message: 'The password is required',
+                       required: {
+                         value: true,
+                         message: 'The confirm password is required',
+                       },
+                       validate: (value) => value === watch('newPwd'),
+                       message: "The confirm password doesn't match the password"
                      }}>
             <Input type="password"/>
           </Form.Item>

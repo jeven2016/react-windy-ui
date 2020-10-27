@@ -161,8 +161,9 @@ const FormItem = React.forwardRef((props, ref) => {
     if (!hasErrors || isNil(rules)) {
       return null;
     }
+    return null;
     const globalMsg = rules.message;
-    return <> {createErrorMessages(ctx, name, globalMsg, rules)}
+    return <> {createErrorMessages(ctx, name, rules)}
     </>;
   }, [ctx, hasErrors, name, rules]);
 
@@ -181,12 +182,7 @@ const FormItem = React.forwardRef((props, ref) => {
           : <>{finalChd}{msg}</>;
     }
 
-    let realLabel = labelComp;
-    if (isNil(realLabel)) {
-      realLabel = filterLabel(chdArray);
-    }
-
-    const errorRow = hasErrors &&
+    let errorRow = hasErrors &&
         <Row>
           <Col extraClassName="item-label" {...itemLabelCol}> </Col>
           <Col {...itemControlCol}>{msg}</Col>
@@ -195,12 +191,30 @@ const FormItem = React.forwardRef((props, ref) => {
     const labelJustifyCls = JustifyContentType[justifyLabel];
     const labelCls = clsx('item-label', labelJustifyCls);
 
-    return <><Row>
-      <Col extraClassName={labelCls} {...itemLabelCol}>{realLabel}</Col>
-      <Col {...itemControlCol}>{finalChd}</Col>
-    </Row>
-      {errorRow}
-    </>;
+    let realLabel = labelComp;
+    let content;
+    if (isNil(realLabel)) {
+      realLabel = filterLabel(chdArray);
+    }
+    if (isNil(realLabel)) {
+      return <>
+        <Row>
+          <Col>{finalChd}</Col>
+        </Row>
+        {hasErrors && <Row><Col>{msg}</Col></Row>}
+      </>
+    } else {
+
+      return <><Row>
+        <Col extraClassName={labelCls} {...itemLabelCol}>{realLabel}</Col>
+        <Col {...itemControlCol}>{finalChd}</Col>
+      </Row>
+        {hasErrors && <Row>
+          <Col extraClassName="item-label" {...itemLabelCol}> </Col>
+          <Col {...itemControlCol}>{msg}</Col>
+        </Row>}
+      </>;
+    }
 
   }, [
     rootItemCtx.rootItemControl,

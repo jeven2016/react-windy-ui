@@ -11,14 +11,16 @@ export default function Form1() {
           <Form.Item compact={true}>
             <Form.Label required>Username</Form.Label>
             <Input placeholder="Please enter your name" block/>
-            <Form.Message type="comment" message="The username is required"/>
+            <Form.Message errorType="comment"
+                          message="The username is required"/>
           </Form.Item>
 
           <Form.Item compact={true}>
             <Form.Label required>Password</Form.Label>
             <Input type="password" block
                    placeholder="Please enter your password"/>
-            <Form.Message type="comment" message="The password is required"/>
+            <Form.Message errorType="comment"
+                          message="The password is required"/>
           </Form.Item>
 
           <Form.Item direction="horizontal" justify="center" compact={true}>

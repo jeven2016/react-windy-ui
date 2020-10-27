@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import {isNil} from '../Utils';
+import {isNil, nonNil} from '../Utils';
 import {FormDirection} from '../common/Constants';
 import {FormProvider} from 'react-hook-form';
 
@@ -21,7 +21,7 @@ const Form = React.forwardRef((props, ref) => {
   let clsName = clsx(extraClassName, className, direction);
 
   let submit = onSubmit;
-  if (!isNil(form)) {
+  if (nonNil(form)) {
     submit = form.handleSubmit(onSubmit, onError);
   }
 

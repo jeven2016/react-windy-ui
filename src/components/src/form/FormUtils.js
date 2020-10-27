@@ -1,5 +1,5 @@
 import React from 'react';
-import {get, isNil, nonNil, validate} from '../Utils';
+import {nonNil, validate} from '../Utils';
 import FormLabel from './FormLabel';
 import FormItem from './FormItem';
 import FormMessage from './FormMessage';
@@ -33,24 +33,13 @@ export const filterLabel = (chdArray) => {
   return null;
 };
 
-export const createErrorMessages = (ctx, name, globalMsg, rules) => {
-  return Object.entries(rules).map(([key, value]) => {
-    if (key === 'message') {
-      return null;
-    }
-    const msg = get(value, 'message');
-    const hasMsg = !isNil(msg);
-    const errorMsg = hasMsg ? msg : globalMsg;
-
-    return nonNil(errorMsg) && <FormMessage key={`m-${key}`}
-                                            error={ctx.errors[name]}
-                                            validationType={key}
-                                            message={errorMsg}/>;
-  });
+export const createErrorMessages = (ctx, name, rules) => {
+  if (nonNil(rules)) {
+    return <FormMessage name={name} errors={ctx.errors}/>;
+  }
 };
 
 export const createFormMessages = (ctx, children, messages = []) => {
-
   React.Children.forEach(children, chd => {
     validate(!chd.props?.rootItem,
         'Root item cannot be embeded in other root item.');
@@ -58,14 +47,11 @@ export const createFormMessages = (ctx, children, messages = []) => {
     if (chd.type === FormItem && nonNil(chd.props.name)) {
       const rules = chd.props.rules;
       if (nonNil(rules)) {
-        const itemErrMsgs = createErrorMessages(ctx, chd.props.name,
-            rules.message,
+        const itemErrMsg = createErrorMessages(ctx, chd.props.name,
             rules);
 
-        itemErrMsgs.filter(err => nonNil(err)).
-            forEach(err => messages.push(err));
+        messages.push(itemErrMsg)
       }
-
     }
 
     if (React.Children.count(chd.props?.children) > 0) {

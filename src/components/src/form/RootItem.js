@@ -30,6 +30,7 @@ const RootItem = React.forwardRef((props, ref) => {
   const errorMessages = useMemo(() => {
     const messages = [];
     createFormMessages(ctx, children, messages);
+    console.log(messages)
     return messages;
   }, [children, ctx]);
 
