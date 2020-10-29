@@ -191,17 +191,14 @@ const FormItem = React.forwardRef((props, ref) => {
     const labelCls = clsx('item-label', labelJustifyCls);
 
     let realLabel = labelComp;
-    let content;
     if (isNil(realLabel)) {
       realLabel = filterLabel(chdArray);
     }
     if (isNil(realLabel)) {
       return <>
-        <Row>
-          <Col>{finalChd}</Col>
-        </Row>
+        {finalChd}
         {hasErrors && <Row><Col>{msg}</Col></Row>}
-      </>
+      </>;
     } else {
 
       return <><Row>

@@ -31,8 +31,7 @@ export default function Form16() {
                      name="gender"
                      required={true}
                      rules={{
-                       required: true,
-                       message: 'The gender is required',
+                       required: 'The gender is required',
                      }} justifyLabel="end">
             <Select block placeholder="Please select the gender" defaultValue=""
                     onSelect={(value) => console.log(value)}>
@@ -51,8 +50,7 @@ export default function Form16() {
                       name="countryCode"
                       simple={true}
                       rules={{
-                        required: true,
-                        message: 'The country code is required',
+                        required: 'The country code is required',
                       }}>
                     <Select placeholder="Code" defaultValue=""
                             onSelect={(value) => console.log(value)}>
@@ -67,8 +65,7 @@ export default function Form16() {
                     name="phoneNumber"
                     simple={true}
                     rules={{
-                      required: true,
-                      message: 'The phone number is required',
+                      required: 'The phone number is required',
                     }}>
                   <Input placeholder="Phone Number" defaultValue=""/>
                 </Form.Item>
@@ -76,7 +73,7 @@ export default function Form16() {
             </Tooltip>
           </Form.Item>
 
-          <Form.Item compact={true}>
+          <Form.Item compact={true} label="">
             <Button color="blue" nativeType="submit">Save</Button>
           </Form.Item>
         </Form>

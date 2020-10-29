@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import {ErrorMessage} from '@hookform/error-message';
-import {nonNil} from "../Utils";
+import {nonNil} from '../Utils';
 
 const FormMessage = React.forwardRef((props, ref) => {
   const {
@@ -27,7 +27,7 @@ const FormMessage = React.forwardRef((props, ref) => {
   //render static message
   if (nonNil(message)) {
     return <div
-        className={`form-msg text ${errorType}`}>{message}{children}</div>
+        className={`form-msg text ${errorType}`}>{message}{children}</div>;
   }
 
   //render react-hook-form message
@@ -36,7 +36,7 @@ const FormMessage = React.forwardRef((props, ref) => {
       name={name}
       render={({message, messages}) => {
         if (nonNil(message)) {
-          return <div className={`form-msg text ${errorType}`}>{message}</div>
+          return <div className={`form-msg text ${errorType}`}>{message}</div>;
         }
 
         if (nonNil(messages)) {

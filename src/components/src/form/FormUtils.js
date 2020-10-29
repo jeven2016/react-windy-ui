@@ -37,6 +37,7 @@ export const createErrorMessages = (ctx, name, rules) => {
   if (nonNil(rules)) {
     return <FormMessage name={name} errors={ctx.errors}/>;
   }
+  return null;
 };
 
 export const createFormMessages = (ctx, children, messages = []) => {
@@ -50,7 +51,7 @@ export const createFormMessages = (ctx, children, messages = []) => {
         const itemErrMsg = createErrorMessages(ctx, chd.props.name,
             rules);
 
-        messages.push(itemErrMsg)
+        nonNil(itemErrMsg) && messages.push(itemErrMsg);
       }
     }
 

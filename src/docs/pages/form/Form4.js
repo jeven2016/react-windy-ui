@@ -7,6 +7,8 @@ import {
   IconAccount,
   IconLock,
   Input,
+  Row,
+  Col,
 } from 'react-windy-ui';
 
 export default function Form4() {
@@ -16,13 +18,12 @@ export default function Form4() {
     mode: 'onSubmit',
   });
 
-
   const onSubmit = (data, e) => {
-    console.log("onSubmit", data, e);
+    console.log('onSubmit', data, e);
     //then call the api to save the data
   };
 
-  const onError = (er, e) => console.log("onError", er, e);
+  const onError = (er, e) => console.log('onError', er, e);
 
   return <>
     <Card style={{maxWidth: '500px', minWidth: '350px'}} hasBox={false}>
@@ -32,17 +33,18 @@ export default function Form4() {
           <Form.Item name="username" rules={{
             required: {
               value: true,
-              message: 'The username is required'
+              message: 'The username is required',
             },
             minLength: {
               value: 5,
-              message: 'The length should be greater than 5'
-            }
+              message: 'The length should be greater than 5',
+            },
           }}>
             <Input
                 defaultValue='Name'
                 leftIcon
-                block placeholder="Username"
+                block
+                placeholder="Username"
                 icon={<IconAccount/>}/>
           </Form.Item>
 
@@ -58,19 +60,24 @@ export default function Form4() {
                 icon={<IconLock/>}/>
           </Form.Item>
 
-          <Form.Item direction="horizontal" compact={true} labelCol={{col: 6}}
-                     controlCol={{col: 6, style: {textAlign: 'right'}}}>
-            <Form.Label>
-              <Checkbox label="Remember me"
-                        defaultChecked/>
-            </Form.Label>
-            <Button inverted size="small"
-                    onClick={(e) => {
-                      console.log("reset password");
-                      e.preventDefault();
-                    }}>
-              Forget password?
-            </Button>
+          <Form.Item direction="horizontal" compact={true}>
+            <Row>
+              <Col>
+                <Checkbox label="Remember me"
+                          defaultChecked/>
+              </Col>
+              <Col justify="end">
+                <Button inverted size="small"
+                        onClick={(e) => {
+                          console.log('reset password');
+                          e.preventDefault();
+                        }}>
+                  Forget password?
+                </Button>
+              </Col>
+            </Row>
+
+
           </Form.Item>
 
           <Form.Item direction="horizontal" compact={true}>
