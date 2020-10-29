@@ -161,10 +161,9 @@ const FormItem = React.forwardRef((props, ref) => {
     if (!hasErrors || isNil(rules)) {
       return null;
     }
-    return null;
-    const globalMsg = rules.message;
-    return <> {createErrorMessages(ctx, name, rules)}
-    </>;
+    return <div className="message-row">
+      {createErrorMessages(ctx, name, rules)}
+    </div>;
   }, [ctx, hasErrors, name, rules]);
 
   const labelComp = useLabel(props);
