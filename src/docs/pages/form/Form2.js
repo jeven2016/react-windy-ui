@@ -19,14 +19,14 @@ export default function Form2() {
               <Form.Label>Address</Form.Label>
               <Input placeholder="..."/>
             </Form.Item>
-            <Form.Item direction="horizontal" justify="start" compact={true}>
+            <div style={{flex: '1 1 100%'}}>
               <Button nativeType="submit" color="blue">
                 Save
               </Button>
               <Button nativeType="reset">
                 Reset
               </Button>
-            </Form.Item>
+            </div>
           </Form>
         </Card.Row>
       </Card>

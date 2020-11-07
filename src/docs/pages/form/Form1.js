@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Card, Form, Input} from 'react-windy-ui';
+import {Button, Card, Form, Input, Row, Col} from 'react-windy-ui';
 
 export default function Form1() {
 
@@ -23,13 +23,22 @@ export default function Form1() {
                           message="The password is required"/>
           </Form.Item>
 
-          <Form.Item direction="horizontal" justify="center" compact={true}>
-            <Button nativeType="submit" color="blue" style={{flex: '1 1 auto'}}>
-              Sign In
-            </Button>
-            <Button nativeType="reset" style={{flex: '1 1 auto'}}>
-              Reset
-            </Button>
+          <Form.Item compact={true}>
+            <Row>
+              <Col>
+                <Button nativeType="submit" color="blue" block
+                        style={{marginRight: '.5rem'}}>
+                  Sign In
+                </Button>
+              </Col>
+              <Col>
+                <Button nativeType="reset" block>
+                  Reset
+                </Button>
+              </Col>
+            </Row>
+
+
           </Form.Item>
 
         </Form>

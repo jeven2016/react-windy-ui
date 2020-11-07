@@ -3,6 +3,8 @@ import {nonNil, validate} from '../Utils';
 import FormLabel from './FormLabel';
 import FormItem from './FormItem';
 import FormMessage from './FormMessage';
+import Row from '../grid/Row';
+import Col from '../grid/Col';
 
 export const useLabel = (props) => {
   const {
@@ -61,4 +63,16 @@ export const createFormMessages = (ctx, children, messages = []) => {
   });
 
   return messages;
+};
+
+export const createGridMsgRow = (hasErrors, compact, msg) => {
+  if (!hasErrors && compact) {
+    return null;
+  }
+
+  return <Row extraClassName="message-row">
+    <Col>
+      {hasErrors && msg}
+    </Col>
+  </Row>;
 };

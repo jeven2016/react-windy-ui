@@ -101,6 +101,7 @@ const FormItem = React.forwardRef((props, ref) => {
     hasRequiredIcon,
     iconPosition,
     renderMessage,
+    equalWidth,
     children,
     simple,
     ...otherProps
@@ -120,12 +121,7 @@ const FormItem = React.forwardRef((props, ref) => {
   const isHorizontal = itemDirection === FormDirection.horizontal;
 
   let justifyCls = JustifyContentType[justify];
-  let clsName = clsx(extraClassName, className, itemDirection, justifyCls, {
-    'with-msg': !compact,
-    'non-compact': !compact && !hasErrors,
-    'row': isHorizontal,
-
-  });
+  let clsName = clsx(extraClassName, className, itemDirection, justifyCls);
 
   const getPureRules = useCallback(() => {
     if (!formControlled) {
@@ -161,10 +157,39 @@ const FormItem = React.forwardRef((props, ref) => {
     if (!hasErrors || isNil(rules)) {
       return null;
     }
-    return <div className="message-row">
-      {createErrorMessages(ctx, name, rules)}
-    </div>;
+    return createErrorMessages(ctx, name, rules);
   }, [ctx, hasErrors, name, rules]);
+
+  const getSimpleMsgRow = useCallback(() => {
+    if (!hasErrors && compact) {
+      return null;
+    }
+
+    return <div className="message-row">{hasErrors && msg}</div>;
+  }, [compact, hasErrors, msg]);
+
+  const getOneMsgRow = useCallback(() => {
+    if (!hasErrors && compact) {
+      return null;
+    }
+
+    return <Row extraClassName="message-row">
+      <Col>
+        {hasErrors && msg}
+      </Col>
+    </Row>;
+  }, [compact, hasErrors, msg]);
+
+  const getGridMsgRow = useCallback(() => {
+    if (!hasErrors && compact) {
+      return null;
+    }
+
+    return <Row extraClassName="message-row">
+      <Col extraClassName="item-label" {...itemLabelCol}> </Col>
+      <Col {...itemControlCol}>{hasErrors && msg}</Col>
+    </Row>;
+  }, [compact, hasErrors, itemControlCol, itemLabelCol, msg]);
 
   const labelComp = useLabel(props);
 
@@ -175,29 +200,23 @@ const FormItem = React.forwardRef((props, ref) => {
     if (rootItemCtx.rootItemControl) {
       return finalChd;
     }
-    if (!isHorizontal) {
-      return nonNil(label)
-          ? <>{labelComp}{finalChd}{msg} </>
-          : <>{finalChd}{msg}</>;
-    }
-
-    let errorRow = hasErrors &&
-        <Row>
-          <Col extraClassName="item-label" {...itemLabelCol}> </Col>
-          <Col {...itemControlCol}>{msg}</Col>
-        </Row>;
-
-    const labelJustifyCls = JustifyContentType[justifyLabel];
-    const labelCls = clsx('item-label', labelJustifyCls);
 
     let realLabel = labelComp;
     if (isNil(realLabel)) {
       realLabel = filterLabel(chdArray);
     }
+
+    if (!isHorizontal) {
+      return <>{realLabel}{finalChd}{getSimpleMsgRow()}</>;
+    }
+
+    const labelJustifyCls = JustifyContentType[justifyLabel];
+    const labelCls = clsx('item-label', labelJustifyCls);
+
     if (isNil(realLabel)) {
       return <>
         {finalChd}
-        {hasErrors && <Row><Col>{msg}</Col></Row>}
+        {getOneMsgRow()}
       </>;
     } else {
 
@@ -205,25 +224,22 @@ const FormItem = React.forwardRef((props, ref) => {
         <Col extraClassName={labelCls} {...itemLabelCol}>{realLabel}</Col>
         <Col {...itemControlCol}>{finalChd}</Col>
       </Row>
-        {hasErrors && <Row>
-          <Col extraClassName="item-label" {...itemLabelCol}> </Col>
-          <Col {...itemControlCol}>{msg}</Col>
-        </Row>}
+        {getGridMsgRow()}
       </>;
     }
 
   }, [
-    rootItemCtx.rootItemControl,
     children,
-    isHorizontal,
-    labelComp,
     updateWidget,
-    hasErrors,
+    rootItemCtx.rootItemControl,
+    labelComp,
+    isHorizontal,
+    justifyLabel,
+    getSimpleMsgRow,
+    getOneMsgRow,
     itemLabelCol,
     itemControlCol,
-    msg,
-    justifyLabel,
-    label]);
+    getGridMsgRow]);
 
   return simple ? chd : <div ref={ref} className={clsName} {...otherProps}>
     {chd}

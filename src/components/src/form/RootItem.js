@@ -30,7 +30,6 @@ const RootItem = React.forwardRef((props, ref) => {
   const errorMessages = useMemo(() => {
     const messages = [];
     createFormMessages(ctx, children, messages);
-    console.log(messages)
     return messages;
   }, [children, ctx]);
 
@@ -74,12 +73,7 @@ const RootItem = React.forwardRef((props, ref) => {
   const hasErrors = nonNil(ctx.errors) && Object.keys(ctx.errors).length > 0;
 
   let justifyCls = JustifyContentType[justify];
-  let clsName = clsx(extraClassName, className, itemDirection, justifyCls, {
-    'with-msg': !compact,
-    'non-compact': !compact && !hasErrors,
-    'row': isHorizontal,
-
-  });
+  let clsName = clsx(extraClassName, className, itemDirection, justifyCls);
   return <FormItemContext.Provider value={{rootItemControl: true}}>
     {simple ? chd : <div ref={ref} className={clsName} {...rest}>
       {chd}
