@@ -2,15 +2,15 @@ import React from 'react';
 import {
   Button,
   Card,
+  Col,
   Form,
   IconAccount,
   IconLock,
   Input,
   InputGroup,
-  Radio,
-  RadioGroup,
+  Row,
   Select,
-  Tooltip,
+  Tooltip
 } from 'react-windy-ui';
 
 export default function Form16() {
@@ -31,31 +31,27 @@ export default function Form16() {
               labelCol={{col: 3}} controlCol={{col: 9}}>
 
           <Form.Item label="username" required name="username" rules={{
-            required: true,
-            message: 'The username is required',
+            required: 'The username is required',
           }} justifyLabel="end">
             <Input leftIcon block placeholder="Username"
                    icon={<IconAccount/>}/>
           </Form.Item>
 
           <Form.Item label="Password" required name="pwd" rules={{
-            required: true,
-            message: 'The password is required',
+            required: 'The password is required',
           }} justifyLabel="end">
             <Input leftIcon block placeholder="Password"
                    icon={<IconLock/>}/>
           </Form.Item>
 
           <Form.Item label="Age" name="age" rules={{
-            required: true,
-            message: 'The age is required',
+            required: 'The age is required',
           }} justifyLabel="end">
             <Input block placeholder="Age"/>
           </Form.Item>
 
           <Form.Item label="Gender" name="gender" rules={{
-            required: true,
-            message: 'The gender is required',
+            required: 'The gender is required',
           }} justifyLabel="end">
             <Select block placeholder="Please select the gender"
                     onSelect={(value) => console.log(value)}>
@@ -73,8 +69,7 @@ export default function Form16() {
                       name="countryCode"
                       simple={true}
                       rules={{
-                        required: true,
-                        message: 'The country code is required',
+                        required: 'The country code is required',
                       }}>
                     <Select onSelect={(value) => console.log(value)}>
                       <Select.Option value="+86">+86</Select.Option>
@@ -88,8 +83,7 @@ export default function Form16() {
                     name="phoneNumber"
                     simple={true}
                     rules={{
-                      required: true,
-                      message: 'The phone number is required',
+                      required: 'The phone number is required',
                     }}>
                   <Input placeholder="Phone Number"/>
                 </Form.Item>
@@ -117,7 +111,11 @@ export default function Form16() {
 
 
           <Form.Item compact={true}>
-            <Button color="blue">Save</Button>
+            <Row>
+              <Col col={9} xsOffset={3}>
+                <Button color="blue" nativeType="submit">Save</Button>
+              </Col>
+            </Row>
           </Form.Item>
         </Form>
       </Card.Row>

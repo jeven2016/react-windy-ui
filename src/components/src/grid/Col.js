@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {inRange, isBlank, isInteger, isNil} from '../Utils';
 import Element from '../common/Element';
 import clsx from 'clsx';
@@ -10,10 +10,12 @@ const Col = React.forwardRef((props, ref) => {
     extraClassName,
     className,
     col,
+    gutter = {x: 0, y: 0}, //todo
     justify = JustifyContentType.start,
     xs, sm, md, lg, xl,
     xsOffset, smOffset, mdOffset, lgOffset, xlOffset,
     order,
+    style,
     ...otherProps
   } = props;
   let justifyCls = JustifyContentType[justify];
@@ -65,7 +67,22 @@ const Col = React.forwardRef((props, ref) => {
     [justifyCls]: justifyCls,
   });
 
-  return <Element ref={ref} className={clsName} {...otherProps}/>;
+  const newSty = useMemo(() => {
+    if (gutter.x === 0 && gutter.y === 0) {
+      return style;
+    }
+
+    const paddingX = gutter.x !== 0 ? gutter.x / 2 : 0;
+    const paddingY = gutter.y !== 0 ? gutter.y / 2 : 0;
+
+    return {
+      ...style,
+      padding: `${paddingY}px ${paddingY}px`
+    }
+  }, [gutter]);
+
+  return <Element ref={ref} className={clsName}
+                  style={newSty} {...otherProps}/>;
 });
 
 Col.propTypes = {
@@ -83,6 +100,7 @@ Col.propTypes = {
   lgOffset: PropTypes.number,
   xlOffset: PropTypes.number,
   order: PropTypes.number,
+  gutter: PropTypes.shape({x: PropTypes.number, y: PropTypes.number})
 };
 
 export default Col;

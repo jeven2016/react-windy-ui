@@ -8,7 +8,7 @@ const Button = React.forwardRef((props, ref) => {
     className = 'button',
     nativeType = 'button',
     type,
-    block,
+    block=false,
     color,
     directRef,
     active = false,

@@ -1,5 +1,13 @@
 import React from 'react';
-import {Button, Card, Form, Input, Notification} from 'react-windy-ui';
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Input,
+  Notification,
+  Row
+} from 'react-windy-ui';
 
 export default function Form7() {
   const {form, watch} = Form.useForm({
@@ -26,11 +34,10 @@ export default function Form7() {
                      name="newPwd"
                      required={true}
                      rules={{
-                       required: true,
-                       message: 'The password is required',
+                       required: 'The password is required'
                      }}
                      justifyLabel="end">
-            <Input type="password"/>
+            <Input type="password" block/>
           </Form.Item>
 
           <Form.Item label="Confirm Password"
@@ -38,18 +45,19 @@ export default function Form7() {
                      required={true}
                      justifyLabel="end"
                      rules={{
-                       required: {
-                         value: true,
-                         message: 'The confirm password is required',
-                       },
-                       validate: (value) => value === watch('newPwd'),
-                       message: "The confirm password doesn't match the password"
+                       required: 'The confirm password is required',
+                       validate: (value) => value === watch('newPwd')
+                           || "The confirm password doesn't match the password",
                      }}>
-            <Input type="password"/>
+            <Input type="password" block/>
           </Form.Item>
 
-          <Form.Item compact={true}>
-            <Button color="blue" nativeType="submit">Save</Button>
+          <Form.Item>
+            <Row>
+              <Col col={9} xsOffset={3}>
+                <Button color="blue" nativeType="submit">Save</Button>
+              </Col>
+            </Row>
           </Form.Item>
         </Form>
       </Card.Row>

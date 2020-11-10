@@ -9,17 +9,19 @@ import Form6 from "./Form6";
 import Form16 from "./Form16";
 import Form7 from './Form7';
 import Form8 from './Form8';
+import Form9 from "./Form9";
 
 const componentMapping = {
   Form1: <Form1/>,
   Form2: <Form2/>,
   Form3: <Form3/>,
   Form4: <Form4/>,
-  // Form5: <Form5/>,
+  Form5: <Form5/>,
   Form6: <Form6/>,
-  // Form7: <Form7/>,
-  // Form8: <Form8/>,
-  // Form16: <Form16/>,
+  Form7: <Form7/>,
+  Form8: <Form8/>,
+  Form9: <Form9/>,
+  Form16: <Form16/>,
 };
 
 export default function FormIndex(props) {

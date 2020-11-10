@@ -1,5 +1,14 @@
 import React from 'react';
-import {Button, Card, Form, Input, Notification, Select} from 'react-windy-ui';
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Input,
+  Notification,
+  Row,
+  Select
+} from 'react-windy-ui';
 
 export default function Form7() {
   const {form, watch} = Form.useForm({
@@ -29,9 +38,7 @@ export default function Form7() {
                      name="gender"
                      required={true}
                      rules={{
-                       required: 'The gender is required',
-                       minLength: {value: 15, message: 'the min length'},
-                       message: 'The gender is required',
+                       required: 'The gender is required'
                      }} justifyLabel="end">
             <Select block placeholder="Please select the gender"
                     defaultValue="">
@@ -48,14 +55,17 @@ export default function Form7() {
                 required={true}
                 rules={{
                   required: 'The name is required',
-                  message: 'The name is required',
                 }} justifyLabel="end">
               <Input block placeholder="Name"/>
             </Form.Item>
           }
 
           <Form.Item compact={true}>
-            <Button color="blue" nativeType="submit">Save</Button>
+            <Row>
+              <Col col={9} xsOffset={3}>
+                <Button color="blue" nativeType="submit">Save</Button>
+              </Col>
+            </Row>
           </Form.Item>
         </Form>
       </Card.Row>

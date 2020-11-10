@@ -11,3 +11,4 @@ export const MenuContext = React.createContext({});
 export const NavbarContext = React.createContext({});
 export const DateContext = React.createContext({});
 export const FormItemContext = React.createContext({});
+export const RowContext = React.createContext(null);
