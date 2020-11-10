@@ -16,17 +16,10 @@ export default function Form2() {
               <Input placeholder="..."/>
             </Form.Item>
             <Form.Item>
-              <Form.Label>Address</Form.Label>
-              <Input placeholder="..."/>
-            </Form.Item>
-            <div style={{flex: '1 1 100%'}}>
               <Button nativeType="submit" color="blue">
                 Save
               </Button>
-              <Button nativeType="reset">
-                Reset
-              </Button>
-            </div>
+            </Form.Item>
           </Form>
         </Card.Row>
       </Card>

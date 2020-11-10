@@ -17,6 +17,7 @@ const Checkbox = React.forwardRef((props, ref) => {
     onChange,
     label,
     children,
+    errorType,//ok, error, warning
     checkedColor,
     uncheckedColor,
     alignLabel = 'right',
@@ -60,6 +61,7 @@ const Checkbox = React.forwardRef((props, ref) => {
     checked: checkState,
     unchecked: !checkState,
     indeterminate: showIndeterminateState,
+    [`check-${errorType}`]: errorType,
   });
 
   const handleClick = useCallback((e) => {

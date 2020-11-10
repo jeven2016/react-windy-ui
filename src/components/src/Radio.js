@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useMemo} from 'react';
-import {isNil, startsWith} from './Utils';
+import {isNil, nonNil, startsWith} from './Utils';
 import {IconRadioChecked, IconRadioUnChecked} from './Icons';
 import PropTypes from 'prop-types';
 import useInternalState from './common/useInternalState';
@@ -27,6 +27,7 @@ const Radio = React.forwardRef((props, ref) => {
     children,
     checkedColor,
     uncheckedColor,
+    errorType,
     alignLabel = 'right',
     checkedIcon = <IconRadioChecked/>,
     uncheckedIcon = <IconRadioUnChecked/>,
@@ -58,9 +59,11 @@ const Radio = React.forwardRef((props, ref) => {
     return checkState ? checkedIcon : uncheckedIcon;
   }, [checkedIcon, uncheckedIcon, checkState]);
 
+  const realErrType = nonNil(errorType) ? errorType : ctx.errorType;
   const clsName = clsx(extraClassName, className, alignLabel, {
     checked: checkState,
     unchecked: !checkState,
+    [`check-${realErrType}`]: realErrType,
   });
 
   const handleClick = useCallback((e) => {
@@ -155,13 +158,14 @@ Radio.propTypes = {
  */
 const RadioGroup = React.forwardRef((props, ref) => {
   const {
-    className,
+    className = 'radio-group',
     extraClassName,
     children,
     defaultValue,
     value,
     onChange,
     disabled,
+    errorType,
     ...otherProps
   } = props;
   const clsName = clsx(className, extraClassName);
@@ -188,8 +192,9 @@ const RadioGroup = React.forwardRef((props, ref) => {
       disabled,
       selectedValue,
       existsGroup: true,
+      errorType,
     };
-  }, [handleChange, customized, disabled, selectedValue]);
+  }, [handleChange, customized, disabled, selectedValue, errorType]);
 
   return <RadioGroupContext.Provider value={ctx}>
     <span className={clsName} ref={ref} {...otherProps}>{children}</span>

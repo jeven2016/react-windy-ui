@@ -10,6 +10,8 @@ import Select from '../select';
 import RootItem from './RootItem';
 import {createErrorMessages, filterLabel, useLabel} from './FormUtils';
 import {FormItemContext} from '../common/Context';
+import Checkbox from '../Checkbox';
+import Radio, {RadioGroup} from '../Radio';
 
 const cloneElement = (elem, props, control) => {
   let newProps;
@@ -36,6 +38,17 @@ const cloneElement = (elem, props, control) => {
       return <Controller as={Select}
                          rules={pureRules}
                          control={control} {...newProps}/>;
+
+    case Checkbox:
+    case Radio:
+    case RadioGroup:
+      const ctlProps = {
+        ...elem.props, ...restProps,
+        extraClassName: clsx(originExCls, 'form-control'),
+      };
+      return <Controller as={elem.type}
+                         rules={pureRules}
+                         control={control} {...ctlProps}/>;
 
     default:
       extraCls = clsx(originExCls, 'form-control');

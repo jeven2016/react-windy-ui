@@ -39,6 +39,18 @@ const RootItem = React.forwardRef((props, ref) => {
   const itemLabelCol = isNil(labelCol) ? ctx.labelCol : labelCol;
   const itemControlCol = isNil(controlCol) ? ctx.controlCol : controlCol;
 
+  const hasErrors = useMemo(() => {
+    let existsErr = false;
+    for (let err of errorMessages) {
+      const currentErr = ctx.errors[err.props.name];
+      if (nonNil(currentErr)) {
+        existsErr = true;
+        break;
+      }
+    }
+    return existsErr;
+  }, [ctx.errors, errorMessages]);
+
   let chd = useMemo(() => {
     let realLabel = labelComp;
     let chdArray = React.Children.toArray(children);
@@ -53,6 +65,10 @@ const RootItem = React.forwardRef((props, ref) => {
         <Col extraClassName={labelCls} {...itemLabelCol}>{realLabel}</Col>
         <Col {...itemControlCol}>{chdArray}</Col>
       </Row>
+        {
+          !hasErrors &&
+          <div className="message-row"></div>
+        }
         {errorMessages.map(
             (err, index) => <Row key={`e-${index}-${err.props.validationType}`}>
               <Col extraClassName="item-label" {...itemLabelCol}> </Col>
@@ -69,8 +85,6 @@ const RootItem = React.forwardRef((props, ref) => {
     labelCls,
     itemLabelCol,
     itemControlCol]);
-
-  const hasErrors = nonNil(ctx.errors) && Object.keys(ctx.errors).length > 0;
 
   let justifyCls = JustifyContentType[justify];
   let clsName = clsx(extraClassName, className, itemDirection, justifyCls);

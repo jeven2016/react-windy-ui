@@ -60,7 +60,7 @@ export default function Form4() {
                 icon={<IconLock/>}/>
           </Form.Item>
 
-          <Form.Item direction="horizontal" compact={true}>
+          <Form.Item direction="horizontal">
             <Row>
               <Col>
                 <Checkbox label="Remember me"
@@ -80,7 +80,7 @@ export default function Form4() {
 
           </Form.Item>
 
-          <Form.Item direction="horizontal" compact={true}>
+          <Form.Item direction="horizontal">
             <div style={{flex: '1 1 100%'}}>
               <Button nativeType="submit" block color="blue">Sign In</Button>
               <div className="text color-blue" style={{

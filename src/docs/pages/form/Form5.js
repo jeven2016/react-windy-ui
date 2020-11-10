@@ -33,7 +33,7 @@ export default function Form4() {
             <div>
               <div>
                 <Form.Widget>
-                  <Input icon={<IconAccount/>}/>
+                  <Input block icon={<IconAccount/>}/>
                 </Form.Widget>
               </div>
             </div>

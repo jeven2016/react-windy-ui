@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Button,
   Card,
@@ -8,20 +8,26 @@ import {
   Input,
   Notification,
   Row,
-  Select
+  Select,
+  RadioGroup,
+  Radio,
 } from 'react-windy-ui';
 
 export default function Form9() {
+
   const {form, watch} = Form.useForm({
     mode: 'onSubmit',
     shouldFocusError: false,
+    defaultValues: {
+      accept: false,
+    },
   });
 
   const onSubmit = (data, e) => {
     Notification.mini({
       position: 'topCenter',
       title: 'The form data:',
-      body: `${JSON.stringify(data)}`
+      body: `${JSON.stringify(data)}`,
     });
     //then call the api to save the data
   };
@@ -29,11 +35,11 @@ export default function Form9() {
   const gutter = {x: 8, y: 8};
   const colConf = {
     xs: 12,
-    sm: 6
+    sm: 6,
   };
 
   return <>
-    <Card style={{minWidth: '80%'}} hasBox={true}>
+    <Card style={{minWidth: '80%', padding: '.5rem'}} hasBox={true}>
       <Card.Row>
         <Form form={form} onSubmit={onSubmit}>
           <Row gutter={gutter}>
@@ -44,7 +50,7 @@ export default function Form9() {
                   name="firstName"
                   required={true}
                   rules={{
-                    required: 'The first name is required'
+                    required: 'The first name is required',
                   }}>
                 <Input block/>
               </Form.Item>
@@ -56,7 +62,7 @@ export default function Form9() {
                   name="lastName"
                   required={true}
                   rules={{
-                    required: 'The last name is required'
+                    required: 'The last name is required',
                   }}>
                 <Input block/>
               </Form.Item>
@@ -71,7 +77,7 @@ export default function Form9() {
                   name="address"
                   required={true}
                   rules={{
-                    required: 'The address is required'
+                    required: 'The address is required',
                   }}>
                 <Input block/>
               </Form.Item>
@@ -124,13 +130,44 @@ export default function Form9() {
             </Col>
           </Row>
 
-          <Form.Item>
-            <Checkbox defaultChecked onChange={(value) => console.log(value)}>
-              Accept the terms
-            </Checkbox>
+          <Row gutter={gutter}>
+            <Col {...colConf}>
+              <Form.Item
+                  direction="vertical"
+                  label="Contact"
+                  name="contact"
+                  required={true}
+                  rules={{
+                    required: 'This is required',
+                  }}>
+                <RadioGroup>
+                  <Radio value="email">Email</Radio>
+                  <Radio value="phone">Phone</Radio>
+                </RadioGroup>
+              </Form.Item>
+            </Col>
+            <Col {...colConf}>
+              <Form.Item
+                  direction="vertical"
+                  label="Introduction"
+                  name="introduction">
+                <Input block/>
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Form.Item name="accept"
+                     rules={{
+                       validate: value => {
+                         if (!value) {
+                           return 'You must accept the terms';
+                         }
+                       },
+                     }}>
+            <Checkbox defaultChecked={false}>Accept the terms</Checkbox>
           </Form.Item>
 
-          <Form.Item>
+          <Form.Item compact={true}>
             <Row>
               <Col>
                 <Button color="blue" nativeType="submit">Save</Button>
