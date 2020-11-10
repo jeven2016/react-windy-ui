@@ -128,7 +128,7 @@ const FormItem = React.forwardRef((props, ref) => {
   });
 
   const getPureRules = useCallback(() => {
-    if (!formControlled) {
+    if (!formControlled || isNil(rules)) {
       return null;
     }
     const {message, ...restRules} = rules;

@@ -117,7 +117,7 @@ const Menu = React.forwardRef((props, ref) => {
   //switch compact/popup
   //1. compact, don't show expanded menu，
   //2. show last expanded menus while switching to other other menu types
-  useEvent(EventListener.click, function() {
+  useEvent(EventListener.click, function () {
     //clicking the document will cause the opened popup submenu to be closed
     if (isPopup && store.getState().openList.length > 0) {
       store.setState({openList: []});
@@ -129,6 +129,9 @@ const Menu = React.forwardRef((props, ref) => {
       return null;
     }
     return React.Children.map(children, chd => {
+      if (isNil(chd?.type)) {
+        return chd;
+      }
       if (chd.type === SubMenu || chd.type === Item) {
         return React.cloneElement(chd, {directChild: true});
       }
@@ -231,7 +234,7 @@ const Menu = React.forwardRef((props, ref) => {
       }
 
       //delay 50 mills to notify that the open list is changed
-      preTimeoutRef.current = execute(function() {
+      preTimeoutRef.current = execute(function () {
         preTimeoutRef.current = null;
         if (!customOpen) {
           notifyChanges();
