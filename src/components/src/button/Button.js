@@ -58,7 +58,8 @@ const Button = React.forwardRef((props, ref) => {
     hasMinWidth,
     initOutlineColor,
     hasBox,
-    hasBorder]);
+    hasBorder,
+    invertedOutline]);
 
   let nativeTypeDef = useMemo(() => {
     const nativeElemType = nativeType === 'a' ? 'a' : 'button';

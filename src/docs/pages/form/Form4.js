@@ -81,11 +81,13 @@ export default function Form4() {
           </Form.Item>
 
           <Form.Item direction="horizontal" compact={true}>
-            <Button nativeType="submit" block color="blue">Sign In</Button>
-            <div className="text color-blue" style={{
-              fontSize: '.9rem',
-              cursor: 'pointer',
-            }}>Or sign up?
+            <div style={{flex: '1 1 100%'}}>
+              <Button nativeType="submit" block color="blue">Sign In</Button>
+              <div className="text color-blue" style={{
+                fontSize: '.9rem',
+                cursor: 'pointer',
+              }}>Or sign up?
+              </div>
             </div>
           </Form.Item>
 
