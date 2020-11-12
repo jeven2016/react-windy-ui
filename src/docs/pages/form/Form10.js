@@ -10,10 +10,12 @@ import {
   InputGroup,
   Row,
   Select,
-  Tooltip
+  Tooltip,
 } from 'react-windy-ui';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faPhone, faUmbrella} from '@fortawesome/free-solid-svg-icons';
 
-export default function Form16() {
+export default function Form10() {
   const {form} = Form.useForm({
     mode: 'onSubmit',
   });
@@ -32,27 +34,27 @@ export default function Form16() {
 
           <Form.Item label="username" required name="username" rules={{
             required: 'The username is required',
-          }} justifyLabel="end">
+          }} justifyLabel="start">
             <Input leftIcon block placeholder="Username"
                    icon={<IconAccount/>}/>
           </Form.Item>
 
           <Form.Item label="Password" required name="pwd" rules={{
             required: 'The password is required',
-          }} justifyLabel="end">
+          }} justifyLabel="start">
             <Input leftIcon block placeholder="Password"
                    icon={<IconLock/>}/>
           </Form.Item>
 
           <Form.Item label="Age" name="age" rules={{
             required: 'The age is required',
-          }} justifyLabel="end">
+          }} justifyLabel="start">
             <Input block placeholder="Age"/>
           </Form.Item>
 
           <Form.Item label="Gender" name="gender" rules={{
             required: 'The gender is required',
-          }} justifyLabel="end">
+          }} justifyLabel="start">
             <Select block placeholder="Please select the gender"
                     onSelect={(value) => console.log(value)}>
               <Select.Option value="nj">Female</Select.Option>
@@ -61,41 +63,60 @@ export default function Form16() {
             </Select>
           </Form.Item>
 
-          <Form.Item rootItem={true} label="Phone Number" justifyLabel="end">
-            <Tooltip body="Phone Number: +86 13344666343">
-              <InputGroup block>
-                <InputGroup.Item autoScale={false} style={{flex: '0 1 5rem'}}>
-                  <Form.Item
-                      name="countryCode"
-                      simple={true}
-                      rules={{
-                        required: 'The country code is required',
-                      }}>
-                    <Select onSelect={(value) => console.log(value)}>
-                      <Select.Option value="+86">+86</Select.Option>
-                      <Select.Option value="+87">+87</Select.Option>
-                      <Select.Option value="+88">+88</Select.Option>
-                    </Select>
-                  </Form.Item>
-                </InputGroup.Item>
-
+          <Form.Item rootItem={true} label="Phone" justifyLabel="start">
+            <InputGroup block>
+              <InputGroup.Item autoScale={false} style={{flex: '0 1 5rem'}}>
                 <Form.Item
-                    name="phoneNumber"
+                    name="countryCode"
                     simple={true}
                     rules={{
-                      required: 'The phone number is required',
+                      required: 'The country code is required',
                     }}>
-                  <Input placeholder="Phone Number"/>
+                  <Select onSelect={(value) => console.log(value)}>
+                    <Select.Option value="+86">+86</Select.Option>
+                    <Select.Option value="+87">+87</Select.Option>
+                    <Select.Option value="+88">+88</Select.Option>
+                  </Select>
                 </Form.Item>
-              </InputGroup>
-            </Tooltip>
+              </InputGroup.Item>
+              <Form.Item
+                  name="phoneNumber"
+                  simple={true}
+                  rules={{
+                    required: 'The phone number is required',
+                  }}>
+                <Input placeholder="Phone Number"/>
+              </Form.Item>
+              <InputGroup.Label>
+                <FontAwesomeIcon icon={faPhone}/>
+              </InputGroup.Label>
+              <InputGroup.Item autoScale={false}>
+                <Button color="green"
+                        onClick={(e) => e.preventDefault()}>Test</Button>
+              </InputGroup.Item>
+            </InputGroup>
+
           </Form.Item>
 
+          <Form.Item label="Hobby" name="hobby" rules={{
+            validate: (values) => {
+              if (values == null || values.length === 0) {
+                return 'You should select one or more items';
+              }
+            },
+          }} justifyLabel="start">
+            <Select multiSelect block searchable={true}>
+              <Select.Option value="Skating">Skating</Select.Option>
+              <Select.Option value="Swimming">Swimming</Select.Option>
+              <Select.Option value="Jumping">Jumping</Select.Option>
+              <Select.Option value="Other">Other</Select.Option>
+            </Select>
+          </Form.Item>
 
           {/*   <Form.Item label="Nationality" required name="nationality" rules={{
             required: true,
             message: 'The nationality is required'
-          }} justifyLabel="end">
+          }} justifyLabel="start">
             <RadioGroup onChange={(val) => console.log(val)}>
               <Radio value="China">
                 China

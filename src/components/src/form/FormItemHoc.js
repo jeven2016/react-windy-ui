@@ -4,98 +4,19 @@ import {isBlank, isNil, nonNil, validate} from '../Utils';
 import {FormDirection, JustifyContentType} from '../common/Constants';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
-import {Controller, useFormContext} from 'react-hook-form';
+import {useFormContext} from 'react-hook-form';
 import Widget from './Widget';
-import Select from '../select';
 import RootItem from './RootItem';
-import {createErrorMessages, filterLabel, useLabel} from './FormUtils';
+import {
+  cloneElement,
+  cloneWidget,
+  createErrorMessages,
+  filterLabel,
+  mapWidget,
+  useLabel,
+} from './FormUtils';
 import {FormItemContext} from '../common/Context';
-import Checkbox from '../Checkbox';
-import Radio, {RadioGroup} from '../Radio';
-
-const cloneElement = (elem, props, control) => {
-  let newProps;
-  let originExCls = elem.props.extraClassName;
-
-  //for Controller, the pureRules is used by controller and the ref should be excluded in this case
-  const {pureRules, ref, ...restProps} = props;
-
-  let extraCls;
-  switch (elem.type) {
-    case Select :
-      originExCls = elem.props.inputProps?.extraClassName;
-      extraCls = clsx(originExCls, 'form-control');
-      newProps = {
-        ...elem.props,
-        ...restProps,
-        inputProps: {
-          ...elem.props.inputProps,
-          extraClassName: extraCls,
-        },
-      };
-      //while the Controller is used, the rules should be moved from ref and
-      //set via rules property of controller
-      return <Controller as={Select}
-                         rules={pureRules}
-                         control={control} {...newProps}/>;
-
-    case Checkbox:
-    case Radio:
-    case RadioGroup:
-      const ctlProps = {
-        ...elem.props, ...restProps,
-        extraClassName: clsx(originExCls, 'form-control'),
-      };
-      return <Controller as={elem.type}
-                         rules={pureRules}
-                         control={control} {...ctlProps}/>;
-
-    default:
-      extraCls = clsx(originExCls, 'form-control');
-      newProps = {
-        ref: ref,
-        ...elem.props,
-        ...restProps,
-        extraClassName: extraCls,
-      };
-      return React.cloneElement(elem, newProps);
-  }
-
-};
-
-const cloneWidget = (widget, props, control) => {
-  const formCtrlNode = widget.props.children;
-
-  validate(React.Children.count(formCtrlNode) === 1,
-      'There should only be one child in "Form.Widget"');
-
-  return React.cloneElement(widget, {
-    children: cloneElement(formCtrlNode, props, control),
-  });
-};
-
-//An alternative is using lodash get & set functions to update the widget by
-// path
-const mapWidget = (chdArray, props, control) => {
-  let found = false;
-  return React.Children.map(chdArray, chd => {
-    if (chd.type === Widget) {
-      found = true;
-      return cloneWidget(chd, props, control);
-    }
-
-    if (found) {
-      return chd;
-    }
-    const count = React.Children.count(chd.props?.children);
-    if (count <= 0) {
-      return chd;
-    }
-
-    return React.cloneElement(chd,
-        {children: mapWidget(chd.props.children, props, control)});
-  });
-};
+import FormLabel from './FormLabel';
 
 const FormItem = React.forwardRef((props, ref) => {
   const {
@@ -136,20 +57,12 @@ const FormItem = React.forwardRef((props, ref) => {
   let justifyCls = JustifyContentType[justify];
   let clsName = clsx(extraClassName, className, itemDirection, justifyCls);
 
-  const getPureRules = useCallback(() => {
-    if (!formControlled || isNil(rules)) {
-      return null;
-    }
-    const {message, ...restRules} = rules;
-    return restRules;
-  }, [formControlled, rules]);
-
   const getCloneProps = useCallback(() => ({
-    ref: ctx.register(getPureRules()),
+    ref: ctx.register(rules),
     name: name,
     errorType: hasErrors ? 'error' : null,
-    pureRules: getPureRules(),
-  }), [ctx, getPureRules, name, hasErrors]);
+    pureRules: rules,
+  }), [ctx, rules, name, hasErrors]);
 
   const updateWidget = useCallback((chdArray) => {
     if (!formControlled || chdArray.length <= 0) {
@@ -157,10 +70,12 @@ const FormItem = React.forwardRef((props, ref) => {
     }
     let finalChd;
     if (chdArray.length === 1) {
+      //only one child found
       finalChd = chdArray[0].type === Widget ? cloneWidget(chdArray[0],
           getCloneProps()) : cloneElement(chdArray[0], getCloneProps(),
           ctx.control);
     } else {
+      //deep find the widget
       finalChd = mapWidget(children, getCloneProps(), ctx.control);
     }
     return finalChd;
@@ -208,7 +123,7 @@ const FormItem = React.forwardRef((props, ref) => {
 
   let chd = useMemo(() => {
     const chdArray = React.Children.toArray(children);
-    const finalChd = updateWidget(chdArray);
+    let finalChd = updateWidget(chdArray);
     //if this item is within a root item, just render the origin children
     if (rootItemCtx.rootItemControl) {
       return finalChd;
@@ -217,6 +132,11 @@ const FormItem = React.forwardRef((props, ref) => {
     let realLabel = labelComp;
     if (isNil(realLabel)) {
       realLabel = filterLabel(chdArray);
+    }
+
+    if (finalChd?.length > 1) {
+      //the label should be excluded since the realLabel is the final label to render
+      finalChd = finalChd.filter(f => f?.type !== FormLabel);
     }
 
     if (!isHorizontal) {

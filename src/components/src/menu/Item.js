@@ -108,7 +108,7 @@ const Item = React.forwardRef((props, ref) => {
       <animated.div className="item-info"
                     style={innerProps}>{children}</animated.div>
     </>;
-  }, [directChild, icon, children, innerProps, show]);
+  }, [customizedChildren, icon, directChild, show, innerProps, children]);
 
   const renderCnt = <div ref={ref} className={clsName} {...otherProps}
                          onClick={clickHandler}>

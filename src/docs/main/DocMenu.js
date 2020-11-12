@@ -176,6 +176,13 @@ export default function DocMenu(props) {
           </Link>
         </Menu.Item>
       </Menu.SubMenu>
+      <Menu.SubMenu header="工具" id="utilsIndex">
+        <Menu.Item id="useMq">
+          <Link to={`${url}/hooks`}>
+            Hooks
+          </Link>
+        </Menu.Item>
+      </Menu.SubMenu>
     </Menu>
   </div>;
 }

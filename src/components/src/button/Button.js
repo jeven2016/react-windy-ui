@@ -8,7 +8,7 @@ const Button = React.forwardRef((props, ref) => {
     className = 'button',
     nativeType = 'button',
     type,
-    block=false,
+    block = false,
     color,
     directRef,
     active = false,
@@ -63,11 +63,15 @@ const Button = React.forwardRef((props, ref) => {
 
   let nativeTypeDef = useMemo(() => {
     const nativeElemType = nativeType === 'a' ? 'a' : 'button';
-    const nativeBtnType = nativeType !== 'a' && nativeType !== 'button' ? {
+
+    //the button has default behaviour of submit, so the type should be populated
+    const nativeBtnType = nativeType !== 'a' ? {
       type: nativeType,
     } : {};
     return {nativeElemType, nativeBtnType};
   }, [nativeType]);
+
+  console.log(nativeTypeDef.nativeElemType);
 
   return (
       <Element

@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import {isNil, nonNil} from '../Utils';
+import {nonNil} from '../Utils';
 import {FormDirection} from '../common/Constants';
 import {FormProvider} from 'react-hook-form';
 

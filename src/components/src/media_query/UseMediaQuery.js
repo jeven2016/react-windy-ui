@@ -1,6 +1,5 @@
-import React, {useMemo, useEffect, useCallback, useState} from 'react';
-import {isString} from '../Utils';
-import useMounted from '../common/UseMounted';
+import React, {useEffect, useMemo, useState} from 'react';
+import {isString, validate} from '../Utils';
 
 const ResponsiveDefinition = {
   xs: {
@@ -51,36 +50,66 @@ export const Responsive = {
  * Use media query hook
  * @param query String | {query: String}
  * @param onChange callback
+ * @param targetWindow by default, it means the window
  */
-const useMediaQuery = (query, onChange) => {
 
-  const moutedRef = useMounted();
-  const mq = useMemo(() => {
-    return window.matchMedia(isString(query) ? query : query.query);
-  }, [query]);
+const useMediaQuery = (query, onChange, targetWindow = window) => {
+  /*{
+    small: "(max-width: 599px)",
+    medium: "(min-width: 600px) and (max-width: 1199px)",
+    large: "(min-width: 1200px)"
+  }*/
+  const isStringQuery = isString(query);
+  validate(isStringQuery || (typeof query) == 'object',
+      'the type of query isn\'t string or object');
 
-  //for refreshing page, somehow the initial matches is false,
-  //the listener will be explicitly invoked to make sure the matches is right.
-  //so this callback should be invoked after the current page is completely mounted.
-  const [match, setMatch] = useState(mq.matches);
+  const keys = !isStringQuery ? Object.keys(query) : [];
 
-  const listener = useCallback(() => {
-    const isMatches = mq.matches;
-    onChange && onChange(isMatches);
-    setMatch(isMatches);
-  }, [mq.matches, onChange]);
+  const initResult = useMemo(() => {
+    if (isStringQuery) {
+      const strMq = targetWindow.matchMedia(query);
+      return {
+        matches: {value: strMq.matches, mq: strMq},
+      };
+    } else {
+      const matchObj = {};
+      keys.forEach(key => {
+        const mq = targetWindow.matchMedia(query[key]);
+        matchObj[key] = {value: mq.matches, mq: mq};
+      });
+      return matchObj;
+    }
+  }, [isStringQuery, keys, query, targetWindow]);
+
+  const [result, setResult] = useState(() => {
+    if (isStringQuery) {
+      return initResult.matches.value;
+    }
+    const multiResult = {};
+    Object.keys(initResult).forEach(r => {
+      multiResult[r] = initResult[r].value;
+    });
+    return multiResult;
+  });
 
   useEffect(() => {
-    if (moutedRef.current) {
-      onChange && onChange(mq.matches);
-    }
-    mq.addListener(listener);
-    return () => mq.removeListener(listener);
-  }, [query, onChange, moutedRef, mq, listener]);
+    const listeners = [];
 
-  return {
-    match,
-  };
+    const listener = (matchKey, matchs) => {
+      setResult(pre => ({...pre, [matchKey]: matchs}));
+    };
+
+    Object.keys(initResult).forEach(key => {
+      const mq = initResult[key].mq;
+      const elemListener = () => listener(key, mq.matches);
+      mq.addEventListener('change', elemListener);
+      listeners.push({mq: mq, listener: elemListener});
+    });
+
+    return () => listeners.forEach(
+        elem => elem.mq.removeEventListener('change', elem.listener));
+  }, [initResult, isStringQuery, keys, query, targetWindow]);
+
+  return result;
 };
-
 export default useMediaQuery;

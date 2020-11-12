@@ -5,7 +5,7 @@ import Menu from '../menu';
 import {
   containsIgnoreCase,
   convertToArray,
-  execute,
+  execute, getErrorClsName,
   isBlank,
   isCustomized,
   isNil,
@@ -379,7 +379,8 @@ const Select = React.forwardRef((props, ref) => {
       extraClassName: clsx('select-input', inputProps?.extraClassName),
     };
     if (multiSelect) {
-      return <span className='select-multiple' onClick={focusInput}
+      const multiSelCls = clsx('select-multiple', getErrorClsName(errorType));
+      return <span className={multiSelCls} onClick={focusInput}
                    style={style}
                    ref={multiSelectRef}>
         <span className="select-multiple-content">

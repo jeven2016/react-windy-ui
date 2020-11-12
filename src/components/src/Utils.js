@@ -14,6 +14,7 @@ import {
   flattenDeep,
 } from 'lodash';
 import {PopupPosition} from './common/Constants';
+import clsx from 'clsx';
 
 export {
   isObject,
@@ -28,7 +29,7 @@ export {
   max,
   get,
   set,
-  flattenDeep
+  flattenDeep,
 };
 
 export const isNil = (value) => value == null;
@@ -434,4 +435,9 @@ export default function getScrollbarWidth() {
 
   document.body.removeChild(outerDiv);
   return barWidth;
+}
+
+export function getErrorClsName(errorType) {
+  const clsName = `border-info ${errorType}`;
+  return clsx({[clsName]: errorType});
 }

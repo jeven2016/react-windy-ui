@@ -4,10 +4,9 @@ import PropTypes from 'prop-types';
 import {EventListener, InputBorderType} from './common/Constants';
 import Element from './common/Element';
 import {InputGroupContext} from './common/Context';
-import {isNil, nonNil, validate} from './Utils';
+import {getErrorClsName, isNil, nonNil, validate} from './Utils';
 import useMultipleRefs from './common/UseMultipleRefs';
 import {useEvent} from './index';
-import useErrorStyle from './common/useErrorStyle';
 import {IconPwdInvisible, IconPwdVisible} from './Icons';
 
 //todo: update doc
@@ -35,7 +34,7 @@ const IconInput = React.forwardRef((props, ref) => {
 
   const ctx = useContext(InputGroupContext);
   const inputDisabled = isNil(ctx.disabled) ? disabled : ctx.disabled;
-  let clsName = clsx(extraClassName, className, useErrorStyle(errorType), {
+  let clsName = clsx(extraClassName, className, getErrorClsName(errorType), {
     'left-icon': leftIcon,
     [size]: size,
     block: block,
@@ -85,7 +84,7 @@ const Input = React.forwardRef((props, ref) => {
   const inputSize = isNil(ctx.size) ? size : ctx.size;
 
   let clsName = clsx(extraClassName, className, inputSize,
-      useErrorStyle(errorType),
+      getErrorClsName(errorType),
       {
         'read-only': readOnly,
         'textarea': type === 'textarea',
@@ -128,7 +127,8 @@ const Password = React.forwardRef((props, ref) => {
   } = props;
   validate(type === 'password', 'The type can only be password');
 
-  validate(toggleIcons.length === 2, 'There should be two icons for switching.');
+  validate(toggleIcons.length === 2,
+      'There should be two icons for switching.');
   const [visible, setVisible] = useState(false);
 
   const change = useCallback((e) => {
@@ -172,6 +172,7 @@ IconInput.propTypes = {
   block: PropTypes.bool,
   errorType: PropTypes.oneOf([null, '', 'ok', 'warning', 'error']),
   disabled: PropTypes.bool,
+  iconProps: PropTypes.object,
 };
 
 Input.propTypes = {
@@ -182,6 +183,7 @@ Input.propTypes = {
   className: PropTypes.string,
   extraClassName: PropTypes.string, //the customized class need to add
   disabled: PropTypes.bool,
+  iconProps: PropTypes.object
 };
 InputHoc.IconInput = IconInput;
 

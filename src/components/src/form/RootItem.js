@@ -66,8 +66,7 @@ const RootItem = React.forwardRef((props, ref) => {
         <Col {...itemControlCol}>{chdArray}</Col>
       </Row>
         {
-          !hasErrors &&
-          <div className="message-row"></div>
+          !hasErrors && !compact && <div className="message-row"/>
         }
         {errorMessages.map(
             (err, index) => <Row key={`e-${index}-${err.props.validationType}`}>
@@ -79,12 +78,14 @@ const RootItem = React.forwardRef((props, ref) => {
     }
   }, [
     labelComp,
-    isHorizontal,
     children,
+    isHorizontal,
     errorMessages,
     labelCls,
     itemLabelCol,
-    itemControlCol]);
+    itemControlCol,
+    hasErrors,
+    compact]);
 
   let justifyCls = JustifyContentType[justify];
   let clsName = clsx(extraClassName, className, itemDirection, justifyCls);
