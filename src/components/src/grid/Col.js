@@ -8,7 +8,7 @@ import {JustifyContentType} from '../common/Constants';
 const Col = React.forwardRef((props, ref) => {
   const {
     extraClassName,
-    className,
+    className = 'col-base',
     col,
     gutter = {x: 0, y: 0}, //todo
     justify = JustifyContentType.start,
@@ -77,9 +77,9 @@ const Col = React.forwardRef((props, ref) => {
 
     return {
       ...style,
-      padding: `${paddingY}px ${paddingY}px`
-    }
-  }, [gutter]);
+      padding: `${paddingY}px ${paddingX}px`,
+    };
+  }, [gutter.x, gutter.y, style]);
 
   return <Element ref={ref} className={clsName}
                   style={newSty} {...otherProps}/>;
@@ -100,7 +100,7 @@ Col.propTypes = {
   lgOffset: PropTypes.number,
   xlOffset: PropTypes.number,
   order: PropTypes.number,
-  gutter: PropTypes.shape({x: PropTypes.number, y: PropTypes.number})
+  gutter: PropTypes.shape({x: PropTypes.number, y: PropTypes.number}),
 };
 
 export default Col;

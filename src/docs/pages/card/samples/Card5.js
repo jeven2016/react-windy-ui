@@ -19,23 +19,24 @@ export default function Card5() {
         lycopersicum, commonly known as a tomato plant.
       </Card.Body>
       <Card.Footer>
-        <Dropdown position="rightBottom" title={<Button outline color="dark"
-                                                        extraClassName="clear-border">
-          Phone
-        </Button>}>
-          <Dropdown.Menu>
-            <Dropdown.Item id="item1">Menu Item1</Dropdown.Item>
-            <Dropdown.Item id="item2">Menu Item2</Dropdown.Item>
-            <Dropdown.Item id="item3">Menu Item3</Dropdown.Item>
-            <Dropdown.Item id="item4">Menu Item4</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <div>
+          <Dropdown position="rightBottom" title={<Button outline color="dark"
+                                                          extraClassName="clear-border">
+            Phone
+          </Button>}>
+            <Dropdown.Menu>
+              <Dropdown.Item id="item1">Menu Item1</Dropdown.Item>
+              <Dropdown.Item id="item2">Menu Item2</Dropdown.Item>
+              <Dropdown.Item id="item3">Menu Item3</Dropdown.Item>
+              <Dropdown.Item id="item4">Menu Item4</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
 
-        <Button outline color="blue" style={{marginLeft: '1rem'}}
-                extraClassName="clear-border">
-          Action
-        </Button>
-
+          <Button outline color="blue" style={{marginLeft: '1rem'}}
+                  extraClassName="clear-border">
+            Action
+          </Button>
+        </div>
       </Card.Footer>
     </Card>
   </>;

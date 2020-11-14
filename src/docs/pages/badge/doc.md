@@ -306,7 +306,7 @@ export default function Badge7() {
 [Badge7_END_en_US]
 ----------------------------------
 [Badge8_BEGIN_zh_CN]
-### 示例7: 显示标记
+### 示例8: 抖动
 <fieldset class="doc desc">
   <legend>提示</legend>
   <div class="doc desc-area">

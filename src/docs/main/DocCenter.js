@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import HomeHeader from '../home/HomeHeader';
 import {
-  Affix,
   Card,
   Col,
+  Drawer,
+  Responsive,
   RouteLoader,
   Row,
+  Affix,
+  StoreContext,
   useMediaQuery,
-  Responsive,
-  Menu,
 } from 'react-windy-ui';
 import DocMenu from './DocMenu';
 import {Route, Switch, useRouteMatch} from 'react-router-dom';
@@ -46,46 +47,61 @@ import DatePickerIndex from '../pages/datepicker/DatePickerIndex';
 import PcIndex from '../pages/popconfirm/PcIndex';
 import FormIndex from '../pages/form/FormIndex';
 import HooksIndex from '../pages/hooks/HooksIndex';
+import NavMenu from './NavMenu';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
   // relative to the parent route, while the `url` lets
   // us build relative links.
   const {url} = useRouteMatch();
-  const {lg: isLg, md: isMd, sm: isSm} = useMediaQuery({
+  const {xg: isMinXg, lg: isMinLg, sm: isMaxSm} = useMediaQuery({
+    xg: Responsive.xg.min,
     lg: Responsive.lg.min,
-    md: Responsive.md.min,
-    sm: Responsive.sm.min,
+    sm: Responsive.sm.max,
   });
 
   let contentProps;
-  if (isLg) {
+  if (isMinXg) {
     contentProps = {lg: 8};
-  } else if (isMd) {
-    contentProps = {md: 10};
+  } else if (isMinLg) {
+    contentProps = {lg: 10};
   } else {
-    contentProps = {sm: 12};
+    contentProps = {xs: 12};
   }
 
   let containerStyle;
-  if (isLg) {
+  if (isMinXg) {
     containerStyle = {padding: '0 8%'};
-  } else if (isMd) {
+  } else if (isMinLg) {
     containerStyle = {padding: '0 5%'};
   } else {
     containerStyle = {padding: '0 2%'};
   }
 
-  const menu =  <DocMenu/>;
+  const [activeDrawer, setActive] = useState(false);
+  const menu = <DocMenu hasBox={isMinLg}
+                        onSelectMenuItem={() => setActive(false)}/>;
 
-  console.log(`${isSm}, ${isMd}, ${isLg}`)
+  const ctx = useContext(StoreContext);
+  const {store} = ctx;
 
   return <>
     <HomeHeader/>
     <div style={containerStyle}>
+      {
+        !isMinLg &&
+        <Drawer active={activeDrawer}
+                position="left"
+                hasAnchor
+                style={{width: isMaxSm ? '80%' : '300px'}}
+                onChange={(e, show) => setActive(show)}>
+          {menu}
+        </Drawer>
+      }
+
       <Row gutter={{x: 16, y: 32}}>
         {
-          isMd &&
+          isMinLg &&
           <Col md={2}>
             {/*<Affix top={90}>*/}
             {menu}
@@ -207,24 +223,11 @@ function DocCenter(props) {
             </Card.Row>
           </Card>
         </Col>
-        {
-          isLg &&
-          <Col lg={2}>
-            <Affix top={70}>
-              <Menu hasBox={false}>
-                <Menu.Item>示例1: 普通的按钮</Menu.Item>
-                <Menu.Item>示例1: 普通的按钮</Menu.Item>
-                <Menu.Item>示例1: 普通的按钮</Menu.Item>
-                <Menu.Item>示例1: 普通的按钮</Menu.Item>
-                <Menu.Item>示例1: 普通的按钮</Menu.Item>
-                <Menu.Item>示例1: 普通的按钮</Menu.Item>
-                <Menu.Item>示例1: 普通的按钮</Menu.Item>
-                <Menu.Item>示例1: 普通的按钮</Menu.Item>
-                <Menu.Item>示例1: 普通的按钮</Menu.Item>
-              </Menu>
-            </Affix>
-          </Col>
-        }
+        {isMinXg && <Col lg={2}>
+          <Affix top={100}>
+            <NavMenu/>
+          </Affix>
+        </Col>}
       </Row>
     </div>
   </>;

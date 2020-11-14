@@ -17,7 +17,7 @@ const Card = React.forwardRef(
       } = props;
       return useElement({...otherProps}, ref, className,
           {
-            'with-width': hasWidth,
+            'with-width': hasWidth && !block,
             block: block,
             'global-with-border': hasBorder,
             'global-with-box': hasBox,
@@ -33,7 +33,12 @@ const Body = React.forwardRef(
 
 const CardImage = React.forwardRef(
     (props, ref) => {
-      const {className = 'card-img', position = 'top', autoScale = false, ...otherProps} = props;
+      const {
+        className = 'card-img',
+        position = 'top',
+        autoScale = false,
+        ...otherProps
+      } = props;
       return useElement(otherProps, ref, className, {
         [position]: position,
         'with-scale': autoScale,

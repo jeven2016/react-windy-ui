@@ -37,11 +37,11 @@ export default function SamplePanel(props) {
   return <>
     <Card block hasBorder hasBox={false}>
       <Card.Row>
-        <Row>
-          <Col sm={8}>
+        <Row align="center">
+          <Col col={8}>
             <div id={id}><TitleMarkDwon/></div>
           </Col>
-          <Col sm={4} style={{display: 'flex', justifyContent: 'flex-end'}}>
+          <Col col={4} style={{display: 'flex', justifyContent: 'flex-end'}}>
             <div>
               <Tooltip body="Source code">
                 <span style={{color: "rgb(158, 155, 155)"}}>

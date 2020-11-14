@@ -54,6 +54,7 @@ export {default as Collapse} from './collapse/Collapse';
 export {default as Table} from './table/Table';
 export {default as PopConfirm} from './popconfirm';
 export {default as Input} from './Input';
+export {initStore, StoreContext} from './common/Store';
 
 export {
   IconInfo,

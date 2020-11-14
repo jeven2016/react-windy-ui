@@ -3,9 +3,10 @@ import {Menu} from 'react-windy-ui';
 import {Link, useRouteMatch} from 'react-router-dom';
 
 export default function DocMenu(props) {
+  const {hasBox = true, onSelectMenuItem} = props;
   const {url} = useRouteMatch();
   return <div style={{width: '100%'}}>
-    <Menu type="primary">
+    <Menu type="primary" hasBox={hasBox} onSelect={onSelectMenuItem}>
       <Menu.SubMenu header="基础组件" id="basic">
         <Menu.Item id="btn">
           <Link to={`${url}/button`}>

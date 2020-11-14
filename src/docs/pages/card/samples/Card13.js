@@ -20,7 +20,7 @@ export default function Card13() {
               active={active}>
         <Card block>
           <Card.CardImage autoScale>
-            <Card.Image src={pic}>
+            <Card.Image src={pic} onclick="return false">
             </Card.Image>
             <Card.OverlayTitle>
               <h2>A Picture</h2>

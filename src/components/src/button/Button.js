@@ -71,8 +71,6 @@ const Button = React.forwardRef((props, ref) => {
     return {nativeElemType, nativeBtnType};
   }, [nativeType]);
 
-  console.log(nativeTypeDef.nativeElemType);
-
   return (
       <Element
           className={className}

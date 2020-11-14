@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
-import {RouteLoader} from 'react-windy-ui';
-import {LanguageContext} from './utils/Context';
+import {RouteLoader, initStore, StoreContext} from 'react-windy-ui';
 
 //Async modules to import
 const Home = React.lazy(() => import(`./home/Home`));
@@ -17,12 +16,15 @@ const barStyle = {
 };
 
 export default function DocHome() {
-  const [language, setLanguage] = useState('zh_CN');
-  const {Provider} = LanguageContext;
+   const [language, setLanguage] = useState('zh_CN');
+
+  const [store] = useState(() =>
+      initStore('init'),
+  );
 
   return <>
     <React.Suspense fallback={<Loading/>}>
-      <Provider value={{language}}>
+      <StoreContext.Provider value={{language, store}}>
         <Switch>
           <RouteLoader
               route={Route}
@@ -45,7 +47,7 @@ export default function DocHome() {
 
           </RouteLoader>
         </Switch>
-      </Provider>
+      </StoreContext.Provider>
     </React.Suspense>
   </>;
 }

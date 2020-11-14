@@ -12,7 +12,7 @@ const MyCard = function() {
   return <>
     <Card block autoScale={true}>
       <Card.CardImage autoScale>
-        <Card.Image src={pic}>
+        <Card.Image src={pic} style={{pointerEvents: 'none'}}>
         </Card.Image>
         <Card.OverlayTitle>
           <h2>A Picture</h2>

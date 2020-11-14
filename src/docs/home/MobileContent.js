@@ -15,7 +15,7 @@ export default function MobileContent() {
                flexDirection: 'column',
              }}>
           <h2>设计更友好的站点，兼容各类显示设备</h2>
-          <img src={DeviceImage} width='100%'/>
+          <img src={DeviceImage} width='100%' onclick="return false"/>
         </Col>
       </Row>
     </div>

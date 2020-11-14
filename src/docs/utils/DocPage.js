@@ -1,5 +1,4 @@
-import React, {useContext} from 'react';
-import {LanguageContext} from './Context';
+import React, {useContext, useEffect, useLayoutEffect} from 'react';
 import useMarkdownFile from './useMarkdownFile';
 import markdown from './Markdown';
 import SamplePanel from './SamplePanel';
@@ -8,6 +7,7 @@ import DemoDesc from './DemoDesc';
 import Code from './Code';
 import Blockquote from '../../components/src/Blockquote';
 import Hcode from './Hcode';
+import {StoreContext} from 'react-windy-ui';
 
 const defaultTitle = 'TITLE';
 const defaultFooter = 'FOOTER';
@@ -26,6 +26,7 @@ const convertCode = (text) => {
   return text;
 };
 
+//convert the default component to customized component
 const defaultOptions = {
   overrides: {
     Code: {component: Code},
@@ -36,7 +37,7 @@ const defaultOptions = {
 };
 
 export default function DocPage(props) {
-  const {language} = useContext(LanguageContext);
+  const {language, store} = useContext(StoreContext);
   const {
     importFunc,
     componentMapping: compMapping,
@@ -67,13 +68,17 @@ export default function DocPage(props) {
   const Footer = markdown(
       {text: contentMap.get(defaultFooter), markdownOptions: mdOptions});
 
+  //make NavMenu update after the page is changed
+  useLayoutEffect(() => {
+    store.setState('updated');
+  });
+
   return <>
 
     {Title && <section className="doc markdown">
       <Title/>
     </section>}
 
-    <div className="doc sample-container">
       {
         Object.entries(compMapping).map(([key, comp], index) => {
           let title = '';
@@ -114,7 +119,6 @@ export default function DocPage(props) {
         })
       }
 
-    </div>
     <section className="doc markdown footer">
       {Footer && <div style={{marginTop: '1rem'}}>
         <Footer/>
