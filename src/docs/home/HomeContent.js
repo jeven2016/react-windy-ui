@@ -37,13 +37,15 @@ export default function HomeContent() {
                           onMouseLeave={() => set({xys: [0, 0, 1]})}
                           style={{transform: props.xys.interpolate(trans)}}>
               <HomeIcon style={{
-                fontSize: '4rem',
-                marginRight: '1rem',
+                fontSize: '3rem',
               }}/>
               {
                 transitions.map(({item, props, key}) =>
                     <animated.div key={key}
-                                  style={{display: 'inline-block', ...props}}>{item}</animated.div>,
+                                  style={{
+                                    display: 'inline-block',
+                                    paddingLeft: '1rem', ...props,
+                                  }}>{item}</animated.div>,
                 )
               }
             </animated.div>
@@ -53,7 +55,7 @@ export default function HomeContent() {
           </div>
 
           <div className="line">
-            <Button type="green" hasMinWidth>Download</Button>
+            <Button type="green" hasMinWidth>Get Started</Button>
             <Button type="purple" hasMinWidth>Github</Button>
           </div>
           <div className="line">

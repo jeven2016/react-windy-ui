@@ -8,9 +8,9 @@ export default function HomeHeader({transparent = false}) {
 
   return <>
     <Affix block top={0} onChange={affixed => {
-      setBarExtraCls(affixed ? 'affix-fixed' : null);
+      setBarExtraCls(affixed ? 'affix-fixed' : '');
     }}>
-      <div className={`doc home-header ${transparent ? 'transparent' : null}`}>
+      <div className={`doc home-header ${transparent ? 'transparent' : ''}`}>
         <Navbar extraClassName={barExtraCls} type="primary"
                 hasBox={false} hasBorder={false}>
 
@@ -18,10 +18,10 @@ export default function HomeHeader({transparent = false}) {
             <Navbar.Switch>
               <IconList/>
             </Navbar.Switch>
-            <HomeIcon style={{
+         {/*   <HomeIcon style={{
               fontSize: '1rem',
               marginRight: '1rem',
-            }}/>
+            }}/>*/}
             <Link to="/">Windy UI</Link>
           </Navbar.Title>
           <Navbar.List align='right'>

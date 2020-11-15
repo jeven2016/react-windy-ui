@@ -8,10 +8,10 @@ import Bq5 from './samples/Bq5';
 
 const componentMapping = {
   Bq1: <Bq1/>,
-  // Bq2: <Bq2/>,
-  // Bq3: <Bq3/>,
-  // Bq4: <Bq4/>,
-  // Bq5: <Bq5/>,
+  Bq2: <Bq2/>,
+  Bq3: <Bq3/>,
+  Bq4: <Bq4/>,
+  Bq5: <Bq5/>,
 };
 
 export default function BqIndex(props) {

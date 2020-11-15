@@ -48,6 +48,7 @@ import PcIndex from '../pages/popconfirm/PcIndex';
 import FormIndex from '../pages/form/FormIndex';
 import HooksIndex from '../pages/hooks/HooksIndex';
 import NavMenu from './NavMenu';
+import AffixIndex from '../pages/affix/AffixIndex';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -62,28 +63,25 @@ function DocCenter(props) {
 
   let contentProps;
   if (isMinXg) {
-    contentProps = {lg: 8};
+    contentProps = {col: 8};
   } else if (isMinLg) {
-    contentProps = {lg: 10};
+    contentProps = {col: 10};
   } else {
-    contentProps = {xs: 12};
+    contentProps = {col: 12};
   }
 
   let containerStyle;
   if (isMinXg) {
-    containerStyle = {padding: '0 8%'};
+    containerStyle = {padding: '16px 8%'};
   } else if (isMinLg) {
-    containerStyle = {padding: '0 5%'};
+    containerStyle = {padding: '16px 5%'};
   } else {
-    containerStyle = {padding: '0 2%'};
+    containerStyle = {padding: '16px 2%'};
   }
 
   const [activeDrawer, setActive] = useState(false);
   const menu = <DocMenu hasBox={isMinLg}
                         onSelectMenuItem={() => setActive(false)}/>;
-
-  const ctx = useContext(StoreContext);
-  const {store} = ctx;
 
   return <>
     <HomeHeader/>
@@ -102,10 +100,10 @@ function DocCenter(props) {
       <Row gutter={{x: 16, y: 32}}>
         {
           isMinLg &&
-          <Col md={2}>
-            {/*<Affix top={90}>*/}
-            {menu}
-            {/*</Affix>*/}
+          <Col col={2}>
+            <Affix top={80} name='left'>
+                {menu}
+            </Affix>
           </Col>
         }
         <Col {...contentProps}>
@@ -208,6 +206,9 @@ function DocCenter(props) {
                 <RouteLoader route={Route} path={`${url}/form`}>
                   <FormIndex/>
                 </RouteLoader>
+                <RouteLoader route={Route} path={`${url}/affix`}>
+                  <AffixIndex/>
+                </RouteLoader>
                 <RouteLoader route={Route} path={`${url}/hooks`}>
                   <HooksIndex/>
                 </RouteLoader>
@@ -223,8 +224,8 @@ function DocCenter(props) {
             </Card.Row>
           </Card>
         </Col>
-        {isMinXg && <Col lg={2}>
-          <Affix top={100}>
+        {isMinXg && <Col col={2}>
+          <Affix top={80}>
             <NavMenu/>
           </Affix>
         </Col>}

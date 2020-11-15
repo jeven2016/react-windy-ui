@@ -1,6 +1,6 @@
 import {useLayoutEffect, useState, useRef} from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
-import {isFunction, isNil} from '../Utils';
+import {isFunction, isNil, nonNil} from '../Utils';
 
 export const defaultRect = {
   x: 0,  //padding-left
@@ -40,13 +40,16 @@ export default function useResizeObserver(
   const preRectRef = useRef(defaultRect);// a reference to previous rect data
 
   useLayoutEffect(() => {
+    if (!enabled) {
+      return;
+    }
     let node = ref;
     if (isFunction(ref)) {
       node = ref();
-    } else if (!isNil(ref.current)) {
+    } else if (nonNil(ref.current)) {
       node = ref.current;
     }
-    if (isNil(node) || !enabled) {
+    if (isNil(node)) {
       return;
     }
 
@@ -69,7 +72,12 @@ export default function useResizeObserver(
         }
       });
     });
-    ro.observe(node);
+    try{
+      nonNil(node) && ro.observe(node);
+    }catch (e){
+      console.log(node);
+    }
+
 
     return () => {
       if (enabled) {
@@ -77,7 +85,7 @@ export default function useResizeObserver(
         ro.disconnect();
       }
     };
-  }, []);
+  }, [comparator, enabled, onResize, ref]);
 
   //todo: the returned rect not working
   return rect;

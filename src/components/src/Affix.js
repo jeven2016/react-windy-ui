@@ -1,14 +1,12 @@
-import React, {useRef, useState, useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {invoke, isNil} from './Utils';
 import {useEvent} from './index';
 import {EventListener} from './common/Constants';
 import clsx from 'clsx';
 import useResizeObserver from './common/UseResizeObserver';
-import useMultipleRefs from './common/UseMultipleRefs';
 import PropTypes from 'prop-types';
 
 const Affix = React.forwardRef((props, ref) => {
-
   const {
     extraClassName,
     className = 'affix ',
@@ -23,10 +21,6 @@ const Affix = React.forwardRef((props, ref) => {
   } = props;
   const [status, setStatus] = useState(
       {affixed: false, width: 0, height: 0, isBlock: false});
-  const preAffixedRef = useRef(status.affixed);
-  const affixRef = useRef(null);
-  const refs = useMultipleRefs(ref, affixRef);
-
   const containerRef = useRef(null);
   const isTop = !isNil(top);
   const isBottom = !isNil(bottom);
@@ -43,58 +37,59 @@ const Affix = React.forwardRef((props, ref) => {
       } else if (isBottom) {
         memoStyle.bottom = bottom;
       }
+
+      if (!block) {
+        memoStyle.width = status.width;
+      }
+      memoStyle.height = status.height;
     }
     return memoStyle;
-  }, [status.affixed, isTop, isBottom]);
+  }, [
+    disabled,
+    status.affixed,
+    status.height,
+    status.width,
+    isTop,
+    isBottom,
+    block,
+    top,
+    bottom]);
 
-  const updateStatus = (rect, condition) => {
-    if (!preAffixedRef.current && condition) {
-      preAffixedRef.current = true;
+  const handleAffixed = useCallback((e) => {
+    const isScrollEvent = e?.type === 'scroll';
+    if (disabled || isNil(containerRef.current)) {
+      return;
+    }
+    const rect = containerRef.current.getBoundingClientRect();
+    let isAffixed;
+    if (isTop) {
+      isAffixed = rect.top < top;
+    } else if (isBottom) {
+      isAffixed = rect.bottom + bottom > window.innerHeight;
+    }
+
+    if (isScrollEvent) {
+      //unnecessary to update the width and height while the window is scrolling
+      if (status.affixed !== isAffixed) {
+        setStatus({...status, affixed: isAffixed});
+        invoke(onChange, isAffixed);
+      }
+    } else {
       setStatus({
-        affixed: true,
+        ...status,
+        affixed: isAffixed,
         width: rect.width,
         height: rect.height,
-        isBlock: block,
       });
-      invoke(onChange, true);
-      return;
+      invoke(onChange, isAffixed);
     }
-
-    if (preAffixedRef.current && !condition) {
-      preAffixedRef.current = false;
-      setStatus({
-        affixed: false,
-        width: status.width,
-        height: rect.height,
-        isBlock: false,
-      });
-      invoke(onChange, false);
-    }
-  };
-
-  const update = useCallback(() => {
-    if (disabled) {
-      return;
-    }
-
-    const rect = containerRef.current.getBoundingClientRect();
-    if (isTop) {
-      updateStatus(rect, rect.top < top);
-    } else if (isBottom) {
-      updateStatus(rect, rect.bottom + bottom > window.innerHeight);// todo:
-    }
-  }, [preAffixedRef.current, disabled, top, bottom, block]);
-
-  //observe the changes of parent node
-  useResizeObserver(() => {
-    return containerRef.current.parentNode;
-  }, update);
-
-  //observe changes of the affix node
-  useResizeObserver(affixRef, update);
+  }, [bottom, disabled, isBottom, isTop, onChange, status, top]);
 
   //register a scroll listener
-  useEvent(EventListener.scroll, () => update());
+  useEvent(EventListener.scroll, handleAffixed);
+
+  //observe the changes of container
+  useResizeObserver(containerRef, handleAffixed);
 
   const containerStyle = style;
   const clsName = clsx(className,
@@ -104,16 +99,17 @@ const Affix = React.forwardRef((props, ref) => {
     block: status.isBlock || block,
   });
 
-  return <div className={containerClsName} style={containerStyle}
-              ref={containerRef}>
-    {canAffix ?
-        <div style={{width: status.width, height: status.height}}/>
-        : null}
-    <div className={clsName} ref={refs}
-         style={!disabled ? newStyle : null} {...otherProps}>
-      {children}
-    </div>
-  </div>;
+  return disabled ? children :
+      <div className={containerClsName} style={containerStyle}
+           ref={containerRef}>
+        {canAffix ?
+            <div style={{width: status.width, height: status.height}}/>
+            : null}
+        <div className={clsName} ref={ref}
+             style={!disabled ? newStyle : null} {...otherProps}>
+          {children}
+        </div>
+      </div>;
 });
 
 Affix.propTypes = {
