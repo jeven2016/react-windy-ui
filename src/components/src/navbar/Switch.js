@@ -10,7 +10,6 @@ const Switch = React.forwardRef((props, ref) => {
     extraClassName,
     onClick,
     type = 'normal',
-    circle = true,
     ...otherProps
   } = props;
   const context = useContext(NavbarContext);
@@ -26,7 +25,6 @@ const Switch = React.forwardRef((props, ref) => {
 
   return <Button className={clsName}
                  size="small"
-                 circle={circle}
                  ref={ref}
                  onClick={click}
                  {...otherProps}/>;
