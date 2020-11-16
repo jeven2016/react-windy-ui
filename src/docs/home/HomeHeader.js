@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {Affix, IconList, Navbar, Dropdown} from 'react-windy-ui';
-import HomeIcon from './HomeIcon';
+import {Affix, Button, Dropdown, IconList, Navbar} from 'react-windy-ui';
 import {Link} from 'react-router-dom';
 
 export default function HomeHeader({transparent = false}) {
@@ -15,10 +14,10 @@ export default function HomeHeader({transparent = false}) {
                 hasBox={false} hasBorder={false}>
 
           <Navbar.Title>
-            <Navbar.Switch>
+            <Navbar.Switch simplified>
               <IconList/>
             </Navbar.Switch>
-         {/*   <HomeIcon style={{
+            {/*   <HomeIcon style={{
               fontSize: '1rem',
               marginRight: '1rem',
             }}/>*/}
