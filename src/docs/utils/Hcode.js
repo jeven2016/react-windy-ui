@@ -4,14 +4,17 @@ import {
   prism as sty2,
 } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import {PrismLight as SyntaxHighlighter} from 'react-syntax-highlighter';
-import {jsx} from 'react-syntax-highlighter/dist/cjs/languages/prism';
+import {
+  jsx,
+  javascript,
+} from 'react-syntax-highlighter/dist/cjs/languages/prism';
 
 const Hcode = React.forwardRef((props, ref) => {
   const {children, style, inline = false, ...otherProps} = props;
 
   useEffect(() => {
     SyntaxHighlighter.registerLanguage('jsx', jsx);
-    // SyntaxHighlighter.registerLanguage('javascript', javascript);
+    SyntaxHighlighter.registerLanguage('javascript', javascript);
     // SyntaxHighlighter.registerLanguage('sass', sass);
     // SyntaxHighlighter.registerLanguage('scss', scss);
   }, []);

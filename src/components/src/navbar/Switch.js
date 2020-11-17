@@ -29,7 +29,7 @@ const Switch = React.forwardRef((props, ref) => {
     }
     context.toggleList && context.toggleList(e);
     onClick && onClick(e);
-  }, [onClick, context]);
+  }, [simplified, context, onClick]);
 
   const {color, ...otherStyles} = style;
   const others = {style: {...otherStyles}, ...otherProps};

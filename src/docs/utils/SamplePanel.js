@@ -1,5 +1,13 @@
 import React, {useMemo, useState} from 'react';
-import {Button, Card, Col, Collapse, Row, Tooltip} from 'react-windy-ui';
+import {
+  Button,
+  Card,
+  Col,
+  Collapse,
+  Row,
+  Tooltip,
+  Divider,
+} from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCode} from '@fortawesome/free-solid-svg-icons';
 import markdown from './Markdown';
@@ -36,7 +44,7 @@ export default function SamplePanel(props) {
 
   return <>
     <Card block hasBorder hasBox={false}>
-      <Card.Row>
+      <Card.Row extraClassName="doc title-row">
         <Row align="center">
           <Col col={8}>
             <div id={id}><TitleMarkDwon/></div>
@@ -44,7 +52,7 @@ export default function SamplePanel(props) {
           <Col col={4} style={{display: 'flex', justifyContent: 'flex-end'}}>
             <div>
               <Tooltip body="Source code">
-                <span style={{color: "rgb(158, 155, 155)"}}>
+                <span style={{color: 'rgb(158, 155, 155)'}}>
                 <Button inverted type="blue" extraClassName="clear-border"
                         onClick={() => setCollapse(pre => !pre)}>
                   <FontAwesomeIcon icon={faCode}/>
@@ -55,6 +63,7 @@ export default function SamplePanel(props) {
           </Col>
         </Row>
       </Card.Row>
+      <Divider/>
       <Card.Row>
         <div className="doc comp-container" id="SampleBtn1">
           <div className="doc btn-area">

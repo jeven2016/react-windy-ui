@@ -15,6 +15,7 @@ export default function DocMenu(props) {
                style={{
                  maxHeight: 'calc(100vh - 80px)',
                  overflow: overflow,
+                 background: '#fff',
                }}>
     <Menu.SubMenu header="基础组件" id="basic">
       <Menu.Item id="btn">
