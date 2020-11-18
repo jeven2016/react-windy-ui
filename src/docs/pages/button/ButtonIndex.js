@@ -40,8 +40,31 @@ const componentMapping = {
   SampleBtn18: <SampleBtn18/>,
 };
 
+//md
+const requireRaw = require.context('!raw-loader!./', false, /doc.md$/);
+
+const requireRaw2 = require.context('./samples', true, /.js$/);
+
 export default function ButtonIndex() {
+
+ /* requireRaw.keys().forEach((filename) => {
+console.log(requireRaw(filename));
+  });*/
+
+  let stop=false;
+  let Comp;
+  requireRaw2.keys().forEach((filename) => {
+    console.log((filename));
+    if(stop){
+      return;
+    }
+    Comp = requireRaw2(filename).default;
+    // console.log(requireRaw2(filename));
+    stop=true;
+  });
+
   return <>
+    {/*{<Comp/>}*/}
     <DocPage
         importFunc={() => import('./doc.md')}
         componentMapping={componentMapping}

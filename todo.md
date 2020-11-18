@@ -24,6 +24,8 @@ Enhance:
 - replace onChange to onActiveChange for switching state, the onChange is used for native value
   changing
 - Form rootItem下显示InputGroup，需要将整个border置为红色边框
+- using prismjs to highlight code lines
+  https://github.com/PrismJS/prism-themes
 
 
 - free pic: https://pixabay.com/photos/bay-beach-boat-exotic-idyllic-1867798/
