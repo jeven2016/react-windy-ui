@@ -86,7 +86,7 @@ const YearRangesPanel = React.forwardRef((props, ref) => {
       rows.push(row);
     }
     return rows;
-  }, [currentYear, selectRange, startYear, yearRange.begin, yearRange.end]);
+  }, [selectRange, startYear, yearRange.begin]);
 
   const setPreRange = useCallback(() => {
     const preInitDate = getState().initialDate;

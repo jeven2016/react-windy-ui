@@ -26,6 +26,7 @@ Enhance:
 - Form rootItem下显示InputGroup，需要将整个border置为红色边框
 - using prismjs to highlight code lines
   https://github.com/PrismJS/prism-themes
+- integrate with Algolia DocSearch 
 
 
 - free pic: https://pixabay.com/photos/bay-beach-boat-exotic-idyllic-1867798/

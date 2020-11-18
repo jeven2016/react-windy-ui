@@ -290,8 +290,21 @@ body {
     }
   }
 
-  &.title-row{
+  &.title-row {
     background: #f5f5f5;
+
+    h3 {
+      display: inline-block;
+    }
+  }
+
+  &.title-col {
+    display: flex;
+    align-items: center;
+
+    .button {
+      margin-left: .25rem;
+    }
   }
 }
 
