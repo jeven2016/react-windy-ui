@@ -51,17 +51,21 @@ export default function HomeContent() {
             </animated.div>
           </div>
           <div className="content">
-            A responsive design system built with React, Wui.
+            {intl.get("global.home.content")}
           </div>
 
           <div className="line">
-            <Button type="green" hasMinWidth>Get Started</Button>
-            <Button type="purple" hasMinWidth>Github</Button>
+            <Button type="green" hasMinWidth>
+              {intl.get("global.home.button.start")}
+            </Button>
+            <Button type="purple" hasMinWidth>
+              {intl.get("global.home.button.github")}
+            </Button>
           </div>
           <div className="line">
-            <span>Current release</span>
+            <span> {intl.get("global.home.current.release")}</span>
             <Badge type="tag" color="error" style={{marginLeft: '1rem'}}>
-              v0.5.0
+              {intl.get("global.home.current.release.version")}
             </Badge>
           </div>
           <div className="line">&nbsp;</div>

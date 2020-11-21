@@ -18,6 +18,7 @@ import SampleBtn15 from './samples/SampleBtn15';
 import SampleBtn16 from './samples/SampleBtn16';
 import SampleBtn17 from './samples/SampleBtn17';
 import SampleBtn18 from './samples/SampleBtn18';
+import {isNil} from '../../../components/src/Utils';
 
 const componentMapping = {
   SampleBtn1: <SampleBtn1/>,
@@ -41,28 +42,54 @@ const componentMapping = {
 };
 
 //todo: map all js and md files
-const requireRaw = require.context('!raw-loader!./', false, /doc.md$/);
+// const requireRaw = require.context('!raw-loader!./', false, /doc.md$/);
 
-const requireRaw2 = require.context('./samples', true, /.js$/);
+// const requireRaw2 = require.context('./samples', true, /.js$/);
+const requireMd = require.context('!raw-loader!./md', false, /.md$/);
+const requireSamples = require.context('./samples', false, /.js$/);
+
+const loadMdFiles = (requireMd, config) => {
+
+  requireMd.keys().forEach((filename) => {
+    const content = requireMd(filename).default;
+    let pureName = filename.substring(filename.lastIndexOf('/') + 1);
+    if (pureName == null || /^\s*$/.test(pureName)) {
+      return;
+    }
+    pureName = pureName.replace(/\.md/g, '');
+    let existingElem;
+    if (config.hasOwnProperty(pureName)) {
+      existingElem = config[pureName];
+    } else {
+      existingElem = config[pureName] = {};
+    }
+
+    existingElem.mdContent = content;
+  });
+
+  return config;
+};
 
 export default function ButtonIndex() {
 
- /* requireRaw.keys().forEach((filename) => {
-console.log(requireRaw(filename));
-  });*/
+  /* requireRaw.keys().forEach((filename) => {
+ console.log(requireRaw(filename));
+   });*/
 
-  let stop=false;
-  let Comp;
-  requireRaw2.keys().forEach((filename) => {
-    console.log((filename));
-    if(stop){
-      return;
-    }
-    Comp = requireRaw2(filename).default;
-    // console.log(requireRaw2(filename));
-    stop=true;
-  });
-
+  /* let stop = false;
+   let Comp;
+   requireRaw2.keys().forEach((filename) => {
+     console.log((filename));
+     if (stop) {
+       return;
+     }
+     Comp = requireRaw2(filename).default;
+     // console.log(requireRaw2(filename));
+     stop = true;
+   });*/
+  const config = {};
+   loadMdFiles(requireMd, config);
+  console.log(config);
   return <>
     {/*{<Comp/>}*/}
     <DocPage
