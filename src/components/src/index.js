@@ -1,4 +1,3 @@
-import TimePicker from './TimePicker';
 import DatePicker from './date/DatePicker';
 import Pagination from './Pagination.js';
 //new
@@ -23,7 +22,6 @@ export {default as Tooltip} from './Tooltip';
 export {default as Modal} from './modal';
 export {default as Toggle} from './toggle';
 export {default as Drawer} from './Drawer';
-export {default as Accordion} from './Accordion';
 export {default as Blockquote} from './Blockquote';
 export {default as Loader} from './Loader';
 export {default as Row} from './grid/Row';
@@ -96,6 +94,5 @@ export {
   removeWindowEventListener,
   preventEvent,
   DatePicker,
-  TimePicker,
   Pagination,
 };

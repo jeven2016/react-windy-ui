@@ -17,7 +17,8 @@ const useMultipleRefs = (...refs) => {
   //refer to: https://github.com/facebook/react/issues/4533
   return useCallback((refElem) => {
     refs.forEach(ref => setDirectRef(ref, refElem))
-  }, []);
+  }, [refs]);
 };
+
 
 export default useMultipleRefs;

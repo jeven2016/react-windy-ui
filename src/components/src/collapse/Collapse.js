@@ -2,7 +2,6 @@ import React from 'react';
 import CollapsePanel from './CollapsePanel';
 import Item from './Item';
 import clsx from 'clsx';
-import useInternalActive from '../common/useInternalActive';
 import {convertToArray, isNil} from '../Utils';
 import {CollapseContext} from '../common/Context';
 import useInternalState from '../common/useInternalState';
@@ -24,7 +23,6 @@ const Collapse = React.forwardRef((props, ref) => {
     className = 'collapse',
     ...otherProps
   } = props;
-  useInternalActive();
   const clsName = clsx(extraClassName, className, {
     'with-border': hasBorder,
     'global-with-box': hasBox,

@@ -1,18 +1,16 @@
-import {
-  get,
-  inRange,
-  isBoolean,
-  isFunction,
-  isInteger,
-  isObject,
-  isString,
-  max,
-  random,
-  set,
-  slice,
-  without,
-  flattenDeep,
-} from 'lodash';
+import get from 'lodash/get';
+import inRange from 'lodash/inRange';
+import isBoolean from 'lodash/isBoolean';
+import isFunction from 'lodash/isFunction';
+import isInteger from 'lodash/isInteger';
+import isObject from 'lodash/isObject';
+import isString from 'lodash/isString';
+import max from 'lodash/max';
+import random from 'lodash/random';
+import set from 'lodash/set';
+import slice from 'lodash/slice';
+import without from 'lodash/without';
+
 import {PopupPosition} from './common/Constants';
 import clsx from 'clsx';
 
@@ -29,7 +27,6 @@ export {
   max,
   get,
   set,
-  flattenDeep,
 };
 
 export const isNil = (value) => value == null;

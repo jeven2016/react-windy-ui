@@ -26,9 +26,30 @@ export const getIndexContent = () => {
   return `
 import React from 'react';
 import ReactDom from 'react-dom';
-import default as Sample from './Sample';
+import 'react-windy-ui/dist/wui.css';
+import {default as Sample} from './Sample';
 
-ReactDom.render(<Sample/>, document.getElementById('root'));
-  
+ReactDom.render(<div style={{margin: '1rem'}}><Sample/></div>, document.getElementById('root'));
   `;
+};
+
+export const getPackage = () => {
+  return {
+    'package.json': {
+      content: {
+        title: 'react-windy-ui',
+        description: 'demo for react-windy-ui ',
+        dependencies: {
+          'react-windy-ui': '0.2.3',
+          'react': 'latest',
+          'react-dom': 'latest',
+        },
+        devDependencies: {
+          'react-scripts': 'latest',
+        },
+        main: 'index.js',
+        scripts: 'react start',
+      },
+    },
+  };
 };

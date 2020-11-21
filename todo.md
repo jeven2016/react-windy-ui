@@ -20,6 +20,7 @@ Enhance:
 - Navbar里面的Input背景色已经Icon的颜色跟primary不匹配
 - Navbar10 sample， 无法在iframe中与Affix结合使用
 - icons redesign
+- remove useInternalActive
 - replacing with scroll-into-view-if-needed
 - replace onChange to onActiveChange for switching state, the onChange is used for native value
   changing
@@ -27,6 +28,9 @@ Enhance:
 - using prismjs to highlight code lines
   https://github.com/PrismJS/prism-themes
 - integrate with Algolia DocSearch 
+
+Note:
+- components 下的package需要修改为json后缀才可以发布版本，当前使用了阿里的源，发布时修改修改对应的.yarnrc和.npmrc去取消发布路径。
 
 
 - free pic: https://pixabay.com/photos/bay-beach-boat-exotic-idyllic-1867798/

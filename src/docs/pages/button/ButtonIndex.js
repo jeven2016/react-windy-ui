@@ -40,7 +40,7 @@ const componentMapping = {
   SampleBtn18: <SampleBtn18/>,
 };
 
-//md
+//todo: map all js and md files
 const requireRaw = require.context('!raw-loader!./', false, /doc.md$/);
 
 const requireRaw2 = require.context('./samples', true, /.js$/);
