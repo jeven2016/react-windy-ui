@@ -19,6 +19,13 @@ import SampleBtn16 from './samples/SampleBtn16';
 import SampleBtn17 from './samples/SampleBtn17';
 import SampleBtn18 from './samples/SampleBtn18';
 import {isNil} from '../../../components/src/Utils';
+import {
+  loadMdFiles,
+  parseCode,
+  parseContent,
+  parseHeader,
+} from '../../utils/parseMd';
+import DocPage2 from '../../utils/DocPage2';
 
 const componentMapping = {
   SampleBtn1: <SampleBtn1/>,
@@ -48,27 +55,11 @@ const componentMapping = {
 const requireMd = require.context('!raw-loader!./md', false, /.md$/);
 const requireSamples = require.context('./samples', false, /.js$/);
 
-const loadMdFiles = (requireMd, config) => {
 
-  requireMd.keys().forEach((filename) => {
-    const content = requireMd(filename).default;
-    let pureName = filename.substring(filename.lastIndexOf('/') + 1);
-    if (pureName == null || /^\s*$/.test(pureName)) {
-      return;
-    }
-    pureName = pureName.replace(/\.md/g, '');
-    let existingElem;
-    if (config.hasOwnProperty(pureName)) {
-      existingElem = config[pureName];
-    } else {
-      existingElem = config[pureName] = {};
-    }
 
-    existingElem.mdContent = content;
-  });
 
-  return config;
-};
+
+
 
 export default function ButtonIndex() {
 
@@ -88,13 +79,16 @@ export default function ButtonIndex() {
      stop = true;
    });*/
   const config = {};
-   loadMdFiles(requireMd, config);
-  console.log(config);
+  loadMdFiles(requireMd, config);
   return <>
-    {/*{<Comp/>}*/}
-    <DocPage
+   {/* <DocPage2
+        requireMd={requireMd}
+        requireJs={requireSamples}
+    />*/}
+
+    {/*<DocPage
         importFunc={() => import('./doc.md')}
         componentMapping={componentMapping}
-    />
+    />*/}
   </>;
 }
