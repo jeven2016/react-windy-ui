@@ -1,5 +1,10 @@
+---   
+  order: 100
+  type: text
+  editUrl: $BASE/docs/pages/button/md/api.md
+---      
 
------ zh_CN
++++  zh_CN
 
 ## API
 按钮的属性如下所示：
@@ -21,7 +26,7 @@
 | block | 将按钮宽度设置为100%的行宽 | boolean | `false` |  |
 | color | 按钮颜色 | boolean | `false` | color和type只需要选择其一即可。值可以是: black, blue,brown, cyan, dark, green, gray, gray-darker, light, light-gray, orange, pink, purple, red, yellow, teal, violet, white |
 
------ en_US
++++ en_US
 
 ## API
 按钮的属性如下所示：

@@ -1,3 +1,5 @@
+import React from 'react';
+
 /**
  * just a note copied from W3School
  * exec() 的行为就稍微复杂一些。它会在 RegExpObject 的 lastIndex 属性指定的字符处开始检索
@@ -47,21 +49,41 @@ export const parseHeader = (markdownContent) => {
       const value = regMt[2].replace(/(.*)/, '$1');
       headers[name] = value.replace(/^'|'$/g, '').trim();
     }
+
+    if (result.title?.type === 'text') {
+      result.title = {
+        order: result.title.order,
+        type: 'text',
+        editUrl: result.title.editUrl,
+      };
+    }
   }
   return result;
 };
 
-export const parseContent = (markdownContent) => {
- /* let regMt;
-  let cnt = {};
-  while ((regMt = contentReg.exec(markdownContent)) !== null) {
-    const locale = regMt[1].trim();
-    if (isBlank(locale)) {
-      return;
-    }
-    cnt[locale] = regMt[2].trim();
+export const parseContent = (markdownContent, beginIndex = 0, result = {}) => {
+  let prefixIndex = markdownContent.indexOf('+++', beginIndex);
+  if (prefixIndex < 0) {
+    return result;
   }
-  return cnt;*/
+
+  let nextPrefixIndex = markdownContent.indexOf('+++', prefixIndex + 5);
+  let text;
+  let end = false;
+  if (nextPrefixIndex > -1) {
+    text = markdownContent.substring(prefixIndex, nextPrefixIndex);
+  } else {
+    text = markdownContent.substring(prefixIndex);
+    end = true;
+  }
+  const regMt = /\+{3}([^\n\r]*)[\n\r]([\s\S]*)/g.exec(text);
+  if (regMt) {
+    const locale = regMt[1].trim();
+    result[locale] = regMt[2].trim();
+  }
+  if (!end) {
+    parseContent(markdownContent, nextPrefixIndex, result);
+  }
 };
 
 export const parseCode = (markdownContent) => {
@@ -72,29 +94,58 @@ export const parseCode = (markdownContent) => {
   return null;
 };
 
-export const loadMdFiles = (requireMd) => {
+const getPureName = (filename) => {
+  return filename.substring(filename.lastIndexOf('/') + 1);
+};
+
+export const loadMdFiles = (requireMd, requireSamples) => {
   const config = {};
   requireMd.keys().forEach((filename) => {
     const content = requireMd(filename).default;
-    let pureName = filename.substring(filename.lastIndexOf('/') + 1);
+    let pureName = getPureName(filename);
     if (isBlank(pureName)) {
       return;
     }
     pureName = pureName.replace(/\.md/g, '');
-    let existingElem;
-    if (config.hasOwnProperty(pureName)) {
-      existingElem = config[pureName];
-    } else {
-      existingElem = config[pureName] = {};
-    }
-    if (pureName.includes('basic_button')) {
-      const title = parseHeader(content);
-      const body = parseContent(content);
-      const code = parseCode(body);
+    const title = parseHeader(content);
+    const body = {};
+    parseContent(content, 0, body);
+    const code = body?.SampleCode?.replace(/`{3}(jsx|js)?/ig, '');
+    delete body.SampleCode;
 
-      console.log(title);
-      console.log(body);
-      console.log(code);
+    config[pureName] = {
+      ...title,
+      content: body,
+      code: code,
+    };
+  });
+
+  requireSamples.keys().forEach(jsFileName => {
+    const Comp = requireSamples(jsFileName).default;
+    let pureName = getPureName(jsFileName);
+    if (isBlank(pureName)) {
+      return;
+    }
+    pureName = pureName.replace(/\.js|\.jsx/g, '');
+    console.log(pureName);
+
+    Object.keys(config).forEach(key => {
+      if (key === pureName || pureName.toLowerCase() === key) {
+        const definition = config[pureName]
+            ? config[pureName]
+            : config[pureName.toLowerCase()];
+        definition.component = <Comp/>;
+      }
+    });
+  });
+
+  //generate a component base on the code
+  Object.keys(config).forEach(key => {
+    const definition = config[key];
+    if (definition.title?.type === 'sample') {
+      if (!definition.component && definition.code) {
+        definition.component = <>{definition.code}</>;
+      }
     }
   });
 

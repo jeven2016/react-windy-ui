@@ -1,34 +1,8 @@
 import React from 'react';
-import SampleBtn1 from './samples/SampleBtn1';
-import SampleBtn2 from './samples/SampleBtn2';
-import SampleBtn3 from './samples/SampleBtn3';
-import SampleBtn4 from './samples/SampleBtn4';
-import SampleBtn5 from './samples/SampleBtn5';
-import SampleBtn6 from './samples/SampleBtn6';
-import SampleBtn7 from './samples/SampleBtn7';
-import SampleBtn8 from './samples/SampleBtn8';
-import SampleBtn9 from './samples/SampleBtn9';
-import SampleBtn10 from './samples/SampleBtn10';
-import SampleBtn11 from './samples/SampleBtn11';
-import SampleBtn12 from './samples/SampleBtn12';
-import SampleBtn13 from './samples/SampleBtn13';
-import DocPage from '../../utils/DocPage';
-import SampleBtn14 from './samples/SampleBtn14';
-import SampleBtn15 from './samples/SampleBtn15';
-import SampleBtn16 from './samples/SampleBtn16';
-import SampleBtn17 from './samples/SampleBtn17';
-import SampleBtn18 from './samples/SampleBtn18';
-import {isNil} from '../../../components/src/Utils';
-import {
-  loadMdFiles,
-  parseCode,
-  parseContent,
-  parseHeader,
-} from '../../utils/parseMd';
-import DocPage2 from '../../utils/DocPage2';
+import {loadMdFiles} from '../../utils/parseMd';
 
-const componentMapping = {
-  SampleBtn1: <SampleBtn1/>,
+/*const componentMapping = {
+  SampleBtn1: <Basic_button/>,
   SampleBtn2: <SampleBtn2/>,
   SampleBtn3: <SampleBtn3/>,
   SampleBtn4: <SampleBtn4/>,
@@ -46,7 +20,7 @@ const componentMapping = {
   SampleBtn16: <SampleBtn16/>,
   SampleBtn17: <SampleBtn17/>,
   SampleBtn18: <SampleBtn18/>,
-};
+};*/
 
 //todo: map all js and md files
 // const requireRaw = require.context('!raw-loader!./', false, /doc.md$/);
@@ -78,8 +52,8 @@ export default function ButtonIndex() {
      // console.log(requireRaw2(filename));
      stop = true;
    });*/
-  const config = {};
-  loadMdFiles(requireMd, config);
+  const config = loadMdFiles(requireMd, requireSamples);
+  console.log(config)
   return <>
    {/* <DocPage2
         requireMd={requireMd}

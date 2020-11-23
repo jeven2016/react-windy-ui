@@ -1,12 +1,10 @@
 ---
-order: 1
-title: 按钮 Button 
-zh_CN: 按钮 Button 
-en_US: Button 
+order: 0
+type: text
 editUrl: $BASE/docs/pages/button/md/title.md
 ---
 
------ zh_CN 
++++  zh_CN 
 ## 按钮 Button  
 
 按钮，作为网页上最常使用的控件，Windy UI提供了如下几种按钮
@@ -27,7 +25,7 @@ editUrl: $BASE/docs/pages/button/md/title.md
 另外提供了大、中、小三种尺寸以供使用。
 
 
------ en_US 
++++  en_US 
 ## Button  
 
 Windy UI provides the fllowing buttons for common use:

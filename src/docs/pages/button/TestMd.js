@@ -4,7 +4,7 @@ import {compiler} from 'markdown-to-jsx';
 import {Button} from 'react-windy-ui';
 import {PrismLight as SyntaxHighlighter} from 'react-syntax-highlighter';
 import {okaidia as sty} from 'react-syntax-highlighter/dist/esm/styles/prism';
-import SampleBtn1 from './samples/SampleBtn1';
+import Basic_button from './samples/SampleBtn1';
 import {jsx} from 'react-syntax-highlighter/dist/cjs/languages/prism';
 import {Badge} from '../../../components/src';
 
@@ -19,7 +19,7 @@ export default function TestMd() {
   return compiler(md, {
     overrides: {
       Button: Button,
-      SampleBtn1: SampleBtn1,
+      SampleBtn1: Basic_button,
       Badge,
     },
   });
