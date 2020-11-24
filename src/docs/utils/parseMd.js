@@ -22,11 +22,11 @@ const isBlank = (value) => value == null || /^\s*$/.test(value);
  *       zh_CN: xxx,
  *       en_US: xxx
  *     },
- *     body: {
+ *     content: {
  *       zh_CN: xxx,
  *       en_US: xxx
  *     }
- *     code: xxxx,
+ *     code: sourceCode,
  *     component: function(){}
  *   }
  * }
@@ -98,8 +98,20 @@ const getPureName = (filename) => {
   return filename.substring(filename.lastIndexOf('/') + 1);
 };
 
-export const loadMdFiles = (requireMd, requireSamples) => {
+export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
   const config = {};
+
+  const sourceCode = {};
+  requireCode.keys().forEach((filename) => {
+    const content = requireCode(filename);
+    let pureName = getPureName(filename);
+    if (isBlank(pureName)) {
+      return;
+    }
+    pureName = pureName.replace(/\.(jsx|js)/ig, '');
+    sourceCode[pureName] = content.default;
+  });
+
   requireMd.keys().forEach((filename) => {
     const content = requireMd(filename).default;
     let pureName = getPureName(filename);
@@ -109,9 +121,23 @@ export const loadMdFiles = (requireMd, requireSamples) => {
     pureName = pureName.replace(/\.md/g, '');
     const title = parseHeader(content);
     const body = {};
+
     parseContent(content, 0, body);
-    const code = body?.SampleCode?.replace(/`{3}(jsx|js)?/ig, '');
-    delete body.SampleCode;
+
+    //parse the code part
+    let code = body?.SampleCode;
+    if (code) {
+      if (/`{3}/.test(code)) {
+        code = code.replace(/`{3}(jsx|js)?/ig, '');
+      } else {
+        const values = code.split(':');
+        if (values && values.length >= 2) {
+          const codeFileName = values[1].trim();
+          code = sourceCode[codeFileName];
+        }
+      }
+      delete body.SampleCode;
+    }
 
     config[pureName] = {
       ...title,
@@ -127,8 +153,6 @@ export const loadMdFiles = (requireMd, requireSamples) => {
       return;
     }
     pureName = pureName.replace(/\.js|\.jsx/g, '');
-    console.log(pureName);
-
     Object.keys(config).forEach(key => {
       if (key === pureName || pureName.toLowerCase() === key) {
         const definition = config[pureName]
@@ -144,10 +168,11 @@ export const loadMdFiles = (requireMd, requireSamples) => {
     const definition = config[key];
     if (definition.title?.type === 'sample') {
       if (!definition.component && definition.code) {
-        definition.component = <>{definition.code}</>;
+        definition.component = definition.code;
       }
     }
   });
 
+  console.log(config);
   return config;
 };

@@ -5,7 +5,9 @@ editUrl: $BASE/docs/pages/button/md/title.md
 ---
 
 +++  zh_CN 
-## 按钮 Button  
+## 按钮 Button [editUrl] 
+<Button inverted circle size="small" nativeType="a" href="https://github.com/jeven2016/react-windy-ui/tree/0.4/src/docs/pages/button/md/title.md" target="_blank"><FontAwesomeIcon size="small" icon={faEdit}/>
+</Button>
 
 按钮，作为网页上最常使用的控件，Windy UI提供了如下几种按钮
 
@@ -26,7 +28,7 @@ editUrl: $BASE/docs/pages/button/md/title.md
 
 
 +++  en_US 
-## Button  
+## Button [editUrl] 
 
 Windy UI provides the fllowing buttons for common use:
 
