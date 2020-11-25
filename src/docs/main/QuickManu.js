@@ -1,5 +1,5 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {Affix, Menu, StoreContext} from 'react-windy-ui';
+import React, {useContext, useEffect, useState} from 'react';
+import {Menu} from 'react-windy-ui';
 import scrollToElement from 'scroll-to-element';
 import {QuickManuContext} from '../utils/DocUtils';
 // import {useHistory} from 'react-router-dom';
