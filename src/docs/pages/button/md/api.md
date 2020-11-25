@@ -1,6 +1,8 @@
 ---   
   order: 100
   type: text
+  zh_CN: API
+  en_US: API
   editUrl: $BASE/docs/pages/button/md/api.md
 ---      
 

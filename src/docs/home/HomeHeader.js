@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useState} from 'react';
-import {Affix, Dropdown, IconList, Navbar} from 'react-windy-ui';
+import {Affix, Dropdown, IconList, Navbar, Popover} from 'react-windy-ui';
 import {Link} from 'react-router-dom';
 import {StoreContext} from '../../components/src';
 import intl from 'react-intl-universal';
@@ -38,8 +38,10 @@ export default function HomeHeader({transparent = false}) {
             <Navbar.Item hasBar>
               {intl.get('global.home.link.template')}
             </Navbar.Item>
-            <Navbar.Item hasBar>
-              {intl.get('global.home.link.contribute')}
+            <Navbar.Item>
+              <Popover body="current Contributor" activeBy="hover" position="bottomRight">
+                <span style={{color: '#fff'}}>{intl.get('global.home.link.contribute')}</span>
+              </Popover>
             </Navbar.Item>
             <Navbar.Item>
               <Dropdown activeBy="hover"

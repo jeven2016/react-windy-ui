@@ -1,5 +1,5 @@
 ---   
-order: 2  
+order: 1  
 type: sample  
 title: 基本按钮   
 zh_CN: 基本按钮  

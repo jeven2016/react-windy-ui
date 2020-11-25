@@ -1,19 +1,25 @@
-import React, {useCallback, useContext, useMemo} from 'react';
-import {loadMdFiles} from "./parseMd";
-import Code from "./Code";
-import DemoDesc from "./DemoDesc";
-import Hcode from "./Hcode";
-import {isNil} from "../../components/src/Utils";
-import {compiler} from "markdown-to-jsx";
-import SamplePanel from "./SamplePanel";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+} from 'react';
+import {loadMdFiles} from './parseMd';
+import Code from './Code';
+import DemoDesc from './DemoDesc';
+import Hcode from './Hcode';
+import {isNil} from '../../components/src/Utils';
+import {compiler} from 'markdown-to-jsx';
+import SamplePanel from './SamplePanel';
 import {Blockquote, Button, IconEdit, StoreContext} from 'react-windy-ui';
-import {faEdit} from "@fortawesome/free-solid-svg-icons";
-import {getEditUrl} from "./DocUtils";
+import {faEdit} from '@fortawesome/free-solid-svg-icons';
+import {getEditUrl, QuickManuContext} from './DocUtils';
 
 const Type = {
   sample: 'sample',
-  text: 'text'
-}
+  text: 'text',
+};
 
 //convert the default component to customized component
 const defaultOptions = {
@@ -42,7 +48,7 @@ export default function DocPage2(props) {
       mdOptions = {overrides: {...markdownOptions.overrides, ...mdOptions.overrides}};
     }
     return mdOptions;
-  }, [defaultOptions, markdownOptions]);
+  }, [markdownOptions]);
 
   const result = useMemo(() => {
     const parseResult = loadMdFiles(requireMd, requireJs, requireCode);
@@ -53,16 +59,20 @@ export default function DocPage2(props) {
       const orderA = parseResult[a].title.order;
       const orderB = parseResult[b].title.order;
 
-      if ((!orderA && !orderB) || !orderB) {
-        return true;
+      if ((!orderA && !orderB) || (orderA && !orderB)) {
+        return -1;
+      }
+
+      if (!orderA && orderB) {
+        return 1;
       }
 
       if (!orderA) {
         return false;
       }
-      return parseInt(orderA) - parseInt(orderB);
+      return parseFloat(orderA) - parseFloat(orderB);
     }).map(key => ({key: key, data: parseResult[key]}));
-  }, [requireMd, requireJs]);
+  }, [requireMd, requireJs, requireCode]);
 
   //correct the real edit url
   const updateEditUrl = useCallback((text, editUrl) => {
@@ -71,11 +81,24 @@ export default function DocPage2(props) {
       return content;
     }
     const realUrl = getEditUrl(editUrl);
-    const btn = `<Button inverted circle size="small" nativeType="a" href="${realUrl}" target="_blank"><IconEdit/></Button>`;
-    const val = content.replace('[editUrl]', btn);
-    console.log(val)
-    return val;
+    const btn = `<Button inverted circle size="small" nativeType="a" href="${realUrl}" target="_blank"><IconEdit extraClassName="doc edit-btn"/></Button>`;
+    return content.replace('[editUrl]', btn);
   }, []);
+
+  //update the QuickManu on right side
+  const ctx = useContext(QuickManuContext);
+  const {quickManuStore} = ctx;
+  useLayoutEffect(() => {
+    const menuList = [];
+    result.forEach(({key, data}) => {
+      const text = data.title[locale];
+      if (key && text) {
+        menuList.push({id: key, text});
+      }
+    });
+
+    setTimeout(() => quickManuStore.setState({list: menuList}), 500);
+  }, [locale, result, quickManuStore]);
 
   return <>
     {
@@ -84,7 +107,7 @@ export default function DocPage2(props) {
           return <section className="doc markdown" key={comp.key}>
             {compiler(updateEditUrl(comp.data.content[locale],
                 comp.data.title.editUrl), mdOpts)}
-          </section>
+          </section>;
         }
 
         if (comp.data.title?.type === Type.sample) {

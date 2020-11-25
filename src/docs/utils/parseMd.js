@@ -50,13 +50,13 @@ export const parseHeader = (markdownContent) => {
       headers[name] = value.replace(/^'|'$/g, '').trim();
     }
 
-    if (result.title?.type === 'text') {
+  /*  if (result.title?.type === 'text') {
       result.title = {
         order: result.title.order,
         type: 'text',
         editUrl: result.title.editUrl,
       };
-    }
+    }*/
   }
   return result;
 };
@@ -126,13 +126,14 @@ export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
 
     //parse the code part
     let code = body?.SampleCode;
+    let codeFileName;
     if (code) {
       if (/`{3}/.test(code)) {
         code = code.replace(/`{3}(jsx|js)?/ig, '');
       } else {
         const values = code.split(':');
         if (values && values.length >= 2) {
-          const codeFileName = values[1].trim();
+          codeFileName = values[1].trim();
           code = sourceCode[codeFileName];
         }
       }
@@ -143,6 +144,7 @@ export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
       ...title,
       content: body,
       code: code,
+      codeFileName,
     };
   });
 
@@ -153,12 +155,16 @@ export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
       return;
     }
     pureName = pureName.replace(/\.js|\.jsx/g, '');
+
+    let found = false;
     Object.keys(config).forEach(key => {
-      if (key === pureName || pureName.toLowerCase() === key) {
-        const definition = config[pureName]
-            ? config[pureName]
-            : config[pureName.toLowerCase()];
-        definition.component = <Comp/>;
+      if (found) {
+        return;
+      }
+      if (key.toLowerCase() === pureName.toLowerCase() ||
+          pureName === config[key].codeFileName) {
+        config[key].component = <Comp/>;
+        found = true;
       }
     });
   });
@@ -173,6 +179,5 @@ export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
     }
   });
 
-  console.log(config);
   return config;
 };

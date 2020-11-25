@@ -1,14 +1,13 @@
 ---
 order: 0
 type: text
+zh_CN: 按钮 Button
+en_US: Button
 editUrl: $BASE/docs/pages/button/md/title.md
 ---
 
 +++  zh_CN 
-## 按钮 Button [editUrl] 
-<Button inverted circle size="small" nativeType="a" href="https://github.com/jeven2016/react-windy-ui/tree/0.4/src/docs/pages/button/md/title.md" target="_blank"><FontAwesomeIcon size="small" icon={faEdit}/>
-</Button>
-
+## 按钮 Button [editUrl]  
 按钮，作为网页上最常使用的控件，Windy UI提供了如下几种按钮
 
 - 默认的灰色按钮

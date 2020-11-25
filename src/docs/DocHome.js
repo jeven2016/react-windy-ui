@@ -74,7 +74,6 @@ export default function DocHome() {
               render={() => <Home/>}
               progressStyle={progressStyle}
               barStyle={barStyle}>
-            <Home/>
           </RouteLoader>
 
           <RouteLoader route={Route} render={() => <div>404, 页面不存在~~</div>}>

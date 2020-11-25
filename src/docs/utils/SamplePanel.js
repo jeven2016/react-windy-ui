@@ -14,7 +14,7 @@ import {faCode, faCopy} from '@fortawesome/free-solid-svg-icons';
 import markdown from './Markdown';
 import Hcode from './Hcode';
 import SandboxButton from './SandboxButton';
-import {getEditUrl} from "./DocUtils";
+import {getEditUrl} from './DocUtils';
 
 /**
  * With markdownOptions , you can directly load a react component in markdwon file
@@ -56,12 +56,14 @@ export default function SamplePanel(props) {
               <TitleMarkDwon/>
               {
                 realEditUrl &&
+                <Tooltip body="Edit">
                 <span style={{color: 'rgb(158, 155, 155)'}}>
                <Button inverted circle size="small" nativeType="a"
                        href={realEditUrl} target="_blank">
-                 <IconEdit/>
+                 <IconEdit extraClassName="doc edit-btn"/>
                </Button>
              </span>
+                </Tooltip>
               }
             </div>
           </Col>
@@ -79,7 +81,7 @@ export default function SamplePanel(props) {
               <Tooltip body="Test in CodeSandbox">
                 <span
                     style={{color: 'rgb(158, 155, 155)', marginLeft: '.25rem'}}>
-                    <SandboxButton/>
+                    <SandboxButton code={code}/>
                 </span>
               </Tooltip>
 
