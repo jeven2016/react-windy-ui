@@ -1,22 +1,13 @@
 import React from 'react';
-import DocPage from '../../utils/DocPage';
-import Bc1 from './samples/Bc1';
-import Bc2 from './samples/Bc2';
-import Bc3 from './samples/Bc3';
-import Bc4 from './samples/Bc4';
+import DocPage2 from '../../utils/DocPage2';
 
-const componentMapping = {
-  Bc1: <Bc1/>,
-  Bc2: <Bc2/>,
-  Bc3: <Bc3/>,
-  Bc4: <Bc4/>
-};
+const requireMd = require.context('!raw-loader!./md', false, /.md$/);
+const requireCode = require.context('!raw-loader!./samples', false, /.js$/);
+const requireJs = require.context('./samples', false, /.js$/);
 
-export default function BcIndex(props) {
-  return <>
-    <DocPage
-        importFunc={() => import('./doc.md')}
-        componentMapping={componentMapping}
-    />
-  </>;
+export default function BcIndex() {
+  return <DocPage2
+      requireMd={requireMd}
+      requireJs={requireJs}
+      requireCode={requireCode}/>;
 }

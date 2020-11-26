@@ -15,4 +15,4 @@ editUrl: $BASE/docs/pages/blockquote/md/bq1.md
 Bq1
 
 +++ SampleCode  
-fileName: Badge1
+fileName: Bq1
