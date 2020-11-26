@@ -1,0 +1,17 @@
+---   
+order: 1  
+type: sample  
+zh_CN: 简单示例   
+en_US: Simple Sample
+editUrl: $BASE/docs/pages/badge/md/badge1.md
+---      
+
++++ zh_CN   
+一个简单的Badge的示例，在body中设置需要显示的标记。
+
+
++++ en_US   
+
+
++++ SampleCode  
+fileName: Badge1

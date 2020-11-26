@@ -1,27 +1,14 @@
 import React from 'react';
-import DocPage from '../../utils/DocPage';
-import Alert1 from './samples/Alert1';
-import Alert2 from './samples/Alert2';
-import Alert3 from './samples/Alert3';
-import Alert4 from './samples/Alert4';
-import Alert5 from './samples/Alert5';
-import Alert6 from './samples/Alert6';
+import DocPage2 from '../../utils/DocPage2';
 
-/**
- * It maps the text blocks in Markdown file
- */
-const componentMapping = {
-  Alert1: <Alert1/>,
-  Alert2: <Alert2/>,
-  Alert3: <Alert3/>,
-  Alert4: <Alert4/>,
-  Alert5: <Alert5/>,
-  Alert6: <Alert6/>,
-};
+// const requireRaw2 = require.context('./samples', true, /.js$/);
+const requireMd = require.context('!raw-loader!./md', false, /.md$/);
+const requireCode = require.context('!raw-loader!./samples', false, /.js$/);
+const requireJs = require.context('./samples', false, /.js$/);
 
-export default function AlertIndex(props) {
-  return <DocPage
-      importFunc={() => import('./doc.md')}
-      componentMapping={componentMapping}
-  />;
+export default function AlertIndex() {
+  return <DocPage2
+      requireMd={requireMd}
+      requireJs={requireJs}
+      requireCode={requireCode}/>;
 }
