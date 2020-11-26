@@ -1,0 +1,17 @@
+--- 
+order: 3
+type: sample
+zh_CN: 显示Drawer的快捷图标
+en_US: Drawer3
+editUrl: $BASE/docs/pages/drawer/md/drawer3.md
+---
+
++++ zh_CN
+当Drawer关闭时，可以在界面上显示一个Drawer的快捷图标。可以通过点击这个快捷图标，打开Drawer。要显示一个快捷图标，只需要将hasAnchor属性
+    设置为true即可。
+    
++++ en_US
+Drawer3
+
++++ SampleCode
+fileName: Drawer3
