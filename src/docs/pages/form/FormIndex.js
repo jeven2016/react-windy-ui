@@ -1,36 +1,13 @@
 import React from 'react';
-import DocPage from '../../utils/DocPage';
-import Form1 from './Form1';
-import Form2 from './Form2';
-import Form3 from './Form3';
-import Form4 from './Form4';
-import Form5 from './Form5';
-import Form6 from './Form6';
-import Form7 from './Form7';
-import Form8 from './Form8';
-import Form9 from './Form9';
-import Form10 from './Form10';
-import Form11 from './Form11';
-import Form12 from './Form12';
+import DocPage2 from '../../utils/DocPage2';
 
-const componentMapping = {
-  Form1: <Form1/>,
-  Form2: <Form2/>,
-  Form3: <Form3/>,
-  Form4: <Form4/>,
-  Form5: <Form5/>,
-  Form6: <Form6/>,
-  Form7: <Form7/>,
-  Form8: <Form8/>,
-  Form9: <Form9/>,
-  Form10: <Form10/>,
-  Form11: <Form11/>,
-  Form12: <Form12/>,
-};
+const requireMd = require.context('!raw-loader!./md', false, /.md$/);
+const requireCode = require.context('!raw-loader!./samples', false, /.js$/);
+const requireJs = require.context('./samples', false, /.js$/);
 
-export default function FormIndex(props) {
-  return <DocPage
-      importFunc={() => import('./doc.md')}
-      componentMapping={componentMapping}
-  />;
+export default function FormIndex() {
+  return <DocPage2
+      requireMd={requireMd}
+      requireJs={requireJs}
+      requireCode={requireCode}/>;
 }
