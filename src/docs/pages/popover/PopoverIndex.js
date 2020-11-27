@@ -1,21 +1,13 @@
 import React from 'react';
-import DocPage from '../../utils/DocPage';
-import Pop1 from './Pop1';
-import Pop3 from './Pop3';
-import Pop2 from './Pop2';
-import Pop4 from './Pop4';
+import DocPage2 from '../../utils/DocPage2';
 
+const requireMd = require.context('!raw-loader!./md', false, /.md$/);
+const requireCode = require.context('!raw-loader!./samples', false, /.js$/);
+const requireJs = require.context('./samples', false, /.js$/);
 
-const componentMapping = {
-  Pop1: <Pop1/>,
-  Pop2: <Pop2/>,
-  Pop3: <Pop3/>,
-  Pop4: <Pop4/>,
-};
-
-export default function PopoverIndex(props) {
-  return <DocPage
-      importFunc={() => import('./doc.md')}
-      componentMapping={componentMapping}
-  />;
+export default function PopoverIndex() {
+  return <DocPage2
+      requireMd={requireMd}
+      requireJs={requireJs}
+      requireCode={requireCode}/>;
 }
