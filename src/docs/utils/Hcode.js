@@ -24,7 +24,7 @@ const Hcode = React.forwardRef((props, ref) => {
         ref={ref}
         customStyle={{fontSize: '.8rem', ...style}}
         language="jsx"
-        showLineNumbers={true}
+        showLineNumbers={false}
         startingLineNumber={1}
         style={inline ? sty2 : sty}
         wrapLines={false}
