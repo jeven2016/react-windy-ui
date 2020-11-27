@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: Modal的大小
 en_US: Modal background
-editUrl: $BASE/docs/pages/menu/md/Modal5.md
+editUrl: $BASE/docs/pages/menu/md/modal5.md
 ---
 
 +++ zh_CN

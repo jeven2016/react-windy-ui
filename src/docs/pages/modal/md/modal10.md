@@ -3,7 +3,7 @@ order: 10
 type: sample
 zh_CN: 关闭单个Modal以及更新Modal的内容
 en_US: Modal
-editUrl: $BASE/docs/pages/menu/md/Modal10.md
+editUrl: $BASE/docs/pages/menu/md/modal10.md
 ---
 
 +++ zh_CN

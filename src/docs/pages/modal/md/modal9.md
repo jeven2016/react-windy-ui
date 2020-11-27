@@ -3,7 +3,7 @@ order: 9
 type: sample
 zh_CN: 弹出多个Modal
 en_US: Modal
-editUrl: $BASE/docs/pages/menu/md/Modal9.md
+editUrl: $BASE/docs/pages/menu/md/modal9.md
 ---
 
 +++ zh_CN

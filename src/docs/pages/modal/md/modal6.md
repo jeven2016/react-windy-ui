@@ -3,7 +3,7 @@ order: 6
 type: sample
 zh_CN: 按钮居中显示
 en_US: Modal Button
-editUrl: $BASE/docs/pages/menu/md/Modal6.md
+editUrl: $BASE/docs/pages/menu/md/modal6.md
 ---
 
 +++ zh_CN

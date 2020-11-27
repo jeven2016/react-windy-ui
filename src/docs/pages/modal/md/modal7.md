@@ -3,7 +3,7 @@ order: 7
 type: sample
 zh_CN: Modal快捷使用
 en_US: Modal 
-editUrl: $BASE/docs/pages/menu/md/Modal7.md
+editUrl: $BASE/docs/pages/menu/md/modal7.md
 ---
 
 +++ zh_CN
