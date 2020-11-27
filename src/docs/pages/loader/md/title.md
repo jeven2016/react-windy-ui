@@ -1,0 +1,21 @@
+---   
+  order: 0
+  type: text
+  zh_CN: 加载 Loader
+  en_US: Loader
+  editUrl: $BASE/docs/pages/loader/md/title.md
+---      
+
++++  zh_CN
+## 加载 Loader [editUrl] 
+Loader常用于页面加载，也可在处理耗时较长的请求时，提示用户等待。
+
+Loader主要提供了以下功能：
+- 全局显示加载中状态
+- 可嵌入Button或Input中
+- 可包裹Card，Alert等组件，可用于在加载过程中缓冲显示
+
+
++++ en_US
+## Loader [editUrl]     
+
