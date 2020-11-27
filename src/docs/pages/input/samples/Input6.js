@@ -1,7 +1,7 @@
 import React from 'react';
 import {Checkbox, Input, InputGroup, Loader} from 'react-windy-ui';
 
-export default function SampleInput6(props) {
+export default function Input6(props) {
   return <>
     <div className="doc doc-row">
       <Input disabled placeholder="Username"/>

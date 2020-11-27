@@ -2,7 +2,7 @@ import React from 'react';
 import {IconSearch, Input} from 'react-windy-ui';
 
 //todo  update the document
-export default function SampleInput2(props) {
+export default function Input2(props) {
   return <>
     <div className="doc doc-row">
       <Input size="small" placeholder="This is a input" icon={<IconSearch/>}/>

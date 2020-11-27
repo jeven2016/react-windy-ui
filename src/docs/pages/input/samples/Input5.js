@@ -9,7 +9,7 @@ import {
 } from 'react-windy-ui';
 
 //todo
-export default function SampleInput5(props) {
+export default function Input5(props) {
   return <>
     <div className="doc doc-row">
       <Input block placeholder="Username"/>

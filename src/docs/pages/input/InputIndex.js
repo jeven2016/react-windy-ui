@@ -1,24 +1,13 @@
 import React from 'react';
-import SampleInput1 from './samples/SampleInput1';
-import DocPage from '../../utils/DocPage';
-import SampleInput2 from './samples/SampleInput2';
-import SampleInput3 from './samples/SampleInput3';
-import SampleInput4 from './samples/SampleInput4';
-import SampleInput5 from './samples/SampleInput5';
-import SampleInput6 from './samples/SampleInput6';
+import DocPage2 from '../../utils/DocPage2';
 
-const componentMapping = {
-  SampleInput1: <SampleInput1/>,
-  SampleInput2: <SampleInput2/>,
-  SampleInput3: <SampleInput3/>,
-  SampleInput4: <SampleInput4/>,
-  SampleInput5: <SampleInput5/>,
-  SampleInput6: <SampleInput6/>,
-};
+const requireMd = require.context('!raw-loader!./md', false, /.md$/);
+const requireCode = require.context('!raw-loader!./samples', false, /.js$/);
+const requireJs = require.context('./samples', false, /.js$/);
 
-export default function InputIndex(props) {
-  return <DocPage
-      importFunc={() => import('./input.md')}
-      componentMapping={componentMapping}
-  />;
+export default function InputIndex() {
+  return <DocPage2
+      requireMd={requireMd}
+      requireJs={requireJs}
+      requireCode={requireCode}/>;
 }
