@@ -11,7 +11,7 @@ editUrl: $BASE/docs/pages/tree/md/tree9.md
      而<Code>expandedItems</Code>则有些特殊，一旦设置该属性后，控件内部无法自行展开或折叠。要想切换状态必须提供一个<Code>onExpand</Code>
      回调函数，并自行控制需要展开的<Code>TreeItem</Code>。  
         
-     <Blockquote hasBackground >
+     <Blockquote hasBackground>
      另外以下这些属性也有与expand相似的行为：      
      <ul>
         <li><Code>defaultSelectedItems</Code>、<Code>selectedItems</Code>、<Code>onSelect</Code></li>
