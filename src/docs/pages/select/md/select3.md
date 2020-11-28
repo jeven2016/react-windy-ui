@@ -1,0 +1,16 @@
+--- 
+order: 3
+type: sample
+zh_CN: 显示搜索中状态
+en_US: Select
+editUrl: $BASE/docs/pages/select/md/select3.md
+---
+
++++ zh_CN
+设置showLoader为true后，将显示一个加载中的状态。
+
++++ en_US
+Select
+
++++ SampleCode
+fileName: Select3

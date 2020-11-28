@@ -5,14 +5,16 @@ import {
   Col,
   Collapse,
   Divider,
+  IconEdit,
   Row,
   Tooltip,
 } from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCode, faCopy, faEdit} from '@fortawesome/free-solid-svg-icons';
+import {faCode, faCopy} from '@fortawesome/free-solid-svg-icons';
 import markdown from './Markdown';
 import Hcode from './Hcode';
 import SandboxButton from './SandboxButton';
+import {getEditUrl} from './DocUtils';
 
 /**
  * With markdownOptions , you can directly load a react component in markdwon file
@@ -34,14 +36,16 @@ import SandboxButton from './SandboxButton';
  * @constructor
  */
 export default function SamplePanel(props) {
-  const {id, title, comp, code, desc, markdownOptions} = props;
+  const {id, title, comp, code, desc, markdownOptions, editUrl} = props;
   const [collapse, setCollapse] = useState(true);
 
   //the component don't need to render for multiple times
   const renderComp = useMemo(() => comp, [comp]);
-
   const DescMarkDown = markdown({text: desc, markdownOptions});
   const TitleMarkDwon = markdown({text: title, markdownOptions});
+
+  const realEditUrl = useMemo(() => editUrl && getEditUrl(editUrl),
+      [editUrl]);
 
   return <>
     <Card block hasBorder hasBox={false}>
@@ -50,10 +54,17 @@ export default function SamplePanel(props) {
           <Col col={8}>
             <div id={id} className="doc title-col">
               <TitleMarkDwon/>
-              <span style={{color: 'rgb(158, 155, 155)'}}>
-               <Button inverted circle size="small"><FontAwesomeIcon
-                   size="small" icon={faEdit}/></Button>
+              {
+                realEditUrl &&
+                <Tooltip body="Edit">
+                <span style={{color: 'rgb(158, 155, 155)'}}>
+               <Button inverted circle size="small" nativeType="a"
+                       href={realEditUrl} target="_blank">
+                 <IconEdit extraClassName="doc edit-btn"/>
+               </Button>
              </span>
+                </Tooltip>
+              }
             </div>
           </Col>
           <Col col={4} style={{display: 'flex', justifyContent: 'flex-end'}}>
@@ -70,7 +81,7 @@ export default function SamplePanel(props) {
               <Tooltip body="Test in CodeSandbox">
                 <span
                     style={{color: 'rgb(158, 155, 155)', marginLeft: '.25rem'}}>
-                    <SandboxButton/>
+                    <SandboxButton code={code}/>
                 </span>
               </Tooltip>
 

@@ -1,19 +1,13 @@
 import React from 'react';
-import DocPage from '../../utils/DocPage';
-import Tooltip1 from './Tooltip1';
-import Tooltip2 from './Tooltip2';
-import Tooltip3 from './Tooltip3';
+import DocPage2 from '../../utils/DocPage2';
 
+const requireMd = require.context('!raw-loader!./md', false, /.md$/);
+const requireCode = require.context('!raw-loader!./samples', false, /.js$/);
+const requireJs = require.context('./samples', false, /.js$/);
 
-const componentMapping = {
-  Tooltip1: <Tooltip1/>,
-  Tooltip2: <Tooltip2/>,
-  Tooltip3: <Tooltip3/>,
-};
-
-export default function TooltipIndex(props) {
-  return <DocPage
-      importFunc={() => import('./doc.md')}
-      componentMapping={componentMapping}
-  />;
+export default function TooltipIndex() {
+  return <DocPage2
+      requireMd={requireMd}
+      requireJs={requireJs}
+      requireCode={requireCode}/>;
 }

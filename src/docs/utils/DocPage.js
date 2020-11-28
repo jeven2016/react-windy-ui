@@ -68,11 +68,6 @@ export default function DocPage(props) {
   const Footer = markdown(
       {text: contentMap.get(defaultFooter), markdownOptions: mdOptions});
 
-  //make NavMenu update after the page is changed
-  useLayoutEffect(() => {
-    store.setState('updated');
-  });
-
   return <>
 
     {Title && <section className="doc markdown">

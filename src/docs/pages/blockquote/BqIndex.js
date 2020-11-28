@@ -1,24 +1,14 @@
 import React from 'react';
-import DocPage from '../../utils/DocPage';
-import Bq1 from './samples/Bq1';
-import Bq2 from './samples/Bq2';
-import Bq4 from './samples/Bq4';
-import Bq3 from './samples/Bq3';
-import Bq5 from './samples/Bq5';
+import DocPage2 from '../../utils/DocPage2';
 
-const componentMapping = {
-  Bq1: <Bq1/>,
-  Bq2: <Bq2/>,
-  Bq3: <Bq3/>,
-  Bq4: <Bq4/>,
-  Bq5: <Bq5/>,
-};
+// const requireRaw2 = require.context('./samples', true, /.js$/);
+const requireMd = require.context('!raw-loader!./md', false, /.md$/);
+const requireCode = require.context('!raw-loader!./samples', false, /.js$/);
+const requireJs = require.context('./samples', false, /.js$/);
 
-export default function BqIndex(props) {
-  return <>
-    <DocPage
-        importFunc={() => import('./doc.md')}
-        componentMapping={componentMapping}
-    />
-  </>;
+export default function BqIndex() {
+  return <DocPage2
+      requireMd={requireMd}
+      requireJs={requireJs}
+      requireCode={requireCode}/>;
 }

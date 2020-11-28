@@ -1,6 +1,7 @@
 import React from 'react';
 import DeviceImage from '../images/home-device.png';
 import {Col, Row} from 'react-windy-ui';
+import intl from 'react-intl-universal';
 
 export default function MobileContent() {
 
@@ -14,7 +15,7 @@ export default function MobileContent() {
                justifyContent: 'center',
                flexDirection: 'column',
              }}>
-          <h2>设计更友好的站点，兼容各类显示设备</h2>
+          <h2>{intl.get('global.home.desc1')}</h2>
           <img src={DeviceImage} width='100%' onClick={() => false}/>
         </Col>
       </Row>

@@ -8,7 +8,7 @@ import {
   RouteLoader,
   Row,
   Affix,
-  StoreContext,
+  initStore,
   useMediaQuery,
 } from 'react-windy-ui';
 import DocMenu from './DocMenu';
@@ -47,8 +47,9 @@ import DatePickerIndex from '../pages/datepicker/DatePickerIndex';
 import PcIndex from '../pages/popconfirm/PcIndex';
 import FormIndex from '../pages/form/FormIndex';
 import HooksIndex from '../pages/hooks/HooksIndex';
-import NavMenu from './NavMenu';
 import AffixIndex from '../pages/affix/AffixIndex';
+import QuickManu from './QuickManu';
+import {QuickManuContext} from '../utils/DocUtils';
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -79,11 +80,15 @@ function DocCenter(props) {
     containerStyle = {padding: '16px 2%'};
   }
 
+  const [store] = useState(() =>
+      initStore({list: []}), /**{list:  [{id: xx, text: xxx}]} **/
+  );
+
   const [activeDrawer, setActive] = useState(false);
   const menu = <DocMenu hasBox={isMinLg}
                         onSelectMenuItem={() => setActive(false)}/>;
 
-  return <>
+  return <QuickManuContext.Provider value={{quickManuStore: store}}>
     <HomeHeader/>
     <div style={containerStyle}>
       {
@@ -102,7 +107,7 @@ function DocCenter(props) {
           isMinLg &&
           <Col col={2}>
             <Affix top={80} name='left'>
-                {menu}
+              {menu}
             </Affix>
           </Col>
         }
@@ -226,12 +231,12 @@ function DocCenter(props) {
         </Col>
         {isMinXg && <Col col={2}>
           <Affix top={80}>
-            <NavMenu/>
+            <QuickManu/>
           </Affix>
         </Col>}
       </Row>
     </div>
-  </>;
+  </QuickManuContext.Provider>;
 
 }
 

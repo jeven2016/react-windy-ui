@@ -11,7 +11,7 @@ function addParam(form, name, value) {
   form.appendChild(input);
 }
 
-const runCode = () => {
+const runCode = (code) => {
   const paramObject = {
     files: {
       ...getPackage(),
@@ -22,21 +22,7 @@ const runCode = () => {
         content: getHtml(),
       },
       'Sample.js': {
-        content: `
-import React from 'react';
-import {Button} from 'react-windy-ui';
-
-const SampleBtn1 = () => {
-  return <>
-    <Button>Default</Button>
-    <Button type="primary">Primary</Button>
-    <Button type="secondary">Secondary</Button>
-  </>;
-};
-
-export default SampleBtn1;
-        
-        `,
+        content: code,
       },
     },
   };
@@ -61,7 +47,8 @@ export default function SandboxButton(props) {
   const {
     code,
   } = props;
-  return <Button inverted circle size="small" onClick={runCode}>
+  return <Button inverted circle size="small"
+                 onClick={() => code && runCode(code)}>
     <svg className="icon svg" style={{fontSize: '1em'}}
          viewBox="0 0 1024 1024" fill="currentColor">
       <path

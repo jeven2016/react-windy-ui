@@ -81,6 +81,7 @@ export {
   IconQuestion,
   IconAccount,
   IconLock,
+  IconEdit
 } from './Icons';
 
 export {

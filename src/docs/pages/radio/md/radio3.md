@@ -1,0 +1,16 @@
+--- 
+order: 3
+type: sample
+zh_CN: 禁用Radio
+en_US: Radio
+editUrl: $BASE/docs/pages/radio/md/radio3.md
+---
+
++++ zh_CN
+将disabled设置为true后，将禁用对应的Radio.
+
++++ en_US
+Radio
+
++++ SampleCode
+fileName: Radio3

@@ -1,27 +1,13 @@
 import React from 'react';
-import DocPage from '../../utils/DocPage';
-import Select1 from './Select1';
-import Select3 from './Select3';
-import Select2 from './Select2';
-import Select4 from './Select4';
-import Select5 from './Select5';
-import Select7 from './Select7';
-import Select6 from './Select6';
+import DocPage2 from '../../utils/DocPage2';
 
-
-const componentMapping = {
-  Select1: <Select1/>,
-  Select2: <Select2/>,
-  Select3: <Select3/>,
-  Select4: <Select4/>,
-  Select5: <Select5/>,
-  Select6: <Select6/>,
-  Select7: <Select7/>,
-};
+const requireMd = require.context('!raw-loader!./md', false, /.md$/);
+const requireCode = require.context('!raw-loader!./samples', false, /.js$/);
+const requireJs = require.context('./samples', false, /.js$/);
 
 export default function SelectIndex() {
-  return <DocPage
-      importFunc={() => import('./doc.md')}
-      componentMapping={componentMapping}
-  />;
+  return <DocPage2
+      requireMd={requireMd}
+      requireJs={requireJs}
+      requireCode={requireCode}/>;
 }
