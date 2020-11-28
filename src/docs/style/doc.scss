@@ -15,7 +15,7 @@
 }
 
 html {
-  font-size: 16px;
+  //font-size: 16px;
 }
 
 body {
@@ -57,8 +57,20 @@ body {
       }
     }
 
+    &:not(.transparent){
+      >.navbar{
+        &:not(.affix-fixed){
+          background: radial-gradient(circle at left top,
+                  rgba(99, 65, 249, 0.9) 15%,
+                  rgba(10, 95, 248, 0.9) 50%,
+                  rgba(33, 180, 212, 0.9) 85%);
+          background-size: cover;
+        }
+      }
+    }
+
     > .navbar {
-      padding: 0 15%;
+      padding: 0 5%;
       border-radius: 0;
       transition: line-height .3s;
 
@@ -132,9 +144,9 @@ body {
   &.home {
     width: 100%;
     background: radial-gradient(circle at left top,
-        rgba(99, 65, 249, 0.9) 15%,
-        rgba(10, 95, 248, 0.9) 50%,
-        rgba(33, 180, 212, 0.9) 85%);
+            rgba(99, 65, 249, 0.9) 15%,
+            rgba(10, 95, 248, 0.9) 50%,
+            rgba(33, 180, 212, 0.9) 85%);
     background-size: cover;
   }
 
@@ -309,7 +321,7 @@ body {
     color: #0ca0ff;
   }
 
-  &.edit-btn{
+  &.edit-btn {
     font-size: 1em;
     color: gray;
   }
@@ -439,11 +451,12 @@ ul {
     font-size: 1.25em;
   }
 
-  .doc.home-header > .navbar.affix-fixed {
-    line-height: 3rem;
-  }
 
   .doc.home-header {
+    &.affix-fixed {
+      line-height: 3rem;
+    }
+
     > .navbar {
       padding: 0 !important;
     }
