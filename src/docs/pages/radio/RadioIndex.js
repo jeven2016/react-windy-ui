@@ -1,27 +1,13 @@
 import React from 'react';
-import DocPage from '../../utils/DocPage';
-import Radio1 from './samples/Radio1';
-import Radio2 from './samples/Radio2';
-import Radio3 from './samples/Radio3';
-import Radio4 from './samples/Radio4';
-import Radio5 from './samples/Radio5';
-import Radio6 from './samples/Radio6';
-import Radio7 from './samples/Radio7';
+import DocPage2 from '../../utils/DocPage2';
 
-
-const componentMapping = {
-  Radio1: <Radio1/>,
-  Radio2: <Radio2/>,
-  Radio3: <Radio3/>,
-  Radio4: <Radio4/>,
-  Radio5: <Radio5/>,
-  Radio6: <Radio6/>,
-  Radio7: <Radio7/>,
-};
+const requireMd = require.context('!raw-loader!./md', false, /.md$/);
+const requireCode = require.context('!raw-loader!./samples', false, /.js$/);
+const requireJs = require.context('./samples', false, /.js$/);
 
 export default function RadioIndex() {
-  return <DocPage
-      importFunc={() => import('./doc.md')}
-      componentMapping={componentMapping}
-  />;
+  return <DocPage2
+      requireMd={requireMd}
+      requireJs={requireJs}
+      requireCode={requireCode}/>;
 }
