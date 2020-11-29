@@ -3,7 +3,7 @@ import {Menu} from 'react-windy-ui';
 import {Link, useRouteMatch} from 'react-router-dom';
 
 export default function DocMenu(props) {
-  const {hasBox = true, onSelectMenuItem} = props;
+  const {hasBox = false, onSelectMenuItem} = props;
   const [overflow, setOverflow] = useState('hidden');
   const {url} = useRouteMatch();
   return <Menu type="primary"

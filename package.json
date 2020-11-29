@@ -54,6 +54,7 @@
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.8.6",
     "react-live": "^2.2.3",
+    "react-use-gesture": "^8.0.1",
     "resolve": "1.16.1",
     "resolve-url-loader": "3.1.1",
     "sass-loader": "8.0.2",
@@ -89,7 +90,6 @@
     "react-swipeable-views": "^0.13.0",
     "react-swipeable-views-utils": "^0.13.7",
     "react-syntax-highlighter": "^12.2.1",
-    "react-transition-group": "^4.3.0",
     "resize-observer-polyfill": "^1.5.1",
     "scroll-to-element": "^2.0.3"
   },

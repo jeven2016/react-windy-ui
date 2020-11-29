@@ -1,7 +1,8 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import PropTypes from 'prop-types';
 import Element from '../common/Element';
 import {isNil} from '../Utils';
+import Ripple from '../common/Ripple';
 
 const Button = React.forwardRef((props, ref) => {
   const {
@@ -22,8 +23,10 @@ const Button = React.forwardRef((props, ref) => {
     hasBox = true, //todo : new field
     hasBorder = true, //todo : new field,
     invertedOutline = false, //todo
+    hasRipple = true,//todo
     onClick,
     disabled = false,
+      children,
     ...otherProps
   } = props;
 
@@ -81,7 +84,10 @@ const Button = React.forwardRef((props, ref) => {
           nativeType={nativeTypeDef.nativeElemType}
           {...nativeTypeDef.nativeBtnType}
           {...otherProps}
-          ref={ref}/>
+          ref={ref}>
+        {children}
+        {hasRipple && <Ripple/>}
+      </Element>
   );
 });
 

@@ -73,11 +73,11 @@ function DocCenter(props) {
 
   let containerStyle;
   if (isMinXg) {
-    containerStyle = {padding: '16px 8%'};
+    containerStyle = {padding: '16px 16px'};
   } else if (isMinLg) {
-    containerStyle = {padding: '16px 5%'};
+    containerStyle = {padding: '16px 16px'};
   } else {
-    containerStyle = {padding: '16px 2%'};
+    containerStyle = {padding: '16px 16px'};
   }
 
   const [store] = useState(() =>
@@ -85,7 +85,7 @@ function DocCenter(props) {
   );
 
   const [activeDrawer, setActive] = useState(false);
-  const menu = <DocMenu hasBox={isMinLg}
+  const menu = <DocMenu hasBox={false}
                         onSelectMenuItem={() => setActive(false)}/>;
 
   return <QuickManuContext.Provider value={{quickManuStore: store}}>
@@ -105,14 +105,14 @@ function DocCenter(props) {
       <Row gutter={{x: 16, y: 32}}>
         {
           isMinLg &&
-          <Col col={2}>
+          <Col col={2} extraClassName="doc left-col">
             <Affix top={80} name='left'>
               {menu}
             </Affix>
           </Col>
         }
-        <Col {...contentProps}>
-          <Card block>
+        <Col {...contentProps} extraClassName="doc content-col">
+          <Card block hasBox={false}>
             <Card.Row extraClassName="doc page-container">
               <Switch>
                 <RouteLoader route={Route} path={`${url}/button`}>
