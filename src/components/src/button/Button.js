@@ -1,8 +1,9 @@
 import React, {useCallback, useMemo, useState} from 'react';
 import PropTypes from 'prop-types';
 import Element from '../common/Element';
-import {isNil} from '../Utils';
+import {isNil, nonNil} from '../Utils';
 import Ripple from '../common/Ripple';
+import clsx from 'clsx';
 
 const Button = React.forwardRef((props, ref) => {
   const {
@@ -15,7 +16,7 @@ const Button = React.forwardRef((props, ref) => {
     active = false,
     size,
     outline = false,
-    circle,
+    circle = false,
     hasMinWidth = false,
     inverted = false, //todo: new field
     hasOutlineBackground = true, //todo : new field
@@ -24,9 +25,12 @@ const Button = React.forwardRef((props, ref) => {
     hasBorder = true, //todo : new field,
     invertedOutline = false, //todo
     hasRipple = true,//todo
+    rippleColor = '#fff',//todo
     onClick,
     disabled = false,
-      children,
+    leftIcon,//todo
+    rightIcon,//todo
+    children,
     ...otherProps
   } = props;
 
@@ -74,6 +78,11 @@ const Button = React.forwardRef((props, ref) => {
     return {nativeElemType, nativeBtnType};
   }, [nativeType]);
 
+  let contentClsName = useMemo(() => clsx('content', {
+    'left-content': nonNil(rightIcon),
+    'right-content': nonNil(leftIcon),
+  }), [leftIcon, rightIcon]);
+
   return (
       <Element
           className={className}
@@ -85,8 +94,18 @@ const Button = React.forwardRef((props, ref) => {
           {...nativeTypeDef.nativeBtnType}
           {...otherProps}
           ref={ref}>
-        {children}
-        {hasRipple && <Ripple/>}
+        <span className="content-root">
+          {
+            isNil(leftIcon) && isNil(rightIcon) ?
+                children
+                : <>
+                  {leftIcon}
+                  <span className={contentClsName}>{children}</span>
+                  {rightIcon}
+                </>
+          }
+        </span>
+        {hasRipple && <Ripple center={circle} color={rippleColor}/>}
       </Element>
   );
 });
@@ -108,6 +127,11 @@ Button.propTypes = {
   inverted: PropTypes.bool,
   hasOutlineBackground: PropTypes.bool,
   initOutlineColor: PropTypes.bool,
+  invertedOutline: PropTypes.bool,
+  hasRipple: PropTypes.bool,
+  leftIcon: PropTypes.node,
+  rightIcon: PropTypes.node,
+  rippleColor: PropTypes.string,
 };
 
 export default Button;

@@ -3,7 +3,7 @@ import {Button} from 'react-windy-ui';
 
 const SampleBtn17 = () => {
   return <>
-    <div style={{padding: '1rem', background: 'black', color: 'white'}}>
+    <div style={{padding: '1rem', background: '#423e3e', color: 'white'}}>
       <div className="doc doc-row">
         <Button color="gray" hasOutlineBackground={false} outline
                 invertedOutline

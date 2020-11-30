@@ -11,9 +11,9 @@ import {
 const SampleBtn13 = () => {
   return <>
     <div style={{color: '#0ca0ff'}}>
-      <Button inverted>Default</Button>
-      <Button inverted type="info">OK</Button>
-      <Button inverted type="success">NO</Button>
+      <Button inverted hasRipple>Default</Button>
+      <Button inverted type="info" hasRipple>OK</Button>
+      <Button inverted type="success" hasRipple>NO</Button>
     </div>
 
     <Navbar type="primary"
@@ -23,22 +23,22 @@ const SampleBtn13 = () => {
       </Navbar.Title>
       <Navbar.List>
         <Navbar.Item>
-          <Button inverted circle color="green">
+          <Button inverted circle color="green" hasRipple hasBox={false}>
             <IconArrowLeft/>
           </Button>
         </Navbar.Item>
         <Navbar.Item>
-          <Button inverted color="blue">
+          <Button inverted color="blue" hasRipple hasBox={false}>
             <IconList/>
           </Button>
         </Navbar.Item>
         <Navbar.Item>
-          <Button inverted circle color="red">
+          <Button inverted circle color="red" hasRipple hasBox={false}>
             <IconArrowRight/>
           </Button>
         </Navbar.Item>
         <Navbar.Item>
-          <Button inverted color="blue">
+          <Button inverted color="blue" hasRipple hasBox={false}>
             <IconCalendar/>
           </Button>
         </Navbar.Item>
