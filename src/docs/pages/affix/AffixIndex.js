@@ -1,5 +1,4 @@
 import React from 'react';
-import DocPage from '../../utils/DocPage';
 import Affix1 from './Affix1';
 
 /**
@@ -10,8 +9,9 @@ const componentMapping = {
 };
 
 export default function AffixIndex(props) {
-  return <DocPage
+  return null;
+  /*return <DocPage
       importFunc={() => import('./doc.md')}
       componentMapping={componentMapping}
-  />;
+  />;*/
 }

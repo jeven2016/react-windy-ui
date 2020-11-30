@@ -1,6 +1,5 @@
-import React, {useMemo, useRef, useState} from 'react';
-import {animated, useSpring} from 'react-spring';
-import {config} from 'react-spring/renderprops';
+import React, {useRef, useState} from 'react';
+import {animated, useTransition,config} from 'react-spring';
 
 const defaultRect = {
   top: 0,
@@ -24,12 +23,11 @@ const Ripple = React.forwardRef((props, ref) => {
   const [nextKey, setNextKey] = useState(0);
   const ignoringMousedown = useRef(false);
 
-
   const stop = (e) => {
     // clearTimeout(this.startTimeout);
 
     // if (e.type === 'touchend' && this.startWrapper) {
-    if (e.type === 'touchend' ) {
+    if (e.type === 'touchend') {
       // when touchend was triggerd
       // before `createRipple` was fired
       // so we invoke createRipple immediately
@@ -56,13 +54,13 @@ const Ripple = React.forwardRef((props, ref) => {
 
     setRippleArray([
       ...rippleArray,
-      <CircleRipple
-          color={color}
-          key={nextRippleKey}
-          rippleX={rippleX}
-          rippleY={rippleY}
-          rippleSize={rippleSize}
-      />,
+      {
+        color: color,
+        key: nextRippleKey,
+        rippleX: rippleX,
+        rippleY: rippleY,
+        rippleSize: rippleSize
+      }
     ]);
 
     setNextKey(pre => pre + 1);
@@ -124,17 +122,46 @@ const Ripple = React.forwardRef((props, ref) => {
     }
   };
 
+  const transitions = useTransition(rippleArray, null, {
+    from: {opacity: 0.1, transform: 'scale(0)'},
+    enter: {opacity: 0.4, transform: 'scale(1)'},
+    leave: {opacity: 0},
+    config: config.gentle
+  })
 
-
+  console.log(rippleArray)
+  const AnimatedCr = animated(CircleRipple);
   return <div className='ripple' ref={rippleRef}
               onMouseDown={start}
-              onMouseUp={stop}
+      onMouseUp={stop}
               onMouseLeave={stop}
               onTouchStart={start}
               onTouchEnd={stop}
               onTouchMove={stop}>
     {
-      rippleArray
+      transitions.map(({item, props}) => {
+        const {
+          color,
+          rippleX,
+          key,
+          rippleY,
+          rippleSize,
+        } = item;
+
+        // return <AnimatedCr key={key} {...item} style={props}/>
+        return <animated.span
+            className="content"
+            key={key}
+            style={{
+              ...props,
+              background: color,
+              left: rippleX - rippleSize / 2,
+              top: rippleY - rippleSize / 2,
+              width: rippleSize,
+              height: rippleSize,
+            }}/>;
+      })
+
     }
   </div>;
 });
@@ -143,33 +170,23 @@ const CircleRipple = React.forwardRef((props, ref) => {
   const {
     color,
     rippleX,
+    style,
+    rippleKey,
     rippleY,
     rippleSize,
   } = props;
 
-  const springConfig = useMemo(() => ({
-    reset: true,
-    from: {opacity: 0.1, transform: 'scale(0)'},
-    to: {opacity: 0.3, transform: 'scale(1)'},
-
-    config: config.gentle,
-  }), []);
-
-  const innerProps = useSpring(springConfig);
-
-  return <>
-    <animated.span
-        className="content"
-        style={{
-          ...innerProps,
-          background: color,
-          left: rippleX - rippleSize / 2,
-          top: rippleY - rippleSize / 2,
-          width: rippleSize,
-          height: rippleSize,
-
-        }}/>
-  </>;
+  console.log(style);
+  return <span
+      className="content"
+      style={{
+        ...style,
+        background: color,
+        left: rippleX - rippleSize / 2,
+        top: rippleY - rippleSize / 2,
+        width: rippleSize,
+        height: rippleSize,
+      }}/>;
 });
 
 export default Ripple;

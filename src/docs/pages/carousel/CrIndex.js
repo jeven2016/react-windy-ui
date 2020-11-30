@@ -1,5 +1,4 @@
 import React from 'react';
-import DocPage from '../../utils/DocPage';
 import Cr1 from './samples/Cr1';
 
 const componentMapping = {
@@ -7,8 +6,9 @@ const componentMapping = {
 };
 
 export default function CrIndex(props) {
-  return <DocPage
+  return null;
+ /* return <DocPage
       importFunc={() => import('./doc.md')}
       componentMapping={componentMapping}
-  />;
+  />;*/
 }
