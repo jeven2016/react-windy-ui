@@ -22,11 +22,29 @@ export const getHtml = () => {
   `;
 };
 
+export const getScss = () => {
+  return `
+.doc{
+
+  &.doc-row {
+    margin-bottom: 1rem;
+  }
+  
+  &.doc-col {
+    display: inline-flex;
+    margin-right: 1rem;
+  }
+}  
+  
+  `;
+}
+
 export const getIndexContent = () => {
   return `
 import React from 'react';
 import ReactDom from 'react-dom';
 import 'react-windy-ui/dist/wui.css';
+import './sample.scss';
 import {default as Sample} from './Sample';
 
 ReactDom.render(<div style={{margin: '1rem'}}><Sample/></div>, document.getElementById('root'));

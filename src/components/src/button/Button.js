@@ -1,10 +1,16 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import Element from '../common/Element';
 import {isNil, nonNil} from '../Utils';
 import Ripple from '../common/Ripple';
 import clsx from 'clsx';
+import Loader from '../Loader';
 
+const grayRippleColor = '#333';
+
+/**
+ * Button component
+ */
 const Button = React.forwardRef((props, ref) => {
   const {
     className = 'button',
@@ -14,10 +20,11 @@ const Button = React.forwardRef((props, ref) => {
     color,
     directRef,
     active = false,
-    size,
+    size = 'medium',
     outline = false,
     circle = false,
     hasMinWidth = false,
+    shape, //circle or round
     inverted = false, //todo: new field
     hasOutlineBackground = true, //todo : new field
     initOutlineColor = false, //todo : new field
@@ -30,9 +37,22 @@ const Button = React.forwardRef((props, ref) => {
     disabled = false,
     leftIcon,//todo
     rightIcon,//todo
+    loading = false,//todo
+    leftLoader = true,//todo
+    loader = <Loader type="primary" active={true} size="small"/>,//todo
     children,
     ...otherProps
   } = props;
+
+  const isIconButton = (nonNil(leftIcon) || nonNil(rightIcon)) &&
+      React.Children.count(children) === 0;
+
+  const realRippleColor = useMemo(() => {
+    if (color === 'gray' || type === 'gray') {
+      return grayRippleColor;
+    }
+    return rippleColor;
+  }, [color, rippleColor, type]);
 
   let clsName = useMemo(() => ({
     default: isNil(type) && isNil(color),
@@ -44,7 +64,8 @@ const Button = React.forwardRef((props, ref) => {
     block: block,
     active: active,
     outline: outline,
-    circle: circle,
+    circle: circle || shape === 'circle',
+    round: shape === 'round',
     'with-outline-bg': outline && hasOutlineBackground,
     'no-outline-bg': outline && !hasOutlineBackground,
     'min-width': hasMinWidth,
@@ -52,6 +73,7 @@ const Button = React.forwardRef((props, ref) => {
     'without-box': !hasBox,
     'without-border': !hasBorder,
     'inverted-outline': invertedOutline,
+    'only-icon': isIconButton,
   }), [
     type,
     color,
@@ -61,12 +83,18 @@ const Button = React.forwardRef((props, ref) => {
     block,
     active,
     circle,
+    shape,
     hasOutlineBackground,
     hasMinWidth,
     initOutlineColor,
     hasBox,
     hasBorder,
-    invertedOutline]);
+    invertedOutline,
+    isIconButton]);
+
+  if (shape === 'round') {
+    console.log(clsName);
+  }
 
   let nativeTypeDef = useMemo(() => {
     const nativeElemType = nativeType === 'a' ? 'a' : 'button';
@@ -83,6 +111,8 @@ const Button = React.forwardRef((props, ref) => {
     'right-content': nonNil(leftIcon),
   }), [leftIcon, rightIcon]);
 
+  const isLoading = loading && nonNil(loader);
+
   return (
       <Element
           className={className}
@@ -96,16 +126,28 @@ const Button = React.forwardRef((props, ref) => {
           ref={ref}>
         <span className="content-root">
           {
+            isLoading && leftLoader && React.cloneElement(loader,
+                {style: {marginRight: '.5rem'}})
+          }
+          {
             isNil(leftIcon) && isNil(rightIcon) ?
                 children
                 : <>
+
                   {leftIcon}
-                  <span className={contentClsName}>{children}</span>
+                  {children && <span className={contentClsName}>{children}</span>}
                   {rightIcon}
                 </>
           }
+          {isLoading && !leftLoader &&
+          React.cloneElement(loader,
+              {style: {marginLeft: '.5rem'}})
+          }
         </span>
-        {hasRipple && <Ripple center={circle} color={rippleColor}/>}
+        {
+          hasRipple && !disabled &&
+          <Ripple center={circle} color={realRippleColor}/>
+        }
       </Element>
   );
 });
@@ -132,6 +174,10 @@ Button.propTypes = {
   leftIcon: PropTypes.node,
   rightIcon: PropTypes.node,
   rippleColor: PropTypes.string,
+  shape: PropTypes.oneOf(['circle', 'round']),
+  loading: PropTypes.bool,
+  leftLoader: PropTypes.bool,
+  loader: PropTypes.node,
 };
 
 export default Button;

@@ -1,5 +1,7 @@
 import React from 'react';
 import {Button, IconList} from 'react-windy-ui';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faPowerOff} from '@fortawesome/free-solid-svg-icons';
 
 const SampleBtn12 = () => {
   /*please add the className 'svg icon' for your custom icon*/
@@ -14,6 +16,7 @@ const SampleBtn12 = () => {
   return <>
     <Button leftIcon={<IconList/>}>Menu</Button>
     <Button type="primary" rightIcon={rightIcon}>Flight</Button>
+    <Button type="primary" leftIcon={<FontAwesomeIcon icon={faPowerOff}/>}></Button>
   </>;
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from 'react-windy-ui';
 import LZString from 'lz-string';
-import {getHtml, getIndexContent, getPackage} from './SampleTemplate';
+import {getHtml, getIndexContent, getPackage, getScss} from './SampleTemplate';
 
 function addParam(form, name, value) {
   const input = document.createElement('input');
@@ -24,6 +24,9 @@ const runCode = (code) => {
       'Sample.js': {
         content: code,
       },
+      'sample.scss':{
+        content: getScss(),
+      }
     },
   };
 

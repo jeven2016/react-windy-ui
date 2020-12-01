@@ -3,8 +3,9 @@ import clsx from 'clsx';
 import {Spring} from 'react-spring/renderprops';
 
 const useIcon = (props) => {
-  const {className = 'svg icon', extraClassName, ...otherProps} = props;
-  const clsName = clsx(extraClassName, className);
+  //size: large, medium, small
+  const {className = 'svg icon', size, extraClassName, ...otherProps} = props;
+  const clsName = clsx(extraClassName, className, size);
   return [clsName, otherProps];
 };
 
