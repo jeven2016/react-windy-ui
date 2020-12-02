@@ -34,10 +34,20 @@ export const getScss = () => {
     display: inline-flex;
     margin-right: 1rem;
   }
+  
+  &.inverted-row {
+    padding: 1rem;
+    background: #423e3e;
+
+    > .button {
+      margin: 0.5rem 0.5rem 0.5rem 0;
+    }
+  }
+  
 }  
   
   `;
-}
+};
 
 export const getIndexContent = () => {
   return `

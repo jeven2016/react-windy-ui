@@ -6,7 +6,7 @@ const SampleBtn4 = () => {
     <Button hasMinWidth>A</Button>
     <Button hasMinWidth>BB</Button>
     <Button hasMinWidth>CCC</Button>
-    <Button hasMinWidth>More Details</Button>
+    <Button hasMinWidth>DDDD</Button>
   </>;
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, IconList} from 'react-windy-ui';
+import {Button, IconLock} from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPowerOff} from '@fortawesome/free-solid-svg-icons';
 
@@ -14,9 +14,9 @@ const SampleBtn12 = () => {
   </svg>;
 
   return <>
-    <Button leftIcon={<IconList/>}>Menu</Button>
+    <Button leftIcon={<IconLock/>}>Menu</Button>
     <Button type="primary" rightIcon={rightIcon}>Flight</Button>
-    <Button type="primary" leftIcon={<FontAwesomeIcon icon={faPowerOff}/>}></Button>
+    <Button type="primary" leftIcon={<FontAwesomeIcon icon={faPowerOff}/>}/>
   </>;
 };
 

@@ -4,6 +4,7 @@ import {Button, Badge} from 'react-windy-ui';
 import HomeHeader from './HomeHeader';
 import HomeIcon from './HomeIcon';
 import {useSpring, animated, useTransition} from 'react-spring';
+import {Link} from 'react-router-dom';
 
 const calc = (x, y) => [
   -(y - window.innerHeight / 2) / 20,
@@ -51,21 +52,23 @@ export default function HomeContent() {
             </animated.div>
           </div>
           <div className="content">
-            {intl.get("global.home.content")}
+            {intl.get('global.home.content')}
           </div>
 
           <div className="line">
-            <Button type="green" hasMinWidth>
-              {intl.get("global.home.button.start")}
+
+            <Button nativeType="a" href="#/docs" type="green" hasMinWidth>
+              {intl.get('global.home.button.start')}
             </Button>
+
             <Button type="purple" hasMinWidth>
-              {intl.get("global.home.button.github")}
+              {intl.get('global.home.button.github')}
             </Button>
           </div>
           <div className="line">
-            <span> {intl.get("global.home.current.release")}</span>
+            <span> {intl.get('global.home.current.release')}</span>
             <Badge type="tag" color="error" style={{marginLeft: '1rem'}}>
-              {intl.get("global.home.current.release.version")}
+              {intl.get('global.home.current.release.version')}
             </Badge>
           </div>
           <div className="line">&nbsp;</div>

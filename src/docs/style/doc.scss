@@ -15,7 +15,7 @@
 }
 
 html {
-  //font-size: 16px;
+  font-size: 14px;
 }
 
 body {
@@ -32,15 +32,16 @@ body {
 }
 
 .doc {
-  &.left-col{
+  &.left-col {
     height: calc(100vh - 80px);
     background: #fff;
   }
 
-  &.content-col{
+  &.content-col {
     border-left: 1px solid #eee;
     border-right: 1px solid #eee;
   }
+
   &.code {
     margin: 0 .15em;
     padding: 0 .15em;
@@ -65,9 +66,9 @@ body {
       }
     }
 
-    &:not(.transparent){
-      >.navbar{
-        &:not(.affix-fixed){
+    &:not(.transparent) {
+      > .navbar {
+        &:not(.affix-fixed) {
           background: radial-gradient(circle at left top,
                   rgba(99, 65, 249, 0.9) 15%,
                   rgba(10, 95, 248, 0.9) 50%,
@@ -158,6 +159,15 @@ body {
     background-size: cover;
   }
 
+  &.inverted-row {
+    padding: 1rem;
+    background: #423e3e;
+
+    > .button {
+      margin: 0.5rem 0.5rem 0.5rem 0;
+    }
+  }
+
   &.markdown {
     margin-bottom: 2rem;
 
@@ -190,12 +200,16 @@ body {
           width: 10rem;
         }
 
+        &:nth-of-type(2) {
+          width: 25%;
+        }
+
         &:nth-of-type(3) {
-          width: 8rem;
+          width: 10rem;
         }
 
         &:nth-of-type(4) {
-          width: 5rem;
+          width: 8rem;
         }
       }
 
@@ -275,6 +289,9 @@ body {
     margin-bottom: 1rem;
   }
 
+  &.desc-row {
+    text-indent: 2rem;
+  }
 
   &.doc-col {
     display: inline-flex;

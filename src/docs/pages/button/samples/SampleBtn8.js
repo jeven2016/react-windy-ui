@@ -2,7 +2,6 @@ import React from 'react';
 import {Button} from 'react-windy-ui';
 
 const SampleBtn8 = () => {
-  //todo: should update the doc
   return <>
     <Button color="gray" outline hasMinWidth>gray</Button>
     <Button color="black" outline hasMinWidth>black</Button>
@@ -10,9 +9,7 @@ const SampleBtn8 = () => {
     <Button color="pink" outline hasMinWidth>pink</Button>
     <Button color="purple" outline hasMinWidth>purple</Button>
     <Button color="violet" outline hasMinWidth>violet</Button>
-
     <br/>
-
     <Button color="blue" outline hasMinWidth>blue</Button>
     <Button color="teal" outline hasMinWidth>teal</Button>
     <Button color="green" outline hasMinWidth>green</Button>

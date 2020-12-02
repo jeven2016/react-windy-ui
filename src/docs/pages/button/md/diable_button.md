@@ -1,17 +1,17 @@
 ---   
 order: 10  
 type: sample  
-zh_CN: 禁用状态
+zh_CN: 禁用按钮
 en_US: Disabled Button
 editUrl: $BASE/docs/pages/button/md/disable_button.md
 ---     
 
 
 +++ zh_CN   
-将disabled设置为true后，将禁用对应的Button。
+将<Code>disabled</Code>设置为<Code>true</Code>后，将禁用对应的Button。
 
 +++ en_US   
-Disable Button
+Disabled Button
 
 +++ SampleCode  
 fileName: SampleBtn10

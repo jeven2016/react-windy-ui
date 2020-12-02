@@ -8,7 +8,7 @@ editUrl: $BASE/docs/pages/button/md/block_button.md
 
 
 +++ zh_CN   
-将block属性设置为true后，按钮的宽度将变成100%并占据整行。
+设置<Code>block</Code>属性后，按钮的宽度将自适应占满整行。
 
 +++ en_US   
 Block Button

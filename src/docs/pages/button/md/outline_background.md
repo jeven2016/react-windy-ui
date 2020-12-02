@@ -1,13 +1,13 @@
 ---   
-order: 16  
+order: 8.2  
 type: sample  
-zh_CN: 显示Outline按钮背景颜色
+zh_CN: 边框按钮的背景颜色
 en_US: Initial background of outline button
 editUrl: $BASE/docs/pages/button/md/outline_background.md
 ---      
 
 +++ zh_CN   
-hasOutlineBackground
+对于outline类型的按钮，通过<Code>hasOutlineBackground</Code>属性可以设置是否有背景色。一般可以跟<Code>initOutlineColor</Code>属性配合使用，组合出多种显示形态。
     
 +++ en_US   
 hasOutlineBackground

@@ -78,7 +78,7 @@ export default function SamplePanel(props) {
                 </span>
               </Tooltip>
 
-              <Tooltip body="Test in CodeSandbox">
+              <Tooltip body="Run in CodeSandbox">
                 <span
                     style={{color: 'rgb(158, 155, 155)', marginLeft: '.25rem'}}>
                     <SandboxButton code={code}/>
@@ -105,15 +105,13 @@ export default function SamplePanel(props) {
           </div>
         </div>
       </Card.Row>
-      <Card.Row>
+      <Card.Row extraClassName="doc desc-row">
         <DescMarkDown/>
       </Card.Row>
       <Card.Row>
         <Collapse.Panel collapse={collapse} heightIncrement={14}>
           <Hcode>{code}</Hcode>
         </Collapse.Panel>
-      </Card.Row>
-      <Card.Row>
       </Card.Row>
     </Card>
 
