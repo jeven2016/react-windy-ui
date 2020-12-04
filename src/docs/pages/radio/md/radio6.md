@@ -7,8 +7,8 @@ editUrl: $BASE/docs/pages/radio/md/radio6.md
 ---
 
 +++ zh_CN
-与defaultValue不同，一旦设置了value属性后，点击Radio时，RadioGroup将不会自动切换。您需要实现onChange回调，并自行更改
-  当前选中的Radio值，以便进行状态的切换。
+与<Code>defaultValue</Code>不同，一旦设置了<Code>value</Code>属性后，点击Radio时，RadioGroup将不会自动切换。
+您需要实现<Code>onChange</Code>回调，并自行控制切换。
 
 +++ en_US
 Radio

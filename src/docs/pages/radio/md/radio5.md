@@ -3,16 +3,16 @@ order: 5
 type: sample
 zh_CN: Radio Group
 en_US: Radio
-editUrl: $BASE/docs/pages/radio/md/radio5.md
----
+editUrl: $BASE/docs/pages/radio/md/radio5.md  
+---   
 
-+++ zh_CN
-要使用RadioGroup，需要在children节点中添加Radio组件，同时给每个Radio设置对应的value。
-RadioGroup会根据value值进行切换，另外设置defaultValue属性，可以让对应的Radio从一开始就变成选中状态。
++++ zh_CN   
+RadioGroup由一系列的Radio组件组成，且每个Radio都需要设置一个<Code>value</Code>。
+如需要默认选中某个Radio，可以提供<Code>defaultValue</Code>属性值。
   
 
-+++ en_US
++++ en_US    
 Radio
 
-+++ SampleCode
++++ SampleCode    
 fileName: Radio5

@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import {preventEvent} from './event';
 import Element from './common/Element';
 import {RadioGroupContext} from './common/Context';
+import Ripple from './common/Ripple';
 
 /**
  * Radio Component
@@ -21,6 +22,7 @@ const Radio = React.forwardRef((props, ref) => {
     disabled = false,
     checked = false,
     defaultChecked = false,
+    hasRipple=true,
     value,
     onChange,
     label,
@@ -130,6 +132,10 @@ const Radio = React.forwardRef((props, ref) => {
         {label}
           {children}
         </span>
+      }
+      {
+        hasRipple && !disabled &&
+        <Ripple center={true} color="#ccc"/>
       }
     </Element>
   </>;

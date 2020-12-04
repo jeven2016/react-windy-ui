@@ -5,7 +5,7 @@ export default function Radio5() {
   return <>
     <div className="doc doc-row">
       <div className="doc doc-row">
-        <RadioGroup onChange={(val) => console.log(val)}>
+        <RadioGroup defaultValue="green" onChange={(val) => console.log(val)}>
           <Radio value="purple" checkedColor="purple"
                  uncheckedColor="red">
             purple
@@ -18,24 +18,6 @@ export default function Radio5() {
 
           <Radio value="blue">
             blue
-          </Radio>
-        </RadioGroup>
-      </div>
-
-      <div className="doc doc-row">
-        <RadioGroup defaultValue="two" onChange={(val) => console.log(val)}>
-          <Radio value="one" checkedColor="purple"
-                 uncheckedColor="red">
-            one
-          </Radio>
-
-          <Radio value="two" checkedColor="green"
-                 uncheckedColor="brown">
-            two
-          </Radio>
-
-          <Radio value="three">
-            three
           </Radio>
         </RadioGroup>
       </div>

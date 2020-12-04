@@ -7,10 +7,10 @@ editUrl: $BASE/docs/pages/radio/md/radio1.md
 ---
 
 +++ zh_CN
-Radio中要在右侧显示提示文字，可以设置label属性值或添加children子节点。
+Radio的一个简单示例，可以设置label属性去显示提示文字。
 
 +++ en_US
-Radio
+Radio1
 
 +++ SampleCode
 fileName: Radio1
