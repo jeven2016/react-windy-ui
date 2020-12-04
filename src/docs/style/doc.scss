@@ -15,7 +15,7 @@
 }
 
 html {
-  font-size: 14px;
+  //font-size: 14px;
 }
 
 body {
@@ -172,12 +172,14 @@ body {
     margin-bottom: 2rem;
 
     table {
+      border: 1px solid #ccc!important;
       overflow: auto;
-      display: block; //to make overflow take effects
+      display: block; //to make overflow take effects todo: check whether the scrool bar can display in mobile phone
       width: 100%;
       border-collapse: collapse;
       border-spacing: 0;
-      border: 1px solid #ccc;
+      direction: ltr;
+      empty-cells: show;
       table-layout: fixed;
       margin-bottom: 1rem;
       //font-size: .8em;
@@ -287,6 +289,10 @@ body {
 
   &.doc-row {
     margin-bottom: 1rem;
+
+    &.space {
+      max-width: 300px;
+    }
   }
 
   &.desc-row {

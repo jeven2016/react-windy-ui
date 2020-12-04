@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/button/md/button_focus.md
 ---      
 
 +++ zh_CN   
- 给按钮设置一个Ref对象后，便可触发按钮的<Code>focus</Code>事件。你可以在通过class的<Code>componentDidMount</Code>方法，或者react hook中
+ 给按钮设置一个Ref对象后，便可触发按钮的<Code>focus</Code>事件。你可以通过class的<Code>componentDidMount</Code>方法，或者react hook中
  的<Code>useEffect()</Code>方法触发<Code>focus</Code>事件。
     
 +++ en_US   

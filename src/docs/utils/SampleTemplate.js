@@ -28,6 +28,10 @@ export const getScss = () => {
 
   &.doc-row {
     margin-bottom: 1rem;
+    
+    &.space{
+      max-width: 250px;
+    }
   }
   
   &.doc-col {

@@ -1,12 +1,14 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {InputGroupContext} from './common/Context';
 
-//todo
+/**
+ * Input Group Component
+ */
 const InputGroup = React.forwardRef((props, ref) => {
   const {
-    block = false,
+    block = true,
     size = 'medium',
     className = 'input-group',
     extraClassName,
@@ -26,8 +28,8 @@ const InputGroup = React.forwardRef((props, ref) => {
 
       return <Item autoScale={true} compact={false}>
         {chd}
-      </Item>
-    })
+      </Item>;
+    });
   }, [children]);
 
   return <InputGroupContext.Provider value={ctx}>
@@ -37,17 +39,21 @@ const InputGroup = React.forwardRef((props, ref) => {
   </InputGroupContext.Provider>;
 });
 
+/**
+ * Item Component
+ */
 const Item = React.forwardRef((props, ref) => {
-  const {children, autoScale = true,  ...rest} = props;
-  const clsName = clsx("item", {
+  const {extraClassName, autoScale = true, ...rest} = props;
+  const clsName = clsx(extraClassName, 'item', {
     'auto-scale': autoScale,
-    'no-scale': !autoScale
-  })
-  return <div className={clsName} {...rest}>
-    {children}
-  </div>
+    'no-scale': !autoScale,
+  });
+  return <div className={clsName} {...rest} ref={ref}/>;
 });
 
+/**
+ * Label Component
+ */
 const Label = React.forwardRef((props, ref) => {
   const {
     className = 'label',
@@ -57,8 +63,7 @@ const Label = React.forwardRef((props, ref) => {
     children,
     ...otherProps
   } = props;
-  const ctx = useContext(InputGroupContext);
-  const labelCls=  clsx(extraClassName, className);
+  const labelCls = clsx(extraClassName, className);
   let cntClsName = clsx('content',
       {'with-bg': hasBackground, compact: compact});
 

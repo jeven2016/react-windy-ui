@@ -20,7 +20,7 @@ const RippleBoxBtn = () => {
         outline
         initOutlineColor
         hasMinWidth>
-      black
+      brown
     </Button>
 
     <Button hasBox={hasBox} hasRipple={hasRipple} color="purple"

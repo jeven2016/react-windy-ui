@@ -3,80 +3,28 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {EventListener, InputBorderType} from './common/Constants';
 import Element from './common/Element';
-import {InputGroupContext} from './common/Context';
 import {getErrorClsName, isNil, nonNil, validate} from './Utils';
 import useMultipleRefs from './common/UseMultipleRefs';
 import {useEvent} from './index';
 import {IconPwdInvisible, IconPwdVisible} from './Icons';
+import {InputGroupContext} from './common/Context';
 
-//todo: update doc
-const IconInput = React.forwardRef((props, ref) => {
+/**
+ * Input Component
+ */
+const PureInput = React.forwardRef((props, ref) => {
   const {
-    className = 'icon-input',
-    size = 'medium',
-    block = false,
-    leftIcon = false,
-    rightIcons = [],//format: [<Icon/>]
-    icon,//todo
-    // inputProps,//todo
-    rootProps,//todo
-    rootRef,
-    iconProps,//todo
-    placeholder,//todo
-    errorType, //todo
-    disabled = false,
     extraClassName,
-    ...otherProps
-  } = props;
-  const [active, setActive] = useState(false);
-  const interInputRef = useRef(null);
-  const multiInputRef = useMultipleRefs(ref, interInputRef);
-
-  const ctx = useContext(InputGroupContext);
-  const inputDisabled = isNil(ctx.disabled) ? disabled : ctx.disabled;
-  let clsName = clsx(extraClassName, className, getErrorClsName(errorType), {
-    'left-icon': leftIcon,
-    [size]: size,
-    block: block,
-    disabled: inputDisabled,
-    active: active,
-  });
-
-  useEvent(EventListener.focus, function() {
-    !active && setActive(true);
-  }, true, () => interInputRef.current);
-
-  useEvent(EventListener.blur, function() {
-    active && setActive(false);
-  }, true, () => interInputRef.current);
-
-  const restIcons = useCallback(() => {
-    return React.Children.map(rightIcons,
-        node => <span className="icon-column right">{node}</span>);
-  }, [rightIcons]);
-
-  return <span className={clsName} {...rootProps} ref={rootRef}>
-    {leftIcon && restIcons()}
-    <Input ref={multiInputRef} canFocus={false} placeholder={placeholder}
-           size={size}
-           disabled={inputDisabled} {...otherProps}/>
-   <span className="icon-column" {...iconProps}>{icon}</span>
-    {!leftIcon && restIcons()}
-  </span>;
-});
-
-const Input = React.forwardRef((props, ref) => {
-  const {
     className = 'input',
     size = 'medium',
     type = 'text',
     disabled = false,
-    block = false,
+    block = true,
+    hasBox = true,
     borderType,
-    extraClassName,
     readOnly = false,
-    canFocus = true,//todo
-    errorType,//todo
+    canFocus = true,
+    errorType,
     ...otherProps
   } = props;
   const ctx = useContext(InputGroupContext);
@@ -92,6 +40,7 @@ const Input = React.forwardRef((props, ref) => {
         'within-group': ctx.withinGroup,
         [borderTypeCls]: borderTypeCls,
         'with-focus': canFocus,
+        'with-input-box': hasBox,
       });
 
   if (type.toLowerCase() === 'textarea') {
@@ -115,7 +64,66 @@ const Input = React.forwardRef((props, ref) => {
 
 });
 
-//todo
+/**
+ * Icon Input
+ */
+const IconInput = React.forwardRef((props, ref) => {
+  const {
+    extraClassName,
+    className = 'icon-input',
+    size = 'medium',
+    block = true,
+    hasBox = true,
+    icon,
+    leftIcon = false,
+    iconProps,
+    rightIcons = [],//format: [<Icon/>]
+    rootProps,
+    rootRef,
+    placeholder,
+    errorType,
+    disabled = false,
+    ...otherProps
+  } = props;
+  const [active, setActive] = useState(false);
+  const interInputRef = useRef(null);
+  const multiInputRef = useMultipleRefs(ref, interInputRef);
+
+  let clsName = clsx(extraClassName, className, getErrorClsName(errorType), {
+    'left-icon': leftIcon,
+    [size]: size,
+    block: block,
+    disabled: disabled,
+    active: active,
+    'with-input-box': hasBox,
+  });
+
+  useEvent(EventListener.focus, function() {
+    !active && setActive(true);
+  }, true, () => interInputRef.current);
+
+  useEvent(EventListener.blur, function() {
+    active && setActive(false);
+  }, true, () => interInputRef.current);
+
+  const restIcons = useCallback(() => {
+    return React.Children.map(rightIcons,
+        node => <span className="icon-column right">{node}</span>);
+  }, [rightIcons]);
+
+  return <span className={clsName} {...rootProps} ref={rootRef}>
+    {leftIcon && restIcons()}
+    <PureInput ref={multiInputRef} canFocus={false} placeholder={placeholder}
+               size={size}
+               disabled={disabled} {...otherProps}/>
+    {icon && <span className="icon-column" {...iconProps}>{icon}</span>}
+    {!leftIcon && restIcons()}
+  </span>;
+});
+
+/**
+ * Password Component
+ */
 const Password = React.forwardRef((props, ref) => {
   const {
     rootRef,
@@ -149,7 +157,10 @@ const Password = React.forwardRef((props, ref) => {
                     rightIcons={rightIcons}  {...otherProps}/>;
 });
 
-const InputHoc = React.forwardRef((props, ref) => {
+/**
+ * Input Component
+ */
+const Input = React.forwardRef((props, ref) => {
   const {rootRef, type, icon, ...otherProps} = props;
   const isPwd = nonNil(type) && type.toLowerCase() === 'password';
   if (nonNil(icon) || isPwd) {
@@ -157,34 +168,58 @@ const InputHoc = React.forwardRef((props, ref) => {
     return <TagName type={type} rootRef={rootRef} icon={icon}
                     ref={ref}  {...otherProps}/>;
   }
-  return <Input type={type} ref={ref} {...otherProps}/>;
+  return <PureInput type={type} ref={ref} {...otherProps}/>;
 });
 
-InputHoc.isIconInput = (comp) => {
+Input.isIconInput = (comp) => {
   return nonNil(comp) && nonNil(comp.props.icon);
 };
 
 IconInput.propTypes = {
   className: PropTypes.string,
   extraClassName: PropTypes.string, //the customized class need to add
-  leftIcon: PropTypes.bool, // whether the icon is placed in left side of the input
   size: PropTypes.oneOf(['large', 'medium', 'small']),
   block: PropTypes.bool,
-  errorType: PropTypes.oneOf([null, '', 'ok', 'warning', 'error']),
-  disabled: PropTypes.bool,
+  hasBox: PropTypes.bool,
+  icon: PropTypes.node,
   iconProps: PropTypes.object,
+  leftIcon: PropTypes.bool, // whether the icon is placed in left side of the input
+  rightIcons: PropTypes.arrayOf(PropTypes.node),
+  rootProps: PropTypes.object,
+  rootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({current: PropTypes.elementType}),
+  ]),
+  placeholder: PropTypes.string,
+  errorType: PropTypes.oneOf(['ok', 'warning', 'error']),
+  disabled: PropTypes.bool,
 };
 
-Input.propTypes = {
-  errorType: PropTypes.oneOf([null, '', 'ok', 'warning', 'error']),
+PureInput.propTypes = {
+  extraClassName: PropTypes.string, //the customized class need to add
+  className: PropTypes.string,
   size: PropTypes.oneOf(['large', 'medium', 'small']), //the size of the input
   type: PropTypes.string,//"text", "textarea", "password", "file", etc.
-  block: PropTypes.bool, //whether the input's width is '100%' and it occupies the whole row
-  className: PropTypes.string,
-  extraClassName: PropTypes.string, //the customized class need to add
   disabled: PropTypes.bool,
-  iconProps: PropTypes.object
+  block: PropTypes.bool, //whether the input's width is '100%' and it occupies the whole row
+  hasBox: PropTypes.bool,
+  borderType: PropTypes.oneOf(['ok', 'warning', 'error']),
+  readOnly: PropTypes.bool,
+  canFocus: PropTypes.bool,
+  errorType: PropTypes.oneOf(['ok', 'warning', 'error']),
 };
-InputHoc.IconInput = IconInput;
 
-export default InputHoc;
+Password.propTypes = {
+  rootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({current: PropTypes.elementType}),
+  ]),
+  hasToggleIcon: PropTypes.bool,
+  toggleIcons: PropTypes.array.length,
+  type: PropTypes.string,
+  leftIcon: PropTypes.bool,
+};
+
+Input.IconInput = IconInput;
+
+export default Input;

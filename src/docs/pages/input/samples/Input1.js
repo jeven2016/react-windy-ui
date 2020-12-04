@@ -1,17 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Input} from 'react-windy-ui';
 
 export default function Input1(props) {
-  const fun=(elem)=>{
-    console.log("==",elem)
-  }
+  const [value, setValue] = useState('');
+
   return <>
-    <Input placeholder="default" ref={fun}/>
-    <br/> <br/>
-    <Input placeholder="large input" size='large'/>
-    <br/> <br/>
-    <Input placeholder="medium input" size='medium'/>
-    <br/> <br/>
-    <Input placeholder="small input" size='small'/>
+    <div className="doc doc-row space">
+      <Input placeholder="default" value={value}
+             onChange={(e) => setValue(e.target.value)}/>
+    </div>
+    <div className="doc doc-row space">
+      <Input placeholder="large size" size='large'/>
+    </div>
+    <div className="doc doc-row space">
+      <Input placeholder="medium size" size='medium'/>
+    </div>
+    <div className="doc doc-row space">
+      <Input placeholder="small size" size='small'/>
+    </div>
   </>;
 }
