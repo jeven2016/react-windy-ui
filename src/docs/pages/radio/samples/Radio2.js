@@ -8,7 +8,7 @@ export default function Radio2() {
       purple
     </Radio>
 
-    <Radio checkedColor="green" uncheckedColor="brown">
+    <Radio checkedColor="#49b847" uncheckedColor="#af3ce5">
       green
     </Radio>
 
@@ -17,11 +17,6 @@ export default function Radio2() {
     </Radio>
 
     <Radio checkedIcon={<IconHome/>}
-           uncheckedIcon={<IconHome/>}>
-      Home
-    </Radio>
-
-    <Radio checkedIcon={<IconSearch/>}
            uncheckedIcon={<IconSearch/>}>
       Search
     </Radio>

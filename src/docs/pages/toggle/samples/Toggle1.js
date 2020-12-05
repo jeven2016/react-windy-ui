@@ -4,7 +4,7 @@ import {Toggle} from 'react-windy-ui';
 export default function Toggle1() {
   return <>
     <div className="doc doc-row">
-      <Toggle defaultActive/>
+      <Toggle defaultActive={false}/>
     </div>
     <div className="doc doc-row">
       <Toggle defaultActive type="primary"/>

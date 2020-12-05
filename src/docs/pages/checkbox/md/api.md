@@ -27,7 +27,7 @@ Checkbox的属性如下所示
 | uncheckedIcon | 对应去选中时的图标 | string | - |  |
 | showIndeterminateState | 是否显示成中间状态 | boolean | - |  |
 | iconIndeterminate | 中间状态时显示的图标 | node | - |  |
-| iconIndeterminateStyle | 中间状态时添加的样式 | object | - |  |
+| iconIndeterminateStyle | 中间状态时添加的样式对象 | object | - | 格式如： <Code>{color: '#ccc', fontSize: '1.5rem}</Code>  |
 
 +++ en_US
 ## API [editUrl]     

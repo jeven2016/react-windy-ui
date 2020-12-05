@@ -13,6 +13,7 @@ import without from 'lodash/without';
 
 import {PopupPosition} from './common/Constants';
 import clsx from 'clsx';
+import {useCallback} from 'react';
 
 export {
   isObject,
@@ -386,7 +387,7 @@ export const isNumber = (value) => {
 };
 
 /**
- * Get scroll bar width
+ * Get the width of the scroll bar
  */
 let barWidth;
 
@@ -437,4 +438,32 @@ export default function getScrollbarWidth() {
 export function getErrorClsName(errorType) {
   const clsName = `border-info ${errorType}`;
   return clsx({[clsName]: errorType});
+}
+
+export const isColorValue = (val) => {
+  return !isNil(val) &&
+      (startsWith(val, '#') || startsWith(val, 'rgb'));
+};
+
+const checkColor = (checkState, checkedColor) => {
+  if (checkState && nonNil(checkedColor)) {
+    if (isColorValue(checkedColor)) {
+      return {isClass: false, style: {color: checkedColor}};
+    } else {
+      return {isClass: true, className: 'text color-' + checkedColor};
+    }
+  }
+  return null;
+};
+
+export function createColorClsName({
+                                     checkState,
+                                     checkedColor,
+                                     uncheckedColor,
+                                   }) {
+  let result = checkColor(checkState, checkedColor);
+  if (isNil(result)) {
+    result = checkColor(!checkState, uncheckedColor);
+  }
+  return result;
 }

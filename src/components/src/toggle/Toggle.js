@@ -75,28 +75,20 @@ const Toggle = React.forwardRef((props, ref) => {
     !isNil(onChange) && onChange(newActive, e);
   }, [disabled, isActive, customized, onChange, setActive]);
 
-  const from = useMemo(()=>{
+  const currentStyle = useMemo(() => {
+    let offset = type === ToggleType.normal ? {
+          leftOffset: 'translate3d(-5%,0,0)',
+          rightOffset: 'translate3d(-95%,0,0)',
+        }
+        : {leftOffset: 'translate3d(0.2rem,-50%,0)', rightOffset: 'translate3d(-1.7rem,-50%,0)'};
+
     return {
-      left: '0%',
-    }
-  },[])
-
-  const to = useMemo(
-      () => {
-        let offset = type === ToggleType.normal ? {
-              leftOffset: '-5%',
-              rightOffset: '-95%',
-            }
-            : {leftOffset: '0.2rem', rightOffset: '-1.7rem'};
-
-        return {
-          left: isOn ? '100%' : '0%',
-          transform: isOn
-              ? `translateX(${offset.rightOffset})`
-              : `translateX(${offset.leftOffset})`,
-        };
-      },
-      [isOn, type]);
+      left: isOn ? '100%' : '0%',
+      transform: isOn
+          ? offset.rightOffset
+          : offset.leftOffset,
+    };
+  }, [isOn, type]);
 
   const btnStyle = {};
   if (block) {
@@ -123,7 +115,7 @@ const Toggle = React.forwardRef((props, ref) => {
     disabled,
   });
 
-  return <>
+  return <div className={clsx('toggle-container', {block: block})}>
     <button style={{...btnStyle, ...style}}
             ref={ref}
             className={buttonClsName}
@@ -133,20 +125,21 @@ const Toggle = React.forwardRef((props, ref) => {
         {barContent}
         {infoContent}
         <Spring
-            from={from}
-            to={to}
+            from={currentStyle}
+            to={currentStyle}
             config={{clamp: true, mass: 1, tesion: 100, friction: 15}}
         >
           {
             springProps => (<span className="ball" style={springProps}>
               {getContent(false)}
+
             </span>)
           }
           </Spring>
       </span>
     </button>
     {normalLabel}
-  </>;
+  </div>;
 
 });
 
