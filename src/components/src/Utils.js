@@ -13,7 +13,12 @@ import without from 'lodash/without';
 
 import {PopupPosition} from './common/Constants';
 import clsx from 'clsx';
-import {useCallback} from 'react';
+
+export const DefaultColor = {
+  ripple: {
+    gray: '#9c9c9c',
+  },
+};
 
 export {
   isObject,

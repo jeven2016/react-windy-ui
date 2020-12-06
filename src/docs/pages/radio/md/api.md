@@ -20,7 +20,7 @@ Radio的属性如下所示
 | checked | 是否选中状态 | boolean | false | 当此属性设置后，需要在onChange中切换该属性值 |
 | defaultChecked | 初始勾选状态 | boolean | false |  |
 | value | Radio对应的值 | any | - |  |
-| onChange | 状态变化触发的回调 | function | - |  |
+| onChange | 状态变化触发的回调 | function | - | 参数格式为： <Code>function(active, e)</Code> |
 | label | 显示的标签信息 | string | - |  |
 | alignLabel | 标签信息的显示位置 | string | - | 值可以是： <Code>top</Code>, <Code>bottom</Code>, <Code>left</Code>, <Code>right</Code> |
 | checkedColor | 选中时的颜色 | string | - | 可选的颜色参见颜色列表定义, 也可以设置成颜色对应的字符串值，比如: '#333',rgb或rgba颜色。 |
