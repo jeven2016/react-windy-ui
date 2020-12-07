@@ -14,15 +14,10 @@
 
 }
 
-html {
-  font-size: 14px;
-}
-
 body {
   background-color: #fff;
   color: rgb(43, 48, 54);
 }
-
 
 .root {
   display: flex;
@@ -251,8 +246,6 @@ body {
 
     > .card {
       margin-bottom: 1rem;
-      overflow: hidden;
-
     }
   }
 

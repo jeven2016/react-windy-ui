@@ -17,7 +17,8 @@ export default function Menu6() {
           Menu Item3
         </Menu.Item>
       </Menu>
-
+    </div>
+    <div className="doc doc-row">
       <Menu defaultActiveItems={['item1']}
             direction="horizontal">
         <Menu.Item id="item1" hasBackground>

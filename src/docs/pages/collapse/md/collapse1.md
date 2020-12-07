@@ -7,8 +7,8 @@ editUrl: $BASE/docs/pages/collapse/md/collapse1.md
 ---
 
 +++ zh_CN
- Collapse组件以Collapse Panel为基石，进行内容的隐藏和展示。Panel对象可以单独使用，而且你可以用它自定义
-实现折叠。
+ Collapse组件以<Code>CollapsePanel</Code>为基础，实现内容区域的展示和隐藏。CollapsePanel对象可以单独使用，比如自定义
+实现某些可折叠的组件。
 
 +++ en_US
 c1

@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useRef} from 'react';
 import PropTypes from 'prop-types';
 import Element from '../common/Element';
 import {isNil, nonNil} from '../Utils';
@@ -12,6 +12,15 @@ const grayRippleColor = '#333';
  * Button component
  */
 const Button = React.forwardRef((props, ref) => {
+  const rippleRef = useRef(null);
+
+  //bind ripple related event listeners
+  const updatedProps = Ripple.useRippleEvent({
+    rippleRef,
+    rootProps: props,
+    hasRipple: props.hasRipple,
+  });
+
   const {
     className = 'button',
     nativeType = 'button',
@@ -42,7 +51,7 @@ const Button = React.forwardRef((props, ref) => {
     loader = <Loader type="primary" active={true} size="small"/>,
     children,
     ...otherProps
-  } = props;
+  } = updatedProps;
 
   const isIconButton = (nonNil(leftIcon) || nonNil(rightIcon)) &&
       React.Children.count(children) === 0;
@@ -127,7 +136,7 @@ const Button = React.forwardRef((props, ref) => {
         </span>
         {
           hasRipple && !disabled &&
-          <Ripple center={circle} color={realRippleColor}/>
+          <Ripple ref={rippleRef} center={circle} color={realRippleColor}/>
         }
       </Element>
   );

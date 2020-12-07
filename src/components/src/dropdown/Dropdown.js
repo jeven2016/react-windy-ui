@@ -21,13 +21,13 @@ const Dropdown = React.forwardRef((props, ref) => {
 
   const ctrlRef = useRef();
 
-  const selectHandler = useCallback((selectedIds) => {
+  const selectHandler = useCallback((selectedIds, e) => {
     const array = convertToArray(selectedIds);
     let selectedId;
     if (array.length > 0) {
       selectedId = array[0];
     }
-    onSelect && onSelect(selectedId);
+    onSelect && onSelect(selectedId, e);
   }, [onSelect]);
 
   const chd = React.Children.map(children, elem => {

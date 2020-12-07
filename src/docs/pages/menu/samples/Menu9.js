@@ -1,6 +1,13 @@
 import React, {useState} from 'react';
-import {IconList, Menu, Radio, RadioGroup, Toggle} from 'react-windy-ui';
-import {IconInfo, IconQuestion} from '../../../../components/src';
+import {
+  IconList,
+  Menu,
+  Radio,
+  RadioGroup,
+  Toggle,
+  IconInfo,
+  IconQuestion,
+} from 'react-windy-ui';
 
 export default function Menu9() {
   const [type, setType] = useState('normal');
@@ -17,7 +24,7 @@ export default function Menu9() {
     </div>
     <div className="doc doc-row">
       <Toggle active={compact} onChange={active => setCompact(active)}
-              content={{on: 'Compact', off: 'Compact'}}/>
+              label="Compact"/>
     </div>
     <div className="doc doc-row" style={{width: '20rem'}}>
       <Menu defaultActiveItems={['item7']}

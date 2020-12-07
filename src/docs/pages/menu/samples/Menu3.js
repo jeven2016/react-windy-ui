@@ -6,7 +6,7 @@ export default function Menu3() {
   return <>
     <div className="doc doc-row">
       <Toggle active={vertical} onChange={active => setVertical(active)}
-              content={{on: 'Veritical', off: 'Horizontal'}}/>
+              label={{on: 'Vertical', off: 'Horizontal'}}/>
     </div>
     <Menu defaultActiveItems={['item1']}
           direction={vertical ? 'vertical' : 'horizontal'}>

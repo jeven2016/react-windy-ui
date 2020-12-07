@@ -18,7 +18,7 @@ Checkbox的属性如下所示
 | disabled | 是否禁用 | boolean | false |  |
 | checked | 是否勾选状态 | boolean | false |  |
 | defaultChecked | 初始勾选状态 | boolean | false |  |
-| onChange | 状态变化触发的回调 | function | - | 参数格式为： <Code>function(active, e)</Code> |
+| onChange | 状态变化触发的回调 | function | - | 参数格式为： <Code>function(active, event)</Code> |
 | label | 显示的提示信息 | string | - |  |
 | children | 子节点对象 | react node | - |  |
 | checkedColor | 对应选中时的颜色 | string | - | 可选的颜色参见颜色列表定义 |

@@ -16,7 +16,7 @@ Enhance:
 - Modal.info()，对话框每次打开后会连带container一起删除，是否可以考虑引入key,每次show都是设置active属性。
 - Progress 添加圆形类型
 - Button , Input 缺乏全白色的类型，比如在Navbar 中嵌入，需要focus，激活后都时白色。 可以考虑inverted属性。
-- 优化文档markdown的格式，使用新的markdown框架
+- 优化文档markdown的格式，使用新的markdown框架 -- done
 - Navbar里面的Input背景色已经Icon的颜色跟primary不匹配
 - Navbar10 sample， 无法在iframe中与Affix结合使用
 - icons redesign
@@ -28,6 +28,8 @@ Enhance:
 - using prismjs to highlight code lines
   https://github.com/PrismJS/prism-themes
 - integrate with Algolia DocSearch 
+- toggle: support normal & small size
+- verify the useEventCallback won't be recreated multiple times
 
 Note:
 - components 下的package需要修改为json后缀才可以发布版本，当前使用了阿里的源，发布时修改修改对应的.yarnrc和.npmrc去取消发布路径。
