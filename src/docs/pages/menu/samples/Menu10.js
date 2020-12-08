@@ -10,10 +10,6 @@ export default function Menu10() {
 
   return <div style={{width: horizontal ? '100%' : '50%'}}>
     <div className="doc doc-row">
-      <Toggle active={horizontal} onChange={active => setHorizontal(active)}
-              content={{on: 'Horizontal', off: 'Horizontal'}}/>
-    </div>
-    <div className="doc doc-row">
       <span style={{marginRight: '1rem'}}>type:</span>
       <RadioGroup defaultValue={type}
                   onChange={(val) => setType(val)}>
@@ -23,8 +19,12 @@ export default function Menu10() {
       </RadioGroup>
     </div>
     <div className="doc doc-row">
+      <Toggle active={horizontal} onChange={active => setHorizontal(active)}
+              label="Horizontal"/>
+    </div>
+    <div className="doc doc-row">
       <Toggle active={popupSubMenu} onChange={active => setPopupSubMenu(active)}
-              content={{on: 'Popup SubMenu', off: 'Popup SubMenu'}}/>
+              label="Popup SubMenu"/>
     </div>
 
     <div className="doc doc-row">

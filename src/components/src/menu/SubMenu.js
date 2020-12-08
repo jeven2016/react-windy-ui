@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 const SubMenu = React.forwardRef((props, ref) => {
   const {
     id,
+    level,
     hasBottomBar,
     className = 'base-menu',
     header,
@@ -64,6 +65,7 @@ const SubMenu = React.forwardRef((props, ref) => {
               popupSubMenu={ctx.popupSubMenu} //the submenu can pops the items list
               popupSubMenuPosition={popupSubMenuPosition}
               blockList={blockList}
+              level={level}
               {...otherProps} />
   </MenuContext.Provider>;
 });
@@ -78,6 +80,7 @@ SubMenu.propTypes = {
   blockList: PropTypes.bool,
   rootMenu: PropTypes.bool,
   hasBottomBar: PropTypes.bool,
+  level: PropTypes.number,
 };
 
 export default SubMenu;

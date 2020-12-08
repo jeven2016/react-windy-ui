@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useMemo, useState} from 'react';
 import clsx from 'clsx';
 import {MenuContext} from '../common/Context';
 import {includes, isNil} from '../Utils';
-import {Action} from './MenuUtils';
+import {Action, getPaddingStyle} from './MenuUtils';
 import PropTypes from 'prop-types';
 import {animated, useSpring} from 'react-spring';
 import {preventEvent} from '../event';
@@ -25,6 +25,8 @@ const Item = React.forwardRef((props, ref) => {
     icon,
     directChild = false,
     onClick,
+    level,
+    style,
     ...otherProps
   } = props;
   const ctx = useContext(MenuContext);
@@ -110,8 +112,19 @@ const Item = React.forwardRef((props, ref) => {
     </>;
   }, [customizedChildren, icon, directChild, show, innerProps, children]);
 
+  const paddingStyle = useMemo(() => ctx.autoIndent ?
+      getPaddingStyle({
+        compact: ctx.compact,
+        indentUnit: ctx.indentUnit,
+        indentation: ctx.indentation,
+        initIndent: ctx.initIndent,
+        level: level,
+      }) : null,
+      [ctx.autoIndent, ctx.compact, ctx.indentUnit, ctx.indentation, ctx.initIndent, level]);
+
   const renderCnt = <div ref={ref} className={clsName} {...otherProps}
-                         onClick={clickHandler}>
+                         onClick={clickHandler}
+                         style={{...paddingStyle, ...style}}>
     {content}
   </div>;
 
@@ -152,6 +165,7 @@ Item.propTypes = {
   icon: PropTypes.node,
   directChild: PropTypes.bool,
   onClick: PropTypes.func,
+  level: PropTypes.number,
 };
 
 export default Item;

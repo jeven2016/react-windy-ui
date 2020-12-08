@@ -35,6 +35,9 @@ Note:
 - components 下的package需要修改为json后缀才可以发布版本，当前使用了阿里的源，发布时修改修改对应的.yarnrc和.npmrc去取消发布路径。
 
 
+Other:
+- 在md文件的title中设置onlyVisible属性，页面中将只显示当前样例。可以用于功能debug测试。
+
 - free pic: https://pixabay.com/photos/bay-beach-boat-exotic-idyllic-1867798/
   https://pixabay.com/photos/girl-teenager-dancing-outdoor-5391785/
 

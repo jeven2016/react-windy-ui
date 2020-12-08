@@ -30,6 +30,7 @@ const BaseMenu = React.forwardRef((props, ref) => {
     blockList = false,
     rootMenu = false,
     hasBottomBar = false,
+    level,
     ...otherProps
   } = props;
   const ctx = useContext(MenuContext);
@@ -125,6 +126,7 @@ const BaseMenu = React.forwardRef((props, ref) => {
     <div ref={multiRef}
          className={clsName} {...otherProps}>
       {ctx.hasHeader && <MenuHeader icon={icon}
+                                    level={level}
                                     handleCollapse={collapseHandler}
                                     handleMouseEnter={mouseEnterHandler}
                                     handleMouseLeave={mouseLeaveHandler}
@@ -158,6 +160,7 @@ BaseMenu.propTypes = {
   blockList: PropTypes.bool,
   rootMenu: PropTypes.bool,
   hasBottomBar: PropTypes.bool,
+  level: PropTypes.number,
 };
 
 export default BaseMenu;

@@ -50,13 +50,13 @@ export const parseHeader = (markdownContent) => {
       headers[name] = value.replace(/^'|'$/g, '').trim();
     }
 
-  /*  if (result.title?.type === 'text') {
-      result.title = {
-        order: result.title.order,
-        type: 'text',
-        editUrl: result.title.editUrl,
-      };
-    }*/
+    /*  if (result.title?.type === 'text') {
+        result.title = {
+          order: result.title.order,
+          type: 'text',
+          editUrl: result.title.editUrl,
+        };
+      }*/
   }
   return result;
 };
@@ -99,9 +99,12 @@ const getPureName = (filename) => {
 };
 
 export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
-  const config = {};
+  let config = {};
+  let visibleSampleName;
 
   const sourceCode = {};
+
+  //parse the raw code
   requireCode.keys().forEach((filename) => {
     const content = requireCode(filename);
     let pureName = getPureName(filename);
@@ -112,6 +115,7 @@ export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
     sourceCode[pureName] = content.default;
   });
 
+  //parse the markdown files
   requireMd.keys().forEach((filename) => {
     const content = requireMd(filename).default;
     let pureName = getPureName(filename);
@@ -140,6 +144,12 @@ export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
       delete body.SampleCode;
     }
 
+    //only display this sample, the others should be ignored.
+    //this field is only internally used to debug some issues.
+    if (title.title.onlyVisible === 'true') {
+      visibleSampleName = pureName;
+    }
+
     config[pureName] = {
       ...title,
       content: body,
@@ -148,6 +158,7 @@ export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
     };
   });
 
+  //fill the react components into config
   requireSamples.keys().forEach(jsFileName => {
     const Comp = requireSamples(jsFileName).default;
     let pureName = getPureName(jsFileName);
@@ -178,6 +189,10 @@ export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
       }
     }
   });
+
+  if (visibleSampleName) {
+    return {onlyVisibleSample: config[visibleSampleName]};
+  }
 
   return config;
 };

@@ -3,6 +3,7 @@ order: 8
 type: sample
 zh_CN: 子菜单SubMenu
 en_US: Menu8
+onlyVisible: false
 editUrl: $BASE/docs/pages/menu/md/Menu8.md
 ---
 

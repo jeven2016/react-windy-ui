@@ -8,6 +8,7 @@ const Group = React.forwardRef((props, ref) => {
     extraClassName,
     header,
     children,
+    level,
     ...otherProps
   } = props;
   const clsName = clsx(extraClassName, className);
@@ -22,6 +23,7 @@ Group.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   extraClassName: PropTypes.string,
+  level: PropTypes.number,
 };
 
 export default Group;

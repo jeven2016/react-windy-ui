@@ -15,6 +15,7 @@ export default function Menu8() {
     </div>
     <div className="doc doc-row">
       <Menu defaultActiveItems={['item1']}
+            id='test'
             type={type}
             style={{width: '250px'}}>
         <Menu.Item id="item1">

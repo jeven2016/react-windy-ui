@@ -1,10 +1,23 @@
 import React from 'react';
 import clsx from 'clsx';
 import {Spring} from 'react-spring/renderprops';
+import {validate} from './Utils';
+
+const IconSize = ['large', 'medium', 'small'];
 
 const useIcon = (props) => {
   //size: large, medium, small
-  const {className = 'svg icon', size, extraClassName, ...otherProps} = props;
+  const {
+    className = 'svg icon',
+    size = 'medium',
+    extraClassName,
+    ...otherProps
+  } = props;
+
+  //check size: large, medium, small
+  validate(IconSize.includes(size),
+      'The size should be one of large/medium/small');
+
   const clsName = clsx(extraClassName, className, size);
   return [clsName, otherProps];
 };

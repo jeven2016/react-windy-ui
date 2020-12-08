@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import Group from './Group';
 import BaseMenu from './BaseMenu';
 import {MenuContext} from '../common/Context';
-import {Action, cancelIndent, indentMenu, MenuDirection} from './MenuUtils';
+import {Action, fillLevel, MenuDirection} from './MenuUtils';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import {convertToArray, execute, includes, isCustomized, isNil} from '../Utils';
 import {EventListener, JustifyContentType} from '../common/Constants';
@@ -19,6 +19,7 @@ import useEvent from '../common/UseEvent';
  */
 const Menu = React.forwardRef((props, ref) => {
   const {
+    id,
     className = 'menu',
     extraClassName,
     hasBox = true,
@@ -31,8 +32,9 @@ const Menu = React.forwardRef((props, ref) => {
     popupSubMenu = false,
     children,
     autoIndent = true,
+    initIndent = 1.5,
     indentUnit = 'rem',
-    indentation = 1.5,
+    indentation = 2,
     onSelect,
     onClickItem,
     multiSelect = false,
@@ -91,33 +93,21 @@ const Menu = React.forwardRef((props, ref) => {
   const isPopup = popupSubMenu || compact;
   const preCompact = usePrevious(compact);
 
-  useEffect(() => {
-    if (autoIndent && !isPopup) {
-      indentMenu({
-        popupSubMenu: isPopup,
-        rootDom: menuRef.current,
-        indentUnit,
-        indentation,
-      });
-    }
-
-    if (!preCompact && compact) {
-      //remove the padding-left attribute
-      cancelIndent({rootDom: menuRef.current});
-    }
-  }, [
-    isPopup,
-    autoIndent,
-    menuRef,
-    indentUnit,
-    indentation,
-    preCompact,
-    compact]);
+  //fill leven field in props of Header & Item & Group,
+  const updatedChildren = useMemo(() => {
+    return fillLevel({
+      id,
+      children,
+      popupSubMenu: isPopup,
+      indentUnit,
+      indentation,
+    });
+  }, [children, id, indentUnit, indentation, isPopup]);
 
   //switch compact/popup
   //1. compact, don't show expanded menu，
   //2. show last expanded menus while switching to other other menu types
-  useEvent(EventListener.click, function () {
+  useEvent(EventListener.click, function() {
     //clicking the document will cause the opened popup submenu to be closed
     if (isPopup && store.getState().openList.length > 0) {
       store.setState({openList: []});
@@ -125,10 +115,10 @@ const Menu = React.forwardRef((props, ref) => {
   }, isPopup);
 
   const newChildren = useMemo(() => {
-    if (!children) {
+    if (!updatedChildren) {
       return null;
     }
-    return React.Children.map(children, chd => {
+    return React.Children.map(updatedChildren, chd => {
       if (isNil(chd?.type)) {
         return chd;
       }
@@ -137,7 +127,7 @@ const Menu = React.forwardRef((props, ref) => {
       }
       return chd;
     });
-  }, [children]);
+  }, [updatedChildren]);
 
   const dispatch = ({type: actionType, ...params}) => {
     switch (actionType) {
@@ -234,7 +224,7 @@ const Menu = React.forwardRef((props, ref) => {
       }
 
       //delay 50 mills to notify that the open list is changed
-      preTimeoutRef.current = execute(function () {
+      preTimeoutRef.current = execute(function() {
         preTimeoutRef.current = null;
         if (!customOpen) {
           notifyChanges();
@@ -254,7 +244,9 @@ const Menu = React.forwardRef((props, ref) => {
   const ctx = {
     store,
     dispatch,
-
+    initIndent,
+    indentation,
+    indentUnit,
     hasBox,
     hasBorderRadius,
     hasArrow,
@@ -268,6 +260,7 @@ const Menu = React.forwardRef((props, ref) => {
     selectable,
     onClickItem,
     primaryBarPosition,
+    autoIndent,
   };
   return <MenuContext.Provider value={ctx}>
     <BaseMenu className={clsName}

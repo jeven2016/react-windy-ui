@@ -1,10 +1,11 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useCallback, useContext, useMemo} from 'react';
 import clsx from 'clsx';
 import {IconArrowLeft, IconArrowRight} from '../Icons';
 import {animated, useSpring} from 'react-spring';
 import {MenuContext} from '../common/Context';
-import {MenuDirection} from './MenuUtils';
+import {getPaddingStyle, MenuDirection} from './MenuUtils';
 import PropTypes from 'prop-types';
+import {isNumber} from '../Utils';
 
 const MenuHeader = React.forwardRef((props, ref) => {
   const {
@@ -19,6 +20,8 @@ const MenuHeader = React.forwardRef((props, ref) => {
     handleMouseLeave,
     menuVisible,
     hasBottomBar,
+    style,
+    level,
   } = props;
   const ctx = useContext(MenuContext);
   const {type, popupSubMenu} = useContext(MenuContext);
@@ -38,7 +41,7 @@ const MenuHeader = React.forwardRef((props, ref) => {
   const show = !ctx.compact && ctx.canCompact;
 
   const springSetting = useMemo(() => ({
-    from: {rotation: 0},
+    from: {rotation: collapse ? 0 : -90},
     to: {rotation: collapse ? 0 : -90},
     config: {clamp: true, mass: 1, tesion: 100, friction: 15},
   }), [collapse]);
@@ -75,7 +78,7 @@ const MenuHeader = React.forwardRef((props, ref) => {
 
   const innerProps = useSpring(springConfig);
 
-  const cnt = () => {
+  const cnt = useCallback(() => {
     if (!ctx.canCompact) {
       return <>
         <div className='header-info'>
@@ -89,12 +92,23 @@ const MenuHeader = React.forwardRef((props, ref) => {
       <animated.div className='header-info'
                     style={innerProps}>  {ctx.header}</animated.div>
       {realIcon}</>;
-  };
+  }, [ctx.canCompact, ctx.header, innerProps, realIcon, show]);
+
+  const paddingStyle = useMemo(() => ctx.autoIndent ?
+      getPaddingStyle({
+        compact: ctx.compact,
+        indentUnit: ctx.indentUnit,
+        indentation: ctx.indentation,
+        initIndent: ctx.initIndent,
+        level: level,
+      }) : null,
+      [ctx.autoIndent, ctx.compact, ctx.indentUnit, ctx.indentation, ctx.initIndent, level]);
 
   return <div className={headerClsName}
               onClick={handleCollapse}
               onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}>
+              onMouseLeave={handleMouseLeave}
+              style={{...paddingStyle, ...style}}>
     {
       icon && <div className="header-icon">
         {icon}
@@ -119,6 +133,7 @@ MenuHeader.propTypes = {
   handleMouseLeave: PropTypes.func,
   menuVisible: PropTypes.bool,
   hasBottomBar: PropTypes.bool,
+  level: PropTypes.number,
 };
 
 export default MenuHeader;
