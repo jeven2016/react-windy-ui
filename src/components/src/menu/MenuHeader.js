@@ -1,14 +1,26 @@
-import React, {useCallback, useContext, useMemo} from 'react';
+import React, {useCallback, useContext, useMemo, useRef} from 'react';
 import clsx from 'clsx';
 import {IconArrowLeft, IconArrowRight} from '../Icons';
 import {animated, useSpring} from 'react-spring';
 import {MenuContext} from '../common/Context';
 import {getPaddingStyle, MenuDirection} from './MenuUtils';
 import PropTypes from 'prop-types';
-import {isNumber} from '../Utils';
+import Ripple from '../common/Ripple';
+import useEventCallback from '../common/useEventCallback';
 
 const MenuHeader = React.forwardRef((props, ref) => {
+  const ctx = useContext(MenuContext);
+  const rippleRef = useRef(null);
+
+  //bind ripple related event listeners
+  const updatedProps = Ripple.useRippleEvent({
+    rippleRef,
+    rootProps: props,
+    hasRipple: ctx.hasRipple,
+  });
+
   const {
+    extraClassName,
     className = 'menu-header',
     handleCollapse,
     collapse,
@@ -16,17 +28,17 @@ const MenuHeader = React.forwardRef((props, ref) => {
     icon,//left icon
     arrowIcon = <IconArrowLeft/>,
     popArrowIcon = <IconArrowRight/>,
-    handleMouseEnter,
-    handleMouseLeave,
+    onMouseEnter,
+    onMouseLeave,
     menuVisible,
     hasBottomBar,
     style,
     level,
-  } = props;
-  const ctx = useContext(MenuContext);
+    ...others
+  } = updatedProps;
   const {type, popupSubMenu} = useContext(MenuContext);
 
-  const headerClsName = clsx(className, {
+  const headerClsName = clsx(extraClassName, className, {
     [type]: type,
     compact: ctx.canCompact && ctx.compact,
     'non-compact': ctx.canCompact && !ctx.compact,
@@ -36,6 +48,7 @@ const MenuHeader = React.forwardRef((props, ref) => {
     'no-arrow': !ctx.hasArrow,
     'active': menuVisible && popupSubMenu,
     [headerType]: headerType,  //it should be normal / dark(color is white)
+    disabled: ctx.disabled,
   });
 
   const show = !ctx.compact && ctx.canCompact;
@@ -96,27 +109,47 @@ const MenuHeader = React.forwardRef((props, ref) => {
 
   const paddingStyle = useMemo(() => ctx.autoIndent ?
       getPaddingStyle({
-        compact: ctx.compact,
+        ignored: popupSubMenu,
         indentUnit: ctx.indentUnit,
         indentation: ctx.indentation,
         initIndent: ctx.initIndent,
         level: level,
       }) : null,
-      [ctx.autoIndent, ctx.compact, ctx.indentUnit, ctx.indentation, ctx.initIndent, level]);
+      [
+        ctx.autoIndent,
+        ctx.indentUnit,
+        ctx.indentation,
+        ctx.initIndent,
+        level,
+        popupSubMenu]);
+
+  const mlHandler = useEventCallback((e) => {
+    !ctx.disabled && onMouseLeave && onMouseLeave(e);
+  });
+
+  const meHandler = useEventCallback((e) => {
+    !ctx.disabled && onMouseEnter && onMouseEnter(e);
+  });
+
+  const collapseHandler = useEventCallback((e) => {
+    !ctx.disabled && handleCollapse && handleCollapse(e);
+  });
 
   return <div className={headerClsName}
-              onClick={handleCollapse}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              style={{...paddingStyle, ...style}}>
+              onClick={collapseHandler}
+              onMouseEnter={meHandler}
+              onMouseLeave={mlHandler}
+              style={{...paddingStyle, ...style}}
+              {...others}>
     {
       icon && <div className="header-icon">
         {icon}
       </div>
     }
-
+    {cnt()}
     {
-      cnt()
+      ctx.hasRipple && !ctx.disabled &&
+      <Ripple ref={rippleRef} color={ctx.rippleColor}/>
     }
   </div>;
 });

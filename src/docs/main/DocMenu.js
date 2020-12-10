@@ -8,6 +8,7 @@ export default function DocMenu(props) {
   const {url} = useRouteMatch();
   return <Menu type="primary"
                hasBox={hasBox}
+               hasRipple={false}
                onSelect={onSelectMenuItem}
                defaultOpenedMenus={['basic']}
                onMouseEnter={() => {setOverflow('auto');}}

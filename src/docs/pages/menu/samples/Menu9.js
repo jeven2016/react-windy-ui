@@ -1,17 +1,18 @@
 import React, {useState} from 'react';
 import {
+  IconAccount,
+  IconHome,
   IconList,
+  IconSearch,
   Menu,
   Radio,
   RadioGroup,
   Toggle,
-  IconInfo,
-  IconQuestion,
 } from 'react-windy-ui';
 
 export default function Menu9() {
   const [type, setType] = useState('normal');
-  const [compact, setCompact] = useState(false);
+  const [compact, setCompact] = useState(true);
   return <>
     <div className="doc doc-row">
       <span style={{marginRight: '1rem', fontWeight: '600'}}>Type:</span>
@@ -27,16 +28,16 @@ export default function Menu9() {
               label="Compact"/>
     </div>
     <div className="doc doc-row" style={{width: '20rem'}}>
-      <Menu defaultActiveItems={['item7']}
+      <Menu defaultActiveItems={['item7']} id="test"
             direction="vertical"
             compact={compact}
             onOpenedMenu={(data) => console.log(`open==${data}`)}
             onSelect={(data, e) => console.log(`select=${data}`)}
             type={type}>
-        <Menu.Item id="item1" icon={<IconQuestion/>}>
+        <Menu.Item id="item1" icon={<IconHome/>}>
           Menu item1
         </Menu.Item>
-        <Menu.Item id="item2" icon={<IconInfo/>}>
+        <Menu.Item id="item2" icon={<IconSearch/>}>
           Menu item2
         </Menu.Item>
         <Menu.SubMenu header="SubMenu 1" id="sub1" icon={<IconList/>}>
@@ -73,7 +74,7 @@ export default function Menu9() {
             </Menu.Item>
           </Menu.SubMenu>
         </Menu.SubMenu>
-        <Menu.SubMenu header="SubMenu 3" id="sub3" icon={<IconList/>}>
+        <Menu.SubMenu header="SubMenu 3" id="sub3" icon={<IconAccount/>}>
           <Menu.Item id="item13">
             Menu item13
           </Menu.Item>
@@ -88,10 +89,6 @@ export default function Menu9() {
           </Menu.Item>
         </Menu.SubMenu>
       </Menu>
-    </div>
-
-    <div className="doc doc-row">
-
     </div>
   </>;
 

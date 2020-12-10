@@ -18,7 +18,7 @@ export default function Navbar4() {
       <Navbar type="primary" hasBorder={false}>
         <Navbar.Title>
           <Navbar.Switch>
-            <IconList/>
+            <IconList size="small"/>
           </Navbar.Switch>
           <span>Web</span>
         </Navbar.Title>

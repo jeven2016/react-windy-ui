@@ -2,12 +2,13 @@
 order: 10
 type: sample
 zh_CN: 弹出式的SubMenu
-en_US: Menu10
+en_US: SubMenu
 editUrl: $BASE/docs/pages/menu/md/Menu10.md
 ---
 
 +++ zh_CN
-Menu还有一个属性可以让SubMenu弹出显示，将popupSubMenu设置为true后，SubMenu将被弹出显示。
+Menu还有一个属性可以让SubMenu弹出显示，将<Code>popupSubMenu</Code>设置为<Code>true</Code>后，
+SubMenu将被弹出显示。
 
 
 +++ en_US

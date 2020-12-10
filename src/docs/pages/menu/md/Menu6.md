@@ -7,7 +7,8 @@ editUrl: $BASE/docs/pages/menu/md/Menu6.md
 ---
 
 +++ zh_CN
-在Item上设置hasBottomBar属性，Item将会在下方显示一个横条；在Item上设置hasBackground属性，Item将会获得一个背景色；
+在Item上设置<Code>hasBottomBar</Code>属性，Item将会在下方显示一个横条；
+在Item上设置<Code>hasBackground</Code>属性，Item将会显示背景色；
  
 
 +++ en_US

@@ -1,13 +1,13 @@
 --- 
 order: 3
 type: sample
-zh_CN: 切换不同类型的Menu
-en_US: Menu3
+zh_CN: Menu的排列方向
+en_US: Menu direction
 editUrl: $BASE/docs/pages/menu/md/Menu3.md
 ---
 
 +++ zh_CN
-默认情况下Menu在垂直方向上排列，要在水平方向上排列的话，则需要将direction属性设置为'horizontal'。
+默认情况下Menu在垂直方向上排列，要在水平方向上排列的话，则可将<Code>direction</Code>属性设置为<Code>horizontal</Code>。
 
 +++ en_US
 Menu3

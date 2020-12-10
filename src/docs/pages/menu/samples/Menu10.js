@@ -24,7 +24,7 @@ export default function Menu10() {
     </div>
     <div className="doc doc-row">
       <Toggle active={popupSubMenu} onChange={active => setPopupSubMenu(active)}
-              label="Popup SubMenu"/>
+              label="Pop SubMenu"/>
     </div>
 
     <div className="doc doc-row">
@@ -52,6 +52,17 @@ export default function Menu10() {
                 Item4
               </Menu.Item>
             </Menu.Group>
+            <Menu.SubMenu header="SubMenu" id="sub1_child">
+              <Menu.Item id="sub_item1">
+                SubMenu Item1
+              </Menu.Item>
+              <Menu.Item id="sub_item2">
+                SubMenu Item2
+              </Menu.Item>
+              <Menu.Item id="sub_item3">
+                SubMenu Item3
+              </Menu.Item>
+            </Menu.SubMenu>
           </Menu.SubMenu>
           <Menu.SubMenu header="Navigation Two" id="sub2"
                         icon={<FontAwesomeIcon icon={faLaptop}/>}>

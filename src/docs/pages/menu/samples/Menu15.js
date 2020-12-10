@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
 import {Menu, Radio, RadioGroup} from 'react-windy-ui';
+import {faListUl} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faAndroid, faBuysellads} from '@fortawesome/free-brands-svg-icons';
 
-export default function Menu2() {
+export default function Menu15() {
   const [type, setType] = useState('normal');
   return <>
     <div className="doc doc-row">
@@ -19,10 +22,13 @@ export default function Menu2() {
           onSelect={(itemId, e) => {
             console.log(itemId);
           }}>
-      <Menu.Item id="item1">Menu Item1</Menu.Item>
-      <Menu.Item id="item2">Menu Item2</Menu.Item>
-      <Menu.Item id="item3">Menu Item3</Menu.Item>
-      <Menu.Item id="item4">Menu Item4</Menu.Item>
+      <Menu.Item id="item1">
+        <Menu.Item.Left><FontAwesomeIcon icon={faAndroid}/></Menu.Item.Left>
+        <Menu.Item.Center>Android Mobile Phone</Menu.Item.Center>
+        <Menu.Item.Right><FontAwesomeIcon
+            icon={faBuysellads}/></Menu.Item.Right>
+      </Menu.Item>
+
     </Menu>
   </>;
 

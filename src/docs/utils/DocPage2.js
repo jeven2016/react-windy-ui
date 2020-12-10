@@ -1,37 +1,14 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-} from 'react';
+import React, {useCallback, useContext, useLayoutEffect, useMemo} from 'react';
 import {loadMdFiles} from './parseMd';
-import Code from './Code';
-import DemoDesc from './DemoDesc';
-import Hcode from './Hcode';
 import {isNil} from '../../components/src/Utils';
 import {compiler} from 'markdown-to-jsx';
 import SamplePanel from './SamplePanel';
-import {Blockquote, Button, IconEdit, StoreContext} from 'react-windy-ui';
-import {faEdit} from '@fortawesome/free-solid-svg-icons';
-import {getEditUrl, QuickManuContext} from './DocUtils';
+import {StoreContext} from 'react-windy-ui';
+import {defaultMarkdownOptions, getEditUrl, QuickManuContext} from './DocUtils';
 
 const Type = {
   sample: 'sample',
   text: 'text',
-};
-
-//convert the default component to customized component
-const defaultOptions = {
-  overrides: {
-    IconEdit: {component: IconEdit},
-    faEdit: {component: faEdit},
-    Button: {component: Button},
-    Code: {component: Code},
-    DemoDesc: {component: DemoDesc},
-    Blockquote: {component: Blockquote, props: {hasBox: true}},
-    Hcode: {component: Hcode},
-  },
 };
 
 export default function DocPage2(props) {
@@ -43,7 +20,7 @@ export default function DocPage2(props) {
   } = props;
   const {locale} = useContext(StoreContext);
   const mdOpts = useMemo(() => {
-    let mdOptions = defaultOptions;
+    let mdOptions = defaultMarkdownOptions;
     if (!isNil(markdownOptions) && !isNil(markdownOptions.overrides)) {
       mdOptions = {overrides: {...markdownOptions.overrides, ...mdOptions.overrides}};
     }

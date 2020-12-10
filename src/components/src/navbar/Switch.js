@@ -13,7 +13,7 @@ const Switch = React.forwardRef((props, ref) => {
     type = 'normal',
     circle = true,
     style = {},
-    buttonColor = 'color',
+    buttonColor = 'blue',
     simplified = false,//todo
     ...otherProps
   } = props;
@@ -35,6 +35,7 @@ const Switch = React.forwardRef((props, ref) => {
   const others = {style: {...otherStyles}, ...otherProps};
   return <span style={nonNil(color) ? {color} : null}>
     <Button inverted
+            hasBox={false}
             color={buttonColor}
             size="small"
             circle={circle}

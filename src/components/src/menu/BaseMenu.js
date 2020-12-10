@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import clsx from 'clsx';
 import MenuHeader from './MenuHeader';
 import {Action, MenuDirection} from './MenuUtils';
@@ -14,6 +8,7 @@ import {MenuContext} from '../common/Context';
 import {execute, includes, isNil} from '../Utils';
 import PropTypes from 'prop-types';
 import {preventEvent} from '../event';
+import useEventCallback from '../common/useEventCallback';
 
 /**
  * SubMenu Component
@@ -44,7 +39,7 @@ const BaseMenu = React.forwardRef((props, ref) => {
   const [open, setOpen] = useState(includes(getState().openList, id));
 
   //handle collapsable submenu
-  const collapseHandler = useCallback((e) => {
+  const collapseHandler = useEventCallback((e) => {
     if (isNil(id)) {
       setCollapse(pre => { setCollapse(!pre); });
       return;
@@ -60,7 +55,7 @@ const BaseMenu = React.forwardRef((props, ref) => {
 
     const activeType = toCollapse ? Action.closeMenu : Action.openMenu;
     ctx.dispatch({type: activeType, id, e, directChild: ctx.directChild});
-  }, [ctx, id, getState]);
+  });
 
   //handle popup submenu
   useEffect(() => {
@@ -86,7 +81,7 @@ const BaseMenu = React.forwardRef((props, ref) => {
   }, [id, open, setOpen, rootMenu, attach, detach]);
 
   const timeoutRef = useRef(null);
-  const mouseEnterHandler = useCallback((e) => {
+  const mouseEnterHandler = useEventCallback((e) => {
     if (!popupSubMenu) {
       return;
     }
@@ -96,9 +91,9 @@ const BaseMenu = React.forwardRef((props, ref) => {
       clearTimeout(closeTimeout);
     }
     ctx.dispatch({type: Action.openMenu, id, e, directChild: ctx.directChild});
-  }, [ctx, id, popupSubMenu]);
+  });
 
-  const mouseLeaveHandler = useCallback((e) => {
+  const mouseLeaveHandler = useEventCallback((e) => {
     if (!popupSubMenu) {
       return;
     }
@@ -108,7 +103,7 @@ const BaseMenu = React.forwardRef((props, ref) => {
       ctx.dispatch({type: Action.closeMenu, id, e});
     }, 50);
 
-  }, [ctx, id, popupSubMenu]);
+  });
 
   const directionCls = MenuDirection.isVertical(ctx.direction)
       ? MenuDirection.vertical.className
@@ -128,8 +123,8 @@ const BaseMenu = React.forwardRef((props, ref) => {
       {ctx.hasHeader && <MenuHeader icon={icon}
                                     level={level}
                                     handleCollapse={collapseHandler}
-                                    handleMouseEnter={mouseEnterHandler}
-                                    handleMouseLeave={mouseLeaveHandler}
+                                    onMouseEnter={mouseEnterHandler}
+                                    onMouseLeave={mouseLeaveHandler}
                                     menuVisible={open}
                                     hasBottomBar={hasBottomBar}
                                     collapse={isNil(collapse)
@@ -154,9 +149,10 @@ const BaseMenu = React.forwardRef((props, ref) => {
 BaseMenu.propTypes = {
   id: PropTypes.string,
   className: PropTypes.string,
+  extraClassName: PropTypes.string,
   icon: PropTypes.node,
   popupSubMenu: PropTypes.bool,
-  popupSubMenuPosition: PropTypes.string,
+  popupSubMenuPosition: PropTypes.oneOf(['left', 'right']),
   blockList: PropTypes.bool,
   rootMenu: PropTypes.bool,
   hasBottomBar: PropTypes.bool,

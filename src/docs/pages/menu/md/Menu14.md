@@ -1,13 +1,13 @@
 --- 
 order: 14
 type: sample
-zh_CN: 利用SubMenu显示层级菜单
-en_US: Menu14
+zh_CN: 禁用SubMenu和Item
+en_US: Disabled SubMenu/Item
 editUrl: $BASE/docs/pages/menu/md/Menu14.md
 ---
 
 +++ zh_CN
-对于通常使用的层级菜单，推荐使用SubMenu将对应的Item组合在一起，而且可以面板可以折叠展开。
+SubMenu和Item都支持<Code>disabled</Code>属性，你可以设置为<Code>true</Code>后禁用。
 
 +++ en_US
 Menu14

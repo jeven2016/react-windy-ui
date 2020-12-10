@@ -1,7 +1,6 @@
 import React, {
   useCallback,
   useImperativeHandle,
-  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -157,19 +156,19 @@ const useRippleEvent = ({rippleRef, rootProps = {}, hasRipple = true}) => {
       onMouseDown);
 
   const mouseUpCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
-      onMouseDown);
+      onMouseUp);
 
   const mouseLeaveCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
-      onMouseDown);
+      onMouseLeave);
 
   const touchStartCb = useRippleCallback(hasRipple, rippleRef, startMethod,
-      onMouseDown);
+      onTouchStart);
 
   const touchEndCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
-      onMouseDown);
+      onTouchEnd);
 
   const touchMoveCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
-      onMouseDown);
+      onTouchMove);
 
   return {
     onMouseDown: mouseDownCb,

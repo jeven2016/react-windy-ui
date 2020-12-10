@@ -47,7 +47,7 @@ export const MenuConst = {
   all: 'all',
 };
 
-const deepUpdateLevel = ({node, level, popupSubMenu}) => {
+const deepUpdateLevel = ({node, level}) => {
   if (isNil(node)) {
     return null;
   }
@@ -56,53 +56,68 @@ const deepUpdateLevel = ({node, level, popupSubMenu}) => {
   if (node.type === Item || isNil(children) || children.length === 0) {
     return React.cloneElement(node, {level: level});
   }
-
-  if (node.type !== Group && node.type !== SubMenu) {
+  const isGroup = node.type === Group;
+  if (!isGroup && node.type !== SubMenu) {
     return node;
   }
 
   return React.cloneElement(node, {
     level: level,
     children: React.Children.map(children, chd => {
-      return deepUpdateLevel({node: chd, level: popupSubMenu ? 1 : level + 1});
+      return deepUpdateLevel({node: chd, level: isGroup ? level : level + 1});
     }),
   });
 
 };
 
+/**
+ * Fill level property for sub components
+ * @param children
+ * @param popupSubMenu
+ * @param indentUnit
+ * @param indentation
+ * @returns children
+ */
 export const fillLevel = ({
-                            id,
                             children,
                             popupSubMenu,
                             indentUnit,
                             indentation,
                           }) => {
 
-  console.log('fill the level again');
-  let level = 0;
+  if (popupSubMenu) {
+    return children;
+  }
+
   return React.Children.map(children, chd => {
     if (chd.type !== SubMenu && chd.type !== Group) {
       return chd;
     }
 
+    if (chd.type === Group) {
+      return React.cloneElement(chd, {
+        level: 0,
+        children: deepUpdateLevel({node: chd, level: 0}),
+      });
+    }
     if (chd.type === SubMenu) {
-      return deepUpdateLevel({node: chd, level, popupSubMenu});
+      return deepUpdateLevel({node: chd, level: 0});
     }
   });
 };
 
 export const getPaddingStyle = ({
-                                  compact,
+                                  ignored,
                                   indentUnit,
                                   indentation,
                                   initIndent,
                                   level,
                                 }) => {
-  if (isNumber(level)) {
-    const padding = level * indentation;
-    const finalPadding = padding === 0 ? initIndent : `${(padding +
-        initIndent)}`;
-    return {paddingLeft: finalPadding + indentUnit};
+  if (ignored || !isNumber(level)) {
+    return null;
   }
-  return null;
+  const padding = level * indentation;
+  const finalPadding = padding === 0 ? initIndent : `${(padding +
+      initIndent)}`;
+  return {paddingLeft: finalPadding + indentUnit};
 };

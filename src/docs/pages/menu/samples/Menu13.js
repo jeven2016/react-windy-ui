@@ -6,6 +6,8 @@ export default function Menu13() {
   const [hasBox, setHasBox] = useState(true);
   const [hasArrow, setHasArrow] = useState(true);
   const [bottomBar, setBottomBar] = useState(true);
+  const [ripple, setRipple] = useState(true);
+  const [indent, setIndent] = useState(true);
   return <>
     <div className="doc doc-row">
       <span style={{marginRight: '1rem', fontWeight: '600'}}>Type:</span>
@@ -18,20 +20,27 @@ export default function Menu13() {
     </div>
     <div className="doc doc-row">
       <Toggle active={hasArrow} onChange={active => setHasArrow(active)}
-              content={{on: 'Arrow', off: 'Arrow'}}/>
+              label='Arrow'/>
     </div>
     <div className="doc doc-row">
       <Toggle active={hasBox} onChange={active => setHasBox(active)}
-              content={{on: 'Box Shadow', off: 'Box Shadow'}}/>
+              label='Box Shadow'/>
     </div>
-
 
     <div className="doc doc-row">
       <Toggle active={bottomBar} onChange={active => setBottomBar(active)}
-              content={{on: 'Bottom Bar', off: 'Bottom Bar'}}/>
+              label='Bottom Bar'/>
+    </div>
+    <div className="doc doc-row">
+      <Toggle active={ripple} onChange={active => setRipple(active)}
+              label='Ripple'/>
+    </div>
+    <div className="doc doc-row">
+      <Toggle active={indent} onChange={active => setIndent(active)}
+              label='Auto Indent'/>
     </div>
     <div className="doc doc-row" style={{width: '50%'}}>
-      <Menu hasBox={hasBox} hasArrow={hasArrow}
+      <Menu hasBox={hasBox} hasArrow={hasArrow} hasRipple={ripple} autoIndent={indent}
             type={type}>
         <Menu.SubMenu header="SubMenu 1" id="sub1" icon={<IconList/>}
                       hasBottomBar={bottomBar}>

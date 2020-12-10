@@ -30,6 +30,7 @@ Enhance:
 - integrate with Algolia DocSearch 
 - toggle: support normal & small size
 - verify the useEventCallback won't be recreated multiple times
+- all components should reactor use EventCallback to bind the onXX events
 
 Note:
 - components 下的package需要修改为json后缀才可以发布版本，当前使用了阿里的源，发布时修改修改对应的.yarnrc和.npmrc去取消发布路径。

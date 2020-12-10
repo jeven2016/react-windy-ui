@@ -5,8 +5,8 @@ export default function Menu1() {
 
   return <Menu style={{width: '20rem'}}
                defaultActiveItems={'item1'}
-               onSelect={(itemInfo, e) => {
-                 console.log(itemInfo);
+               onSelect={(itemId, e) => {
+                 console.log(itemId);
                }}>
     <Menu.Item id="item1">Menu Item1</Menu.Item>
     <Menu.Item id="item2">Menu Item2</Menu.Item>
