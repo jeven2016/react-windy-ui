@@ -21,17 +21,11 @@ export default function Navbar6() {
           <span style={{flex: '1 1 auto'}}>Web</span>
         </Navbar.Title>
         <Navbar.List align="right">
-          <Navbar.Item style={{minWidth: '2rem', padding: '0 .5rem'}}>
-            <Button circle outline color="green"
-                    extraClassName="clear-border"
-                    style={{color: '#fff'}}>
+          <Navbar.Item>
+            <Button circle inverted size="large">
               <IconSearch/>
             </Button>
-          </Navbar.Item>
-          <Navbar.Item style={{minWidth: '2rem', padding: '0 .5rem'}}>
-            <Button circle outline color="green"
-                    extraClassName="clear-border"
-                    style={{color: '#fff'}}>
+            <Button circle inverted size="large">
               <IconHome/>
             </Button>
           </Navbar.Item>

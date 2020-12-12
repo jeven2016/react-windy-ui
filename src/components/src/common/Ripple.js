@@ -91,7 +91,7 @@ const Ripple = React.forwardRef((props, ref) => {
     from: {opacity: 0.1, transform: 'scale(0)'},
     enter: {opacity: 0.4, transform: 'scale(1)'},
     leave: {opacity: 0},
-    config: config.gentle,
+    config: config.slow,
   });
 
   return <div className='ripple' ref={rippleRef}>

@@ -6,7 +6,10 @@ import Ripple from '../common/Ripple';
 import clsx from 'clsx';
 import Loader from '../Loader';
 
-const grayRippleColor = '#333';
+const defaultRippleColor = {
+  defaultButton: '#333',
+  other: '#fff',
+};
 
 /**
  * Button component
@@ -41,7 +44,7 @@ const Button = React.forwardRef((props, ref) => {
     hasBorder = true,
     invertedOutline = false,
     hasRipple = true,
-    rippleColor = '#fff',
+    rippleColor,
     onClick,
     disabled = false,
     leftIcon,
@@ -57,10 +60,16 @@ const Button = React.forwardRef((props, ref) => {
       React.Children.count(children) === 0;
 
   const realRippleColor = useMemo(() => {
-    if (color === 'gray' || type === 'gray') {
-      return grayRippleColor;
+    if (nonNil(rippleColor)) {
+      return rippleColor;
     }
-    return rippleColor;
+    if (isNil(color) && isNil(type)) {
+      return defaultRippleColor.defaultButton;
+    }
+    if (color === 'gray' || type === 'gray') {
+      return defaultRippleColor.defaultButton;
+    }
+    return defaultRippleColor.other;
   }, [color, rippleColor, type]);
 
   let clsName = {

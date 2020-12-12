@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Button from '../button';
 import {NavbarContext} from '../common/Context';
-import {nonNil} from "../Utils";
+import {nonNil} from '../Utils';
 
 const Switch = React.forwardRef((props, ref) => {
   const {
@@ -13,7 +13,8 @@ const Switch = React.forwardRef((props, ref) => {
     type = 'normal',
     circle = true,
     style = {},
-    buttonColor = 'blue',
+    rippleColor = '#fff',
+    buttonProps,
     simplified = false,//todo
     ...otherProps
   } = props;
@@ -33,16 +34,15 @@ const Switch = React.forwardRef((props, ref) => {
 
   const {color, ...otherStyles} = style;
   const others = {style: {...otherStyles}, ...otherProps};
-  return <span style={nonNil(color) ? {color} : null}>
-    <Button inverted
-            hasBox={false}
-            color={buttonColor}
-            size="small"
-            circle={circle}
-            ref={ref}
-            onClick={click}
-            {...others} />
-  </span>;
+  return <Button inverted
+                 className="button navbar-switch"
+                 hasBox={false}
+                 rippleColor={rippleColor}
+                 size="large"
+                 circle={circle}
+                 ref={ref}
+                 onClick={click}
+                 {...others} />;
 });
 
 Switch.propTypes = {

@@ -3,6 +3,7 @@ order: 4
 type: sample
 zh_CN: 靠右侧排列的Item
 en_US: navbar
+onlyVisible: false
 editUrl: $BASE/docs/pages/navbar/md/navbar4.md
 ---
 

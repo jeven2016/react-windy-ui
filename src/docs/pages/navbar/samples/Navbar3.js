@@ -8,12 +8,12 @@ export default function Navbar3() {
   return <>
     <div className="doc doc-row">
       <div className="doc doc-row">
-        <Toggle active={bg} content={{on: 'Background', off: 'Background'}}
+        <Toggle active={bg} label='Background'
                 onChange={(val) => setBg(val)}/>
       </div>
       <div className="doc doc-row">
         <Toggle active={bottomBar}
-                content={{on: 'Bottom Bar', off: 'Bottom Bar'}}
+                label='Bottom Bar'
                 onChange={(val) => setBottomBar(val)}/>
       </div>
     </div>

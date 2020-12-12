@@ -34,7 +34,7 @@ editUrl: $BASE/docs/pages/button/md/api.md
 | hasBorder | 是否有box阴影边框 | boolean | true | 对非outline类型的按钮生效 |
 | invertedOutline | outline按钮的反转形态 | boolean | false |  |
 | hasRipple | 是否有点击的水纹效果 | boolean | false |  |
-| rippleColor | 水纹的颜色 | string | false | 颜色字符串值，例如<Code>'#333'</Code> |
+| rippleColor | 水纹的颜色 | string | - | 颜色字符串值，例如<Code>'#333'</Code> |
 | onClick | 点击按钮触发的回调 | function | - |  |
 | disabled | 禁用按钮 | boolean | false |  |
 | leftIcon | 在左侧显示的Icon | react node | - | 当按钮中只有Icon时，设置leftIcon或rightIcon效果相同 |

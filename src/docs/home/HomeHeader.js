@@ -17,7 +17,7 @@ export default function HomeHeader({transparent = false}) {
       setBarExtraCls(affixed ? 'affix-fixed' : '');
     }}>
       <div className={`doc home-header ${transparent ? 'transparent' : ''}`}>
-        <Navbar extraClassName={barExtraCls} type="primary"
+        <Navbar extraClassName={barExtraCls} type="primary" id="header"
                 hasBox={false} hasBorder={false}>
 
           <Navbar.Title>

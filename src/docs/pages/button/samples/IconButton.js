@@ -1,19 +1,24 @@
 import React from 'react';
-import {Button, IconList, IconQuestion, IconSearch} from 'react-windy-ui';
+import {Button, IconSearch} from 'react-windy-ui';
+import {faCog} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 const IconButton = () => {
   return <>
     <div className="doc doc-row">
-      <Button type="primary" size="large" leftIcon={<IconList/>}/>
+      <Button type="primary" size="large"
+              leftIcon={<FontAwesomeIcon icon={faCog} size='1x'/>}/>
       <Button type="primary" size="medium"
-              leftIcon={<IconQuestion/>}/>
-      <Button type="primary" size="small" leftIcon={<IconSearch/>}/>
+              leftIcon={<FontAwesomeIcon icon={faCog}/>}/>
+      <Button type="primary" size="small"
+              leftIcon={<FontAwesomeIcon icon={faCog}/>}/>
     </div>
     <div className="doc doc-row">
-      <Button type="primary" size="large" leftIcon={<IconList/>} circle/>
+      <Button type="primary" size="large" leftIcon={<IconSearch/>} circle/>
       <Button type="primary" size="medium"
-              leftIcon={<IconQuestion/>} circle/>
-      <Button type="primary" size="small" leftIcon={<IconSearch/>} circle/>
+              leftIcon={<IconSearch/>} circle/>
+      <Button type="primary" size="small" leftIcon={<IconSearch size="small"/>}
+              circle/>
     </div>
   </>;
 };

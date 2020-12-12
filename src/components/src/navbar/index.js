@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 import Navbar from './Navbar';
 import Switch from './Switch';
 import Element from '../common/Element';
 import {NavbarListAlign} from '../common/Constants';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import {NavbarContext} from '../common/Context';
+import {useTransition} from 'react-spring';
 
 const Title = React.forwardRef((props, ref) => {
   const {className = 'title', nativeType = 'li', ...otherProps} = props;
@@ -20,15 +22,24 @@ const List = React.forwardRef((props, ref) => {
     nativeType = 'ul',
     extraClassName,
     align = 'left',
+    style,
     ...otherProps
   } = props;
+  const {expandList, smallWindow} = useContext(NavbarContext);
   let alignClsName = NavbarListAlign[align];
 
   let clsName = clsx(extraClassName, className, {
     [alignClsName]: alignClsName,
+    'small-window': smallWindow,
   });
 
+  const newStyle = {
+    ...style,
+    display: (expandList && smallWindow) || !smallWindow ? 'flex' : 'none',
+  };
+
   return <Element nativeType={nativeType} className={clsName} ref={ref}
+                  style={newStyle}
                   {...otherProps}/>;
 });
 
@@ -39,7 +50,7 @@ const Item = React.forwardRef((props, ref) => {
     nativeType = 'li',
     hasBackground = false,
     hasBar = false,
-    active=false,
+    active = false,
     alignRight,
     ...otherProps
   } = props;

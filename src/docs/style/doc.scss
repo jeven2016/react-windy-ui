@@ -17,6 +17,7 @@
 body {
   background-color: #fff;
   color: rgb(43, 48, 54);
+  overflow: hidden;
 }
 
 .root {
@@ -492,6 +493,10 @@ ul {
 
   .doc.normal-panel {
     padding: 4rem 0;
+  }
+
+  iframe{
+    width: 100%!important;
   }
 }
 
