@@ -1,12 +1,20 @@
-import React from 'react';
-import {IconList, Navbar} from 'react-windy-ui';
+import React, {useState} from 'react';
+import {IconList, Toggle,Navbar} from 'react-windy-ui';
 import DocFrame, {FrameContextConsumer} from '../../../utils/DocFrame';
 
 export default function Navbar4() {
+  const [smallWindow, setSmallWindow] = useState(false);
+
+  const width = smallWindow ? '500px' : '100%';
   return <>
+    <div className="doc doc-row">
+      <Toggle active={smallWindow}
+              label='Small Window'
+              onChange={(val) => setSmallWindow(val)}/>
+    </div>
 
     {/*the doc frame is an iframe for demo*/}
-    <DocFrame width='450px' height='270px'>
+    <DocFrame width={width} height='270px'>
       <FrameContextConsumer>
         {
           ({document, window:iframeWindow}) =>
@@ -18,9 +26,9 @@ export default function Navbar4() {
                   <Navbar.Switch>
                     <IconList size="small"/>
                   </Navbar.Switch>
-                  <span>Web</span>
+                  <span>Navbar</span>
                 </Navbar.Title>
-                <Navbar.List align="right">
+                <Navbar.List justify="end">
                   <Navbar.Item hasBackground={true}>
                     User
                   </Navbar.Item>

@@ -29,7 +29,7 @@ export default function Navbar2() {
         </Navbar.Switch>
         Navbar
       </Navbar.Title>
-      <Navbar.List>
+      <Navbar.List justify="end">
         <Navbar.Item hasBackground={bg} hasBar={bottomBar}>
           User
         </Navbar.Item>
@@ -51,7 +51,17 @@ export default function Navbar2() {
             </Dropdown.Menu>
           </Dropdown>
         </Navbar.Item>
-        <Navbar.Item hasBackground={false} hasBar={false} alignRight={true}>
+        <Navbar.Item hasBackground={false} hasBar={false}>
+          <Dropdown title={<Button>Dropdown</Button>}>
+            <Dropdown.Menu>
+              <Dropdown.Item id="item1">Menu Item1</Dropdown.Item>
+              <Dropdown.Item id="item2">Menu Item2</Dropdown.Item>
+              <Dropdown.Item id="item3">Menu Item3</Dropdown.Item>
+              <Dropdown.Item id="item4">Menu Item4</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Navbar.Item>
+        <Navbar.Item hasBackground={false} hasBar={false} compact={true}>
           <Tooltip body="Twitter">
             <Button size="large" circle>
               <FontAwesomeIcon icon={faTwitter}/>
@@ -62,14 +72,6 @@ export default function Navbar2() {
               <FontAwesomeIcon icon={faGithub}/>
             </Button>
           </Tooltip>
-          <Dropdown title={<Button>Dropdown</Button>}>
-            <Dropdown.Menu>
-              <Dropdown.Item id="item1">Menu Item1</Dropdown.Item>
-              <Dropdown.Item id="item2">Menu Item2</Dropdown.Item>
-              <Dropdown.Item id="item3">Menu Item3</Dropdown.Item>
-              <Dropdown.Item id="item4">Menu Item4</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
         </Navbar.Item>
       </Navbar.List>
     </Navbar>

@@ -49,6 +49,16 @@ export const isBlank = (value) => {
 
 export const startsWith = (first, next) => first.slice(0, next.length) === next;
 
+export const getScrollTop = (win) => {
+  return win.document.documentElement.scrollTop || win.pageYOffset
+      || win.document.body.scrollTop;
+};
+
+export const getScrollLeft = (win) => {
+  return win.document.documentElement.scrollLeft || win.pageXOffset
+      || win.document.body.scrollLeft;
+};
+
 /**
  * Set padding property for a child node instead of setting margin property
  * @param destComponent
@@ -138,10 +148,8 @@ export const place = (dest, ctrl, type, offset = 0) => {
 
   const destPosition = dest.style.position;
   if (isNil(destPosition) || destPosition !== 'fixed') {
-    scrollTop = document.documentElement.scrollTop || window.pageYOffset
-        || document.body.scrollTop;
-    scrollLeft = document.documentElement.scrollLeft || window.pageXOffset
-        || document.body.scrollLeft;
+    scrollTop = getScrollTop(window);
+    scrollLeft = getScrollLeft(window);
   }
 
   let posLeft = Math.floor(pos.left);

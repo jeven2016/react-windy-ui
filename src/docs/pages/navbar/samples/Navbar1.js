@@ -1,10 +1,26 @@
-import React from 'react';
-import {Navbar} from 'react-windy-ui';
+import React, {useState} from 'react';
+import {Navbar, Toggle} from 'react-windy-ui';
 
 export default function Navbar1() {
+  const [border, setBorder] = useState(false);
+  const [box, setBox] = useState(true);
+
   return <>
+
     <div className="doc doc-row">
-      <Navbar>
+      <div className="doc doc-row">
+        <Toggle active={border} label='Border'
+                onChange={(val) => setBorder(val)}/>
+      </div>
+      <div className="doc doc-row">
+        <Toggle active={box}
+                label='Box Shadow'
+                onChange={(val) => setBox(val)}/>
+      </div>
+    </div>
+
+    <div className="doc doc-row">
+      <Navbar hasBox={box} hasBorder={border}>
         <Navbar.Title>
           Navbar
         </Navbar.Title>
@@ -24,11 +40,11 @@ export default function Navbar1() {
     </div>
 
     <div className="doc doc-row">
-      <Navbar style={{marginTop: '2rem'}} hasBox={false} hasBorder={true}>
+      <Navbar hasBox={box} hasBorder={border} type="primary">
         <Navbar.Title>
           Navbar
         </Navbar.Title>
-        <Navbar.List>
+        <Navbar.List justify="end">
           <Navbar.Item hasBackground={true}>
             User
           </Navbar.Item>

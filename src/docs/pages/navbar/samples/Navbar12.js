@@ -1,10 +1,19 @@
 import React, {useState} from 'react';
-import {IconList, Navbar, Toggle, RadioGroup, Radio} from 'react-windy-ui';
+import {
+  Drawer,
+  IconList,
+  Menu,
+  Navbar,
+  Radio,
+  RadioGroup,
+  Toggle,
+} from 'react-windy-ui';
 import DocFrame, {FrameContextConsumer} from '../../../utils/DocFrame';
 
-export default function Navbar9() {
-  const [smallWindow, setSmallWindow] = useState(false);
+export default function Navbar12() {
+  const [smallWindow, setSmallWindow] = useState(true);
   const [position, setPosition] = useState('top');
+  const [activeDrawer, setActiveDrawer] = useState(false);
 
   const width = smallWindow ? '500px' : '100%';
   return <>
@@ -22,21 +31,25 @@ export default function Navbar9() {
       </RadioGroup>
     </div>
 
+
     {/*the doc frame is an iframe for demo*/}
-    <DocFrame width={width} height='270px'>
+    <DocFrame width={width} height='270px' frameBorder="1px solid #333">
       <FrameContextConsumer>
+
         {
           ({document, window: iframeWindow}) => <>
             {/*detecting the change of the iframe since we demonstrate via an embedded iframe.*/}
-            {/*Please ignore the targetWindow & mediaQueryWindow properties if your navbar isn't running in a iframe*/}
+            {/*Please ignore the targetWindow & mediaQueryWindow if your navbar isn't running in a iframe*/}
 
-            <Navbar type="primary" hasBorder={false} fixed={position}
-                    mediaQueryWindow={iframeWindow}>
-              <Navbar.Title style={{width: '100%'}}>
-                <span style={{flex: '1 1 auto'}}>Web</span>
-                <Navbar.Switch>
+            <Navbar mediaQueryWindow={iframeWindow} type="primary"
+                    fixed={position}>
+              <Navbar.Title>
+                <Navbar.Switch autoSwitch={false} onClick={(e) => {
+                  setActiveDrawer(true);
+                }}>
                   <IconList/>
                 </Navbar.Switch>
+                <span style={{flex: '1 1 auto'}}>Web</span>
               </Navbar.Title>
               <Navbar.List justify="end">
                 <Navbar.Item hasBackground={true}>
@@ -50,11 +63,24 @@ export default function Navbar9() {
                 </Navbar.Item>
               </Navbar.List>
             </Navbar>
+
+            <Drawer active={activeDrawer}
+                    style={{width: '50%'}}
+                    onChange={(e, show) => setActiveDrawer(show)}>
+              <Menu hasBox={false} onSelect={() => setActiveDrawer(false)}>
+                <Menu.Item id="user">User</Menu.Item>
+                <Menu.Item id="role">Role</Menu.Item>
+                <Menu.Item id={'security'}>Security</Menu.Item>
+              </Menu>
+            </Drawer>
+
             <div style={{height: '400px'}}>
 
             </div>
+
           </>
         }
+
       </FrameContextConsumer>
     </DocFrame>
   </>;

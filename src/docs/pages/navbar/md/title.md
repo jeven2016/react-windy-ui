@@ -1,14 +1,14 @@
 ---   
   order: 0
   type: text
-  zh_CN: 导航条 NavBar
+  zh_CN: 导航条 Navbar
   en_US: NavBar
   editUrl: $BASE/docs/pages/navbar/md/title.md
 ---      
 
 +++  zh_CN
 ## 导航条 NavBar [editUrl] 
-可将一系列操作放置在导航条，或是当前窗口相关的内容。可用于展示标题、品牌、导航选项等。  
+导航条，可在其中放置一系列操作， 也可用于展示标题、品牌等。  
     
 - 提供了两种类型的NavBar
 - 支持自定义背景色

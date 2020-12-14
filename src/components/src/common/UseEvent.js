@@ -21,17 +21,23 @@ const useEvent = (
    */
   useEffect(() => {
     if (!listenable) {
+      handlerRef.current = null;
       return;
     }
     handlerRef.current = handler;
   }, [handler, listenable]);
 
   useEffect(() => {
+    let elemNode, listener;
     if (!listenable) {
+      if (name && listener && elemNode) {
+        elemNode.removeEventListener(name, listener);
+        elemNode = null;
+      }
       return;
     }
 
-    let elemNode = elem;
+    elemNode = elem;
     if (isFunction(elem)) {
       elemNode = invoke(elem);
     } else if (elem.current) {
@@ -43,12 +49,11 @@ const useEvent = (
     if (!isSupportedBrowser) {
       return;
     }
-    // console.log('add a event listener: ' + name);
-    const listener = event => handlerRef.current(event);
+    listener = event => handlerRef.current(event);
     elemNode.addEventListener(name, listener);
     return () => {
-      // console.log('remove a event listener: ' + name);
       elemNode.removeEventListener(name, listener);
+      elemNode = null;
     };
   }, [name, elem, listenable]);
 };

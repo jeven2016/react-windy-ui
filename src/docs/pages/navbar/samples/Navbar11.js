@@ -1,13 +1,21 @@
 import React, {useState} from 'react';
-import {Affix, IconList, Navbar, Toggle} from 'react-windy-ui';
+import {
+  IconList,
+  Navbar,
+  Toggle,
+  RadioGroup,
+  Radio,
+  Affix,
+} from 'react-windy-ui';
 import DocFrame, {FrameContextConsumer} from '../../../utils/DocFrame';
 
 const fixedNavbarStyle = {
   background: '#333',
 };
 
-export default function Navbar10() {
+export default function Navbar11() {
   const [smallWindow, setSmallWindow] = useState(false);
+  const [position, setPosition] = useState('top');
   const [affixedStyle, setAffixedStyle] = useState(null);
 
   const width = smallWindow ? '500px' : '100%';
@@ -19,6 +27,13 @@ export default function Navbar10() {
                 onChange={(val) => setSmallWindow(val)}/>
       </div>
     </div>
+    <div className="doc doc-row">
+      <RadioGroup value={position} onChange={(val) => setPosition(val)}>
+        <Radio value="top" checkedColor="purple">Top</Radio>
+        <Radio value="bottom" checkedColor="green">Bottom</Radio>
+      </RadioGroup>
+    </div>
+
 
     {/*the doc frame is an iframe for demo*/}
     <DocFrame width={width} height='270px' frameBorder="1px solid #333">
@@ -27,13 +42,13 @@ export default function Navbar10() {
         {
           ({document, window: iframeWindow}) => <>
             {/*detecting the change of the iframe since we demonstrate via an embedded iframe.*/}
-            {/*Please ignore the targetWindow & mediaQueryWindow properties if your navbar isn't running in a iframe*/}
+            {/*Please ignore the targetWindow & mediaQueryWindow if your navbar isn't running in a iframe*/}
 
             <Affix targetWindow={iframeWindow} block top={0}
                    onChange={affixed => {
                      setAffixedStyle(affixed ? fixedNavbarStyle : null);
                    }}>
-              <Navbar mediaQueryWindow={iframeWindow} type="primary"
+              <Navbar mediaQueryWindow={iframeWindow} type="primary" hideOnScroll={true}
                       style={{borderRadius: '0', ...affixedStyle}}>
                 <Navbar.Title>
                   <Navbar.Switch>
@@ -54,13 +69,7 @@ export default function Navbar10() {
                 </Navbar.List>
               </Navbar>
             </Affix>
-            <div style={{height: '400px', marginTop: '1rem'}}>
-              The HTML Element (or HTML Block Quotation Element) indicates that
-              the enclosed text is an extended quotation. Usually, this is
-              rendered visually by indentation (see Notes for how to change it).
-              A URL for the source of the quotation may be given using the cite
-              attribute, while a text representation of the source can be given
-              using the &lt;cite&gt; element.
+            <div style={{height: '700px'}}>
             </div>
           </>
         }
