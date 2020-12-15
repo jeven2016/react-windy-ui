@@ -14,10 +14,11 @@ const Tooltip = React.forwardRef((props, ref) => {
     position = 'top',
     body,
     zIndex = 2000,
-    offset = 10,
+    offset = 8,
     hasArrow = true,
     children,
     popupInstanceRef,
+    popupBodyStyle,
     ...otherProps
   } = props;
   let clsName = clsx(extraClassName, className);
@@ -31,12 +32,11 @@ const Tooltip = React.forwardRef((props, ref) => {
   const animationFunc = (activeState) => {
     return {
       from: {
-        transform: 'scaleY(0.9)',
-        opacity: 0,
-        transformOrigin: 'center',
+        // transform: activeState ? 'scaleY(1)' : 'scaleY(0.9)',
+        opacity: activeState ? 1 : 0,
       },
       to: {
-        transform: activeState ? 'scaleY(1)' : 'scaleY(0.9)',
+        // transform: activeState ? 'scaleY(1)' : 'scaleY(0.9)',
         opacity: activeState ? 1 : 0,
       },
     };
@@ -53,7 +53,8 @@ const Tooltip = React.forwardRef((props, ref) => {
       ctrlNode={children}
       body={popupBody}
       hasBorder={false}
-      hasBox={true}
+      popupBodyStyle={{...popupBodyStyle, background: 'transparent'}}
+      hasBox={false}
       zIndex={zIndex}
   />;
 

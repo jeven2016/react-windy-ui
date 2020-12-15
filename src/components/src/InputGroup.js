@@ -26,7 +26,7 @@ const InputGroup = React.forwardRef((props, ref) => {
         return chd;
       }
 
-      return <Item autoScale={true} compact={false}>
+      return <Item autoScale={true}>
         {chd}
       </Item>;
     });
@@ -83,6 +83,13 @@ InputGroup.propTypes = {
 Label.propTypes = {
   className: PropTypes.string, //the class name of button
   extraClassName: PropTypes.string, //the customized class need to add
+  compact: PropTypes.bool,
+};
+
+Item.propTypes = {
+  className: PropTypes.string, //the class name of button
+  extraClassName: PropTypes.string, //the customized class need to add
+  autoScale: PropTypes.bool,
 };
 
 InputGroup.Label = Label;

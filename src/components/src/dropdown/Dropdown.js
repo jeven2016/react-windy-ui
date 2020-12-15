@@ -58,6 +58,10 @@ Dropdown.propTypes = {
   className: PropTypes.string,
   title: PropTypes.node,
   onSelect: PropTypes.func,
+  popupInstanceRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({current: PropTypes.elementType}),
+  ]),
 };
 
 export default Dropdown;

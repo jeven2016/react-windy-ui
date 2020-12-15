@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/dropdown/md/dp1.md
 ---
 
 +++ zh_CN
-一个简单的示例，点击文本、Button后弹出菜单。
+点击文本、Button后弹出菜单。
 
 +++ en_US
 Dp1

@@ -1,9 +1,28 @@
 import React from 'react';
-import {Button, Dropdown} from 'react-windy-ui';
+import {Button, Dropdown, Tooltip} from 'react-windy-ui';
 
 const createDropdown = (text, position, activeBy) => {
-  const title = <Button hasMinWidth={false} color="primary" outline
-                        style={{margin: '1rem'}}>{text}</Button>;
+  let tooltipPosition;
+
+  if (position.startsWith('left')) {
+    tooltipPosition = position.replace('left', 'right');
+  } else if (position.startsWith('right')) {
+    tooltipPosition = position.replace('right', 'left');
+  } else if (position.startsWith('bottom')) {
+    tooltipPosition = position.replace('bottom', 'top');
+  } else if (position.startsWith('top')) {
+    tooltipPosition = position.replace('top', 'bottom');
+  }
+
+  const title = <Tooltip body={position} position={tooltipPosition}><Button
+      color="primary" outline initOutlineColor
+      style={{
+        margin: '.5rem',
+        fontSize: '.8rem',
+        width: '2rem',
+        height: '2rem',
+      }}>{text}</Button></Tooltip>;
+
   return <Dropdown position={position}
                    title={title}
                    activeBy={activeBy}>

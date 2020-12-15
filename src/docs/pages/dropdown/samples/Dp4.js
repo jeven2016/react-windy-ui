@@ -11,9 +11,8 @@ export default function Dp4() {
         </Dropdown.Item>
         <Dropdown.Item onClick={(e) => {
           console.log('click item2');
-          e.stopPropagation();
         }}>
-          Won't close
+          Menu Item2
         </Dropdown.Item>
         <Dropdown.Item onClick={() => console.log('click item3')}>
           Menu Item3

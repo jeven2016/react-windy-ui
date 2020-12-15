@@ -7,8 +7,8 @@ export default function Pop2() {
     <div>This is a sample</div>
   </>;
   return <>
-    <Popover body={body} activeBy="hover">
-      <Button outline={true} color="blue">Hover</Button>
+    <Popover body={body} activeBy="click">
+      <Button outline={true} color="blue">Click</Button>
     </Popover>
 
     <Popover header="Hover" body={body} activeBy="hover">
