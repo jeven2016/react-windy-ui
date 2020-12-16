@@ -1,11 +1,9 @@
-import React from 'react';
-import {
-  PopupCtrlType,
-  PositionClass,
-} from './common/Constants';
+import React, {useMemo} from 'react';
+import {PopupCtrlType, PositionClass} from './common/Constants';
 import clsx from 'clsx';
 import Popup from './popup/Popup';
 import * as PropTypes from 'prop-types';
+import {isColorValue, nonNil} from './Utils';
 
 const Tooltip = React.forwardRef((props, ref) => {
   const {
@@ -14,29 +12,52 @@ const Tooltip = React.forwardRef((props, ref) => {
     position = 'top',
     body,
     zIndex = 2000,
-    offset = 8,
+    offset = 5,
     hasArrow = true,
+    background,
+    tooltipStyle,
     children,
     popupInstanceRef,
     popupBodyStyle,
     ...otherProps
   } = props;
-  let clsName = clsx(extraClassName, className);
-  let positionClassName = `${PositionClass[position]} tooltip-arrow`;
 
-  const popupBody = <div className={clsName} ref={ref}>
-    {hasArrow && <div className={positionClassName}/>}
+  const isColorString = isColorValue(background);
+  const bgClsName = (nonNil(background) && !isColorString)
+      ? `bg-color-${background}`
+      : null;
+
+  let clsName = clsx(extraClassName, className, bgClsName);
+
+  const positionClsName = PositionClass[position];
+  let arrowClsName = clsx(positionClsName, 'tooltip-arrow', bgClsName);
+
+  const realStyleBg = useMemo(() => {
+    const styleBg = tooltipStyle?.background;
+    if (nonNil(styleBg)) {
+      return {background: styleBg};
+    }
+    if (isColorString) {
+      return {background: background};
+    }
+    return null;
+  }, [background, isColorString, tooltipStyle]);
+
+  const popupBody = <div className={clsName} ref={ref} style={realStyleBg}>
+    {
+      hasArrow &&
+      <div className={arrowClsName} style={realStyleBg}/>}
     {body}
   </div>;
 
   const animationFunc = (activeState) => {
     return {
       from: {
-        // transform: activeState ? 'scaleY(1)' : 'scaleY(0.9)',
+        transform: activeState ? 'scale(1)' : 'scale(0.9)',
         opacity: activeState ? 1 : 0,
       },
       to: {
-        // transform: activeState ? 'scaleY(1)' : 'scaleY(0.9)',
+        transform: activeState ? 'scale(1)' : 'scale(0.9)',
         opacity: activeState ? 1 : 0,
       },
     };
@@ -68,6 +89,9 @@ Tooltip.propTypes = {
   hasArrow: PropTypes.bool,
   zIndex: PropTypes.number,
   offset: PropTypes.number,
+  background: PropTypes.string,
+  tooltipStyle: PropTypes.object,
+  popupBodyStyle: PropTypes.object,
 };
 
 export default Tooltip;

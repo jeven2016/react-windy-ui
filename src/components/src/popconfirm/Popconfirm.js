@@ -1,18 +1,22 @@
-import React, {useCallback, useRef} from 'react';
+import React, {useRef} from 'react';
 import Popover from '../popover';
 import {IconWarning2} from '../Icons';
 import Button from '../button';
 import {JustifyContentType, PopupPosition} from '../common/Constants';
 import clsx from 'clsx';
 import * as PropTypes from 'prop-types';
+import useEventCallback from '../common/useEventCallback';
 
+/**
+ * PopConfirm Component
+ */
 const PopConfirm = React.forwardRef((props, ref) => {
   const {
     className = 'pop-confirm',
     extraClassName,
     body,
-    okText = 'Ok',
-    cancelText = 'No',
+    okText = 'OK',
+    cancelText = 'NO',
     okButtonProps,
     cancelButtonProps,
     children,
@@ -32,19 +36,19 @@ const PopConfirm = React.forwardRef((props, ref) => {
     [justifyCls]: justifyCls,
   });
 
-  const closePopover = useCallback(() => {
+  const closePopover = useEventCallback(() => {
     popupRef.current.changeActive(false);
-  }, [popupRef]);
+  });
 
-  const handleOk = useCallback((e) => {
+  const handleOk = useEventCallback((e) => {
     onOk && onOk(e);
     closePopover();
-  }, [closePopover, onOk]);
+  });
 
-  const handleCancel = useCallback((e) => {
+  const handleCancel = useEventCallback((e) => {
     onCancel && onCancel(e);
     closePopover();
-  }, [closePopover, onCancel]);
+  });
 
   const bodyCnt = <div className={clsName}>
     <div className="pop-row">
@@ -68,7 +72,7 @@ const PopConfirm = React.forwardRef((props, ref) => {
     </div>
   </div>;
 
-  return <Popover popupInstanceRef={popupRef} body={bodyCnt} position={position}
+  return <Popover ref={ref} popupInstanceRef={popupRef} body={bodyCnt} position={position}
                   autoWidth={true} {...otherProps}>
     {children}
   </Popover>;

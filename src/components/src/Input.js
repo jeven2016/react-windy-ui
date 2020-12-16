@@ -55,6 +55,7 @@ const PureInput = React.forwardRef((props, ref) => {
   return (
       <Element nativeType="input" ref={ref} className={clsName}
                type="text"
+               autoComplete='off'
                setDisabledAttr={true}
                readOnly={readOnly}
                disabled={disabled}
@@ -116,7 +117,7 @@ const IconInput = React.forwardRef((props, ref) => {
     <PureInput ref={multiInputRef} canFocus={false} placeholder={placeholder}
                size={size}
                disabled={disabled} {...otherProps}/>
-    {icon && <span className="icon-column" {...iconProps}>{icon}</span>}
+    {icon && <span className="icon-column" unselectable="on" {...iconProps}>{icon}</span>}
     {!leftIcon && restIcons()}
   </span>;
 });
@@ -186,9 +187,9 @@ IconInput.propTypes = {
   leftIcon: PropTypes.bool, // whether the icon is placed in left side of the input
   rightIcons: PropTypes.arrayOf(PropTypes.node),
   rootProps: PropTypes.object,
-  rootRef: PropTypes.oneOfType([
+  rootRef:  PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({current: PropTypes.elementType}),
+    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
   ]),
   placeholder: PropTypes.string,
   errorType: PropTypes.oneOf(['ok', 'warning', 'error']),
@@ -210,9 +211,9 @@ PureInput.propTypes = {
 };
 
 Password.propTypes = {
-  rootRef: PropTypes.oneOfType([
+  rootRef:  PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({current: PropTypes.elementType}),
+    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
   ]),
   hasToggleIcon: PropTypes.bool,
   toggleIcons: PropTypes.array.length,

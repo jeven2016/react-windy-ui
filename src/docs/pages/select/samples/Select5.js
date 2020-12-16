@@ -7,6 +7,7 @@ import {
   Select,
   Tooltip,
 } from 'react-windy-ui';
+import {IconChecked} from '../../../../components/src';
 
 const rootStyle = {
   display: 'flex',
@@ -47,7 +48,7 @@ const descStyle = {
 const Template = ({title, desc}) => {
   return <div style={rootStyle}>
     <div style={iconColumn}>
-      <IconHome style={{fontSize: '2rem'}}/>
+      <IconHome size="large"/>
     </div>
     <div style={infoColumn}>
       <div style={titleStyle}>
@@ -64,6 +65,7 @@ const Template = ({title, desc}) => {
 export default function Select5() {
   const [list, setList] = useState([]);
   const [value, setValue] = useState('');
+  const [active, setActive] = useState(false);
 
   const changValue = (e) => {
     setValue(e.target.value);
@@ -80,27 +82,33 @@ export default function Select5() {
             defaultValue="shanghai"
             position="bottomLeft"
             autoWidth={false}
-            onActiveChange={(item) => console.log(item)}>//todo
+            active={active}
+            onActiveChange={(next) => setActive(next)}>
+
       <Select.Option value="park" text="Central Park"
                      style={{borderBottom: '1px solid #ccc'}}>
         <Template title="Central Park"
                   desc=" 5 Ave to Central Park W, 59 St To 110 St, New York, NY 10019"/>
       </Select.Option>
-      <Select.Option value="nanjing" text="Nanjing"
+
+      <Select.Option value="nanjing" text={<IconChecked/>}
                      style={{borderBottom: '1px solid #ccc'}}>
         <Template title="Nanjing Presidential Palace Park"
                   desc="No. 292, Changjiang Road, Xuanwu District"/>
       </Select.Option>
+
       <Select.Option value="shanghai" text="Shanghai"
                      style={{borderBottom: '1px solid #ccc'}}>
         <Template title="Shanghai Museum"
                   desc="No.201 Renmin Avenue, Shanghai, Shang..."/>
       </Select.Option>
+
       <Select.Option value="hk" text="HongKong"
                      style={{borderBottom: '1px solid #ccc'}}>
         <Template title="Victoria Peak"
                   desc="33 Garden Road, Central, Hong Kong Isla..."/>
       </Select.Option>
+
       {
         list.map((title, index) => {
           return <Select.Option key={title + index} value={title} text={title}
@@ -110,14 +118,19 @@ export default function Select5() {
           </Select.Option>;
         })
       }
+
       <div style={{display: 'flex', justifyContent: 'center', padding: '1rem'}}
-           onClick={(e) => e.stopPropagation()}>
-        <InputGroup>
+           onClick={(e) => setActive(true)}>
+
+        <InputGroup style={{width: '13rem'}}>
           <Input placeholder="Creat New" value={value} onChange={changValue}/>
-          <Tooltip body="Try to create one" position="right">
-            <Button onClick={(e) => {create(e);}}>+</Button>
-          </Tooltip>
+          <InputGroup.Item autoScale={false}>
+            <Tooltip body="Try to create one" position="bottom">
+              <Button onClick={(e) => {create(e);}}>+</Button>
+            </Tooltip>
+          </InputGroup.Item>
         </InputGroup>
+
       </div>
     </Select>
   </>;

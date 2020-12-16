@@ -5,7 +5,8 @@ import Menu from '../menu';
 import {
   containsIgnoreCase,
   convertToArray,
-  execute, getErrorClsName,
+  execute,
+  getErrorClsName,
   isBlank,
   isCustomized,
   isNil,
@@ -23,6 +24,7 @@ import {preventEvent} from '../event';
 import Loader from '../Loader';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import * as PropTypes from 'prop-types';
+import useEventCallback from '../common/useEventCallback';
 
 const Option = React.forwardRef((props, ref) => {
   const {value, children, hasBackground = true, text, ...otherProps} = props;
@@ -83,7 +85,7 @@ const Select = React.forwardRef((props, ref) => {
     menuProps = {},
     removable = true, //whether the search text can be removed
     loaderType = 'primary',
-    showLoader = false,
+    loading = false,
     ctrlRef,
     ...otherProps
   } = props;
@@ -299,24 +301,21 @@ const Select = React.forwardRef((props, ref) => {
   }, [setSearchedValue, onSearch]);
 
   const realIcon = useMemo(() => {
-    if (showLoader) {
-      return <div className="icon-column">
-        <Loader type={loaderType} active size="small"/>
-      </div>;
+    if (loading) {
+      return <Loader type={loaderType} active size="small"/>;
     }
     if (multiSelect) {
       return null;
     }
 
     if (removable && !isBlank(searchedValue)) {
-      return <div className="icon-column">X</div>;
+      return 'x';
     }
 
-    let icon = isActive ? activeArrowIcon : arrowIcon;
-    return <div className="icon-column">{icon}</div>;
+    return isActive ? activeArrowIcon : arrowIcon;
   }, [
     isActive,
-    showLoader,
+    loading,
     loaderType,
     multiSelect,
     removable,
@@ -367,12 +366,12 @@ const Select = React.forwardRef((props, ref) => {
     onRemove && onRemove(v, e);
   };
 
-  const getCtrl = () => {
-    const copiedProps = {
+  const getCtrl = useEventCallback(() => {
+    let copiedProps = {
       ...inputProps,
       placeholder: realPlaceHolder,
       readOnly: !searchable,
-      style: ctrlStyle,
+      style: multiSelect ? ctrlStyle : {...ctrlStyle, ...style},
       value: displayText,
       onChange: handleSearch,
       onBlur: handleBlur,
@@ -406,17 +405,19 @@ const Select = React.forwardRef((props, ref) => {
           </span>
           </span>;
     }
+
     return <Input name={name} errorType={errorType}
                   ref={inputMultiRef}
                   disabled={disabled}
-                  block={block} size={size}
-                  style={style}
+                  block={block}
+                  size={size}
                   {...copiedProps}
                   rootRef={multiSelectRef}
                   icon={realIcon}/>;
-  };
+  });
 
-  const selectHandler = (itemsArray, e) => {
+  const selectHandler = (items, e) => {
+    const itemsArray = convertToArray(items);
     if (multiSelect) {
       if (!isActive) {
         changeActive(true, e);

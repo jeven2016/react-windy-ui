@@ -158,9 +158,9 @@ Button.propTypes = {
   type: PropTypes.string,   //it can be 'primary', 'secondary', 'info', 'warning', 'error', etc.
   block: PropTypes.bool, //whether the button's width is '100%' and it occupies the whole row
   color: PropTypes.string, //the color, like "primary", "red"
-  directRef: PropTypes.oneOfType([
+  directRef:  PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({current: PropTypes.elementType}),
+    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
   ]),
   active: PropTypes.bool, // active this button
   size: PropTypes.oneOf(['large', 'medium', 'small']), //the size of the button

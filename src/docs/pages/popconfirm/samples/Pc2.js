@@ -3,7 +3,7 @@ import {Button, Notification, PopConfirm} from 'react-windy-ui';
 
 export default function Pc2() {
   const onOk = () => {
-    Notification.mini({body: "You clicked 'OK' button.", position: 'topCenter'})
+    Notification.mini({body: "You clicked 'OK' button.", position: 'topCenter', hasCloseIcon: false})
   }
 
   const onCancel = () => {

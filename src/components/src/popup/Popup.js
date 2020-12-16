@@ -7,7 +7,7 @@ import {
   PopupCtrlType,
   PopupPosition,
 } from '../common/Constants';
-import {animated, useSpring,config} from 'react-spring';
+import {animated, useSpring, config} from 'react-spring';
 import {execute, isNil, isString, place, setDisplay} from '../Utils';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import useResizeObserver from '../common/UseResizeObserver';
@@ -161,7 +161,12 @@ const Popup = React.forwardRef((props, ref) => {
     to: animationSetting.to,
     onStart: preUpdate,
     onRest: postUpdate,
-    config: {clamp: true, mass: 1, tesion: 100, friction: 15},
+    config: animationSetting.config ? animationSetting.config : {
+      clamp: true,
+      mass: 1,
+      tesion: 100,
+      friction: 15,
+    },
   });
 
   //get the controller node
@@ -386,11 +391,11 @@ Popup.propTypes = {
   body: PropTypes.node,
   ctrlRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({current: PropTypes.elementType}),
+    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
   ]),
   popupRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({current: PropTypes.elementType}),
+    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
   ]),
   activeBy: PropTypes.string,
   defaultActive: PropTypes.bool,

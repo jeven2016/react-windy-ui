@@ -13,23 +13,23 @@ export default function Select4() {
   }, [count]);
 
   const [itemList, setItemList] = useState(items);
-  const [showLoader, setShowLoader] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   //customized search function
   const search = (value) => {
     console.log('search ' + value);
 
-    //if the value is blank, show the original items
+    //if it is blank, show the original items
     if (value == null || /^\s*$/.test(value)) {
       setItemList(items);
       return;
     }
 
     //let Select to show a loading indicator
-    setShowLoader(true);
+    setLoading(true);
 
     setTimeout(() => {
-      //filter a list of items and ecch item's text should contain the searched value
+      //filter a list of items and the text of item should contain the searched value
       let list = items.filter(
           item => {
             return item.props.children.toLowerCase().
@@ -37,9 +37,8 @@ export default function Select4() {
 
           });
       setItemList(list);
-      setShowLoader(false);
+      setLoading(false);
     }, 1000);
-
   };
 
   return <>
@@ -47,7 +46,7 @@ export default function Select4() {
             activeBy="hover"
             defaultValue={0}
             searchable
-            showLoader={showLoader}
+            loading={loading}
             onSearch={search}
             onSelect={(val) => console.log(`You just selected ${val}`)}>
       {itemList}
