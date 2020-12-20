@@ -21,8 +21,8 @@ export default function QuickManu() {
   }, [ctx, setItems, quickManuStore]);
 
   return <>
-    <Menu hasBox={false} extraClassName="doc nav-menu" onSelect={(ids) => {
-      const elem = document.getElementById(`${ids[0]}`);
+    <Menu hasBox={false} extraClassName="doc nav-menu" onSelect={(id) => {
+      const elem = document.getElementById(id);
       if (elem) {
         scrollToElement(elem, {offset: -100});
       }

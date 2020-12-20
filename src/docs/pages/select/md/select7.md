@@ -3,6 +3,7 @@ order: 7
 type: sample
 zh_CN: 构建复杂的Select
 en_US: Select
+onlyVisible: false
 editUrl: $BASE/docs/pages/select/md/select7.md
 ---
 

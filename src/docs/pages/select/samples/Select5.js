@@ -7,7 +7,6 @@ import {
   Select,
   Tooltip,
 } from 'react-windy-ui';
-import {IconChecked} from '../../../../components/src';
 
 const rootStyle = {
   display: 'flex',
@@ -85,13 +84,12 @@ export default function Select5() {
             active={active}
             onActiveChange={(next) => setActive(next)}>
 
-      <Select.Option value="park" text="Central Park"
+      <Select.Option value="park" text="New York"
                      style={{borderBottom: '1px solid #ccc'}}>
         <Template title="Central Park"
                   desc=" 5 Ave to Central Park W, 59 St To 110 St, New York, NY 10019"/>
       </Select.Option>
-
-      <Select.Option value="nanjing" text={<IconChecked/>}
+      <Select.Option value="nanjing" text="Nanjing"
                      style={{borderBottom: '1px solid #ccc'}}>
         <Template title="Nanjing Presidential Palace Park"
                   desc="No. 292, Changjiang Road, Xuanwu District"/>
@@ -103,7 +101,7 @@ export default function Select5() {
                   desc="No.201 Renmin Avenue, Shanghai, Shang..."/>
       </Select.Option>
 
-      <Select.Option value="hk" text="HongKong"
+      <Select.Option value="hk" text="Hong Kong"
                      style={{borderBottom: '1px solid #ccc'}}>
         <Template title="Victoria Peak"
                   desc="33 Garden Road, Central, Hong Kong Isla..."/>

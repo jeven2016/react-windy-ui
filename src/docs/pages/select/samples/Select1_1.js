@@ -1,30 +1,24 @@
 import React from 'react';
 import {Select} from 'react-windy-ui';
 
-export default function Select1() {
+export default function Select1_1() {
   return <>
-    <div className="doc doc-row">
-      <Select defaultValue="nj"
-              style={{width: '8rem'}} //todo
+    <div className="doc doc-row space">
+      <Select defaultValue="a"
+              style={{width: '15rem'}}
               onSelect={(value) => console.log(value)}>
-        <Select.Option value="bj">
-          Beijing
-        </Select.Option>
-        <Select.Option value="nj">Nanjing</Select.Option>
-        <Select.Option value="sh">Shanghai</Select.Option>
-        <Select.Option value="sz">Suzhou</Select.Option>
+        <Select.Option value="a">Option A</Select.Option>
+        <Select.Option value="b">Option B</Select.Option>
+        <Select.Option value="c">Option C</Select.Option>
       </Select>
     </div>
-    <div className="doc doc-row">
-      <Select defaultValue="nj"
+    <div className="doc doc-row space">
+      <Select defaultValue="a"
               block
               onSelect={(value) => console.log(value)}>
-        <Select.Option value="bj">
-          Beijing
-        </Select.Option>
-        <Select.Option value="nj">Nanjing</Select.Option>
-        <Select.Option value="sh">Shanghai</Select.Option>
-        <Select.Option value="sz">Suzhou</Select.Option>
+        <Select.Option value="a">Option A</Select.Option>
+        <Select.Option value="b">Option B</Select.Option>
+        <Select.Option value="c">Option C</Select.Option>
       </Select>
     </div>
   </>;

@@ -17,6 +17,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import useEventCallback from '../common/useEventCallback';
 import {getRefConfig} from './PopupUtils';
+import {preventEvent} from '../event';
 
 function getTranslate(position, activePopup, startOffset) {
   const transOffset = startOffset + 5;
@@ -347,7 +348,8 @@ const Popup = React.forwardRef((props, ref) => {
   useEvent(EventListener.click,
       useCallback((e) => handleClick(e), [handleClick]),
       !isHover,
-      realCtrlRef);
+      realCtrlRef,
+      false);
 
   useEvent(EventListener.keyDown,
       (e) => handleKeyDown(e),

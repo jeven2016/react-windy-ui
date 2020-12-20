@@ -1,11 +1,10 @@
 import React from 'react';
 import {Select} from 'react-windy-ui';
 
-//todo
 export default function Select7() {
   return <>
     <Select style={{width: '20rem'}}
-            activeBy='hover'
+            activeBy='click'
             defaultValue="sh"
             multiSelect={true}
             searchable={true}

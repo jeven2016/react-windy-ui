@@ -5,6 +5,7 @@ export default function Select2() {
   return <>
     <Select defaultValue="sh"
             searchable
+            style={{width: '10rem'}}
             onSelect={(value) => console.log(`${value}`)}>
       <Select.Option value="bj">
         Beijing
