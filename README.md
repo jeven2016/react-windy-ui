@@ -66,3 +66,28 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+### run with pm2
+* install pm2
+```shell
+npm install pm2@latest -g  
+//or
+yarn global add pm2
+```
+*  start the doc application in background
+```shell
+pm2 start --name react-windy-ui npm -- start
+```
+* check the list of apps
+```shell
+pm2 list
+```
+* stop the app
+```shell
+pm2 stop <app name>
+```
+* (Optional) delete the service
+```shell
+pm2 delete <app name>
+```
