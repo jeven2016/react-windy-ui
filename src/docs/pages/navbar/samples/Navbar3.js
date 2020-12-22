@@ -2,34 +2,28 @@ import React, {useState} from 'react';
 import {Navbar, Toggle} from 'react-windy-ui';
 
 export default function Navbar3() {
-  const [bg, setBg] = useState(false);
-  const [bottomBar, setBottomBar] = useState(false);
+  const [left, setLeft] = useState(false);
 
   return <>
     <div className="doc doc-row">
       <div className="doc doc-row">
-        <Toggle active={bg} content={{on: 'Background', off: 'Background'}}
-                onChange={(val) => setBg(val)}/>
-      </div>
-      <div className="doc doc-row">
-        <Toggle active={bottomBar}
-                content={{on: 'Bottom Bar', off: 'Bottom Bar'}}
-                onChange={(val) => setBottomBar(val)}/>
+        <Toggle active={left} label='Justify'
+                onChange={(val) => setLeft(val)}/>
       </div>
     </div>
 
-    <Navbar type="primary" hasBorder={false}>
+    <Navbar type="primary" hasBorder={false} hasBox={true} hasItemBackground={true}>
       <Navbar.Title>
-        <span>Web</span>
+        <span>Navbar</span>
       </Navbar.Title>
-      <Navbar.List align="right">
-        <Navbar.Item hasBackground={bg} hasBar={bottomBar}>
+      <Navbar.List justify={left ? 'start' : 'end'}>
+        <Navbar.Item>
           User
         </Navbar.Item>
-        <Navbar.Item active={true} hasBackground={bg} hasBar={bottomBar}>
+        <Navbar.Item>
           Role
         </Navbar.Item>
-        <Navbar.Item hasBackground={bg} hasBar={bottomBar}>
+        <Navbar.Item>
           Security
         </Navbar.Item>
       </Navbar.List>

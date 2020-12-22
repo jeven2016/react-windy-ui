@@ -7,9 +7,7 @@ editUrl: $BASE/docs/pages/tooltip/md/tooltip2.md
 ---
 
 +++ zh_CN
-Dropdown可在十二个方位显示，可相应地设置position属性为以下值： Top方位： 'topLeft'、'top'、'topRight'； 
-Bottom方位: 'bottomLeft'、'bottom'、'bottomRight'； Left方位: 'leftTop'、'left'、'leftBottom'；
-Right方位: 'rightTop'、'right'、'rightBottom'。
+建议Tooltip在四个方位显示，因此您可以设置为<Code>top</Code>,<Code>bottom</Code>,<Code>left</Code>,<Code>right</Code>
 
 +++ en_US
 tooltip

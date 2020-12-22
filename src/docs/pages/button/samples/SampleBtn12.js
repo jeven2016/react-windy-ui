@@ -16,7 +16,6 @@ const SampleBtn12 = () => {
   return <>
     <Button leftIcon={<IconLock/>}>Menu</Button>
     <Button type="primary" rightIcon={rightIcon}>Flight</Button>
-    <Button type="primary" leftIcon={<FontAwesomeIcon icon={faPowerOff}/>}/>
   </>;
 };
 

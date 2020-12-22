@@ -17,6 +17,7 @@ const Affix = React.forwardRef((props, ref) => {
     children,
     block = false,
     onChange,
+    targetWindow = window,
     ...otherProps
   } = props;
   const [status, setStatus] = useState(
@@ -86,7 +87,7 @@ const Affix = React.forwardRef((props, ref) => {
   }, [bottom, disabled, isBottom, isTop, onChange, status, top]);
 
   //register a scroll listener
-  useEvent(EventListener.scroll, handleAffixed);
+  useEvent(EventListener.scroll, handleAffixed, true, targetWindow);
 
   //observe the changes of container
   useResizeObserver(containerRef, handleAffixed);

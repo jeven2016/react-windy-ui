@@ -7,7 +7,8 @@ editUrl: $BASE/docs/pages/menu/md/Menu9.md
 ---
 
 +++ zh_CN
-设置compact属性，可将菜单折叠或展开。当Menu折叠后将只显示SubMenu或Item的图标，所以您需要给对应的Item和SubMenu指定一个Icon对象。
+设置<Code>compact</Code>属性，可将菜单折叠。而且折叠后将只显示<Code>SubMenu</Code>和<Code>Item</Code>的图标，
+因此您需要给Menu直接子节点Item和SubMenu指定一个<Code>Icon</Code>。
 
 +++ en_US
 Menu9

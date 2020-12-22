@@ -3,16 +3,14 @@ import {Select} from 'react-windy-ui';
 
 export default function Select1() {
   return <>
-    <Select defaultValue="nj"
-            onSelect={(value) => console.log(value)}>
-      <Select.Option value="bj">
-        Beijing
-      </Select.Option>
-      <Select.Option value="nj">Nanjing</Select.Option>
-      <Select.Option value="sh">Shanghai</Select.Option>
-      <Select.Option value="sz">Suzhou</Select.Option>
-    </Select>
-
+    <div className="doc doc-row space">
+      <Select defaultValue="a"
+              onSelect={(value) => console.log(value)}>
+        <Select.Option value="a">Option A</Select.Option>
+        <Select.Option value="b">Option B</Select.Option>
+        <Select.Option value="c">Option C</Select.Option>
+      </Select>
+    </div>
   </>;
 
 }

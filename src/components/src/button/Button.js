@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useRef} from 'react';
 import PropTypes from 'prop-types';
 import Element from '../common/Element';
 import {isNil, nonNil} from '../Utils';
@@ -6,12 +6,24 @@ import Ripple from '../common/Ripple';
 import clsx from 'clsx';
 import Loader from '../Loader';
 
-const grayRippleColor = '#333';
+const defaultRippleColor = {
+  defaultButton: '#333',
+  other: '#fff',
+};
 
 /**
  * Button component
  */
 const Button = React.forwardRef((props, ref) => {
+  const rippleRef = useRef(null);
+
+  //bind ripple related event listeners
+  const updatedProps = Ripple.useRippleEvent({
+    rippleRef,
+    rootProps: props,
+    hasRipple: props.hasRipple,
+  });
+
   const {
     className = 'button',
     nativeType = 'button',
@@ -32,7 +44,7 @@ const Button = React.forwardRef((props, ref) => {
     hasBorder = true,
     invertedOutline = false,
     hasRipple = true,
-    rippleColor = '#fff',
+    rippleColor,
     onClick,
     disabled = false,
     leftIcon,
@@ -42,16 +54,22 @@ const Button = React.forwardRef((props, ref) => {
     loader = <Loader type="primary" active={true} size="small"/>,
     children,
     ...otherProps
-  } = props;
+  } = updatedProps;
 
   const isIconButton = (nonNil(leftIcon) || nonNil(rightIcon)) &&
       React.Children.count(children) === 0;
 
   const realRippleColor = useMemo(() => {
-    if (color === 'gray' || type === 'gray') {
-      return grayRippleColor;
+    if (nonNil(rippleColor)) {
+      return rippleColor;
     }
-    return rippleColor;
+    if (isNil(color) && isNil(type)) {
+      return defaultRippleColor.defaultButton;
+    }
+    if (color === 'gray' || type === 'gray') {
+      return defaultRippleColor.defaultButton;
+    }
+    return defaultRippleColor.other;
   }, [color, rippleColor, type]);
 
   let clsName = {
@@ -127,7 +145,7 @@ const Button = React.forwardRef((props, ref) => {
         </span>
         {
           hasRipple && !disabled &&
-          <Ripple center={circle} color={realRippleColor}/>
+          <Ripple ref={rippleRef} center={circle} color={realRippleColor}/>
         }
       </Element>
   );
@@ -140,9 +158,9 @@ Button.propTypes = {
   type: PropTypes.string,   //it can be 'primary', 'secondary', 'info', 'warning', 'error', etc.
   block: PropTypes.bool, //whether the button's width is '100%' and it occupies the whole row
   color: PropTypes.string, //the color, like "primary", "red"
-  directRef: PropTypes.oneOfType([
+  directRef:  PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({current: PropTypes.elementType}),
+    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
   ]),
   active: PropTypes.bool, // active this button
   size: PropTypes.oneOf(['large', 'medium', 'small']), //the size of the button

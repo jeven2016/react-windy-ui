@@ -1,30 +1,20 @@
 import React, {useState} from 'react';
-import {Button, Collapse, Card} from 'react-windy-ui';
+import {Button, Collapse} from 'react-windy-ui';
 
 export default function Collapse1() {
   const [collapse, setCollapse] = useState(false);
   return <>
     <Button type="primary"
-            style={{marginBottom: '1rem'}}
             onClick={() => setCollapse(col => !col)}>
       Toggle
     </Button>
     <Collapse.Panel collapse={collapse}>
-      <Card>
-        <Card.Body>
-          Card Body...
-          Card Body...
-          Card Body...
-          Card Body...
-          Card Body...
-          Card Body...
-          Card Body...
-          Card Body...
-          Card Body...
-          Card Body...
-          Card Body...
-        </Card.Body>
-      </Card>
+      Content...<br/>
+      Content...<br/>
+      Content...<br/>
+      Content...<br/>
+      Content...<br/>
+
     </Collapse.Panel>
   </>;
 }

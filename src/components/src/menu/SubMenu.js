@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import {MenuContext} from '../common/Context';
 import {MenuDirection, SubMenuDirection} from './MenuUtils';
 import PropTypes from 'prop-types';
+import {nonNil} from '../Utils';
 
 /**
  * SubMenu Component
@@ -11,11 +12,13 @@ import PropTypes from 'prop-types';
 const SubMenu = React.forwardRef((props, ref) => {
   const {
     id,
-    hasBottomBar,
-    className = 'base-menu',
-    header,
     extraClassName,
+    className = 'base-menu',
+    level,
+    hasBottomBar,
+    header,
     directChild = false, //is this submenu the child of Menu
+    disabled,
     ...otherProps
   } = props;
   const ctx = useContext(MenuContext);
@@ -36,6 +39,7 @@ const SubMenu = React.forwardRef((props, ref) => {
     collapsable: isCollapsable,
     direction: MenuDirection.vertical.key,
     hasHeader: true,
+    disabled: nonNil(disabled) ? disabled : ctx.disabled,
   };
 
   //the direct child of menu should align the botom of the menu, others should  align right
@@ -64,6 +68,7 @@ const SubMenu = React.forwardRef((props, ref) => {
               popupSubMenu={ctx.popupSubMenu} //the submenu can pops the items list
               popupSubMenuPosition={popupSubMenuPosition}
               blockList={blockList}
+              level={level}
               {...otherProps} />
   </MenuContext.Provider>;
 });
@@ -72,12 +77,10 @@ SubMenu.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   className: PropTypes.string,
   extraClassName: PropTypes.string,
-  icon: PropTypes.node,
-  popupSubMenu: PropTypes.bool,
-  popupSubMenuPosition: PropTypes.string,
-  blockList: PropTypes.bool,
-  rootMenu: PropTypes.bool,
   hasBottomBar: PropTypes.bool,
+  header: PropTypes.node,
+  icon: PropTypes.node,
+  disabled: PropTypes.bool,
 };
 
 export default SubMenu;

@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/popover/md/pop2.md
 ---
 
 +++ zh_CN
-设置activeBy属性可以选择Popover的弹出方式，activeBy可以设置成'hover'或'click'。这里示例了当鼠标 悬停在Button上时，激活弹出菜单。
+可以在鼠标悬停或点击时弹出菜单，您可以相应地将<Code>activeBy</Code>设置成<Code>hover</Code>或<Code>click</Code>。
 
 +++ en_US
 popover

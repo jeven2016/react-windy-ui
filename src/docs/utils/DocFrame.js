@@ -1,5 +1,6 @@
-import Frame from 'react-frame-component';
+import Frame, {FrameContextConsumer} from 'react-frame-component';
 import React from 'react';
+import {Responsive, useMediaQuery} from 'react-windy-ui';
 
 const getStyles = () => {
   let head = '';
@@ -15,16 +16,21 @@ const getStyles = () => {
 };
 
 const DocFrame = (props) => {
-  const {children, width = '100%', height = '200px', ...others} = props;
+  const {children, width = '100%', height = '200px', style, ...others} = props;
+
   return <Frame
       initialContent={`<!DOCTYPE html><html><head>${getStyles()}</head><body><div id="docRoot"></div></body></html>`}
       mountTarget='#docRoot'
       // style={{border: 'none', overflow: 'visible'}}
       scrolling="yes"
       frameBorder="0"
-      width={width} height={height} {...others}>
+      style={{
+        ...style,
+        width: width,
+      }} height={height} {...others}>
     {children}
   </Frame>;
 };
 
+export {FrameContextConsumer};
 export default DocFrame;

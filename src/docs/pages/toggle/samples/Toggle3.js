@@ -10,28 +10,31 @@ import {
 export default function Toggle3() {
   return <>
     <div className="doc doc-row">
-      <Toggle defaultActive content={{on: 'ON', off: 'CLOSE'}}/>
+      <Toggle defaultActive label={{on: 'ON', off: 'CLOSE'}}/>
     </div>
     <div className="doc doc-row">
-      <Toggle defaultActive type="primary" style={{width: '5rem'}}
-              content={{
+      <Toggle defaultActive label="Toggle"/>
+    </div>
+    <div className="doc doc-row">
+      <Toggle defaultActive type="primary"
+              label={{
                 on: <IconChecked2/>,
                 off: <IconClear/>,
                 showInBar: true,
               }}/>
     </div>
     <div className="doc doc-row">
-      <Toggle defaultActive type="primary" style={{width: '5rem'}}
-              content={{
+      <Toggle defaultActive type="primary"
+              label={{
                 on: 'ON',
                 off: 'OFF',
                 showInBar: true,
               }}/>
     </div>
     <div className="doc doc-row">
-      <Toggle defaultActive type="secondary" style={{width: '4rem'}}
-              onChange={(v)=>console.log(v)}
-              content={{
+      <Toggle defaultActive type="secondary"
+              onChange={(v) => console.log(v)}
+              label={{
                 on: <IconArrowRight/>,
                 off: <IconArrowLeft/>,
               }}/>

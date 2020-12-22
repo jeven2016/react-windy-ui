@@ -1,25 +1,44 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
-import {NavbarFixedTypes} from '../common/Constants';
+import {EventListener, NavbarFixedTypes} from '../common/Constants';
 import clsx from 'clsx';
 import {NavbarContext} from '../common/Context';
 import useInternalState from '../common/useInternalState';
+import useMediaQuery, {Responsive} from '../media_query/UseMediaQuery';
+import useEventCallback from '../common/useEventCallback';
+import useMultipleRefs from '../common/UseMultipleRefs';
+import useEvent from '../common/UseEvent';
+import {getScrollTop, isNil} from '../Utils';
+import {animated, useSpring} from 'react-spring';
 
 const Navbar = React.forwardRef((props, ref) => {
   const {
     children,
-    type = 'normal',
     className = 'navbar',
-    fixed,
+    extraClassName,
+    type = 'normal',
+    fixed = false,
+    hideOnScroll = false,
     hasBox = true,
     hasBorder = false,
-    extraClassName,
-    expand,
+    hasBar = false,
+    autoHideList = true,
     defaultExpand = false,
+    expand,
     onExpand,
-    autoHide = true,
+    hasItemBackground = false,
+    style,
+    mediaQuery = Responsive.sm.max,
+    mediaQueryWindow = window,
     ...otherProps
   } = props;
+  const navRef = useRef();
+  const multiRef = useMultipleRefs(ref, navRef);
+  const preScrollTop = useRef(null);
+  const [hide, setHide] = useState(false);//whether to hide while scrolling the window
+
+  const {matches: smallWindow} = useMediaQuery(mediaQuery, null,
+      mediaQueryWindow);
 
   const {
     state: expandList,
@@ -32,12 +51,45 @@ const Navbar = React.forwardRef((props, ref) => {
     state: expand,
   });
 
-  const toggleList = useCallback(() => {
+  const toggleList = useEventCallback((e) => {
+    const next = !expandList;
     if (!customized) {
-      setExpand(pre => !pre);
+      setExpand(next);
     }
-    onExpand && onExpand(!expandList);
-  }, [customized, expandList, onExpand, setExpand]);
+    onExpand && onExpand(next, e);
+  });
+
+  //hide the navbar while scrolling window
+  const handleScroll = useEventCallback((e) => {
+    console.log('scrolling....');
+    if (!hideOnScroll) {
+      return;
+    }
+    const nav = navRef.current;
+    if (nav) {
+      const rect = nav.getBoundingClientRect();
+      const scrollTop = getScrollTop(mediaQueryWindow);
+
+      //detect if the window is scrolling to bottom
+      const scrollToBottom = isNil(preScrollTop.current) ||
+          (scrollTop > preScrollTop.current);
+
+      //hide the navbar if the window scrolled to bottom for a distance
+      if (scrollToBottom && scrollTop > rect.height + 10) {
+        //hide the navbar
+        !hide && setHide(true);
+      }
+
+      //if show the navbar if the window is scrolling to top
+      if (!scrollToBottom && hide) {
+        setHide(false);
+      }
+      preScrollTop.current = scrollTop;
+    }
+  });
+
+  //add event listener to window for window scrolling
+  useEvent(EventListener.scroll, handleScroll, hideOnScroll, mediaQueryWindow);
 
   let fixedType = useMemo(() => NavbarFixedTypes.find(f => f === fixed),
       [fixed]);
@@ -45,36 +97,56 @@ const Navbar = React.forwardRef((props, ref) => {
   let clsName = clsx(extraClassName, className, {
     [type]: type,
     [`fixed ${fixedType}`]: fixedType,
-    'with-box': hasBox,
+    'global-with-box': hasBox,
     'with-border': hasBorder,
-    'auto-hide': autoHide,
+    'auto-hide': autoHideList,
     expand: expandList,
+    'small-window': smallWindow,
   });
+
+  const springConfig = useMemo(() => ({
+    from: {transform: hide ? 'translateY(-130%)' : 'translateY( 0%)'},
+    to: {transform: hide ? 'translateY(-130%)' : 'translateY(0%)'},
+    config: {clamp: true, mass: 1, tesion: 100, friction: 15},
+  }), [hide]);
+  const sprProps = useSpring(springConfig);
 
   return (
       <NavbarContext.Provider
           value={{
+            smallWindow,
+            expandList: expandList,
             toggleList: toggleList,
             type: type,
+            hasItemBackground,
+            hasBar,
           }}>
-        <ul className={clsName} {...otherProps} ref={ref}>
+        <animated.ul className={clsName} style={{
+          ...style,
+          ...sprProps,
+        }} ref={multiRef}{...otherProps}>
           {children}
-        </ul>
+        </animated.ul>
       </NavbarContext.Provider>
   );
 });
 
 Navbar.propTypes = {
-  type: PropTypes.oneOf(['primary', 'normal']),   //it can only be blank or 'button' and it has nothing to do with native html type
   className: PropTypes.string, //the class name of button
   extraClassName: PropTypes.string, //the class name of button
-  fixed: PropTypes.string, //fixed top or bottom
-  hasBox: PropTypes.bool, //fixed top or bottom
-  hasBorder: PropTypes.bool, //fixed top or bottom
-  expand: PropTypes.bool, //fixed top or bottom
-  defaultExpand: PropTypes.bool, //fixed top or bottom
-  onExpand: PropTypes.func, //fixed top or bottom
-  autoHide: PropTypes.bool, //fixed top or bottom
+  type: PropTypes.oneOf(['primary', 'normal']),   //it can only be blank or 'button' and it has nothing to do with native html type
+  fixed: PropTypes.oneOf(['top', 'bottom']), //fixed top or bottom
+  hideOnScroll: PropTypes.bool,
+  hasBox: PropTypes.bool,
+  hasBorder: PropTypes.bool,
+  hasBar: PropTypes.bool,
+  autoHideList: PropTypes.bool,
+  defaultExpand: PropTypes.bool,
+  expand: PropTypes.bool,
+  onExpand: PropTypes.func,
+  hasItemBackground: PropTypes.bool,
+  mediaQuery: PropTypes.string,
+  mediaQueryWindow: PropTypes.object,
 };
 
 export default Navbar;

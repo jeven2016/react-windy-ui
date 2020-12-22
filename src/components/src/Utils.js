@@ -14,6 +14,12 @@ import without from 'lodash/without';
 import {PopupPosition} from './common/Constants';
 import clsx from 'clsx';
 
+export const DefaultColor = {
+  ripple: {
+    gray: '#9c9c9c',
+  },
+};
+
 export {
   isObject,
   inRange,
@@ -42,6 +48,16 @@ export const isBlank = (value) => {
 };
 
 export const startsWith = (first, next) => first.slice(0, next.length) === next;
+
+export const getScrollTop = (win) => {
+  return win.document.documentElement.scrollTop || win.pageYOffset
+      || win.document.body.scrollTop;
+};
+
+export const getScrollLeft = (win) => {
+  return win.document.documentElement.scrollLeft || win.pageXOffset
+      || win.document.body.scrollLeft;
+};
 
 /**
  * Set padding property for a child node instead of setting margin property
@@ -132,10 +148,8 @@ export const place = (dest, ctrl, type, offset = 0) => {
 
   const destPosition = dest.style.position;
   if (isNil(destPosition) || destPosition !== 'fixed') {
-    scrollTop = document.documentElement.scrollTop || window.pageYOffset
-        || document.body.scrollTop;
-    scrollLeft = document.documentElement.scrollLeft || window.pageXOffset
-        || document.body.scrollLeft;
+    scrollTop = getScrollTop(window);
+    scrollLeft = getScrollLeft(window);
   }
 
   let posLeft = Math.floor(pos.left);
@@ -386,7 +400,7 @@ export const isNumber = (value) => {
 };
 
 /**
- * Get scroll bar width
+ * Get the width of the scroll bar
  */
 let barWidth;
 
@@ -437,4 +451,32 @@ export default function getScrollbarWidth() {
 export function getErrorClsName(errorType) {
   const clsName = `border-info ${errorType}`;
   return clsx({[clsName]: errorType});
+}
+
+export const isColorValue = (val) => {
+  return !isNil(val) &&
+      (startsWith(val, '#') || startsWith(val, 'rgb'));
+};
+
+const checkColor = (checkState, checkedColor) => {
+  if (checkState && nonNil(checkedColor)) {
+    if (isColorValue(checkedColor)) {
+      return {isClass: false, style: {color: checkedColor}};
+    } else {
+      return {isClass: true, className: 'text color-' + checkedColor};
+    }
+  }
+  return null;
+};
+
+export function createColorClsName({
+                                     checkState,
+                                     checkedColor,
+                                     uncheckedColor,
+                                   }) {
+  let result = checkColor(checkState, checkedColor);
+  if (isNil(result)) {
+    result = checkColor(!checkState, uncheckedColor);
+  }
+  return result;
 }

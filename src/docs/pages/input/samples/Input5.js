@@ -1,25 +1,10 @@
 import React from 'react';
-import {
-  Button,
-  Checkbox,
-  IconSearch,
-  Input,
-  InputGroup,
-  Loader
-} from 'react-windy-ui';
+import {Button, Checkbox, IconSearch, Input, InputGroup, Select} from 'react-windy-ui';
 
-//todo
-export default function Input5(props) {
+export default function Input5() {
   return <>
     <div className="doc doc-row">
-      <Input block placeholder="Username"/>
-    </div>
-    <div className="doc doc-row">
-      <Input.IconInput block placeholder="Searching"
-                       icon={<Loader size="small" active={true}/>}/>
-    </div>
-    <div className="doc doc-row">
-      <InputGroup block>
+      <InputGroup>
         <InputGroup.Label>$</InputGroup.Label>
         <Input placeholder="money......"/>
         <InputGroup.Label>
@@ -27,8 +12,9 @@ export default function Input5(props) {
         </InputGroup.Label>
       </InputGroup>
     </div>
+
     <div className="doc doc-row">
-      <InputGroup block>
+      <InputGroup>
         <InputGroup.Item autoScale={false}>
           <Button color="green">Search</Button>
         </InputGroup.Item>
@@ -42,14 +28,26 @@ export default function Input5(props) {
         </InputGroup.Label>
       </InputGroup>
     </div>
+
     <div className="doc doc-row">
-      <InputGroup block>
+      <InputGroup>
         <Input.IconInput leftIcon placeholder="This is a input"
                          icon={<IconSearch/>}/>
         <InputGroup.Item autoScale={false}>
           <Button color="green">Search</Button>
         </InputGroup.Item>
-        <Input placeholder="next......"/>
+        <InputGroup.Item autoScale={false}>
+          <Select defaultValue="nj"
+                  inputStyle={{width: '80px'}}
+                  onSelect={(value) => console.log(value)}>
+            <Select.Option value="bj">
+              City
+            </Select.Option>
+            <Select.Option value="nj">Nanjing</Select.Option>
+            <Select.Option value="sh">Shanghai</Select.Option>
+            <Select.Option value="sz">Suzhou</Select.Option>
+          </Select>
+        </InputGroup.Item>
       </InputGroup>
     </div>
   </>;

@@ -4,7 +4,7 @@ import {Select, Divider} from 'react-windy-ui';
 export default function Select3() {
   return <>
     <Select defaultValue="sh"
-            showLoader={true}
+            loading={true}
             onSelect={(value) => console.log(`${value}`)}>
       <Select.Option value="bj">
         Beijing

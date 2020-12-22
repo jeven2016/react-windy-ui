@@ -7,11 +7,11 @@ const RippleBoxBtn = () => {
   return <>
     <div className="doc doc-row">
       <Toggle active={hasRipple} onChange={val => setRipple(val)}
-              content={{on: 'Ripple', off: 'Ripple'}}/>
+              label='Ripple'/>
     </div>
     <div className="doc doc-row">
       <Toggle active={hasBox} onChange={val => setBox(val)}
-              content={{on: 'Box', off: 'Box'}}/>
+              label='Box'/>
     </div>
     <Button
         hasRipple={hasRipple}
@@ -20,7 +20,7 @@ const RippleBoxBtn = () => {
         outline
         initOutlineColor
         hasMinWidth>
-      black
+      brown
     </Button>
 
     <Button hasBox={hasBox} hasRipple={hasRipple} color="purple"

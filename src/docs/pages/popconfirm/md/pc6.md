@@ -1,7 +1,7 @@
 --- 
 order: 6
 type: sample
-zh_CN: 自定义弹出框、按钮的props属性
+zh_CN: 自定义弹出框和按钮
 en_US: PopConfirm
 editUrl: $BASE/docs/pages/popconfirm/md/pc6.md
 ---

@@ -1,5 +1,11 @@
-import React, {useRef, useState} from 'react';
-import {animated, useTransition, config} from 'react-spring';
+import React, {
+  useCallback,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
+import {animated, config, useTransition} from 'react-spring';
+import useEventCallback from './useEventCallback';
 
 const defaultRect = {
   top: 0,
@@ -10,6 +16,9 @@ const defaultRect = {
   height: 0,
 };
 
+/**
+ * Ripple component
+ */
 const Ripple = React.forwardRef((props, ref) => {
   const {
     center,
@@ -20,17 +29,22 @@ const Ripple = React.forwardRef((props, ref) => {
   const [rippleArray, setRippleArray] = useState([]);
   const nextKey = useRef(0);
 
-  const stop = (e) => {
+  useImperativeHandle(ref, () => ({
+    start: start,
+    stop: stop,
+  }));
+
+  const stop = useCallback((e) => {
     if (e.type === 'touchend') {
       e.persist();
     }
-    if (rippleArray && rippleArray.length) {
+    if (rippleArray && rippleArray.length > 0) {
       // remove the a ripple
       setRippleArray(pre => pre.slice(1));
     }
-  };
+  }, [rippleArray]);
 
-  const createRipple = (params) => {
+  const createRipple = useCallback((params) => {
     const {rippleX, rippleY, rippleSize} = params;
     nextKey.current = nextKey.current + 1;
     setRippleArray([
@@ -42,9 +56,9 @@ const Ripple = React.forwardRef((props, ref) => {
         rippleSize: rippleSize,
       },
     ]);
-  };
+  }, [rippleArray]);
 
-  const start = (e) => {
+  const start = useCallback((e) => {
     const element = rippleRef.current;
     const rect = element ? element.getBoundingClientRect() : defaultRect;
 
@@ -71,22 +85,16 @@ const Ripple = React.forwardRef((props, ref) => {
       rippleSize = Math.sqrt(Math.pow(sizeX, 2) + Math.pow(sizeY, 2));
     }
     createRipple({rippleX, rippleY, rippleSize});
-  };
+  }, [center, createRipple]);
 
   const transitions = useTransition(rippleArray, null, {
     from: {opacity: 0.1, transform: 'scale(0)'},
     enter: {opacity: 0.4, transform: 'scale(1)'},
     leave: {opacity: 0},
-    config: config.gentle,
+    config: config.slow,
   });
 
-  return <div className='ripple' ref={rippleRef}
-              onMouseDown={start}
-              onMouseUp={stop}
-              onMouseLeave={stop}
-              onTouchStart={start}
-              onTouchEnd={stop}
-              onTouchMove={stop}>
+  return <div className='ripple' ref={rippleRef}>
     {
       transitions.map(({item, props: styleProps}) => {
         const {
@@ -112,4 +120,66 @@ const Ripple = React.forwardRef((props, ref) => {
     }
   </div>;
 });
+
+const useRippleCallback = (hasRipple, rippleRef, rippleMethod, callback) => {
+  return useEventCallback((e) => {
+    if (callback) {
+      callback(e);
+    }
+
+    if (hasRipple && rippleRef.current) {
+      rippleRef.current[rippleMethod](e);
+    }
+
+  });
+};
+
+/**
+ * update ripple related event listeners
+ * @param rippleRef Ripple instance ref
+ * @param rootProps the parent node of ripple
+ * @param hasRipple whether the ripple is enabled
+ * @returns props
+ */
+const useRippleEvent = ({rippleRef, rootProps = {}, hasRipple = true}) => {
+  const {
+    onMouseDown,
+    onMouseUp,
+    onMouseLeave,
+    onTouchStart,
+    onTouchEnd,
+    onTouchMove,
+    ...others
+  } = rootProps;
+  const startMethod = 'start', stopMethod = 'stop';
+  const mouseDownCb = useRippleCallback(hasRipple, rippleRef, startMethod,
+      onMouseDown);
+
+  const mouseUpCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
+      onMouseUp);
+
+  const mouseLeaveCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
+      onMouseLeave);
+
+  const touchStartCb = useRippleCallback(hasRipple, rippleRef, startMethod,
+      onTouchStart);
+
+  const touchEndCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
+      onTouchEnd);
+
+  const touchMoveCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
+      onTouchMove);
+
+  return {
+    onMouseDown: mouseDownCb,
+    onMouseUp: mouseUpCb,
+    onMouseLeave: mouseLeaveCb,
+    onTouchStart: touchStartCb,
+    onTouchEnd: touchEndCb,
+    onTouchMove: touchMoveCb,
+    ...others,
+  };
+};
+
+Ripple.useRippleEvent = useRippleEvent;
 export default Ripple;

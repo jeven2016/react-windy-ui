@@ -3,43 +3,100 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {EventListener, InputBorderType} from './common/Constants';
 import Element from './common/Element';
-import {InputGroupContext} from './common/Context';
 import {getErrorClsName, isNil, nonNil, validate} from './Utils';
 import useMultipleRefs from './common/UseMultipleRefs';
 import {useEvent} from './index';
 import {IconPwdInvisible, IconPwdVisible} from './Icons';
+import {InputGroupContext} from './common/Context';
 
-//todo: update doc
+/**
+ * Input Component
+ */
+const PureInput = React.forwardRef((props, ref) => {
+  const {
+    extraClassName,
+    className = 'input',
+    size = 'medium',
+    type = 'text',
+    disabled = false,
+    block = true,
+    hasBox = true,
+    borderType,
+    readOnly = false,
+    canFocus = true,
+    errorType,
+    ...otherProps
+  } = props;
+  const ctx = useContext(InputGroupContext);
+  let borderTypeCls = InputBorderType[borderType];
+  const inputSize = isNil(ctx.size) ? size : ctx.size;
+
+  let clsName = clsx(extraClassName, className, inputSize,
+      getErrorClsName(errorType),
+      {
+        'read-only': readOnly,
+        'textarea': type === 'textarea',
+        block: block,
+        'within-group': ctx.withinGroup,
+        [borderTypeCls]: borderTypeCls,
+        'with-focus': canFocus,
+        'with-input-box': hasBox,
+      });
+
+  if (type.toLowerCase() === 'textarea') {
+    return <Element nativeType="textarea"
+                    className={clsName}
+                    setDisabledAttr={true}
+                    disabled={disabled}
+                    readOnly={readOnly}
+                    {...otherProps}/>;
+  }
+  const newProps = {type: type, ...otherProps};
+  return (
+      <Element nativeType="input" ref={ref} className={clsName}
+               type="text"
+               autoComplete='off'
+               setDisabledAttr={true}
+               readOnly={readOnly}
+               disabled={disabled}
+               {...newProps}
+      />
+  );
+
+});
+
+/**
+ * Icon Input
+ */
 const IconInput = React.forwardRef((props, ref) => {
   const {
+    extraClassName,
     className = 'icon-input',
     size = 'medium',
-    block = false,
+    block = true,
+    hasBox = true,
+    icon,
     leftIcon = false,
+    iconProps,
     rightIcons = [],//format: [<Icon/>]
-    icon,//todo
-    // inputProps,//todo
-    rootProps,//todo
+    rootProps,
     rootRef,
-    iconProps,//todo
-    placeholder,//todo
-    errorType, //todo
+    placeholder,
+    errorType,
     disabled = false,
-    extraClassName,
     ...otherProps
   } = props;
   const [active, setActive] = useState(false);
   const interInputRef = useRef(null);
   const multiInputRef = useMultipleRefs(ref, interInputRef);
 
-  const ctx = useContext(InputGroupContext);
-  const inputDisabled = isNil(ctx.disabled) ? disabled : ctx.disabled;
   let clsName = clsx(extraClassName, className, getErrorClsName(errorType), {
     'left-icon': leftIcon,
     [size]: size,
     block: block,
-    disabled: inputDisabled,
+    disabled: disabled,
     active: active,
+    'with-input-box': hasBox,
   });
 
   useEvent(EventListener.focus, function() {
@@ -57,65 +114,17 @@ const IconInput = React.forwardRef((props, ref) => {
 
   return <span className={clsName} {...rootProps} ref={rootRef}>
     {leftIcon && restIcons()}
-    <Input ref={multiInputRef} canFocus={false} placeholder={placeholder}
-           size={size}
-           disabled={inputDisabled} {...otherProps}/>
-   <span className="icon-column" {...iconProps}>{icon}</span>
+    <PureInput ref={multiInputRef} canFocus={false} placeholder={placeholder}
+               size={size}
+               disabled={disabled} {...otherProps}/>
+    {icon && <span className="icon-column" unselectable="on" {...iconProps}>{icon}</span>}
     {!leftIcon && restIcons()}
   </span>;
 });
 
-const Input = React.forwardRef((props, ref) => {
-  const {
-    className = 'input',
-    size = 'medium',
-    type = 'text',
-    disabled = false,
-    block = false,
-    borderType,
-    extraClassName,
-    readOnly = false,
-    canFocus = true,//todo
-    errorType,//todo
-    ...otherProps
-  } = props;
-  const ctx = useContext(InputGroupContext);
-  let borderTypeCls = InputBorderType[borderType];
-  const inputSize = isNil(ctx.size) ? size : ctx.size;
-
-  let clsName = clsx(extraClassName, className, inputSize,
-      getErrorClsName(errorType),
-      {
-        'read-only': readOnly,
-        'textarea': type === 'textarea',
-        block: block,
-        'within-group': ctx.withinGroup,
-        [borderTypeCls]: borderTypeCls,
-        'with-focus': canFocus,
-      });
-
-  if (type.toLowerCase() === 'textarea') {
-    return <Element nativeType="textarea"
-                    className={clsName}
-                    setDisabledAttr={true}
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    {...otherProps}/>;
-  }
-  const newProps = {type: type, ...otherProps};
-  return (
-      <Element nativeType="input" ref={ref} className={clsName}
-               type="text"
-               setDisabledAttr={true}
-               readOnly={readOnly}
-               disabled={disabled}
-               {...newProps}
-      />
-  );
-
-});
-
-//todo
+/**
+ * Password Component
+ */
 const Password = React.forwardRef((props, ref) => {
   const {
     rootRef,
@@ -149,7 +158,10 @@ const Password = React.forwardRef((props, ref) => {
                     rightIcons={rightIcons}  {...otherProps}/>;
 });
 
-const InputHoc = React.forwardRef((props, ref) => {
+/**
+ * Input Component
+ */
+const Input = React.forwardRef((props, ref) => {
   const {rootRef, type, icon, ...otherProps} = props;
   const isPwd = nonNil(type) && type.toLowerCase() === 'password';
   if (nonNil(icon) || isPwd) {
@@ -157,34 +169,58 @@ const InputHoc = React.forwardRef((props, ref) => {
     return <TagName type={type} rootRef={rootRef} icon={icon}
                     ref={ref}  {...otherProps}/>;
   }
-  return <Input type={type} ref={ref} {...otherProps}/>;
+  return <PureInput type={type} ref={ref} {...otherProps}/>;
 });
 
-InputHoc.isIconInput = (comp) => {
+Input.isIconInput = (comp) => {
   return nonNil(comp) && nonNil(comp.props.icon);
 };
 
 IconInput.propTypes = {
   className: PropTypes.string,
   extraClassName: PropTypes.string, //the customized class need to add
-  leftIcon: PropTypes.bool, // whether the icon is placed in left side of the input
   size: PropTypes.oneOf(['large', 'medium', 'small']),
   block: PropTypes.bool,
-  errorType: PropTypes.oneOf([null, '', 'ok', 'warning', 'error']),
-  disabled: PropTypes.bool,
+  hasBox: PropTypes.bool,
+  icon: PropTypes.node,
   iconProps: PropTypes.object,
+  leftIcon: PropTypes.bool, // whether the icon is placed in left side of the input
+  rightIcons: PropTypes.arrayOf(PropTypes.node),
+  rootProps: PropTypes.object,
+  rootRef:  PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+  ]),
+  placeholder: PropTypes.string,
+  errorType: PropTypes.oneOf(['ok', 'warning', 'error']),
+  disabled: PropTypes.bool,
 };
 
-Input.propTypes = {
-  errorType: PropTypes.oneOf([null, '', 'ok', 'warning', 'error']),
+PureInput.propTypes = {
+  extraClassName: PropTypes.string, //the customized class need to add
+  className: PropTypes.string,
   size: PropTypes.oneOf(['large', 'medium', 'small']), //the size of the input
   type: PropTypes.string,//"text", "textarea", "password", "file", etc.
-  block: PropTypes.bool, //whether the input's width is '100%' and it occupies the whole row
-  className: PropTypes.string,
-  extraClassName: PropTypes.string, //the customized class need to add
   disabled: PropTypes.bool,
-  iconProps: PropTypes.object
+  block: PropTypes.bool, //whether the input's width is '100%' and it occupies the whole row
+  hasBox: PropTypes.bool,
+  borderType: PropTypes.oneOf(['ok', 'warning', 'error']),
+  readOnly: PropTypes.bool,
+  canFocus: PropTypes.bool,
+  errorType: PropTypes.oneOf(['ok', 'warning', 'error']),
 };
-InputHoc.IconInput = IconInput;
 
-export default InputHoc;
+Password.propTypes = {
+  rootRef:  PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+  ]),
+  hasToggleIcon: PropTypes.bool,
+  toggleIcons: PropTypes.array.length,
+  type: PropTypes.string,
+  leftIcon: PropTypes.bool,
+};
+
+Input.IconInput = IconInput;
+
+export default Input;

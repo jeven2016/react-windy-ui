@@ -4,7 +4,7 @@ import {IconChecked, IconCheckedIndeterminate, IconUnChecked} from './Icons';
 import Element from './common/Element';
 import clsx from 'clsx';
 import useInternalState from './common/useInternalState';
-import {isNil, startsWith} from './Utils';
+import {createColorClsName} from './Utils';
 import {preventEvent} from './event';
 
 const Checkbox = React.forwardRef((props, ref) => {
@@ -76,38 +76,24 @@ const Checkbox = React.forwardRef((props, ref) => {
     onChange && onChange(nextState, e);
   }, [onChange, checkState, customized, setCheckState, disabled]);
 
-  /*
-   * For internal used icon
-   */
-  const isColorValue = useCallback((value) => !isNil(value) &&
-      (startsWith(value, '#') || startsWith(value, 'rgb')),
-      []);
-
-  const iconColorCls = useMemo(() => {
-    if (checkState && !isNil(checkedColor) && !isColorValue(checkedColor)) {
-      return 'text color-' + checkedColor;
-    }
-    if (!checkState && !isNil(uncheckedColor) &&
-        !isColorValue(uncheckedColor)) {
-      return 'text color-' + uncheckedColor;
-    }
-    return null;
-  }, [checkState, checkedColor, uncheckedColor, isColorValue]);
+  const iconColor = useMemo(() => createColorClsName({
+    checkState, checkedColor, uncheckedColor,
+  }), [checkState, checkedColor, uncheckedColor]);
 
   realIcon = useMemo(() => realIcon ? React.cloneElement(realIcon, {
         onKeyDown: (e) => e.keyCode === 13 && handleClick(),
         tabIndex: 0,
-        extraClassName: iconColorCls,
+        extraClassName: iconColor?.className || '',
         style: showIndeterminateState
             ? iconIndeterminateStyle
-            : null,
+            : ((!iconColor?.isClass && iconColor?.style) || {}),
       }) : null,
       [
-        iconColorCls,
         realIcon,
-        handleClick,
+        iconColor,
         showIndeterminateState,
-        iconIndeterminateStyle]);
+        iconIndeterminateStyle,
+        handleClick]);
 
   return <>
     <Element className={clsName} disabled={disabled} {...otherProps}

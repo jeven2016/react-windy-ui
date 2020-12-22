@@ -1,16 +1,28 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
 import {MenuContext} from '../common/Context';
-import {includes, isNil} from '../Utils';
-import {Action} from './MenuUtils';
+import {includes, isNil, nonNil} from '../Utils';
+import {Action, getPaddingStyle} from './MenuUtils';
 import PropTypes from 'prop-types';
 import {animated, useSpring} from 'react-spring';
 import {preventEvent} from '../event';
 import Element from '../common/Element';
 import Tooltip from '../Tooltip';
 import {MenuType} from '../common/Constants';
+import Ripple from '../common/Ripple';
+import useEventCallback from '../common/useEventCallback';
 
 const Item = React.forwardRef((props, ref) => {
+  const ctx = useContext(MenuContext);
+  const rippleRef = useRef(null);
+
+  //bind ripple related event listeners
+  const updatedProps = Ripple.useRippleEvent({
+    rippleRef,
+    rootProps: props,
+    hasRipple: ctx.hasRipple,
+  });
+
   const {
     className = 'menu-item',
     extraClassName,
@@ -25,17 +37,19 @@ const Item = React.forwardRef((props, ref) => {
     icon,
     directChild = false,
     onClick,
+    level,
+    style,
     ...otherProps
-  } = props;
-  const ctx = useContext(MenuContext);
+  } = updatedProps;
   const {attach, detach, getState} = ctx.store;
   const [active, setActive] = useState(null);
   const isActive = isNil(active) ? includes(getState().activeItemsList, id)
       : active;
 
+  const isDisabled = nonNil(disabled) ? disabled : ctx.disabled;
+
   const show = !ctx.compact;
   const springConfig = useMemo(() => ({
-    from: {opacity: 0, transform: 'scale(0)'},
     to: {opacity: show ? 1 : 0, transform: show ? 'scale(1)' : 'scale(0)'},
     config: {clamp: true, mass: 1, tesion: 100, friction: 15},
   }), [show]);
@@ -46,14 +60,12 @@ const Item = React.forwardRef((props, ref) => {
       return;
     }
     const listener = ({activeItemsList}) => {
-      if (!disabled && !isNil(id)) {
+      if (!isDisabled && !isNil(id)) {
         const nextActive = includes(activeItemsList, id);
-        //to active
         if (nextActive && !isActive) {
           setActive(true);
         }
 
-        //to deactive
         if (!nextActive && isActive) {
           setActive(false);
         }
@@ -61,10 +73,10 @@ const Item = React.forwardRef((props, ref) => {
     };
     attach(listener);
     return () => detach(listener);
-  }, [isActive, id, disabled, setActive, detach, attach]);
+  }, [isActive, id, setActive, detach, attach, isDisabled]);
 
-  const clickHandler = (e) => {
-    if (disabled) {
+  const clickHandler = useEventCallback((e) => {
+    if (isDisabled) {
       preventEvent(e);
       return;
     }
@@ -75,13 +87,13 @@ const Item = React.forwardRef((props, ref) => {
 
     onClick && onClick(e);
     ctx.onClickItem && ctx.onClickItem(id, e);
-  };
+  });
 
   const clsName = clsx(extraClassName, className, {
     [ctx.type]: ctx.type,
     equitable: equitable,
     [align]: align,
-    disabled: disabled,
+    disabled: isDisabled,
     active: isActive,
     'with-bg': hasBackground,
     'with-bottom-bar': hasBottomBar,
@@ -105,14 +117,36 @@ const Item = React.forwardRef((props, ref) => {
     }
     return !show ? iconCnt : <>
       {iconCnt}
+
       <animated.div className="item-info"
                     style={innerProps}>{children}</animated.div>
     </>;
   }, [customizedChildren, icon, directChild, show, innerProps, children]);
 
+  const paddingStyle = useMemo(() => ctx.autoIndent ?
+      getPaddingStyle({
+        ignored: ctx.popupSubMenu,
+        indentUnit: ctx.indentUnit,
+        indentation: ctx.indentation,
+        initIndent: ctx.initIndent,
+        level: level,
+      }) : null,
+      [
+        ctx.autoIndent,
+        ctx.indentUnit,
+        ctx.indentation,
+        ctx.initIndent,
+        ctx.popupSubMenu,
+        level]);
+
   const renderCnt = <div ref={ref} className={clsName} {...otherProps}
-                         onClick={clickHandler}>
+                         onClick={clickHandler}
+                         style={{...paddingStyle, ...style}}>
     {content}
+    {
+      ctx.hasRipple && !isDisabled &&
+      <Ripple ref={rippleRef} color={ctx.rippleColor}/>
+    }
   </div>;
 
   if (!show && directChild) {
@@ -140,18 +174,17 @@ Item.Right = React.forwardRef((props, ref) =>
 Item.propTypes = {
   className: PropTypes.string,
   extraClassName: PropTypes.string,
-  equitable: PropTypes.bool,
-  hasBackground: PropTypes.bool,
-  hasBottomBar: PropTypes.bool,
-  selectable: PropTypes.func,
-  children: PropTypes.node,
-  customizedChildren: PropTypes.bool, //whether to show the customized children and ignore the children parameter
   disabled: PropTypes.bool,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  equitable: PropTypes.bool,
   align: PropTypes.string,
+  hasBackground: PropTypes.bool,
+  hasBottomBar: PropTypes.bool,
   icon: PropTypes.node,
   directChild: PropTypes.bool,
   onClick: PropTypes.func,
+  customizedChildren: PropTypes.bool, //whether to show the customized children and ignore the children parameter
+  level: PropTypes.number,
 };
 
 export default Item;

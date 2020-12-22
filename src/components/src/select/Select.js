@@ -1,31 +1,44 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import Popup from '../popup/Popup';
-import Input from '../Input';
 import Menu from '../menu';
 import {
   containsIgnoreCase,
   convertToArray,
-  execute, getErrorClsName,
+  execute,
+  getErrorClsName,
+  invoke,
   isBlank,
   isCustomized,
   isNil,
   nonNil,
 } from '../Utils';
 import Element from '../common/Element';
-import {IconArrowDown, IconArrowUp, IconChecked2, IconNoData} from '../Icons';
+import {
+  IconArrowDown,
+  IconArrowUp,
+  IconChecked2,
+  IconClear,
+  IconNoData,
+} from '../Icons';
 import useInternalState from '../common/useInternalState';
 import {PopupCtrlType} from '../common/Constants';
 import clsx from 'clsx';
-import {animated, useTransition} from 'react-spring';
 import Item from '../menu/Item';
-import Badge from '../Badge';
 import {preventEvent} from '../event';
 import Loader from '../Loader';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import * as PropTypes from 'prop-types';
+import useEventCallback from '../common/useEventCallback';
 
 const Option = React.forwardRef((props, ref) => {
-  const {value, children, hasBackground = true, text, ...otherProps} = props;
+  const {
+    value,
+    children,
+    hasBackground = true,
+    text,
+    render,
+    ...otherProps
+  } = props;
 
   return <Menu.Item id={value} hasBackground={hasBackground}
                     ref={ref} {...otherProps}>
@@ -71,6 +84,7 @@ const Select = React.forwardRef((props, ref) => {
     searchDelay = 300,
     noDataText = 'Not Found',
     searchInputWidth = 16,
+    hasArrow = true,
     arrowIcon = <IconArrowDown/>,
     activeArrowIcon = <IconArrowUp/>,
     removeIcon,
@@ -83,7 +97,7 @@ const Select = React.forwardRef((props, ref) => {
     menuProps = {},
     removable = true, //whether the search text can be removed
     loaderType = 'primary',
-    showLoader = false,
+    loading = false,
     ctrlRef,
     ...otherProps
   } = props;
@@ -131,7 +145,7 @@ const Select = React.forwardRef((props, ref) => {
 
     const inputDomNode = inputRef.current;
     //adjust the input's width
-    if (multiSelect) {
+    if (multiSelect && inputDomNode) {
       const decDomNode = detectRef.current;
       inputDomNode.style.width = decDomNode.width > searchInputWidth
           ? `${decDomNode.width +
@@ -168,6 +182,7 @@ const Select = React.forwardRef((props, ref) => {
         value: child.props.value,
         text: child.props.text,
         children: child.props.children,
+        render: child.props.render,
       };
     }).filter(elem => !isNil(elem));
   }, [children]);
@@ -185,6 +200,11 @@ const Select = React.forwardRef((props, ref) => {
     if (!itemInfo) {
       return null;
     }
+
+    if (nonNil(itemInfo.render)) {
+      return invoke(itemInfo.render, itemInfo);
+    }
+
     return isNil(itemInfo.text)
         ? itemInfo.children
         : itemInfo.text;
@@ -258,7 +278,7 @@ const Select = React.forwardRef((props, ref) => {
   const finalItems = getDisplayItems();
 
   //search by value
-  const handleSearch = (e) => {
+  const handleSearch = useEventCallback((e) => {
     const inputVal = e.target.value;
     clearTimeout(searchTimer.current);
     setSearchedValue(inputVal);
@@ -273,7 +293,7 @@ const Select = React.forwardRef((props, ref) => {
         onSearch && onSearch(inputVal);
       }
     }, searchDelay);
-  };
+  });
 
   const realPlaceHolder = useMemo(() => {
     if (multiSelect) {
@@ -299,24 +319,21 @@ const Select = React.forwardRef((props, ref) => {
   }, [setSearchedValue, onSearch]);
 
   const realIcon = useMemo(() => {
-    if (showLoader) {
-      return <div className="icon-column">
-        <Loader type={loaderType} active size="small"/>
-      </div>;
+    if (loading) {
+      return <Loader type={loaderType} active size="small"/>;
     }
     if (multiSelect) {
       return null;
     }
 
     if (removable && !isBlank(searchedValue)) {
-      return <div className="icon-column">X</div>;
+      return 'x';
     }
 
-    let icon = isActive ? activeArrowIcon : arrowIcon;
-    return <div className="icon-column">{icon}</div>;
+    return isActive ? activeArrowIcon : arrowIcon;
   }, [
     isActive,
-    showLoader,
+    loading,
     loaderType,
     multiSelect,
     removable,
@@ -345,78 +362,139 @@ const Select = React.forwardRef((props, ref) => {
       setActive(next);
     }
     onActiveChange && onActiveChange(next, e);
+
+    const inputDom = inputRef.current;
+    inputDom && inputDom.focus();
   }, [isActive, customActive, setActive, onActiveChange]);
 
-  const tran = useTransition(selectedValue.map(findItemInfo),
-      item => isNil(item) ? null : item.value, {
-        from: {transform: 'scale(0.5)'},
-        enter: {transform: 'scale(1)'},
-        leave: {transform: 'scale(0.5)'},
-        config: {clamp: true, mass: 1, tesion: 100, friction: 15},
-      });
-
-  const focusInput = useCallback(() => {
-    inputRef.current.focus();
-  }, [inputRef]);
-
-  const removeItem = (v, e) => {
+  const removeItem = useEventCallback((v, e) => {
     if (!customValue) {
-      const rest = selectedValue.filter(val => val !== value);
+      const rest = selectedValue.filter(val => val !== v);
       setValue(rest);
     }
     onRemove && onRemove(v, e);
-  };
+    preventEvent(e);
+  });
 
-  const getCtrl = () => {
-    const copiedProps = {
+  let multiSelectCtrl;
+  multiSelectCtrl = useMemo(() => {
+    if (!multiSelect) {
+      return null;
+    }
+    let copiedProps = {
       ...inputProps,
       placeholder: realPlaceHolder,
       readOnly: !searchable,
-      style: ctrlStyle,
+      style: {pointerEvents: searchable ? 'cursor' : 'none', ...ctrlStyle},
       value: displayText,
       onChange: handleSearch,
       onBlur: handleBlur,
-      extraClassName: clsx('select-input', inputProps?.extraClassName),
+      className: clsx('select-input', size, inputProps?.extraClassName),
     };
-    if (multiSelect) {
-      const multiSelCls = clsx('select-multiple', getErrorClsName(errorType));
-      return <span className={multiSelCls} onClick={focusInput}
-                   style={style}
-                   ref={multiSelectRef}>
+
+    const multiSelCls = clsx('select-multiple', size,
+        {block, 'active': isActive, 'with-select-box': hasBox && isActive},
+        getErrorClsName(errorType));
+
+    return <span className={multiSelCls}
+                 style={style}
+                 ref={multiSelectRef}>
         <span className="select-multiple-content">
         {
-          tran.map(({item, props: tranProps, key}) => (
-              <animated.span key={key} className="multi-item" style={tranProps}>
-                <Badge type="tag"
-                       color="gray">
-                  <span>{getText(item)}</span>
-                  <span className="remove-icon"
-                        onClick={(e) => {
-                          removeItem(item.value, e);
-                        }}>×</span>
-                </Badge>
-              </animated.span>
-          ))
+          selectedValue.map(findItemInfo).map(item =>
+              nonNil(item.render) ? item.render(
+                  {...item, removeItem: removeItem})
+                  : <span key={`item-${item.value}`} className="multi-item">
+                <span>{getText(item)}</span>
+                <div className="icon-column" onClick={(e) => {
+                  removeItem(item.value, e);
+                }}>
+                  <IconClear size="small"/>
+                </div>
+              </span>,
+          )
         }
-          <Input name={name} ref={inputMultiRef} {...copiedProps}/>
+          <input name={name} ref={inputMultiRef} {...copiedProps}/>
+
           <span ref={detectRef} className='search-text-detector'>
         {/*this used to detect the width of the input value in pixel*/}
             {searchedValue}
           </span>
           </span>
           </span>;
+  }, [
+    block,
+    ctrlStyle,
+    displayText,
+    errorType,
+    findItemInfo,
+    getText,
+    handleBlur,
+    handleSearch,
+    inputMultiRef,
+    inputProps,
+    multiSelect,
+    multiSelectRef,
+    name,
+    realPlaceHolder,
+    removeItem,
+    searchable,
+    searchedValue,
+    selectedValue,
+    size,
+    style]);
+
+  const getCtrl = () => {
+    if (multiSelect) {
+      return multiSelectCtrl;
     }
-    return <Input name={name} errorType={errorType}
-                  ref={inputMultiRef}
-                  disabled={disabled}
-                  block={block} size={size}
-                  style={style}
-                  {...copiedProps}
-                  rootRef={multiSelectRef}
-                  icon={realIcon}/>;
+
+    const selectClsName = clsx('select', size, {
+      'with-select-box': hasBox && isActive,
+      'active': isActive,
+      disabled,
+    });
+
+    const contentClsName = clsx('select-content  ', {
+      placeholder: isBlank(displayText),
+    });
+
+    return <div className={selectClsName} style={style}
+                ref={multiSelectRef}>
+      <div className="select-info ellipsis" unselectable="on">
+        <div className={contentClsName}
+             style={{display: !searchable ? 'flex' : 'none'}}>
+          {!isBlank(displayText) ? displayText : placeholder}
+        </div>
+        <input className="select-input"
+               name={name}
+               value={displayText}
+               disabled={disabled}
+               placeholder={searchable ? realPlaceHolder : null}
+               style={{display: searchable ? 'block' : 'none'}}
+               onChange={handleSearch}
+               onBlur={handleBlur}
+               ref={inputMultiRef}/>
+      </div>
+      {
+        hasArrow && <div className="icon-column">
+          {realIcon}
+        </div>
+      }
+    </div>;
+
+    /* return <Input name={name} errorType={errorType}
+                   ref={inputMultiRef}
+                   disabled={disabled}
+                   block={block}
+                   size={size}
+                   {...copiedProps}
+                   rootRef={multiSelectRef}
+                   icon={realIcon}/>;*/
   };
 
-  const selectHandler = (itemsArray, e) => {
+  const selectHandler = useEventCallback((items, e) => {
+    const itemsArray = convertToArray(items);
     if (multiSelect) {
       if (!isActive) {
         changeActive(true, e);
@@ -430,11 +508,15 @@ const Select = React.forwardRef((props, ref) => {
       setSearchedValue(null);
     }
 
-    onSelect && onSelect(multiSelect ? itemsArray : itemsArray[0], e);
-    onChange && onChange(multiSelect ? itemsArray : itemsArray[0], e);
-  };
+    const item = multiSelect ? itemsArray : itemsArray[0];
+    if (onSelect) {
+      onSelect(item, e);
+    } else if (onChange) {
+      onChange(item, e);
+    }
+  });
 
-  const getPopupBody = () => {
+  const popBody = useMemo(() => {
     return nonNil(finalItems) && finalItems.length === 0 ?
         <Element className="no-data">
           <IconNoData extraClassName="no-data-icon"/>
@@ -447,7 +529,13 @@ const Select = React.forwardRef((props, ref) => {
                 {...menuProps}>
           {finalItems}
         </Menu>;
-  };
+  }, [
+    finalItems,
+    menuProps,
+    multiSelect,
+    noDataText,
+    selectHandler,
+    selectedValue]);
 
   const popupCntExtraCls = clsx(popupExtraClassName, {
     'global-with-border': hasBorder,
@@ -461,7 +549,7 @@ const Select = React.forwardRef((props, ref) => {
       className={clsx(extraClassName, className)}
       ctrlRef={rootRef}
       ctrlNode={getCtrl()}
-      body={getPopupBody()}
+      body={popBody}
       popupExtraClassName={popupCntExtraCls}
       {...otherProps}
   />;

@@ -2,27 +2,26 @@ import React from 'react';
 import {Collapse} from 'react-windy-ui';
 
 export default function Collapse2() {
-  const comp = <>
-    <Collapse defaultActive={[1]}>
-      <Collapse.Item header="Header1" hasBackground value={1}>
+  return <>
+    <Collapse defaultActive={1}>
+      <Collapse.Item header="Header1" value={1}>
         <div style={{padding: '1rem'}}>
-          This is a panel....<br/>
-          This is a panel....<br/>
+          content<br/>
+          ......<br/>
         </div>
       </Collapse.Item>
-      <Collapse.Item header="Header2" hasBackground value={2}>
+      <Collapse.Item header="Header2" value={2}>
         <div style={{padding: '1rem'}}>
-          This is a panel....<br/>
-          This is a panel....<br/>
+          content<br/>
+          ......<br/>
         </div>
       </Collapse.Item>
-      <Collapse.Item header="Header3" hasBackground value={3}>
+      <Collapse.Item header="Header3" value={3}>
         <div style={{padding: '1rem'}}>
-          This is a panel....<br/>
-          This is a panel....<br/>
+          content<br/>
+          ......<br/>
         </div>
       </Collapse.Item>
     </Collapse>
   </>;
-  return comp;
 }

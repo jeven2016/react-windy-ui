@@ -124,20 +124,25 @@ export const Direction = {
 
 export const FormDirection = {
   ...Direction,
-  inline: 'inline'
-}
+  inline: 'inline',
+};
 
 //=================================
 export const EventListener = {
   click: 'click',
   mouseEnter: 'mouseover',
   mouseLeave: 'mouseleave',
+  mouseDown: 'mousedown',
+  mouseUp: 'mouseup',
   focus: 'focus',
   blur: 'blur',
   resize: 'resize',
   keyDown: 'keydown',
   scroll: 'scroll',
   select: 'select',
+  touchStart: 'touchstart',
+  touchEnd: 'touchend',
+  touchMove: 'touchmove',
 };
 
 export const ContainerId = {

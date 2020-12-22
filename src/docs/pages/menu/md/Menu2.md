@@ -1,13 +1,13 @@
 --- 
 order: 2
 type: sample
-zh_CN: 切换不同类型的Menu
-en_US: Menu2
+zh_CN: Menu类型
+en_US: Menu Type
 editUrl: $BASE/docs/pages/menu/md/Menu2.md
 ---
 
 +++ zh_CN
-有三种Menu类型： primary、normal、dark。
+Menu有三种类型： <Code>primary</Code>、<Code>normal</Code>、<Code>dark</Code>。
 
 +++ en_US
 Menu2

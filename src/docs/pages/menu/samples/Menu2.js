@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Menu, RadioGroup, Radio} from 'react-windy-ui';
+import {Menu, Radio, RadioGroup} from 'react-windy-ui';
 
 export default function Menu2() {
   const [type, setType] = useState('normal');
@@ -14,10 +14,10 @@ export default function Menu2() {
       </RadioGroup>
     </div>
     <Menu type={type}
-          style={{width: "20rem"}}
+          style={{width: '20rem'}}
           defaultActiveItems={['item1']}
-          onSelect={(itemInfo, e) => {
-            console.log(itemInfo);
+          onSelect={(itemId, e) => {
+            console.log(itemId);
           }}>
       <Menu.Item id="item1">Menu Item1</Menu.Item>
       <Menu.Item id="item2">Menu Item2</Menu.Item>

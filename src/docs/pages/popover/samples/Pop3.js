@@ -12,7 +12,12 @@ const createPopover = (text, position, activeBy) => {
                   hasBorder={true}
                   hasBox={false}>
     <Button hasMinWidth={false} color="primary" outline
-            style={{margin: '1rem'}}>
+            style={{
+              margin: '.5rem',
+              fontSize: '.8rem',
+              width: '2rem',
+              height: '2rem',
+            }}>
       {text}
     </Button>
   </Popover>;

@@ -1,57 +1,51 @@
 import React, {useCallback, useContext} from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import Button from '../button';
 import {NavbarContext} from '../common/Context';
-import {nonNil} from "../Utils";
+import useEventCallback from '../common/useEventCallback';
 
 const Switch = React.forwardRef((props, ref) => {
   const {
-    className = 'button switch-btn',
+    className = 'button navbar-switch',
     extraClassName,
     onClick,
-    type = 'normal',
     circle = true,
     style = {},
-    buttonColor = 'color',
-    simplified = false,//todo
+    rippleColor = '#fff',
+    autoSwitch = true,
     ...otherProps
   } = props;
   const context = useContext(NavbarContext);
 
-  let clsName = clsx(extraClassName, className, {
-    'text color-white-hover': type === 'primary',
-  });
-
-  const click = useCallback((e) => {
-    if (simplified) {
-      return;
+  const click = useEventCallback((e) => {
+    if (autoSwitch) {
+      context.toggleList && context.toggleList(e);
     }
-    context.toggleList && context.toggleList(e);
     onClick && onClick(e);
-  }, [simplified, context, onClick]);
+  });
 
   const {color, ...otherStyles} = style;
   const others = {style: {...otherStyles}, ...otherProps};
-  return <span style={nonNil(color) ? {color} : null}>
-    <Button inverted
-            color={buttonColor}
-            size="small"
-            circle={circle}
-            ref={ref}
-            onClick={click}
-            {...others} />
-  </span>;
+  return <Button inverted
+                 className={className}
+                 extraClassName={extraClassName}
+                 hasBox={false}
+                 hasBorder={false}
+                 rippleColor={rippleColor}
+                 size="large"
+                 circle={circle}
+                 ref={ref}
+                 onClick={click}
+                 {...others} />;
 });
 
 Switch.propTypes = {
-  type: PropTypes.oneOf(['primary', 'normal']),   //it can only be blank or 'button' and it has nothing to do with native html type
-  className: PropTypes.string, //the class name of button
-  extraClassName: PropTypes.string, //the class name of button
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
   onClick: PropTypes.func,
   circle: PropTypes.bool,
-  simplified: PropTypes.bool,
-  buttonColor: PropTypes.string,
+  rippleColor: PropTypes.string,
+  autoSwitch: PropTypes.bool,
 };
 
 export default Switch;

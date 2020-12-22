@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
-import {isNil} from '../Utils';
+import {isNil, isObject} from '../Utils';
 import clsx from 'clsx';
 import {Spring} from 'react-spring/renderprops';
 import PropTypes from 'prop-types';
@@ -13,15 +13,15 @@ const ToggleType = {
 
 const Toggle = React.forwardRef((props, ref) => {
   const {
+    className = 'toggle-container',
+    extraClassName,
+    type = 'normal',
     defaultActive = false,
     active,
-    disabled = false,
-    className = 'toggle',
-    extraClassName,
     block = false,
+    disabled = false,
     style,
-    type = 'normal',
-    content,
+    label,
     onChange,
     ...otherProps
   } = props;
@@ -34,31 +34,43 @@ const Toggle = React.forwardRef((props, ref) => {
   });
 
   let isOn = customized ? active : isActive;
-  let clsName = clsx(extraClassName, className, {
+  let clsName = clsx('toggle', {
     on: isOn,
     off: !isOn,
     disabled: disabled,
     [type]: type,
   });
 
+  const labelContent = useMemo(() => {
+    let onLabel, offLabel;
+
+    if (!isObject(label)) {
+      onLabel = offLabel = label;
+    } else {
+      onLabel = label?.on;
+      offLabel = label?.off;
+    }
+    return {on: onLabel, off: offLabel};
+  }, [label]);
+
   const getContent = useCallback((isBarContent, defaultValue = null) => {
     if (type === ToggleType.normal) {
       return null;
     }
-    if (isNil(content)) {
+    if (isNil(label)) {
       return defaultValue;
     }
 
-    if ((isBarContent && !content.showInBar)) {
+    if ((isBarContent && !label?.showInBar)) {
       return defaultValue;
     }
 
-    if (!isBarContent && content.showInBar) {
+    if (!isBarContent && label?.showInBar) {
       return defaultValue;
     }
 
-    return isOn ? content.on : content.off;
-  }, [isOn, content, type]);
+    return isOn ? labelContent.on : labelContent.off;
+  }, [isOn, label, labelContent.off, labelContent.on, type]);
 
   const clickToggle = useCallback((e) => {
     if (disabled) {
@@ -75,57 +87,49 @@ const Toggle = React.forwardRef((props, ref) => {
     !isNil(onChange) && onChange(newActive, e);
   }, [disabled, isActive, customized, onChange, setActive]);
 
-  const from = useMemo(()=>{
-    return {
-      left: '0%',
-    }
-  },[])
-
-  const to = useMemo(
-      () => {
-        let offset = type === ToggleType.normal ? {
-              leftOffset: '-5%',
-              rightOffset: '-95%',
-            }
-            : {leftOffset: '0.2rem', rightOffset: '-1.7rem'};
-
-        return {
-          left: isOn ? '100%' : '0%',
-          transform: isOn
-              ? `translateX(${offset.rightOffset})`
-              : `translateX(${offset.leftOffset})`,
+  const currentStyle = useMemo(() => {
+    let offset = type === ToggleType.normal ? {
+          leftOffset: 'translate3d(-5%,0,0)',
+          rightOffset: 'translate3d(-95%,0,0)',
+        }
+        : {
+          leftOffset: 'translate3d(0.2rem,-50%,0)',
+          rightOffset: 'translate3d(-1.7rem,-50%,0)',
         };
-      },
-      [isOn, type]);
 
-  const btnStyle = {};
-  if (block) {
-    btnStyle.width = '100%';
-  }
+    return {
+      left: isOn ? '100%' : '0%',
+      transform: isOn
+          ? offset.rightOffset
+          : offset.leftOffset,
+    };
+  }, [isOn, type]);
 
   const barContent = type === ToggleType.normal ? <span
       className="bar"> {getContent(true)}</span> : null;
 
-  const infoContent = type !== ToggleType.normal ? <span className="info">
+  const infoContent = type !== ToggleType.normal ? <span
+      className={`info ${isOn ? 'on' : 'off'}`}>
     {getContent(true, '\u00A0')}
       </span> : null;
 
   const normalLabel = useMemo(() => {
-    if (type !== ToggleType.normal || isNil(content)) {
+    if (type !== ToggleType.normal || isNil(label)) {
       return null;
     }
-    const text = isOn ? content.on : content.off;
-    const labelClsName = `toggle-label ${isOn ? 'on' : null}`;
+    const text = isOn ? labelContent.on : labelContent.off;
+    const labelClsName = `toggle-label ${isOn ? 'on' : ''}`;
     return <span className={labelClsName}>{text}</span>;
-  }, [type, isOn, content]);
+  }, [type, label, isOn, labelContent.on, labelContent.off]);
 
   const buttonClsName = clsx('toggle-button', {
+    block: block,
     disabled,
   });
 
-  return <>
-    <button style={{...btnStyle, ...style}}
-            ref={ref}
+  return <div className={clsx(extraClassName, className, {block: block})}
+              style={style}>
+    <button ref={ref}
             className={buttonClsName}
             disabled={disabled}
             onClick={clickToggle} {...otherProps}>
@@ -133,34 +137,40 @@ const Toggle = React.forwardRef((props, ref) => {
         {barContent}
         {infoContent}
         <Spring
-            from={from}
-            to={to}
+            from={currentStyle}
+            to={currentStyle}
             config={{clamp: true, mass: 1, tesion: 100, friction: 15}}
         >
           {
             springProps => (<span className="ball" style={springProps}>
               {getContent(false)}
+
             </span>)
           }
           </Spring>
       </span>
     </button>
     {normalLabel}
-  </>;
+  </div>;
 
 });
 
 Toggle.propTypes = {
   className: PropTypes.string,
   extraClassName: PropTypes.string, //the customized class need to add
-  disabled: PropTypes.bool,
+  type: PropTypes.oneOf(['normal', 'primary', 'secondary']),
+  defaultActive: PropTypes.bool,
   active: PropTypes.bool,
   block: PropTypes.bool,
+  disabled: PropTypes.bool,
   style: PropTypes.object,
-  type: PropTypes.oneOf(['normal', 'primary', 'secondary']),
+  label: PropTypes.oneOfType([
+    PropTypes.string, PropTypes.shape({
+      on: PropTypes.node,
+      off: PropTypes.node,
+      showInBar: PropTypes.bool,
+    })]),
   onChange: PropTypes.func,
-  content: PropTypes.shape(
-      {one: PropTypes.node, off: PropTypes.node, showInBar: PropTypes.bool}),
 };
 
 export default Toggle;

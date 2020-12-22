@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useMemo} from 'react';
-import {isNil, nonNil, startsWith} from './Utils';
+import {createColorClsName, isNil, nonNil} from './Utils';
 import {IconRadioChecked, IconRadioUnChecked} from './Icons';
 import PropTypes from 'prop-types';
 import useInternalState from './common/useInternalState';
@@ -27,10 +27,10 @@ const Radio = React.forwardRef((props, ref) => {
     children,
     checkedColor,
     uncheckedColor,
-    errorType,
     alignLabel = 'right',
     checkedIcon = <IconRadioChecked/>,
     uncheckedIcon = <IconRadioUnChecked/>,
+    errorType,
     ...otherProps
   } = props;
   const ctx = useContext(RadioGroupContext);
@@ -91,32 +91,17 @@ const Radio = React.forwardRef((props, ref) => {
     disabled,
     ctx]);
 
-  /*
-   * For internal used icon
-   */
-  const isColorValue = useCallback((val) => {
-        return !isNil(val) &&
-            (startsWith(val, '#') || startsWith(val, 'rgb'));
-      },
-      []);
-
-  const iconColorCls = useMemo(() => {
-    if (checkState && !isNil(checkedColor) && !isColorValue(checkedColor)) {
-      return 'text color-' + checkedColor;
-    }
-    if (!checkState && !isNil(uncheckedColor) &&
-        !isColorValue(uncheckedColor)) {
-      return 'text color-' + uncheckedColor;
-    }
-    return null;
-  }, [checkState, checkedColor, uncheckedColor, isColorValue]);
+  const iconColor = useMemo(() => createColorClsName({
+    checkState, checkedColor, uncheckedColor,
+  }), [checkState, checkedColor, uncheckedColor]);
 
   realIcon = useMemo(() => realIcon ? React.cloneElement(realIcon, {
         onKeyDown: (e) => e.keyCode === 13 && handleClick(),
         tabIndex: 0,
-        extraClassName: iconColorCls,
+        extraClassName: iconColor?.className || '',
+        style: (!iconColor?.isClass && iconColor?.style) || {},
       }) : null,
-      [iconColorCls, realIcon, handleClick]);
+      [iconColor, realIcon, handleClick]);
 
   return <>
     <Element className={clsName}
@@ -141,20 +126,19 @@ Radio.propTypes = {
   disabled: PropTypes.bool,
   checked: PropTypes.bool,
   defaultChecked: PropTypes.bool,
+  value: PropTypes.any,
   onChange: PropTypes.func,
   label: PropTypes.node,
-  children: PropTypes.node,
-  checkedIcon: PropTypes.node,
-  uncheckedIcon: PropTypes.node,
   checkedColor: PropTypes.string,
   uncheckedColor: PropTypes.string,
+  alignLabel: PropTypes.oneOf(['top', 'bottom', 'left', 'right']),
+  checkedIcon: PropTypes.node,
+  uncheckedIcon: PropTypes.node,
+  errorType: PropTypes.oneOf(['ok', 'warning', 'error']),
 };
 
 /**
  * Radio Group
- * @param props
- * @returns {*}
- * @constructor
  */
 const RadioGroup = React.forwardRef((props, ref) => {
   const {
@@ -202,11 +186,13 @@ const RadioGroup = React.forwardRef((props, ref) => {
 });
 
 RadioGroup.propTypes = {
-  disabled: PropTypes.bool,
-  onChange: PropTypes.func,
-  children: PropTypes.node,
+  className: PropTypes.string,
+  extraClassName: PropTypes.string, //the customized class need to add
   defaultValue: PropTypes.any,
   value: PropTypes.any,
+  onChange: PropTypes.func,
+  disabled: PropTypes.bool,
+  errorType: PropTypes.oneOf(['ok', 'warning', 'error']),
 };
 
 export default Radio;

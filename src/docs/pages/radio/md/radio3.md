@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/radio/md/radio3.md
 ---
 
 +++ zh_CN
-将disabled设置为true后，将禁用对应的Radio.
+将<Code>disabled</Code>设置为<Code>true</Code>后，将禁用对应的Radio.
 
 +++ en_US
 Radio

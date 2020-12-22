@@ -1,7 +1,7 @@
 --- 
 order: 9
 type: sample
-zh_CN: 自定义背景色
+zh_CN: 固定位置
 en_US: navbar
 editUrl: $BASE/docs/pages/navbar/md/navbar9.md
 ---

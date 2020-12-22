@@ -1,14 +1,14 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import HomeHeader from '../home/HomeHeader';
 import {
+  Affix,
   Card,
   Col,
   Drawer,
+  initStore,
   Responsive,
   RouteLoader,
   Row,
-  Affix,
-  initStore,
   useMediaQuery,
 } from 'react-windy-ui';
 import DocMenu from './DocMenu';
@@ -56,11 +56,12 @@ function DocCenter(props) {
   // relative to the parent route, while the `url` lets
   // us build relative links.
   const {url} = useRouteMatch();
-  const {xg: isMinXg, lg: isMinLg, sm: isMaxSm} = useMediaQuery({
+  const responsive = useMemo(() => ({
     xg: Responsive.xg.min,
     lg: Responsive.lg.min,
     sm: Responsive.sm.max,
-  });
+  }), []);
+  const {xg: isMinXg, lg: isMinLg, sm: isMaxSm} = useMediaQuery(responsive);
 
   let contentProps;
   if (isMinXg) {
@@ -71,22 +72,13 @@ function DocCenter(props) {
     contentProps = {col: 12};
   }
 
-  let containerStyle;
-  if (isMinXg) {
-    containerStyle = {padding: '16px 16px'};
-  } else if (isMinLg) {
-    containerStyle = {padding: '16px 16px'};
-  } else {
-    containerStyle = {padding: '16px 16px'};
-  }
+  let containerStyle = {padding: '16px 16px'};
 
   const [store] = useState(() =>
       initStore({list: []}), /**{list:  [{id: xx, text: xxx}]} **/
   );
 
   const [activeDrawer, setActive] = useState(false);
-  const menu = <DocMenu hasBox={false}
-                        onSelectMenuItem={() => setActive(false)}/>;
 
   return <QuickManuContext.Provider value={{quickManuStore: store}}>
     <HomeHeader/>
@@ -98,7 +90,8 @@ function DocCenter(props) {
                 hasAnchor
                 style={{width: isMaxSm ? '80%' : '300px'}}
                 onChange={(e, show) => setActive(show)}>
-          {menu}
+          <DocMenu hasBox={false}
+                   onSelectMenuItem={() => setActive(false)}/>
         </Drawer>
       }
 
@@ -106,8 +99,9 @@ function DocCenter(props) {
         {
           isMinLg &&
           <Col col={2} extraClassName="doc left-col">
-            <Affix top={80} name='left'>
-              {menu}
+            <Affix top={80}>
+              <DocMenu hasBox={false}
+                       onSelectMenuItem={() => setActive(false)}/>
             </Affix>
           </Col>
         }

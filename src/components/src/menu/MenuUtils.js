@@ -1,4 +1,8 @@
-import {isNil} from '../Utils';
+import React from 'react';
+import {isNil, isNumber, nonNil} from '../Utils';
+import SubMenu from './SubMenu';
+import Group from './Group';
+import Item from './Item';
 
 export const MenuDirection = {
   horizontal: {key: 'horizontal', className: 'menu-row'},
@@ -43,81 +47,77 @@ export const MenuConst = {
   all: 'all',
 };
 
-export const indentMenu = (
-    props,
-    index = 1) => {
-  const {popupSubMenu, rootDom, indentUnit, indentation} = props;
-
-  if (rootDom && rootDom.hasChildNodes()) {
-    let menuChildNodes = rootDom.childNodes;
-    menuChildNodes.forEach(childNode => {
-      if (hasClass(childNode, MenuClassName.item)) {
-        if (index > 1) {
-          childNode.style.paddingLeft = `${index * indentation}${indentUnit}`;
-        }
-        return;
-      }
-
-      if (hasClass(childNode, MenuClassName.header) ||
-          hasClass(childNode, MenuClassName.groupHeader)) {
-        const count = index - 1 > 0 ? index - 1 : 1;
-        childNode.style.paddingLeft = `${count *
-        indentation}${indentUnit}`;
-        return;
-      }
-
-      if (hasClass(childNode, MenuClassName.subMenu)) {
-        const next = popupSubMenu ? index : index + 1;
-        indentMenu({...props, rootDom: childNode}, next);
-        return;
-      }
-
-      //group
-      if (hasClass(childNode, MenuClassName.group)) {
-        const next = index + 1;
-        indentMenu({...props, rootDom: childNode}, next);
-        return;
-      }
-
-      //collapse-panel
-      var menuList = getItemParent(childNode);
-      if (menuList) {
-        indentMenu({...props, rootDom: menuList.node}, index);
-      }
-    });
+const deepUpdateLevel = ({node, level}) => {
+  if (isNil(node)) {
+    return null;
   }
+
+  const children = node.props.children;
+  if (node.type === Item || isNil(children) || children.length === 0) {
+    return React.cloneElement(node, {level: level});
+  }
+  const isGroup = node.type === Group;
+  if (!isGroup && node.type !== SubMenu) {
+    return node;
+  }
+
+  return React.cloneElement(node, {
+    level: level,
+    children: React.Children.map(children, chd => {
+      return deepUpdateLevel({node: chd, level: isGroup ? level : level + 1});
+    }),
+  });
+
 };
 
-export const cancelIndent = (props) => {
-  const {rootDom} = props;
-  if (rootDom) {
-    var headers = rootDom.getElementsByClassName('menu-header');
-    for (let header of headers) {
-      const paddingLeft = header.style.paddingLeft;
-      if (!isNil(paddingLeft)) {
-        header.style.paddingLeft = '';
-      }
-    }
-  }
-};
+/**
+ * Fill level property for sub components
+ * @param children
+ * @param popupSubMenu
+ * @param indentUnit
+ * @param indentation
+ * @returns children
+ */
+export const fillLevel = ({
+                            children,
+                            popupSubMenu,
+                            indentUnit,
+                            indentation,
+                          }) => {
 
-const getItemParent = (node) => {
-  if (node && node.hasChildNodes()) {
-    const childNodes = node.childNodes;
-    for (let i = 0; i < childNodes.length; i++) {
-      if (hasClass(childNodes[i], MenuClassName.item)) {
-        return {node, isGroup: false};
-      }
-      if (hasClass(childNodes[i], MenuClassName.group)) {
-        return {node, isGroup: true};
-      }
-      return getItemParent(childNodes[i]);
+  if (popupSubMenu) {
+    return children;
+  }
+
+  return React.Children.map(children, chd => {
+    if (chd.type !== SubMenu && chd.type !== Group) {
+      return chd;
     }
 
-  }
-  return null;
-
+    if (chd.type === Group) {
+      return React.cloneElement(chd, {
+        level: 0,
+        children: deepUpdateLevel({node: chd, level: 0}),
+      });
+    }
+    if (chd.type === SubMenu) {
+      return deepUpdateLevel({node: chd, level: 0});
+    }
+  });
 };
 
-export const hasClass = (node, className) => !isNil(node.className) &&
-    node.className.includes(className);
+export const getPaddingStyle = ({
+                                  ignored,
+                                  indentUnit,
+                                  indentation,
+                                  initIndent,
+                                  level,
+                                }) => {
+  if (ignored || !isNumber(level)) {
+    return null;
+  }
+  const padding = level * indentation;
+  const finalPadding = padding === 0 ? initIndent : `${(padding +
+      initIndent)}`;
+  return {paddingLeft: finalPadding + indentUnit};
+};

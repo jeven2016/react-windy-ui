@@ -10,28 +10,24 @@ export default function Navbar6() {
     <div className="doc doc-row">
       <div className="doc doc-row">
         <Toggle active={smallWindow}
-                content={{on: 'Small Window', off: 'Small Window'}}
+                label='Small Window'
                 onChange={(val) => setSmallWindow(val)}/>
       </div>
     </div>
 
     <DocFrame width={width} height='150px'>
-      <Navbar type="primary" hasBorder={false} autoHide={false}>
+      <Navbar type="primary" hasBorder={false} autoHideList={false}>
         <Navbar.Title style={{width: '100%'}}>
           <span style={{flex: '1 1 auto'}}>Web</span>
         </Navbar.Title>
-        <Navbar.List align="right">
-          <Navbar.Item style={{minWidth: '2rem', padding: '0 .5rem'}}>
-            <Button circle outline color="green"
-                    extraClassName="clear-border"
-                    style={{color: '#fff'}}>
+        <Navbar.List justify="end">
+          <Navbar.Item compact={true}>
+            <Button circle inverted size="large">
               <IconSearch/>
             </Button>
           </Navbar.Item>
-          <Navbar.Item style={{minWidth: '2rem', padding: '0 .5rem'}}>
-            <Button circle outline color="green"
-                    extraClassName="clear-border"
-                    style={{color: '#fff'}}>
+          <Navbar.Item compact={true}>
+            <Button circle inverted size="large">
               <IconHome/>
             </Button>
           </Navbar.Item>

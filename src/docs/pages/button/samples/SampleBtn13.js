@@ -7,6 +7,8 @@ import {
   IconList,
   Navbar,
 } from 'react-windy-ui';
+import {faPhone} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 const SampleBtn13 = () => {
   return <>
@@ -23,20 +25,20 @@ const SampleBtn13 = () => {
       </Navbar.Title>
       <Navbar.List>
         <Navbar.Item>
-          <Button inverted circle color="green" hasRipple hasBox={false}
+          <Button inverted circle color="green" hasBox={false}
                   leftIcon={<IconArrowLeft/>}/>
         </Navbar.Item>
         <Navbar.Item>
-          <Button inverted circle color="blue" hasRipple hasBox={false}
+          <Button inverted circle color="blue" hasBox={false}
                   leftIcon={<IconList/>}/>
         </Navbar.Item>
         <Navbar.Item>
-          <Button inverted circle color="red" hasRipple hasBox={false}
+          <Button inverted circle color="red" hasBox={false}
                   leftIcon={<IconArrowRight/>}/>
         </Navbar.Item>
         <Navbar.Item>
-          <Button inverted circle color="blue" hasRipple hasBox={false}
-                  leftIcon={<IconCalendar/>}/>
+          <Button inverted circle color="blue" hasBox={false}
+                  leftIcon={<FontAwesomeIcon icon={faPhone}/>}/>
         </Navbar.Item>
       </Navbar.List>
     </Navbar>

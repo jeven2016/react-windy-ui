@@ -17,11 +17,11 @@ export default function HomeHeader({transparent = false}) {
       setBarExtraCls(affixed ? 'affix-fixed' : '');
     }}>
       <div className={`doc home-header ${transparent ? 'transparent' : ''}`}>
-        <Navbar extraClassName={barExtraCls} type="primary"
+        <Navbar extraClassName={barExtraCls} type="primary" id="header"
                 hasBox={false} hasBorder={false}>
 
           <Navbar.Title>
-            <Navbar.Switch simplified>
+            <Navbar.Switch>
               <IconList/>
             </Navbar.Switch>
             {/*   <HomeIcon style={{
@@ -30,7 +30,7 @@ export default function HomeHeader({transparent = false}) {
             }}/>*/}
             <Link to="/">{intl.get('global.home.title')}</Link>
           </Navbar.Title>
-          <Navbar.List align='right'>
+          <Navbar.List>
             <Navbar.Item hasBar>
               <Link to="/docs">{intl.get(
                   'global.home.link.documentation')}</Link>

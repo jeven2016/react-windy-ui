@@ -8,7 +8,7 @@
 
 +++  zh_CN
 ## 确认 PopConfirm  [editUrl] 
-弹出确认弹出框，在当前页面额外弹出一个小框体，提示用户确认操作。  
+在当前页面额外弹出一个确认小框体，提示用户确认操作。  
 
 - 与Modal相比，在页面占用更小的空间
 - 提供了一个快捷的确认弹出框
@@ -16,5 +16,5 @@
 
 
 +++ en_US
-## Notification [editUrl]  
+## PopConfirm [editUrl]  
 

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Button, PopConfirm, Select} from 'react-windy-ui';
 
 export default function Pc5() {
-  const [position, setPosition] = useState("topRight");
+  const [position, setPosition] = useState("topLeft");
 
   return <>
     <div className="doc doc-row">
@@ -17,6 +17,7 @@ export default function Pc5() {
         <Select.Option value="topLeft">TopLeft</Select.Option>
         <Select.Option value="top">Top</Select.Option>
         <Select.Option value="right">Right</Select.Option>
+        <Select.Option value="bottom">Bottom</Select.Option>
       </Select>
     </div>
 

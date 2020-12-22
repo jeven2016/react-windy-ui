@@ -1,13 +1,26 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useCallback, useContext, useMemo, useRef} from 'react';
 import clsx from 'clsx';
 import {IconArrowLeft, IconArrowRight} from '../Icons';
 import {animated, useSpring} from 'react-spring';
 import {MenuContext} from '../common/Context';
-import {MenuDirection} from './MenuUtils';
+import {getPaddingStyle, MenuDirection} from './MenuUtils';
 import PropTypes from 'prop-types';
+import Ripple from '../common/Ripple';
+import useEventCallback from '../common/useEventCallback';
 
 const MenuHeader = React.forwardRef((props, ref) => {
+  const ctx = useContext(MenuContext);
+  const rippleRef = useRef(null);
+
+  //bind ripple related event listeners
+  const updatedProps = Ripple.useRippleEvent({
+    rippleRef,
+    rootProps: props,
+    hasRipple: ctx.hasRipple,
+  });
+
   const {
+    extraClassName,
     className = 'menu-header',
     handleCollapse,
     collapse,
@@ -15,15 +28,17 @@ const MenuHeader = React.forwardRef((props, ref) => {
     icon,//left icon
     arrowIcon = <IconArrowLeft/>,
     popArrowIcon = <IconArrowRight/>,
-    handleMouseEnter,
-    handleMouseLeave,
+    onMouseEnter,
+    onMouseLeave,
     menuVisible,
     hasBottomBar,
-  } = props;
-  const ctx = useContext(MenuContext);
+    style,
+    level,
+    ...others
+  } = updatedProps;
   const {type, popupSubMenu} = useContext(MenuContext);
 
-  const headerClsName = clsx(className, {
+  const headerClsName = clsx(extraClassName, className, {
     [type]: type,
     compact: ctx.canCompact && ctx.compact,
     'non-compact': ctx.canCompact && !ctx.compact,
@@ -33,12 +48,13 @@ const MenuHeader = React.forwardRef((props, ref) => {
     'no-arrow': !ctx.hasArrow,
     'active': menuVisible && popupSubMenu,
     [headerType]: headerType,  //it should be normal / dark(color is white)
+    disabled: ctx.disabled,
   });
 
   const show = !ctx.compact && ctx.canCompact;
 
   const springSetting = useMemo(() => ({
-    from: {rotation: 0},
+    from: {rotation: collapse ? 0 : -90},
     to: {rotation: collapse ? 0 : -90},
     config: {clamp: true, mass: 1, tesion: 100, friction: 15},
   }), [collapse]);
@@ -75,7 +91,7 @@ const MenuHeader = React.forwardRef((props, ref) => {
 
   const innerProps = useSpring(springConfig);
 
-  const cnt = () => {
+  const cnt = useCallback(() => {
     if (!ctx.canCompact) {
       return <>
         <div className='header-info'>
@@ -89,20 +105,51 @@ const MenuHeader = React.forwardRef((props, ref) => {
       <animated.div className='header-info'
                     style={innerProps}>  {ctx.header}</animated.div>
       {realIcon}</>;
-  };
+  }, [ctx.canCompact, ctx.header, innerProps, realIcon, show]);
+
+  const paddingStyle = useMemo(() => ctx.autoIndent ?
+      getPaddingStyle({
+        ignored: popupSubMenu,
+        indentUnit: ctx.indentUnit,
+        indentation: ctx.indentation,
+        initIndent: ctx.initIndent,
+        level: level,
+      }) : null,
+      [
+        ctx.autoIndent,
+        ctx.indentUnit,
+        ctx.indentation,
+        ctx.initIndent,
+        level,
+        popupSubMenu]);
+
+  const mlHandler = useEventCallback((e) => {
+    !ctx.disabled && onMouseLeave && onMouseLeave(e);
+  });
+
+  const meHandler = useEventCallback((e) => {
+    !ctx.disabled && onMouseEnter && onMouseEnter(e);
+  });
+
+  const collapseHandler = useEventCallback((e) => {
+    !ctx.disabled && handleCollapse && handleCollapse(e);
+  });
 
   return <div className={headerClsName}
-              onClick={handleCollapse}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}>
+              onClick={collapseHandler}
+              onMouseEnter={meHandler}
+              onMouseLeave={mlHandler}
+              style={{...paddingStyle, ...style}}
+              {...others}>
     {
       icon && <div className="header-icon">
         {icon}
       </div>
     }
-
+    {cnt()}
     {
-      cnt()
+      ctx.hasRipple && !ctx.disabled &&
+      <Ripple ref={rippleRef} color={ctx.rippleColor}/>
     }
   </div>;
 });
@@ -119,6 +166,7 @@ MenuHeader.propTypes = {
   handleMouseLeave: PropTypes.func,
   menuVisible: PropTypes.bool,
   hasBottomBar: PropTypes.bool,
+  level: PropTypes.number,
 };
 
 export default MenuHeader;

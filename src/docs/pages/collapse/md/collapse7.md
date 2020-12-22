@@ -7,7 +7,8 @@ editUrl: $BASE/docs/pages/collapse/md/collapse7.md
 ---
 
 +++ zh_CN
- 在每个Collapse.Item上设置disabled属性以便禁用整个Collapse。
+ 在每个<Code>Collapse.Item</Code>上设置<Code>disabled</Code>属性可以禁用对应的Item， 也在<Code>Collapse</Code>上全局设置
+<Code>disabled</Code>属性去禁用整个Collapse。
 
 +++ en_US
 Collapse7
