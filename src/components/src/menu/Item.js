@@ -6,7 +6,6 @@ import {Action, getPaddingStyle} from './MenuUtils';
 import PropTypes from 'prop-types';
 import {animated, useSpring} from 'react-spring';
 import {preventEvent} from '../event';
-import Element from '../common/Element';
 import Tooltip from '../Tooltip';
 import {MenuType} from '../common/Constants';
 import Ripple from '../common/Ripple';
@@ -44,7 +43,7 @@ const Item = React.forwardRef((props, ref) => {
   const {attach, detach, getState} = ctx.store;
   const [active, setActive] = useState(null);
   const isActive = isNil(active) ? includes(getState().activeItemsList, id)
-      : active;
+    : active;
 
   const isDisabled = nonNil(disabled) ? disabled : ctx.disabled;
 
@@ -98,9 +97,9 @@ const Item = React.forwardRef((props, ref) => {
     'with-bg': hasBackground,
     'with-bottom-bar': hasBottomBar,
     'left-bar': ctx.type === MenuType.primary && ctx.primaryBarPosition ===
-        'left',
+      'left',
     'right-bar': ctx.type === MenuType.primary && ctx.primaryBarPosition ===
-        'right',
+      'right',
   });
 
   const content = useMemo(() => {
@@ -124,20 +123,20 @@ const Item = React.forwardRef((props, ref) => {
   }, [customizedChildren, icon, directChild, show, innerProps, children]);
 
   const paddingStyle = useMemo(() => ctx.autoIndent ?
-      getPaddingStyle({
-        ignored: ctx.popupSubMenu,
-        indentUnit: ctx.indentUnit,
-        indentation: ctx.indentation,
-        initIndent: ctx.initIndent,
-        level: level,
-      }) : null,
-      [
-        ctx.autoIndent,
-        ctx.indentUnit,
-        ctx.indentation,
-        ctx.initIndent,
-        ctx.popupSubMenu,
-        level]);
+    getPaddingStyle({
+      ignored: ctx.popupSubMenu,
+      indentUnit: ctx.indentUnit,
+      indentation: ctx.indentation,
+      initIndent: ctx.initIndent,
+      level: level,
+    }) : null,
+    [
+      ctx.autoIndent,
+      ctx.indentUnit,
+      ctx.indentation,
+      ctx.initIndent,
+      ctx.popupSubMenu,
+      level]);
 
   const renderCnt = <div ref={ref} className={clsName} {...otherProps}
                          onClick={clickHandler}
@@ -157,19 +156,6 @@ const Item = React.forwardRef((props, ref) => {
 
   return renderCnt;
 });
-
-Item.Left = React.forwardRef((props, ref) =>
-    <Element nativeType="span" className="left"
-             ref={ref} {...props}/>,
-);
-Item.Center = React.forwardRef((props, ref) =>
-    <Element nativeType="span" className="item-info"
-             ref={ref} {...props}/>,
-);
-Item.Right = React.forwardRef((props, ref) =>
-    <Element nativeType="span" className="right"
-             ref={ref} {...props}/>,
-);
 
 Item.propTypes = {
   className: PropTypes.string,

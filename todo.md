@@ -10,6 +10,7 @@ Bugs:
 - TabBar的move方法无法useCallback, 使用后会出现max 调用的问题， 考虑store迁移; Tabs的useEffect-> scroll也有这个问题
 - Tabs6中当为left时，出现左侧蓝色条。
 - popup监听click改成mouseUp后，select的不允许关闭的例子失效。需要衡量是否能很修改
+- no icon for multi select 
 
 Enhance:
 

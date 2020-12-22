@@ -2,13 +2,13 @@ import React, {useMemo, useState} from 'react';
 import {Select} from 'react-windy-ui';
 
 export default function Select4() {
-  //the items count
+  //the item count
   const count = 15;
 
   //generate the items for selection
   const items = useMemo(() => {
     return [...Array(count).keys()].map((key, index) =>
-        <Select.Option key={key} value={key}>{`Option ${key}`}</Select.Option>,
+      <Select.Option key={key} value={key}>{`Option ${key}`}</Select.Option>,
     );
   }, [count]);
 
@@ -25,32 +25,32 @@ export default function Select4() {
       return;
     }
 
-    //let Select to show a loading indicator
+    //show a loading indicator
     setLoading(true);
 
     setTimeout(() => {
-      //filter a list of items and the text of item should contain the searched value
+      //filter a list of items
       let list = items.filter(
-          item => {
-            return item.props.children.toLowerCase().
-                includes(value.toLowerCase());
-
-          });
+        item => {
+          return item.props.children.toLowerCase().includes(value.toLowerCase());
+        });
       setItemList(list);
       setLoading(false);
     }, 1000);
   };
 
   return <>
-    <Select popupBodyStyle={{height: '20rem', overflow: 'auto'}}
-            activeBy="hover"
-            defaultValue={0}
-            searchable
-            loading={loading}
-            onSearch={search}
-            onSelect={(val) => console.log(`You just selected ${val}`)}>
-      {itemList}
-    </Select>
+    <div className="doc doc-row space">
+      <Select popupBodyStyle={{height: '20rem', overflow: 'auto'}}
+              activeBy="hover"
+              defaultValue={0}
+              searchable
+              loading={loading}
+              onSearch={search}
+              onSelect={(val) => console.log(`You just selected ${val}`)}>
+        {itemList}
+      </Select>
+    </div>
   </>;
 
 }

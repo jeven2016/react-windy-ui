@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/select/md/select3.md
 ---
 
 +++ zh_CN
-设置loading为true后，将显示一个加载中的状态。
+设置<Code>loading</Code>为<Code>true</Code>后，将显示一个加载中的状态。
 
 +++ en_US
 Select
