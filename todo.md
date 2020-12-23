@@ -44,3 +44,17 @@ Other:
 - free pic: https://pixabay.com/photos/bay-beach-boat-exotic-idyllic-1867798/
   https://pixabay.com/photos/girl-teenager-dancing-outdoor-5391785/
 
+* react-spring interpolate function    
+
+```shell
+import {interpolate} from 'react-spring';
+
+ transform: interpolate([
+      nonNil(xyz) ? xyz.interpolate((x, y, z) => `translate3D(${x}, ${y},${z})`) : -1,
+      nonNil(scale) ? scale.interpolate(scale => `scale(${scale})`) : -1
+    ], (t, scale) => {
+      const tf = `${t ? t : ""} ${scale ? scale : ""}`
+      console.log(tf);
+      return tf;
+    })
+```

@@ -3,6 +3,7 @@ order: 1
 type: sample
 zh_CN: 简单示例
 en_US: Modal
+onlyVisible: false
 editUrl: $BASE/docs/pages/menu/md/modal1.md
 ---
 

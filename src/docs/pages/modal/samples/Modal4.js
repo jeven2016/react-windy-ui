@@ -21,9 +21,7 @@ export default function Modal4() {
 
     <Modal active={active} type={type} onCancel={close}
            extraClassName={`${bg} text color-white`}
-           size="large"
-           alignCenter={false}
-           style={{top: '7rem'}}>
+           size="large">
       <Modal.Header>
         Modal Header
       </Modal.Header>

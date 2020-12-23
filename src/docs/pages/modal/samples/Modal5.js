@@ -20,8 +20,7 @@ export default function Modal5() {
 
     <Button type="primary" onClick={() => setActive(true)}>Simple</Button>
 
-    <Modal active={active} size={size} onCancel={close}
-           alignCenter={true}>
+    <Modal active={active} size={size} onCancel={close}>
       <Modal.Header>
         Modal Header
       </Modal.Header>

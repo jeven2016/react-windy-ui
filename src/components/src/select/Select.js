@@ -482,13 +482,11 @@ const Select = React.forwardRef((props, ref) => {
       setValue(itemsArray);
       setSearchedValue(null);
     }
-
     const item = multiSelect ? itemsArray : itemsArray[0];
-    if (onSelect) {
-      onSelect(item, e);
-    } else if (onChange) {
-      onChange(item, e);
-    }
+    onSelect && onSelect(item, e);
+
+    //for form, the form component need to get the name by name and it required to be triggered by onChange
+    onChange && onChange(item, e);
   });
 
   const popBody = useMemo(() => {

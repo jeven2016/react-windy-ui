@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 简单示例
 en_US: Select
-onlyVisible: false
+onlyVisible: true
 editUrl: $BASE/docs/pages/select/md/select1.md
 ---
 

@@ -51,56 +51,12 @@ export const startsWith = (first, next) => first.slice(0, next.length) === next;
 
 export const getScrollTop = (win) => {
   return win.document.documentElement.scrollTop || win.pageYOffset
-      || win.document.body.scrollTop;
+    || win.document.body.scrollTop;
 };
 
 export const getScrollLeft = (win) => {
   return win.document.documentElement.scrollLeft || win.pageXOffset
-      || win.document.body.scrollLeft;
-};
-
-/**
- * Set padding property for a child node instead of setting margin property
- * @param destComponent
- * @param ctrl
- * @param type
- * @param padding
- */
-export const placePadding = (
-    destComponent, ctrl, type, padding = '0px', margin = 0) => {
-  place(destComponent, ctrl, type, margin);
-};
-
-/**
- * Deprecated
- * @param type
- * @returns {null}
- */
-export const getPaddingAttribute = (type) => {
-  let paddingAttr = null;
-  switch (type) {
-    case 'bottom':
-    case 'bottomLeft':
-    case 'bottomRight':
-      paddingAttr = 'paddingTop';
-      break;
-    case 'top':
-    case 'topLeft':
-    case 'topRight':
-      paddingAttr = 'paddingBottom';
-      break;
-    case 'left':
-    case 'leftTop':
-    case 'leftBottom':
-      paddingAttr = 'paddingRight';
-      break;
-    case 'right':
-    case 'rightTop':
-    case 'rightBottom':
-      paddingAttr = 'paddingLeft';
-      break;
-  }
-  return paddingAttr;
+    || win.document.body.scrollLeft;
 };
 
 export const getTransformOrigin = (type) => {
@@ -156,56 +112,56 @@ export const place = (dest, ctrl, type, offset = 0) => {
   let left = 0, top = 0;
   if (type === PopupPosition.bottom) {
     left = scrollLeft + (posLeft
-        - (dest.offsetWidth
-            - ctrl.offsetWidth)
-        / 2) + 'px';
+      - (dest.offsetWidth
+        - ctrl.offsetWidth)
+      / 2) + 'px';
     top = (pos.bottom + offset) + scrollTop + 'px';
   }
 
   if (type === PopupPosition.top) {
     left = scrollLeft + (posLeft
-        - (dest.offsetWidth
-            - ctrl.offsetWidth)
-        / 2) + 'px';
+      - (dest.offsetWidth
+        - ctrl.offsetWidth)
+      / 2) + 'px';
     top = (pos.top - dest.offsetHeight
-        - offset)
-        + scrollTop + 'px';
+      - offset)
+      + scrollTop + 'px';
   }
 
   if (type === PopupPosition.left) {
     left = scrollLeft + posLeft - dest.offsetWidth
-        - offset + 'px';
+      - offset + 'px';
     top = pos.top - (dest.offsetHeight
-        - ctrl.offsetHeight) / 2
-        + scrollTop
-        + 'px';
+      - ctrl.offsetHeight) / 2
+      + scrollTop
+      + 'px';
   }
 
   if (type === PopupPosition.leftTop) {
     left = scrollLeft + posLeft - dest.offsetWidth
-        - offset + 'px';
+      - offset + 'px';
     top = pos.top + scrollTop - dest.offsetHeight
-        + pos.height + 'px';
+      + pos.height + 'px';
   }
 
   if (type === PopupPosition.leftBottom) {
     left = scrollLeft + posLeft - dest.offsetWidth
-        - offset + 'px';
+      - offset + 'px';
     top = pos.top + scrollTop + 'px';
   }
 
   if (type === PopupPosition.right) {
     left = scrollLeft + pos.right + offset + 'px';
     top = pos.top - (dest.offsetHeight
-        - ctrl.offsetHeight) / 2
-        + scrollTop
-        + 'px';
+      - ctrl.offsetHeight) / 2
+      + scrollTop
+      + 'px';
   }
 
   if (type === PopupPosition.rightTop) {
     left = scrollLeft + pos.right + offset + 'px';
     top = pos.top + scrollTop - dest.offsetHeight
-        + pos.height + 'px';
+      + pos.height + 'px';
   }
 
   if (type === PopupPosition.rightBottom) {
@@ -216,31 +172,31 @@ export const place = (dest, ctrl, type, offset = 0) => {
   if (type === PopupPosition.topLeft) {
     left = scrollLeft + posLeft + 'px';
     top = pos.top - dest.offsetHeight - offset
-        + scrollTop
-        + 'px';
+      + scrollTop
+      + 'px';
   }
 
   if (type === PopupPosition.topRight) {
     left = scrollLeft + pos.right
-        - dest.offsetWidth + 'px';
+      - dest.offsetWidth + 'px';
     top = pos.top - dest.offsetHeight - offset
-        + scrollTop
-        + 'px';
+      + scrollTop
+      + 'px';
   }
 
   if (type === PopupPosition.bottomLeft) {
     left = scrollLeft + posLeft + 'px';
     top = pos.bottom + offset
-        + scrollTop
-        + 'px';
+      + scrollTop
+      + 'px';
   }
 
   if (type === PopupPosition.bottomRight) {
     left = scrollLeft + pos.right
-        - dest.offsetWidth + 'px';
+      - dest.offsetWidth + 'px';
     top = pos.bottom + offset
-        + scrollTop
-        + 'px';
+      + scrollTop
+      + 'px';
   }
   dest.style.left = left;
   dest.style.top = top;
@@ -248,14 +204,6 @@ export const place = (dest, ctrl, type, offset = 0) => {
   return {
     ctrlRect: pos,
   };
-};
-
-export const getLeftIfCentered = (dest, ctrl) => {
-  var ctrlPos = ctrl.getBoundingClientRect();
-  var destPos = dest.getBoundingClientRect();
-  let destAvaliableWidth = Math.max(destPos.width,
-      dest.offsetWidth);
-  return Math.floor((ctrlPos.width - destAvaliableWidth) / 2) + 'px';
 };
 
 export const validate = (condition, message, ignore) => {
@@ -361,21 +309,6 @@ export const includes = (array, value) => {
 };
 
 /**
- * set dom node's style attribute
- * @param condition
- * @param value
- * @param ref
- */
-export const setDisplay = (condition, value, ref) => {
-  if (condition) {
-    const div = ref.current;
-    if (div) {
-      div.style.display = value;
-    }
-  }
-};
-
-/**
  * Check whether the comparedValue includes value
  * @param value
  * @param comparedValue
@@ -448,6 +381,27 @@ export default function getScrollbarWidth() {
   return barWidth;
 }
 
+/**
+ * set padding-left for body if the scroll bar exists
+ * @param active  the corresponding component appears
+ */
+export const updateBodyStyle = (active) => {
+  let body = document.body;
+  if (!active) {
+    body.removeAttribute('style');
+    return;
+  }
+
+  //set padding-left for body if the scroll bar exists
+  if (body.scrollHeight > window.innerHeight) {
+    body.style.overflow = 'hidden';
+    const barWidth = getScrollbarWidth();
+    if (barWidth > 0) {
+      body.style.paddingRight = `${getScrollbarWidth() + "px"}`; //避免滚动条造成的页面抖动
+    }
+  }
+}
+
 export function getErrorClsName(errorType) {
   const clsName = `border-info ${errorType}`;
   return clsx({[clsName]: errorType});
@@ -455,7 +409,7 @@ export function getErrorClsName(errorType) {
 
 export const isColorValue = (val) => {
   return !isNil(val) &&
-      (startsWith(val, '#') || startsWith(val, 'rgb'));
+    (startsWith(val, '#') || startsWith(val, 'rgb'));
 };
 
 const checkColor = (checkState, checkedColor) => {

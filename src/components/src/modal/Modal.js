@@ -1,13 +1,14 @@
-import React, {useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import {ModalContext} from '../common/Context';
 import clsx from 'clsx';
 import useEvent from '../common/UseEvent';
 import {EventListener} from '../common/Constants';
-import {isNil, setDisplay} from '../Utils';
+import {isNil, nonNil, updateBodyStyle} from '../Utils';
 import Mask from '../Mask';
-import {animated, config, useSpring} from 'react-spring';
+import {animated, config, interpolate, useSpring} from 'react-spring';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import PropTypes from 'prop-types';
+import useEventCallback from "../common/useEventCallback";
 
 const ModalSizeStyle = {
   small: 'width-sm',
@@ -16,11 +17,36 @@ const ModalSizeStyle = {
   xLarge: 'width-xl',
 };
 
+const ModalType = {
+  primary: 'primary',
+  secondary: 'secondary',
+  simple: 'simple',
+  fullWindow: 'fullWindow'
+}
+
+const createCenterStyle = (active) => {
+  return {
+    opacity: active ? 1 : 0,
+    xyz: ['-50%', '-50%', '0'],
+    scale: active ? 1 : 0.9,
+    disp: active ? 1 : 0,
+  }
+}
+
+const createFullWindowStyle = (active) => {
+  return {
+    opacity: active ? 1 : 0,
+    xyz: [0, 0, 0],
+    scale: active ? 1 : 0.5,
+    disp: active ? 1 : 0,
+  };
+}
+
 const Modal = React.forwardRef((props, ref) => {
   const {
     size = 'medium',
     type = 'primary',
-    className = 'dialog',
+    className = 'modal',
     hasMask = true,
     extraClassName,
     onCancel,
@@ -28,12 +54,11 @@ const Modal = React.forwardRef((props, ref) => {
     autoClose = true,
     children,
     style,
-    alignCenter = true,
     allowOverflow = false,
     hasDefaultWidth = true,
     ...otherProps
   } = props;
-
+  const isFullWindow = type === ModalType.fullWindow;
   const internalRef = useRef(null);
   const multiRef = useMultipleRefs(ref, internalRef);
 
@@ -45,25 +70,19 @@ const Modal = React.forwardRef((props, ref) => {
   });
 
   useEffect(() => {
-    let body = document.body;
-    if (!active) {
-      body.removeAttribute('style');
-      return;
-    }
-    body.style.overflow = 'hidden';
-    body.style.paddingRight = '17px'; //避免滚动条造成的页面抖动
+    updateBodyStyle(active);
   }, [active]);
 
+  const modalType = isFullWindow ? 'primary full-window' : type;
   const clsName = clsx(extraClassName, className,
-      alignCenter ? 'align-center' : 'align-top',
-      {
-        'with-width': hasDefaultWidth,
-        [type]: type,
-        [ModalSizeStyle[size]]: ModalSizeStyle[size],
-      },
+    {
+      'with-width': !isFullWindow && hasDefaultWidth,
+      [modalType]: modalType,
+      [ModalSizeStyle[size]]: !isFullWindow && ModalSizeStyle[size],
+    },
   );
 
-  const handleCancel = (e) => {
+  const handleCancel = useEventCallback((e) => {
     if (!autoClose || internalRef.current.contains(e.target)) {
       return;
     }
@@ -71,48 +90,47 @@ const Modal = React.forwardRef((props, ref) => {
     if (onCancel) {
       return onCancel(e);
     }
-  };
+  });
 
   const from = useMemo(() => {
-    return alignCenter ? {
-      top: '50%',
-      left: '50%',
-      opacity: 0,
-      transform: 'translate3D(-50%, -50%, 0) scale(0.8)',
-    } : {opacity: 0, transform: 'translate3D(-50%, -100%, 0)'};
-  }, [alignCenter]);
+    if (isFullWindow) {
+      return createFullWindowStyle(active);
+    }
+
+    return createCenterStyle(active);
+  }, [active, isFullWindow]);
 
   const to = useMemo(() => {
-    if (alignCenter) {
-      return active ? {
-            top: '50%',
-            left: '50%',
-            opacity: 1,
-            transform: 'translate3D(-50%, -50%, 0) scale(1)',
-          } :
-          {opacity: 0, transform: 'translate3D(-50%, -50%, 0) scale(0.8)'};
-    } else {
-      return active ? {opacity: 1, transform: 'translate3D(-50%, 0, 0)'}
-          : {opacity: 0, transform: 'translate3D(-50%, -100%, 0)'};
+    if (isFullWindow) {
+      return createFullWindowStyle(active);
     }
-  }, [alignCenter, active]);
 
-  const preUpdate = useCallback(() => setDisplay(active, 'flex', internalRef),
-      [active]);
-  const postUpdate = useCallback(
-      () => setDisplay(!active, 'none', internalRef),
-      [active]);
+    return createCenterStyle(active);
 
-  const springProps = useSpring({
+  }, [isFullWindow, active]);
+
+  const {opacity, xyz, scale, disp} = useSpring({
     // config: {clamp: true, mass: 1, tesion: 100, friction: 15},
     config: config.friction,
     from: from,
     to: to,
-    onStart: preUpdate,
-    onRest: postUpdate,
   });
 
-  const modalStyle = {...style, ...springProps};
+  console.log(from)
+  console.log(to)
+
+  const modalStyle = {
+    ...style,
+    opacity,
+    transform: interpolate([
+      xyz.interpolate((x, y, z) => `translate3d(${x}, ${y},${z})`),
+      scale.interpolate(scale => `scale(${scale})`)
+    ], (t, scale) => `${t ? t : ""} ${scale ? scale : ""}`),
+    display: disp.interpolate(disp => disp === 0 ? 'none' : 'initial')
+  };
+
+  // console.log(modalStyle)
+
   return <ModalContext.Provider value={{
     onMove: null,//useMove(internalRef),
     onCancel: onCancel,
@@ -120,7 +138,7 @@ const Modal = React.forwardRef((props, ref) => {
   }}>
     <>
       {
-        hasMask &&
+        hasMask && !isFullWindow &&
         <Mask active={active} onClick={handleCancel}/>
       }
       <animated.div className={clsName} ref={multiRef}
@@ -141,7 +159,6 @@ Modal.propTypes = {
   active: PropTypes.bool,
   autoClose: PropTypes.bool,
   style: PropTypes.object,
-  alignCenter: PropTypes.bool,
   allowOverflow: PropTypes.bool,
   hasDefaultWidth: PropTypes.bool
 };

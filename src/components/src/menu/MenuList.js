@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useRef} from 'react';
+import React, {useContext, useRef} from 'react';
 import Collapse from '../collapse/Collapse';
 import clsx from 'clsx';
 import {animated, useSpring} from 'react-spring';
@@ -6,7 +6,6 @@ import {SubMenuDirection} from './MenuUtils';
 import {MenuContext} from '../common/Context';
 import usePrevious from '../common/UsePrevious';
 import PropTypes from 'prop-types';
-import {setDisplay} from '../Utils';
 
 export default function MenuList(props) {
   const {
@@ -41,29 +40,23 @@ export default function MenuList(props) {
   const isInitialCompact = preCompact !== ctx.compact && ctx.compact;
   // const showPopup = ctx.compact ? show && !isInitialCompact : show;
   const showPopup = popupSubMenu ? show : ctx.compact && show &&
-      !isInitialCompact;
-
-  const preUpdate = useCallback(() => setDisplay(showPopup, 'flex', listRef),
-      [showPopup]);
-  const postUpdate = useCallback(() => setDisplay(!showPopup, 'none', listRef),
-      [showPopup]);
+    !isInitialCompact;
 
   //this animation is only applied for popup submenu
   const springProps = useSpring({
-    from: {offset: startOffset, opacity: 0},
+    from: {offset: startOffset, opacity: 0, disp: 0},
     to: {
       offset: showPopup ? 0 : startOffset,
       opacity: showPopup ? 1 : 0,
+      disp: showPopup ? 1 : 0,
     },
-    onStart: preUpdate,
-    onRest: postUpdate,
     config: {clamp: true, mass: 1, tesion: 100, friction: 15},
   });
 
   const interpolateOffset = (offset) => {
     return isBottomPos
-        ? `translate3d(0, ${offset}px, 0)`
-        : `translate3d(${offset}px, 0, 0)`;
+      ? `translate3d(0, ${offset}px, 0)`
+      : `translate3d(${offset}px, 0, 0)`;
   };
 
   if (popupSubMenu) {
@@ -72,8 +65,9 @@ export default function MenuList(props) {
                          onMouseLeave={handleMouseLeave}
                          style={{
                            transform: springProps.offset.interpolate(
-                               interpolateOffset),
+                             interpolateOffset),
                            opacity: springProps.opacity,
+                           display: springProps.disp.interpolate(disp => disp === 0 ? 'none' : 'flex')
                          }}>{content}</animated.div>;
   }
 

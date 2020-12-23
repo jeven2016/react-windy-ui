@@ -134,7 +134,7 @@ const Loader = React.forwardRef((props, ref) => {
       };
     }
 
-    return <Modal alignCenter={true} active={active} style={mStyle}
+    return <Modal active={active} style={mStyle}
                   type="secondary"
                   hasDefaultWidth={hasDefaultWidth}
                   hasMask={hasMask} onCancel={onMaskClick}>

@@ -1,14 +1,9 @@
 import React, {useCallback, useImperativeHandle, useMemo, useRef} from 'react';
 import ReactDOM from 'react-dom';
 import useContainer from '../common/UseContainer';
-import {
-  ContainerId,
-  EventListener,
-  PopupCtrlType,
-  PopupPosition,
-} from '../common/Constants';
-import {animated, useSpring, config} from 'react-spring';
-import {execute, isNil, isString, place, setDisplay} from '../Utils';
+import {ContainerId, EventListener, PopupCtrlType, PopupPosition,} from '../common/Constants';
+import {animated, useSpring} from 'react-spring';
+import {execute, isNil, isString, nonNil, place} from '../Utils';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import useResizeObserver from '../common/UseResizeObserver';
 import useEvent from '../common/UseEvent';
@@ -17,7 +12,6 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import useEventCallback from '../common/useEventCallback';
 import {getRefConfig} from './PopupUtils';
-import {preventEvent} from '../event';
 
 function getTranslate(position, activePopup, startOffset) {
   const transOffset = startOffset + 5;
@@ -37,8 +31,8 @@ function getTranslate(position, activePopup, startOffset) {
   }
   return {
     transform: activePopup
-        ? 'translate3d(0px, 0px, 0px)'
-        : `translate3d(${x}px, ${y}px, 0px)`,
+      ? 'translate3d(0px, 0px, 0px)'
+      : `translate3d(${x}px, ${y}px, 0px)`,
   };
 }
 
@@ -79,7 +73,7 @@ const Popup = React.forwardRef((props, ref) => {
   const isHover = activeBy === PopupCtrlType.hover;
 
   const {state: isActive, setState: setActive, customized: customActive}
-      = useInternalState({
+    = useInternalState({
     props,
     stateName: 'active',
     defaultState: defaultActive,
@@ -126,42 +120,33 @@ const Popup = React.forwardRef((props, ref) => {
   });
 
   useResizeObserver(() => realCtrlRef.current,
-      updatePosition
-      , true, () => true);
+    updatePosition
+    , true, () => true);
 
   useResizeObserver(document.body,
-      updatePosition, true, () => true);
+    updatePosition, true, () => true);
 
   useEvent(EventListener.scroll, updatePosition);
 
   //----------------------------------------------
-
-  const preUpdate = useEventCallback(() => {
-    setDisplay(activePopup, 'block', realPopupRef);
-    updatePosition();
-  });
-
-  const postUpdate = useEventCallback(
-      () => setDisplay(!activePopup, 'none', realPopupRef));
 
   const transform = useMemo(() => {
     return getTranslate(position, activePopup, offset);
   }, [position, activePopup, offset]);
 
   const animationSetting = useMemo(
-      () => animationFunc ? animationFunc(activePopup) : {
-        from: {transform: 'translate3d(0px, 0px, 0px)', opacity: 0},
-        to: {
-          transform: transform.transform,
-          opacity: activePopup ? 1 : 0,
-        },
-      }, [activePopup, animationFunc, transform.transform]);
+    () => animationFunc ? animationFunc(activePopup) : {
+      from: {transform: 'translate3d(0px, 0px, 0px)', opacity: 0, disp: 0},
+      to: {
+        transform: transform.transform,
+        opacity: activePopup ? 1 : 0,
+        disp: activePopup ? 1 : 0,
+      },
+    }, [activePopup, animationFunc, transform.transform]);
 
   const springProps = useSpring({
     from: animationSetting.from,
     to: animationSetting.to,
-    onStart: preUpdate,
-    onRest: postUpdate,
     config: animationSetting.config ? animationSetting.config : {
       clamp: true,
       mass: 1,
@@ -189,8 +174,8 @@ const Popup = React.forwardRef((props, ref) => {
     if (disabled) {
       finalProps.disabled = true;
       finalProps.style = finalProps.style
-          ? {...finalProps.style, ...disabledStyle}
-          : disabledStyle;
+        ? {...finalProps.style, ...disabledStyle}
+        : disabledStyle;
     }
 
     return React.cloneElement(ctrlNode, finalProps);
@@ -207,6 +192,7 @@ const Popup = React.forwardRef((props, ref) => {
 
   const mergedProps = {
     ...popupStyle, ...otherProps, ...springProps,
+    display: springProps.disp.interpolate(disp => disp === 0 ? 'none' : 'flex'),
     zIndex: zIndex,
   };
 
@@ -228,50 +214,50 @@ const Popup = React.forwardRef((props, ref) => {
   });
 
   const handleHover = useEventCallback(
-      (e, nextActive, eventType, forceUpdate = false) => {
-        if (disabled || !isHover) {
+    (e, nextActive, eventType, forceUpdate = false) => {
+      if (disabled || !isHover) {
+        return;
+      }
+      if (!forceUpdate) {
+        //the hover event should only be fired by controller or popup.
+        //the menu items or popover-arrow cannot trigger closing the popup.
+        //
+        // but firefox doesn't support fromElement/toElement, so using relatedTarget instead.
+        //for mouseEnter : relatedTarget == fromElement
+        //for mouseEnter : relatedTarget == toElement
+        const isValidOver = eventType === EventListener.mouseEnter &&
+          !realPopupRef.current.contains(e.relatedTarget) &&
+          realPopupRef.current.contains(e.target);
+
+        //for mouse leave, the mouse should move from popup to outside
+        const isValidOut = eventType === EventListener.mouseLeave &&
+          realPopupRef.current.contains(e.target) &&
+          !realPopupRef.current.contains(e.relatedTarget);
+
+        if (!isValidOver && !isValidOut) {
           return;
         }
-        if (!forceUpdate) {
-          //the hover event should only be fired by controller or popup.
-          //the menu items or popover-arrow cannot trigger closing the popup.
-          //
-          // but firefox doesn't support fromElement/toElement, so using relatedTarget instead.
-          //for mouseEnter : relatedTarget == fromElement
-          //for mouseEnter : relatedTarget == toElement
-          const isValidOver = eventType === EventListener.mouseEnter &&
-              !realPopupRef.current.contains(e.relatedTarget) &&
-              realPopupRef.current.contains(e.target);
+      }
 
-          //for mouse leave, the mouse should move from popup to outside
-          const isValidOut = eventType === EventListener.mouseLeave &&
-              realPopupRef.current.contains(e.target) &&
-              !realPopupRef.current.contains(e.relatedTarget);
-
-          if (!isValidOver && !isValidOut) {
-            return;
-          }
-        }
-
-        if (!nextActive) {
-          //if the popup is already closed or there's a closing timer running at this time
-          if (!isNil(preCloseRef.current) || !activePopup) {
-            return;
-          }
-          preCloseRef.current = execute(() => {
-            changeActive(nextActive, e);
-          }, delayClose);
+      if (!nextActive) {
+        //if the popup is already closed or there's a closing timer running at this time
+        if (!isNil(preCloseRef.current) || !activePopup) {
           return;
         }
-
-        if (nextActive) {
-          clearCloseTimer();
-          if (activePopup) {
-            return;
-          }
+        preCloseRef.current = execute(() => {
           changeActive(nextActive, e);
+        }, delayClose);
+        return;
+      }
+
+      if (nextActive) {
+        clearCloseTimer();
+        if (activePopup) {
+          return;
         }
-      });
+        changeActive(nextActive, e);
+      }
+    });
 
   const handleBackgroundClick = useEventCallback((e) => {
     if (!activePopup || realCtrlRef.current.contains(e.target)) {
@@ -323,22 +309,22 @@ const Popup = React.forwardRef((props, ref) => {
   // close the popup while clicking the window (listens on window instead of document)
   //this works better for DateTimePicker while clicking the date button
   useEvent('mouseup', (e) => handleBackgroundClick(e),
-      true, window);
+    true, window);
 
   useEvent(EventListener.mouseEnter,
-      (e) => handleHover(e, true, EventListener.mouseEnter, true),
-      isHover,
-      realCtrlRef);
+    (e) => handleHover(e, true, EventListener.mouseEnter, true),
+    isHover,
+    realCtrlRef);
 
   useEvent(EventListener.mouseLeave,
-      (e) => handleHover(e, false, EventListener.mouseLeave, true),
-      isHover,
-      realCtrlRef);
+    (e) => handleHover(e, false, EventListener.mouseLeave, true),
+    isHover,
+    realCtrlRef);
 
   useEvent(EventListener.focus,
-      (e) => handleHover(e, true, EventListener.focus, true),
-      isHover,
-      realCtrlRef);
+    (e) => handleHover(e, true, EventListener.focus, true),
+    isHover,
+    realCtrlRef);
 
   /*useEvent(EventListener.blur,
       (e) => handleHover(e, false, EventListener.blur, true),
@@ -346,29 +332,29 @@ const Popup = React.forwardRef((props, ref) => {
       realCtrlRef);*/
 
   useEvent(EventListener.click,
-      useCallback((e) => handleClick(e), [handleClick]),
-      !isHover,
-      realCtrlRef,
-      false);
+    useCallback((e) => handleClick(e), [handleClick]),
+    !isHover,
+    realCtrlRef,
+    false);
 
   useEvent(EventListener.keyDown,
-      (e) => handleKeyDown(e),
-      true,
-      realCtrlRef);
+    (e) => handleKeyDown(e),
+    true,
+    realCtrlRef);
 
   useEvent(EventListener.mouseEnter,
-      (e) => {
-        handleHover(e, true, EventListener.mouseEnter);
-      },
-      isHover,
-      realPopupRef);
+    (e) => {
+      handleHover(e, true, EventListener.mouseEnter);
+    },
+    isHover,
+    realPopupRef);
 
   useEvent(EventListener.mouseLeave,
-      (e) => {
-        handleHover(e, false, EventListener.mouseLeave);
-      },
-      isHover,
-      realPopupRef);
+    (e) => {
+      handleHover(e, false, EventListener.mouseLeave);
+    },
+    isHover,
+    realPopupRef);
 
   const portal = ReactDOM.createPortal(popup, rootElem);
 
@@ -405,7 +391,7 @@ Popup.propTypes = {
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
   delayClose: PropTypes.number,
-  animationFunc: PropTypes.func,
+  animationFunc: PropTypes.func, /*the returned object should have 'disp' property*/
   position: PropTypes.string,
   autoClose: PropTypes.bool,
 };
