@@ -7,8 +7,8 @@ editUrl: $BASE/docs/pages/menu/md/modal2.md
 ---
 
 +++ zh_CN
- 默认情况下，Modal会在屏幕居中显示。如果需要在顶部一定距离显示，可以指定alignCenter为false,同时在style
-    中设置top属性值， 这样Modal就会在top距离位置开始显示。
+ 默认情况下，Modal会在屏幕居中显示。如果需要在顶部一定距离显示，可以<Code>center</Code>为<Code>false</Code>,同时在<Code>style</Code>
+    中设置<Code>top</Code>属性值。
 
 +++ en_US
 Modal2

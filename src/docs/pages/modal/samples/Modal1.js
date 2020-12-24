@@ -14,8 +14,11 @@ export default function Modal1() {
         Modal Header
       </Modal.Header>
       <Modal.Body>
-        <div style={{height: '10rem'}}>
-          Modal Content....
+        <div>
+          <div>Modal Content....</div>
+          <div>Modal Content....</div>
+          <div>Modal Content....</div>
+          <div>Modal Content....</div>
         </div>
       </Modal.Body>
       <Modal.Footer>

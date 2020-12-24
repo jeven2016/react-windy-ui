@@ -3,7 +3,7 @@ import {ModalContext} from '../common/Context';
 import clsx from 'clsx';
 import useEvent from '../common/UseEvent';
 import {EventListener} from '../common/Constants';
-import {isNil, nonNil, updateBodyStyle} from '../Utils';
+import {isNil, updateBodyStyle} from '../Utils';
 import Mask from '../Mask';
 import {animated, config, interpolate, useSpring} from 'react-spring';
 import useMultipleRefs from '../common/UseMultipleRefs';
@@ -24,11 +24,11 @@ const ModalType = {
   fullWindow: 'fullWindow'
 }
 
-const createCenterStyle = (active) => {
+const createCenterStyle = (active, center) => {
   return {
     opacity: active ? 1 : 0,
-    xyz: ['-50%', '-50%', '0'],
-    scale: active ? 1 : 0.9,
+    xyz: ['-50%', center ? '-50%' : '0', '0'],
+    scale: active ? 1 : 0.8,
     disp: active ? 1 : 0,
   }
 }
@@ -54,6 +54,7 @@ const Modal = React.forwardRef((props, ref) => {
     autoClose = true,
     children,
     style,
+    center = true,
     allowOverflow = false,
     hasDefaultWidth = true,
     ...otherProps
@@ -75,11 +76,12 @@ const Modal = React.forwardRef((props, ref) => {
 
   const modalType = isFullWindow ? 'primary full-window' : type;
   const clsName = clsx(extraClassName, className,
-    {
-      'with-width': !isFullWindow && hasDefaultWidth,
-      [modalType]: modalType,
-      [ModalSizeStyle[size]]: !isFullWindow && ModalSizeStyle[size],
-    },
+      {
+        center: center && type !== ModalType.simple,
+        'with-width': !isFullWindow && hasDefaultWidth,
+        [modalType]: modalType,
+        [ModalSizeStyle[size]]: !isFullWindow && ModalSizeStyle[size],
+      },
   );
 
   const handleCancel = useEventCallback((e) => {
@@ -97,20 +99,19 @@ const Modal = React.forwardRef((props, ref) => {
       return createFullWindowStyle(active);
     }
 
-    return createCenterStyle(active);
-  }, [active, isFullWindow]);
+    return createCenterStyle(active, center);
+  }, [active, center, isFullWindow]);
 
   const to = useMemo(() => {
     if (isFullWindow) {
       return createFullWindowStyle(active);
     }
 
-    return createCenterStyle(active);
+    return createCenterStyle(active, center);
 
-  }, [isFullWindow, active]);
+  }, [isFullWindow, active, center]);
 
   const {opacity, xyz, scale, disp} = useSpring({
-    // config: {clamp: true, mass: 1, tesion: 100, friction: 15},
     config: config.friction,
     from: from,
     to: to,
