@@ -6,7 +6,7 @@ export default function Badge8() {
 
   return <>
     <div className="doc doc-row">
-      <Toggle active={shake} content={{on: 'Shake', off: 'Shake'}}
+      <Toggle active={shake} label='Shake'
               onChange={(val) => setShake(val)}/>
     </div>
     <Badge type="tag" color="info" shake={shake}>

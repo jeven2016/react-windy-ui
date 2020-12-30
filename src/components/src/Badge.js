@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import clsx from 'clsx';
-import {isNil} from './Utils';
+import {isColorValue, isNil} from './Utils';
 import * as PropTypes from 'prop-types';
 import {animated, useSpring} from 'react-spring';
 
@@ -28,17 +28,20 @@ const Badge = React.forwardRef((props, ref) => {
     active = true,
     shake = false,
     shakeDuration = 1000,
+    contentStyle,
     ...otherProps
   } = props;
   const [internalShake, setShake] = useState(true);
 
-  const colorType = Color[color];
+  const isCustomColor = isColorValue(color);
+  const colorType = !isCustomColor && Color[color];
+
   let contentBackground = useMemo(() => {
-    if (isNil(colorType) && !isNil(color)) {
+    if (isCustomColor) {
       return {background: color};
     }
     return {};
-  }, [colorType, color]);
+  }, [isCustomColor, color]);
 
   let clsName = clsx(extraClassName, className, {
     [type]: type,
@@ -73,33 +76,35 @@ const Badge = React.forwardRef((props, ref) => {
   }, [shake, active, shakeDuration]);
 
   return (
-      <div className={clsName} {...otherProps}>
-        <animated.div className="content" style={{
-          // opacity: x.interpolate({range: [0, 1], output: [0.5, 1]}),
-          transform: x.interpolate({
-            range: [0, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 1],
-            output: [1, 0.97, 0.9, 1.3, 0.9, 1.3, 1.03, 1],
-          }).interpolate(val => type === BadgeType.tag
-              ? `scale(${val})`
-              : `translate(80%, -50%) scale(${val})`),
-          display: active ? 'inline-flex' : 'none', ...contentBackground,
-        }}>
-          {badgeContent}
-        </animated.div>
-        {chd}
-      </div>
+    <div className={clsName} {...otherProps}>
+      <animated.div className="content" style={{
+        ...contentStyle,
+        // opacity: x.interpolate({range: [0, 1], output: [0.8, 1]}),
+        transform: x.interpolate({
+          range: [0, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 1],
+          output: [1, 0.97, 0.9, 1.3, 0.9, 1.3, 1.03, 1],
+        }).interpolate(val => type === BadgeType.tag
+          ? `scale(${val})`
+          : `translate(50%, -50%) scale(${val})`),
+        display: active ? 'inline-flex' : 'none', ...contentBackground,
+      }}>
+        {badgeContent}
+      </animated.div>
+      {chd}
+    </div>
   );
 });
 
 Badge.propTypes = {
   extraClassName: PropTypes.string,
   className: PropTypes.string,
-  type: PropTypes.string,
+  type: PropTypes.oneOf(['normal', 'dot', 'tag']),
   body: PropTypes.node,
   color: PropTypes.string,
   active: PropTypes.bool,
   shake: PropTypes.bool,
   shakeDuration: PropTypes.number,
+  contentStyle: PropTypes.object,
 };
 
 export default Badge;

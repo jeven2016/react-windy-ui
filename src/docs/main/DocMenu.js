@@ -101,6 +101,11 @@ export default function DocMenu(props) {
           对话框 Modal
         </Link>
       </Menu.Item>
+      <Menu.Item id="drawer">
+        <Link to={`${url}/drawer`}>
+          抽屉 Drawer
+        </Link>
+      </Menu.Item>
       <Menu.Item id="datepicker">
         <Link to={`${url}/datepicker`}>
           DataPicker 日期选择
@@ -111,11 +116,6 @@ export default function DocMenu(props) {
       <Menu.Item id="badge">
         <Link to={`${url}/badge`}>
           标记 Badge
-        </Link>
-      </Menu.Item>
-      <Menu.Item id="drawer">
-        <Link to={`${url}/drawer`}>
-          抽屉 Drawer
         </Link>
       </Menu.Item>
       <Menu.Item id="alert">

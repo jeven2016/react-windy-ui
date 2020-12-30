@@ -25,7 +25,7 @@ export default function Drawer2() {
     <Drawer active={active}
             position={position}
             style={style}
-            onChange={(e, show) => setActive(show)}>
+            onChange={(show) => setActive(show)}>
     </Drawer>
   </>;
 }

@@ -18,9 +18,11 @@ const Position = {
   bottom: 'bottom',
 };
 
+/**
+ * Drawer component
+ */
 const Drawer = React.forwardRef((props, ref) => {
   const {
-    type,
     active = false,
     className = 'drawer',
     extraClassName,
@@ -36,7 +38,7 @@ const Drawer = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   validate(Position.hasOwnProperty(position),
-      `The position '${type}' is not acceptable.`);
+      `The position '${position}' is not acceptable.`);
 
   const dwRef = useRef(null);
   const multiRef = useMultipleRefs(ref, dwRef);
@@ -45,7 +47,7 @@ const Drawer = React.forwardRef((props, ref) => {
     if (!autoClose) {
       return;
     }
-    onChange && onChange(e, false);
+    onChange && onChange(false, e);
   }, [autoClose, onChange]);
 
   // register window click event listener if no mask displays
@@ -60,7 +62,6 @@ const Drawer = React.forwardRef((props, ref) => {
   }, !hasMask);
 
   let clsName = clsx(extraClassName, className, {
-    [type]: type,
     [position]: position,
   });
 
@@ -78,7 +79,7 @@ const Drawer = React.forwardRef((props, ref) => {
   });
 
   const clickAnchorHandler = useCallback((e) => {
-    onChange && onChange(e, true);
+    onChange && onChange(true, e);
   }, [onChange]);
 
   const showAnchor = hasAnchor && !active;
@@ -125,7 +126,6 @@ const Drawer = React.forwardRef((props, ref) => {
 });
 
 Drawer.propTypes = {
-  type: PropTypes.string,
   active: PropTypes.bool,
   className: PropTypes.string,
   extraClassName: PropTypes.string,

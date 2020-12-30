@@ -31,7 +31,7 @@ export default function Drawer3() {
             position={position}
             hasAnchor={hasAnchor}
             style={style}
-            onChange={(e, show) => setActive(show)}>
+            onChange={(show) => setActive(show)}>
     </Drawer>
   </>;
 }

@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/badge/md/badge8.md
 ---      
 
 +++ zh_CN   
-
+将<Code>shake</Code>属性设置为<Code>true</Code>时， Badge将会一段时间内闪烁显示。
 
 
 +++ en_US   

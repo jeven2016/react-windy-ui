@@ -7,8 +7,8 @@ editUrl: $BASE/docs/pages/menu/md/modal6.md
 ---
 
 +++ zh_CN
-Modal的Footer可以指定一侧排列，可以指定靠左、居中、靠右排列。对应地将Footer的align属性设置为：
-   left、center、right。这里将align设置为center后，Modal中的按钮将居中显示。
+Modal的Footer可以指定一侧排列，通过<Code>justify</Code>属性可以指定靠左<Code>(start)</Code>、
+居中<Code>(center)</Code>、靠右<Code>(end)</Code>排列。
 
 +++ en_US
 Modal6

@@ -86,12 +86,6 @@ export const PopoverTriggerType = {
   click: 'click',
 };
 
-export const FlexAlign = {
-  left: 'flex-align left',
-  right: 'flex-align right',
-  center: 'flex-align center',
-};
-
 export const JustifyContentType = {
   start: 'flex-adjust justify-start',
   end: 'flex-adjust justify-end',

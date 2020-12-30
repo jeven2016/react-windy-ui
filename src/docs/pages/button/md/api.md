@@ -8,7 +8,7 @@ editUrl: $BASE/docs/pages/button/md/api.md
 
 +++ zh_CN
 
-## API
+## API [editUrl]
 
 - <Code>Button</Code>
 

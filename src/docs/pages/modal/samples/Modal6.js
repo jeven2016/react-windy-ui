@@ -18,7 +18,7 @@ export default function Modal6() {
           Modal Content....
         </div>
       </Modal.Body>
-      <Modal.Footer align="center">
+      <Modal.Footer justify="center">
         <Button hasMinWidth={true} type="primary" onClick={close}>OK</Button>
         <Button hasMinWidth={true} onClick={close}>Cancel</Button>
       </Modal.Footer>

@@ -3,26 +3,13 @@ import {ModalContext} from '../common/Context';
 import clsx from 'clsx';
 import useEvent from '../common/UseEvent';
 import {EventListener} from '../common/Constants';
-import {isNil, updateBodyStyle} from '../Utils';
+import {updateBodyStyle} from '../Utils';
 import Mask from '../Mask';
 import {animated, config, interpolate, useSpring} from 'react-spring';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import PropTypes from 'prop-types';
 import useEventCallback from "../common/useEventCallback";
-
-const ModalSizeStyle = {
-  small: 'width-sm',
-  medium: 'width-md',
-  large: 'width-lg',
-  xLarge: 'width-xl',
-};
-
-const ModalType = {
-  primary: 'primary',
-  secondary: 'secondary',
-  simple: 'simple',
-  fullWindow: 'fullWindow'
-}
+import {ModalSizeStyle, ModalType} from "./ModalUtils";
 
 const createCenterStyle = (active, center) => {
   return {
@@ -51,11 +38,10 @@ const Modal = React.forwardRef((props, ref) => {
     extraClassName,
     onCancel,
     active,
-    autoClose = true,
     children,
     style,
     center = true,
-    allowOverflow = false,
+    autoOverflow = false,
     hasDefaultWidth = true,
     ...otherProps
   } = props;
@@ -65,8 +51,8 @@ const Modal = React.forwardRef((props, ref) => {
 
   useEvent(EventListener.keyDown, (e) => {
     //add listener for esc key
-    if (active && e.keyCode === 27 && !isNil(onCancel)) {
-      onCancel(e);
+    if (active && e.keyCode === 27) {
+      onCancel && onCancel(e);
     }
   });
 
@@ -76,31 +62,29 @@ const Modal = React.forwardRef((props, ref) => {
 
   const modalType = isFullWindow ? 'primary full-window' : type;
   const clsName = clsx(extraClassName, className,
-      {
-        center: center && type !== ModalType.simple,
-        'with-width': !isFullWindow && hasDefaultWidth,
-        [modalType]: modalType,
-        [ModalSizeStyle[size]]: !isFullWindow && ModalSizeStyle[size],
-      },
+    {
+      center: center && type !== ModalType.simple,
+      'with-width': !isFullWindow && hasDefaultWidth,
+      [modalType]: modalType,
+      [ModalSizeStyle[size]]: !isFullWindow && ModalSizeStyle[size],
+    },
   );
 
   const handleCancel = useEventCallback((e) => {
-    if (!autoClose || internalRef.current.contains(e.target)) {
+    if (internalRef.current.contains(e.target)) {
       return;
     }
 
-    if (onCancel) {
-      return onCancel(e);
-    }
+    onCancel && onCancel(e);
   });
 
   const from = useMemo(() => {
     if (isFullWindow) {
-      return createFullWindowStyle(active);
+      return createFullWindowStyle(false);
     }
 
-    return createCenterStyle(active, center);
-  }, [active, center, isFullWindow]);
+    return createCenterStyle(false, center);
+  }, [center, isFullWindow]);
 
   const to = useMemo(() => {
     if (isFullWindow) {
@@ -117,8 +101,8 @@ const Modal = React.forwardRef((props, ref) => {
     to: to,
   });
 
-  console.log(from)
-  console.log(to)
+  console.log(from);
+  console.log(to);
 
   const modalStyle = {
     ...style,
@@ -130,37 +114,33 @@ const Modal = React.forwardRef((props, ref) => {
     display: disp.interpolate(disp => disp === 0 ? 'none' : 'initial')
   };
 
-  // console.log(modalStyle)
-
   return <ModalContext.Provider value={{
     onMove: null,//useMove(internalRef),
     onCancel: onCancel,
-    allowOverflow,
+    autoOverflow,
   }}>
-    <>
-      {
-        hasMask && !isFullWindow &&
-        <Mask active={active} onClick={handleCancel}/>
-      }
-      <animated.div className={clsName} ref={multiRef}
-                    style={modalStyle} {...otherProps}>
-        {children}
-      </animated.div>
-    </>
+    {
+      hasMask && !isFullWindow &&
+      <Mask active={active} onClick={handleCancel}/>
+    }
+    <animated.div className={clsName} ref={multiRef}
+                  style={modalStyle} {...otherProps}>
+      {children}
+    </animated.div>
   </ModalContext.Provider>;
 });
 
 Modal.propTypes = {
-  size: PropTypes.string,
-  type: PropTypes.string,
+  size: PropTypes.oneOf(['xLarge', 'large', 'medium', 'small']),
+  type: PropTypes.oneOf(['primary', 'secondary', 'fullWindow', 'simple']),
   className: PropTypes.string,
   hasMask: PropTypes.bool,
   extraClassName: PropTypes.string,
   onCancel: PropTypes.func,
   active: PropTypes.bool,
-  autoClose: PropTypes.bool,
   style: PropTypes.object,
-  allowOverflow: PropTypes.bool,
+  center: PropTypes.bool,
+  autoOverflow: PropTypes.bool,
   hasDefaultWidth: PropTypes.bool
 };
 

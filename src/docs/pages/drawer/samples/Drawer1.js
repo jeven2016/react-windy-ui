@@ -12,13 +12,13 @@ export default function Drawer1() {
 
     <Drawer active={active}
             style={{width: '40%'}}
-            onChange={(e, show) => setActive(show)}>
+            onChange={(show) => setActive(show)}>
     </Drawer>
 
     <Drawer active={drawer2Active}
             hasMask={false}
             style={{width: '40%'}}
-            onChange={(e, show) => setDrawer2Active(show)}>
+            onChange={(show) => setDrawer2Active(show)}>
     </Drawer>
   </>;
 }

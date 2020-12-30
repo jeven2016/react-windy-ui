@@ -7,8 +7,7 @@ editUrl: $BASE/docs/pages/menu/md/modal8.md
 ---
 
 +++ zh_CN
-当Body内容过多后，Modal内部会出现滚动条，将内容滚动显示。此时您需要将allowOverflow设置为true,
-     并同时给Modal设置一个整体的高度，而且Body会默认占据尽可能多的空间。
+当Body内容过多后，Modal内部会出现滚动条，将内容滚动显示。此时您需要将<Code>autoOverflow</Code>设置为<Code>true</Code>。
      
 +++ en_US
 Modal8

@@ -37,8 +37,7 @@ const Navbar = React.forwardRef((props, ref) => {
   const preScrollTop = useRef(null);
   const [hide, setHide] = useState(false);//whether to hide while scrolling the window
 
-  const {matches: smallWindow} = useMediaQuery(mediaQuery, null,
-      mediaQueryWindow);
+  const {matches: smallWindow} = useMediaQuery(mediaQuery, mediaQueryWindow);
 
   const {
     state: expandList,
@@ -72,7 +71,7 @@ const Navbar = React.forwardRef((props, ref) => {
 
       //detect if the window is scrolling to bottom
       const scrollToBottom = isNil(preScrollTop.current) ||
-          (scrollTop > preScrollTop.current);
+        (scrollTop > preScrollTop.current);
 
       //hide the navbar if the window scrolled to bottom for a distance
       if (scrollToBottom && scrollTop > rect.height + 10) {
@@ -92,7 +91,7 @@ const Navbar = React.forwardRef((props, ref) => {
   useEvent(EventListener.scroll, handleScroll, hideOnScroll, mediaQueryWindow);
 
   let fixedType = useMemo(() => NavbarFixedTypes.find(f => f === fixed),
-      [fixed]);
+    [fixed]);
 
   let clsName = clsx(extraClassName, className, {
     [type]: type,
@@ -112,22 +111,22 @@ const Navbar = React.forwardRef((props, ref) => {
   const sprProps = useSpring(springConfig);
 
   return (
-      <NavbarContext.Provider
-          value={{
-            smallWindow,
-            expandList: expandList,
-            toggleList: toggleList,
-            type: type,
-            hasItemBackground,
-            hasBar,
-          }}>
-        <animated.ul className={clsName} style={{
-          ...style,
-          ...sprProps,
-        }} ref={multiRef}{...otherProps}>
-          {children}
-        </animated.ul>
-      </NavbarContext.Provider>
+    <NavbarContext.Provider
+      value={{
+        smallWindow,
+        expandList: expandList,
+        toggleList: toggleList,
+        type: type,
+        hasItemBackground,
+        hasBar,
+      }}>
+      <animated.ul className={clsName} style={{
+        ...style,
+        ...sprProps,
+      }} ref={multiRef}{...otherProps}>
+        {children}
+      </animated.ul>
+    </NavbarContext.Provider>
   );
 });
 

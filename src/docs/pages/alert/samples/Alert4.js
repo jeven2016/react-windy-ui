@@ -7,11 +7,11 @@ export default function Alert4() {
   return <>
     <div className="doc doc-row">
       <Toggle active={closeIcon} onChange={val => setCloseIcon(val)}
-              content={{on: 'Close Icon', off: 'Close Icon'}}/>
+              label='Close Icon'/>
     </div>
     <div className="doc doc-row">
       <Toggle active={showIcon} onChange={val => setShowIcon(val)}
-              content={{on: 'Icon', off: 'Icon'}}/>
+              label='Icon'/>
     </div>
     <Alert type="info" body="A info alert" hasCloseIcon={closeIcon}
            hasIcon={showIcon}/>

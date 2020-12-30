@@ -1,13 +1,27 @@
-import React from 'react';
-import {Alert} from 'react-windy-ui';
+import React, {useState} from 'react';
+import {Alert, Toggle} from 'react-windy-ui';
 
 export default function Alert1() {
+  const [active, setActive] = useState(true);
+  const [filled, setFilled] = useState(false);
+
   return <>
-    <Alert type="info" body="A info alert"/>
-    <Alert type="ok" body="ok alert"/>
-    <Alert type="warning" body="A warning alert"/>
-    <Alert type="error" body="A error alert"/>
-    <Alert type="mini" body="A mini alert"/>
-    <Alert type="simple" title="Simple Title" body="A simple alert"/>
+    <div className="doc doc-row">
+      <Toggle active={active} label='Left Border'
+              onChange={(val) => setActive(val)}/>
+    </div>
+    <div className="doc doc-row">
+      <Toggle active={filled} label='Filled'
+              onChange={(val) => setFilled(val)}/>
+    </div>
+
+    <Alert hasLeftBorder={active} filled={filled} type="info" body="Info alert"/>
+    <Alert hasLeftBorder={active} filled={filled} type="ok" body="Ok alert"/>
+    <Alert hasLeftBorder={active} filled={filled} type="warning" body="Warning alert"/>
+    <Alert hasLeftBorder={active} filled={filled} type="error" body="Error alert"/>
+
+
+    <Alert hasLeftBorder={active} type="mini" body="Mini alert"/>
+    <Alert hasLeftBorder={active} type="simple" title="Simple Title" body="Simple alert"/>
   </>;
 }

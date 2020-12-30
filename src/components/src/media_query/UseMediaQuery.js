@@ -53,7 +53,6 @@ export const Responsive = {
  * Use media query hook
  * @param query String | {query: String}, caller should memorized the query object by useMemo() if the query is an object,
  *        then the listener won't be recreated frequently
- * @param onChange callback
  * @param targetWindow by default, it means the window
  * @return string if query is string otherwise an object with same keys
  *
@@ -67,7 +66,7 @@ export const Responsive = {
  *   const {matches: smallWindow} = useMediaQuery(string);
  */
 
-const useMediaQuery = (query, onChange, targetWindow = window) => {
+const useMediaQuery = (query, targetWindow = window) => {
   /*{
     small: "(max-width: 599px)",
     medium: "(min-width: 600px) and (max-width: 1199px)",
@@ -75,7 +74,7 @@ const useMediaQuery = (query, onChange, targetWindow = window) => {
   }*/
   const isStringQuery = isString(query);
   validate(isStringQuery || (typeof query) == 'object',
-      'the type of query isn\'t string or object');
+    'the type of query isn\'t string or object');
 
   const initResult = useMemo(() => {
     const keys = !isStringQuery ? Object.keys(query) : [];
@@ -119,35 +118,10 @@ const useMediaQuery = (query, onChange, targetWindow = window) => {
     });
 
     return () => listeners.forEach(
-        elem => console.log('remove') &&
-            elem.mq.removeEventListener('change', elem.listener));
+      elem => console.log('remove') &&
+        elem.mq.removeEventListener('change', elem.listener));
   }, [initResult, isStringQuery, query, targetWindow]);
 
   return result;
 };
 export default useMediaQuery;
-
-export const useMedia = (query, defaultState = false) => {
-  const [state, setState] = useState(() => window.matchMedia(query).matches);
-
-  useEffect(() => {
-    let mounted = true;
-    const mql = window.matchMedia(query);
-    const onChange = () => {
-      if (!mounted) {
-        return;
-      }
-      setState(!!mql.matches);
-    };
-    console.log('media');
-    mql.addListener(onChange);
-    setState(mql.matches);
-
-    return () => {
-      mounted = false;
-      mql.removeListener(onChange);
-    };
-  }, [query]);
-
-  return state;
-};
