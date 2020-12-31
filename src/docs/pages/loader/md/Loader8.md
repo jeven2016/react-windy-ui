@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/loader/md/loader8.md
 ---
 
 +++ zh_CN
-设置darkMask为false后，将使用50%透明度的背景层展示。
+设置<Code>darkMask</Code>为<Code>false</Code>后，将使用半透明的背景层展示。
     
 +++ en_US
 Loader8

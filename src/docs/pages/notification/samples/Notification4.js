@@ -32,20 +32,20 @@ export default function Notification4() {
   };
 
   return <>
-    <div className="doc doc-row">
+    <div className="doc doc-row space">
       <span style={{marginRight: '1rem', fontWeight: '600'}}>Duration:</span>
       <Tooltip
           body={<span>{`each message will be closed in ${duration}ms`}</span>}>
         <Input value={duration}
                onChange={val => changeDuration(val)}/>
-      </Tooltip>&nbsp;ms
+      </Tooltip>
 
     </div>
     <div className="doc doc-row">
       <Toggle active={hasCloseIcon} onChange={val => changeCloseIcon(val)}
               content={{on: 'Close icon', off: 'Close icon'}}/>
     </div>
-    <div className="doc doc-row">
+    <div className="doc doc-row space">
       <span style={{marginRight: '1rem', fontWeight: '600'}}>Position:</span>
       <Select value={position} onSelect={value => setPosition(value)}>
         <Select.Option value="topLeft">topLeft</Select.Option>

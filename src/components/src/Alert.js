@@ -1,11 +1,12 @@
 import React, {useCallback, useEffect, useMemo} from 'react';
-import {execute, isNil, validate} from './Utils';
+import {execute, isNil, nonNil, validate} from './Utils';
 import clsx from 'clsx';
 import {IconClear, IconError, IconInfo, IconOk, IconWarning} from './Icons';
 import {Transition} from 'react-spring/renderprops';
 import useInternalState from './common/useInternalState';
 import * as PropTypes from 'prop-types';
 import Button from "./button";
+import useEventCallback from "./common/useEventCallback";
 
 const AlertType = {
   simple: {clsName: 'alert-simple', icon: null},
@@ -19,10 +20,10 @@ const AlertType = {
 const Alert = React.forwardRef((props, ref) => {
   const {
     type = 'info',
-    children,
-    hasLeftBorder = true,
     className = 'alert',
     extraClassName,
+    children,
+    hasLeftBorder = false,
     duration = 5000,
     onClose,
     title,
@@ -55,12 +56,12 @@ const Alert = React.forwardRef((props, ref) => {
 
   let typeCls = AlertType[type].clsName;
 
-  const close = useCallback((e) => {
+  const close = useEventCallback((e) => {
     if (!customized) {
       setActive(false);
     }
     onClose && onClose(true, e);
-  }, [customized, setActive, onClose]);
+  });
 
   useEffect(() => {
     let timer;
@@ -72,7 +73,7 @@ const Alert = React.forwardRef((props, ref) => {
     }
 
     return () => {
-      !isNil(timer) && clearTimeout(timer);
+      nonNil(timer) && clearTimeout(timer);
     };
   }, [activeAlert, autoClose, duration, close]);
 
@@ -146,7 +147,7 @@ const Alert = React.forwardRef((props, ref) => {
 });
 
 Alert.propTypes = {
-  type: PropTypes.string,
+  type: PropTypes.oneOf(Object.keys(AlertType)),
   className: PropTypes.string,
   extraClassName: PropTypes.string,
   hasLeftBorder: PropTypes.bool,
@@ -155,6 +156,7 @@ Alert.propTypes = {
   title: PropTypes.node,
   body: PropTypes.node,
   style: PropTypes.object,
+  filled: PropTypes.bool,
   autoClose: PropTypes.bool,
   hasCloseIcon: PropTypes.bool,
   icon: PropTypes.node,

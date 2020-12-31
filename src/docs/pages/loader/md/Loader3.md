@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/loader/md/loader3.md
 ---
 
 +++ zh_CN
- 在Button中显示Loader。 
+在Button中显示Loader。 
 
 +++ en_US
 Loader3

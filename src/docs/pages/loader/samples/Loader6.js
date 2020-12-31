@@ -26,7 +26,7 @@ export default function Loader6() {
             modalStyle={{background: '#000'}}
             direction="horizontal"
             active={active}
-            onMaskClick={() => setActive(false)}
+            // onMaskClick={() => setActive(false)}
             text="Loading the data">
     </Loader>
   </>;

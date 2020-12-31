@@ -16,10 +16,10 @@ export default function Alert2() {
     </div>
 
     <Alert hasLeftBorder={active} filled={filled} title="OK" type="ok" body="ok alert"/>
-    <Alert hasLeftBorder={active} filled={filled} title="INFO" type="info" body="A info alert"/>
-    <Alert hasLeftBorder={active} filled={filled} title="WARNING" type="warning" body="A warning alert"/>
-    <Alert hasLeftBorder={active} filled={filled} title="ERROR" type="error" body="A error alert"/>
-    <Alert hasLeftBorder={active} filled={filled} title="Customized" type="ok" body="This is a customized alert"
+    <Alert hasLeftBorder={active} filled={filled} title="INFO" type="info" body="info alert"/>
+    <Alert hasLeftBorder={active} filled={filled} title="WARNING" type="warning" body="warning alert"/>
+    <Alert hasLeftBorder={active} filled={filled} title="ERROR" type="error" body="error alert"/>
+    <Alert hasLeftBorder={active} filled={filled} title="Customized" type="ok" body="a customized alert"
            icon={<IconHome/>}/>
   </>;
 }

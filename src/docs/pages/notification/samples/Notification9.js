@@ -1,10 +1,5 @@
 import React, {useEffect} from 'react';
-import {
-  Button, Notification, IconError,
-  IconInfo,
-  IconOk,
-  IconWarning,
-} from 'react-windy-ui';
+import {Button, Notification,} from 'react-windy-ui';
 
 export default function Notification9() {
   useEffect(() => {

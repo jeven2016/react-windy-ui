@@ -35,6 +35,7 @@ const Modal = React.forwardRef((props, ref) => {
     type = 'primary',
     className = 'modal',
     hasMask = true,
+    canEsc = true,
     extraClassName,
     onCancel,
     active,
@@ -51,7 +52,7 @@ const Modal = React.forwardRef((props, ref) => {
 
   useEvent(EventListener.keyDown, (e) => {
     //add listener for esc key
-    if (active && e.keyCode === 27) {
+    if (canEsc && active && e.keyCode === 27) {
       onCancel && onCancel(e);
     }
   });

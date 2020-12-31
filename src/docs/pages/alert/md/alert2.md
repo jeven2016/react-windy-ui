@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/alert/md/alert2.md
 ---      
 
 +++ zh_CN   
-可以给Alert添加title和body, 相应地设置title和body属性。
+可以给Alert添加<Code>title</Code>和<Code>body</Code>, 相应地设置<Code>title</Code>和<Code>body</Code>属性。
 
 +++ en_US   
 Alert

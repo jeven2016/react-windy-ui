@@ -12,7 +12,7 @@ export default function Alert6() {
                   setActiveAuto(enable);
                 }}/>
     </div>
-    <Alert type="info" body="A info alert" active={active}
+    <Alert type="info" body="info alert" active={active}
            onClose={() => setActive(false)}/>
 
     <Alert type="ok" body="close in 3 seconds" active={activeAuto} autoClose={true}

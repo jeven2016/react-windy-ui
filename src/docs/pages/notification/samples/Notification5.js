@@ -12,17 +12,10 @@ export default function Notification5() {
       position: 'topRight',
 
       alertProps: {
-        hasIcon: true,
-        hasCloseIcon: false,
-        iconStyle: {
-          color: 'white',
-        },
+        filled: true,
         style: {
           background: 'black',
-          color: 'white',
-          border: 'none',
         },
-        closeStyle: {},
       },
     });
   };

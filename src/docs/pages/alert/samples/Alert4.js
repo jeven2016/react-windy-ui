@@ -11,9 +11,9 @@ export default function Alert4() {
     </div>
     <div className="doc doc-row">
       <Toggle active={showIcon} onChange={val => setShowIcon(val)}
-              label='Icon'/>
+              label='Left Icon'/>
     </div>
-    <Alert type="info" body="A info alert" hasCloseIcon={closeIcon}
+    <Alert type="info" body="info alert" hasCloseIcon={closeIcon}
            hasIcon={showIcon}/>
   </>;
 }

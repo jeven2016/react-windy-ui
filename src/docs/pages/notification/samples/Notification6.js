@@ -34,7 +34,7 @@ export default function Notification6() {
     Notification.simple({body: 'Hello folks', position: position});
   };
   return <>
-    <div className="doc doc-row">
+    <div className="doc doc-row space">
       <span style={{marginRight: '1rem', fontWeight: '600'}}>Position:</span>
       <Select value={position} onSelect={value => setPosition(value)}>
         <Select.Option value="topLeft">topLeft</Select.Option>
@@ -46,10 +46,7 @@ export default function Notification6() {
     </div>
     <div className="doc doc-row">
       <Toggle defaultActive={false} onChange={active => toggle(active)}
-              content={{
-                on: 'Update the global Configuration',
-                off: 'Update the global Configuration',
-              }}/>
+              label='Update the global Configuration'/>
     </div>
     <Button type="primary" onClick={() => sendMessage()}>Message</Button>
   </>;

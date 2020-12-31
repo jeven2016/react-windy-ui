@@ -7,8 +7,8 @@ editUrl: $BASE/docs/pages/loader/md/loader5.md
 ---
 
 +++ zh_CN
-默认情况下全局显示的Loader会有一个默认的宽度，如果需要Loader的宽度以内容区域的宽度为准，则可以设置hasDefaultWidth
-    属性为false。同时可以通过modalStyle属性去修改Loader使用的Modal样式，比如这个例子，就将背景色设置为黑色。
+默认情况下全局显示的Loader会有一个默认的宽度，如果需要Loader的宽度以内容区域的宽度为准，则可以设置<Code>asDefaultWidth</Code>
+    属性为<Code>false</Code>。同时可以通过<Code>modalStyle</Code>属性去修改Loader使用的Modal样式，在这个例子中，就将背景色设置为黑色。
     
     
 +++ en_US
