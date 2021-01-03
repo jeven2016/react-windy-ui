@@ -1,5 +1,5 @@
 import React from 'react';
-import {convertToArray, invoke, isArray, isNil} from '../Utils';
+import {convertToArray, isArray, isNil} from '../Utils';
 import TreeItem from './TreeItem';
 
 export const RootId = '$$root$$';

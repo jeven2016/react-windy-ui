@@ -1,9 +1,8 @@
 import React, {useCallback, useState} from 'react';
-import PropTypes, {element} from 'prop-types';
+import PropTypes from 'prop-types';
 import TreeItem from './TreeItem';
 import clsx from 'clsx';
 import {TreeContext} from '../common/Context';
-import useInternalActive from '../common/useInternalActive';
 import {convertToArray, isNil} from '../Utils';
 import {
   CheckedStatus,
@@ -15,6 +14,7 @@ import {
   updateParentsStatus,
 } from './TreeCommon';
 import Loader from '../Loader';
+import useInternalState from "../common/useInternalState";
 
 const Tree = React.forwardRef((props, ref) => {
   const {
@@ -36,7 +36,6 @@ const Tree = React.forwardRef((props, ref) => {
     checkedItems,
     highlightLine = false,
     children,
-
     onSelect,
     onCheck,
     onExpand,
@@ -44,28 +43,45 @@ const Tree = React.forwardRef((props, ref) => {
   } = props;
   const providedJsonData = props.hasOwnProperty('jsonData');
   const [treeData, setTreeData] = useState(
-      () => parseChildren(providedJsonData,
-          children, jsonData));
+    () => parseChildren(providedJsonData,
+      children, jsonData));
 
   const [statusMap, setStatusMap] = useState(new Map());
   const [loadingIds, setLoadingIds] = useState([]);
 
   const clsName = clsx(className, extraClassName);
 
-  const isExternalControl = props.hasOwnProperty('selectedItems');
-  const {currentActive: currentSelectedItems, setActive: setSelectedItems} = useInternalActive(
-      isExternalControl,
-      convertToArray(defaultSelectedItems), convertToArray(selectedItems));
+  const {
+    state: currentSelectedItems,
+    setState: setSelectedItems,
+    customized: isExternalControl,
+  } = useInternalState({
+    props,
+    stateName: 'selectedItems',
+    defaultState: convertToArray(defaultSelectedItems),
+    state: convertToArray(selectedItems),
+  });
 
-  const isExpendControl = props.hasOwnProperty('expandedItems');
-  const {currentActive: currentExpandedItems, setActive: setExpendedItems} = useInternalActive(
-      isExpendControl,
-      convertToArray(defaultExpandedItems), convertToArray(expandedItems));
+  const {
+    state: currentExpandedItems,
+    setState: setExpendedItems,
+    customized: isExpendControl,
+  } = useInternalState({
+    props,
+    stateName: 'expandedItems',
+    defaultState: convertToArray(defaultExpandedItems),
+    state: convertToArray(expandedItems),
+  });
 
-  const isCheckControl = props.hasOwnProperty('checkedItems');
-  const {currentActive: currentCheckedItems} = useInternalActive(
-      isCheckControl,
-      convertToArray(defaultCheckedItems), convertToArray(checkedItems));
+  const {
+    state: currentCheckedItems,
+    customized: isCheckControl,
+  } = useInternalState({
+    props,
+    stateName: 'checkedItems',
+    defaultState: convertToArray(defaultCheckedItems),
+    state: convertToArray(checkedItems),
+  });
 
   /*
    * select handler
@@ -125,7 +141,7 @@ const Tree = React.forwardRef((props, ref) => {
           let itemStatusMap = new Map(statusMap);
           parentNode = newTreeData.treeNodeMap.get(id);
           updateChildrenStatus(itemStatusMap, parentNode,
-              CheckedStatus.checked);
+            CheckedStatus.checked);
           setStatusMap(itemStatusMap);
         }
       }
@@ -152,7 +168,7 @@ const Tree = React.forwardRef((props, ref) => {
 
     //add this node into map
     itemStatusMap.set(id,
-        checked ? CheckedStatus.checked : CheckedStatus.unchecked);
+      checked ? CheckedStatus.checked : CheckedStatus.unchecked);
 
     let parent = node.getParent();
     if (isNil(parent)) {
@@ -160,13 +176,13 @@ const Tree = React.forwardRef((props, ref) => {
     }
 
     updateParentsStatus(itemStatusMap, parent,
-        checked ? CheckedStatus.checked :
-            CheckedStatus.unchecked);
+      checked ? CheckedStatus.checked :
+        CheckedStatus.unchecked);
 
     //check or uncheck all leaf nodes if the parent has
     if (node.hasChildren() && autoCheckLeafs) {
       updateChildrenStatus(itemStatusMap, node,
-          checked ? CheckedStatus.checked : CheckedStatus.unchecked);
+        checked ? CheckedStatus.checked : CheckedStatus.unchecked);
     }
 
     if (!isCheckControl) {

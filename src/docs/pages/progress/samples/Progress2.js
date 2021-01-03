@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {ButtonGroup, Button, Progress, Card, Checkbox} from 'react-windy-ui';
+import {Button, ButtonGroup, Checkbox, Progress} from 'react-windy-ui';
 
 export default function Progress2() {
   const [value, setValue] = useState(30);
@@ -9,9 +9,9 @@ export default function Progress2() {
   const [showContent, setShowContent] = useState(false);
   const increment = 10;
   const increase = () => setValue(
-      val => val + increment >= 100 ? 100 : val + increment);
+    val => val + increment >= 100 ? 100 : val + increment);
   const decrease = () => setValue(
-      val => val - increment <= 0 ? 0 : val - increment);
+    val => val - increment <= 0 ? 0 : val - increment);
 
   return <>
     <div className="doc doc-row">
@@ -27,21 +27,19 @@ export default function Progress2() {
       <Checkbox onChange={val => setShowContent(val)}>Content</Checkbox>
     </div>
 
-    <Card>
-      <Card.Row>
-        <Progress percentValue={value} hasContent={showContent}
-                  hasStripe={showStrip}
-                  hasAnimation={showAnimation}/>
-        <Progress percentValue={value} type="info" hasContent={showContent}
-                  hasStripe={showStrip} hasAnimation={showAnimation}/>
-        <Progress percentValue={value} type="ok" hasContent={showContent}
-                  hasStripe={showStrip} hasAnimation={showAnimation}/>
-        <Progress percentValue={value} type="warning" hasContent={showContent}
-                  hasStripe={showStrip} hasAnimation={showAnimation}/>
-        <Progress percentValue={value} type="error" hasContent={showContent}
-                  hasStripe={showStrip} hasAnimation={showAnimation}/>
-      </Card.Row>
-    </Card>
+    <div className="doc doc-row space">
+      <Progress percentValue={value} hasContent={showContent}
+                hasStripe={showStrip}
+                hasAnimation={showAnimation}/>
+      <Progress percentValue={value} type="info" hasContent={showContent}
+                hasStripe={showStrip} hasAnimation={showAnimation}/>
+      <Progress percentValue={value} type="ok" hasContent={showContent}
+                hasStripe={showStrip} hasAnimation={showAnimation}/>
+      <Progress percentValue={value} type="warning" hasContent={showContent}
+                hasStripe={showStrip} hasAnimation={showAnimation}/>
+      <Progress percentValue={value} type="error" hasContent={showContent}
+                hasStripe={showStrip} hasAnimation={showAnimation}/>
+    </div>
 
   </>;
 

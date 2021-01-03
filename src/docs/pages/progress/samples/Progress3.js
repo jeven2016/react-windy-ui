@@ -15,11 +15,11 @@ export default function Progress3() {
   return <>
     <div className="doc doc-row">
       <div className="doc doc-row">
-        <Toggle active={active} content={{on: 'Active', off: 'Active'}}
+        <Toggle active={active} label='Active'
                 onChange={(val) => setActive(val)}/>
       </div>
       <div className="doc doc-row">
-        <Toggle active={loading} content={{on: 'Loading', off: 'Loading'}}
+        <Toggle active={loading} label='Loading'
                 onChange={(val) => setLoading(val)}/>
       </div>
     </div>
@@ -32,7 +32,7 @@ export default function Progress3() {
               active={active}
               percentValue={value}
               showLoading={loading}
-              type="ok"
+              type="error"
               style={{top: '0px'}}/>
   </>;
 

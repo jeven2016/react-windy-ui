@@ -2,7 +2,7 @@ import React from 'react';
 import {autoPlay} from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
 import clsx from 'clsx';
-import useInternalActive from '../common/useInternalActive';
+import useInternalState from "../common/useInternalState";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -22,9 +22,18 @@ const Carousel = React.forwardRef((props, ref) => {
   } = props;
   const count = React.Children.count(children);
   const clsName = clsx(extraClassName, className);
-  const isExternalControl = props.hasOwnProperty('active');
-  const {currentActive, setActive} = useInternalActive(isExternalControl,
-      defaultActive, active);
+
+  const {
+    state: currentActive,
+    setState: setActive,
+    customized: isExternalControl,
+  } = useInternalState({
+    props,
+    stateName: 'active',
+    defaultState: defaultActive,
+    state: active,
+  });
+
   const change = (index) => {
     if (isExternalControl) {
       onChange && onChange(index);
@@ -33,13 +42,13 @@ const Carousel = React.forwardRef((props, ref) => {
     setActive(index);
   };
 
- return <div className={clsName}>
+  return <div className={clsName}>
     <ul className={`indicators ${position}`}>
       {hasIndicators && React.Children.map(children, (chd, i) =>
-          <li className={`${indicatorType} ${i === currentActive
-              ? 'active'
-              : ''}`}
-              onClick={change.bind(null, i)}/>)}
+        <li className={`${indicatorType} ${i === currentActive
+          ? 'active'
+          : ''}`}
+            onClick={change.bind(null, i)}/>)}
     </ul>
     <AutoPlaySwipeableViews index={currentActive}
                             enableMouseEvents

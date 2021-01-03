@@ -1,22 +1,28 @@
-import React, {useState} from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import {isNil} from './Utils';
 import Element from './common/Element';
-import useInternalActive from './common/useInternalActive';
+import useInternalState from "./common/useInternalState";
 
 function BaseSwitch(props) {
   const {
     defaultValue,
     iconIndeterminate, showIndeterminateState = false, iconIndeterminateStyle,
-    value, label, baseClassName, inputType, underControlled = false,
+    value, label, baseClassName, inputType,
     iconChecked, iconUnchecked, canUnchecked = true, disabled = false,
     children, onChange, checked, ...otherProps
   } = props;
 
-  const isExternalControl = props.hasOwnProperty('value');
-  const {currentActive: checkState, setActive: setCheckState} = useInternalActive(
-      isExternalControl,
-      defaultValue, value);
+  const {
+    state: checkState,
+    setState: setCheckState,
+    customized: isExternalControl,
+  } = useInternalState({
+    props,
+    stateName: 'value',
+    defaultState: defaultValue,
+    state: value,
+  });
 
   //get the icon
   let Icon;
