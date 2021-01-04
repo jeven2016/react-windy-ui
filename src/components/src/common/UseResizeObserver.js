@@ -1,4 +1,4 @@
-import {useLayoutEffect, useState, useRef} from 'react';
+import {useRef, useState, useEffect} from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import {isFunction, isNil, nonNil} from '../Utils';
 
@@ -15,7 +15,7 @@ export const defaultRect = {
 
 export const defaultComparator = (preRect, currentRect) => {
   return Math.floor(preRect.width) !== Math.floor(currentRect.width) ||
-      Math.floor(preRect.height) !== Math.floor(currentRect.height);
+    Math.floor(preRect.height) !== Math.floor(currentRect.height);
 };
 
 /**
@@ -35,11 +35,11 @@ export const defaultComparator = (preRect, currentRect) => {
  * @returns {{top: number, left: number, bottom: number, x: number, width: number, y: number, right: number, height: number}}
  */
 export default function useResizeObserver(
-    ref, onResize, enabled = true, comparator = defaultComparator) {
+  ref, onResize, enabled = true, comparator = defaultComparator) {
   const [rect, setRect] = useState(defaultRect);
   const preRectRef = useRef(defaultRect);// a reference to previous rect data
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!enabled) {
       return;
     }
@@ -72,9 +72,9 @@ export default function useResizeObserver(
         }
       });
     });
-    try{
+    try {
       nonNil(node) && ro.observe(node);
-    }catch (e){
+    } catch (e) {
       console.log(node);
     }
 

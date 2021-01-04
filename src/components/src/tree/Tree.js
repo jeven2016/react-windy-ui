@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import TreeItem from './TreeItem';
 import clsx from 'clsx';
@@ -15,6 +15,7 @@ import {
 } from './TreeCommon';
 import Loader from '../Loader';
 import useInternalState from "../common/useInternalState";
+import useEventCallback from "../common/useEventCallback";
 
 const Tree = React.forwardRef((props, ref) => {
   const {
@@ -86,7 +87,7 @@ const Tree = React.forwardRef((props, ref) => {
   /*
    * select handler
    */
-  const selectHandler = useCallback((id, e, selected) => {
+  const selectHandler = useEventCallback((id, e, selected) => {
     let selectedIds;
 
     if (selected) {
@@ -99,21 +100,16 @@ const Tree = React.forwardRef((props, ref) => {
     if (!isExternalControl) {
       setSelectedItems(selectedIds);
     }
-    onSelect && onSelect(selectedIds, e);
-  }, [
-    currentSelectedItems,
-    isExternalControl,
-    onSelect,
-    multiSelect,
-    setSelectedItems]);
+    onSelect && onSelect(multiSelect ? selectedIds : selectedIds[0], e);
+  });
 
-  const isChecked = useCallback((id) => {
+  const isChecked = useEventCallback((id) => {
     const checkedStatus = statusMap.get(id);
     if (!isNil(checkedStatus)) {
       return checkedStatus === CheckedStatus.checked;
     }
     return false;
-  }, [statusMap]);
+  });
 
   const expandHandler = async (id, expand, evt) => {
     if (isExpendControl) {
@@ -155,10 +151,9 @@ const Tree = React.forwardRef((props, ref) => {
     if (!isExpendControl) {
       setExpendedItems(expandedIds);
     }
-
   };
 
-  const checkHandler = useCallback((id, checked, e) => {
+  const checkHandler = useEventCallback((id, checked, e) => {
     let node = treeData.treeNodeMap.get(id);
     if (isNil(node)) {
       throw new Error('No node exists with this id \'' + id + '\'.');
@@ -196,12 +191,7 @@ const Tree = React.forwardRef((props, ref) => {
       }
     }
     onCheck && onCheck(checkedIds);
-  }, [
-    treeData.treeNodeMap,
-    statusMap,
-    autoCheckLeafs,
-    isCheckControl,
-    onCheck]);
+  });
 
   const ctx = {
     multiSelect,
@@ -240,12 +230,12 @@ Tree.propTypes = {
   className: PropTypes.string,
   extraClassName: PropTypes.string,
   checkable: PropTypes.bool,
-  defaultExpandedItems: PropTypes.arrayOf(PropTypes.string),
-  expandedItems: PropTypes.arrayOf(PropTypes.string),
-  defaultSelectedItems: PropTypes.arrayOf(PropTypes.string),
-  selectedItems: PropTypes.arrayOf(PropTypes.string),
-  defaultCheckedItems: PropTypes.arrayOf(PropTypes.string),
-  checkedItems: PropTypes.arrayOf(PropTypes.string),
+  defaultExpandedItems: PropTypes.any,
+  expandedItems: PropTypes.any,
+  defaultSelectedItems: PropTypes.any,
+  selectedItems: PropTypes.any,
+  defaultCheckedItems: PropTypes.any,
+  checkedItems: PropTypes.any,
   highlightLine: PropTypes.bool,
   onSelect: PropTypes.func,
   onCheck: PropTypes.func,
