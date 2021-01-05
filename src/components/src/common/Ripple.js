@@ -125,6 +125,7 @@ const useRippleCallback = (hasRipple, rippleRef, rippleMethod, callback) => {
   return useEventCallback((e) => {
     if (callback) {
       callback(e);
+      e.preventDefault();
     }
 
     if (hasRipple && rippleRef.current) {
@@ -155,6 +156,7 @@ const useRippleEvent = ({rippleRef, rootProps = {}, hasRipple = true}) => {
   const mouseDownCb = useRippleCallback(hasRipple, rippleRef, startMethod,
       onMouseDown);
 
+  //todo: mouseUpCb works on mobile browser
   const mouseUpCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
       onMouseUp);
 

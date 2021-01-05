@@ -27,12 +27,12 @@ const TreeItem = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const treeContext = useContext(TreeContext);
-  const {attach, detach, getState, setState} = treeContext.store;
+  const {attach, detach, getState} = treeContext.store;
   // const statusMap = treeContext.statusMap;
   const [treeData, setTreeData] = useState(getState().treeData);
   const [statusMap, setStatusMap] = useState(getState().statusMap);
+  console.log(statusMap)
 
-  console.log(treeData);
   useEffect(() => {
     const listener = ({statusMap: map, treeData: tree}) => {
       setStatusMap(map);

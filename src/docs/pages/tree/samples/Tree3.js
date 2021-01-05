@@ -4,10 +4,11 @@ import {Toggle, Tree} from 'react-windy-ui';
 export default function Tree3() {
   const [checkable, setCheckable] = useState(true);
   const [selectedIds, set] = useState(null);
-  const [checkedIds, setCheckedIds] = useState(["Child-1-1","Parent-1"]);
+  const [checkedIds, setCheckedIds] = useState(["Child-1-1", "Parent-1"]);
 
   const checkHandler = (ids) => {
     setCheckedIds(ids);
+    console.log(ids)
   }
 
   console.log(checkedIds);
@@ -19,8 +20,8 @@ export default function Tree3() {
     </div>
 
     <Tree checkable={checkable}
-        checkedItems={checkedIds}
-        onCheck={checkHandler}
+          checkedItems={checkedIds}
+          onCheck={checkHandler}
           selectedItems={selectedIds}
           onSelect={(ids, e) => set(ids)}>
       <Tree.TreeItem id="Parent-1" label="Parent-1">

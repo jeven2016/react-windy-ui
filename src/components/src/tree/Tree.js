@@ -44,20 +44,6 @@ const Tree = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const providedJsonData = props.hasOwnProperty('jsonData');
-
-  //init a internal store
-  //{ checkedValues: {key: [values]} , the key corresponds the showParam
-  const [store] = useState(() => initStore({
-    treeData: parseChildren(providedJsonData,
-        children, jsonData),
-    statusMap: new Map()
-  }));
-
-  // const [treeData, setTreeData] = useState(
-  //     () => parseChildren(providedJsonData,
-  //         children, jsonData));
-
-  const statusMap = useRef(new Map());
   const [loadingIds, setLoadingIds] = useState([]);
 
   const clsName = clsx(className, extraClassName);
@@ -93,6 +79,15 @@ const Tree = React.forwardRef((props, ref) => {
     defaultState: convertToArray(defaultCheckedItems),
     state: convertToArray(checkedItems),
   });
+
+  //init a internal store
+  const [store] = useState(() => initStore({
+    treeData: parseChildren(providedJsonData,
+      children, jsonData),
+    statusMap: new Map(currentCheckedItems.map(item => [item, CheckedStatus.checked]))
+  }));
+
+  const statusMap = useRef(new Map());
 
   /*
    * select handler
@@ -148,7 +143,7 @@ const Tree = React.forwardRef((props, ref) => {
           let itemStatusMap = new Map(store.getState().statusMap);
           parentNode = newTreeData.treeNodeMap.get(id);
           updateChildrenStatus(itemStatusMap, parentNode,
-              CheckedStatus.checked);
+            CheckedStatus.checked);
           store.setState({statusMap: itemStatusMap});
         }
       }
@@ -174,7 +169,7 @@ const Tree = React.forwardRef((props, ref) => {
 
     //add this node into map
     itemStatusMap.set(id,
-        checked ? CheckedStatus.checked : CheckedStatus.unchecked);
+      checked ? CheckedStatus.checked : CheckedStatus.unchecked);
 
     let parent = node.getParent();
     if (isNil(parent)) {
@@ -182,13 +177,13 @@ const Tree = React.forwardRef((props, ref) => {
     }
 
     updateParentsStatus(itemStatusMap, parent,
-        checked ? CheckedStatus.checked :
-            CheckedStatus.unchecked);
+      checked ? CheckedStatus.checked :
+        CheckedStatus.unchecked);
 
     //check or uncheck all leaf nodes if the parent has
     if (node.hasChildren() && autoCheckLeafs) {
       updateChildrenStatus(itemStatusMap, node,
-          checked ? CheckedStatus.checked : CheckedStatus.unchecked);
+        checked ? CheckedStatus.checked : CheckedStatus.unchecked);
     }
 
     if (isCheckControl) {
@@ -215,8 +210,6 @@ const Tree = React.forwardRef((props, ref) => {
     loadJsonData,
     loader,
     loadingIds,
-    statusMap,
-    treeData: store.getState().treeData,
     onlySelectLeaf,
     checkable,
     selectedItems: currentSelectedItems,

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {Menu} from 'react-windy-ui';
 import {Link, useRouteMatch} from 'react-router-dom';
 
@@ -6,13 +6,26 @@ export default function DocMenu(props) {
   const {hasBox = false, onSelectMenuItem} = props;
   const [overflow, setOverflow] = useState('hidden');
   const {url} = useRouteMatch();
+
+  const handleOverflow = useCallback((value, e) => {
+    setOverflow(value);
+    e.preventDefault();
+  }, [setOverflow]);
+
   return <Menu type="primary"
                hasBox={hasBox}
                hasRipple={false}
                onSelect={onSelectMenuItem}
                defaultOpenedMenus={['basic']}
-               onMouseEnter={() => {setOverflow('auto');}}
-               onMouseLeave={() => {setOverflow('hidden');}}
+               onTouchStart={(e) => {
+                 handleOverflow('auto', e);
+               }}
+               onMouseEnter={(e) => {
+                 handleOverflow('auto', e);
+               }}
+               onMouseLeave={(e) => {
+                 handleOverflow('hidden', e);
+               }}
                style={{
                  maxHeight: 'calc(100vh - 80px)',
                  overflow: overflow,

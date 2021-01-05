@@ -89,7 +89,7 @@ function DocCenter(props) {
                 position="left"
                 hasAnchor
                 style={{width: isMaxSm ? '80%' : '300px'}}
-                onChange={(e, show) => setActive(show)}>
+                onChange={(show) => setActive(show)}>
           <DocMenu hasBox={false}
                    onSelectMenuItem={() => setActive(false)}/>
         </Drawer>
