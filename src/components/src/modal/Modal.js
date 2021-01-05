@@ -102,9 +102,6 @@ const Modal = React.forwardRef((props, ref) => {
     to: to,
   });
 
-  console.log(from);
-  console.log(to);
-
   const modalStyle = {
     ...style,
     opacity,
