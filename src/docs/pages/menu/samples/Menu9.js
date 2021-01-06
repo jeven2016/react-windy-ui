@@ -28,9 +28,9 @@ export default function Menu9() {
               label="Compact"/>
     </div>
     <div className="doc doc-row space">
-      <Menu defaultActiveItems={['item7']} id="test"
-            direction="vertical"
+      <Menu direction="vertical"
             compact={compact}
+            defaultOpenedMenus={["sub1"]}
             onOpenedMenu={(data) => console.log(`open==${data}`)}
             onSelect={(data, e) => console.log(`select=${data}`)}
             type={type}>

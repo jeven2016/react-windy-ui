@@ -16,7 +16,7 @@ export default function Menu4() {
         <Radio value="evenly">evenly </Radio>
       </RadioGroup>
     </div>
-    <div className="doc doc-row space">
+    <div className="doc doc-row">
       <Menu defaultActiveItems={['item1']}
             direction="horizontal"
             justify={justify}>

@@ -40,7 +40,7 @@ const Item = React.forwardRef((props, ref) => {
     style,
     ...otherProps
   } = updatedProps;
-  const {attach, detach, getState} = ctx.store;
+  const {attach, detach} = ctx.store;
   const [active, setActive] = useState(false);
 
   const isActive = useMemo(() => {
@@ -48,7 +48,9 @@ const Item = React.forwardRef((props, ref) => {
       return includes(ctx.activeItems, id)
     }
     return active
-  }, [active, ctx.customActive, ctx.activeItems]);
+  }, [ctx.customActive, ctx.activeItems, active, id]);
+
+  id=='item2'&& console.log("refresh...")
 
   const isDisabled = nonNil(disabled) ? disabled : ctx.disabled;
 

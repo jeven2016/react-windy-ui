@@ -3,7 +3,7 @@ order: 12
 type: sample
 zh_CN: 多选Menu
 en_US: Menu12
-onlyVisible: true
+onlyVisible: false
 editUrl: $BASE/docs/pages/menu/md/Menu12.md
 ---
 

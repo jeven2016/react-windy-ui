@@ -6,7 +6,7 @@ const ItemStyle = {
 };
 
 export default function Menu7() {
-  return <div className="doc doc-row space">
+  return <div className="doc doc-row">
     <Menu type="dark"
           direction="horizontal">
       <Menu.Item id="item1" style={ItemStyle}>

@@ -72,13 +72,10 @@ const Menu = React.forwardRef((props, ref) => {
     openList: defaultOpenList,
   }));
 
-  const realActiveItems = useMemo(() =>
-          customActive ? activeItems : store.getState().activeItemsList,
-      [customActive, activeItems, store.getState().activeItemsList]);
-
-  const realOpenList = useMemo(() =>
-          customOpen ? openedMenus : store.getState().openList,
-      [customOpen, openedMenus, store.getState().openList]);
+  //while the field is not customized, the store would be changed in Item and then the memorized data would get
+  //outdated data, so remove the useMemo()
+  const realActiveItems = () => customActive ? activeItems : store.getState().activeItemsList;
+  const realOpenList = () => customOpen ? openedMenus : store.getState().openList;
 
   //for handling the menu switched from compact/popup to other type
   useEffect(() => {
@@ -112,7 +109,7 @@ const Menu = React.forwardRef((props, ref) => {
   //2. show last expanded menus while switching to other other menu types
   useEvent(EventListener.click, function () {
     //clicking the document will cause the opened popup submenu to be closed
-    if (isPopup && realOpenList.length > 0) {
+    if (isPopup && realOpenList().length > 0) {
       store.setState({openList: []});
     }
   }, isPopup);
@@ -152,10 +149,10 @@ const Menu = React.forwardRef((props, ref) => {
 
   const clickItemHandler = useEventCallback(({id, e}) => {
     let nextList = [id];
-    const list = realActiveItems;
+    const list = realActiveItems();
     if (multiSelect) {
       nextList = list.includes(id) ? [...list.filter(item => item !== id)] :
-          [...list, id];
+        [...list, id];
     }
 
     if (!customActive) {
@@ -178,7 +175,8 @@ const Menu = React.forwardRef((props, ref) => {
   });
 
   const openMenuHandler = useEventCallback(({id, e, directChild}) => {
-    if (isNil(id) || includes(realOpenList, id)) {
+    const oList = realOpenList();
+    if (isNil(id) || includes(oList, id)) {
       return;
     }
 
@@ -192,9 +190,9 @@ const Menu = React.forwardRef((props, ref) => {
       //if this submenu is direct child of menu, that means only one submenu should
       //open later
       nextList = directChild ? [id]
-          : realOpenList.concat(id);
+        : oList.concat(id);
     } else {
-      nextList = realOpenList.concat(id);
+      nextList = oList.concat(id);
       preExpandList.current = nextList;
     }
     if (!customOpen) {
@@ -211,12 +209,13 @@ const Menu = React.forwardRef((props, ref) => {
    * should only include the last focused submenu's id.
    */
   const closeMenuHandler = useEventCallback(({id, e}) => {
+    const oList = realOpenList();
     const {updateState, notifyChanges, getState, setState} = store;
-    if (isNil(id) || !includes(getState().openList, id)) {
+    if (isNil(id) || !includes(oList, id)) {
       return;
     }
 
-    const restList = [...getState().openList.filter(it => it !== id)];
+    const restList = [...oList.filter(it => it !== id)];
     if (isPopup) {
       //only update the store
       updateState({openList: restList});
@@ -249,7 +248,8 @@ const Menu = React.forwardRef((props, ref) => {
     store,
     customActive,
     customOpen,
-    activeItems,
+    activeItems: realActiveItems(),
+    openList: realOpenList(),
     dispatch,
     initIndent,
     indentation,
@@ -306,13 +306,13 @@ Menu.propTypes = {
   multiSelect: PropTypes.bool,
   compact: PropTypes.bool,
   defaultActiveItems: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.number, PropTypes.array]),
+    [PropTypes.string, PropTypes.number, PropTypes.array]),
   activeItems: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.number, PropTypes.array]),
+    [PropTypes.string, PropTypes.number, PropTypes.array]),
   defaultOpenedMenus: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.number, PropTypes.array]),
+    [PropTypes.string, PropTypes.number, PropTypes.array]),
   openedMenus: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.number, PropTypes.array]),
+    [PropTypes.string, PropTypes.number, PropTypes.array]),
   onOpenedMenu: PropTypes.func,
   primaryBarPosition: PropTypes.oneOf(['left', 'right']),
   selectable: PropTypes.bool,

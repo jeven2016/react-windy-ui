@@ -3,7 +3,7 @@ import {Menu} from 'react-windy-ui';
 
 export default function Menu6() {
   return <>
-    <div className="doc doc-row space">
+    <div className="doc doc-row">
       <Menu defaultActiveItems={['item1']} type="normal"
             style={{marginBottom: '1rem'}}
             direction="horizontal">
@@ -18,7 +18,7 @@ export default function Menu6() {
         </Menu.Item>
       </Menu>
     </div>
-    <div className="doc doc-row space">
+    <div className="doc doc-row">
       <Menu defaultActiveItems={['item1']}
             direction="horizontal">
         <Menu.Item id="item1" hasBackground>
