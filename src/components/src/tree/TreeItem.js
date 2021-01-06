@@ -10,7 +10,7 @@ import {IconArrowRightBlack, IconHome} from '../Icons';
 import Checkbox from '../Checkbox';
 import {TreeContext} from '../common/Context';
 import CollapsePanel from '../collapse/CollapsePanel';
-import {convertToArray, isNil} from '../Utils';
+import {convertToArray, isNil, nonNil} from '../Utils';
 import {CheckedStatus} from './TreeCommon';
 import {preventEvent} from '../event';
 import PropTypes from 'prop-types';
@@ -54,9 +54,12 @@ const TreeItem = React.forwardRef((props, ref) => {
   var status = statusMap?.get(id);
   const showIndeterminateState = !isNil(status) && status ===
       CheckedStatus.indeterminate;
-  const checked = (!isNil(status) && status === CheckedStatus.checked)
+  const checked = (nonNil(status) && status === CheckedStatus.checked)
       || treeContext.checkedItems.includes(id);
 
+  if(id==='Child-1-2'){
+    debugger
+  }
   const clsName = clsx(className, extraClassName);
 
   const isSelected = treeContext.selectedItems.find(elem => elem === id);

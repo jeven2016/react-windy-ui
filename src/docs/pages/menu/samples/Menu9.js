@@ -27,7 +27,7 @@ export default function Menu9() {
       <Toggle active={compact} onChange={active => setCompact(active)}
               label="Compact"/>
     </div>
-    <div className="doc doc-row" style={{width: '20rem'}}>
+    <div className="doc doc-row space">
       <Menu defaultActiveItems={['item7']} id="test"
             direction="vertical"
             compact={compact}

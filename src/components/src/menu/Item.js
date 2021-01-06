@@ -41,9 +41,14 @@ const Item = React.forwardRef((props, ref) => {
     ...otherProps
   } = updatedProps;
   const {attach, detach, getState} = ctx.store;
-  const [active, setActive] = useState(null);
-  const isActive = isNil(active) ? includes(getState().activeItemsList, id)
-    : active;
+  const [active, setActive] = useState(false);
+
+  const isActive = useMemo(() => {
+    if (ctx.customActive) {
+      return includes(ctx.activeItems, id)
+    }
+    return active
+  }, [active, ctx.customActive, ctx.activeItems]);
 
   const isDisabled = nonNil(disabled) ? disabled : ctx.disabled;
 
@@ -58,8 +63,10 @@ const Item = React.forwardRef((props, ref) => {
     if (isNil(id)) {
       return;
     }
+
+    //only register this listener for non-controlled items
     const listener = ({activeItemsList}) => {
-      if (!isDisabled && !isNil(id)) {
+      if (!isDisabled && nonNil(id)) {
         const nextActive = includes(activeItemsList, id);
         if (nextActive && !isActive) {
           setActive(true);
@@ -70,9 +77,10 @@ const Item = React.forwardRef((props, ref) => {
         }
       }
     };
-    attach(listener);
+
+    !ctx.customActive && attach(listener);
     return () => detach(listener);
-  }, [isActive, id, setActive, detach, attach, isDisabled]);
+  }, [ctx.customActive, isActive, id, setActive, detach, attach, isDisabled]);
 
   const clickHandler = useEventCallback((e) => {
     if (isDisabled) {
@@ -97,9 +105,9 @@ const Item = React.forwardRef((props, ref) => {
     'with-bg': hasBackground,
     'with-bottom-bar': hasBottomBar,
     'left-bar': ctx.type === MenuType.primary && ctx.primaryBarPosition ===
-      'left',
+        'left',
     'right-bar': ctx.type === MenuType.primary && ctx.primaryBarPosition ===
-      'right',
+        'right',
   });
 
   const content = useMemo(() => {
@@ -123,20 +131,20 @@ const Item = React.forwardRef((props, ref) => {
   }, [customizedChildren, icon, directChild, show, innerProps, children]);
 
   const paddingStyle = useMemo(() => ctx.autoIndent ?
-    getPaddingStyle({
-      ignored: ctx.popupSubMenu,
-      indentUnit: ctx.indentUnit,
-      indentation: ctx.indentation,
-      initIndent: ctx.initIndent,
-      level: level,
-    }) : null,
-    [
-      ctx.autoIndent,
-      ctx.indentUnit,
-      ctx.indentation,
-      ctx.initIndent,
-      ctx.popupSubMenu,
-      level]);
+      getPaddingStyle({
+        ignored: ctx.popupSubMenu,
+        indentUnit: ctx.indentUnit,
+        indentation: ctx.indentation,
+        initIndent: ctx.initIndent,
+        level: level,
+      }) : null,
+      [
+        ctx.autoIndent,
+        ctx.indentUnit,
+        ctx.indentation,
+        ctx.initIndent,
+        ctx.popupSubMenu,
+        level]);
 
   const renderCnt = <div ref={ref} className={clsName} {...otherProps}
                          onClick={clickHandler}

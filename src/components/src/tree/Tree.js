@@ -87,8 +87,6 @@ const Tree = React.forwardRef((props, ref) => {
     statusMap: new Map(currentCheckedItems.map(item => [item, CheckedStatus.checked]))
   }));
 
-  const statusMap = useRef(new Map());
-
   /*
    * select handler
    */

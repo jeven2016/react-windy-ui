@@ -39,7 +39,7 @@ export default function Menu13() {
       <Toggle active={indent} onChange={active => setIndent(active)}
               label='Auto Indent'/>
     </div>
-    <div className="doc doc-row" style={{width: '50%'}}>
+    <div className="doc doc-row space">
       <Menu hasBox={hasBox} hasArrow={hasArrow} hasRipple={ripple} autoIndent={indent}
             type={type}>
         <Menu.SubMenu header="SubMenu 1" id="sub1" icon={<IconList/>}
@@ -78,10 +78,6 @@ export default function Menu13() {
           </Menu.Item>
         </Menu.SubMenu>
       </Menu>
-    </div>
-
-    <div className="doc doc-row">
-
     </div>
   </>;
 
