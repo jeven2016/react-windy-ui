@@ -10,7 +10,7 @@ import {IconArrowRightBlack, IconHome} from '../Icons';
 import Checkbox from '../Checkbox';
 import {TreeContext} from '../common/Context';
 import CollapsePanel from '../collapse/CollapsePanel';
-import {convertToArray, isNil, nonNil} from '../Utils';
+import {convertToArray, includes, isNil, nonNil} from '../Utils';
 import {CheckedStatus} from './TreeCommon';
 import {preventEvent} from '../event';
 import PropTypes from 'prop-types';
@@ -28,19 +28,30 @@ const TreeItem = React.forwardRef((props, ref) => {
   } = props;
   const treeContext = useContext(TreeContext);
   const {attach, detach, getState} = treeContext.store;
-  // const statusMap = treeContext.statusMap;
+  // const checkMap = treeContext.checkMap;
   const [treeData, setTreeData] = useState(getState().treeData);
-  const [statusMap, setStatusMap] = useState(getState().statusMap);
-  console.log(statusMap)
+
+  //the initial checkedItems is same with the checkMap of store
+  const initStatus = useMemo(() => {
+    if (includes(treeContext.checkedItems, id)) {
+      return CheckedStatus.checked;
+    }
+    return getState().checkMap.get(id);
+  }, [treeContext.checkedItems, getState, id]);
+
+  const [status, setStatus] = useState(initStatus);
 
   useEffect(() => {
-    const listener = ({statusMap: map, treeData: tree}) => {
-      setStatusMap(map);
+    const listener = ({checkMap: map, treeData: tree}) => {
+      var nextStatus = map?.get(id);
+      if (nonNil(nextStatus) && nextStatus !== status) {
+        setStatus(nextStatus);
+      }
       setTreeData(tree);
     };
     attach(listener);
     return () => detach(listener);
-  }, [setStatusMap, attach, detach]);
+  }, [setStatus, status, attach, detach]);
 
   //check whether to asynchronously load  the children nodes
   const treeNodeMap = treeData.treeNodeMap;
@@ -51,14 +62,16 @@ const TreeItem = React.forwardRef((props, ref) => {
   }, [moreElements]);
 
   //check the status of the checkbox
-  var status = statusMap?.get(id);
-  const showIndeterminateState = !isNil(status) && status ===
-      CheckedStatus.indeterminate;
-  const checked = (nonNil(status) && status === CheckedStatus.checked)
-      || treeContext.checkedItems.includes(id);
+  const storeStatus = getState().checkMap.get(id);
+  const showIndeterminateState = treeContext.customCheck ?
+      storeStatus === CheckedStatus.indeterminate
+      : status === CheckedStatus.indeterminate;
 
-  if(id==='Child-1-2'){
-    debugger
+  const checked = treeContext.customCheck ? includes(treeContext.checkedItems,
+      id) : status === CheckedStatus.checked;
+
+  if (id === 'Child-1-2') {
+    // debugger
   }
   const clsName = clsx(className, extraClassName);
 

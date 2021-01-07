@@ -27,7 +27,7 @@ export default function Menu10() {
               label="Pop SubMenu"/>
     </div>
 
-    <div className="doc doc-row space">
+    <div className="doc doc-row">
       <Menu direction={horizontal ? 'horizontal' : 'vertical'}
             popupSubMenu={popupSubMenu}
             type={type}

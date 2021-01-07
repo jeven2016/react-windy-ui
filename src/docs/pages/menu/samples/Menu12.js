@@ -24,19 +24,18 @@ export default function Menu12() {
     </div>
 
     <div className="doc doc-row space">
-      <Menu defaultActiveItems={['item1', 'item2']}
-            activeItems={activeItems}
-            onSelect={(data) => {
-              console.log(data);
-              setActiveItems(data)
-            }}
-            multiSelect={multiSelect}
-            openedMenus={openMenus}
-            onOpenedMenu={(data) => {
-              console.log(`open==${data}`)
-              setOpenMenus(data)
-            }}
-            type={type}>
+      <Menu
+          activeItems={activeItems}
+          onSelect={(ids) => {
+            console.log(ids);
+            setActiveItems(ids)
+          }}
+          multiSelect={multiSelect}
+          defaultOpenedMenus={openMenus}
+          onOpenedMenu={(ids) => {
+            console.log(`open==${ids}`)
+          }}
+          type={type}>
         <Menu.SubMenu header="SubMenu 1" id="sub1" icon={<IconList/>}>
           <Menu.Item id="item1">
             Menu item1
