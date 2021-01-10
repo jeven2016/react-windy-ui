@@ -27,20 +27,28 @@ const TreeItem = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const treeContext = useContext(TreeContext);
-  const {attach, detach, getState} = treeContext.store;
+  const {attach, detach} = treeContext.store;
+
+  const cacheStatus = treeContext.statusMap.get(id);
+  const [status, setStatus] = useState(nonNil(cacheStatus) ? cacheStatus : CheckedStatus.unchecked);
+  const [isAsyncItem, setAsyncItem] = useState(false);//todo
+
+
   // const statusMap = treeContext.statusMap;
-  const [treeData, setTreeData] = useState(getState().treeData);
-  const [statusMap, setStatusMap] = useState(getState().statusMap);
-  console.log(statusMap)
+  const treeData = treeContext.treeData;
+
+  // const [statusMap, setStatusMap] = useState(getState().statusMap);
 
   useEffect(() => {
-    const listener = ({statusMap: map, treeData: tree}) => {
-      setStatusMap(map);
-      setTreeData(tree);
+    const listener = ({statusMap}) => {
+      const nextStatus = statusMap.get(id);
+      if (nextStatus !== status) {
+        setStatus(nextStatus);
+      }
     };
-    attach(listener);
+    !treeContext.customCheck && attach(listener);
     return () => detach(listener);
-  }, [setStatusMap, attach, detach]);
+  }, [attach, detach, id, status, treeContext.customCheck]);
 
   //check whether to asynchronously load  the children nodes
   const treeNodeMap = treeData.treeNodeMap;
@@ -51,20 +59,17 @@ const TreeItem = React.forwardRef((props, ref) => {
   }, [moreElements]);
 
   //check the status of the checkbox
-  var status = statusMap?.get(id);
-  const showIndeterminateState = !isNil(status) && status ===
-      CheckedStatus.indeterminate;
-  const checked = (nonNil(status) && status === CheckedStatus.checked)
-      || treeContext.checkedItems.includes(id);
+  // var status = statusMap?.get(id);
+  const realStatus = treeContext.customCheck ? treeContext.statusMap.get(id) : status;
+  const showIndeterminateState = realStatus ===
+    CheckedStatus.indeterminate;
+  const checked = status === CheckedStatus.checked;
 
-  if(id==='Child-1-2'){
-    debugger
-  }
   const clsName = clsx(className, extraClassName);
 
   const isSelected = treeContext.selectedItems.find(elem => elem === id);
   const isExpanded = treeContext.expandedItems.find(
-      elem => 'all' === elem || elem === id);
+    elem => 'all' === elem || elem === id);
 
   const isLeaf = useMemo(() => {
     if (isAsyncLoadItem) {
@@ -83,21 +88,21 @@ const TreeItem = React.forwardRef((props, ref) => {
 
   //check if the node is in loading
   const isAsyncLoading = useMemo(() =>
-      treeContext.showLoading && isAsyncLoadItem &&
-      treeContext.loadingIds.includes(id)
-      , [treeContext.showLoading, treeContext.loadingIds, isAsyncLoadItem, id]);
+    treeContext.showLoading && isAsyncLoadItem &&
+    treeContext.loadingIds.includes(id)
+    , [treeContext.showLoading, treeContext.loadingIds, isAsyncLoadItem, id]);
 
   const iconNode = useMemo(() => {
     let iconSpan;
     if (!isLeaf) {
       iconSpan = isAsyncLoading ? <div
-              className="icon-column">{treeContext.loader}</div>
-          : <span onClick={expandItem}
-                  className={`icon-column ${isExpanded
-                      ? 'expand'
-                      : ''
-                  }`}>{
-            <IconArrowRightBlack/>}</span>;
+          className="icon-column">{treeContext.loader}</div>
+        : <span onClick={expandItem}
+                className={`icon-column ${isExpanded
+                  ? 'expand'
+                  : ''
+                }`}>{
+          <IconArrowRightBlack/>}</span>;
     } else {
       iconSpan = <span className={`icon-column empty`}>&nbsp;</span>;
     }
@@ -151,8 +156,8 @@ const TreeItem = React.forwardRef((props, ref) => {
 
     return <div className="title-info" onClick={divClick}>
       <span className={`label-info ${!treeContext.highlightLine && isSelected
-          ? 'active'
-          : ''}`} onClick={spanClick}>{label}</span>
+        ? 'active'
+        : ''}`} onClick={spanClick}>{label}</span>
     </div>;
   };
 
@@ -160,7 +165,7 @@ const TreeItem = React.forwardRef((props, ref) => {
     <div className="tree-title">
       {
         treeContext.highlightLine && isSelected ?
-            <div className="item-bg">&nbsp;</div> : null
+          <div className="item-bg">&nbsp;</div> : null
       }
 
       <div className="title-row">
@@ -172,7 +177,7 @@ const TreeItem = React.forwardRef((props, ref) => {
           {getTitle()}
           {
             elems.map((item, index) =>
-                <div key={`more-${index}`} className="icon-column">{item}</div>)
+              <div key={`more-${index}`} className="icon-column">{item}</div>)
           }
         </div>
       </div>
@@ -180,11 +185,11 @@ const TreeItem = React.forwardRef((props, ref) => {
 
     {
       !isNil(children) ? <div className="tree-panel">
-            <CollapsePanel collapse={!isExpanded}>
-              {children}
-            </CollapsePanel>
-          </div>
-          : null
+          <CollapsePanel collapse={!isExpanded}>
+            {children}
+          </CollapsePanel>
+        </div>
+        : null
     }
   </div>;
 });

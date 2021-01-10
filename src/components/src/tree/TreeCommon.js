@@ -30,7 +30,7 @@ export const updateParentsStatus = (map, parent, status) => {
     });
 
     map.set(parent.getId(),
-        otherChdChecked ? status : CheckedStatus.indeterminate);
+      otherChdChecked ? status : CheckedStatus.indeterminate);
   } else {
     //1. if any sibling nodes checked the parent node should be indeterminate
     //2. if all sibling nodes unchecked the parent node should be unchecked
@@ -43,7 +43,7 @@ export const updateParentsStatus = (map, parent, status) => {
     });
 
     map.set(parent.getId(),
-        otherChdUnChecked ? status : CheckedStatus.indeterminate);
+      otherChdUnChecked ? status : CheckedStatus.indeterminate);
   }
 
   updateParentsStatus(map, parent.getParent(), status);
@@ -66,7 +66,7 @@ function parseChild(child, nodes, chdNode, providedJsonData) {
   let isLeaf;
   if (providedJsonData) {
     isLeaf = child.hasOwnProperty('isLeaf') ? child.isLeaf : convertToArray(
-        child.children).length === 0;
+      child.children).length === 0;
   } else {
     isLeaf = React.Children.count(child.props.children) === 0;
   }
@@ -124,7 +124,7 @@ export const parseChildren = (providedJsonData, children, jsonData) => {
     }
 
     let chdNode = node.isRoot ? node.rootNode :
-        new TreeNode(node.id, node.parentNode);
+      new TreeNode(node.id, node.parentNode);
     treeNodeMap.set(node.id, chdNode);
 
     if (!isNil(node.parentNode)) {
@@ -135,15 +135,15 @@ export const parseChildren = (providedJsonData, children, jsonData) => {
       //if no children set and mark it as non-leaf node
       const isAsyncLoad = !node.isLeaf;
       chdNode.setParam(
-          {isLeaf: !isAsyncLoad, asyncLoad: isAsyncLoad, label: node.label});
+        {isLeaf: !isAsyncLoad, asyncLoad: isAsyncLoad, label: node.label});
     } else {
       chdNode.setParam({isLeaf: false, label: node.label});
       if (providedJsonData) {
         node.children.forEach(
-            (child) => parseChild(child, nodes, chdNode, providedJsonData));
+          (child) => parseChild(child, nodes, chdNode, providedJsonData));
       } else {
         React.Children.forEach(node.children,
-            (child) => parseChild(child, nodes, chdNode, providedJsonData));
+          (child) => parseChild(child, nodes, chdNode, providedJsonData));
       }
     }
   }
@@ -153,6 +153,30 @@ export const parseChildren = (providedJsonData, children, jsonData) => {
     treeNodeMap,
   };
 
+};
+
+export const mapCheckedStatus = ({ids, treeData, autoCheckLeafs, map, checked}) => {
+  const idArray = convertToArray(ids);
+  for (let id of idArray) {
+    let node = treeData.treeNodeMap.get(id);
+    if (isNil(node)) {
+      throw new Error('No node exists with this id \'' + id + '\'.');
+    }
+    //add this node into map
+    map.set(id, checked);
+
+    let parent = node.getParent();
+    if (isNil(parent)) {
+      return;
+    }
+
+    updateParentsStatus(map, parent, checked);
+
+    //check or uncheck all leaf nodes if the parent has
+    if (node.hasChildren() && autoCheckLeafs) {
+      updateChildrenStatus(map, node, checked);
+    }
+  }
 };
 
 export const getNode = (data) => {
@@ -170,8 +194,8 @@ export const getNode = (data) => {
 export class TreeNode {
 
   constructor(
-      id, parent, children,
-      param = {isLeaf: false, label: null, asyncLoad: false}) {
+    id, parent, children,
+    param = {isLeaf: false, label: null, asyncLoad: false}) {
     let validChildren = !isNil(children);
     if (validChildren && !Array.isArray(children)) {
       throw new Error('the children should be a valid array.');
@@ -222,7 +246,7 @@ export class TreeNode {
   }
 
   handleChildren(children) {
-    const fun = (function(chd) {
+    const fun = (function (chd) {
       return <TreeItem id={chd.getId()} label={chd.getParam()['label']}
                        key={chd.getId()}>
         {this.handleChildren(chd.getChildren())}

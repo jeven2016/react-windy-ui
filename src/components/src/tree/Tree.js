@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useMemo} from 'react';
 import PropTypes from 'prop-types';
 import TreeItem from './TreeItem';
 import clsx from 'clsx';
@@ -6,7 +6,7 @@ import {TreeContext} from '../common/Context';
 import {convertToArray, isNil} from '../Utils';
 import {
   CheckedStatus,
-  getNode,
+  getNode, mapCheckedStatus,
   mergeChildren,
   parseChildren,
   RootId,
@@ -43,7 +43,7 @@ const Tree = React.forwardRef((props, ref) => {
     onExpand,
     ...otherProps
   } = props;
-  const providedJsonData = props.hasOwnProperty('jsonData');
+  const customData = props.hasOwnProperty('jsonData');
   const [loadingIds, setLoadingIds] = useState([]);
 
   const clsName = clsx(className, extraClassName);
@@ -72,7 +72,7 @@ const Tree = React.forwardRef((props, ref) => {
 
   const {
     state: currentCheckedItems,
-    customized: isCheckControl,
+    customized: customCheck,
   } = useInternalState({
     props,
     stateName: 'checkedItems',
@@ -80,11 +80,31 @@ const Tree = React.forwardRef((props, ref) => {
     state: convertToArray(checkedItems),
   });
 
+  const initTreeData = useMemo(() => parseChildren(customData,
+    children, jsonData), [children, jsonData, customData]);
+
+  //init a map to record the items should be marked as checked for customized items
+  const initCustomChkMap = useMemo(() => {
+    if (!checkable || currentCheckedItems.length <= 0) {
+      return new Map();
+    }
+
+    const map = new Map();
+    //update the map by checkedItems
+    mapCheckedStatus({
+      ids: currentCheckedItems,
+      treeData: initTreeData,
+      autoCheckLeafs,
+      map,
+      checked: CheckedStatus.checked
+    });
+    return map;
+  }, [autoCheckLeafs, checkable, currentCheckedItems, initTreeData]);
+
   //init a internal store
   const [store] = useState(() => initStore({
-    treeData: parseChildren(providedJsonData,
-      children, jsonData),
-    statusMap: new Map(currentCheckedItems.map(item => [item, CheckedStatus.checked]))
+    // treeData: initTreeData,
+    statusMap: initCustomChkMap
   }));
 
   /*
@@ -121,7 +141,7 @@ const Tree = React.forwardRef((props, ref) => {
     }
     let expandedIds;
     if (expand) {
-      let parentNode = store.getState().treeData.treeNodeMap.get(id);
+      let parentNode = initTreeData.treeNodeMap.get(id);
       if (parentNode.isAsyncLoad() && loadJsonData) {
         //Asynchronous loading the data and merge it with the existing json data
         const newIds = [...loadingIds, id];
@@ -158,42 +178,22 @@ const Tree = React.forwardRef((props, ref) => {
   };
 
   const checkHandler = useEventCallback((id, checked, e) => {
-    let node = store.getState().treeData.treeNodeMap.get(id);
-    if (isNil(node)) {
-      throw new Error('No node exists with this id \'' + id + '\'.');
-    }
+    const map = new Map(customCheck ? initCustomChkMap : store.getState().statusMap);
+    mapCheckedStatus({
+      ids: id,
+      treeData: initTreeData,
+      autoCheckLeafs,
+      map,
+      checked: checked ? CheckedStatus.checked : CheckedStatus.unchecked
+    });
 
-    let itemStatusMap = new Map(store.getState().statusMap);
-
-    //add this node into map
-    itemStatusMap.set(id,
-      checked ? CheckedStatus.checked : CheckedStatus.unchecked);
-
-    let parent = node.getParent();
-    if (isNil(parent)) {
-      return;
-    }
-
-    updateParentsStatus(itemStatusMap, parent,
-      checked ? CheckedStatus.checked :
-        CheckedStatus.unchecked);
-
-    //check or uncheck all leaf nodes if the parent has
-    if (node.hasChildren() && autoCheckLeafs) {
-      updateChildrenStatus(itemStatusMap, node,
-        checked ? CheckedStatus.checked : CheckedStatus.unchecked);
-    }
-
-    if (isCheckControl) {
-      //just memorize the map and not refreshing the tree
-      store.updateState({statusMap: itemStatusMap});
-    } else {
+    if (!customCheck) {
       //update the store and refresh the tree
-      store.setState({statusMap: itemStatusMap});
+      store.setState({statusMap: map});
     }
 
     const checkedIds = [];
-    for (let [key, value] of itemStatusMap.entries()) {
+    for (let [key, value] of map.entries()) {
       if (key !== RootId && value === CheckedStatus.checked) {
         checkedIds.push(key);
       }
@@ -216,12 +216,14 @@ const Tree = React.forwardRef((props, ref) => {
     selectItem: selectHandler,
     expandItem: expandHandler,
     checkItem: checkHandler,
+    statusMap: initCustomChkMap,
+    treeData: initTreeData,
     highlightLine,
   };
 
   return <TreeContext.Provider value={ctx}>
     <div className={clsName} {...otherProps} ref={ref}>
-      {providedJsonData ? getNode(store.getState().treeData) : children}
+      {customData ? getNode(initTreeData) : children}
     </div>
   </TreeContext.Provider>;
 });
