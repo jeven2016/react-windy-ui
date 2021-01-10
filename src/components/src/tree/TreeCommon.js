@@ -26,7 +26,6 @@ export const updateParentsStatus = (map, parent, status) => {
         return false; // none checked
       }
       return checkedNode === CheckedStatus.checked;
-
     });
 
     map.set(parent.getId(),

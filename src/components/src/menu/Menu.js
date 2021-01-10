@@ -13,6 +13,7 @@ import {EventListener, JustifyContentType} from '../common/Constants';
 import {initStore} from '../common/Store';
 import useEvent from '../common/UseEvent';
 import useEventCallback from '../common/useEventCallback';
+import usePrevious from "../common/UsePrevious";
 
 /**
  * Menu Component
@@ -74,17 +75,24 @@ const Menu = React.forwardRef((props, ref) => {
 
   //while the field is not customized, the store would be changed in Item and then the memorized data would get
   //outdated data, so remove the useMemo()
-  const realActiveItems = () => customActive ? activeItems : store.getState().activeItemsList;
-  const realOpenList = () => customOpen ? openedMenus : store.getState().openList;
+  const realActiveItems = () => customActive ? activeItems
+      : store.getState().activeItemsList;
+  const realOpenList = () => customOpen ? openedMenus
+      : store.getState().openList;
 
-  //for handling the menu switched from compact/popup to other type
+  const preCompact = usePrevious(compact);
+  const prePopupSubMenu = usePrevious(popupSubMenu);
+
+  // for handling the menu switched from compact/popup to other type
   useEffect(() => {
     //it the menu is changed to compact or popup submenu, no submenus should pop up meanwhile
-    if (compact || popupSubMenu) {
+    if ((!preCompact && compact) || (!prePopupSubMenu && popupSubMenu)) {
       store.setState({openList: []});
-    } else {
-      //if it reverts to non-popup submenu, to retrieve previous open list
-      //to show
+    }
+
+    //changed from compact/popup submenu to normal menu
+    if ((preCompact && !compact) || (prePopupSubMenu && !popupSubMenu)) {
+      //revert to previous open list
       const pre = preExpandList.current;
       if (pre) {
         store.setState({openList: pre});
@@ -152,7 +160,7 @@ const Menu = React.forwardRef((props, ref) => {
     const list = realActiveItems();
     if (multiSelect) {
       nextList = list.includes(id) ? [...list.filter(item => item !== id)] :
-        [...list, id];
+          [...list, id];
     }
 
     if (!customActive) {
@@ -171,7 +179,6 @@ const Menu = React.forwardRef((props, ref) => {
       }
       onOpenedMenu && onOpenedMenu([], e);
     }
-
   });
 
   const openMenuHandler = useEventCallback(({id, e, directChild}) => {
@@ -188,9 +195,9 @@ const Menu = React.forwardRef((props, ref) => {
         clearTimeout(preTimer);
       }
       //if this submenu is direct child of menu, that means only one submenu should
-      //open later
+      //be opened later
       nextList = directChild ? [id]
-        : oList.concat(id);
+          : oList.concat(id);
     } else {
       nextList = oList.concat(id);
       preExpandList.current = nextList;
@@ -206,7 +213,7 @@ const Menu = React.forwardRef((props, ref) => {
    * 50 mill-seconds to check whether need to notify the updates and rerender the nodes afterwards.
    * If the mouse leaves from submenu1 and focus on submenu2, we don't want the callback invoked twice (one is due to mouse leaving,
    * the other is due to mouse entering). Instead the callback should be invoked once and the opened list
-   * should only include the last focused submenu's id.
+   * should only include the id of last focused submenu.
    */
   const closeMenuHandler = useEventCallback(({id, e}) => {
     const oList = realOpenList();
@@ -222,11 +229,11 @@ const Menu = React.forwardRef((props, ref) => {
 
       const preTimeout = preTimeoutRef.current;
       if (!isNil(preTimeout)) {
-        //exits if there already be a timer running
+        //exit if there already be a timer running
         return;
       }
 
-      //delay 50 mills to notify that the open list is changed
+      //delay 50 mills to notify the open list is changed
       preTimeoutRef.current = execute(function () {
         preTimeoutRef.current = null;
         if (!customOpen) {
@@ -306,13 +313,13 @@ Menu.propTypes = {
   multiSelect: PropTypes.bool,
   compact: PropTypes.bool,
   defaultActiveItems: PropTypes.oneOfType(
-    [PropTypes.string, PropTypes.number, PropTypes.array]),
+      [PropTypes.string, PropTypes.number, PropTypes.array]),
   activeItems: PropTypes.oneOfType(
-    [PropTypes.string, PropTypes.number, PropTypes.array]),
+      [PropTypes.string, PropTypes.number, PropTypes.array]),
   defaultOpenedMenus: PropTypes.oneOfType(
-    [PropTypes.string, PropTypes.number, PropTypes.array]),
+      [PropTypes.string, PropTypes.number, PropTypes.array]),
   openedMenus: PropTypes.oneOfType(
-    [PropTypes.string, PropTypes.number, PropTypes.array]),
+      [PropTypes.string, PropTypes.number, PropTypes.array]),
   onOpenedMenu: PropTypes.func,
   primaryBarPosition: PropTypes.oneOf(['left', 'right']),
   selectable: PropTypes.bool,

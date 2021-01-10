@@ -36,14 +36,14 @@ const BaseMenu = React.forwardRef((props, ref) => {
 
   const internalRef = useRef(null);
   const multiRef = useMultipleRefs(ref, internalRef);
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setOpen] = useState(includes(ctx.openList, id));
 
   const isOpen = useMemo(() => {
     if (ctx.customOpen) {
       return includes(ctx.openList, id)
     }
-    return open
-  }, [ctx.customOpen, ctx.openList, open, id]);
+    return internalOpen
+  }, [ctx.customOpen, ctx.openList, internalOpen, id]);
 
   //handle collapsable submenu
   const collapseHandler = useEventCallback((e) => {
@@ -60,7 +60,8 @@ const BaseMenu = React.forwardRef((props, ref) => {
     }
 
     //the id should exists in the list ,and then it can be removed that means to collapse the panel
-    const toCollapse = ctx.customOpen ? ctx.openList.includes(id) : getState().openList.includes(id);
+    const toCollapse = ctx.customOpen ? ctx.openList.includes(id)
+        : getState().openList.includes(id);
 
     const activeType = toCollapse ? Action.closeMenu : Action.openMenu;
     ctx.dispatch({type: activeType, id, e, directChild: ctx.directChild});
@@ -68,7 +69,7 @@ const BaseMenu = React.forwardRef((props, ref) => {
 
   //handle popup submenu
   useEffect(() => {
-    if (rootMenu || isNil(id)) {
+    if (rootMenu || isNil(id) || ctx.customOpen) {
       return;
     }
     const listener = ({openList}) => {
@@ -83,11 +84,11 @@ const BaseMenu = React.forwardRef((props, ref) => {
         setOpen(false);
       }
     };
-    !ctx.customOpen && attach(listener);
+    attach(listener);
     return () => {
       detach(listener);
     };
-  }, [id, open, setOpen, rootMenu, attach, detach, ctx.customOpen, isOpen]);
+  }, [id, setOpen, rootMenu, attach, detach, ctx.customOpen, isOpen]);
 
   const timeoutRef = useRef(null);
   const mouseEnterHandler = useEventCallback((e) => {
@@ -115,8 +116,8 @@ const BaseMenu = React.forwardRef((props, ref) => {
   });
 
   const directionCls = MenuDirection.isVertical(ctx.direction)
-    ? MenuDirection.vertical.className
-    : MenuDirection.horizontal.className;
+      ? MenuDirection.vertical.className
+      : MenuDirection.horizontal.className;
 
   const clsName = clsx(extraClassName, className, directionCls, {
     compact: ctx.canCompact && ctx.compact,
@@ -137,18 +138,18 @@ const BaseMenu = React.forwardRef((props, ref) => {
                                     menuVisible={isOpen}
                                     hasBottomBar={hasBottomBar}
                                     collapse={isNil(collapse)
-                                      ? !isOpen
-                                      : collapse}/>}
+                                        ? !isOpen
+                                        : collapse}/>}
 
       <MenuList
-        popupSubMenu={popupSubMenu}
-        popupSubMenuPosition={popupSubMenuPosition}
-        collapse={isNil(collapse) ? !isOpen : collapse}
-        content={children}
-        handleMouseEnter={mouseEnterHandler}
-        handleMouseLeave={mouseLeaveHandler}
-        show={isOpen}
-        blockList={blockList}
+          popupSubMenu={popupSubMenu}
+          popupSubMenuPosition={popupSubMenuPosition}
+          collapse={isNil(collapse) ? !isOpen : collapse}
+          content={children}
+          handleMouseEnter={mouseEnterHandler}
+          handleMouseLeave={mouseLeaveHandler}
+          show={isOpen}
+          blockList={blockList}
       />
 
     </div>
@@ -161,7 +162,7 @@ BaseMenu.propTypes = {
   extraClassName: PropTypes.string,
   icon: PropTypes.node,
   popupSubMenu: PropTypes.bool,
-  popupSubMenuPosition: PropTypes.oneOf(['left', 'right']),
+  popupSubMenuPosition: PropTypes.oneOf(['left', 'right', 'bottom']),
   blockList: PropTypes.bool,
   rootMenu: PropTypes.bool,
   hasBottomBar: PropTypes.bool,

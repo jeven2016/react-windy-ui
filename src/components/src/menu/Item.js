@@ -41,7 +41,9 @@ const Item = React.forwardRef((props, ref) => {
     ...otherProps
   } = updatedProps;
   const {attach, detach} = ctx.store;
-  const [active, setActive] = useState(false);
+
+  //if the defaultActiveItems defined, ensure the initial active is correct
+  const [active, setActive] = useState(includes(ctx.activeItems, id));
 
   const isActive = useMemo(() => {
     if (ctx.customActive) {
@@ -49,8 +51,6 @@ const Item = React.forwardRef((props, ref) => {
     }
     return active
   }, [ctx.customActive, ctx.activeItems, active, id]);
-
-  id=='item2'&& console.log("refresh...")
 
   const isDisabled = nonNil(disabled) ? disabled : ctx.disabled;
 
