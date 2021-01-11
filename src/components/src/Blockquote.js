@@ -5,14 +5,14 @@ import {JustifyContentType} from './common/Constants';
 import PropTypes from 'prop-types';
 
 const Header = React.forwardRef(
-    (props, ref) => useElement(props, ref, 'header'));
+  (props, ref) => useElement(props, ref, 'header'));
 
 const Footer = React.forwardRef(
-    (props, ref) => {
-      const {justify = JustifyContentType.start, ...otherProps} = props;
-      return useElement(otherProps, ref, 'footer',
-          {[JustifyContentType[justify]]: justify});
-    });
+  (props, ref) => {
+    const {justify = JustifyContentType.start, ...otherProps} = props;
+    return useElement(otherProps, ref, 'footer',
+      {[JustifyContentType[justify]]: justify});
+  });
 
 const Blockquote = React.forwardRef((props, ref) => {
   const {
@@ -20,12 +20,14 @@ const Blockquote = React.forwardRef((props, ref) => {
     extraClassName,
     type = 'normal',
     hasBorder = false,
+    hasBorderRadius = true,
     hasBox = false,
     hasBackground = false,
     ...otherProps
   } = props;
 
   let clsName = clsx(extraClassName, className, {
+    'with-border-radius': hasBorderRadius,
     [type]: type,
     border: hasBorder,
     'with-bg': hasBackground,
@@ -41,6 +43,7 @@ Blockquote.propTypes = {
   hasBorder: PropTypes.bool,
   hasBox: PropTypes.bool,
   hasBackground: PropTypes.bool,
+  hasBorderRadius: PropTypes.bool,
 };
 
 Header.propTypes = {
