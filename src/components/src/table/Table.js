@@ -37,7 +37,7 @@ const SortComparator = (a, b) => a === b ? 0 : (a < b ? 1 : -1); //by desc
 
 const FilterComparator = (filteredValues, row, cell) => {
   for (let value of filteredValues) {
-    if (row[cell.showParam].toString().includes(value.toString())) {
+    if (row[cell.paramName].toString().includes(value.toString())) {
       return true;
     }
   }
@@ -115,7 +115,7 @@ const Table = React.forwardRef((props, ref) => {
   const [filterParams, setFilterParams] = useState([]);
 
   //init a internal store
-  //{ checkedValues: {key: [values]} , the key corresponds the showParam
+  //{ checkedValues: {key: [values]} , the key corresponds the paramName
   const [store] = useState(() => initStore({
     checkedValues: {},
   }));
@@ -248,7 +248,7 @@ const Table = React.forwardRef((props, ref) => {
           {selectTd}
           {
             realCellsData.map((cell, i) => {
-              let content = row[cell.showParam];
+              let content = row[cell.paramName];
               if (cell.format) {
                 content = invoke(cell.format, content, row, index);
               }

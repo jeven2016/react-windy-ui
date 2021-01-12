@@ -35,7 +35,7 @@
 | 属性 | 名称 | 类型 | 默认值 | 描述 |
 | --- | --- | --- | --- | --- |
 | zIndex | 弹出菜单的z-index值 | number | 1200 | 当弹出菜单需要在其他控件之上时可以设置此值 |
-| hasBox | 是否有box阴影边框 | boolean | false |  |
+| hasBox | 是否有阴影 | boolean | false |  |
 | hasBorderRadius | 是否边角有弧度 | boolean | true |  |
 | hasBorder | 是否有边框 | number | boolean | false |
 | popupExtraClassName | 弹出框体需要额外添加的样式 | string | - |  |

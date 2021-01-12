@@ -1,7 +1,7 @@
 --- 
 order: 6
 type: sample
-zh_CN: 异步排序以及显示加载中状态
+zh_CN: 清除过滤和排序
 en_US: Table
 editUrl: $BASE/docs/pages/table/md/table6.md
 ---
@@ -10,6 +10,7 @@ editUrl: $BASE/docs/pages/table/md/table6.md
 要使表格列支持过滤功能，需要将<Code>filterable</Code>属性设置为<Code>true</Code>,同时需要提供一个<Code>filterConfig</Code>对象。
    其中<Code>filterItems</Code>属性提供可供过滤的选项，而<Code>onFilter</Code>
    用来判断选中值是否符合标准。另外过滤弹出框提供了<Code>reset</Code>和<Code>ok</Code>按钮，您可以设置对应的显示文字。
+当需要清除已有的过滤和排序条件时，可用通过<Code>instanceRef</Code>去调用Table的clear方法。
 
 
 +++ en_US

@@ -39,12 +39,12 @@ const loadData = () => {
 const cells = [
   {
     head: 'ID',
-    showParam: 'key',
+    paramName: 'key',
     sortable: true,
   },
   {
     head: 'City',
-    showParam: 'name',
+    paramName: 'name',
     filterable: true,
     filterConfig: {
       filterItems: [
@@ -74,7 +74,7 @@ const cells = [
   },
   {
     head: 'Place',
-    showParam: 'place',
+    paramName: 'place',
     filterable: true,
     filterConfig: {
       filterItems: [

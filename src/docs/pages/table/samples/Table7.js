@@ -1,13 +1,12 @@
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {
-  Table,
-  Row,
   Button,
-  Input,
-  Col,
   Card,
+  Col,
   IconSearch,
-  ButtonGroup,
+  Input,
+  Row,
+  Table,
 } from 'react-windy-ui';
 
 const tableData = [
@@ -55,7 +54,7 @@ const Element = ({onSearch, tableProps}) => {
              }}/>
     </Card.Row>
     <Card.Row>
-      <Row>
+      <Row gutter={{x: 16, y: 0}}>
         <Col xs={6} justify="center">
           <Button block onClick={(e) => setValue('')}>Reset</Button>
         </Col>
@@ -86,12 +85,12 @@ export default function Table7() {
   const cells = useMemo(() => [
     {
       head: 'ID',
-      showParam: 'key',
+      paramName: 'key',
       sortable: true,
     },
     {
       head: 'City',
-      showParam: 'name',
+      paramName: 'name',
       filterable: true,
       filterConfig: {
         filterItems: [
@@ -119,7 +118,7 @@ export default function Table7() {
     },
     {
       head: 'Place',
-      showParam: 'place',
+      paramName: 'place',
       filterable: true,
       filterConfig: {
         filterItems: [

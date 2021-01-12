@@ -25,25 +25,25 @@ const loadData = [
 const cells = [
   {
     head: 'ID',
-    showParam: 'key',
+    paramName: 'key',
     sortable: true,
     sortComparator: (a, b, order) => order === 'asc' ? a - b : b - a,
     defaultSortOrder: 'asc',
   },
   {
     head: 'Name',
-    showParam: 'name',
+    paramName: 'name',
     sortable: true,
     defaultSortOrder: 'asc',
   },
   {
     head: 'Age',
-    showParam: 'age',
+    paramName: 'age',
     sortable: true,
   },
   {
     head: 'Address',
-    showParam: 'address',
+    paramName: 'address',
     sortable: true,
     defaultSortOrder: 'desc',
   },

@@ -19,7 +19,7 @@
 | type | Input的类型 | string | - | 值可以是：text, textarea, password, file等html类型 |
 | disabled | 禁用此Input | boolean | false |  |
 | block | 将Input宽度设置为100%的行宽 | boolean | true |  |
-| hasBox | 是否有box阴影边框 | boolean | false |  |
+| hasBox | 是否有阴影 | boolean | false |  |
 | borderType | 边框类型 | string | - | 值可以为：ok, warning, error |
 | readOnly | 是否只读 | boolean | - |  |
 | canFocus | 是否有focus相关的效果 | boolean | false | <Code>true</Code>:不会有边框阴影且边框颜色不会变化 |
@@ -39,7 +39,7 @@
 | extraClassName | 额外添加的样式名称 | string | - |  |
 | size | Input的尺寸 | string | medium | 值可以是: large, medium, small或者不设置 |
 | block | 将Input宽度设置为100%的行宽 | boolean | true |  |
-| hasBox | 是否有box阴影边框 | boolean | false |  |
+| hasBox | 是否有阴影 | boolean | false |  |
 | icon | 在右侧显示的Icon | react node | - |  |
 | leftIcon | Icon是否要在左侧显示 | boolean | false |  |
 | iconProps | Icon的props属性对象 | object | - | 如果要修改icon的颜色时，可以设置为<Code>{style:{color: 'red'}}</Code>  |  

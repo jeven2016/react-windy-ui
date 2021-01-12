@@ -37,17 +37,17 @@ const data = [
 const cells = [
   {
     head: 'ID',
-    showParam: 'key',
+    paramName: 'key',
     sortable: true,
   },
   {
     head: 'City',
-    showParam: 'name',
+    paramName: 'name',
     sortable: true,
   },
   {
     head: 'Place',
-    showParam: 'place',
+    paramName: 'place',
     sortable: true,
   },
 ];

@@ -30,7 +30,7 @@ editUrl: $BASE/docs/pages/button/md/api.md
 | inverted | 是否显示按钮的反转形态 | boolean | false | |
 | hasOutlineBackground | 边框按钮是否有初始背景色 | boolean | false | 只在outline设置为true时有用 |
 | initOutlineColor | 边框按钮是否有初始颜色 | boolean | false | 只在outline设置为true时有用 |
-| hasBox | 是否有box阴影边框 | boolean | true | 对非outline类型的按钮生效 |
+| hasBox | 是否有阴影 | boolean | true | 对非outline类型的按钮生效 |
 | hasBorder | 是否有边框 | boolean | true | 对非outline类型的按钮生效 |
 | invertedOutline | outline按钮的反转形态 | boolean | false |  |
 | hasRipple | 是否有点击的水纹效果 | boolean | false |  |
