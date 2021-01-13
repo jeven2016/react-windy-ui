@@ -25,7 +25,7 @@ editUrl: $BASE/docs/pages/menu/md/api.md
 | ref | 根节点Dom对象的引用 | function \| ref | - | 当需要获取到根节点的dom对象时可设置此属性 |
 | className | 样式名称 | string | menu |  |
 | extraClassName | 额外添加的样式名称 | string | - |  |
-| hasBox | 是否显示边框阴影 | boolean | true | - |
+| hasBox | 是否显示阴影 | boolean | true | - |
 | hasBorderRadius | 是否边角有弧度 | boolean | true |  |
 | hasArrow | 是否有折叠\/展开的箭头 | boolean | true |  |
 | collapsable | 是否支持折叠 | boolean | true |  |

@@ -10,7 +10,8 @@ import getScrollbarWidth, {
   contains,
   convertToArray,
   invoke,
-  isNil, isNumber,
+  isNil,
+  isNumber,
   validate,
 } from '../Utils';
 import Checkbox from '../Checkbox';
@@ -20,10 +21,11 @@ import {initStore} from '../common/Store';
 import {checkScrollBar, filterLeaves, SortOrder} from './TableUtils';
 import BodyCell from './BodyCell';
 import TableHead from './TableHead';
+import * as PropTypes from "prop-types";
+import Element from "../common/Element";
 
 const Type = {
   normal: 'normal',
-  responsive: 'responsive',
   striped: 'striped',
   simple: 'simple',
 };
@@ -75,7 +77,7 @@ const Table = React.forwardRef((props, ref) => {
     defaultOkText = 'OK',
     defaultResetText = 'Reset',
     defaultFilterComparator = FilterComparator,
-    filteredItems, //[value]
+    // filteredItems, //[value]
     onFilter,
 
     scrollY = false,
@@ -417,4 +419,62 @@ const Table = React.forwardRef((props, ref) => {
   return getBody();
 
 });
+
+Table.propTypes = {
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  instanceRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+  ]),
+  type: PropTypes.oneOf(Object.keys(Type)),
+  hover: PropTypes.bool,
+  hasBorder: PropTypes.bool,
+  loadData: PropTypes.oneOfType(
+      [PropTypes.array, PropTypes.func, PropTypes.object]),
+  cells: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.any,
+    head: PropTypes.node,
+    paramName: PropTypes.string,
+    autoEllipsis: PropTypes.bool,
+    fixed: PropTypes.oneOf(['left', 'right']),
+    sortable: PropTypes.bool,
+    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    filterable: PropTypes.bool,
+    filterConfig: PropTypes.shape({
+      filterItems: PropTypes.arrayOf(PropTypes.shape({
+        text: PropTypes.node,
+        value: PropTypes.any
+      }))
+    }),
+  })),
+  hasBox: PropTypes.bool,
+  checkable: PropTypes.bool,
+  checkType: PropTypes.oneOf(Object.keys(CheckType)),
+  canCheckAll: PropTypes.bool,
+  onCheckChange: PropTypes.func,
+  onCheckAll: PropTypes.func,
+  defaultCheckedRows: PropTypes.oneOfType(
+      [PropTypes.string, PropTypes.array]),
+  checkedRows: PropTypes.oneOfType(
+      [PropTypes.string, PropTypes.array]),
+  highlightCheckedRow: PropTypes.bool,
+  defaultSortComparator: PropTypes.func,
+  defaultSortOrder: PropTypes.string,
+  onSort: PropTypes.func,
+  sortOrder: PropTypes.shape({
+    key: PropTypes.any,
+    order: PropTypes.string
+  }),
+  defaultOkText: PropTypes.string,
+  defaultResetText: PropTypes.string,
+  defaultFilterComparator: PropTypes.func,
+  // filteredItems: PropTypes.arrayOf(PropTypes.string),
+  onFilter: PropTypes.func,
+  scrollY: PropTypes.bool,
+  bodyHeight: PropTypes.number,
+  scrollX: PropTypes.bool,
+  bodyWidth: PropTypes.number
+}
+
 export default Table;

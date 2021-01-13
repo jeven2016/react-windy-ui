@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
-import {contains, convertToArray, isNil, validate, max} from '../Utils';
+import {contains, convertToArray, isNil, max, validate} from '../Utils';
 import HeadCell from './HeadCell';
 import Checkbox from '../Checkbox';
 import Radio from '../Radio';
@@ -21,7 +21,6 @@ const TableHead = React.forwardRef((props, ref) => {
     canCheckAll,
     isCheckbox,
     rowData,
-    cellsData,
     checkedRowKeys,
     onCheckAll,
     defaultSortComparator,

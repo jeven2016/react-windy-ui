@@ -1,7 +1,7 @@
 --- 
 order: 7
 type: sample
-zh_CN: 在表格列中添加自定义的元素
+zh_CN: 加自定义的元素
 en_US: Table
 editUrl: $BASE/docs/pages/table/md/table7.md
 ---
