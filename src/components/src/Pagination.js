@@ -66,6 +66,7 @@ const Pagination = React.forwardRef((props, ref) => {
     compact = true,
     renderPre,
     renderNext,
+    selectProps,
     ...otherProps
   } = props;
 
@@ -388,7 +389,8 @@ const Pagination = React.forwardRef((props, ref) => {
 
       {
         hasPageLimits &&
-        <Select defaultValue={limit} onSelect={changePageLimit}>
+        <Select defaultValue={limit} onSelect={changePageLimit}
+                block={false} {...selectProps}>
           {
             pageLimits.map((value, index) => {
               const itemText = isNil(renderPageLimitItem) ? `${value}条 / 页` :
