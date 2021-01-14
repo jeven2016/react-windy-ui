@@ -1,10 +1,9 @@
 import React, {useCallback, useContext, useMemo} from 'react';
-import {createColorClsName, isNil, nonNil} from './Utils';
+import {createColorClsName, isNil, nonNil, preventEvent} from './Utils';
 import {IconRadioChecked, IconRadioUnChecked} from './Icons';
 import PropTypes from 'prop-types';
 import useInternalState from './common/useInternalState';
 import clsx from 'clsx';
-import {preventEvent} from './event';
 import Element from './common/Element';
 import {RadioGroupContext} from './common/Context';
 
@@ -38,7 +37,7 @@ const Radio = React.forwardRef((props, ref) => {
   //whether the radio is under controlled by a radio group
   const existsGroup = ctx.existsGroup;
   const customizedFunction = useCallback(() => existsGroup ||
-      props.hasOwnProperty('checked'), [existsGroup, props]);
+    props.hasOwnProperty('checked'), [existsGroup, props]);
 
   const initChecked = useMemo(() => {
     const ctxSelectedVal = ctx.selectedValue;
@@ -96,12 +95,12 @@ const Radio = React.forwardRef((props, ref) => {
   }), [checkState, checkedColor, uncheckedColor]);
 
   realIcon = useMemo(() => realIcon ? React.cloneElement(realIcon, {
-        onKeyDown: (e) => e.keyCode === 13 && handleClick(),
-        tabIndex: 0,
-        extraClassName: iconColor?.className || '',
-        style: (!iconColor?.isClass && iconColor?.style) || {},
-      }) : null,
-      [iconColor, realIcon, handleClick]);
+      onKeyDown: (e) => e.keyCode === 13 && handleClick(),
+      tabIndex: 0,
+      extraClassName: iconColor?.className || '',
+      style: (!iconColor?.isClass && iconColor?.style) || {},
+    }) : null,
+    [iconColor, realIcon, handleClick]);
 
   return <>
     <Element className={clsName}

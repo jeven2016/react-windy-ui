@@ -1,41 +1,28 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import Button from './button';
-import {
-  IconArrowLeft,
-  IconArrowRight,
-  IconLeftDoubleArrows,
-  IconMore,
-  IconRightDoubleArrows,
-} from './Icons';
+import {IconArrowLeft, IconArrowRight, IconLeftDoubleArrows, IconMore, IconRightDoubleArrows,} from './Icons';
 import Select from './select';
-import {
-  invoke,
-  isBlank,
-  isInteger,
-  isNil,
-  isNumber,
-  nonNil,
-  validate
-} from './Utils';
+import {invoke, isBlank, isInteger, isNil, isNumber, nonNil, validate} from './Utils';
 import useInternalState from './common/useInternalState';
 import InputGroup from './InputGroup';
 import Input from './Input';
 import Tooltip from './Tooltip';
 import clsx from 'clsx';
+import useEventCallback from "./common/useEventCallback";
 
 const PageButton = React.forwardRef((props, ref) => {
   const {left = true, onClick, buttonProps} = props;
   const [showIcon, setShow] = useState(false);
 
-  const toggle = useCallback((value) => {
+  const toggle = useEventCallback((value) => {
     setShow(value);
-  }, [setShow]);
+  });
 
-  const focus = useCallback(() => toggle(true), [toggle]);
-  const blur = useCallback(() => toggle(false), [toggle]);
+  const focus = useEventCallback(() => toggle(true));
+  const blur = useEventCallback(() => toggle(false));
 
   const arrowIcon = left ? <IconLeftDoubleArrows style={{fontSize: '1em'}}/> :
-      <IconRightDoubleArrows style={{fontSize: '1em'}}/>;
+    <IconRightDoubleArrows style={{fontSize: '1em'}}/>;
 
   return <Button inverted
                  color="blue"
@@ -59,12 +46,12 @@ const Pagination = React.forwardRef((props, ref) => {
     defaultPage = 1,
     hasPrevButton = true,
     hasNextButton = true,
-    hasPageRange = true,
+    hasPageRange = false,
     pageRanges = [],
     renderPageRanges,
     defaultPageRange = 10,
     pageRange,
-    onChange, //onChange(e, value, pageRange)
+    onChange,
     onChangeRange,
     hasGo = false,
     buttonProps,
@@ -104,14 +91,14 @@ const Pagination = React.forwardRef((props, ref) => {
 
   const [directPage, setDirectPage] = useState('');
 
-  const changePage = useCallback((nextPage, e) => {
+  const changePage = useEventCallback((nextPage, e) => {
     if (!customized) {
       setPage(nextPage);
     }
     onChange && onChange(nextPage, limit, e);
-  }, [customized, setPage, onChange, limit]);
+  });
 
-  const goTo = useCallback((selectedValue, e) => {
+  const goTo = useEventCallback((selectedValue, e) => {
     if (!isNumber(selectedValue)) {
       return;
     }
@@ -125,12 +112,7 @@ const Pagination = React.forwardRef((props, ref) => {
     }
 
     onChange && onChange(selectedValue, limit, e);
-  }, [
-    customized,
-    limit,
-    onChange,
-    pageCount,
-    setPage]);
+  });
 
   const firstPageItem = useMemo(() => {
     return <span className="item">
@@ -193,13 +175,13 @@ const Pagination = React.forwardRef((props, ref) => {
           continue;
         }
         items.push(
-            {value: i, active: !isNil(currentPage) && i === currentPage});
+          {value: i, active: !isNil(currentPage) && i === currentPage});
       }
     }
     return items;
-  }, [currentPage, siblingCount, currentPage, pageCount]);
+  }, [currentPage, pageCount, siblingCount]);
 
-  const showPrePages = useCallback(() => {
+  const showPrePages = useEventCallback(() => {
     if (otherPageItems.length === 0) {
       return;
     }
@@ -212,7 +194,7 @@ const Pagination = React.forwardRef((props, ref) => {
       changePage(nextPage);
     }
 
-  }, [otherPageItems, siblingCount]);
+  });
 
   const preIconItem = useMemo(() => {
     if (otherPageItems.length === 0 || otherPageItems[0].value - 1 === 1) {
@@ -225,7 +207,7 @@ const Pagination = React.forwardRef((props, ref) => {
         </span>;
   }, [buttonProps, otherPageItems, showPrePages]);
 
-  const showNextPages = useCallback(() => {
+  const showNextPages = useEventCallback(() => {
     if (otherPageItems.length === 0) {
       return;
     }
@@ -238,11 +220,11 @@ const Pagination = React.forwardRef((props, ref) => {
       changePage(nextPage);
     }
 
-  }, [otherPageItems, pageCount, siblingCount]);
+  });
 
   const nextIconItem = useMemo(() => {
     if (otherPageItems.length === 0
-        || otherPageItems[otherPageItems.length - 1].value + 1 === pageCount) {
+      || otherPageItems[otherPageItems.length - 1].value + 1 === pageCount) {
       return null;
     }
 
@@ -252,27 +234,27 @@ const Pagination = React.forwardRef((props, ref) => {
         </span>;
   }, [buttonProps, otherPageItems, pageCount, showNextPages]);
 
-  const enterPage = useCallback((e) => {
+  const enterPage = useEventCallback((e) => {
     setDirectPage(e.target.value);
-  }, [setDirectPage]);
+  });
 
-  const updateDirectPage = useCallback((e) => {
+  const updateDirectPage = useEventCallback((e) => {
     if (!isNumber(directPage) || directPage < 1 || directPage > pageCount) {
       setDirectPage('');
     }
-  }, [directPage, pageCount]);
+  });
 
-  const changePageLimit = useCallback((value, e) => {
+  const changePageLimit = useEventCallback((value, e) => {
     const val = parseInt(value);
     if (!customizedLimit) {
       setLimit(val);
     }
     onChangeRange && onChangeRange(val, e);
-  }, [customizedLimit, onChangeRange, setLimit]);
+  });
 
   const preBtn = useMemo(() => {
     return hasPrevButton &&
-        <span className="item">
+      <span className="item">
           <Button outline initOutlineColor hasOutlineBackground={false}
                   hasBox={false}
                   disabled={currentPage <= 1}
@@ -286,7 +268,7 @@ const Pagination = React.forwardRef((props, ref) => {
 
   const nextBtn = useMemo(() => {
     return hasNextButton &&
-        <span className="item">
+      <span className="item">
           <Button outline initOutlineColor hasOutlineBackground={false}
                   hasBox={false}
                   disabled={currentPage === pageCount}
@@ -296,14 +278,9 @@ const Pagination = React.forwardRef((props, ref) => {
              {renderPre ? renderPre() : <IconArrowRight/>}
           </Button>
         </span>;
-  }, [
-    buttonProps,
-    currentPage,
-    goTo,
-    hasNextButton,
-    renderPre]);
+  }, [buttonProps, currentPage, goTo, hasNextButton, pageCount, renderPre]);
 
-  const jumpTo = useCallback((e) => {
+  const jumpTo = useEventCallback((e) => {
     if (e.key !== 'Enter') {
       return;
     }
@@ -324,7 +301,7 @@ const Pagination = React.forwardRef((props, ref) => {
     if (targetPage > -1) {
       goTo(targetPage, e);
     }
-  }, [directPage, goTo, pageCount]);
+  });
 
   if (isInteger(pageCount) && pageCount <= 0) {
     return null;
@@ -389,8 +366,8 @@ const Pagination = React.forwardRef((props, ref) => {
                 block={false} {...selectProps}>
           {
             pageRanges.map((value, index) => {
-              const itemText = isNil(renderPageRanges) ? `${value}条 / 页` :
-                  invoke(renderPageRanges, value);
+              const itemText = isNil(renderPageRanges) ? `${value}` :
+                invoke(renderPageRanges, value);
               return <Select.Option value={value} key={`${value}-${index}`}
                                     text={itemText}/>;
             })

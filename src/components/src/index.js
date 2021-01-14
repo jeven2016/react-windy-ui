@@ -5,11 +5,6 @@ import Button from './button/Button';
 import ButtonGroup from './ButtonGroup';
 import Icon from './Icon';
 import InputGroup from './InputGroup.js';
-import {
-  addWindowEventListener,
-  preventEvent,
-  removeWindowEventListener,
-} from './event/EventFuntions';
 import Navbar from './navbar';
 
 export {default as Dropdown} from './dropdown';
@@ -53,6 +48,8 @@ export {default as Table} from './table/Table';
 export {default as PopConfirm} from './popconfirm';
 export {default as Input} from './Input';
 export {initStore, StoreContext} from './common/Store';
+export {default as useEventCallback} from './common/useEventCallback';
+export {default as usePrevious} from './common/UsePrevious';
 
 export {
   IconInfo,
@@ -90,10 +87,6 @@ export {
   Icon,
   InputGroup,
   Navbar,
-
-  addWindowEventListener,
-  removeWindowEventListener,
-  preventEvent,
   DatePicker,
   Pagination,
 };

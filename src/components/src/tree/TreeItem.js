@@ -1,18 +1,11 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
+import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react';
 import clsx from 'clsx';
 import {IconArrowRightBlack, IconHome} from '../Icons';
 import Checkbox from '../Checkbox';
 import {TreeContext} from '../common/Context';
 import CollapsePanel from '../collapse/CollapsePanel';
-import {convertToArray, isNil, nonNil} from '../Utils';
+import {convertToArray, isNil, nonNil, preventEvent} from '../Utils';
 import {CheckedStatus} from './TreeCommon';
-import {preventEvent} from '../event';
 import PropTypes from 'prop-types';
 
 const TreeItem = React.forwardRef((props, ref) => {

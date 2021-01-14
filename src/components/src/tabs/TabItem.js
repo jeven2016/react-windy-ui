@@ -1,8 +1,7 @@
 import React, {useContext} from 'react';
 import clsx from 'clsx';
 import {TabsContext} from './TabsCommon';
-import {isNil} from '../Utils';
-import {preventEvent} from '../event';
+import {isNil, preventEvent} from '../Utils';
 import PropTypes from 'prop-types';
 
 const TabItem = React.forwardRef((props, ref) => {
@@ -18,7 +17,7 @@ const TabItem = React.forwardRef((props, ref) => {
   const context = useContext(TabsContext);
   const isActive = !isNil(value) && value === context.active;
   const clsName = clsx(extraClassName, className,
-      {active: isActive, disabled: disabled});
+    {active: isActive, disabled: disabled});
 
   const deleteIconClsName = clsx('item-icon', {disabled: disabled});
 

@@ -4,8 +4,7 @@ import {IconChecked, IconCheckedIndeterminate, IconUnChecked} from './Icons';
 import Element from './common/Element';
 import clsx from 'clsx';
 import useInternalState from './common/useInternalState';
-import {createColorClsName} from './Utils';
-import {preventEvent} from './event';
+import {createColorClsName, preventEvent} from './Utils';
 
 const Checkbox = React.forwardRef((props, ref) => {
   const {
@@ -81,19 +80,19 @@ const Checkbox = React.forwardRef((props, ref) => {
   }), [checkState, checkedColor, uncheckedColor]);
 
   realIcon = useMemo(() => realIcon ? React.cloneElement(realIcon, {
-        onKeyDown: (e) => e.keyCode === 13 && handleClick(),
-        tabIndex: 0,
-        extraClassName: iconColor?.className || '',
-        style: showIndeterminateState
-            ? iconIndeterminateStyle
-            : ((!iconColor?.isClass && iconColor?.style) || {}),
-      }) : null,
-      [
-        realIcon,
-        iconColor,
-        showIndeterminateState,
-        iconIndeterminateStyle,
-        handleClick]);
+      onKeyDown: (e) => e.keyCode === 13 && handleClick(),
+      tabIndex: 0,
+      extraClassName: iconColor?.className || '',
+      style: showIndeterminateState
+        ? iconIndeterminateStyle
+        : ((!iconColor?.isClass && iconColor?.style) || {}),
+    }) : null,
+    [
+      realIcon,
+      iconColor,
+      showIndeterminateState,
+      iconIndeterminateStyle,
+      handleClick]);
 
   return <>
     <Element className={clsName} disabled={disabled} {...otherProps}

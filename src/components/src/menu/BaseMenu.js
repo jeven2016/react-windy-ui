@@ -5,9 +5,8 @@ import {Action, MenuDirection} from './MenuUtils';
 import MenuList from './MenuList';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import {MenuContext} from '../common/Context';
-import {execute, includes, isNil} from '../Utils';
+import {execute, includes, isNil, preventEvent} from '../Utils';
 import PropTypes from 'prop-types';
-import {preventEvent} from '../event';
 import useEventCallback from '../common/useEventCallback';
 
 /**
@@ -61,7 +60,7 @@ const BaseMenu = React.forwardRef((props, ref) => {
 
     //the id should exists in the list ,and then it can be removed that means to collapse the panel
     const toCollapse = ctx.customOpen ? ctx.openList.includes(id)
-        : getState().openList.includes(id);
+      : getState().openList.includes(id);
 
     const activeType = toCollapse ? Action.closeMenu : Action.openMenu;
     ctx.dispatch({type: activeType, id, e, directChild: ctx.directChild});
@@ -116,8 +115,8 @@ const BaseMenu = React.forwardRef((props, ref) => {
   });
 
   const directionCls = MenuDirection.isVertical(ctx.direction)
-      ? MenuDirection.vertical.className
-      : MenuDirection.horizontal.className;
+    ? MenuDirection.vertical.className
+    : MenuDirection.horizontal.className;
 
   const clsName = clsx(extraClassName, className, directionCls, {
     compact: ctx.canCompact && ctx.compact,
@@ -138,18 +137,18 @@ const BaseMenu = React.forwardRef((props, ref) => {
                                     menuVisible={isOpen}
                                     hasBottomBar={hasBottomBar}
                                     collapse={isNil(collapse)
-                                        ? !isOpen
-                                        : collapse}/>}
+                                      ? !isOpen
+                                      : collapse}/>}
 
       <MenuList
-          popupSubMenu={popupSubMenu}
-          popupSubMenuPosition={popupSubMenuPosition}
-          collapse={isNil(collapse) ? !isOpen : collapse}
-          content={children}
-          handleMouseEnter={mouseEnterHandler}
-          handleMouseLeave={mouseLeaveHandler}
-          show={isOpen}
-          blockList={blockList}
+        popupSubMenu={popupSubMenu}
+        popupSubMenuPosition={popupSubMenuPosition}
+        collapse={isNil(collapse) ? !isOpen : collapse}
+        content={children}
+        handleMouseEnter={mouseEnterHandler}
+        handleMouseLeave={mouseLeaveHandler}
+        show={isOpen}
+        blockList={blockList}
       />
 
     </div>

@@ -10,10 +10,10 @@ export default function Pagination4() {
                     circle: true,
                   }}
                   leftItems={[
-                    "1 - 10 Items",
+                    "Details",
                   ]}
                   rightItems={[
-                    <span style={{color: '#333'}}>Total: 100条，50页</span>,
+                    <span style={{color: '#333', padding: '0 .5rem'}}>Total: 100条，50页</span>,
                   ]}/>
     </div>
   </>;

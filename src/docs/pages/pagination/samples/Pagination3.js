@@ -37,16 +37,18 @@ export default function Pagination3() {
                   buttonProps={{
                     type: 'purple',
                     circle: true,
-                    outline: true,
                     hasOutlineBackground: true,
-                    hasBox: true,
+                    hasBox: false,
                     hasBorder: false,
                   }}/>
     </div>
     <div className="doc doc-row">
       <Pagination pageCount={10} hasGo={false} hasPageRange={true}
+                  pageRanges={[10, 20, 30, 100]}
+                  renderPageRanges={(pageRange) => `${pageRange}条/页`}
                   selectProps={{
-                    size: 'medium'
+                    size: 'medium',
+                    style: {width: '7rem'}
                   }}
                   buttonProps={{
                     type: 'red',

@@ -21,6 +21,7 @@ export default function Pagination2() {
       <Pagination
           pageCount={pageCount}
           page={page}
+          hasPageRange={true}
           pageRanges={[10, 20, 50, 100]}
           pageRange={pageRange}
           onChangeRange={handleRangeChange}

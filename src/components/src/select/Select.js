@@ -11,13 +11,13 @@ import {
   isCustomized,
   isNil,
   nonNil,
+  preventEvent,
 } from '../Utils';
 import Element from '../common/Element';
 import {IconArrowDown, IconArrowUp, IconChecked2, IconClear, IconNoData,} from '../Icons';
 import useInternalState from '../common/useInternalState';
 import {PopupCtrlType} from '../common/Constants';
 import clsx from 'clsx';
-import {preventEvent} from '../event';
 import Loader from '../Loader';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import * as PropTypes from 'prop-types';

@@ -5,7 +5,7 @@ import {includes, isNil, nonNil} from '../Utils';
 import {Action, getPaddingStyle} from './MenuUtils';
 import PropTypes from 'prop-types';
 import {animated, useSpring} from 'react-spring';
-import {preventEvent} from '../event';
+import {preventEvent} from '../Utils';
 import Tooltip from '../Tooltip';
 import {MenuType} from '../common/Constants';
 import Ripple from '../common/Ripple';

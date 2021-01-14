@@ -434,3 +434,11 @@ export function createColorClsName({
   }
   return result;
 }
+
+export const preventEvent = (evt) => {
+  if (!evt) {
+    return;
+  }
+  evt.preventDefault();
+  evt.stopPropagation();
+};
