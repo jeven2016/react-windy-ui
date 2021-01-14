@@ -8,7 +8,15 @@ import {
   IconRightDoubleArrows,
 } from './Icons';
 import Select from './select';
-import {invoke, isBlank, isInteger, isNil, isNumber, nonNil, validate} from './Utils';
+import {
+  invoke,
+  isBlank,
+  isInteger,
+  isNil,
+  isNumber,
+  nonNil,
+  validate
+} from './Utils';
 import useInternalState from './common/useInternalState';
 import InputGroup from './InputGroup';
 import Input from './Input';
@@ -27,16 +35,16 @@ const PageButton = React.forwardRef((props, ref) => {
   const blur = useCallback(() => toggle(false), [toggle]);
 
   const arrowIcon = left ? <IconLeftDoubleArrows style={{fontSize: '1em'}}/> :
-    <IconRightDoubleArrows style={{fontSize: '1em'}}/>;
+      <IconRightDoubleArrows style={{fontSize: '1em'}}/>;
 
-  return <Button outline initOutlineColor hasOutlineBackground={false}
+  return <Button inverted
+                 color="blue"
                  hasBox={false}
                  onClick={onClick}
                  onMouseOver={focus}
                  onMouseLeave={blur}
                  onFocus={focus}
                  onBlur={blur}
-                 type="primary"
                  {...buttonProps}>
     {!showIcon && <IconMore/>}
     {showIcon && arrowIcon}
@@ -51,13 +59,13 @@ const Pagination = React.forwardRef((props, ref) => {
     defaultPage = 1,
     hasPrevButton = true,
     hasNextButton = true,
-    hasPageLimits = true,
-    pageLimits = [10, 20, 50],
-    renderPageLimitItem,
-    defaultLimitRows = 10,
-    limitRows,
-    onChange, //onChange(e, value, limitRows)
-    onChangeRows,
+    hasPageRange = true,
+    pageRanges = [],
+    renderPageRanges,
+    defaultPageRange = 10,
+    pageRange,
+    onChange, //onChange(e, value, pageRange)
+    onChangeRange,
     hasGo = false,
     buttonProps,
     leftItems = [],
@@ -70,7 +78,7 @@ const Pagination = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
 
-  validate(nonNil(pageCount), 'Invalid value of pageCount');
+  validate(nonNil(pageCount), 'Invalid pageCount');
 
   const {
     state: currentPage,
@@ -89,15 +97,15 @@ const Pagination = React.forwardRef((props, ref) => {
     customizedLimit,
   } = useInternalState({
     props,
-    stateName: 'limitRows',
-    defaultState: defaultLimitRows,
-    state: limitRows,
+    stateName: 'pageRange',
+    defaultState: defaultPageRange,
+    state: pageRange,
   });
 
-  const [basePage, setBasePage] = useState(currentPage); //the base page for calculate the number items to display
+  const [basePage, setBasePage] = useState(currentPage); //the base page for calculating the number items to display
   const [disablePreBtn, setDisablePreBtn] = useState(currentPage === 1);
   const [disableNextBtn, setDisableNextBtn] = useState(
-    currentPage === pageCount);
+      currentPage === pageCount);
 
   const [directPage, setDirectPage] = useState('');
 
@@ -170,7 +178,6 @@ const Pagination = React.forwardRef((props, ref) => {
         items.push({value: i, active: false});
       }
     } else {
-
       //start
       const firstPage = 1;
       let start = 1;
@@ -196,7 +203,7 @@ const Pagination = React.forwardRef((props, ref) => {
           continue;
         }
         items.push(
-          {value: i, active: !isNil(currentPage) && i === currentPage});
+            {value: i, active: !isNil(currentPage) && i === currentPage});
       }
     }
     return items;
@@ -217,7 +224,7 @@ const Pagination = React.forwardRef((props, ref) => {
 
   }, [otherPageItems, siblingCount]);
 
-  const prePagesItem = useMemo(() => {
+  const preIconItem = useMemo(() => {
     if (otherPageItems.length === 0 || otherPageItems[0].value - 1 === 1) {
       return null;
     }
@@ -243,9 +250,9 @@ const Pagination = React.forwardRef((props, ref) => {
 
   }, [otherPageItems, pageCount, siblingCount]);
 
-  const nextPagesItem = useMemo(() => {
+  const nextIconItem = useMemo(() => {
     if (otherPageItems.length === 0
-      || otherPageItems[otherPageItems.length - 1].value + 1 === pageCount) {
+        || otherPageItems[otherPageItems.length - 1].value + 1 === pageCount) {
       return null;
     }
 
@@ -266,15 +273,16 @@ const Pagination = React.forwardRef((props, ref) => {
   }, [directPage, pageCount]);
 
   const changePageLimit = useCallback((value, e) => {
+    const val = parseInt(value);
     if (!customizedLimit) {
-      setLimit(value);
+      setLimit(val);
     }
-    onChangeRows && onChangeRows(value, e);
-  }, [customizedLimit, onChangeRows, setLimit]);
+    onChangeRange && onChangeRange(val, e);
+  }, [customizedLimit, onChangeRange, setLimit]);
 
   const preBtn = useMemo(() => {
     return hasPrevButton &&
-      <span className="item">
+        <span className="item">
           <Button outline initOutlineColor hasOutlineBackground={false}
                   hasBox={false}
                   disabled={disablePreBtn}
@@ -288,7 +296,7 @@ const Pagination = React.forwardRef((props, ref) => {
 
   const nextBtn = useMemo(() => {
     return hasNextButton &&
-      <span className="item">
+        <span className="item">
           <Button outline initOutlineColor hasOutlineBackground={false}
                   hasBox={false}
                   disabled={disableNextBtn}
@@ -307,24 +315,24 @@ const Pagination = React.forwardRef((props, ref) => {
     renderPre]);
 
   const jumpTo = useCallback((e) => {
-    if (e.keyCode !== 13) {
+    if (e.key !== 'Enter') {
       return;
     }
+
     if (!isNumber(directPage)) {
       setDirectPage('');
       return;
     }
 
-    let targetPage = -1;
-    if (directPage > pageCount) {
+    let targetPage = parseInt(directPage);
+    if (targetPage > pageCount) {
       targetPage = pageCount;
     }
-    if (directPage <= 1) {
+    if (targetPage <= 1) {
       targetPage = 1;
     }
 
     if (targetPage > -1) {
-      setDirectPage(targetPage);
       goTo(targetPage, e);
     }
   }, [directPage, goTo, pageCount]);
@@ -340,7 +348,7 @@ const Pagination = React.forwardRef((props, ref) => {
       <div className={simpleClsName}>
         {
           hasGo &&
-          <Tooltip body={directPage} disabled={isBlank(directPage)}>
+          <Tooltip body={directPage} hidePopup={isBlank(directPage)}>
             <Input value={isBlank(directPage) ? currentPage : directPage}
                    onChange={enterPage}
                    onKeyDown={jumpTo}
@@ -367,7 +375,7 @@ const Pagination = React.forwardRef((props, ref) => {
       }
       {preBtn}
       {firstPageItem}
-      {prePagesItem}
+      {preIconItem}
       {
         otherPageItems.map((item, index) => {
           return <span className="item" key={`${item.value}-${index}`}>
@@ -382,18 +390,18 @@ const Pagination = React.forwardRef((props, ref) => {
         })
       }
 
-      {nextPagesItem}
+      {nextIconItem}
       {lastPageItem}
       {nextBtn}
 
       {
-        hasPageLimits &&
-        <Select defaultValue={limit} onSelect={changePageLimit}
+        hasPageRange &&
+        <Select defaultValue={limit} onSelect={changePageLimit} size='small'
                 block={false} {...selectProps}>
           {
-            pageLimits.map((value, index) => {
-              const itemText = isNil(renderPageLimitItem) ? `${value}条 / 页` :
-                invoke(renderPageLimitItem, value);
+            pageRanges.map((value, index) => {
+              const itemText = isNil(renderPageRanges) ? `${value}条 / 页` :
+                  invoke(renderPageRanges, value);
               return <Select.Option value={value} key={`${value}-${index}`}
                                     text={itemText}/>;
             })
@@ -404,11 +412,12 @@ const Pagination = React.forwardRef((props, ref) => {
       {
         hasGo &&
         <span className="go-item">
-          <InputGroup>
-           <Button inverted type="primary"
+          <InputGroup normal={false}>
+           <Button inverted type="primary" hasBox={false}
                    onClick={(e) => goTo(directPage, e)}>跳至</Button>
-            <Tooltip body={directPage} disabled={isBlank(directPage)}>
+            <Tooltip body={directPage} hidePopup={isBlank(directPage)}>
             <Input value={directPage} onChange={enterPage}
+                   className="input page-input"
                    onKeyDown={jumpTo}
                    onBlur={updateDirectPage}/>
             </Tooltip>

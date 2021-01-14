@@ -58,6 +58,7 @@ Dropdown内部使用了<Code>Popup</Code>组件，因此您还可以设置如下
 | popupBodyStyle | 弹出框体内部存放Menu区域的样式 | object | - |  |
 | offset | 弹出框体偏离控制组件的距离 | number | 10 | 控制组件是指接受点击的文字或按钮，点击后会弹出菜单 |
 | delayClose | 延迟显示弹出菜单的时间 | number | 100ms |  |
+| hidePopup | 是否隐藏弹出菜单 | boolean | false |  |
 
 
 +++ en_US

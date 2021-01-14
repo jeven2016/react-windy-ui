@@ -72,6 +72,7 @@
 | extraClassName | 额外添加的样式名称 | string | - | |
 | block | 将宽度设置为100%的行宽 | boolean | true |  |
 | size | 尺寸 | string | medium | 值可以是: large, medium, small或者不设置 |
+| normal | 是否正常的InputGroup | boolean | true | 值为true时，Item和Label中的控件会处理border-radius边角；值为false时，不会处理。 |
 
 * <Code>InputGroup.Label</Code>
 

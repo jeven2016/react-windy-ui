@@ -7,7 +7,7 @@ export default function Select11() {
     <div className="doc doc-row">
       <RadioGroup value={size} onChange={(val) => setSize(val)}>
         <Radio value="large">
-          Larget
+          Large
         </Radio>
 
         <Radio value="medium">
