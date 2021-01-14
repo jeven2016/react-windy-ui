@@ -102,41 +102,31 @@ const Pagination = React.forwardRef((props, ref) => {
     state: pageRange,
   });
 
-  const [basePage, setBasePage] = useState(currentPage); //the base page for calculating the number items to display
-  const [disablePreBtn, setDisablePreBtn] = useState(currentPage === 1);
-  const [disableNextBtn, setDisableNextBtn] = useState(
-      currentPage === pageCount);
-
   const [directPage, setDirectPage] = useState('');
+
+  const changePage = useCallback((nextPage, e) => {
+    if (!customized) {
+      setPage(nextPage);
+    }
+    onChange && onChange(nextPage, limit, e);
+  }, [customized, setPage, onChange, limit]);
 
   const goTo = useCallback((selectedValue, e) => {
     if (!isNumber(selectedValue)) {
       return;
     }
-    if (!customized) {
-      if (selectedValue >= pageCount) {
-        //disable the button
-        !disableNextBtn && setDisableNextBtn(true);
-        disablePreBtn && setDisablePreBtn(false);
-      } else if (selectedValue > 1) {
-        disableNextBtn && setDisableNextBtn(false);
-        disablePreBtn && setDisablePreBtn(false);
-      } else {
-        disableNextBtn && setDisableNextBtn(false);
-        !disablePreBtn && setDisablePreBtn(true);
-      }
 
-      if (selectedValue <= pageCount && selectedValue >= 1) {
-        selectedValue = parseInt(selectedValue);
+    if (selectedValue <= pageCount && selectedValue >= 1) {
+      selectedValue = parseInt(selectedValue);
+
+      if (!customized) {
         setPage(selectedValue);
-        setBasePage(selectedValue);
       }
     }
+
     onChange && onChange(selectedValue, limit, e);
   }, [
     customized,
-    disableNextBtn,
-    disablePreBtn,
     limit,
     onChange,
     pageCount,
@@ -171,7 +161,7 @@ const Pagination = React.forwardRef((props, ref) => {
   const otherPageItems = useMemo(() => {
     const items = [];
 
-    if (isNil(basePage)) {
+    if (isNil(currentPage)) {
       const occupy = (2 * siblingCount + 1);
       const lastNumber = occupy > pageCount ? pageCount : occupy + 1;
       for (let i = 2; i < lastNumber; i++) {
@@ -181,8 +171,8 @@ const Pagination = React.forwardRef((props, ref) => {
       //start
       const firstPage = 1;
       let start = 1;
-      if (basePage - firstPage > siblingCount) {
-        start = basePage - siblingCount;
+      if (currentPage - firstPage > siblingCount) {
+        start = currentPage - siblingCount;
       }
 
       let end = start + 2 * siblingCount + 1;
@@ -207,7 +197,7 @@ const Pagination = React.forwardRef((props, ref) => {
       }
     }
     return items;
-  }, [basePage, siblingCount, currentPage, pageCount]);
+  }, [currentPage, siblingCount, currentPage, pageCount]);
 
   const showPrePages = useCallback(() => {
     if (otherPageItems.length === 0) {
@@ -215,11 +205,11 @@ const Pagination = React.forwardRef((props, ref) => {
     }
 
     const startItem = otherPageItems[0];
-    let nextBasePage = startItem.value - 2 * siblingCount + 1;
-    if (nextBasePage <= 1) {
-      setBasePage(1);
+    let nextPage = startItem.value - 2 * siblingCount + 1;
+    if (nextPage <= 1) {
+      changePage(1);
     } else {
-      setBasePage(nextBasePage);
+      changePage(nextPage);
     }
 
   }, [otherPageItems, siblingCount]);
@@ -241,11 +231,11 @@ const Pagination = React.forwardRef((props, ref) => {
     }
 
     const startItem = otherPageItems[otherPageItems.length - 1];
-    let nextBasePage = startItem.value + 2 * siblingCount - 1;
-    if (nextBasePage >= pageCount) {
-      setBasePage(pageCount - siblingCount);
+    let nextPage = startItem.value + 2 * siblingCount - 1;
+    if (nextPage >= pageCount) {
+      changePage(pageCount - siblingCount);
     } else {
-      setBasePage(nextBasePage);
+      changePage(nextPage);
     }
 
   }, [otherPageItems, pageCount, siblingCount]);
@@ -264,7 +254,7 @@ const Pagination = React.forwardRef((props, ref) => {
 
   const enterPage = useCallback((e) => {
     setDirectPage(e.target.value);
-  }, []);
+  }, [setDirectPage]);
 
   const updateDirectPage = useCallback((e) => {
     if (!isNumber(directPage) || directPage < 1 || directPage > pageCount) {
@@ -285,21 +275,21 @@ const Pagination = React.forwardRef((props, ref) => {
         <span className="item">
           <Button outline initOutlineColor hasOutlineBackground={false}
                   hasBox={false}
-                  disabled={disablePreBtn}
+                  disabled={currentPage <= 1}
                   onClick={(e) => goTo(currentPage - 1, e)}
                   type="primary"
                   {...buttonProps}>
             {renderPre ? renderPre() : <IconArrowLeft/>}
           </Button>
         </span>;
-  }, [buttonProps, currentPage, disablePreBtn, goTo, hasPrevButton, renderPre]);
+  }, [buttonProps, currentPage, goTo, hasPrevButton, renderPre]);
 
   const nextBtn = useMemo(() => {
     return hasNextButton &&
         <span className="item">
           <Button outline initOutlineColor hasOutlineBackground={false}
                   hasBox={false}
-                  disabled={disableNextBtn}
+                  disabled={currentPage === pageCount}
                   onClick={(e) => goTo(currentPage + 1, e)}
                   type="primary"
                   {...buttonProps}>
@@ -309,7 +299,6 @@ const Pagination = React.forwardRef((props, ref) => {
   }, [
     buttonProps,
     currentPage,
-    disableNextBtn,
     goTo,
     hasNextButton,
     renderPre]);

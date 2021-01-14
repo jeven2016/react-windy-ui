@@ -25,8 +25,7 @@ export default function Pagination2() {
           pageRange={pageRange}
           onChangeRange={handleRangeChange}
           hasGo
-          onChange={handlePageChange}
-      />
+          onChange={handlePageChange}/>
     </div>
   </>;
 }

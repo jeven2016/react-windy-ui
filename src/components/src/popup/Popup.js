@@ -85,7 +85,7 @@ const Popup = React.forwardRef((props, ref) => {
     defaultState: defaultActive,
     state: active,
   });
-  const activePopup = isActive;
+  const activePopup = isActive && !hidePopup;
   const preActiveRef = useRef(null);
   preActiveRef.current = activePopup;
 
