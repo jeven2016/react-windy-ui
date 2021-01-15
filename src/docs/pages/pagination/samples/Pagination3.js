@@ -5,10 +5,7 @@ export default function Pagination3() {
 
   return <>
     <div className="doc doc-row">
-      <Pagination pageCount={10} hasGo={false} hasPageRange={false}
-                  buttonProps={{
-                    circle: true,
-                  }}/>
+      <Pagination pageCount={10} hasGo={false} hasPageRange={false}/>
     </div>
     <div className="doc doc-row">
       {/*the button is outlined by default*/}
@@ -18,48 +15,25 @@ export default function Pagination3() {
                     outline: false,
                     hasBorder: false,
                     inverted: true,
-                    hasBox: false
-                  }}/>
-    </div>
-    <div className="doc doc-row">
-      <Pagination pageCount={10} hasGo={false} hasPageRange={false}
-                  buttonProps={{
-                    color: 'purple',
-                    outline: false,
-                    circle: true,
-                    hasBorder: false,
-                    inverted: true,
-                    hasBox: false
-                  }}/>
-    </div>
-    <div className="doc doc-row">
-      <Pagination pageCount={10} hasGo={false} hasPageRange={false}
-                  buttonProps={{
-                    type: 'purple',
-                    circle: true,
-                    hasOutlineBackground: true,
                     hasBox: false,
-                    hasBorder: false,
-                  }}/>
-    </div>
-    <div className="doc doc-row">
-      <Pagination pageCount={10} hasGo={false} hasPageRange={true}
-                  pageRanges={[10, 20, 30, 100]}
-                  renderPageRanges={(pageRange) => `${pageRange}条/页`}
-                  selectProps={{
-                    size: 'medium',
-                    style: {width: '7rem'}
-                  }}
-                  buttonProps={{
-                    type: 'red',
-                    inverted: true,
-                    circle: true,
-                    hasBorder: false,
                     style: {
                       fontWeight: '500',
                     },
                   }}/>
     </div>
-
+    <div className="doc doc-row">
+      <Pagination pageCount={10} hasGo={false}
+                  hasPageRange={true}
+                  pageRanges={[10, 20, 30, 100]}
+                  renderPageRanges={(pageRange) => `${pageRange}条/页`}
+                  renderPre={() => <span style={{padding: '0 .5rem'}}>上一页</span>}
+                  renderNext={() => <span style={{padding: '0 .5rem'}}>下一页</span>}
+                  buttonProps={{
+                    type: 'purple',
+                    hasOutlineBackground: true,
+                    hasBox: false,
+                    hasBorder: false,
+                  }}/>
+    </div>
   </>;
 }

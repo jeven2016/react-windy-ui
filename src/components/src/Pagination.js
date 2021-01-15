@@ -2,13 +2,18 @@ import React, {useMemo, useState} from 'react';
 import Button from './button';
 import {IconArrowLeft, IconArrowRight, IconLeftDoubleArrows, IconMore, IconRightDoubleArrows,} from './Icons';
 import Select from './select';
-import {invoke, isBlank, isInteger, isNil, isNumber, nonNil, validate} from './Utils';
+import {invoke, isBlank, isNil, isNumber} from './Utils';
 import useInternalState from './common/useInternalState';
 import InputGroup from './InputGroup';
 import Input from './Input';
 import Tooltip from './Tooltip';
 import clsx from 'clsx';
 import useEventCallback from "./common/useEventCallback";
+
+const PagType = {
+  primary: 'primary',
+  secondary: 'secondary'
+}
 
 const PageButton = React.forwardRef((props, ref) => {
   const {left = true, onClick, buttonProps} = props;
@@ -40,6 +45,9 @@ const PageButton = React.forwardRef((props, ref) => {
 
 const Pagination = React.forwardRef((props, ref) => {
   const {
+    className = 'pagination',
+    extraClassName,
+    type = PagType.primary,
     siblingCount = 2,
     pageCount,
     page,
@@ -64,8 +72,6 @@ const Pagination = React.forwardRef((props, ref) => {
     selectProps,
     ...otherProps
   } = props;
-
-  validate(nonNil(pageCount), 'Invalid pageCount');
 
   const {
     state: currentPage,
@@ -275,10 +281,10 @@ const Pagination = React.forwardRef((props, ref) => {
                   onClick={(e) => goTo(currentPage + 1, e)}
                   type="primary"
                   {...buttonProps}>
-             {renderPre ? renderPre() : <IconArrowRight/>}
+             {renderNext ? renderNext() : <IconArrowRight/>}
           </Button>
         </span>;
-  }, [buttonProps, currentPage, goTo, hasNextButton, pageCount, renderPre]);
+  }, [buttonProps, currentPage, goTo, hasNextButton, pageCount, renderNext]);
 
   const jumpTo = useEventCallback((e) => {
     if (e.key !== 'Enter') {
@@ -303,13 +309,15 @@ const Pagination = React.forwardRef((props, ref) => {
     }
   });
 
-  if (isInteger(pageCount) && pageCount <= 0) {
+  if (pageCount <= 0) {
     return null;
   }
 
+  const clsName = clsx(extraClassName, className, type);
+
   if (simple) {
     const simpleClsName = clsx('simple-content', {compact: compact});
-    return <div className="pagination" {...otherProps}>
+    return <div className={clsName} {...otherProps}>
       {preBtn}
       <div className={simpleClsName}>
         {
@@ -331,7 +339,7 @@ const Pagination = React.forwardRef((props, ref) => {
   }
 
   return <>
-    <div className="pagination" {...otherProps}>
+    <div className={clsName} {...otherProps}>
       {
         leftItems.map((item, index) => {
           return <span className="item" key={`left-${index}`}>
@@ -363,6 +371,7 @@ const Pagination = React.forwardRef((props, ref) => {
       {
         hasPageRange &&
         <Select defaultValue={limit} onSelect={changePageLimit} size='small'
+                compactMenu={true}
                 block={false} {...selectProps}>
           {
             pageRanges.map((value, index) => {

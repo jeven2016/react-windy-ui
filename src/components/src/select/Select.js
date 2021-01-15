@@ -54,6 +54,7 @@ const Select = React.forwardRef((props, ref) => {
   const {
     extraClassName,
     className = 'select-menu popup',
+    compactMenu = false,//todo
     name,
     children,
     placeholder,
@@ -520,7 +521,7 @@ const Select = React.forwardRef((props, ref) => {
     active={isActive}
     onChange={changeActive}
     activeBy={activeBy}
-    className={clsx(extraClassName, className)}
+    className={clsx(extraClassName, className, {compact: compactMenu, 'non-compact': !compactMenu})}
     ctrlRef={rootRef}
     ctrlNode={getCtrl()}
     body={popBody}
@@ -565,6 +566,7 @@ Select.propTypes = {
   removable: PropTypes.bool,
   loaderType: PropTypes.string,
   loading: PropTypes.bool,
+  compactMenu: PropTypes.bool,
 }
 
 
