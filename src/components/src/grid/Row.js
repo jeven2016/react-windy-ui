@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {AlignItemsType, JustifyContentType} from '../common/Constants';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -22,7 +22,6 @@ const Row = React.forwardRef((props, ref) => {
     children,
     ...otherProps
   } = props;
-  const ctx = useContext(RowContext);
 
   const gutterX = gutter?.x;
   const gutterY = gutter?.y;
@@ -41,24 +40,26 @@ const Row = React.forwardRef((props, ref) => {
     margin: `-${gutterY / 2}px -${gutterX / 2}px ${gutterY / 2}px`
   };
 
-  return <div ref={ref} style={{...style, ...rowStyle}}
-              className={clsName} {...otherProps}>
-    {
-      React.Children.map(children, chd => {
-        if (chd && chd?.type === Col) {
-          return React.cloneElement(chd, {gutter: validGutter});
-        }
-        return chd;
-      })
-    }
-  </div>;
+  return <RowContext.Provider value={gutter}>
+    <div ref={ref} style={{...style, ...rowStyle}}
+         className={clsName} {...otherProps}>
+      {
+        React.Children.map(children, chd => {
+          if (chd && chd?.type === Col) {
+            return React.cloneElement(chd, {gutter: validGutter});
+          }
+          return chd;
+        })
+      }
+    </div>
+  </RowContext.Provider>;
 });
 
 Row.propTypes = {
   className: PropTypes.string, //the class name of button
   extraClassName: PropTypes.string, //the class name of button
   justify: PropTypes.oneOf(Object.keys(JustifyContentType)),
-  alignCls: PropTypes.oneOf(Object.keys(AlignItemsType)),
+  align: PropTypes.oneOf(Object.keys(AlignItemsType)),
   gutter: PropTypes.shape({x: PropTypes.number, y: PropTypes.number})
 };
 export default Row;

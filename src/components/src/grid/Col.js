@@ -1,16 +1,17 @@
-import React, {useCallback, useMemo} from 'react';
-import {inRange, isBlank, isInteger, isNil} from '../Utils';
+import React, {useCallback, useContext, useMemo} from 'react';
+import {inRange, isBlank, isInteger, isNil, nonNil} from '../Utils';
 import Element from '../common/Element';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {JustifyContentType} from '../common/Constants';
+import {RowContext} from "../common/Context";
 
 const Col = React.forwardRef((props, ref) => {
   const {
     extraClassName,
     className = 'col-base',
     col,
-    gutter = {x: 0, y: 0}, //todo
+    gutter,
     justify = JustifyContentType.start,
     xs, sm, md, lg, xl,
     xsOffset, smOffset, mdOffset, lgOffset, xlOffset,
@@ -18,19 +19,22 @@ const Col = React.forwardRef((props, ref) => {
     style,
     ...otherProps
   } = props;
+  const {rowGutter} = useContext(RowContext);
+  const realGutter = nonNil(gutter) ? gutter : rowGutter;
+
   let justifyCls = JustifyContentType[justify];
   [
     col,
     xs, sm, md, lg, xl, xsOffset,
     smOffset, mdOffset, lgOffset,
     xlOffset].forEach(value => {
-    if (!isNil(value) && !inRange(value, 1, 13)) {
+    if (nonNil(value) && !inRange(value, 1, 13)) {
       throw new Error(
-          'The value of col/xs/sm/md/lg/xl/xsOffset/smOffset/mdOffset'
-          + '/lgOffset/xlOffset, should be in a integer range [1,12].');
+        'The value of col/xs/sm/md/lg/xl/xsOffset/smOffset/mdOffset'
+        + '/lgOffset/xlOffset, should be in a integer range [1,12].');
     }
   });
-  if (!isNil(order) && !isInteger(order)) {
+  if (nonNil(order) && !isInteger(order)) {
     throw new Error('the order is invalid: ' + order);
   }
 
@@ -42,16 +46,16 @@ const Col = React.forwardRef((props, ref) => {
   }, []);
 
   let cls = getClsName('col-xs-', xs)
-      + getClsName('col-sm-', sm)
-      + getClsName('col-md-', md)
-      + getClsName('col-lg-', lg)
-      + getClsName('col-xl-', xl)
-      + getClsName('offset-xs-', xsOffset)
-      + getClsName('offset-sm-', smOffset)
-      + getClsName('offset-md-', mdOffset)
-      + getClsName('offset-lg-', lgOffset)
-      + getClsName('offset-xl-', xlOffset)
-      + getClsName('order-', order);
+    + getClsName('col-sm-', sm)
+    + getClsName('col-md-', md)
+    + getClsName('col-lg-', lg)
+    + getClsName('col-xl-', xl)
+    + getClsName('offset-xs-', xsOffset)
+    + getClsName('offset-sm-', smOffset)
+    + getClsName('offset-md-', mdOffset)
+    + getClsName('offset-lg-', lgOffset)
+    + getClsName('offset-xl-', xlOffset)
+    + getClsName('order-', order);
 
   const isBlankCls = isBlank(cls);
   if (!isNil(col)) {
@@ -68,18 +72,18 @@ const Col = React.forwardRef((props, ref) => {
   });
 
   const newSty = useMemo(() => {
-    if (gutter.x === 0 && gutter.y === 0) {
+    if (isNil(realGutter) || (realGutter.x === 0 && realGutter.y === 0)) {
       return style;
     }
 
-    const paddingX = gutter.x !== 0 ? gutter.x / 2 : 0;
-    const paddingY = gutter.y !== 0 ? gutter.y / 2 : 0;
+    const paddingX = realGutter.x !== 0 ? realGutter.x / 2 : 0;
+    const paddingY = realGutter.y !== 0 ? realGutter.y / 2 : 0;
 
     return {
       ...style,
       padding: `${paddingY}px ${paddingX}px`,
     };
-  }, [gutter.x, gutter.y, style]);
+  }, [realGutter, style]);
 
   return <Element ref={ref} className={clsName}
                   style={newSty} {...otherProps}/>;
