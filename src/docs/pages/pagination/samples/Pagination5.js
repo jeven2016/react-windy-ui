@@ -8,10 +8,10 @@ export default function Pagination5() {
       <Pagination pageCount={10} simple/>
     </div>
 
-    <div className="doc doc-row space" style={{width: '400px'}}>
-      <Pagination pageCount={10} simple compact={true} hasGo={true}
+   {/* <div className="doc doc-row space" style={{width: '400px'}}>
+      <Pagination pageCount={10} simple hasGo={true}
                   onChange={(page) => console.log(page)}/>
-    </div>
+    </div>*/}
 
     <div className="doc doc-row space"
          style={{
@@ -23,7 +23,7 @@ export default function Pagination5() {
         padding: '.5rem 0.5rem',
         background: 'white'
       }}>
-        <Pagination pageCount={10} simple compact={true}
+        <Pagination pageCount={10} simple
                     buttonProps={{
                       inverted: true,
                       outline: false,

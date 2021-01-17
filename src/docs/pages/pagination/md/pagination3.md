@@ -1,13 +1,13 @@
 --- 
 order: 3
 type: sample
-zh_CN: 分页
+zh_CN: 自定义属性
 en_US: Pagination
 editUrl: $BASE/docs/pages/pagination/md/pagination3.md
 ---
 
 +++ zh_CN
-
+通过更多属性设置定制显示。
 
 +++ en_US
 Pagination3

@@ -29,7 +29,7 @@ export default function Pagination3() {
                   renderPre={() => <span style={{padding: '0 .5rem'}}>上一页</span>}
                   renderNext={() => <span style={{padding: '0 .5rem'}}>下一页</span>}
                   buttonProps={{
-                    type: 'purple',
+                    color: 'purple',
                     hasOutlineBackground: true,
                     hasBox: false,
                     hasBorder: false,

@@ -9,11 +9,8 @@ import Input from './Input';
 import Tooltip from './Tooltip';
 import clsx from 'clsx';
 import useEventCallback from "./common/useEventCallback";
-
-const PagType = {
-  primary: 'primary',
-  secondary: 'secondary'
-}
+import PropTypes from "prop-types";
+import usePrevious from "./common/UsePrevious";
 
 const PageButton = React.forwardRef((props, ref) => {
   const {left = true, onClick, buttonProps} = props;
@@ -47,7 +44,6 @@ const Pagination = React.forwardRef((props, ref) => {
   const {
     className = 'pagination',
     extraClassName,
-    type = PagType.primary,
     siblingCount = 2,
     pageCount,
     page,
@@ -57,7 +53,7 @@ const Pagination = React.forwardRef((props, ref) => {
     hasPageRange = false,
     pageRanges = [],
     renderPageRanges,
-    defaultPageRange = 10,
+    defaultPageRange,
     pageRange,
     onChange,
     onChangeRange,
@@ -66,7 +62,7 @@ const Pagination = React.forwardRef((props, ref) => {
     leftItems = [],
     rightItems = [],
     simple = false,
-    compact = true,
+    compactMenu = true,
     renderPre,
     renderNext,
     selectProps,
@@ -313,23 +309,27 @@ const Pagination = React.forwardRef((props, ref) => {
     return null;
   }
 
-  const clsName = clsx(extraClassName, className, type);
+  const clsName = clsx(extraClassName, className);
 
   if (simple) {
-    const simpleClsName = clsx('simple-content', {compact: compact});
-    return <div className={clsName} {...otherProps}>
+    const displayPage = isBlank(currentPage) ? 1 : currentPage;
+    const simpleClsName = clsx('simple-content');
+    return <div className={clsName} {...otherProps} ref={ref}>
       {preBtn}
       <div className={simpleClsName}>
-        {
+        {/*todo*/}
+        {/*  {
           hasGo &&
-          <Tooltip body={directPage} hidePopup={isBlank(directPage)}>
-            <Input value={isBlank(directPage) ? currentPage : directPage}
+          <Tooltip body={displayPage} hidePopup={isBlank(displayPage)}>
+            <Input value={displayPage}
+                   className="input page-input"
                    onChange={enterPage}
                    onKeyDown={jumpTo}
                    onBlur={updateDirectPage}/>
           </Tooltip>
         }
-        {!hasGo && <span className="label">{currentPage}</span>}
+        {!hasGo && <span className="label">{currentPage}</span>}*/}
+        {<span className="label">{displayPage}</span>}
 
         <span className="label">/</span>
         <span className="label">{pageCount}</span>
@@ -339,7 +339,7 @@ const Pagination = React.forwardRef((props, ref) => {
   }
 
   return <>
-    <div className={clsName} {...otherProps}>
+    <div className={clsName} {...otherProps} ref={ref}>
       {
         leftItems.map((item, index) => {
           return <span className="item" key={`left-${index}`}>
@@ -371,7 +371,7 @@ const Pagination = React.forwardRef((props, ref) => {
       {
         hasPageRange &&
         <Select defaultValue={limit} onSelect={changePageLimit} size='small'
-                compactMenu={true}
+                compactMenu={compactMenu}
                 block={false} {...selectProps}>
           {
             pageRanges.map((value, index) => {
@@ -410,5 +410,32 @@ const Pagination = React.forwardRef((props, ref) => {
   </>;
 
 });
+
+Pagination.propTypes = {
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
+  siblingCount: PropTypes.number,
+  pageCount: PropTypes.number,
+  page: PropTypes.number,
+  defaultPage: PropTypes.number,
+  hasPrevButton: PropTypes.bool,
+  hasNextButton: PropTypes.bool,
+  hasPageRange: PropTypes.bool,
+  pageRanges: PropTypes.arrayOf(PropTypes.number),
+  renderPageRanges: PropTypes.func,
+  defaultPageRange: PropTypes.number,
+  pageRange: PropTypes.number,
+  onChange: PropTypes.func,
+  onChangeRange: PropTypes.func,
+  hasGo: PropTypes.bool,
+  buttonProps: PropTypes.object,
+  leftItems: PropTypes.arrayOf(PropTypes.node),
+  rightItems: PropTypes.arrayOf(PropTypes.node),
+  simple: PropTypes.bool,
+  compactMenu: PropTypes.bool,
+  renderPre: PropTypes.func,
+  renderNext: PropTypes.func,
+  selectProps: PropTypes.object,
+}
 
 export default Pagination;
