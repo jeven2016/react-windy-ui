@@ -12,3 +12,4 @@ export const NavbarContext = React.createContext({});
 export const DateContext = React.createContext({});
 export const FormItemContext = React.createContext({});
 export const RowContext = React.createContext(null);
+export const ThemeContext = React.createContext(null);
