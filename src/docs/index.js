@@ -5,13 +5,17 @@ import 'core-js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
-import './style/wui-modern-0.5.1.min.css';
 import './style/doc.scss';
 import DocHome from './DocHome';
 import {HashRouter as Router} from 'react-router-dom';
 import {library} from '@fortawesome/fontawesome-svg-core';
+import {CssThemeProvider} from 'react-windy-ui';
 
 library.add();
+
+const themeMap = {
+  normal: `/wui-modern-0.5.1.min.css`
+}
 
 //{<!-- https://reactjs.org/docs/strict-mode.html -->}
 //When we use useState, component 2 time render.
@@ -19,12 +23,14 @@ library.add();
 // https://github.com/facebook/react/issues/18422
 // https://reactjs.org/docs/strict-mode.html
 ReactDOM.render(
-    // <React.StrictMode>
-      <Router>
-        <DocHome/>
-      </Router>,
-    // </React.StrictMode>,
-    document.getElementById('root'),
+  // <React.StrictMode>
+  <CssThemeProvider defaultTheme='normal' themeMap={themeMap}>
+    <Router>
+      <DocHome/>
+    </Router>
+  </CssThemeProvider>,
+  // </React.StrictMode>,
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change

@@ -50,6 +50,7 @@ export {default as Input} from './Input';
 export {initStore, StoreContext} from './common/Store';
 export {default as useEventCallback} from './common/useEventCallback';
 export {default as usePrevious} from './common/UsePrevious';
+export {CssThemeProvider, useTheme} from './theme/theme';
 
 export {
   IconInfo,

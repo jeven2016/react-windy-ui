@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import intl from 'react-intl-universal';
-import {Button, Badge} from 'react-windy-ui';
+import {Button, Badge, useTheme} from 'react-windy-ui';
 import HomeHeader from './HomeHeader';
 import HomeIcon from './HomeIcon';
 import {useSpring, animated, useTransition} from 'react-spring';
 import {Link} from 'react-router-dom';
+import {Select} from "../../components/src";
 
 const calc = (x, y) => [
   -(y - window.innerHeight / 2) / 20,
@@ -24,6 +25,8 @@ export default function HomeContent() {
     enter: {transform: 'translate3d(0,0px,0)', opacity: 1},
     leave: {transform: 'translate3d(0,-80px,0)', opacity: 0},
   });
+
+  const {theme, change}= useTheme();
 
   return <>
     <div className="doc home">
@@ -56,6 +59,11 @@ export default function HomeContent() {
           </div>
 
           <div className="line">
+            <a className="test">Test</a>
+            <Select value={theme} onChange={(val)=> change(val)}>
+              <Select.Option value="normal">Normal</Select.Option>
+              <Select.Option value="dark">Dark</Select.Option>
+            </Select>
 
             <Button nativeType="a" href="#/docs" type="green" hasMinWidth>
               {intl.get('global.home.button.start')}
