@@ -5,11 +5,12 @@ import 'core-js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
+import './style/wui-modern-0.5.1.min.css';
 import './style/doc.scss';
 import DocHome from './DocHome';
 import {HashRouter as Router} from 'react-router-dom';
 import {library} from '@fortawesome/fontawesome-svg-core';
-import {CssThemeProvider} from 'react-windy-ui';
+// import {CssThemeProvider} from 'react-windy-ui';
 
 library.add();
 
@@ -24,11 +25,11 @@ const themeMap = {
 // https://reactjs.org/docs/strict-mode.html
 ReactDOM.render(
   // <React.StrictMode>
-  <CssThemeProvider defaultTheme='normal' themeMap={themeMap}>
+  // <CssThemeProvider defaultTheme='normal' themeMap={themeMap}>
     <Router>
       <DocHome/>
-    </Router>
-  </CssThemeProvider>,
+    </Router>,
+  // </CssThemeProvider>,
   // </React.StrictMode>,
   document.getElementById('root'),
 );
