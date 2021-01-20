@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const TabPanel = React.forwardRef((props, ref) => {
   const {
-    className,
+    className="tab-panel",
     extraClassName,
     children,
     itemValue,

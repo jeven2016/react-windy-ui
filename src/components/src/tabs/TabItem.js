@@ -1,10 +1,20 @@
-import React, {useContext} from 'react';
+import React, {useContext, useRef} from 'react';
 import clsx from 'clsx';
 import {TabsContext} from './TabsCommon';
-import {isNil, preventEvent} from '../Utils';
+import {isNil, nonNil, preventEvent} from '../Utils';
 import PropTypes from 'prop-types';
+import Ripple from "../common/Ripple";
 
 const TabItem = React.forwardRef((props, ref) => {
+  const rippleRef = useRef(null);
+
+  //bind ripple related event listeners
+  const updatedProps = Ripple.useRippleEvent({
+    rippleRef,
+    rootProps: props,
+    hasRipple: props.hasRipple,
+  });
+
   const {
     className = 'tab-item',
     extraClassName,
@@ -12,14 +22,18 @@ const TabItem = React.forwardRef((props, ref) => {
     children,
     value,
     removable,
+    hasRipple,
     ...otherProps
-  } = props;
+  } = updatedProps;
+
   const context = useContext(TabsContext);
   const isActive = !isNil(value) && value === context.active;
   const clsName = clsx(extraClassName, className,
-    {active: isActive, disabled: disabled});
+      {active: isActive, disabled: disabled});
 
   const deleteIconClsName = clsx('item-icon', {disabled: disabled});
+
+  const showRipple = nonNil(hasRipple) ? hasRipple : context.hasRipple;
 
   const remove = (e) => {
     preventEvent(e);
@@ -42,6 +56,7 @@ const TabItem = React.forwardRef((props, ref) => {
         x
       </div> : null
     }
+    {showRipple && <Ripple ref={rippleRef} color={context.rippleColor}/>}
   </div>;
 });
 

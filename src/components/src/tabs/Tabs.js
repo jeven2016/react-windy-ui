@@ -30,6 +30,8 @@ const defaultConfig = {
 
 const Tabs = React.forwardRef((props, ref) => {
   const {
+    hasRipple = true,
+    rippleColor="#ccc",
     defaultActive,
     active,
     onChange,
@@ -252,6 +254,8 @@ const Tabs = React.forwardRef((props, ref) => {
 
   return <>
     <TabsContext.Provider value={{
+      hasRipple,
+      rippleColor,
       equalWidth,
       removable,
       tabItemsCount,

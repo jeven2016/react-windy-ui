@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
-import {Tabs, Select, Toggle} from 'react-windy-ui';
+import {Select, Tabs, Toggle} from 'react-windy-ui';
 
-const contentStyle = {
+const panelStyle = {
   minHeight: '200px',
   background: '#fff',
-  padding: '1rem .5rem',
   borderRadius: '.25rem',
 };
 
@@ -61,14 +60,14 @@ export default function Tabs6() {
           </Tabs.TabItem>
         </Tabs.Items>
         <Tabs.Panels>
-          <Tabs.TabPanel itemValue="Item1">
-            <div style={contentStyle}>The panel for Item1</div>
+          <Tabs.TabPanel itemValue="Item1" style={panelStyle}>
+            The panel for Item1
           </Tabs.TabPanel>
-          <Tabs.TabPanel itemValue="Item2">
-            <div style={contentStyle}>The panel for Item2</div>
+          <Tabs.TabPanel itemValue="Item2" style={panelStyle}>
+            The panel for Item2
           </Tabs.TabPanel>
-          <Tabs.TabPanel itemValue="Item3">
-            <div style={contentStyle}>The panel for Item3</div>
+          <Tabs.TabPanel itemValue="Item3" style={panelStyle}>
+            The panel for Item3
           </Tabs.TabPanel>
         </Tabs.Panels>
       </Tabs>

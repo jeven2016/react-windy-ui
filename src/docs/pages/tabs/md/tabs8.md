@@ -1,9 +1,9 @@
 --- 
-order: 7
+order: 8
 type: sample
 zh_CN: Navbar
 en_US: Tabs
-editUrl: $BASE/docs/pages/tabs/md/tabs7.md
+editUrl: $BASE/docs/pages/tabs/md/tabs8.md
 ---
 
 +++ zh_CN
@@ -13,4 +13,4 @@ editUrl: $BASE/docs/pages/tabs/md/tabs7.md
 Tabs
 
 +++ SampleCode
-fileName: Tabs7
+fileName: Tabs8

@@ -14,7 +14,7 @@ const Wrapper = (props) => {
   }} {...props}/>
 }
 
-export default function Tabs7() {
+export default function Tabs8() {
   const [type, setType] = useState('normal');
   const [equalWidth, setEqualWidth] = useState(true);
 
@@ -34,7 +34,8 @@ export default function Tabs7() {
 
     <Tabs type={type} equalWidth={equalWidth} style={{
       borderRadius: '.25rem',
-      background: '#f5f5f5',
+      color: '#fff',
+      background: '#0ca0ff',
       boxShadow: '0px 5px 5px -3px rgba(0, 0, 0, 0.18), 0px 8px 10px 1px rgba(0, 0, 0, 0.12), 0px 3px 12px 2px rgba(0, 0, 0, 0.12)'
     }}>
       <Tabs.Items>
