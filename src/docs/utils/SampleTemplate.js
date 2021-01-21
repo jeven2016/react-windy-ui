@@ -48,7 +48,29 @@ export const getScss = () => {
     }
   }
   
-}  
+} 
+
+.extra-tab {
+  border-radius: .5rem .5rem 0 0;
+  color: rgba(255, 255, 255, .6);
+  background: rgb(10, 137, 219);
+  box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.15);
+
+  .tab-item {
+    &:hover {
+      color: #fff !important;
+    }
+
+    &.active {
+      color: #fff !important;
+      background: rgba(12, 160, 255, 5);
+    }
+  }
+
+  .tab-bar {
+    border-bottom: 4px solid rgb(255, 0, 0) !important;
+  }
+} 
   
   `;
 };

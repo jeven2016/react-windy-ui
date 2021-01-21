@@ -3,17 +3,6 @@ import {Select, Tabs, Toggle} from 'react-windy-ui';
 import {faFax, faHeart, faPhone} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const Wrapper = (props) => {
-  return <div style={{
-    flex: '1 1 100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    padding: '.5rem 0',
-  }} {...props}/>
-}
-
 export default function Tabs7() {
   const [type, setType] = useState('normal');
   const [equalWidth, setEqualWidth] = useState(true);
@@ -33,40 +22,39 @@ export default function Tabs7() {
     </div>
 
     <Tabs type={type} equalWidth={equalWidth} style={{
+      color: '#acaaaa',
       borderRadius: '.25rem',
       background: '#f5f5f5',
-      boxShadow: '0px 5px 5px -3px rgba(0, 0, 0, 0.18), 0px 8px 10px 1px rgba(0, 0, 0, 0.12), 0px 3px 12px 2px rgba(0, 0, 0, 0.12)'
     }}>
       <Tabs.Items>
         <Tabs.TabItem value="Item1">
-          <Wrapper>
+          <Tabs.ItemContent>
             <FontAwesomeIcon icon={faFax} style={{
               marginBottom: '.5rem',
               fontSize: '1.5rem'
             }}/>
             FAVOURITE
-          </Wrapper>
+          </Tabs.ItemContent>
         </Tabs.TabItem>
         <Tabs.TabItem value="Item2">
-          <Wrapper>
+          <Tabs.ItemContent>
             <FontAwesomeIcon icon={faPhone} style={{
               marginBottom: '.5rem',
               fontSize: '1.5rem'
             }}/>
             PHONE
-          </Wrapper>
+          </Tabs.ItemContent>
         </Tabs.TabItem>
         <Tabs.TabItem value="Item3">
-          <Wrapper>
+          <Tabs.ItemContent>
             <FontAwesomeIcon icon={faHeart} style={{
               marginBottom: '.5rem',
               fontSize: '1.5rem'
             }}/>
             GIFT
-          </Wrapper>
+          </Tabs.ItemContent>
         </Tabs.TabItem>
       </Tabs.Items>
     </Tabs>
-  </>
-      ;
+  </>;
 }

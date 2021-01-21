@@ -20,6 +20,7 @@ import PreBtn from './PreBtn';
 import {useEvent} from '../index';
 import useInternalState from '../common/useInternalState';
 import PropTypes from 'prop-types';
+import ItemContent from "./ItemContent";
 
 const defaultConfig = {
   visiblePre: true,
@@ -31,7 +32,7 @@ const defaultConfig = {
 const Tabs = React.forwardRef((props, ref) => {
   const {
     hasRipple = true,
-    rippleColor="#ccc",
+    rippleColor = "#ccc",
     defaultActive,
     active,
     onChange,
@@ -319,5 +320,6 @@ Tabs.Items = Items;
 Tabs.Panels = Panels;
 Tabs.TabItem = TabItem;
 Tabs.TabPanel = TabPanel;
+Tabs.ItemContent = ItemContent;
 
 export default Tabs;
