@@ -19,8 +19,8 @@ export default function Tabs6() {
   const [position, setPosition] = useState('top');
 
   return <>
-    <div className="doc doc-row">
-      <span style={{marginRight: '1rem', fontWeight: '600'}}>Card Border:</span>
+    <div className="doc doc-row space">
+      <span style={{fontWeight: '600'}}>Card Border:</span>
       <Select value={cardBorder} onSelect={value => setCardBorder(value)}>
         <Select.Option value="none">none</Select.Option>
         <Select.Option value="one">one</Select.Option>
@@ -29,10 +29,10 @@ export default function Tabs6() {
     </div>
     <div className="doc doc-row">
       <Toggle active={tabBorder} onChange={val => setTabBorder(val)}
-              content={{on: 'Tabs Border', off: 'Tabs Border'}}/>
+              label='Tabs Border'/>
     </div>
-    <div className="doc doc-row">
-      <span style={{marginRight: '1rem', fontWeight: '600'}}>Position:</span>
+    <div className="doc doc-row space">
+      <span style={{fontWeight: '600'}}>Position:</span>
       <Select value={position} onSelect={value => setPosition(value)}>
         <Select.Option value="top">top</Select.Option>
         <Select.Option value="bottom">bottom</Select.Option>
@@ -44,6 +44,7 @@ export default function Tabs6() {
     <div style={containerStyle}>
       <Tabs position={position}
             equalWidth
+            hasRipple={false}
             type="card"
             hasBorder={tabBorder}
             cardBorder={cardBorder}

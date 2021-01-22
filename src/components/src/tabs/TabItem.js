@@ -4,6 +4,7 @@ import {TabsContext} from './TabsCommon';
 import {isNil, nonNil, preventEvent} from '../Utils';
 import PropTypes from 'prop-types';
 import Ripple from "../common/Ripple";
+import {IconClear} from "../Icons";
 
 const TabItem = React.forwardRef((props, ref) => {
   const rippleRef = useRef(null);
@@ -53,7 +54,7 @@ const TabItem = React.forwardRef((props, ref) => {
     {
       isRemovable ? <div className={deleteIconClsName}
                          onClick={remove}>
-        x
+        <IconClear size="small"/>
       </div> : null
     }
     {showRipple && <Ripple ref={rippleRef} color={context.rippleColor}/>}

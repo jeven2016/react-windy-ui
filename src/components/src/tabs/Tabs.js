@@ -21,6 +21,7 @@ import {useEvent} from '../index';
 import useInternalState from '../common/useInternalState';
 import PropTypes from 'prop-types';
 import ItemContent from "./ItemContent";
+import useEventCallback from "../common/useEventCallback";
 
 const defaultConfig = {
   visiblePre: true,
@@ -31,6 +32,8 @@ const defaultConfig = {
 
 const Tabs = React.forwardRef((props, ref) => {
   const {
+    extraClassName,
+    className = 'tab',
     hasRipple = true,
     rippleColor = "#ccc",
     defaultActive,
@@ -38,9 +41,7 @@ const Tabs = React.forwardRef((props, ref) => {
     onChange,
     onRemove,
     removable,
-    className = 'tab',
     equalWidth = false,
-    extraClassName,
     position = 'top', //top, bottom, left, right
     hasBorder = true,
     cardBorder = 'full', //none, one, full
@@ -188,7 +189,7 @@ const Tabs = React.forwardRef((props, ref) => {
         });
   };
 
-  const clickPre = () => {
+  const clickPre = useEventCallback(() => {
     if (scrlSpringConfig.disablePre) {
       return;
     }
@@ -213,7 +214,7 @@ const Tabs = React.forwardRef((props, ref) => {
       translateTo = {transform: `translate3d(${result.to}px, 0px, 0px)`};
     }
     setScrlSpringConfig({...scrlSpringConfig, to: translateTo});
-  };
+  });
 
   const tabBarContent = !isSecondaryCard && <TabBar
       tabType={type}
@@ -301,14 +302,16 @@ const Tabs = React.forwardRef((props, ref) => {
 });
 
 Tabs.propTypes = {
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  hasRipple: PropTypes.bool,
+  rippleColor: PropTypes.string,
   defaultActive: PropTypes.bool,
   active: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onChange: PropTypes.func,
   onRemove: PropTypes.func,
   removable: PropTypes.bool,
-  className: PropTypes.string,
   equalWidth: PropTypes.bool,
-  extraClassName: PropTypes.string,
   position: PropTypes.string,
   hasBorder: PropTypes.bool,
   cardBorder: PropTypes.string,

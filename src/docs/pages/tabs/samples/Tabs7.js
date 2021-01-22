@@ -13,7 +13,7 @@ export default function Tabs7() {
               label={{on: 'Equal-width', off: 'Equal-width'}}/>
     </div>
     <div className="doc doc-row space">
-      <span style={{marginRight: '1rem', fontWeight: '600'}}>Type:</span>
+      <span style={{fontWeight: '600'}}>Type:</span>
       <Select value={type} onSelect={value => setType(value)}>
         <Select.Option value="normal">normal</Select.Option>
         <Select.Option value="card">card</Select.Option>
@@ -33,7 +33,7 @@ export default function Tabs7() {
               marginBottom: '.5rem',
               fontSize: '1.5rem'
             }}/>
-            FAVOURITE
+            Home
           </Tabs.ItemContent>
         </Tabs.TabItem>
         <Tabs.TabItem value="Item2">

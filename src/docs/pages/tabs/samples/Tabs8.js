@@ -1,6 +1,6 @@
 import React from 'react';
 import {Tabs} from 'react-windy-ui';
-import {faFax, faHeart, faPhone} from "@fortawesome/free-solid-svg-icons";
+import {faHeart, faHome, faPhone} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 /*
@@ -44,8 +44,8 @@ export default function Tabs8() {
       <Tabs.Items>
         <Tabs.TabItem value="Item1">
           <Tabs.ItemContent>
-            <FontAwesomeIcon icon={faFax} style={IconStyle}/>
-            FAVOURITE
+            <FontAwesomeIcon icon={faHome} style={IconStyle}/>
+            Home
           </Tabs.ItemContent>
         </Tabs.TabItem>
         <Tabs.TabItem value="Item2">

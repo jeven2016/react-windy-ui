@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Toggle, Tabs} from 'react-windy-ui';
+import {Tabs, Toggle} from 'react-windy-ui';
 
 const tabs = [...Array(10).keys()].map(
     i => ({key: i, value: i, title: `Item-${i}`, content: `Content-${i}`}
@@ -32,7 +32,7 @@ export default function Tabs5() {
   return <>
     <div className="doc doc-row">
       <Toggle active={removable} onChange={val => setRemovable(val)}
-              content={{on: 'Removable', off: 'Removable'}}/>
+              label='Removable'/>
     </div>
 
     <Tabs
