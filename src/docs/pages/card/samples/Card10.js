@@ -2,13 +2,7 @@ import React from 'react';
 import {Button, Card, Col, Divider, Row} from 'react-windy-ui';
 import pic from './m.jpeg';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {
-  faBusAlt,
-  faMailBulk,
-  faPhone,
-  faPlane,
-  faWineGlassAlt,
-} from '@fortawesome/free-solid-svg-icons';
+import {faBusAlt, faMailBulk, faPhone, faPlane, faWineGlassAlt,} from '@fortawesome/free-solid-svg-icons';
 
 export default function Card10() {
   return <>
@@ -22,24 +16,23 @@ export default function Card10() {
         </Card.OverlayTitle>
       </Card.CardImage>
       <Card.Row>
-        <Row align="center" justify="center" style={{margin: '.5rem 0'}}>
-          <Col
-              extraClassName="flex-adjust align-center justify-center text color-blue">
+        <Row align="center" gutter={{x: 16, y: 16}}>
+          <Col justify="center" extraClassName="text color-blue">
             <FontAwesomeIcon icon={faWineGlassAlt}/>
           </Col>
 
           <Col xs={10}>
-            <div>Who's she?</div>
+            <div>Who's she</div>
             <h5 className="text comment">The description ........</h5>
           </Col>
         </Row>
 
-        <Row align="center" justify="center" style={{margin: '.5rem 0'}}>
-          <Col
-              extraClassName="flex-adjust align-center justify-center text color-blue">
-            <FontAwesomeIcon icon={faBusAlt}/></Col>
+        <Row align="center" gutter={{x: 16, y: 16}}>
+          <Col justify="center" extraClassName="text color-blue">
+            <FontAwesomeIcon icon={faBusAlt}/>
+          </Col>
           <Col xs={10}>
-            <div>How to get to there?</div>
+            <div>How to get to there</div>
             <h5 className="text comment">The description ........</h5>
           </Col>
         </Row>
@@ -49,21 +42,18 @@ export default function Card10() {
 
       <Card.Footer>
         <Row>
-          <Col justify="center">
-            <Button circle outline color="blue"
-                    extraClassName="clear-border">
+          <Col justify="center" extraClassName="text color-blue">
+            <Button inverted circle color="blue" hasBox={false}>
               <FontAwesomeIcon icon={faPhone}/>
             </Button>
           </Col>
-          <Col justify="center">
-            <Button circle outline color="blue"
-                    extraClassName="clear-border">
+          <Col justify="center" extraClassName="text color-blue">
+            <Button inverted circle color="blue" hasBox={false}>
               <FontAwesomeIcon icon={faMailBulk}/>
             </Button>
           </Col>
-          <Col justify="center">
-            <Button circle outline color="blue"
-                    extraClassName="clear-border">
+          <Col justify="center" extraClassName="text color-blue">
+            <Button inverted circle color="blue" hasBox={false}>
               <FontAwesomeIcon icon={faPlane}/>
             </Button>
           </Col>

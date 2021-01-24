@@ -8,11 +8,11 @@ export default function Card13() {
   return <>
     <div className="doc doc-row">
       <Toggle active={active} onChange={val => setActive(val)}
-              content={{on: 'Active', off: 'Active'}}/>
+              label='Active'/>
     </div>
     <div className="doc doc-row">
       <Toggle active={showMask} onChange={val => enableMask(val)}
-              content={{on: 'Dark Mask', off: 'Dark Mask'}}/>
+              label='Dark Mask'/>
     </div>
     <div style={{width: '15rem'}}>
       <Loader type="primary" color="blue"
@@ -23,8 +23,7 @@ export default function Card13() {
             <Card.Image src={pic} onclick="return false">
             </Card.Image>
             <Card.OverlayTitle>
-              <h2>A Picture</h2>
-              <h6>The description for this picture</h6>
+              <h3>A Picture</h3>
               <h6>The description for this picture</h6>
             </Card.OverlayTitle>
           </Card.CardImage>

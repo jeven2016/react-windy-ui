@@ -7,6 +7,9 @@ import {
   reversePosition,
   TabsContext,
 } from './TabsCommon';
+import useEventCallback from "../common/useEventCallback";
+import PropTypes from "prop-types";
+import Tabs from "./Tabs";
 
 const CardBorderType = {
   none: 'none',
@@ -36,16 +39,16 @@ const TabBar = React.forwardRef((props, ref) => {
   let barPos = isTabCard ? position : barPosition;
 
   const barClsName = clsx(`tab-bar`,
-      barPos,
-      {
-        'with-border': hasBorder || cardBorder === CardBorderType.full,
-        'one-border': cardBorder === CardBorderType.one,
-        horizontal: isHorizontal,
-        vertical: isVertical,
-        'tab-card': isTabCard,
-      });
+    barPos,
+    {
+      'with-border': hasBorder || cardBorder === CardBorderType.full,
+      'one-border': cardBorder === CardBorderType.one,
+      horizontal: isHorizontal,
+      vertical: isVertical,
+      'tab-card': isTabCard,
+    });
 
-  const move = () => {
+  const move = useEventCallback(() => {
     const parentNode = parentRef.current;
     const activeItemNode = parentNode.getElementsByClassName('tab-item active');
 
@@ -55,30 +58,35 @@ const TabBar = React.forwardRef((props, ref) => {
       const itemRect = activeItemNode[0].getBoundingClientRect();
 
       const newConfig = barAnimationConfig(config, isTabCard,
-          itemRect, tabRect,
-          barPosition);
+        itemRect, tabRect,
+        barPosition);
       setConfig(newConfig);
     }
-  };
+  });
 
   useEffect(() => {
     move();
-  }, [
-    active,
-    barPosition,
-    scrollable,
-    tabType,
-    position,
-    context.removable,
-    context.tabItemsCount]);
+  }, [active, barPosition, scrollable, tabType, position, context.removable, context.tabItemsCount, move]);
 
   return <Spring from={config.from} to={config.to}>
     {springProps =>
-        <div className={barClsName} ref={tabBarRef} {...otherProps}
-             style={handleProps(isTabCard, barPosition,
-                 springProps)}/>
+      <div className={barClsName} ref={tabBarRef} {...otherProps}
+           style={handleProps(isTabCard, barPosition,
+             springProps)}/>
     }
   </Spring>;
 });
+
+TabBar.propTypes = {
+  hasBorder: PropTypes.bool,
+  isTabCard: PropTypes.bool,
+  position: PropTypes.string,
+  isHorizontal: PropTypes.bool,
+  isVertical: PropTypes.bool,
+  tabType: PropTypes.string,
+  active: PropTypes.any,
+  cardBorder: PropTypes.string,
+  scrollable: PropTypes.bool,
+}
 
 export default TabBar;

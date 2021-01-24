@@ -1,58 +1,61 @@
 import React from 'react';
 import useElement from '../common/useElement';
 import PropTypes from 'prop-types';
+import Curtain from "./Curtain";
 
 /**
  * Card Component
  * @type {React.ComponentType<{} & React.ClassAttributes<unknown>>}
  */
 const Card = React.forwardRef(
-    (props, ref) => {
-      const {
-        className = 'card',
-        block = false, autoScale = false,
-        hasBorder = false, hasBox = true,
-        hasWidth = true,
-        ...otherProps
-      } = props;
-      return useElement({...otherProps}, ref, className,
-          {
-            'with-width': hasWidth && !block,
-            block: block,
-            'global-with-border': hasBorder,
-            'global-with-box': hasBox,
-            scale: autoScale,
-          });
-    });
+  (props, ref) => {
+    const {
+      className = 'card',
+      rise = false,
+      block = false, autoScale = false,
+      hasBorder = false, hasBox = true,
+      hasWidth = true,
+      ...otherProps
+    } = props;
+    return useElement({...otherProps}, ref, className,
+      {
+        rise,
+        'with-width': hasWidth && !block,
+        block: block,
+        'global-with-border': hasBorder,
+        'global-with-box': hasBox,
+        scale: autoScale,
+      });
+  });
 
 const Body = React.forwardRef(
-    (
-        {className = 'card-body', ...otherProps},
-        ref) => useElement(otherProps,
-        ref, 'card-body'));
+  (
+    {className = 'card-body', ...otherProps},
+    ref) => useElement(otherProps,
+    ref, 'card-body'));
 
 const CardImage = React.forwardRef(
-    (props, ref) => {
-      const {
-        className = 'card-img',
-        position = 'top',
-        autoScale = false,
-        ...otherProps
-      } = props;
-      return useElement(otherProps, ref, className, {
-        [position]: position,
-        'with-scale': autoScale,
-      });
+  (props, ref) => {
+    const {
+      className = 'card-img',
+      position = 'top',
+      autoScale = false,
+      ...otherProps
+    } = props;
+    return useElement(otherProps, ref, className, {
+      [position]: position,
+      'with-scale': autoScale,
     });
+  });
 
 const Footer = React.forwardRef(
-    ({className = 'card-footer', ...otherProps}, ref) => useElement(otherProps,
-        ref, className));
+  ({className = 'card-footer', ...otherProps}, ref) => useElement(otherProps,
+    ref, className));
 
 const Header = React.forwardRef((props, ref) => {
   const {hasBackground, className = 'card-header', ...otherProps} = props;
   return useElement(otherProps, ref, className,
-      {gray: hasBackground});
+    {gray: hasBackground});
 });
 
 const Image = React.forwardRef((props, ref) => {
@@ -65,12 +68,12 @@ const Image = React.forwardRef((props, ref) => {
 });
 
 const OverlayTitle = React.forwardRef(
-    ({className = 'overlay-title', ...otherProps}, ref) => useElement(
-        otherProps, ref, className));
+  ({className = 'overlay-title', ...otherProps}, ref) => useElement(
+    otherProps, ref, className));
 
 const Row = React.forwardRef(
-    ({className = 'card-row', ...otherProps}, ref) => useElement(otherProps,
-        ref, className));
+  ({className = 'card-row', ...otherProps}, ref) => useElement(otherProps,
+    ref, className));
 
 Card.propTypes = {
   className: PropTypes.string, //the class name of button
@@ -80,6 +83,7 @@ Card.propTypes = {
   hasBorder: PropTypes.bool,
   hasBox: PropTypes.bool,
   hasWidth: PropTypes.bool,
+  rise: PropTypes.bool
 };
 
 Body.propTypes = {
@@ -125,5 +129,6 @@ Card.Header = Header;
 Card.Image = Image;
 Card.OverlayTitle = OverlayTitle;
 Card.Row = Row;
+Card.Curtain = Curtain;
 
 export default Card;

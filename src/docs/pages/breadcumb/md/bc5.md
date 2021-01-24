@@ -1,9 +1,9 @@
 ---   
-order: 4
+order: 5
 type: sample  
 zh_CN: 结合其他组件使用
 en_US: Integrate with other components
-editUrl: $BASE/docs/pages/breadcumb/md/bc4.md
+editUrl: $BASE/docs/pages/breadcumb/md/bc5.md
 ---      
 
 +++ zh_CN   
@@ -14,4 +14,4 @@ Breadcrumb的<Code>Item</Code>可以与其他组件一起搭配使用，比如�
 Bc4
 
 +++ SampleCode  
-fileName: Bc4
+fileName: Bc5

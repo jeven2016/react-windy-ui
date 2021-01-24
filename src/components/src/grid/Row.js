@@ -16,8 +16,8 @@ const Row = React.forwardRef((props, ref) => {
     extraClassName,
     className = 'row',
     gutter = DefaultGutter, //todo
-    justify = JustifyContentType.start,
-    align = AlignItemsType.start,
+    justify = 'start',
+    align = 'start',
     style,
     children,
     ...otherProps

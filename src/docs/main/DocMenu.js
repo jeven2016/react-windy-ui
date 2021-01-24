@@ -180,6 +180,11 @@ export default function DocMenu(props) {
       </Menu.Item>
     </Menu.SubMenu>
     <Menu.SubMenu header="布局" id="layoutIndex">
+      <Menu.Item id="space">
+        <Link to={`${url}/space`}>
+          间距 Space
+        </Link>
+      </Menu.Item>
       <Menu.Item id="grid">
         <Link to={`${url}/grid`}>
           栅格 Grid

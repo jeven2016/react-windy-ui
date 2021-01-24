@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/tabs/md/tabs3.md
 ---
 
 +++ zh_CN
-有三种类型的Tabs可供选用，可以将type设置为<Code>normal</Code>、<Code>card</Code>、<Code>secondaryCard</Code>。
+有三种类型的Tabs可供选择，可以将type设置为<Code>normal</Code>、<Code>card</Code>、<Code>secondaryCard</Code>。
 
 
 +++ en_US

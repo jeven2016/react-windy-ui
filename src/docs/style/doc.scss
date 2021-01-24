@@ -65,9 +65,9 @@ body {
       > .navbar {
         &:not(.affix-fixed) {
           background: radial-gradient(circle at left top,
-              rgba(99, 65, 249, 0.9) 15%,
-              rgba(10, 95, 248, 0.9) 50%,
-              rgba(33, 180, 212, 0.9) 85%);
+                  rgba(99, 65, 249, 0.9) 15%,
+                  rgba(10, 95, 248, 0.9) 50%,
+                  rgba(33, 180, 212, 0.9) 85%);
           background-size: cover;
         }
       }
@@ -140,17 +140,17 @@ body {
   }
 
   p {
-    margin-top: 0.25rem;
-    margin-bottom: 1rem;
+    //margin-top: 0.25rem;
+    //margin-bottom: 1rem;
   }
 
 
   &.home {
     width: 100%;
     background: radial-gradient(circle at left top,
-        rgba(99, 65, 249, 0.9) 15%,
-        rgba(10, 95, 248, 0.9) 50%,
-        rgba(33, 180, 212, 0.9) 85%);
+            rgba(99, 65, 249, 0.9) 15%,
+            rgba(10, 95, 248, 0.9) 50%,
+            rgba(33, 180, 212, 0.9) 85%);
     background-size: cover;
   }
 
@@ -523,12 +523,22 @@ ul {
     &.active {
       color: #fff !important;
       background: rgba(12, 160, 255, 5);
-      text-shadow:  1px 1px 2px #333;;
+      text-shadow: 1px 1px 2px #333;;
     }
   }
 
   .tab-bar {
     border-bottom: 4px solid rgb(255, 0, 0) !important;
+  }
+}
+
+.custom-bd {
+  &.breadcrumb {
+    > .item.active,
+    > .item:focus,
+    > .item:hover {
+      color: #fff !important;
+    }
   }
 }
 

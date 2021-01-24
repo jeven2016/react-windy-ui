@@ -1,16 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import HomeHeader from '../home/HomeHeader';
-import {
-  Affix,
-  Card,
-  Col,
-  Drawer,
-  initStore,
-  Responsive,
-  RouteLoader,
-  Row,
-  useMediaQuery,
-} from 'react-windy-ui';
+import {Affix, Card, Col, Drawer, initStore, Responsive, RouteLoader, Row, useMediaQuery,} from 'react-windy-ui';
 import DocMenu from './DocMenu';
 import {Route, Switch, useRouteMatch} from 'react-router-dom';
 import InstallIndex from '../pages/install/InstallIndex';
@@ -50,6 +40,7 @@ import HooksIndex from '../pages/hooks/HooksIndex';
 import AffixIndex from '../pages/affix/AffixIndex';
 import QuickManu from './QuickManu';
 import {QuickManuContext} from '../utils/DocUtils';
+import SpaceIndex from "../pages/space/SpaceIndex";
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -75,7 +66,7 @@ function DocCenter(props) {
   let containerStyle = {padding: '16px 16px'};
 
   const [store] = useState(() =>
-      initStore({list: []}), /**{list:  [{id: xx, text: xxx}]} **/
+    initStore({list: []}), /**{list:  [{id: xx, text: xxx}]} **/
   );
 
   const [activeDrawer, setActive] = useState(false);
@@ -210,6 +201,9 @@ function DocCenter(props) {
                 </RouteLoader>
                 <RouteLoader route={Route} path={`${url}/hooks`}>
                   <HooksIndex/>
+                </RouteLoader>
+                <RouteLoader route={Route} path={`${url}/space`}>
+                  <SpaceIndex/>
                 </RouteLoader>
                 <RouteLoader route={Route} path={`${url}/`}>
                   <InstallIndex/>

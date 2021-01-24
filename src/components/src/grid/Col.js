@@ -1,6 +1,5 @@
 import React, {useCallback, useContext, useMemo} from 'react';
 import {inRange, isBlank, isInteger, isNil, nonNil} from '../Utils';
-import Element from '../common/Element';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {JustifyContentType} from '../common/Constants';
@@ -76,8 +75,8 @@ const Col = React.forwardRef((props, ref) => {
       return style;
     }
 
-    const paddingX = realGutter.x !== 0 ? realGutter.x / 2 : 0;
-    const paddingY = realGutter.y !== 0 ? realGutter.y / 2 : 0;
+    const paddingX = realGutter.x / 2;
+    const paddingY = realGutter.y / 2;
 
     return {
       ...style,
@@ -85,8 +84,8 @@ const Col = React.forwardRef((props, ref) => {
     };
   }, [realGutter, style]);
 
-  return <Element ref={ref} className={clsName}
-                  style={newSty} {...otherProps}/>;
+  return <div ref={ref} className={clsName}
+              style={newSty} {...otherProps}/>;
 });
 
 Col.propTypes = {

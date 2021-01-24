@@ -1,36 +1,30 @@
 import React from 'react';
-import {Button, ButtonGroup, Card} from 'react-windy-ui';
+import {Button, ButtonGroup, Card, Divider} from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
   faMailBulk,
   faPhone,
-  faUmbrella,
 } from '@fortawesome/free-solid-svg-icons';
 
 export default function Card4() {
   return <>
     <Card>
-      <Card.Header>
-        <h2 className="text color-dark">
-          <FontAwesomeIcon icon={faUmbrella} style={{marginRight: '0.5rem'}}/>
-          <span>Tomato</span>
-        </h2>
-        <h5 className="text comment">This article is about the plant and the
-          fruit.</h5>
-      </Card.Header>
-      <Card.Body extraClassName="text color-dark">
-        The tomato is the edible, often red, berry of the plant Solanum
-        lycopersicum, commonly known as a tomato plant.
+      <Card.Body>
+        <h3>Forbidden City</h3>
+        <h5 className="text comment">The Forbidden City and the Imperial Palace</h5>
+        <p>
+          China's largest and most important building, the Forbidden City — also known as the Imperial Palace — is
+          situated
+          in the very heart of Beijing and is a must-see when visiting the country.
+        </p>
       </Card.Body>
+      <Divider/>
       <Card.Footer>
         <ButtonGroup block>
-          <Button style={{width: '50%'}} color="green">
-            <FontAwesomeIcon icon={faPhone} style={{marginRight: '0.5rem'}}/>
+          <Button color="green" leftIcon={<FontAwesomeIcon icon={faPhone}/>}>
             Phone
           </Button>
-          <Button style={{width: '50%'}} color="blue">
-            <FontAwesomeIcon icon={faMailBulk}
-                             style={{marginRight: '0.5rem'}}/>
+          <Button color="blue" leftIcon={<FontAwesomeIcon icon={faMailBulk}/>}>
             Mail
           </Button>
         </ButtonGroup>

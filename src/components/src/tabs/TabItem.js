@@ -67,6 +67,7 @@ TabItem.propTypes = {
   disabled: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   removable: PropTypes.bool,
+  hasRipple: PropTypes.bool,
 };
 
 export default TabItem;

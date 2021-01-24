@@ -8,11 +8,12 @@ export default function Card8() {
   return <>
     <Card style={{width: '15rem'}}>
       <Card.Header>
-        <Row>
-          <Col xs={9}><h4 className="text color-primary">Star</h4></Col>
-          <Col justify="end">
-            <Dropdown position="bottomRight" title={<Button size="small" outline color="blue"
-                                                            extraClassName="clear-border">
+        <Row align="center">
+          <Col col={6}>
+            <div className="flex-adjust align-center text bold color-blue">Title</div>
+          </Col>
+          <Col col={6} justify="end" style={{color: '#0ca0ff'}}>
+            <Dropdown position="bottomRight" title={<Button inverted color="blue" circle hasBox={false}>
               <FontAwesomeIcon icon={faListUl}/>
             </Button>}>
               <Dropdown.Menu>
