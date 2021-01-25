@@ -6,6 +6,7 @@ import useEventCallback from "../common/useEventCallback";
 import useMultipleRefs from "../common/UseMultipleRefs";
 import useEvent from "../common/UseEvent";
 import {EventListener} from "../common/Constants";
+import PropTypes from "prop-types";
 
 const TriggerType = {
   hover: 'hover',
@@ -16,9 +17,9 @@ const Curtain = React.forwardRef((props, ref) => {
   const {
     disabled = false,
     triggerBy = TriggerType.hover,
+    extraClassName,
     className = "card-curtain",
     clickMaskToChange = false, // whether to change automaticly
-    extraClassName,
     defaultClose = false,
     close,
     onChange,
@@ -63,7 +64,7 @@ const Curtain = React.forwardRef((props, ref) => {
     if (curNode && currentClose) {
       if (e.target !== curNode) {
         if (!clickMaskToChange && (maskRef.current.contains(e.target)
-          || internalRef.current.contains(e.target))) {
+            || internalRef.current.contains(e.target))) {
           //don't change while clicking the mask
           return;
         }
@@ -90,13 +91,26 @@ const Curtain = React.forwardRef((props, ref) => {
   });
 
   const clsName = clsx(extraClassName, className, {close: currentClose});
-  console.log(currentClose)
   return <div className={clsName} ref={multiRef} onClick={click}  {...rest}>
     {children}
-    <Mask ref={maskRef} active={currentClose} dark={darkMask} className='curtain-mask'>
+    <Mask ref={maskRef} active={currentClose} dark={darkMask}
+          className='curtain-mask'>
       {closeContent}
     </Mask>
   </div>
 });
+
+Curtain.propTypes = {
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+  triggerBy: PropTypes.oneOf(Object.keys(TriggerType)),
+  clickMaskToChange: PropTypes.bool,
+  defaultClose: PropTypes.bool,
+  close: PropTypes.bool,
+  onChange: PropTypes.func,
+  closeContent: PropTypes.node,
+  darkMask: PropTypes.bool
+}
 
 export default Curtain;

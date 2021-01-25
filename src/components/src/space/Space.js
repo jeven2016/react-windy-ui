@@ -2,6 +2,7 @@ import React, {useMemo} from "react";
 import clsx from "clsx";
 import {AlignItemsType, Direction} from "../common/Constants";
 import {nonNil} from "../Utils";
+import PropTypes from "prop-types";
 
 const defaultX = 8;
 const defaultY = 16;
@@ -37,7 +38,6 @@ const Space = React.forwardRef((props, ref) => {
     return defaultY
   }, [gutter, isVertical]);
 
-
   const count = useMemo(() => {
     return React.Children.count(children);
   }, [children]);
@@ -72,4 +72,12 @@ const Space = React.forwardRef((props, ref) => {
   </div>
 });
 
+Space.propTypes = {
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  align: PropTypes.oneOf(Object.keys(AlignItemsType)),
+  gutter: PropTypes.shape({x: PropTypes.number, y: PropTypes.number}),
+  wrap: PropTypes.bool,
+  direction: PropTypes.oneOf(Object.keys(Direction)),
+}
 export default Space;

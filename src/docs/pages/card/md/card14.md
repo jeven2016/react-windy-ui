@@ -1,14 +1,13 @@
 ---   
 order: 14
 type: sample  
-zh_CN: 显示加载状态
+zh_CN: 窗帘
 en_US: Loading
 editUrl: $BASE/docs/pages/card/md/card14.md
 ---      
 
 +++ zh_CN   
- 当<Code>Card</Code>的中的内容需要异步加载并在加载完成之前显示等待状态时，可以使用一个<Code>Loader</Code>将该Card包裹起来。
- 
+Card中还额外提供了一个<Code>Curtain</Code>组件，可以显示关闭或打开窗帘后的界面。
     
 +++ en_US   
 card14

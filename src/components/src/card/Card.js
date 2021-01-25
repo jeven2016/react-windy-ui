@@ -11,7 +11,6 @@ const Card = React.forwardRef(
   (props, ref) => {
     const {
       className = 'card',
-      rise = false,
       block = false, autoScale = false,
       hasBorder = false, hasBox = true,
       hasWidth = true,
@@ -19,7 +18,6 @@ const Card = React.forwardRef(
     } = props;
     return useElement({...otherProps}, ref, className,
       {
-        rise,
         'with-width': hasWidth && !block,
         block: block,
         'global-with-border': hasBorder,
@@ -83,7 +81,6 @@ Card.propTypes = {
   hasBorder: PropTypes.bool,
   hasBox: PropTypes.bool,
   hasWidth: PropTypes.bool,
-  rise: PropTypes.bool
 };
 
 Body.propTypes = {

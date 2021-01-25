@@ -6,7 +6,7 @@ export default function Card12() {
   return <>
     <Card block autoScale style={{width: '15rem'}}>
       <Card.CardImage autoScale>
-        <Card.Image src={pic} onclick="return false">
+        <Card.Image src={pic} onClick="return false">
         </Card.Image>
         <Card.OverlayTitle>
           <h2>A Picture</h2>

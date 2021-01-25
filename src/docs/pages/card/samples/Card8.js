@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 export default function Card8() {
   return <>
-    <Card style={{width: '15rem'}}>
+    <Card style={{width: '18rem'}}>
       <Card.Header>
         <Row align="center">
           <Col col={6}>

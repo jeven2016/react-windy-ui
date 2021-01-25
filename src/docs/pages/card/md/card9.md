@@ -1,7 +1,7 @@
 ---   
 order: 9 
 type: sample  
-zh_CN: 卡片背景色
+zh_CN: 背景色
 en_US: Background
 editUrl: $BASE/docs/pages/card/md/card9.md
 ---      

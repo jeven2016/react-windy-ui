@@ -15,12 +15,11 @@ export default function Card13() {
               label='Dark Mask'/>
     </div>
     <div style={{width: '15rem'}}>
-      <Loader type="primary" color="blue"
-              darkMask={showMask}
+      <Loader darkMask={showMask}
               active={active}>
         <Card block>
           <Card.CardImage autoScale>
-            <Card.Image src={pic} onclick="return false">
+            <Card.Image src={pic} onClick="return false">
             </Card.Image>
             <Card.OverlayTitle>
               <h3>A Picture</h3>

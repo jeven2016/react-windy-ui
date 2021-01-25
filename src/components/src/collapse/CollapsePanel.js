@@ -34,7 +34,7 @@ const CollapsePanel = React.forwardRef((props, ref) => {
   //the panel height
   const [panelHeight, setPanelHeight] = useState(startHeight);
 
-  //updated while the pannel changed
+  //updated while the panel changed
   useResizeObserver(panelRef, rect => setPanelHeight(rect.height),
     autoScaleHeight);
 

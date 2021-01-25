@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/space/md/space1.md
 ---
 
 +++ zh_CN
-
+使用Space,  让一系列按钮水平间隔排列。
 
 +++ en_US
 space1
