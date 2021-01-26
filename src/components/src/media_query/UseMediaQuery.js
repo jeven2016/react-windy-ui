@@ -74,7 +74,7 @@ const useMediaQuery = (query, targetWindow = window) => {
   }*/
   const isStringQuery = isString(query);
   validate(isStringQuery || (typeof query) == 'object',
-    'the type of query isn\'t string or object');
+      'the type of query isn\'t string or object');
 
   const initResult = useMemo(() => {
     const keys = !isStringQuery ? Object.keys(query) : [];
@@ -113,13 +113,13 @@ const useMediaQuery = (query, targetWindow = window) => {
     Object.keys(initResult).forEach(key => {
       const mq = initResult[key].mq;
       const elemListener = () => listener(key, mq.matches);
-      mq.addEventListener('change', elemListener);
+      mq.addListener(elemListener);
       listeners.push({mq: mq, listener: elemListener});
     });
 
     return () => listeners.forEach(
-      elem => console.log('remove') &&
-        elem.mq.removeEventListener('change', elem.listener));
+        elem => console.log('remove') &&
+            elem.mq.removeListener(elem.listener));
   }, [initResult, isStringQuery, query, targetWindow]);
 
   return result;
