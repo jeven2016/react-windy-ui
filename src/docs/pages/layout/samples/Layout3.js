@@ -53,7 +53,6 @@ function getMenu(position) {
 
 export default function Layout3() {
   const [leftPosition, setPosition] = useState(true);
-
   const flexDirection = leftPosition ? 'row' : 'row-reverse';
 
   const borderStyle = leftPosition ? {borderRight: '1px solid #f0f0f0'}
@@ -62,7 +61,7 @@ export default function Layout3() {
   return <>
     <div className="doc doc-row">
       <Toggle active={leftPosition} onChange={val => setPosition(val)}
-              content={{on: 'Left', off: 'Left'}}/>
+              label={{on: 'Left', off: 'Right'}}/>
     </div>
 
     <div style={{background: '#f5f6f7'}}>

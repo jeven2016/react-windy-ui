@@ -81,7 +81,7 @@ pm2 start --name react-windy-ui npm -- start
 
 //or 
 yarn global add serve
-pm2 start --name react-windy-ui serve -s dist
+pm2 start -- run startPro
 
 ```
 * check the list of apps

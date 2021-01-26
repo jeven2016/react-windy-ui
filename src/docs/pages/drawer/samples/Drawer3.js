@@ -9,8 +9,8 @@ export default function Drawer3() {
   //for left & right, you need to specify a width, on the contrary the height is needed
   //for top & bottom
   const style = position === 'left' || position === 'right'
-      ? {width: '40%'}
-      : {height: '40%'};
+    ? {width: '40%'}
+    : {height: '40%'};
 
   return <>
     <div className="doc doc-row">
@@ -24,7 +24,7 @@ export default function Drawer3() {
     </div>
     <div className="doc doc-row">
       <Toggle active={hasAnchor} onChange={val => enableAnchor(val)}
-              content={{on: 'Show anchor', off: 'Show anchor'}}/>
+              label='Show anchor'/>
     </div>
     <Button type="primary" onClick={() => setActive(true)}>Active</Button>
     <Drawer active={active}

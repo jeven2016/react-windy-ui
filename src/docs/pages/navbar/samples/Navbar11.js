@@ -1,12 +1,5 @@
 import React, {useState} from 'react';
-import {
-  IconList,
-  Navbar,
-  Toggle,
-  RadioGroup,
-  Radio,
-  Affix,
-} from 'react-windy-ui';
+import {Affix, IconList, Navbar, Toggle,} from 'react-windy-ui';
 import DocFrame, {FrameContextConsumer} from '../../../utils/DocFrame';
 
 const fixedNavbarStyle = {
@@ -15,7 +8,6 @@ const fixedNavbarStyle = {
 
 export default function Navbar11() {
   const [smallWindow, setSmallWindow] = useState(false);
-  const [position, setPosition] = useState('top');
   const [affixedStyle, setAffixedStyle] = useState(null);
 
   const width = smallWindow ? '500px' : '100%';
@@ -26,12 +18,6 @@ export default function Navbar11() {
                 label='Small Window'
                 onChange={(val) => setSmallWindow(val)}/>
       </div>
-    </div>
-    <div className="doc doc-row">
-      <RadioGroup value={position} onChange={(val) => setPosition(val)}>
-        <Radio value="top" checkedColor="purple">Top</Radio>
-        <Radio value="bottom" checkedColor="green">Bottom</Radio>
-      </RadioGroup>
     </div>
 
 

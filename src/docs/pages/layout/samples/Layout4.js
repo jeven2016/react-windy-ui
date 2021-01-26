@@ -12,6 +12,7 @@ import {
 function getMenu(position, collapse) {
   return <Menu defaultActiveItems={['item2']}
                hasBox={false}
+               defaultOpenedMenus={['sub1', 'sub3']}
                compact={collapse}
                primaryBarPosition={position ? 'right' : 'left'}
                type="dark">
@@ -55,11 +56,11 @@ export default function Layout4() {
   return <>
     <div className="doc doc-row">
       <Toggle active={leftPosition} onChange={val => setPosition(val)}
-              content={{on: 'Left', off: 'Left'}}/>
+              label={{on: 'Left', off: 'Right'}}/>
     </div>
     <div className="doc doc-row">
       <Toggle active={collapse} onChange={val => setCollapse(val)}
-              content={{on: 'Collapse', off: 'Collapse'}}/>
+              label={{on: 'Collapse', off: 'Collapse'}}/>
     </div>
 
     <div style={{background: '#f5f6f7'}}>
@@ -92,7 +93,7 @@ export default function Layout4() {
       </Layout.Header>
 
       <Layout.Split style={{flexDirection: flexDirection}}>
-        <Layout.Slider style={{background: '#000'}} collapse={collapse}>
+        <Layout.Slider style={{background: '#000'}} collapse={collapse} autoHide={false}>
           {getMenu(leftPosition, collapse)}
         </Layout.Slider>
 
