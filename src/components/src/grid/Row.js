@@ -29,15 +29,16 @@ const Row = React.forwardRef((props, ref) => {
     x: nonNil(gutterX) && isNumber(gutterX) ? gutterX : DefaultGutter.x,
     y: nonNil(gutterY) && isNumber(gutterY) ? gutterY : DefaultGutter.y
   }
-  let justifyCls = JustifyContentType[justify];
-  let alignCls = AlignItemsType[align];
+  let justifyCls = JustifyContentType.simplify(JustifyContentType[justify]);
+  let alignCls = AlignItemsType.simplify(AlignItemsType[align]);
+
   const clsName = clsx(extraClassName, className, {
     [justifyCls]: justifyCls,
     [alignCls]: alignCls,
   });
 
-  const rowStyle = gutterX === 0 && gutterY === 0 ? null : {
-    margin: `-${gutterY / 2}px -${gutterX / 2}px ${gutterY / 2}px`
+  const rowStyle = validGutter.x === 0 && validGutter.y === 0 ? null : {
+    margin: `-${validGutter.y / 2}px -${validGutter.x / 2}px ${validGutter.y / 2}px`
   };
 
   return <RowContext.Provider value={gutter}>

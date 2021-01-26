@@ -47,7 +47,7 @@ export const createErrorMessages = (ctx, name, rules) => {
 export const createFormMessages = (ctx, children, messages = []) => {
   React.Children.forEach(children, chd => {
     validate(!chd.props?.rootItem,
-        'Root item cannot be embeded in other root item.');
+        'Root item cannot be embedded in other root item.');
 
     if (chd.type === FormItem && nonNil(chd.props.name)) {
       const rules = chd.props.rules;

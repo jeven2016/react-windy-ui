@@ -1,3 +1,5 @@
+import {nonNil} from "../Utils";
+
 export const InputBorderType = {
   ok: 'input-ok',
   warning: 'input-warning',
@@ -93,12 +95,20 @@ export const JustifyContentType = {
   around: 'flex-adjust justify-around',
   between: 'flex-adjust justify-between',
   evenly: 'flex-adjust justify-evenly',
+
+  simplify: (value) => {
+    return nonNil(value) ? value.replace('flex-adjust', '') : value;
+  }
 };
 
 export const AlignItemsType = {
   start: 'flex-adjust align-start',
   end: 'flex-adjust align-end',
   center: 'flex-adjust align-center',
+
+  simplify: (value) => {
+    return nonNil(value) ? value.replace('flex-adjust', '') : value;
+  }
 };
 
 export const Active = {

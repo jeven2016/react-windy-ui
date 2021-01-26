@@ -61,7 +61,7 @@ const RootItem = React.forwardRef((props, ref) => {
     if (!isHorizontal) {
       return <>{labelComp}{chdArray}{errorMessages} </>;
     } else {
-      return <><Row>
+      return <><Row align='center'>
         <Col extraClassName={labelCls} {...itemLabelCol}>{realLabel}</Col>
         <Col {...itemControlCol}>{chdArray}</Col>
       </Row>
@@ -69,10 +69,10 @@ const RootItem = React.forwardRef((props, ref) => {
           !hasErrors && !compact && <div className="message-row"/>
         }
         {errorMessages.map(
-            (err, index) => <Row key={`e-${index}-${err.props.validationType}`}>
-              <Col extraClassName="item-label" {...itemLabelCol}> </Col>
-              <Col {...itemControlCol}>{err}</Col>
-            </Row>,
+          (err, index) => <Row align='center' key={`e-${index}-${err.props.validationType}`}>
+            <Col extraClassName="item-label" {...itemLabelCol}> </Col>
+            <Col {...itemControlCol}>{err}</Col>
+          </Row>,
         )}
       </>;
     }

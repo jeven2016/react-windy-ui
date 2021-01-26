@@ -424,7 +424,7 @@ const Select = React.forwardRef((props, ref) => {
       return multiSelectCtrl;
     }
 
-    const selectClsName = clsx('select', size, {
+    const selectClsName = clsx('select', size, getErrorClsName(errorType), {
       'with-select-box': hasBox && isActive,
       'active': isActive,
       block,
@@ -458,15 +458,6 @@ const Select = React.forwardRef((props, ref) => {
         </div>
       }
     </div>;
-
-    /* return <Input name={name} errorType={errorType}
-                   ref={inputMultiRef}
-                   disabled={disabled}
-                   block={block}
-                   size={size}
-                   {...copiedProps}
-                   rootRef={multiSelectRef}
-                   icon={realIcon}/>;*/
   };
 
   const selectHandler = useEventCallback((items, e) => {

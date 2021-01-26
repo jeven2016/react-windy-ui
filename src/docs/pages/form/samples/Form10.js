@@ -1,19 +1,7 @@
 import React from 'react';
-import {
-  Button,
-  Card,
-  Col,
-  Form,
-  IconAccount,
-  IconLock,
-  Input,
-  InputGroup,
-  Row,
-  Select,
-  Tooltip,
-} from 'react-windy-ui';
+import {Button, Card, Col, Form, IconAccount, IconLock, Input, InputGroup, Row, Select,} from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPhone, faUmbrella} from '@fortawesome/free-solid-svg-icons';
+import {faPhone} from '@fortawesome/free-solid-svg-icons';
 
 export default function Form10() {
   const {form} = Form.useForm({
@@ -30,7 +18,7 @@ export default function Form10() {
     <Card style={{minWidth: '80%'}} hasBox={false}>
       <Card.Row>
         <Form form={form} onSubmit={onSubmit} direction="horizontal"
-              labelCol={{col: 3}} controlCol={{col: 9}}>
+              labelCol={{md: 3, sm: 12}} controlCol={{md: 9, sm: 12}}>
 
           <Form.Item label="username" required name="username" rules={{
             required: 'The username is required',
@@ -67,11 +55,11 @@ export default function Form10() {
             <InputGroup block>
               <InputGroup.Item autoScale={false} style={{flex: '0 1 5rem'}}>
                 <Form.Item
-                    name="countryCode"
-                    simple={true}
-                    rules={{
-                      required: 'The country code is required',
-                    }}>
+                  name="countryCode"
+                  simple={true}
+                  rules={{
+                    required: 'The country code is required',
+                  }}>
                   <Select onSelect={(value) => console.log(value)}>
                     <Select.Option value="+86">+86</Select.Option>
                     <Select.Option value="+87">+87</Select.Option>
@@ -80,11 +68,11 @@ export default function Form10() {
                 </Form.Item>
               </InputGroup.Item>
               <Form.Item
-                  name="phoneNumber"
-                  simple={true}
-                  rules={{
-                    required: 'The phone number is required',
-                  }}>
+                name="phoneNumber"
+                simple={true}
+                rules={{
+                  required: 'The phone number is required',
+                }}>
                 <Input placeholder="Phone Number"/>
               </Form.Item>
               <InputGroup.Label>

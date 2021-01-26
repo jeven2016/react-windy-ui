@@ -114,7 +114,7 @@ const FormItem = React.forwardRef((props, ref) => {
     }
 
     return <Row extraClassName="message-row">
-      <Col extraClassName="item-label" {...itemLabelCol}> </Col>
+      <Col extraClassName="item-label msg-row-control" {...itemLabelCol}> </Col>
       <Col {...itemControlCol}>{hasErrors && msg}</Col>
     </Row>;
   }, [compact, hasErrors, itemControlCol, itemLabelCol, msg]);
@@ -153,7 +153,7 @@ const FormItem = React.forwardRef((props, ref) => {
       </>;
     } else {
 
-      return <><Row>
+      return <><Row align="center">
         <Col extraClassName={labelCls} {...itemLabelCol}>{realLabel}</Col>
         <Col {...itemControlCol}>{finalChd}</Col>
       </Row>

@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from 'react-windy-ui';
 
-export default function Form16() {
+export default function Form6() {
   const {form} = Form.useForm({
     mode: 'onSubmit',
     shouldFocusError: false,

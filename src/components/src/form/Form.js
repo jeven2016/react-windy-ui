@@ -4,11 +4,16 @@ import {nonNil} from '../Utils';
 import {FormDirection} from '../common/Constants';
 import {FormProvider} from 'react-hook-form';
 
+const defaultOnSubmit = () => {
+};
+const defaultOnError = () => {
+};
+
 const Form = React.forwardRef((props, ref) => {
   const {
     form,
-    onSubmit,
-    onError,
+    onSubmit = defaultOnSubmit,
+    onError = defaultOnError,
     nativeType: RootElement = 'form',
     className = 'form',
     extraClassName,
