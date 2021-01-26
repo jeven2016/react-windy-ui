@@ -31,10 +31,20 @@ export default function DocMenu(props) {
                  overflow: overflow,
                  background: '#fff',
                }}>
-    <Menu.SubMenu header="基础组件" id="basic">
+    <Menu.SubMenu header="表单" id="basic">
       <Menu.Item id="btn">
         <Link to={`${url}/button`}>
           按钮 Button
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="chk">
+        <Link to={`${url}/checkbox`}>
+          多选 Checkbox
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="menu">
+        <Link to={`${url}/menu`}>
+          菜单 Menu
         </Link>
       </Menu.Item>
       <Menu.Item id="input">
@@ -47,9 +57,9 @@ export default function DocMenu(props) {
           单选 Radio
         </Link>
       </Menu.Item>
-      <Menu.Item id="chk">
-        <Link to={`${url}/checkbox`}>
-          多选 Checkbox
+      <Menu.Item id="select">
+        <Link to={`${url}/select`}>
+          选择 Select
         </Link>
       </Menu.Item>
       <Menu.Item id="toggle">
@@ -57,19 +67,9 @@ export default function DocMenu(props) {
           开关 Toggle
         </Link>
       </Menu.Item>
-      <Menu.Item id="collapse">
-        <Link to={`${url}/collapse`}>
-          折叠框 Collapse
-        </Link>
-      </Menu.Item>
-      <Menu.Item id="menu">
-        <Link to={`${url}/menu`}>
-          菜单 Menu
-        </Link>
-      </Menu.Item>
-      <Menu.Item id="navbar">
-        <Link to={`${url}/navbar`}>
-          导航条 Navbar
+      <Menu.Item id="datepicker">
+        <Link to={`${url}/datepicker`}>
+          日期 DatePicker
         </Link>
       </Menu.Item>
       <Menu.Item id="form">
@@ -104,11 +104,6 @@ export default function DocMenu(props) {
           提示 Tooltip
         </Link>
       </Menu.Item>
-      <Menu.Item id="select">
-        <Link to={`${url}/select`}>
-          选择 Select
-        </Link>
-      </Menu.Item>
       <Menu.Item id="modal">
         <Link to={`${url}/modal`}>
           对话框 Modal
@@ -119,13 +114,8 @@ export default function DocMenu(props) {
           抽屉 Drawer
         </Link>
       </Menu.Item>
-      <Menu.Item id="datepicker">
-        <Link to={`${url}/datepicker`}>
-          DataPicker 日期选择
-        </Link>
-      </Menu.Item>
     </Menu.SubMenu>
-    <Menu.SubMenu header="提示信息" id="info">
+    <Menu.SubMenu header="信息" id="info">
       <Menu.Item id="badge">
         <Link to={`${url}/badge`}>
           标记 Badge
@@ -153,6 +143,11 @@ export default function DocMenu(props) {
       </Menu.Item>
     </Menu.SubMenu>
     <Menu.SubMenu header="数据展示" id="data">
+      <Menu.Item id="navbar">
+        <Link to={`${url}/navbar`}>
+          导航条 Navbar
+        </Link>
+      </Menu.Item>
       <Menu.Item id="tree">
         <Link to={`${url}/tree`}>
           树控件 Tree
@@ -183,6 +178,11 @@ export default function DocMenu(props) {
       <Menu.Item id="space">
         <Link to={`${url}/space`}>
           间距 Space
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="collapse">
+        <Link to={`${url}/collapse`}>
+          折叠框 Collapse
         </Link>
       </Menu.Item>
       <Menu.Item id="grid">

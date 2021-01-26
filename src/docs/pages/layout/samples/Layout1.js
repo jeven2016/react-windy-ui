@@ -6,8 +6,7 @@ export default function Layout1() {
     <Layout style={{background: '#f5f6f7'}}>
       <Layout.Header>
         <Navbar type="primary"
-                hasBorder={false}
-                extraClassName="clear-radius">
+                hasBorder={false}>
           <Navbar.Title>
             <Navbar.Switch>
               <IconList/>
