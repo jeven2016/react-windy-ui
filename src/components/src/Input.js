@@ -216,7 +216,7 @@ Password.propTypes = {
     PropTypes.shape({current: PropTypes.instanceOf(Element)}),
   ]),
   hasToggleIcon: PropTypes.bool,
-  toggleIcons: PropTypes.array.length,
+  toggleIcons: PropTypes.arrayOf(PropTypes.node),
   type: PropTypes.string,
   leftIcon: PropTypes.bool,
 };
