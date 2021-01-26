@@ -1,3 +1,3 @@
 #!/bin/bash
 
-pm2 start --name react-windy-ui -- run startPro
+pm2 start yarn -- run startPro
