@@ -78,6 +78,11 @@ yarn global add pm2
 *  start the doc application in background
 ```shell
 pm2 start --name react-windy-ui npm -- start
+
+//or 
+yarn global add serve
+pm2 start --name react-windy-ui serve -s dist
+
 ```
 * check the list of apps
 ```shell

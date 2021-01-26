@@ -118,8 +118,7 @@ const useMediaQuery = (query, targetWindow = window) => {
     });
 
     return () => listeners.forEach(
-        elem => console.log('remove') &&
-            elem.mq.removeListener(elem.listener));
+        elem => elem.mq.removeListener(elem.listener));
   }, [initResult, isStringQuery, query, targetWindow]);
 
   return result;
