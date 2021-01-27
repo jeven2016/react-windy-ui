@@ -33,12 +33,14 @@ const Row = React.forwardRef((props, ref) => {
   let alignCls = AlignItemsType.simplify(AlignItemsType[align]);
 
   const clsName = clsx(extraClassName, className, {
+    'flex-adjust': justifyCls && alignCls,
     [justifyCls]: justifyCls,
-    [alignCls]: alignCls,
+    [alignCls]: alignCls
   });
 
   const rowStyle = validGutter.x === 0 && validGutter.y === 0 ? null : {
-    margin: `-${validGutter.y / 2}px -${validGutter.x / 2}px ${validGutter.y / 2}px`
+    margin: `-${validGutter.y / 2}px -${validGutter.x / 2}px ${validGutter.y
+    / 2}px`
   };
 
   return <RowContext.Provider value={gutter}>
