@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import clsx from 'clsx';
-import {isNil, nonNil} from '../Utils';
+import {isBlank, isNil, nonNil} from '../Utils';
 import {FormDirection, JustifyContentType} from '../common/Constants';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
@@ -58,6 +58,7 @@ const RootItem = React.forwardRef((props, ref) => {
       realLabel = filterLabel(chdArray);
     }
 
+    console.log(children)
     if (!isHorizontal) {
       return <>{labelComp}{chdArray}{errorMessages} </>;
     } else {
@@ -68,11 +69,12 @@ const RootItem = React.forwardRef((props, ref) => {
         {
           !hasErrors && !compact && <div className="message-row"/>
         }
-        {errorMessages.map(
-          (err, index) => <Row align='center' key={`e-${index}-${err.props.validationType}`}>
-            <Col extraClassName="item-label" {...itemLabelCol}> </Col>
-            <Col {...itemControlCol}>{err}</Col>
-          </Row>,
+        {hasErrors && errorMessages.map(
+          (err, index) => isBlank(err) ? null :
+            <Row extraClassName="message-row" align='center' key={`e-${index}-${err.props.validationType}`}>
+              <Col extraClassName="item-label" {...itemLabelCol}/>
+              <Col {...itemControlCol}>{err}</Col>
+            </Row>,
         )}
       </>;
     }

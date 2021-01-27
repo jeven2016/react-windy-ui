@@ -18,7 +18,7 @@ export default function Form10() {
     <Card style={{minWidth: '80%'}} hasBox={false}>
       <Card.Row>
         <Form form={form} onSubmit={onSubmit} direction="horizontal"
-              labelCol={{md: 3, sm: 12}} controlCol={{md: 9, sm: 12}}>
+              labelCol={{lg: 3, md: 12}} controlCol={{lg: 9, md: 12}}>
 
           <Form.Item label="Username" required name="Username" rules={{
             required: 'The username is required',
