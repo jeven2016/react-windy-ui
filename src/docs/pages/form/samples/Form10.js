@@ -20,7 +20,7 @@ export default function Form10() {
         <Form form={form} onSubmit={onSubmit} direction="horizontal"
               labelCol={{md: 3, sm: 12}} controlCol={{md: 9, sm: 12}}>
 
-          <Form.Item label="username" required name="username" rules={{
+          <Form.Item label="Username" required name="Username" rules={{
             required: 'The username is required',
           }} justifyLabel="start">
             <Input leftIcon block placeholder="Username"

@@ -3,6 +3,13 @@ import {Affix, Dropdown, IconList, Navbar, Popover} from 'react-windy-ui';
 import {Link} from 'react-router-dom';
 import {StoreContext} from '../../components/src';
 import intl from 'react-intl-universal';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+  faBook,
+  faLaptopHouse,
+  faLightbulb,
+  faSignLanguage
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function HomeHeader({transparent = false}) {
   const [barExtraCls, setBarExtraCls] = useState(null);
@@ -32,18 +39,27 @@ export default function HomeHeader({transparent = false}) {
           </Navbar.Title>
           <Navbar.List>
             <Navbar.Item hasBar>
+              <FontAwesomeIcon icon={faBook} style={{marginRight: '.5rem'}}/>
               <Link to="/docs">{intl.get(
                   'global.home.link.documentation')}</Link>
             </Navbar.Item>
             <Navbar.Item hasBar>
+              <FontAwesomeIcon icon={faLaptopHouse}
+                               style={{marginRight: '.5rem'}}/>
               {intl.get('global.home.link.template')}
             </Navbar.Item>
             <Navbar.Item>
-              <Popover body="current Contributor" activeBy="hover" position="bottomRight">
-                <span style={{color: '#fff'}}>{intl.get('global.home.link.contribute')}</span>
+              <FontAwesomeIcon icon={faLightbulb}
+                               style={{marginRight: '.5rem'}}/>
+              <Popover body="current Contributor" activeBy="hover"
+                       position="bottomRight">
+                <span style={{color: '#fff'}}>{intl.get(
+                    'global.home.link.contribute')}</span>
               </Popover>
             </Navbar.Item>
             <Navbar.Item>
+              <FontAwesomeIcon icon={faSignLanguage}
+                               style={{marginRight: '.5rem'}}/>
               <Dropdown activeBy="hover"
                         title={<span>{intl.get(
                             'global.home.link.language')}</span>}

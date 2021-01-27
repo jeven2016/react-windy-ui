@@ -1,5 +1,7 @@
 import React from 'react';
-import {Button, Row, Col} from 'react-windy-ui';
+import {Button, Col, Popover, Row} from 'react-windy-ui';
+import {faSmile} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export default function HomeFooter() {
   return <div className="doc home-footer">
@@ -47,7 +49,15 @@ export default function HomeFooter() {
           <div className="doc footer-title">
             进行捐助
           </div>
-          <Button color="green" outline>我要捐助</Button>
+          <Popover position="top" autoWidth body={<div>
+            <p>Haha, you're so kind. </p>
+            <p>Appreciate to access this project.</p>
+            {<FontAwesomeIcon icon={faSmile} style={{color: '#49b847'}}/>}
+            {<FontAwesomeIcon icon={faSmile} style={{color: '#49b847'}}/>}
+            {<FontAwesomeIcon icon={faSmile} style={{color: '#49b847'}}/>}
+          </div>}>
+            <Button color="green" outline>我要捐助</Button>
+          </Popover>
         </div>
       </Col>
     </Row>

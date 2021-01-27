@@ -28,7 +28,7 @@ export default function Form7() {
     <Card style={{minWidth: '80%'}} hasBox={false}>
       <Card.Row>
         <Form form={form} onSubmit={onSubmit} direction="horizontal"
-              labelCol={{col: 3}} controlCol={{col: 9}}>
+              labelCol={{md: 3}} controlCol={{md: 9}}>
 
           <Form.Item label="New Password"
                      name="newPwd"
