@@ -47,13 +47,13 @@ export const createErrorMessages = (ctx, name, rules) => {
 export const createFormMessages = (ctx, children, messages = []) => {
   React.Children.forEach(children, chd => {
     validate(!chd.props?.rootItem,
-        'Root item cannot be embedded in other root item.');
+      'Root item cannot be embedded in other root item.');
 
     if (chd.type === FormItem && nonNil(chd.props.name)) {
       const rules = chd.props.rules;
       if (nonNil(rules)) {
         const itemErrMsg = createErrorMessages(ctx, chd.props.name,
-            rules);
+          rules);
 
         nonNil(itemErrMsg) && messages.push(itemErrMsg);
       }
@@ -90,6 +90,7 @@ export const cloneElement = (elem, props, control) => {
       //while the Controller is used, the rules should be moved from ref and
       //set via rules property of controller
       return <Controller as={Select}
+                         defaultValue=""
                          rules={pureRules}
                          control={control} {...newProps}/>;
 
@@ -121,7 +122,7 @@ export const cloneWidget = (widget, props, control) => {
   const formCtrlNode = widget.props.children;
 
   validate(React.Children.count(formCtrlNode) === 1,
-      'There should only be one child in "Form.Widget"');
+    'There should only be one child in "Form.Widget"');
 
   return React.cloneElement(widget, {
     children: cloneElement(formCtrlNode, props, control),
@@ -147,6 +148,6 @@ export const mapWidget = (chdArray, props, control) => {
     }
 
     return React.cloneElement(chd,
-        {children: mapWidget(chd.props.children, props, control)});
+      {children: mapWidget(chd.props.children, props, control)});
   });
 };

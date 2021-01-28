@@ -10,7 +10,6 @@ import Tooltip from './Tooltip';
 import clsx from 'clsx';
 import useEventCallback from "./common/useEventCallback";
 import PropTypes from "prop-types";
-import usePrevious from "./common/UsePrevious";
 
 const PageButton = React.forwardRef((props, ref) => {
   const {left = true, onClick, buttonProps} = props;

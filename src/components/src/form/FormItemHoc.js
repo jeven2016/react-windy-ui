@@ -7,14 +7,7 @@ import Col from '../grid/Col';
 import {useFormContext} from 'react-hook-form';
 import Widget from './Widget';
 import RootItem from './RootItem';
-import {
-  cloneElement,
-  cloneWidget,
-  createErrorMessages,
-  filterLabel,
-  mapWidget,
-  useLabel,
-} from './FormUtils';
+import {cloneElement, cloneWidget, createErrorMessages, filterLabel, mapWidget, useLabel,} from './FormUtils';
 import {FormItemContext} from '../common/Context';
 import FormLabel from './FormLabel';
 

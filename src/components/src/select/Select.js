@@ -393,12 +393,18 @@ const Select = React.forwardRef((props, ref) => {
                  style={style}
                  ref={multiSelectRef}>
         <span className="select-multiple-content">
-          {selectedValue.length === 0 && placeholder &&
-          <span className="placeholder-text ellipsis">{placeholder}</span>}
           {
-            selectedValue.map(findItemInfo).map(item =>
-              nonNil(item.render) ? item.render(
-                {...item, removeItem: removeItem})
+            selectedValue.length === 0 && placeholder && <span className="placeholder-text ellipsis">
+            {placeholder}
+          </span>
+          }
+
+          {
+            selectedValue.map(findItemInfo).map(item => {
+              if (isNil(item)) {
+                return null;
+              }
+              return nonNil(item.render) ? item.render({...item, removeItem: removeItem})
                 : <span key={`item-${item.value}`} className={`multi-item ${size}`}>
                 <span>{getText(item)}</span>
                 <div className={`icon-column ${disabled ? "disabled" : ""}`} onClick={(e) => {
@@ -406,17 +412,17 @@ const Select = React.forwardRef((props, ref) => {
                 }}>
                   <IconClear size="small"/>
                 </div>
-              </span>,
-            )
+              </span>
+            })
           }
           <input name={name} ref={inputMultiRef} {...copiedProps}/>
 
           <span ref={detectRef} className='search-text-detector'>
-        {/*this used to detect the width of the input value in pixel*/}
+            {/*this used to detect the width of the input value in pixel*/}
             {searchedValue}
           </span>
-          </span>
-          </span>;
+        </span>
+    </span>;
   }, [block, ctrlStyle, disabled, displayText, errorType, findItemInfo, getText, handleBlur, handleSearch, hasBox, inputMultiRef, isActive, multiSelect, multiSelectRef, name, placeholder, removeItem, searchable, searchedValue, selectedValue, size, style]);
 
   const getCtrl = () => {

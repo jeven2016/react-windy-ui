@@ -98,7 +98,7 @@ const Menu = React.forwardRef((props, ref) => {
         store.setState({openList: pre});
       }
     }
-  }, [compact, popupSubMenu, preExpandList, store]);
+  }, [compact, popupSubMenu, preCompact, preExpandList, prePopupSubMenu, store]);
 
   const isPopup = popupSubMenu || compact;
 
