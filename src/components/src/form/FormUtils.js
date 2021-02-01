@@ -102,6 +102,7 @@ export const cloneElement = (elem, props, control) => {
         extraClassName: clsx(originExCls, 'form-control'),
       };
       return <Controller as={elem.type}
+                         defaultValue=""
                          rules={pureRules}
                          control={control} {...ctlProps}/>;
 
