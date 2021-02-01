@@ -3,6 +3,7 @@ order: 6
 type: sample
 zh_CN: Form
 en_US: Form
+onlyVisible: false
 editUrl: $BASE/docs/pages/form/md/form6.md
 ---
 

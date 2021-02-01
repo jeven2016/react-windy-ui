@@ -39,7 +39,7 @@ export const filterLabel = (chdArray) => {
 
 export const createErrorMessages = (ctx, name, rules) => {
   if (nonNil(rules)) {
-    return <FormMessage name={name} errors={ctx.errors}/>;
+    return <FormMessage name={name} errors={ctx.errors} key={`msg-${name}`}/>;
   }
   return null;
 };

@@ -1,5 +1,7 @@
 import {nonNil} from "../Utils";
 
+export const ColCount = 12;
+
 export const InputBorderType = {
   ok: 'input-ok',
   warning: 'input-warning',

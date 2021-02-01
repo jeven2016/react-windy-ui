@@ -2,36 +2,32 @@ import React from 'react';
 import {Button, Col, Form, Input, Row} from 'react-windy-ui';
 
 export default function Form1() {
+  const form = Form.useForm({
+    //Validation will trigger on the submit event and invalid inputs will attach onChange event listeners to re-validate them.
+    mode: 'onSubmit',
+  });
+
+  //invoked while submit button is clicked
+  const onSubmit = (data, e) => {
+    console.log('onSubmit', data, e);
+    //then call the api to save the data
+  };
 
   return <div className="doc doc-row space">
-    <Form>
-      <Form.Item compact={true}>
-        <Form.Label required>Username</Form.Label>
+    <Form form={form} onSubmit={onSubmit}>
+      <Form.Item label="Username" name="username" required rules={{required: 'The username is required'}}>
         <Input placeholder="Please enter your name" block/>
-        <Form.Message errorType="comment"
-                      message="The username is required"/>
       </Form.Item>
 
-      <Form.Item compact={true}>
-        <Form.Label required>Password</Form.Label>
+      <Form.Item label="Password" name="password" required rules={{required: 'The password is required'}}>
         <Input type="password" block
                placeholder="Please enter your password"/>
-        <Form.Message errorType="comment"
-                      message="The password is required"/>
       </Form.Item>
 
-      <Form.Item compact={true}>
+      <Form.Item>
         <Row gutter={{x: 16}}>
-          <Col>
-            <Button color="blue" block>
-              Sign In
-            </Button>
-          </Col>
-          <Col>
-            <Button nativeType="reset" block>
-              Reset
-            </Button>
-          </Col>
+          <Col><Button nativeType="submit" color="blue" block>Sign In</Button></Col>
+          <Col><Button nativeType="reset" block>Reset</Button></Col>
         </Row>
       </Form.Item>
     </Form>

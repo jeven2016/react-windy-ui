@@ -59,13 +59,14 @@ const RootItem = React.forwardRef((props, ref) => {
     }
 
     if (!isHorizontal) {
-      return <>{labelComp}{chdArray}{errorMessages} </>;
+      return <>{labelComp}<div>{chdArray}{errorMessages}</div> </>;
     } else {
       return <><Row align='center'>
         <Col extraClassName={labelCls} {...itemLabelCol}>{realLabel}</Col>
         <Col {...itemControlCol}>{chdArray}</Col>
       </Row>
         {
+          //insert a empty row to this item
           !hasErrors && !compact && <div className="message-row"/>
         }
         {hasErrors && errorMessages.map(

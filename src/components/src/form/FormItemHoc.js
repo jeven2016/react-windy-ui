@@ -37,7 +37,7 @@ const FormItem = React.forwardRef((props, ref) => {
   const rootItemCtx = useContext(FormItemContext);
   if (nonNil(rules)) {
     validate(nonNil(name),
-        'The name is required while the rules is configured');
+      'The name is required while the rules is configured in Form.Item');
   }
 
   const itemDirection = isNil(direction) ? ctx.direction : direction;
@@ -65,8 +65,8 @@ const FormItem = React.forwardRef((props, ref) => {
     if (chdArray.length === 1) {
       //only one child found
       finalChd = chdArray[0].type === Widget ? cloneWidget(chdArray[0],
-          getCloneProps()) : cloneElement(chdArray[0], getCloneProps(),
-          ctx.control);
+        getCloneProps()) : cloneElement(chdArray[0], getCloneProps(),
+        ctx.control);
     } else {
       //deep find the widget
       finalChd = mapWidget(children, getCloneProps(), ctx.control);
@@ -82,12 +82,13 @@ const FormItem = React.forwardRef((props, ref) => {
   }, [ctx, hasErrors, name, rules]);
 
   const getSimpleMsgRow = useCallback(() => {
-    if (!hasErrors && compact) {
+    //no extra message row inserted while no errors appear and the item is compact or inline
+    if (!hasErrors && (compact || itemDirection === FormDirection.inline)) {
       return null;
     }
 
     return <div className="message-row">{hasErrors && msg}</div>;
-  }, [compact, hasErrors, msg]);
+  }, [compact, hasErrors, itemDirection, msg]);
 
   const getOneMsgRow = useCallback(() => {
     if (!hasErrors && compact) {
@@ -133,7 +134,9 @@ const FormItem = React.forwardRef((props, ref) => {
     }
 
     if (!isHorizontal) {
-      return <>{realLabel}{finalChd}{getSimpleMsgRow()}</>;
+      return <>{realLabel}
+        <div>{finalChd}{getSimpleMsgRow()}</div>
+      </>;
     }
 
     const labelJustifyCls = JustifyContentType[justifyLabel];

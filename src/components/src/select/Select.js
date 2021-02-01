@@ -401,7 +401,7 @@ const Select = React.forwardRef((props, ref) => {
 
           {
             selectedValue.map(findItemInfo).map(item => {
-              if (isNil(item)) {
+              if(isNil(item)){
                 return null;
               }
               return nonNil(item.render) ? item.render({...item, removeItem: removeItem})

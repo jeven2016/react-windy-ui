@@ -1,5 +1,6 @@
-import React from 'react';
-import {Button, Card, Form, Input, Notification} from 'react-windy-ui';
+import React, {useState} from 'react';
+import {Button, Card, Form, Input} from 'react-windy-ui';
+import {IconClear2} from "../../../../components/src";
 
 export default function Form7() {
   const {form, watch} = Form.useForm({
@@ -7,19 +8,24 @@ export default function Form7() {
     shouldFocusError: false,
   });
 
+  const [errorNames, setErrorNames] = useState([]);
+
   const onSubmit = (data, e) => {
-    Notification.mini({
-      position: 'topCenter',
-      title: 'The form data:',
-      body: `${JSON.stringify(data)}`
-    });
+    setErrorNames([]);
     //then call the api to save the data
   };
+
+  const onError = (data, e) => {
+    console.log(data);
+    setErrorNames(Object.keys(data));
+  }
 
   return <>
     <Card style={{minWidth: '80%'}} hasBox={false}>
       <Card.Row>
-        <Form form={form} onSubmit={onSubmit} direction="horizontal"
+        <Form form={form} onSubmit={onSubmit}
+              onError={onError}
+              direction="horizontal"
               labelCol={{sm: 12, md: 3}} controlCol={{sm: 12, md: 9}}>
 
           <Form.Item label="New Password"
@@ -29,7 +35,8 @@ export default function Form7() {
                        required: 'The password is required'
                      }}
                      justifyLabel="end">
-            <Input type="password" block/>
+            <Input type="password" block errorType={errorNames.includes('newPwd') ? 'error' : 'ok'}
+                   icon={errorNames.includes('newPwd') ? <IconClear2/> : null}/>
           </Form.Item>
 
           <Form.Item label="Confirm Password"
