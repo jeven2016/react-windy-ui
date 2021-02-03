@@ -66,13 +66,13 @@ const FormItem = React.forwardRef((props, ref) => {
       //only one child found
       finalChd = chdArray[0].type === Widget ? cloneWidget(chdArray[0],
         getCloneProps()) : cloneElement(chdArray[0], getCloneProps(),
-        ctx.control);
+        ctx);
     } else {
       //deep find the widget
       finalChd = mapWidget(children, getCloneProps(), ctx.control);
     }
     return finalChd;
-  }, [formControlled, getCloneProps, ctx.control, children]);
+  }, [formControlled, getCloneProps, ctx, children]);
 
   const msg = useMemo(() => {
     if (!hasErrors || isNil(rules)) {

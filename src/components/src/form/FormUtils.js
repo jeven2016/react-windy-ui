@@ -67,9 +67,13 @@ export const createFormMessages = (ctx, children, messages = []) => {
   return messages;
 };
 
-export const cloneElement = (elem, props, control) => {
+export const cloneElement = (elem, props, ctx) => {
+  const control = ctx.control;
   let newProps;
   let originExCls = elem.props.extraClassName;
+
+  const errorType = elem.props.errorType;
+  const realEt = nonNil(errorType) ? errorType : props.errorType;
 
   //for Controller, the pureRules is used by controller and the ref should be excluded in this case
   const {pureRules, ref, ...restProps} = props;
@@ -86,6 +90,7 @@ export const cloneElement = (elem, props, control) => {
           ...elem.props.inputProps,
           extraClassName: extraCls,
         },
+        errorType: realEt
       };
       //while the Controller is used, the rules should be moved from ref and
       //set via rules property of controller
@@ -100,6 +105,7 @@ export const cloneElement = (elem, props, control) => {
       const ctlProps = {
         ...elem.props, ...restProps,
         extraClassName: clsx(originExCls, 'form-control'),
+        errorType: realEt
       };
       return <Controller as={elem.type}
                          defaultValue=""
@@ -113,6 +119,7 @@ export const cloneElement = (elem, props, control) => {
         ...elem.props,
         ...restProps,
         extraClassName: extraCls,
+        errorType: realEt
       };
       return React.cloneElement(elem, newProps);
   }

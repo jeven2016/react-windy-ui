@@ -22,7 +22,7 @@ export default function Form11() {
         <Card.Row>
           <Form direction="vertical">
 
-            <Form.Item justifyLabel="end">
+            <Form.Item>
               <Form.Label>Field1</Form.Label>
               <Input block errorType="ok" icon={<IconChecked2/>} iconProps={{
                 style: {
@@ -31,13 +31,13 @@ export default function Form11() {
               }} placeholder="..."/>
             </Form.Item>
 
-            <Form.Item justifyLabel="end" compact={true}>
+            <Form.Item compact={true}>
               <Form.Label>Field2</Form.Label>
               <Input block errorType="warning" placeholder="..."/>
               <Form.Message errorType="warning" message="Invalid value"/>
             </Form.Item>
 
-            <Form.Item justifyLabel="end" compact={true}>
+            <Form.Item compact={true}>
               <Form.Label>Field3</Form.Label>
               <Input block errorType="error" icon={<IconWarning/>} iconProps={{
                 style: {
@@ -47,7 +47,7 @@ export default function Form11() {
               <Form.Message errorType="error" message="Invalid value"/>
             </Form.Item>
 
-            <Form.Item justifyLabel="end" compact={true}>
+            <Form.Item compact={true}>
               <Form.Label>Field4</Form.Label>
               <RadioGroup errorType="error">
                 <Radio value="email">Email</Radio>
@@ -58,14 +58,14 @@ export default function Form11() {
             </Form.Item>
 
 
-            <Form.Item justifyLabel="end" compact={true}>
+            <Form.Item compact={true}>
               <Form.Label>Field5</Form.Label>
               <Checkbox errorType="error" defaultChecked={false}>Accept the
                 terms</Checkbox>
               <Form.Message errorType="error" message="You should accept it"/>
             </Form.Item>
 
-            <Form.Item justifyLabel="end" compact={true}>
+            <Form.Item compact={true}>
               <Form.Label>Field6</Form.Label>
               <RadioGroup errorType="ok" defaultValue="email">
                 <Radio value="email">Email</Radio>
@@ -75,7 +75,7 @@ export default function Form11() {
                             message="A valid option is selected"/>
             </Form.Item>
 
-            <Form.Item justifyLabel="end" compact={true}>
+            <Form.Item compact={true}>
               <Form.Label>Field7</Form.Label>
               <Checkbox errorType="ok" defaultChecked={true}>Accept the
                 terms</Checkbox>

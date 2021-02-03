@@ -1,23 +1,22 @@
 import React, {useState} from 'react';
-import {Button, Card, Form, Input} from 'react-windy-ui';
-import {IconClear2} from "../../../../components/src";
+import {Button, Card, Form, Input, IconClear2} from 'react-windy-ui';
 
 export default function Form7() {
-  const {form, watch} = Form.useForm({
+  const {
+    form, watch, errors,
+    formState: {submitCount, isValid},
+  } = Form.useForm({
     mode: 'onSubmit',
     shouldFocusError: false,
   });
 
-  const [errorNames, setErrorNames] = useState([]);
+  console.log(errors);
 
   const onSubmit = (data, e) => {
-    setErrorNames([]);
-    //then call the api to save the data
   };
 
   const onError = (data, e) => {
-    console.log(data);
-    setErrorNames(Object.keys(data));
+    // console.log(data);
   }
 
   return <>
@@ -35,8 +34,8 @@ export default function Form7() {
                        required: 'The password is required'
                      }}
                      justifyLabel="end">
-            <Input type="password" block errorType={errorNames.includes('newPwd') ? 'error' : 'ok'}
-                   icon={errorNames.includes('newPwd') ? <IconClear2/> : null}/>
+            <Input type="password" block errorType={errors.newPwd ? 'error' : 'ok'}
+                   rightIcons={errors.newPwd ? [<IconClear2/>] : null}/>
           </Form.Item>
 
           <Form.Item label="Confirm Password"
