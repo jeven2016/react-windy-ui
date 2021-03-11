@@ -2,7 +2,6 @@ import React, {useCallback, useContext, useMemo} from 'react';
 import {inRange, isBlank, isInteger, isNil, nonNil} from '../Utils';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import {JustifyContentType} from '../common/Constants';
 import {RowContext} from "../common/Context";
 
 const Col = React.forwardRef((props, ref) => {
@@ -11,7 +10,6 @@ const Col = React.forwardRef((props, ref) => {
     className = 'col-base',
     col,
     gutter,
-    justify = JustifyContentType.start,
     xs, sm, md, lg, xl,
     xsOffset, smOffset, mdOffset, lgOffset, xlOffset,
     order,
@@ -21,7 +19,6 @@ const Col = React.forwardRef((props, ref) => {
   const {rowGutter} = useContext(RowContext);
   const realGutter = nonNil(gutter) ? gutter : rowGutter;
 
-  let justifyCls = JustifyContentType[justify];
   [
     col,
     xs, sm, md, lg, xl, xsOffset,
@@ -67,7 +64,6 @@ const Col = React.forwardRef((props, ref) => {
 
   let clsName = clsx(extraClassName, className, {
     [cls]: cls,
-    [justifyCls]: justifyCls,
   });
 
   const newSty = useMemo(() => {

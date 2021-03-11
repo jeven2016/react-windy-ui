@@ -9,7 +9,7 @@ import {MenuContext} from '../common/Context';
 import {Action, fillLevel, MenuDirection, MenuType} from './MenuUtils';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import {convertToArray, execute, includes, isCustomized, isNil} from '../Utils';
-import {EventListener, JustifyContentType} from '../common/Constants';
+import {adjustItems, EventListener} from '../common/Constants';
 import {initStore} from '../common/Store';
 import useEvent from '../common/UseEvent';
 import useEventCallback from '../common/useEventCallback';
@@ -56,7 +56,7 @@ const Menu = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const isDark = type === MenuType.dark;
-  const clsName = clsx(extraClassName, className, JustifyContentType[justify]);
+  const clsName = clsx(extraClassName, className, adjustItems(justify));
   const menuRef = useRef(null);
   const multiRef = useMultipleRefs(ref, menuRef);
 
@@ -76,9 +76,9 @@ const Menu = React.forwardRef((props, ref) => {
   //while the field is not customized, the store would be changed in Item and then the memorized data would get
   //outdated data, so remove the useMemo()
   const realActiveItems = () => customActive ? activeItems
-      : store.getState().activeItemsList;
+    : store.getState().activeItemsList;
   const realOpenList = () => customOpen ? openedMenus
-      : store.getState().openList;
+    : store.getState().openList;
 
   const preCompact = usePrevious(compact);
   const prePopupSubMenu = usePrevious(popupSubMenu);
@@ -160,7 +160,7 @@ const Menu = React.forwardRef((props, ref) => {
     const list = realActiveItems();
     if (multiSelect) {
       nextList = list.includes(id) ? [...list.filter(item => item !== id)] :
-          [...list, id];
+        [...list, id];
     }
 
     if (!customActive) {
@@ -197,7 +197,7 @@ const Menu = React.forwardRef((props, ref) => {
       //if this submenu is direct child of menu, that means only one submenu should
       //be opened later
       nextList = directChild ? [id]
-          : oList.concat(id);
+        : oList.concat(id);
     } else {
       nextList = oList.concat(id);
       preExpandList.current = nextList;
@@ -313,13 +313,13 @@ Menu.propTypes = {
   multiSelect: PropTypes.bool,
   compact: PropTypes.bool,
   defaultActiveItems: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.number, PropTypes.array]),
+    [PropTypes.string, PropTypes.number, PropTypes.array]),
   activeItems: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.number, PropTypes.array]),
+    [PropTypes.string, PropTypes.number, PropTypes.array]),
   defaultOpenedMenus: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.number, PropTypes.array]),
+    [PropTypes.string, PropTypes.number, PropTypes.array]),
   openedMenus: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.number, PropTypes.array]),
+    [PropTypes.string, PropTypes.number, PropTypes.array]),
   onOpenedMenu: PropTypes.func,
   primaryBarPosition: PropTypes.oneOf(['left', 'right']),
   selectable: PropTypes.bool,

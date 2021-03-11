@@ -10,7 +10,7 @@
   "global.home.button.start": "快速开始",
   "global.home.button.github": "Github",
   "global.home.current.release": "当前版本",
-  "global.home.current.release.version": "0.4.1",
+  "global.home.current.release.version": "0.4.2",
 
   "global.home.desc1": "设计更友好的站点，兼容各类显示设备"
 }

@@ -1,7 +1,7 @@
 import React, {useCallback, useContext, useMemo} from 'react';
 import clsx from 'clsx';
 import {isBlank, isNil, nonNil, validate} from '../Utils';
-import {FormDirection, JustifyContentType} from '../common/Constants';
+import {adjustItems, FormDirection} from '../common/Constants';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
 import {useFormContext} from 'react-hook-form';
@@ -17,8 +17,8 @@ const FormItem = React.forwardRef((props, ref) => {
     compact = false,//todo
     extraClassName,
     direction,
-    justify = JustifyContentType.start,
-    justifyLabel = JustifyContentType.start,
+    justify = "start",
+    justifyLabel = "start",
     labelCol,
     controlCol,
     name,
@@ -47,7 +47,7 @@ const FormItem = React.forwardRef((props, ref) => {
   const formControlled = !isBlank(name) || nonNil(rules);
   const isHorizontal = itemDirection === FormDirection.horizontal;
 
-  let justifyCls = JustifyContentType[justify];
+  let justifyCls = adjustItems(justify);
   let clsName = clsx(extraClassName, className, itemDirection, justifyCls);
 
   const getCloneProps = useCallback(() => ({
@@ -139,7 +139,7 @@ const FormItem = React.forwardRef((props, ref) => {
       </>;
     }
 
-    const labelJustifyCls = JustifyContentType[justifyLabel];
+    const labelJustifyCls = adjustItems(justifyLabel);
     const labelCls = clsx('item-label', labelJustifyCls);
 
     if (isNil(realLabel)) {

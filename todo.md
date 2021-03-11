@@ -34,6 +34,7 @@ Enhance:
 - all components should reactor use EventCallback to bind the onXX events
 - select list supports virtual list feature for big data set (virtual-list)
 - change ok to success
+- improve AlignItemsType and JustifyContentType
 
 Note:
 - components 下的package需要修改为json后缀才可以发布版本，当前使用了阿里的源，发布时修改修改对应的.yarnrc和.npmrc去取消发布路径。

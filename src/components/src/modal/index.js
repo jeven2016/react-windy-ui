@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import Modal from './Modal';
 import useElement from '../common/useElement';
-import {JustifyContentType} from '../common/Constants';
+import {adjustItems} from '../common/Constants';
 import {ModalContext} from '../common/Context';
 import {isNil} from '../Utils';
 import Element from '../common/Element';
@@ -17,9 +17,10 @@ const Body = React.forwardRef(
 
 const Footer = React.forwardRef((props, ref) => {
   const {justify = 'end', compact = false, ...otherProps} = props;
+  const justifyCls = adjustItems(justify);
   return useElement({...otherProps}, ref, 'footer', {
     'compact-footer': compact,
-    [JustifyContentType[justify]]: justify,
+    [justifyCls]: justifyCls
   });
 });
 

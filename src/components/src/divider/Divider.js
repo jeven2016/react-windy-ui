@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import useElement from '../common/useElement';
 
 /**
@@ -7,11 +7,12 @@ import useElement from '../common/useElement';
  */
 const Divider = React.forwardRef(
   (props, ref) => {
-    const {translucent = false, direction = 'horizontal', ...otherProps} = props;
-    const style = translucent ? {
+    const {translucent = false, style, direction = 'horizontal', ...otherProps} = props;
+    const sty = translucent ? {
+      ...style,
       backgroundColor: 'rgba(0,0,0,0.15)',
-    } : {};
-    return useElement({...otherProps, style: style}, ref, 'divider', {[direction]: direction});
+    } : style;
+    return useElement({...otherProps, style: sty}, ref, 'divider', {[direction]: direction});
   });
 
 export default Divider;

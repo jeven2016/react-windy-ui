@@ -21,7 +21,7 @@ const Affix = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const [status, setStatus] = useState(
-      {affixed: false, width: 0, height: 0, isBlock: false});
+    {affixed: false, width: 0, height: 0, isBlock: false});
   const containerRef = useRef(null);
   const isTop = !isNil(top);
   const isBottom = !isNil(bottom);
@@ -31,7 +31,7 @@ const Affix = React.forwardRef((props, ref) => {
     if (disabled) {
       return null;
     }
-    const memoStyle = {};
+    const memoStyle = style ? style : {};
     if (status.affixed) {
       if (isTop) {
         memoStyle.top = top;
@@ -45,16 +45,7 @@ const Affix = React.forwardRef((props, ref) => {
       memoStyle.height = status.height;
     }
     return memoStyle;
-  }, [
-    disabled,
-    status.affixed,
-    status.height,
-    status.width,
-    isTop,
-    isBottom,
-    block,
-    top,
-    bottom]);
+  }, [disabled, style, status.affixed, status.height, status.width, isTop, isBottom, block, top, bottom]);
 
   const handleAffixed = useCallback((e) => {
     const isScrollEvent = e?.type === 'scroll';
@@ -92,25 +83,24 @@ const Affix = React.forwardRef((props, ref) => {
   //observe the changes of container
   useResizeObserver(containerRef, handleAffixed);
 
-  const containerStyle = style;
   const clsName = clsx(className,
-      {'affix-fixed': canAffix, 'block': status.isBlock || block});
+    {'affix-fixed': canAffix, 'block': status.isBlock || block});
 
   const containerClsName = clsx('affix-container', extraClassName, {
     block: status.isBlock || block,
   });
 
   return disabled ? children :
-      <div className={containerClsName} style={containerStyle}
-           ref={containerRef}>
-        {canAffix ?
-            <div style={{width: status.width, height: status.height}}/>
-            : null}
-        <div className={clsName} ref={ref}
-             style={!disabled ? newStyle : null} {...otherProps}>
-          {children}
-        </div>
-      </div>;
+    <div className={containerClsName}
+         ref={containerRef}>
+      {canAffix ?
+        <div style={{width: status.width, height: status.height}}/>
+        : null}
+      <div className={clsName} ref={ref}
+           style={!disabled ? newStyle : null} {...otherProps}>
+        {children}
+      </div>
+    </div>;
 });
 
 Affix.propTypes = {

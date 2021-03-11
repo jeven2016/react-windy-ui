@@ -9,7 +9,9 @@ const Content = () => {
     textAlign: 'center',
     color: '#fff',
     borderRadius: '.25rem',
-    fontWeight: '500'
+    fontWeight: '500',
+    flexShrink: 0,
+    width: '100%'
   }}>
     Col
   </div>

@@ -1,4 +1,4 @@
-import {nonNil} from "../Utils";
+import clsx from "clsx";
 
 export const ColCount = 12;
 
@@ -85,33 +85,30 @@ export const PopupPosition = {
   rightBottom: 'rightBottom',
 };
 
-export const PopoverTriggerType = {
-  hover: 'hover',
-  click: 'click',
-};
-
 export const JustifyContentType = {
-  start: 'flex-adjust justify-start',
-  end: 'flex-adjust justify-end',
-  center: 'flex-adjust justify-center',
-  around: 'flex-adjust justify-around',
-  between: 'flex-adjust justify-between',
-  evenly: 'flex-adjust justify-evenly',
-
-  simplify: (value) => {
-    return nonNil(value) ? value.replace('flex-adjust', '') : value;
-  }
+  start: 'justify-start',
+  end: 'justify-end',
+  center: 'justify-center',
+  around: 'justify-around',
+  between: 'justify-between',
+  evenly: 'justify-evenly'
 };
 
 export const AlignItemsType = {
-  start: 'flex-adjust align-start',
-  end: 'flex-adjust align-end',
-  center: 'flex-adjust align-center',
-
-  simplify: (value) => {
-    return nonNil(value) ? value.replace('flex-adjust', '') : value;
-  }
+  start: 'align-start',
+  end: 'align-end',
+  center: 'align-center'
 };
+
+export function adjustItems(justifyContent/* value: start, center,...*/, alignItems/*value: start, end,...*/) {
+  const jc = JustifyContentType[justifyContent];
+  const al = AlignItemsType[alignItems];
+  return clsx({
+    "flex-adjust": jc || al,
+    [jc]: jc,
+    [al]: al
+  })
+}
 
 export const Active = {
   na: 'na',

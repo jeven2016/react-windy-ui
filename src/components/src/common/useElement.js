@@ -1,7 +1,7 @@
 import React from 'react';
 import Element from './Element';
 import clsx from 'clsx';
-import {JustifyContentType} from './Constants';
+import {adjustItems} from './Constants';
 
 const useElement = (props, ref, defaultClassName, cls = {}, newStyle = {}) => {
   const {
@@ -12,8 +12,9 @@ const useElement = (props, ref, defaultClassName, cls = {}, newStyle = {}) => {
     ...otherProps
   } = props;
 
+  const justifyCls = adjustItems(justify);
   let clsName = clsx(extraClassName, className, cls, {
-    [JustifyContentType[justify]]: justify,
+    [justifyCls]: justifyCls,
   });
 
   const sty = {...style, newStyle};

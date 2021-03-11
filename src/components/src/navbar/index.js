@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import Navbar from './Navbar';
 import Switch from './Switch';
 import Element from '../common/Element';
-import {JustifyContentType} from '../common/Constants';
+import {adjustItems} from '../common/Constants';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {NavbarContext} from '../common/Context';
@@ -47,10 +47,8 @@ const List = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const {expandList, smallWindow} = useContext(NavbarContext);
-  let justifyCls = JustifyContentType[justify];
 
-  let clsName = clsx(extraClassName, className, {
-    [justifyCls]: justifyCls,
+  let clsName = clsx(extraClassName, className, adjustItems(justify), {
     'small-window': smallWindow,
   });
 
@@ -78,7 +76,7 @@ const Item = React.forwardRef((props, ref) => {
     compact = false,
     ...otherProps
   } = props;
-  
+
   const {hasItemBackground: menuHasBg, menuHasBar} = useContext(NavbarContext);
   let extraClass = clsx(extraClassName, {
     'with-bg': nonNil(hasBackground) ? hasBackground : menuHasBg,

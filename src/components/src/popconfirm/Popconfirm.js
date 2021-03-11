@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import Popover from '../popover';
 import {IconWarning2} from '../Icons';
 import Button from '../button';
-import {JustifyContentType, PopupPosition} from '../common/Constants';
+import {adjustItems, PopupPosition} from '../common/Constants';
 import clsx from 'clsx';
 import * as PropTypes from 'prop-types';
 import useEventCallback from '../common/useEventCallback';
@@ -23,18 +23,14 @@ const PopConfirm = React.forwardRef((props, ref) => {
     onOk,
     onCancel,
     icon,
-    justifyFooter = JustifyContentType.end,
+    justifyFooter = "end",
     position = PopupPosition.bottom,
     ...otherProps
   } = props;
   const popupRef = useRef(null);
-  const justifyCls = JustifyContentType[justifyFooter];
-
   const clsName = clsx(extraClassName, className);
 
-  const footerClsName = clsx('pop-footer', {
-    [justifyCls]: justifyCls,
-  });
+  const footerClsName = clsx('pop-footer', adjustItems(justifyFooter));
 
   const closePopover = useEventCallback(() => {
     popupRef.current.changeActive(false);
@@ -91,7 +87,7 @@ Popover.propTypes = {
   onCancel: PropTypes.func,
   icon: PropTypes.node,
   justifyFooter: PropTypes.oneOf(
-      ['start', 'end', 'center', 'around', 'between', 'between']),
+    ['start', 'end', 'center', 'around', 'between', 'between']),
   position: PropTypes.string,
 };
 

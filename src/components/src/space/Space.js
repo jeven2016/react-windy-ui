@@ -1,6 +1,6 @@
 import React, {useMemo} from "react";
 import clsx from "clsx";
-import {AlignItemsType, Direction} from "../common/Constants";
+import {adjustItems, AlignItemsType, Direction, JustifyContentType} from "../common/Constants";
 import {nonNil} from "../Utils";
 import PropTypes from "prop-types";
 
@@ -12,6 +12,8 @@ const Space = React.forwardRef((props, ref) => {
     extraClassName,
     className = 'space-row',
     align = 'center',
+    justifyItem = "center",
+    alignItem = "center",
     gutter,
     wrap = false,
     children,
@@ -20,7 +22,7 @@ const Space = React.forwardRef((props, ref) => {
   } = props;
   const isVertical = direction === Direction.vertical;
 
-  const alignCls = AlignItemsType[align];
+  const alignCls = adjustItems(null, align);
 
   const gutterX = useMemo(() => {
     const x = gutter?.x;
@@ -43,6 +45,7 @@ const Space = React.forwardRef((props, ref) => {
   }, [children]);
 
   const newChd = useMemo(() => {
+    const itemClsName = clsx("space-item", adjustItems(justifyItem, alignItem));
     return React.Children.map(children, (chd, i) => {
       const sty = {};
       const notLastNode = i + 1 < count;
@@ -56,11 +59,11 @@ const Space = React.forwardRef((props, ref) => {
           sty.marginBottom = `${gutterY}px`;
         }
       }
-      return <div className="space-item" style={sty}>
+      return <div className={itemClsName} style={sty}>
         {chd}
       </div>
     });
-  }, [children, count, gutterX, gutterY, isVertical]);
+  }, [alignItem, children, count, gutterX, gutterY, isVertical, justifyItem]);
 
   const clsName = clsx(extraClassName, className, alignCls, {
     column: isVertical,
@@ -76,6 +79,8 @@ Space.propTypes = {
   extraClassName: PropTypes.string,
   className: PropTypes.string,
   align: PropTypes.oneOf(Object.keys(AlignItemsType)),
+  justifyItem: PropTypes.oneOf(Object.keys(JustifyContentType)),
+  alignItem: PropTypes.oneOf(Object.keys(AlignItemsType)),
   gutter: PropTypes.shape({x: PropTypes.number, y: PropTypes.number}),
   wrap: PropTypes.bool,
   direction: PropTypes.oneOf(Object.keys(Direction)),

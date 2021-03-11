@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import clsx from 'clsx';
 import {isBlank, isNil, nonNil} from '../Utils';
-import {FormDirection, JustifyContentType} from '../common/Constants';
+import {adjustItems, FormDirection} from '../common/Constants';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
 import {useFormContext} from 'react-hook-form';
@@ -13,8 +13,8 @@ const RootItem = React.forwardRef((props, ref) => {
     children,
     rootItem,
     direction,
-    justify = JustifyContentType.start,
-    justifyLabel = JustifyContentType.start,
+    justify = "start",
+    justifyLabel = "start",
     labelCol,
     controlCol,
     simple,
@@ -34,7 +34,7 @@ const RootItem = React.forwardRef((props, ref) => {
   }, [children, ctx]);
 
   const labelComp = useLabel(props);
-  const labelJustifyCls = JustifyContentType[justifyLabel];
+  const labelJustifyCls = adjustItems(justifyLabel);
   const labelCls = clsx('item-label', labelJustifyCls);
   const itemLabelCol = isNil(labelCol) ? ctx.labelCol : labelCol;
   const itemControlCol = isNil(controlCol) ? ctx.controlCol : controlCol;
@@ -59,7 +59,9 @@ const RootItem = React.forwardRef((props, ref) => {
     }
 
     if (!isHorizontal) {
-      return <>{labelComp}<div>{chdArray}{errorMessages}</div> </>;
+      return <>{labelComp}
+        <div>{chdArray}{errorMessages}</div>
+      </>;
     } else {
       return <><Row align='center'>
         <Col extraClassName={labelCls} {...itemLabelCol}>{realLabel}</Col>
@@ -92,7 +94,7 @@ const RootItem = React.forwardRef((props, ref) => {
     hasErrors,
     compact]);
 
-  let justifyCls = JustifyContentType[justify];
+  let justifyCls = adjustItems(justify);
   let clsName = clsx(extraClassName, className, itemDirection, justifyCls);
   return <FormItemContext.Provider value={{rootItemControl: true}}>
     {simple ? chd : <div ref={ref} className={clsName} {...rest}>

@@ -1,18 +1,20 @@
 import React from 'react';
 import clsx from 'clsx';
 import useElement from './common/useElement';
-import {JustifyContentType} from './common/Constants';
+import {adjustItems, JustifyContentType} from './common/Constants';
 import PropTypes from 'prop-types';
 
 const Header = React.forwardRef(
-    (props, ref) => useElement(props, ref, 'header'));
+  (props, ref) => useElement(props, ref, 'header'));
 
 const Footer = React.forwardRef(
-    (props, ref) => {
-      const {justify = JustifyContentType.start, ...otherProps} = props;
-      return useElement(otherProps, ref, 'footer',
-          {[JustifyContentType[justify]]: justify});
-    });
+  (props, ref) => {
+    const {justify = "start", ...otherProps} = props;
+
+    const justifyClsName = adjustItems(justify)
+    return useElement(otherProps, ref, 'footer',
+      {[justifyClsName]: justifyClsName});
+  });
 
 const Blockquote = React.forwardRef((props, ref) => {
   const {

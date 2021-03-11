@@ -1,5 +1,5 @@
 import React from 'react';
-import {AlignItemsType, JustifyContentType} from '../common/Constants';
+import {adjustItems, AlignItemsType, JustifyContentType} from '../common/Constants';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {RowContext} from "../common/Context";
@@ -29,14 +29,9 @@ const Row = React.forwardRef((props, ref) => {
     x: nonNil(gutterX) && isNumber(gutterX) ? gutterX : DefaultGutter.x,
     y: nonNil(gutterY) && isNumber(gutterY) ? gutterY : DefaultGutter.y
   }
-  let justifyCls = JustifyContentType.simplify(JustifyContentType[justify]);
-  let alignCls = AlignItemsType.simplify(AlignItemsType[align]);
 
-  const clsName = clsx(extraClassName, className, {
-    'flex-adjust': justifyCls && alignCls,
-    [justifyCls]: justifyCls,
-    [alignCls]: alignCls
-  });
+  const justifyCls = adjustItems(justify, align);
+  const clsName = clsx(extraClassName, className, justifyCls);
 
   const rowStyle = validGutter.x === 0 && validGutter.y === 0 ? null : {
     margin: `-${validGutter.y / 2}px -${validGutter.x / 2}px ${validGutter.y

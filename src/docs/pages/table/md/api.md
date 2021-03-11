@@ -59,7 +59,7 @@
 | width | 表格列的宽度 | number | - |   |
 | filterable | 是否可以过滤 | boolean | false |   |
 | filterConfig | 过滤的配置选项, 用于在过滤弹出框中显示可以过滤的选项 | object| - | 格式为： <Code>{filterItems: [ { text: 'filter item1', value: 'item1'}]}</Code>   |
-
+| format | 转换列的显示内容 | function(text, row, tableIndex) | - |   |
 
 
 +++ en_US
