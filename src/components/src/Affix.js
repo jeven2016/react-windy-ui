@@ -31,7 +31,7 @@ const Affix = React.forwardRef((props, ref) => {
     if (disabled) {
       return null;
     }
-    const memoStyle = style ? style : {};
+    const memoStyle = {...style};
     if (status.affixed) {
       if (isTop) {
         memoStyle.top = top;

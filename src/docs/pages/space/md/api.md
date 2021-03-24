@@ -20,9 +20,10 @@
 | alignItem | 指定Item中的内容在垂直方向的排列方式 | string | start | 值可以是: <Code>start</Code>、<Code>center</Code>、<Code>end</Code> |
 | justifyItem | 指定Item中的内容在水平方向的排列方式 | string | start | 值可以是: <Code>start</Code>、<Code>center</Code>、<Code>end</Code>、<Code>around</Code>、<Code>between</Code>、<Code>evenly</Code> |
 | gutter | 指定列在垂直、水平方向的间隔 | object | - | <Code>{x,y}</Code>, x指水平方向上的间隔(像素)，y指垂直方向上的间隔(像素)。|
-| wrap | 内容超出时，是否自动换行 | boolean | false |  |
+| wrap | 内容超出时，是否设置flex-wrap为wrap | boolean | false |  |
 | direction | 布局方向 | string | horizontal | 值可以是： <Code>horizontal（水平布局</Code>），<Code>vertical（垂直布局）</Code>   |
-
+| block | 将宽度设置为100%的行宽 | boolean | false |  |
+| blockItem | 每个item的宽度是否为100%的行宽 | boolean | false |  |
 
 +++ en_US
 ## API [editUrl]     

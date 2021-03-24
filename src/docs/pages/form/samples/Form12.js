@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Form, Input, Notification, Radio, RadioGroup, Space} from 'react-windy-ui';
 
 export default function Form12() {
-  const {form, clearErrors, trigger} = Form.useForm({
+  const {form, clearErrors, trigger, handleSubmit} = Form.useForm({
     mode: 'onChange',
     shouldFocusError: false,
   });
@@ -49,9 +49,14 @@ export default function Form12() {
         </Form.Item>
 
         <Form.Item>
-          <Space gutter={{x:8,y:8}}>
+          <Space gutter={{x: 8, y: 8}}>
             <Button color="blue" nativeType="submit">Submit</Button>
-            <Button onClick={() => trigger(['name', 'age'])}>
+            <Button onClick={async () => {
+              const succeed = await trigger(['name', 'age'])
+              if (succeed) {
+                await handleSubmit(onSubmit)();
+              }
+            }}>
               Check Name & Age
             </Button>
             <Button onClick={() => clearErrors()}>Clear Errors</Button>

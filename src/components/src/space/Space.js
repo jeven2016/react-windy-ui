@@ -11,6 +11,8 @@ const Space = React.forwardRef((props, ref) => {
   const {
     extraClassName,
     className = 'space-row',
+    block = false,
+    blockItem = false,
     align = 'center',
     justifyItem = "center",
     alignItem = "center",
@@ -45,13 +47,16 @@ const Space = React.forwardRef((props, ref) => {
   }, [children]);
 
   const newChd = useMemo(() => {
-    const itemClsName = clsx("space-item", adjustItems(justifyItem, alignItem));
+    const itemClsName = clsx("space-item", {block: blockItem}, adjustItems(justifyItem, alignItem));
     return React.Children.map(children, (chd, i) => {
       const sty = {};
       const notLastNode = i + 1 < count;
-      if (nonNil(gutterX) && notLastNode) {
-        //not the last node
-        sty.marginRight = `${gutterX}px`;
+
+      if (!blockItem && !isVertical) {
+        if (nonNil(gutterX) && notLastNode) {
+          //not the last node
+          sty.marginRight = `${gutterX}px`;
+        }
       }
 
       if (nonNil(gutterY)) {
@@ -63,11 +68,12 @@ const Space = React.forwardRef((props, ref) => {
         {chd}
       </div>
     });
-  }, [alignItem, children, count, gutterX, gutterY, isVertical, justifyItem]);
+  }, [alignItem, blockItem, children, count, gutterX, gutterY, isVertical, justifyItem]);
 
   const clsName = clsx(extraClassName, className, alignCls, {
     column: isVertical,
     wrap,
+    block
   });
 
   return <div className={clsName} {...rest}>
@@ -84,5 +90,7 @@ Space.propTypes = {
   gutter: PropTypes.shape({x: PropTypes.number, y: PropTypes.number}),
   wrap: PropTypes.bool,
   direction: PropTypes.oneOf(Object.keys(Direction)),
+  block: PropTypes.bool,
+  blockItem: PropTypes.bool,
 }
 export default Space;

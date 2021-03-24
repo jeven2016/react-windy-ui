@@ -1,3 +1,13 @@
+
+### 0.4.4
+* Col:  update the aligin-self of Col itself to stretch
+
+
+### 0.4.3
+Fixed the following bugs 
+* Hot fix: Affix, object is not extensible  
+* Space: support block and blockItem property
+
 ### 0.4.2
 Fixed the following bugs 
 * Divider: cannot inject style object
