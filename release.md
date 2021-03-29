@@ -1,6 +1,9 @@
 
 ### 0.4.4
-* Col:  update the aligin-self of Col itself to stretch
+* Col:  update the align-self of Col itself to stretch
+* Toggle: add type button to avoid submitting form automatically
+* Toggle: integrate with form
+* upgrade react-hook-form to the latest stable version
 
 
 ### 0.4.3

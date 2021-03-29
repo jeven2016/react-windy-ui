@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, Form, Input, Notification, Radio, RadioGroup, Space} from 'react-windy-ui';
+import {Toggle} from "../../../../components/src";
 
 export default function Form12() {
   const {form, clearErrors, trigger, handleSubmit} = Form.useForm({
@@ -8,6 +9,7 @@ export default function Form12() {
   });
 
   const onSubmit = (data, e) => {
+    console.log(data)
     Notification.mini({
       position: 'topCenter',
       title: 'The form data:',
@@ -46,6 +48,19 @@ export default function Form12() {
             <Radio value="email">Email</Radio>
             <Radio value="phone">Phone</Radio>
           </RadioGroup>
+        </Form.Item>
+
+        <Form.Item
+          label="e"
+          name="e"
+          rules={{
+            validate: (value) => {
+              if (!value) {
+                return "Should be enabled";
+              }
+            }
+          }}>
+          <Toggle/>
         </Form.Item>
 
         <Form.Item>
