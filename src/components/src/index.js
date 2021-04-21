@@ -52,6 +52,7 @@ export {default as useEventCallback} from './common/useEventCallback';
 export {default as usePrevious} from './common/UsePrevious';
 export {CssThemeProvider, useTheme} from './theme/theme';
 export {default as Space} from './space/Space';
+export {default as TextField} from './textfield';
 
 export {
   IconInfo,

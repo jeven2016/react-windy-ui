@@ -38,10 +38,12 @@ const Ripple = React.forwardRef((props, ref) => {
     if (e.type === 'touchend') {
       e.persist();
     }
-    if (rippleArray && rippleArray.length > 0) {
-      // remove the a ripple
-      setRippleArray(pre => pre.slice(1));
-    }
+    setTimeout(() => {
+      if (rippleArray && rippleArray.length > 0) {
+        // remove the a ripple
+        setRippleArray(pre => pre.slice(1));
+      }
+    }, 100);
   }, [rippleArray]);
 
   const createRipple = useCallback((params) => {
@@ -64,7 +66,7 @@ const Ripple = React.forwardRef((props, ref) => {
 
     let rippleX, rippleY, rippleSize;
     if (center || (e.clientX === 0 && e.clientY === 0) ||
-        (!e.clientX && !e.touches)) {
+      (!e.clientX && !e.touches)) {
       rippleX = Math.round(rect.width / 2);
       rippleY = Math.round(rect.height / 2);
     } else {
@@ -76,12 +78,12 @@ const Ripple = React.forwardRef((props, ref) => {
 
     if (center) {
       rippleSize = Math.sqrt(
-          (2 * Math.pow(rect.width, 2) + Math.pow(rect.height, 2)) / 3);
+        (2 * Math.pow(rect.width, 2) + Math.pow(rect.height, 2)) / 3);
     } else {
       const sizeX = Math.max(
-          Math.abs(element.clientWidth - rippleX), rippleX) * 2 + 2;
+        Math.abs(element.clientWidth - rippleX), rippleX) * 2 + 2;
       const sizeY = Math.max(Math.abs(element.clientHeight - rippleY),
-          rippleY) * 2 + 2;
+        rippleY) * 2 + 2;
       rippleSize = Math.sqrt(Math.pow(sizeX, 2) + Math.pow(sizeY, 2));
     }
     createRipple({rippleX, rippleY, rippleSize});
@@ -91,7 +93,7 @@ const Ripple = React.forwardRef((props, ref) => {
     from: {opacity: 0.1, transform: 'scale(0)'},
     enter: {opacity: 0.4, transform: 'scale(1)'},
     leave: {opacity: 0},
-    config: config.slow,
+    // config: {duration: 3000},
   });
 
   return <div className='ripple' ref={rippleRef}>
@@ -105,16 +107,16 @@ const Ripple = React.forwardRef((props, ref) => {
         } = item;
 
         return <animated.span
-            className="content"
-            key={key}
-            style={{
-              ...styleProps,
-              background: color,
-              left: rippleX - rippleSize / 2,
-              top: rippleY - rippleSize / 2,
-              width: rippleSize,
-              height: rippleSize,
-            }}/>;
+          className="content"
+          key={key}
+          style={{
+            ...styleProps,
+            background: color,
+            left: rippleX - rippleSize / 2,
+            top: rippleY - rippleSize / 2,
+            width: rippleSize,
+            height: rippleSize,
+          }}/>;
       })
 
     }
@@ -154,23 +156,23 @@ const useRippleEvent = ({rippleRef, rootProps = {}, hasRipple = true}) => {
   } = rootProps;
   const startMethod = 'start', stopMethod = 'stop';
   const mouseDownCb = useRippleCallback(hasRipple, rippleRef, startMethod,
-      onMouseDown);
+    onMouseDown);
 
   //todo: mouseUpCb works on mobile browser
   const mouseUpCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
-      onMouseUp);
+    onMouseUp);
 
   const mouseLeaveCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
-      onMouseLeave);
+    onMouseLeave);
 
   const touchStartCb = useRippleCallback(hasRipple, rippleRef, startMethod,
-      onTouchStart);
+    onTouchStart);
 
   const touchEndCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
-      onTouchEnd);
+    onTouchEnd);
 
   const touchMoveCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
-      onTouchMove);
+    onTouchMove);
 
   return {
     onMouseDown: mouseDownCb,
