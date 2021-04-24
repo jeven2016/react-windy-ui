@@ -1,98 +1,190 @@
-import React, {useMemo, useRef, useState} from "react";
+import React, {useCallback, useMemo, useRef, useState} from "react";
 import clsx from "clsx";
 import useMultipleRefs from "../common/UseMultipleRefs";
 import useEvent from "../common/UseEvent";
 import {EventListener} from "../common/Constants";
 import useEventCallback from "../common/useEventCallback";
-import usePrevious from "../common/UsePrevious";
 import {animated, useSpring} from "react-spring";
-import {isBlank} from "../Utils";
+import {convertToArray, isBlank, isNil, nonNil, validate} from "../Utils";
+import {IconPwdInvisible, IconPwdVisible} from "../Icons";
+import Select from "../select";
 
-const Type = {
+const Shape = {
   outline: 'outline',
   underline: 'underline'
 }
 
+const Animation = {
+  outline: {
+    labelFixed: {labelTop: "0%", labelTransform: 'translate3d(0.75rem, -50%, 0)'},
+    labelMove: {
+      labelTop: {moveTo: '0%', revertTo: '50%'},
+      labelTransform: {to: 'translate3d(0.75rem, -50%, 0)', revert: 'translate3d(1rem, -50%, 0)'}
+    }
+  },
+  underline: {
+    labelFixed: {labelTop: "0%", labelTransform: 'translate3d(0, -0.25rem, 0)'},
+    labelMove: {
+      labelTop: {moveTo: '0%', revertTo: '50%'},
+      labelTransform: {to: 'translate3d(0, 0, 0)', revert: 'translate3d(0, -0.25rem, 0)'}
+    }
+  }
+}
+
+function getAnimation(type) {
+  const animation = Animation[type];
+  validate(!isNil(animation), "Invalid type:" + type);
+  return animation;
+}
+
 const TextField = React.forwardRef((props, ref) => {
-  const {
-    required = false,
-    className = "text-field",
-    extraClassName,
-    type = Type.outline,
-    label,
-    labelFixed = false,
-    placeholder,
-    disabled = false,
-    nativeType = "text",
-    ...rest
-  } = props;
-  const inputRef = useRef(null);
-  const multiInputRef = useMultipleRefs(ref, inputRef);
+    const {
+      rootRef,
+      shape = Shape.outline,
+      required = false,
+      className = "text-field",
+      extraClassName,
+      label,
+      labelFixed = false,
+      placeholder,
+      disabled = false,
+      nativeType = "text",
+      hasBottomBar = true,
+      hasToggleIcon = true,
+      toggleIcons = [<IconPwdVisible/>, <IconPwdInvisible/>],
+      leftElements,
+      rightElements,
+      block = false,
+      select = false,
+      children, //only works for select
+      selectProps = {},
+      size = "medium",
+      ...rest
+    } = props;
+    const isOutline = shape === Shape.outline;
+    const inputRef = useRef(null);
+    const multiInputRef = useMultipleRefs(ref, inputRef);
+    const intRootRef = useRef(null);
+    const realRootRef = useMultipleRefs(rootRef, intRootRef)
 
-  const [moveLabel, setMove] = useState(false);
-  const [inputFocused, setFocused] = useState(false);
+    const [moveLabel, setMove] = useState(false);
+    const [inputFocused, setFocused] = useState(false);
 
-  const changeLabel = useEventCallback(() => {
-    if (disabled) {
-      return;
-    }
-    setMove(true);
-    setFocused(true);
-  });
+    const shouldLabelFixed = moveLabel || labelFixed || nonNil(props.value) || select;
 
-  const revertLabel = useEventCallback((e) => {
-    if (disabled) {
-      return;
-    }
-    setMove(!isBlank(e.target.value));
-    setFocused(false);
-  });
+    const rightElems = convertToArray(rightElements);
+    const leftElems = convertToArray(leftElements);
 
-  const getInput = useEventCallback(() => inputRef.current);
+    const changeLabel = useEventCallback(() => {
+      setMove(true);
+      setFocused(true);
+    });
 
-  const preHandler = usePrevious(changeLabel);
+    const revertLabel = useEventCallback((e) => {
+      setMove(!isBlank(e?.target?.value));
+      setFocused(false);
+    });
 
-  console.log(`handler=${changeLabel === preHandler}`);
+    const getInput = useEventCallback(() => select ? intRootRef.current : inputRef.current);
 
-  useEvent(EventListener.click, changeLabel, !disabled, getInput);
-  useEvent(EventListener.blur, revertLabel, !disabled, getInput);
+    useEvent(EventListener.click, changeLabel, !disabled, getInput);
+    useEvent(EventListener.blur, revertLabel, !disabled, getInput);
 
-  const clsName = clsx(extraClassName, className, type, {
-    "show": moveLabel || labelFixed,
-    "focused": inputFocused
-  })
+    const clsName = clsx(extraClassName, className, shape, size, {
+      block,
+      "show": shouldLabelFixed,
+      "focused": inputFocused,
+      'with-bottom-bar': !isOutline && hasBottomBar,
+    })
 
 
-  const labelMovement = useMemo(() => {
-    if (labelFixed) {
-      return {labelTop: "0%", labelTransform: 'translate3d(0.75rem, -50%, 0)'}
-    }
+    const labelMovement = useMemo(() => {
+      const animation = getAnimation(shape);
 
-    return {
-      labelTop: moveLabel ? '0%' : '50%',
-      labelTransform: moveLabel ? 'translate3d(0.75rem, -50%, 0)' : 'translate3d(1rem, -50%, 0)'
-    }
-  }, [labelFixed, moveLabel])
-
-  const {labelTop, labelTransform} = useSpring({
-    from: labelMovement,
-    to: labelMovement,
-    config: {duration: 120},
-  });
-
-  return <>
-    <div className={clsName}>
-      {
-        label && type === Type.outline &&
-        <animated.span className="tf-label" style={{top: labelTop, transform: labelTransform}}>
-          <span> {label}</span>
-          {required && <span className="tf-required">*</span>}
-        </animated.span>
+      if (shouldLabelFixed) {
+        return animation.labelFixed;
       }
-      <input type={nativeType} ref={multiInputRef} className="tf-input"
-             placeholder={moveLabel || labelFixed ? placeholder : null} {...rest}/>
-    </div>
-  </>
-});
+
+      return {
+        labelTop: moveLabel ? animation.labelMove.labelTop.moveTo : animation.labelMove.labelTop.revertTo,
+        labelTransform: moveLabel ? animation.labelMove.labelTransform.to : animation.labelMove.labelTransform.revert
+      }
+    }, [moveLabel, shape, shouldLabelFixed])
+
+    const {labelTop, labelTransform} = useSpring({
+      from: labelMovement,
+      to: labelMovement,
+      config: {duration: 150},
+    });
+
+    const createSelect = useCallback(() => {
+      const optionType = (<option/>).type;
+      const {onActiveChange} = selectProps;
+
+      const activeHandler = (nextActive, e) => {
+        console.log(e.target?.className)
+        //if select menu is closed by selecting one of its items
+        if (!nextActive && !intRootRef.current.contains(e.target)) {
+          setFocused(false)
+        }
+        onActiveChange && onActiveChange(nextActive, e);
+      };
+      const newProps = {...rest, ...selectProps, onActiveChange: activeHandler};
+      return <Select ref={intRootRef} placeholder={placeholder} disabled={disabled}
+                     block={block} size={size}
+                     {...newProps}>
+        {
+          React.Children.map(children, (chd, i) => {
+            if (chd.type === optionType) {
+              return <Select.Option {...chd.props} key={`opt-${i}`}/>
+            }
+            if (chd.type === Select.Option) {
+              return chd;
+            }
+            return null;
+          })
+        }
+      </Select>
+
+    }, [block, children, disabled, placeholder, selectProps]);
+
+    const inputElem = useMemo(() => {
+      let input = select ? createSelect() :
+        <input type={nativeType} ref={multiInputRef} className="tf-input" disabled={disabled}
+               placeholder={shouldLabelFixed ? placeholder : null} {...rest}/>;
+
+      if (rightElems.length === 0 && leftElems.length === 0) {
+        return input;
+      }
+
+      return <div className="tf-input-wrapper">
+        {
+          leftElems.map((elem, i) =>
+            <div className="tf-col left" key={`left-${i}`}>{elem}</div>
+          )
+        }
+        {input}
+        {
+          rightElems.map((elem, i) =>
+            <div className="tf-col right" key={`right-${i}`}>{elem}</div>
+          )
+        }
+      </div>;
+    }, [createSelect, disabled, leftElems, multiInputRef, nativeType, placeholder, rest, rightElems, select, shouldLabelFixed]);
+
+    return <>
+      <div className={clsName} ref={realRootRef}>
+        {
+          label &&
+          <animated.span className="tf-label" style={{top: labelTop, transform: labelTransform}}>
+            <span> {label}</span>
+            {required && <span className="tf-required">*</span>}
+          </animated.span>
+        }
+        {inputElem}
+      </div>
+    </>
+  }
+);
 
 export default TextField;
