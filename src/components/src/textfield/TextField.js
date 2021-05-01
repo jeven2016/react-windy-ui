@@ -59,6 +59,8 @@ const TextField = React.forwardRef((props, ref) => {
       children, //only works for select
       selectProps = {},
       size = "medium",
+      errorType,
+      hasBox = true,
       ...rest
     } = props;
     const isOutline = shape === Shape.outline;
@@ -90,12 +92,16 @@ const TextField = React.forwardRef((props, ref) => {
     useEvent(EventListener.click, changeLabel, !disabled, getInput);
     useEvent(EventListener.blur, revertLabel, !disabled, getInput);
 
-    const clsName = clsx(extraClassName, className, shape, size, {
-      block,
-      "show": shouldLabelFixed,
-      "focused": inputFocused,
-      'with-bottom-bar': !isOutline && hasBottomBar,
-    })
+    const errorCls = isNil(errorType) ? null : clsx('error-info', errorType);
+
+    const clsName = clsx(extraClassName, className, shape, size, errorCls,
+      {
+        block,
+        "show": shouldLabelFixed,
+        "focused": inputFocused,
+        'with-bottom-bar': !isOutline && hasBottomBar,
+        'with-box': hasBox
+      })
 
 
     const labelMovement = useMemo(() => {
@@ -146,7 +152,7 @@ const TextField = React.forwardRef((props, ref) => {
         }
       </Select>
 
-    }, [block, children, disabled, placeholder, selectProps]);
+    }, [block, children, disabled, placeholder, rest, selectProps, size]);
 
     const inputElem = useMemo(() => {
       let input = select ? createSelect() :

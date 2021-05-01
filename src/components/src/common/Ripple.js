@@ -1,11 +1,7 @@
-import React, {
-  useCallback,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
-import {animated, config, useTransition} from 'react-spring';
+import React, {useCallback, useImperativeHandle, useState,} from 'react';
+import {animated, useTransition} from 'react-spring';
 import useEventCallback from './useEventCallback';
+import {random} from "../Utils";
 
 const defaultRect = {
   top: 0,
@@ -25,9 +21,7 @@ const Ripple = React.forwardRef((props, ref) => {
     color = '#fff',
   } = props;
   const rippleRef = React.useRef(null);
-
   const [rippleArray, setRippleArray] = useState([]);
-  const nextKey = useRef(0);
 
   useImperativeHandle(ref, () => ({
     start: start,
@@ -39,7 +33,7 @@ const Ripple = React.forwardRef((props, ref) => {
       e.persist();
     }
     setTimeout(() => {
-      if (rippleArray && rippleArray.length > 0) {
+      if (rippleRef.current && rippleArray && rippleArray.length > 0) {
         // remove the a ripple
         setRippleArray(pre => pre.slice(1));
       }
@@ -48,11 +42,10 @@ const Ripple = React.forwardRef((props, ref) => {
 
   const createRipple = useCallback((params) => {
     const {rippleX, rippleY, rippleSize} = params;
-    nextKey.current = nextKey.current + 1;
     setRippleArray([
       ...rippleArray,
       {
-        key: nextKey.current,
+        key: random(100, 10000000),
         rippleX: rippleX,
         rippleY: rippleY,
         rippleSize: rippleSize,
@@ -91,7 +84,7 @@ const Ripple = React.forwardRef((props, ref) => {
 
   const transitions = useTransition(rippleArray, null, {
     from: {opacity: 0.1, transform: 'scale(0)'},
-    enter: {opacity: 0.4, transform: 'scale(1)'},
+    enter: {opacity: 0.3, transform: 'scale(1)'},
     leave: {opacity: 0},
     // config: {duration: 3000},
   });
@@ -106,17 +99,21 @@ const Ripple = React.forwardRef((props, ref) => {
           rippleSize,
         } = item;
 
-        return <animated.span
-          className="content"
-          key={key}
-          style={{
-            ...styleProps,
-            background: color,
-            left: rippleX - rippleSize / 2,
-            top: rippleY - rippleSize / 2,
-            width: rippleSize,
-            height: rippleSize,
-          }}/>;
+        try {
+          return <animated.span
+            className="content"
+            key={key}
+            style={{
+              ...styleProps,
+              background: color,
+              left: rippleX - rippleSize / 2,
+              top: rippleY - rippleSize / 2,
+              width: rippleSize,
+              height: rippleSize,
+            }}/>;
+        } catch (e) {
+          console.log(e)
+        }
       })
 
     }

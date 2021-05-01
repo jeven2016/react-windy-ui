@@ -2,6 +2,7 @@
 
 ### 0.4.5
 * Toggle: support form's defaultValue, other components need to double check as well(TODO)
+* Ripple: fix ripple issue of setTime
 
 ### 0.4.4
 * Col:  update the align-self of Col itself to stretch
