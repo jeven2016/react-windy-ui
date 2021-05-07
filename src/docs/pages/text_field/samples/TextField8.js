@@ -14,13 +14,15 @@ export default function TextField8() {
       </RadioGroup>
     </div>
 
-    <Space wrap gutter={{y: 16}}>
+    <Space wrap gutter={{y: 16}} direction="vertical" justifyItem="start">
       <TextField label="Name" placeholder="Enter Name"
                  size={size}
+                 block={true}
                  required={true}/>
 
       <TextField label="Name" shape="underline"
                  size={size}
+                 block={true}
                  placeholder="Enter Name" required={true}/>
 
       <TextField select={true}
@@ -28,7 +30,7 @@ export default function TextField8() {
                  placeholder="Select a city"
                  defaultValue="Shanghai"
                  label="City"
-                 style={{width: '15rem'}}
+                 block={true}
                  required={true}>
         <option value="Beijing">Beijing</option>
         <option value="Shanghai">Shanghai</option>

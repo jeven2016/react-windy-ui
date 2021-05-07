@@ -10,6 +10,7 @@ import Checkbox from '../Checkbox';
 import Radio, {RadioGroup} from '../Radio';
 import Widget from './Widget';
 import Toggle from "../toggle";
+import TextField from "../textfield";
 
 export const useLabel = (props) => {
   const {
@@ -104,6 +105,7 @@ export const cloneElement = (elem, props, ctx) => {
     case Radio:
     case RadioGroup:
     case Toggle:
+    case TextField:
       const ctlProps = {
         ...elem.props, ...restProps,
         extraClassName: clsx(originExCls, 'form-control'),

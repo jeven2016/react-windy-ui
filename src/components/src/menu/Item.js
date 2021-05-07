@@ -1,11 +1,10 @@
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
 import {MenuContext} from '../common/Context';
-import {includes, isNil, nonNil} from '../Utils';
+import {includes, invoke, isNil, nonNil, preventEvent} from '../Utils';
 import {Action, getPaddingStyle} from './MenuUtils';
 import PropTypes from 'prop-types';
 import {animated, useSpring} from 'react-spring';
-import {preventEvent} from '../Utils';
 import Tooltip from '../Tooltip';
 import {MenuType} from '../common/Constants';
 import Ripple from '../common/Ripple';
@@ -94,8 +93,8 @@ const Item = React.forwardRef((props, ref) => {
       ctx.dispatch({type: Action.clickHeader, id, e});
     }
 
-    onClick && onClick(e);
-    ctx.onClickItem && ctx.onClickItem(id, e);
+    invoke(onClick, e);
+    invoke(ctx.onClickItem, id, e);
   });
 
   const clsName = clsx(extraClassName, className, {
@@ -107,9 +106,9 @@ const Item = React.forwardRef((props, ref) => {
     'with-bg': hasBackground,
     'with-bottom-bar': hasBottomBar,
     'left-bar': ctx.type === MenuType.primary && ctx.primaryBarPosition ===
-        'left',
+      'left',
     'right-bar': ctx.type === MenuType.primary && ctx.primaryBarPosition ===
-        'right',
+      'right',
   });
 
   const content = useMemo(() => {
@@ -133,20 +132,20 @@ const Item = React.forwardRef((props, ref) => {
   }, [customizedChildren, icon, directChild, show, innerProps, children]);
 
   const paddingStyle = useMemo(() => ctx.autoIndent ?
-      getPaddingStyle({
-        ignored: ctx.popupSubMenu,
-        indentUnit: ctx.indentUnit,
-        indentation: ctx.indentation,
-        initIndent: ctx.initIndent,
-        level: level,
-      }) : null,
-      [
-        ctx.autoIndent,
-        ctx.indentUnit,
-        ctx.indentation,
-        ctx.initIndent,
-        ctx.popupSubMenu,
-        level]);
+    getPaddingStyle({
+      ignored: ctx.popupSubMenu,
+      indentUnit: ctx.indentUnit,
+      indentation: ctx.indentation,
+      initIndent: ctx.initIndent,
+      level: level,
+    }) : null,
+    [
+      ctx.autoIndent,
+      ctx.indentUnit,
+      ctx.indentation,
+      ctx.initIndent,
+      ctx.popupSubMenu,
+      level]);
 
   const renderCnt = <div ref={ref} className={clsName} {...otherProps}
                          onClick={clickHandler}

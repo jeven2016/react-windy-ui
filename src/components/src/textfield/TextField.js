@@ -52,8 +52,8 @@ const TextField = React.forwardRef((props, ref) => {
       hasBottomBar = true,
       hasToggleIcon = true,
       toggleIcons = [<IconPwdVisible/>, <IconPwdInvisible/>],
-      leftElements,
-      rightElements,
+      leftItems,
+      rightItems,
       block = false,
       select = false,
       children, //only works for select
@@ -74,8 +74,8 @@ const TextField = React.forwardRef((props, ref) => {
 
     const shouldLabelFixed = moveLabel || labelFixed || nonNil(props.value) || select;
 
-    const rightElems = convertToArray(rightElements);
-    const leftElems = convertToArray(leftElements);
+    const rightElems = convertToArray(rightItems);
+    const leftElems = convertToArray(leftItems);
 
     const changeLabel = useEventCallback(() => {
       setMove(true);
@@ -128,7 +128,6 @@ const TextField = React.forwardRef((props, ref) => {
       const {onActiveChange} = selectProps;
 
       const activeHandler = (nextActive, e) => {
-        console.log(e.target?.className)
         //if select menu is closed by selecting one of its items
         if (!nextActive && !intRootRef.current.contains(e.target)) {
           setFocused(false)

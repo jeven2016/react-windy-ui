@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Form, Input, Notification, Radio, RadioGroup, Space} from 'react-windy-ui';
-import {Toggle} from "../../../../components/src";
+import {TextField, Toggle} from "../../../../components/src";
 
 export default function Form12() {
   const {form, clearErrors, trigger, handleSubmit} = Form.useForm({
@@ -50,9 +50,27 @@ export default function Form12() {
           </RadioGroup>
         </Form.Item>
 
+        <Form.Item justifyLabel="end" name="country" required
+                   rules={{
+                     required: 'The country is required',
+                   }}>
+          <TextField label="Country" block/>
+        </Form.Item>
+
+        <Form.Item justifyLabel="end" name="city" required
+                   rules={{
+                     required: 'The city is required',
+                   }}>
+          <TextField label="City" block select>
+            <option>Nanjing</option>
+            <option>Beijing</option>
+            <option>Shanghai</option>
+          </TextField>
+        </Form.Item>
+
         <Form.Item
-          label="e"
-          name="e"
+          label="Enable"
+          name="enable"
           rules={{
             validate: (value) => {
               if (!value) {

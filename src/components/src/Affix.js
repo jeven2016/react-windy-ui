@@ -1,10 +1,11 @@
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import {invoke, isNil} from './Utils';
 import {useEvent} from './index';
 import {EventListener} from './common/Constants';
 import clsx from 'clsx';
 import useResizeObserver from './common/UseResizeObserver';
 import PropTypes from 'prop-types';
+import useEventCallback from "./common/useEventCallback";
 
 const Affix = React.forwardRef((props, ref) => {
   const {
@@ -47,7 +48,7 @@ const Affix = React.forwardRef((props, ref) => {
     return memoStyle;
   }, [disabled, style, status.affixed, status.height, status.width, isTop, isBottom, block, top, bottom]);
 
-  const handleAffixed = useCallback((e) => {
+  const handleAffixed = useEventCallback((e) => {
     const isScrollEvent = e?.type === 'scroll';
     if (disabled || isNil(containerRef.current)) {
       return;
@@ -57,7 +58,7 @@ const Affix = React.forwardRef((props, ref) => {
     if (isTop) {
       isAffixed = rect.top < top;
     } else if (isBottom) {
-      isAffixed = rect.bottom + bottom > window.innerHeight;
+      isAffixed = rect.bottom > targetWindow.innerHeight;
     }
 
     if (isScrollEvent) {
@@ -75,7 +76,7 @@ const Affix = React.forwardRef((props, ref) => {
       });
       invoke(onChange, isAffixed);
     }
-  }, [bottom, disabled, isBottom, isTop, onChange, status, top]);
+  });
 
   //register a scroll listener
   useEvent(EventListener.scroll, handleAffixed, true, targetWindow);

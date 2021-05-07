@@ -7,6 +7,7 @@ editUrl: $BASE/docs/pages/text-field/md/TextField6.md
 ---
 
 +++ zh_CN
+结合<Code>Select</Code>组件的下拉选择框。
 
 +++ en_US
 Underlined Text Field
