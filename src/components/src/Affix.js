@@ -1,5 +1,5 @@
 import React, {useMemo, useRef, useState} from 'react';
-import {invoke, isNil} from './Utils';
+import {execute, invoke, isEqual, isNil} from './Utils';
 import {useEvent} from './index';
 import {EventListener} from './common/Constants';
 import clsx from 'clsx';
@@ -33,7 +33,7 @@ const Affix = React.forwardRef((props, ref) => {
       return null;
     }
     const memoStyle = {...style};
-    if (status.affixed) {
+    if (canAffix) {
       if (isTop) {
         memoStyle.top = top;
       } else if (isBottom) {
@@ -46,10 +46,10 @@ const Affix = React.forwardRef((props, ref) => {
       memoStyle.height = status.height;
     }
     return memoStyle;
-  }, [disabled, style, status.affixed, status.height, status.width, isTop, isBottom, block, top, bottom]);
+  }, [disabled, style, canAffix, isTop, isBottom, top, bottom, block, status.height, status.width]);
 
   const handleAffixed = useEventCallback((e) => {
-    const isScrollEvent = e?.type === 'scroll';
+    // const isScrollEvent = e?.type === 'scroll';
     if (disabled || isNil(containerRef.current)) {
       return;
     }
@@ -61,22 +61,18 @@ const Affix = React.forwardRef((props, ref) => {
       isAffixed = rect.bottom > targetWindow.innerHeight;
     }
 
-    if (isScrollEvent) {
-      //unnecessary to update the width and height while the window is scrolling
-      if (status.affixed !== isAffixed) {
-        setStatus({...status, affixed: isAffixed});
-        invoke(onChange, isAffixed);
-      }
-    } else {
-      setStatus({
-        ...status,
-        affixed: isAffixed,
-        width: rect.width,
-        height: rect.height,
-      });
-      invoke(onChange, isAffixed);
+    const nextStatus = {
+      ...status,
+      affixed: isAffixed,
+      width: rect.width,
+      height: rect.height,
+    };
+
+    if (!isEqual(nextStatus, status)) {
+      setStatus(nextStatus);
+      execute(() => invoke(onChange, isAffixed), 100);
     }
-  });
+  }, [disabled, isBottom, isTop, onChange, status, targetWindow.innerHeight, top]);
 
   //register a scroll listener
   useEvent(EventListener.scroll, handleAffixed, true, targetWindow);

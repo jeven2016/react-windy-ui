@@ -10,6 +10,7 @@ import random from 'lodash/random';
 import set from 'lodash/set';
 import slice from 'lodash/slice';
 import without from 'lodash/without';
+import isEqual from 'lodash/isEqual';
 
 import {PopupPosition} from './common/Constants';
 import clsx from 'clsx';
@@ -33,6 +34,7 @@ export {
   max,
   get,
   set,
+  isEqual,
 };
 
 export const isNil = (value) => value == null;
@@ -89,6 +91,9 @@ export const getTransformOrigin = (type) => {
       break;
     case 'rightBottom':
       origin = 'left top';
+      break;
+
+    default:
       break;
   }
   return origin;

@@ -62,9 +62,9 @@ export default function Form12() {
                      required: 'The city is required',
                    }}>
           <TextField label="City" block select>
-            <option>Nanjing</option>
-            <option>Beijing</option>
-            <option>Shanghai</option>
+            <option value="Nanjing">Nanjing</option>
+            <option value="Beijing">Beijing</option>
+            <option value="Shanghai">Shanghai</option>
           </TextField>
         </Form.Item>
 
