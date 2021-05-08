@@ -4,6 +4,7 @@
 * Toggle: support form's defaultValue, other components need to double check as well(TODO)
 * Ripple: fix ripple issue of setTimeout
 * Affix: unable to fix bottom
+* Affix: unable to automatically adjust the Affix's width
 
 ### 0.4.4
 * Col:  update the align-self of Col itself to stretch
