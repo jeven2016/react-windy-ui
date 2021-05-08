@@ -9,7 +9,6 @@ export default function TextField7() {
       <RadioGroup defaultValue={errorType}
                   onChange={(val) => setType(val)}>
         <Radio value="ok"> ok</Radio>
-        <Radio value="success"> success</Radio>
         <Radio value="warning">warning </Radio>
         <Radio value="error">error </Radio>
       </RadioGroup>

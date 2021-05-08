@@ -6,10 +6,17 @@ export default function Form12() {
   const {form, clearErrors, trigger, handleSubmit} = Form.useForm({
     mode: 'onChange',
     shouldFocusError: false,
+    defaultValues: {
+      name: 'ui',
+      age: 18,
+      contact: 'email',
+      country: 'China',
+      enable: true,
+      city: 'Beijing'
+    }
   });
 
   const onSubmit = (data, e) => {
-    console.log(data)
     Notification.mini({
       position: 'topCenter',
       title: 'The form data:',

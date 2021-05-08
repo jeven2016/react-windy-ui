@@ -8,6 +8,8 @@ import {animated, useSpring} from "react-spring";
 import {convertToArray, isBlank, isNil, nonNil, validate} from "../Utils";
 import {IconPwdInvisible, IconPwdVisible} from "../Icons";
 import Select from "../select";
+import PropTypes from "prop-types";
+import Element from "../common/Element";
 
 const Shape = {
   outline: 'outline',
@@ -191,5 +193,32 @@ const TextField = React.forwardRef((props, ref) => {
     </>
   }
 );
+
+TextField.propTypes = {
+  rootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+  ]),
+  shape: PropTypes.oneOf(Object.keys(Shape)),
+  required: PropTypes.bool,
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
+  label: PropTypes.node,
+  labelFixed: PropTypes.bool,
+  placeholder: PropTypes.string,
+  disabled: PropTypes.bool,
+  nativeType: PropTypes.string,
+  hasBottomBar: PropTypes.bool,
+  hasToggleIcon: PropTypes.bool,
+  toggleIcons: PropTypes.any,
+  leftItems: PropTypes.any,
+  rightItems: PropTypes.any,
+  block: PropTypes.bool,
+  select: PropTypes.bool,
+  selectProps: PropTypes.object,
+  size: PropTypes.oneOf(['large', 'medium', 'small']),
+  errorType: PropTypes.oneOf(['ok', 'warning', 'error']),
+  hasBox: PropTypes.bool,
+}
 
 export default TextField;

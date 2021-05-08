@@ -60,7 +60,6 @@ const Navbar = React.forwardRef((props, ref) => {
 
   //hide the navbar while scrolling window
   const handleScroll = useEventCallback((e) => {
-    console.log('scrolling....');
     if (!hideOnScroll) {
       return;
     }

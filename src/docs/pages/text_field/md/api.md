@@ -31,7 +31,7 @@
 | select | 是否是选择框控件 | boolean | false  |   |
 | selectProps | 当是选择框控件时，设置给Select的属性 | object | -  | 当select为true时，通过此属性给Select传递属性值  |
 | size | 文本框的尺寸 | boolean | false  | 值可以是: large, medium, small或者不设置  |
-| errorType | 对应的错误类型 | string | -  | 值可以是: error, ok, success, warning或者不设置  |
+| errorType | 对应的错误类型 | string | -  | 值可以是: error, ok, warning或者不设置  |
 | hasBox | 是否有阴影 | boolean | true  |  |
 
 
