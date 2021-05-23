@@ -1,8 +1,8 @@
 
 
 ### 0.4.5
-* Toggle: support form's defaultValue, other components need to double check as well(TODO)
-* Ripple: fix ripple issue of setTimeout
+* Toggle: support form's defaultValue, other components need to double check as well
+* Ripple: fix a ripple issue of setTimeout
 * Affix: unable to fix bottom
 * Affix: unable to automatically adjust the Affix's width
 
@@ -11,7 +11,6 @@
 * Toggle: add type button to avoid submitting form automatically
 * Toggle: integrate with form
 * upgrade react-hook-form to the latest stable version
-
 
 ### 0.4.3
 Fixed the following bugs 

@@ -1,14 +1,13 @@
 import React from 'react';
-import {Button, Form, Input, Notification, Radio, RadioGroup, Space} from 'react-windy-ui';
-import {TextField, Toggle} from "../../../../components/src";
+import {Button, Form, Input, Notification, Radio, RadioGroup, Space, TextField, Toggle} from 'react-windy-ui';
 
 export default function Form12() {
   const {form, clearErrors, trigger, handleSubmit} = Form.useForm({
     mode: 'onChange',
     shouldFocusError: false,
     defaultValues: {
-      name: 'ui',
-      age: 18,
+      name: null,
+      age: null,
       contact: 'email',
       country: 'China',
       enable: true,
@@ -30,7 +29,7 @@ export default function Form12() {
     <div className="doc doc-row">
       <Form direction="vertical" form={form} onSubmit={onSubmit}>
 
-        <Form.Item justifyLabel="end" name="name" label="Name" required
+        <Form.Item justifyLabel="end" name="name" label="Name" required defaultValue={"hlllll"}
                    rules={{
                      required: 'The name is required',
                    }}>

@@ -79,6 +79,7 @@ export const cloneElement = (elem, props, ctx) => {
 
   //for Controller, the pureRules is used by controller and the ref should be excluded in this case
   const {pureRules, ref, ...restProps} = props;
+  const mergedProps = {...elem.props, ...restProps}
 
   let extraCls;
   switch (elem.type) {
@@ -86,8 +87,7 @@ export const cloneElement = (elem, props, ctx) => {
       originExCls = elem.props.inputProps?.extraClassName;
       extraCls = clsx(originExCls, 'form-control');
       newProps = {
-        ...elem.props,
-        ...restProps,
+        ...mergedProps,
         inputProps: {
           ...elem.props.inputProps,
           extraClassName: extraCls,
@@ -101,13 +101,28 @@ export const cloneElement = (elem, props, ctx) => {
                          rules={pureRules}
                          control={control} {...newProps}/>;
 
+    case Toggle:
+      const cp = {
+        ...mergedProps,
+        extraClassName: clsx(originExCls, 'form-control'),
+        errorType: realEt
+      };
+      const name = cp.name;
+      delete cp.name;
+      return <Controller
+        name={name}
+        rules={pureRules}
+        render={({onChange, onBlur, value, ref: toggleRef}) => {
+          return <Toggle active={value} onChange={onChange} onBlur={onBlur} ref={toggleRef} {...cp}/>
+        }}
+        control={control}/>;
+
     case Checkbox:
     case Radio:
     case RadioGroup:
-    case Toggle:
     case TextField:
       const ctlProps = {
-        ...elem.props, ...restProps,
+        ...mergedProps,
         extraClassName: clsx(originExCls, 'form-control'),
         errorType: realEt
       };
