@@ -3,7 +3,6 @@ import HomeHeader from '../home/HomeHeader';
 import {Affix, Card, Col, Drawer, initStore, Responsive, RouteLoader, Row, useMediaQuery,} from 'react-windy-ui';
 import DocMenu from './DocMenu';
 import {Route, Switch, useRouteMatch} from 'react-router-dom';
-import InstallIndex from '../pages/install/InstallIndex';
 import ButtonIndex from '../pages/button/ButtonIndex';
 import InputIndex from '../pages/input/InputIndex';
 import CheckboxIndex from '../pages/checkbox/CheckboxIndex';
@@ -214,7 +213,7 @@ function DocCenter(props) {
                   <StartIndex/>
                 </RouteLoader>
                 <RouteLoader route={Route} path={`${url}/`}>
-                  <InstallIndex/>
+                  <StartIndex/>
                 </RouteLoader>
                 <RouteLoader route={Route}>
                   <div>
