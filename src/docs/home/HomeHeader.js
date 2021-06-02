@@ -10,6 +10,7 @@ import {
   faLightbulb,
   faSignLanguage
 } from "@fortawesome/free-solid-svg-icons";
+import Contributors from "./Contributors";
 
 export default function HomeHeader({transparent = false}) {
   const [barExtraCls, setBarExtraCls] = useState(null);
@@ -51,7 +52,7 @@ export default function HomeHeader({transparent = false}) {
             <Navbar.Item>
               <FontAwesomeIcon icon={faLightbulb}
                                style={{marginRight: '.5rem'}}/>
-              <Popover body="current Contributor" activeBy="hover"
+              <Popover body={<Contributors/>} activeBy="click"
                        position="bottomRight">
                 <span style={{color: '#fff'}}>{intl.get(
                     'global.home.link.contribute')}</span>

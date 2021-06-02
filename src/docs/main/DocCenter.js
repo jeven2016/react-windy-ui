@@ -42,6 +42,7 @@ import QuickManu from './QuickManu';
 import {QuickManuContext} from '../utils/DocUtils';
 import SpaceIndex from "../pages/space/SpaceIndex";
 import TextFieldIndex from "../pages/text_field/TextFieldIndex";
+import StartIndex from "../pages/start/StartIndex";
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -208,6 +209,9 @@ function DocCenter(props) {
                 </RouteLoader>
                 <RouteLoader route={Route} path={`${url}/text-field`}>
                   <TextFieldIndex/>
+                </RouteLoader>
+                <RouteLoader route={Route} path={`${url}/start`}>
+                  <StartIndex/>
                 </RouteLoader>
                 <RouteLoader route={Route} path={`${url}/`}>
                   <InstallIndex/>

@@ -15,6 +15,7 @@ export default function DocMenu(props) {
   return <Menu type="primary"
                hasBox={hasBox}
                hasRipple={false}
+               defaultActiveItems={['start']}
                onSelect={onSelectMenuItem}
                defaultOpenedMenus={['basic']}
                onTouchStart={(e) => {
@@ -31,6 +32,11 @@ export default function DocMenu(props) {
                  overflow: overflow,
                  background: '#fff',
                }}>
+      <Menu.Item id="start">
+        <Link to={`${url}/start`}>
+          快速开始
+        </Link>
+      </Menu.Item>
     <Menu.SubMenu header="表单" id="basic">
       <Menu.Item id="btn">
         <Link to={`${url}/button`}>

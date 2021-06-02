@@ -94,7 +94,7 @@ export const getPackage = () => {
         title: 'react-windy-ui',
         description: 'demo for react-windy-ui ',
         dependencies: {
-          'react-windy-ui': '^0.4.2',
+          'react-windy-ui': '^0.4.5',
           'react': 'latest',
           'react-dom': 'latest',
         },

@@ -105,7 +105,7 @@ export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
   const sourceCode = {};
 
   //parse the raw code
-  requireCode.keys().forEach((filename) => {
+  requireCode && requireCode.keys().forEach((filename) => {
     const content = requireCode(filename);
     let pureName = getPureName(filename);
     if (isBlank(pureName)) {
@@ -116,7 +116,7 @@ export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
   });
 
   //parse the markdown files
-  requireMd.keys().forEach((filename) => {
+  requireMd && requireMd.keys().forEach((filename) => {
     const content = requireMd(filename).default;
     let pureName = getPureName(filename);
     if (isBlank(pureName)) {
@@ -159,7 +159,7 @@ export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
   });
 
   //fill the react components into config
-  requireSamples.keys().forEach(jsFileName => {
+  requireSamples && requireSamples.keys().forEach(jsFileName => {
     const Comp = requireSamples(jsFileName).default;
     let pureName = getPureName(jsFileName);
     if (isBlank(pureName)) {
@@ -173,7 +173,7 @@ export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
         return;
       }
       if (key.toLowerCase() === pureName.toLowerCase() ||
-          pureName === config[key].codeFileName) {
+        pureName === config[key].codeFileName) {
         config[key].component = <Comp/>;
         found = true;
       }
