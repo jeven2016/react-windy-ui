@@ -35,9 +35,9 @@
 -  **可使用create-react-app创建工程**  
 
 <Hcode>
-yarn create react-app antd-demo
+yarn create react-app my-app
 # or
-npx create-react-app antd-demo
+npx create-react-app my-app
 </Hcode>  
 
 yarn 或 npm 安装    
