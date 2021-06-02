@@ -32,11 +32,11 @@ export default function DocMenu(props) {
                  overflow: overflow,
                  background: '#fff',
                }}>
-      <Menu.Item id="start">
-        <Link to={`${url}/start`}>
-          快速开始
-        </Link>
-      </Menu.Item>
+    <Menu.Item id="start">
+      <Link to={`${url}/start`}>
+        快速开始
+      </Link>
+    </Menu.Item>
     <Menu.SubMenu header="表单" id="basic">
       <Menu.Item id="btn">
         <Link to={`${url}/button`}>
@@ -227,6 +227,18 @@ export default function DocMenu(props) {
         <Link to={`${url}/hooks`}>
           Hooks
         </Link>
+      </Menu.Item>
+      <Menu.Item id="theme">
+        皮肤
+      </Menu.Item>
+      <Menu.Item id="icons">
+        图标库
+      </Menu.Item>
+      <Menu.Item id="classes">
+        辅助样式
+      </Menu.Item>
+      <Menu.Item id="functions">
+        函数工具
       </Menu.Item>
     </Menu.SubMenu>
   </Menu>;
