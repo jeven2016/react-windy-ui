@@ -31,11 +31,7 @@ const Collapse = React.forwardRef((props, ref) => {
     'global-with-box': hasBox,
   });
 
-  const {
-    state: currentActive,
-    setState: setActive,
-    customized,
-  } = useInternalState({
+  const [currentActive, setActive] = useInternalState({
     props,
     stateName: 'active',
     defaultState: convertToArray(defaultActive),
@@ -43,24 +39,22 @@ const Collapse = React.forwardRef((props, ref) => {
   });
 
   const clickItem = (value, isCollapsed, e) => {
-    if (!customized) {
-      if (isNil(currentActive)) {
-        if (!isCollapsed) {
-          setActive([value]);
-          return;
-        }
-      }
-
-      if (isCollapsed && currentActive.includes(value)) {
-        //collapse the item corresponding to this value
-        setActive(currentActive.filter(v => v !== value));
-      }
+    if (isNil(currentActive)) {
       if (!isCollapsed) {
-        if (accordion) {
-          setActive([value]);
-        } else if (!currentActive.includes(value)) {
-          setActive(pre => [...pre, value]);
-        }
+        setActive([value]);
+        return;
+      }
+    }
+
+    if (isCollapsed && currentActive.includes(value)) {
+      //collapse the item corresponding to this value
+      setActive(currentActive.filter(v => v !== value));
+    }
+    if (!isCollapsed) {
+      if (accordion) {
+        setActive([value]);
+      } else if (!currentActive.includes(value)) {
+        setActive(pre => [...pre, value]);
       }
     }
     onChange && onChange(value, isCollapsed, e);
@@ -68,7 +62,6 @@ const Collapse = React.forwardRef((props, ref) => {
 
   const ctx = {
     accordion,
-    customized,
     hasBorder,
     hasCollapseIcon,
     collapseIcon: null,
@@ -82,7 +75,7 @@ const Collapse = React.forwardRef((props, ref) => {
 
   return <div className={clsName} {...otherProps}>
     <CollapseContext.Provider
-        value={ctx}>
+      value={ctx}>
       {children}
     </CollapseContext.Provider>
   </div>;

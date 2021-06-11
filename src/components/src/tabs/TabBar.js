@@ -9,7 +9,6 @@ import {
 } from './TabsCommon';
 import useEventCallback from "../common/useEventCallback";
 import PropTypes from "prop-types";
-import Tabs from "./Tabs";
 
 const CardBorderType = {
   none: 'none',

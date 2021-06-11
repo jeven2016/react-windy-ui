@@ -7,12 +7,12 @@ export default function Tree2() {
   return <>
     <div className="doc doc-row">
       <Toggle active={onlySelectLeaf}
-              content={{on: 'Only Select Leaf', off: 'Only Select Leaf'}}
+              label={{on: 'Only Select Leaf', off: 'Only Select Leaf'}}
               onChange={(val) => setOnlySelectLeaf(val)}/>
     </div>
     <div className="doc doc-row">
       <Toggle active={highlightLine}
-              content={{on: 'Highlight Line', off: 'Highlight Line'}}
+              label={{on: 'Highlight Line', off: 'Highlight Line'}}
               onChange={(val) => setHighlightLine(val)}/>
     </div>
 

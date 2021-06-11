@@ -40,11 +40,7 @@ const Carousel = React.forwardRef((props, ref) => {
   } = props;
   const clsName = clsx(extraClassName, className);
 
-  const {
-    state: currentActive,
-    setState: setActive,
-    customized: customActive,
-  } = useInternalState({
+  const [currentActive, setActive] = useInternalState({
     props,
     stateName: 'active',
     defaultState: defaultActive,
@@ -52,10 +48,7 @@ const Carousel = React.forwardRef((props, ref) => {
   });
 
   const change = useEventCallback(index => {
-    if (!customActive) {
-      setActive(index);
-    }
-
+    setActive(index);
     onChange && onChange(index);
   });
 

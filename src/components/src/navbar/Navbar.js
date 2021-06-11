@@ -39,11 +39,7 @@ const Navbar = React.forwardRef((props, ref) => {
 
   const {matches: smallWindow} = useMediaQuery(mediaQuery, mediaQueryWindow);
 
-  const {
-    state: expandList,
-    setState: setExpand,
-    customized,
-  } = useInternalState({
+  const [expandList, setExpand] = useInternalState({
     props,
     stateName: 'expand',
     defaultState: defaultExpand,
@@ -52,9 +48,7 @@ const Navbar = React.forwardRef((props, ref) => {
 
   const toggleList = useEventCallback((e) => {
     const next = !expandList;
-    if (!customized) {
-      setExpand(next);
-    }
+    setExpand(next);
     onExpand && onExpand(next, e);
   });
 

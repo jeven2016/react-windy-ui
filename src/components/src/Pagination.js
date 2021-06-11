@@ -68,22 +68,14 @@ const Pagination = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
 
-  const {
-    state: currentPage,
-    setState: setPage,
-    customized,
-  } = useInternalState({
+  const [currentPage, setPage] = useInternalState({
     props,
     stateName: 'page',
     defaultState: defaultPage,
     state: page,
   });
 
-  const {
-    state: limit,
-    setState: setLimit,
-    customizedLimit,
-  } = useInternalState({
+  const [limit, setLimit] = useInternalState({
     props,
     stateName: 'pageRange',
     defaultState: defaultPageRange,
@@ -93,9 +85,7 @@ const Pagination = React.forwardRef((props, ref) => {
   const [directPage, setDirectPage] = useState('');
 
   const changePage = useEventCallback((nextPage, e) => {
-    if (!customized) {
-      setPage(nextPage);
-    }
+    setPage(nextPage);
     onChange && onChange(nextPage, limit, e);
   });
 
@@ -106,10 +96,7 @@ const Pagination = React.forwardRef((props, ref) => {
 
     if (selectedValue <= pageCount && selectedValue >= 1) {
       selectedValue = parseInt(selectedValue);
-
-      if (!customized) {
-        setPage(selectedValue);
-      }
+      setPage(selectedValue);
     }
 
     onChange && onChange(selectedValue, limit, e);
@@ -247,9 +234,7 @@ const Pagination = React.forwardRef((props, ref) => {
 
   const changePageLimit = useEventCallback((value, e) => {
     const val = parseInt(value);
-    if (!customizedLimit) {
-      setLimit(val);
-    }
+    setLimit(val);
     onChangeRange && onChangeRange(val, e);
   });
 

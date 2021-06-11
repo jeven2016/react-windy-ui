@@ -1,10 +1,10 @@
-import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useContext, useMemo, useState} from 'react';
 import clsx from 'clsx';
 import {IconArrowRightBlack, IconHome} from '../Icons';
 import Checkbox from '../Checkbox';
 import {TreeContext} from '../common/Context';
 import CollapsePanel from '../collapse/CollapsePanel';
-import {convertToArray, isNil, nonNil, preventEvent} from '../Utils';
+import {convertToArray, isNil, preventEvent} from '../Utils';
 import {CheckedStatus} from './TreeCommon';
 import PropTypes from 'prop-types';
 
@@ -20,28 +20,28 @@ const TreeItem = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const treeContext = useContext(TreeContext);
-  const {attach, detach} = treeContext.store;
+  // const {attach, detach} = treeContext.store;
 
-  const cacheStatus = treeContext.statusMap.get(id);
-  const [status, setStatus] = useState(nonNil(cacheStatus) ? cacheStatus : CheckedStatus.unchecked);
+  const realStatus = treeContext.treeStatus.get(id);
+
   const [isAsyncItem, setAsyncItem] = useState(false);//todo
 
 
-  // const statusMap = treeContext.statusMap;
+  // const treeStatus = treeContext.treeStatus;
   const treeData = treeContext.treeData;
 
   // const [statusMap, setStatusMap] = useState(getState().statusMap);
 
-  useEffect(() => {
-    const listener = ({statusMap}) => {
-      const nextStatus = statusMap.get(id);
-      if (nextStatus !== status) {
-        setStatus(nextStatus);
-      }
-    };
-    !treeContext.customCheck && attach(listener);
-    return () => detach(listener);
-  }, [attach, detach, id, status, treeContext.customCheck]);
+  // useEffect(() => {
+  //   const listener = ({statusMap}) => {
+  //     const nextStatus = statusMap.get(id);
+  //     if (nextStatus !== status) {
+  //       setStatus(nextStatus);
+  //     }
+  //   };
+  //   !treeContext.customCheck && attach(listener);
+  //   return () => detach(listener);
+  // }, [attach, detach, id, status, treeContext.customCheck]);
 
   //check whether to asynchronously load  the children nodes
   const treeNodeMap = treeData.treeNodeMap;
@@ -52,17 +52,14 @@ const TreeItem = React.forwardRef((props, ref) => {
   }, [moreElements]);
 
   //check the status of the checkbox
-  // var status = statusMap?.get(id);
-  const realStatus = treeContext.customCheck ? treeContext.statusMap.get(id) : status;
   const showIndeterminateState = realStatus ===
     CheckedStatus.indeterminate;
-  const checked = status === CheckedStatus.checked;
+  const checked = realStatus === CheckedStatus.checked;
 
   const clsName = clsx(className, extraClassName);
 
   const isSelected = treeContext.selectedItems.find(elem => elem === id);
-  const isExpanded = treeContext.expandedItems.find(
-    elem => 'all' === elem || elem === id);
+  const isExpanded = treeContext.expandedItems.find(elem => 'all' === elem || elem === id);
 
   const isLeaf = useMemo(() => {
     if (isAsyncLoadItem) {

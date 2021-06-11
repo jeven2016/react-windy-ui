@@ -28,11 +28,7 @@ const Checkbox = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
 
-  const {
-    state: checkState,
-    setState: setCheckState,
-    customized,
-  } = useInternalState({
+  const [checkState, setCheckState] = useInternalState({
     props,
     stateName: 'checked',
     defaultState: defaultChecked,
@@ -69,11 +65,9 @@ const Checkbox = React.forwardRef((props, ref) => {
       return;
     }
     const nextState = !checkState;
-    if (!customized) {
-      setCheckState(nextState);
-    }
+    setCheckState(nextState);
     onChange && onChange(nextState, e);
-  }, [onChange, checkState, customized, setCheckState, disabled]);
+  }, [onChange, checkState, setCheckState, disabled]);
 
   const iconColor = useMemo(() => createColorClsName({
     checkState, checkedColor, uncheckedColor,

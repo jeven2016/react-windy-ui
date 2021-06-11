@@ -6,7 +6,7 @@ export default function Tree4() {
   return <>
     <div className="doc doc-row">
       <Toggle active={multipleSelect}
-              content={{on: 'Multi-Select', off: 'Multi-Select'}}
+              label={{on: 'Multi-Select', off: 'Multi-Select'}}
               onChange={(val) => setMultipleSelect(val)}/>
     </div>
 

@@ -13,11 +13,7 @@ function BaseSwitch(props) {
     children, onChange, checked, ...otherProps
   } = props;
 
-  const {
-    state: checkState,
-    setState: setCheckState,
-    customized: isExternalControl,
-  } = useInternalState({
+  const [checkState, setCheckState] = useInternalState({
     props,
     stateName: 'value',
     defaultState: defaultValue,
@@ -44,9 +40,7 @@ function BaseSwitch(props) {
       return;
     }
     let state = !checkState;
-    if (!isExternalControl) {
-      setCheckState(state);
-    }
+    setCheckState(state);
     !isNil(onChange) && onChange(state, e);
   };
 

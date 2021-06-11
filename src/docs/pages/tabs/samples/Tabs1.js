@@ -3,7 +3,7 @@ import {Tabs} from 'react-windy-ui';
 
 export default function Tabs1() {
   return <>
-    <Tabs onChange={(item)=> console.log(item)}>
+    <Tabs onChange={(item) => console.log(item)}>
       <Tabs.Items>
         <Tabs.TabItem value="Item1">
           Item1

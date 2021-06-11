@@ -3,6 +3,7 @@ order: 6
 type: sample
 zh_CN: 异步读取JSON数据生成Tree
 en_US: Sample
+onlyVisible: false
 editUrl: $BASE/docs/pages/tree/md/tree6.md
 ---
 

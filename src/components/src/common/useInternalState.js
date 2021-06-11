@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {isNil} from '../Utils';
 
 /**
@@ -10,22 +10,31 @@ import {isNil} from '../Utils';
  * 3. if both the defaultState and state are not set, the backupState will be the the candidate.
  */
 const useInternalState = ({
-                            props, stateName, customizedFunction,
-                            defaultState, state, backupState,
+                            props,
+                            stateName,
+                            checkCustomized,
+                            defaultState,
+                            state,
+                            backupState,
                           }) => {
-  const customized = customizedFunction
-      ? customizedFunction()
-      : props.hasOwnProperty(stateName);
+  const customized = checkCustomized
+    ? checkCustomized()
+    : props.hasOwnProperty(stateName);
+
   let initState = customized ? state : defaultState;
   if (isNil(initState)) {
     initState = backupState;
   }
+
   const [internalState, setInternalState] = useState(initState);
-  return {
-    state: customized ? state : internalState,
-    setState: setInternalState,
-    customized: customized,
-  };
-};
+
+  const set = useCallback((value) => !customized && setInternalState(value), [customized]);
+
+  return [
+    customized ? state : internalState,
+    set,
+    customized,
+  ];
+}
 
 export default useInternalState;

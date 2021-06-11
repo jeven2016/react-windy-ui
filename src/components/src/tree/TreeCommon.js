@@ -99,6 +99,7 @@ export const mergeChildren = (jsonData, partialData, id) => {
 };
 
 export const parseChildren = (providedJsonData, children, jsonData) => {
+  console.log("parser tree....")
   var newChildren = providedJsonData ? jsonData : children;
   let root = {
     id: RootId,
@@ -115,7 +116,7 @@ export const parseChildren = (providedJsonData, children, jsonData) => {
   let i = 0;
   while (nodes.length > 0) {
     if (i++ > 10000) {
-      throw new Error('too many loops take to parse the whole tree.');
+      throw new Error('too many loops taken to parse the whole tree.');
     }
     let node = nodes.shift();
     if (isNil(node)) {
@@ -154,7 +155,7 @@ export const parseChildren = (providedJsonData, children, jsonData) => {
 
 };
 
-export const mapCheckedStatus = ({ids, treeData, autoCheckLeafs, map, checked}) => {
+export const mapCheckedStatus = ({ids, treeData, autoCheckLeaves, map, checked}) => {
   const idArray = convertToArray(ids);
   for (let id of idArray) {
     let node = treeData.treeNodeMap.get(id);
@@ -172,7 +173,7 @@ export const mapCheckedStatus = ({ids, treeData, autoCheckLeafs, map, checked}) 
     updateParentsStatus(map, parent, checked);
 
     //check or uncheck all leaf nodes if the parent has
-    if (node.hasChildren() && autoCheckLeafs) {
+    if (node.hasChildren() && autoCheckLeaves) {
       updateChildrenStatus(map, node, checked);
     }
   }
@@ -197,7 +198,7 @@ export class TreeNode {
     param = {isLeaf: false, label: null, asyncLoad: false}) {
     let validChildren = !isNil(children);
     if (validChildren && !Array.isArray(children)) {
-      throw new Error('the children should be a valid array.');
+      throw new Error('the children of this TreeNode should be a valid array.');
     }
     this.parent = parent;
     this.children = validChildren ? children : [];

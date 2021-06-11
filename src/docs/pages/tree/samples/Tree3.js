@@ -6,12 +6,12 @@ export default function Tree3() {
   const [selectedIds, set] = useState(null);
   const [checkedIds, setCheckedIds] = useState(["Child-1-1"]);
 
+  //maintain the checked items by yourself
   const checkHandler = (ids) => {
     setCheckedIds(ids);
     console.log(ids)
   }
 
-  console.log(checkedIds);
   return <>
     <div className="doc doc-row">
       <Toggle active={checkable}

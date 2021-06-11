@@ -29,11 +29,7 @@ const Curtain = React.forwardRef((props, ref) => {
     ...rest
   } = props;
 
-  const {
-    state: currentClose,
-    setState: setClose,
-    customized: customClose,
-  } = useInternalState({
+  const [currentClose, setClose] = useInternalState({
     props,
     stateName: 'close',
     defaultState: defaultClose,
@@ -49,9 +45,7 @@ const Curtain = React.forwardRef((props, ref) => {
     if (currentClose === value) {
       return;
     }
-    if (!customClose) {
-      setClose(value);
-    }
+    setClose(value);
     onChange && onChange(value, e);
   });
 
@@ -64,7 +58,7 @@ const Curtain = React.forwardRef((props, ref) => {
     if (curNode && currentClose) {
       if (e.target !== curNode) {
         if (!clickMaskToChange && (maskRef.current.contains(e.target)
-            || internalRef.current.contains(e.target))) {
+          || internalRef.current.contains(e.target))) {
           //don't change while clicking the mask
           return;
         }

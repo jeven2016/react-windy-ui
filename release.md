@@ -1,4 +1,7 @@
-
+### 0.4.6
+* Tree: fix the tree items unable to check
+* Tree: async loading of tree items
+* refactor useInternalState hook
 
 ### 0.4.5
 * Toggle: support form's defaultValue, other components need to double check as well

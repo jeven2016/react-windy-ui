@@ -43,11 +43,7 @@ const Alert = React.forwardRef((props, ref) => {
   validate(AlertType.hasOwnProperty(type),
     `The type '${type}' is not acceptable.`);
 
-  const {
-    state: activeAlert,
-    setState: setActive,
-    customized,
-  } = useInternalState({
+  const [activeAlert, setActive] = useInternalState({
     props,
     stateName: 'active',
     defaultState: true,
@@ -57,9 +53,7 @@ const Alert = React.forwardRef((props, ref) => {
   let typeCls = AlertType[type].clsName;
 
   const close = useEventCallback((e) => {
-    if (!customized) {
-      setActive(false);
-    }
+    setActive(false);
     onClose && onClose(true, e);
   });
 

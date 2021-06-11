@@ -85,26 +85,16 @@ const Tabs = React.forwardRef((props, ref) => {
     return isNil(firstItem) ? null : firstItem.props.value;
   }, [children]);
 
-  const backupActive = isNil(defaultActive) && isNil(active)
-    ? getFirstValue()
-    : null;
-
-  const {
-    state: currentActive,
-    setState: setActive,
-    customized,
-  } = useInternalState({
+  const [currentActive, setActive, customized] = useInternalState({
     props,
     stateName: 'active',
     defaultState: defaultActive,
     state: active,
-    backupState: backupActive,
+    backupState: getFirstValue(),
   });
 
   const change = (value) => {
-    if (!customized) {
-      setActive(value);
-    }
+    setActive(value);
     onChange && onChange(value);
   };
 
@@ -300,7 +290,7 @@ Tabs.propTypes = {
   className: PropTypes.string,
   hasRipple: PropTypes.bool,
   rippleColor: PropTypes.string,
-  defaultActive: PropTypes.bool,
+  defaultActive: PropTypes.any,
   active: PropTypes.any,
   onChange: PropTypes.func,
   onRemove: PropTypes.func,

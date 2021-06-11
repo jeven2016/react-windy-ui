@@ -94,8 +94,7 @@ const Select = React.forwardRef((props, ref) => {
   } = props;
 
   //use a internal state to host the active state
-  const {state: isActive, setState: setActive, customized: customActive}
-    = useInternalState({
+  const [isActive, setActive] = useInternalState({
     props,
     stateName: 'active',
     defaultState: defaultActive,
@@ -116,11 +115,7 @@ const Select = React.forwardRef((props, ref) => {
   const rootRef = useRef();
   const multiSelectRef = useMultipleRefs(ref, rootRef);
 
-  const {
-    state: selectedValue,
-    setState: setValue,
-    customized: customValue,
-  } = useInternalState({
+  const [selectedValue, setValue] = useInternalState({
     props,
     stateName: 'value',
     defaultState: convertToArray(defaultValue),
@@ -354,20 +349,16 @@ const Select = React.forwardRef((props, ref) => {
     if (isActive === next) {
       return;
     }
-    if (!customActive) {
-      setActive(next);
-    }
+    setActive(next);
     onActiveChange && onActiveChange(next, e);
 
     const inputDom = inputRef.current;
     inputDom && inputDom.focus();
-  }, [isActive, customActive, setActive, onActiveChange]);
+  }, [isActive, setActive, onActiveChange]);
 
   const removeItem = useEventCallback((v, e) => {
-    if (!customValue) {
-      const rest = selectedValue.filter(val => val !== v);
-      setValue(rest);
-    }
+    const rest = selectedValue.filter(val => val !== v);
+    setValue(rest);
     onRemove && onRemove(v, e);
     preventEvent(e);
   });
@@ -476,10 +467,8 @@ const Select = React.forwardRef((props, ref) => {
       preventEvent(e);
     }
 
-    if (!customValue) {
-      setValue(itemsArray);
-      setSearchedValue(null);
-    }
+    setValue(itemsArray);
+    setSearchedValue(null);
     const item = multiSelect ? itemsArray : itemsArray[0];
     onSelect && onSelect(item, e);
 

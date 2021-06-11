@@ -27,14 +27,14 @@ const Toggle = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
 
-  const {state: isActive, setState: setActive, customized} = useInternalState({
+  const [isActive, setActive, customized] = useInternalState({
     props,
     stateName: 'active',
     defaultState: defaultActive,
     state: active,
   });
 
-  let isOn = customized ? active : isActive;
+  let isOn = isActive;
   let clsName = clsx('toggle', {
     on: isOn,
     off: !isOn,

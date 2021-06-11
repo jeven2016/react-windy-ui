@@ -96,8 +96,7 @@ const Table = React.forwardRef((props, ref) => {
     validate(isCellsDefined, 'the cells should be provided');
   }
 
-  const {state: checkedRowKeys, setState: setChecked, customized: customCheck}
-      = useInternalState({
+  const [checkedRowKeys, setChecked, customCheck] = useInternalState({
     props,
     stateName: 'checkedRows',
     defaultState: convertToArray(defaultCheckedRows),
@@ -161,7 +160,6 @@ const Table = React.forwardRef((props, ref) => {
   const isCheckbox = checkType === CheckType.checkbox;
 
   const head = <TableHead cells={cells}
-                          customCheck={customCheck}
                           setChecked={setChecked}
                           checkable={checkable}
                           canCheckAll={canCheckAll}
@@ -229,7 +227,7 @@ const Table = React.forwardRef((props, ref) => {
 
       return <td className="cell-check">
         {isCheckbox ? <Checkbox checked={isRowChecked} onChange={checkRow}/>
-            : <Radio value={true} checked={isRowChecked} onChange={checkRow}/>}
+          : <Radio value={true} checked={isRowChecked} onChange={checkRow}/>}
       </td>;
     }
     return null;
@@ -313,8 +311,8 @@ const Table = React.forwardRef((props, ref) => {
     var cols = leaves.map((c, index) => <col key={c.width + '-' + index}
                                              style={{
                                                width: isNumber(c.width)
-                                                   ? c.width + 'px'
-                                                   : c.width,
+                                                 ? c.width + 'px'
+                                                 : c.width,
                                              }}/>);
 
     if (scrollY && isHead) {
@@ -431,7 +429,7 @@ Table.propTypes = {
   hover: PropTypes.bool,
   hasBorder: PropTypes.bool,
   loadData: PropTypes.oneOfType(
-      [PropTypes.array, PropTypes.func, PropTypes.object]),
+    [PropTypes.array, PropTypes.func, PropTypes.object]),
   cells: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.any,
     head: PropTypes.node,
@@ -455,9 +453,9 @@ Table.propTypes = {
   onCheckChange: PropTypes.func,
   onCheckAll: PropTypes.func,
   defaultCheckedRows: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.array]),
+    [PropTypes.string, PropTypes.array]),
   checkedRows: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.array]),
+    [PropTypes.string, PropTypes.array]),
   highlightCheckedRow: PropTypes.bool,
   defaultSortComparator: PropTypes.func,
   defaultSortOrder: PropTypes.string,

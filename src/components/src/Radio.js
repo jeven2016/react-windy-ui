@@ -36,7 +36,7 @@ const Radio = React.forwardRef((props, ref) => {
 
   //whether the radio is under controlled by a radio group
   const existsGroup = ctx.existsGroup;
-  const customizedFunction = useCallback(() => existsGroup ||
+  const checkCustomized = useCallback(() => existsGroup ||
     props.hasOwnProperty('checked'), [existsGroup, props]);
 
   const initChecked = useMemo(() => {
@@ -44,12 +44,8 @@ const Radio = React.forwardRef((props, ref) => {
     return existsGroup ? !isNil(value) && value === ctxSelectedVal : checked;
   }, [existsGroup, ctx.selectedValue, checked, value]);
 
-  const {
-    state: checkState,
-    setState: setCheckState,
-    customized,
-  } = useInternalState({
-    customizedFunction,
+  const [checkState, setCheckState] = useInternalState({
+    checkCustomized,
     defaultState: defaultChecked,
     state: initChecked,
   });
@@ -71,9 +67,7 @@ const Radio = React.forwardRef((props, ref) => {
       return;
     }
     const nextState = !checkState;
-    if (!customized) {
-      setCheckState(nextState);
-    }
+    setCheckState(nextState);
     if (existsGroup) {
       //call radio group's callback
       ctx.onChange && ctx.onChange(value, e);
@@ -85,7 +79,6 @@ const Radio = React.forwardRef((props, ref) => {
     value,
     onChange,
     checkState,
-    customized,
     setCheckState,
     disabled,
     ctx]);
@@ -152,11 +145,7 @@ const RadioGroup = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const clsName = clsx(className, extraClassName);
-  const {
-    state: selectedValue,
-    setState: setSelectedValue,
-    customized,
-  } = useInternalState({
+  const [selectedValue, setSelectedValue] = useInternalState({
     props,
     stateName: 'value',
     defaultState: defaultValue,
@@ -171,13 +160,12 @@ const RadioGroup = React.forwardRef((props, ref) => {
   const ctx = useMemo(() => {
     return {
       onChange: handleChange,
-      customized,
       disabled,
       selectedValue,
       existsGroup: true,
       errorType,
     };
-  }, [handleChange, customized, disabled, selectedValue, errorType]);
+  }, [handleChange, disabled, selectedValue, errorType]);
 
   return <RadioGroupContext.Provider value={ctx}>
     <span className={clsName} ref={ref} {...otherProps}>{children}</span>
