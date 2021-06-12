@@ -1,9 +1,9 @@
-import React, {useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import PropTypes from 'prop-types';
 import TreeItem from './TreeItem';
 import clsx from 'clsx';
 import {TreeContext} from '../common/Context';
-import {convertToArray, isNil} from '../Utils';
+import {convertToArray, isNil, nonNil} from '../Utils';
 import {
   CheckedStatus,
   getNode,
@@ -14,9 +14,13 @@ import {
   updateChildrenStatus,
 } from './TreeCommon';
 import Loader from '../Loader';
-import useInternalState from "../common/useInternalState";
+import useInternalState, {useOptionalState} from "../common/useInternalState";
 import useEventCallback from "../common/useEventCallback";
 
+/**
+ * Tree Component
+ * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{}> & React.RefAttributes<unknown>>}
+ */
 const Tree = React.forwardRef((props, ref) => {
   const {
     showLoading = true,
@@ -30,6 +34,7 @@ const Tree = React.forwardRef((props, ref) => {
     extraClassName,
     checkable,
     defaultExpandedItems = [],
+    autoExpandParents = true,
     expandedItems,
     defaultSelectedItems = [],
     selectedItems,
@@ -45,7 +50,7 @@ const Tree = React.forwardRef((props, ref) => {
   const customData = props.hasOwnProperty('jsonData');
   const [loadingIds, setLoadingIds] = useState([]);
 
-  const clsName = clsx(className, extraClassName);
+  const clsName = useMemo(() => clsx(className, extraClassName), [className, extraClassName]);
 
   const [currentSelectedItems, setSelectedItems] = useInternalState({
     props,
@@ -68,12 +73,11 @@ const Tree = React.forwardRef((props, ref) => {
     state: convertToArray(checkedItems),
   });
 
-
-  const initTreeData = useMemo(() => parseChildren(customData,
-    children, jsonData), [children, jsonData, customData]);
+  const initTreeData = useMemo(() => parseChildren(customData, children, jsonData),
+    [children, jsonData, customData]);
 
   //init a map to record the items should be marked as checked for customized items
-  const initCustomChkMap = useMemo(() => {
+  const checkedItemMap = useMemo(() => {
     if (!checkable || currentCheckedItems.length <= 0) {
       return new Map();
     }
@@ -90,16 +94,8 @@ const Tree = React.forwardRef((props, ref) => {
     return map;
   }, [autoCheckLeaves, checkable, currentCheckedItems, initTreeData]);
 
-
   const [treeConfig, setTreeConfig] = useState(initTreeData);
-  const [treeStatus, setTreeStatus] = useState(initCustomChkMap);
-
-
-  //init a internal store
-  // const [store] = useState(() => initStore({
-  //   treeData: initTreeData, //It represents a full tree
-  //   statusMap: initCustomChkMap
-  // }));
+  const [realTreeStatus, setTreeStatus] = useOptionalState(customCheck, checkedItemMap);
 
   /*
    * select handler
@@ -119,27 +115,23 @@ const Tree = React.forwardRef((props, ref) => {
   });
 
   const isChecked = useEventCallback((id) => {
-    const checkedStatus = treeStatus.get(id);
+    const checkedStatus = realTreeStatus.get(id);
     if (!isNil(checkedStatus)) {
       return checkedStatus === CheckedStatus.checked;
     }
     return false;
   });
 
-  const expandHandler = async (id, expand, evt) => {
-    if (isExpendControl) {
-      onExpand && onExpand(id, expand, evt);
-      return;
-    }
+  const expandHandler = useEventCallback(async (id, expand, e) => {
     let expandedIds;
     if (expand) {
-      let parentNode = initTreeData.treeNodeMap.get(id);
-      if (parentNode.isAsyncLoad() && loadJsonData) {
+      let node = treeConfig.treeNodeMap.get(id);
+      if (node.isAsyncLoad() && loadJsonData) {
         //Asynchronous loading the data and merge it with the existing json data
         const newIds = [...loadingIds, id];
         setLoadingIds(newIds);
 
-        const data = await loadJsonData(id, evt);
+        const data = await loadJsonData(id, e);
         setLoadingIds(prevState => [...prevState.filter(val => val !== id)]);//clear loading status
         const newJsonData = {...jsonData};
 
@@ -149,10 +141,9 @@ const Tree = React.forwardRef((props, ref) => {
 
         if (isChecked(id)) {
           //if parent node is checked all children should be checked as well
-          let itemStatusMap = new Map(treeStatus);
-          parentNode = newTreeData.treeNodeMap.get(id);
-          updateChildrenStatus(itemStatusMap, parentNode,
-            CheckedStatus.checked);
+          let itemStatusMap = new Map(realTreeStatus);
+          node = newTreeData.treeNodeMap.get(id);
+          updateChildrenStatus(itemStatusMap, node, CheckedStatus.checked);
           setTreeStatus(itemStatusMap);
         }
       }
@@ -161,15 +152,12 @@ const Tree = React.forwardRef((props, ref) => {
     } else {
       expandedIds = [...currentExpandedItems.filter(elem => elem !== id)];
     }
+    setExpendedItems(expandedIds);
     onExpand && onExpand(expandedIds);
-
-    if (!isExpendControl) {
-      setExpendedItems(expandedIds);
-    }
-  };
+  });
 
   const checkHandler = useEventCallback((id, checked, e) => {
-    const map = new Map(treeStatus);
+    const map = new Map(realTreeStatus);
     mapCheckedStatus({
       ids: id,
       treeData: treeConfig,
@@ -189,8 +177,12 @@ const Tree = React.forwardRef((props, ref) => {
         checkedIds.push(key);
       }
     }
-    onCheck && onCheck(checkedIds);
+    onCheck && onCheck(checkedIds, e);
   });
+
+  const createNodes = useCallback(() => {
+    return customData ? getNode(treeConfig) : children;
+  }, [children, customData, treeConfig]);
 
   const ctx = {
     multiSelect,
@@ -207,15 +199,14 @@ const Tree = React.forwardRef((props, ref) => {
     selectItem: selectHandler,
     expandItem: expandHandler,
     checkItem: checkHandler,
-    treeStatus,
+    treeStatus: realTreeStatus,
     treeData: treeConfig,
     highlightLine,
   };
 
-  console.log(treeStatus)
   return <TreeContext.Provider value={ctx}>
     <div className={clsName} {...otherProps} ref={ref}>
-      {customData ? getNode(initTreeData) : children}
+      {createNodes()}
     </div>
   </TreeContext.Provider>;
 });
@@ -231,6 +222,7 @@ Tree.propTypes = {
   className: PropTypes.string,
   extraClassName: PropTypes.string,
   checkable: PropTypes.bool,
+  autoExpandParents: PropTypes.bool,
   defaultExpandedItems: PropTypes.any,
   expandedItems: PropTypes.any,
   defaultSelectedItems: PropTypes.any,

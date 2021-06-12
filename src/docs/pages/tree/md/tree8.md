@@ -3,6 +3,7 @@ order: 8
 type: sample
 zh_CN: 默认展开节点
 en_US: Sample
+onlyVisible: false
 editUrl: $BASE/docs/pages/tree/md/tree8.md
 ---
 

@@ -3,7 +3,6 @@ order: 3
 type: sample
 zh_CN: 可选中的Tree
 en_US: Sample
-onlyVisible: false
 editUrl: $BASE/docs/pages/tree/md/tree3.md
 ---
 

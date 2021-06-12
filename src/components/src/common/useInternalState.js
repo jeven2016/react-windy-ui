@@ -26,15 +26,27 @@ const useInternalState = ({
     initState = backupState;
   }
 
-  const [internalState, setInternalState] = useState(initState);
+  const [internalState, setInternalState] = useOptionalState(customized, initState);
 
-  const set = useCallback((value) => !customized && setInternalState(value), [customized]);
+  const set = useCallback((value) => !customized && setInternalState(value), [customized, setInternalState]);
 
   return [
-    customized ? state : internalState,
+    internalState,
     set,
     customized,
   ];
+}
+
+/**
+ * For handling the state in this case : if customized then return initState else return a internal state
+ * @param customized
+ * @param initState
+ * @returns [realState, setter]
+ */
+export const useOptionalState = (customized, initState) => {
+  const [internalState, setInternalState] = useState(initState);
+
+  return [customized ? initState : internalState, setInternalState];
 }
 
 export default useInternalState;

@@ -20,28 +20,14 @@ const TreeItem = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const treeContext = useContext(TreeContext);
-  // const {attach, detach} = treeContext.store;
 
+  //check the status of the checkbox
   const realStatus = treeContext.treeStatus.get(id);
-
-  const [isAsyncItem, setAsyncItem] = useState(false);//todo
-
+  const showIndeterminateState = realStatus === CheckedStatus.indeterminate;
+  const checked = realStatus === CheckedStatus.checked;
 
   // const treeStatus = treeContext.treeStatus;
   const treeData = treeContext.treeData;
-
-  // const [statusMap, setStatusMap] = useState(getState().statusMap);
-
-  // useEffect(() => {
-  //   const listener = ({statusMap}) => {
-  //     const nextStatus = statusMap.get(id);
-  //     if (nextStatus !== status) {
-  //       setStatus(nextStatus);
-  //     }
-  //   };
-  //   !treeContext.customCheck && attach(listener);
-  //   return () => detach(listener);
-  // }, [attach, detach, id, status, treeContext.customCheck]);
 
   //check whether to asynchronously load  the children nodes
   const treeNodeMap = treeData.treeNodeMap;
@@ -50,11 +36,6 @@ const TreeItem = React.forwardRef((props, ref) => {
   const elems = useMemo(() => {
     return convertToArray(moreElements);
   }, [moreElements]);
-
-  //check the status of the checkbox
-  const showIndeterminateState = realStatus ===
-    CheckedStatus.indeterminate;
-  const checked = realStatus === CheckedStatus.checked;
 
   const clsName = clsx(className, extraClassName);
 

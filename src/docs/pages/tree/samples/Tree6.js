@@ -43,7 +43,18 @@ export default function Tree6() {
             id: id + '-2',
             label: id + '-2',
             isLeaf: true,
-          }]);
+          },
+          {
+            id: id + '-3',
+            label: id + '-3',
+            isLeaf: true,
+          },
+          {
+            id: id + '-4',
+            label: id + '-4',
+            isLeaf: true,
+          }
+        ]);
       }, 1000);
     });
   };

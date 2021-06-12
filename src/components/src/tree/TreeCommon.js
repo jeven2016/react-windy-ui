@@ -99,7 +99,7 @@ export const mergeChildren = (jsonData, partialData, id) => {
 };
 
 export const parseChildren = (providedJsonData, children, jsonData) => {
-  console.log("parser tree....")
+  console.log("parseChildren....")
   var newChildren = providedJsonData ? jsonData : children;
   let root = {
     id: RootId,
@@ -115,8 +115,8 @@ export const parseChildren = (providedJsonData, children, jsonData) => {
   let nodes = [root];
   let i = 0;
   while (nodes.length > 0) {
-    if (i++ > 10000) {
-      throw new Error('too many loops taken to parse the whole tree.');
+    if (i++ > 100000) {
+      throw new Error('too many loops taken or the number of tree nodes exceed the maximum value 10000.');
     }
     let node = nodes.shift();
     if (isNil(node)) {
@@ -188,7 +188,6 @@ export const getNode = (data) => {
   return children.map(chd => {
     return chd.toComponent();
   });
-
 };
 
 export class TreeNode {

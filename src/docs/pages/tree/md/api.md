@@ -24,6 +24,7 @@
 | multiSelect | 是否可以选中多个TreeItem | boolean | false |  |
 | onlySelectLeaf | 是否只可以选中叶子节点 | boolean | true | 当true时，点击父节点只控制树的展开/折叠 |
 | checkable | 是否可以勾选节点 | boolean | false |  |
+| autoExpandParents | 点击子节点是否自动勾选父节点 | boolean | true |  |
 | defaultExpandedItems | 默认展开的节点 | Array(string) | [] |  |
 | expandedItems | 当前展开的节点 | Array(string) | - | 一旦设置必须通过onExpand方法去自行控制数组中的值 |
 | defaultSelectedItems | 默认选中的节点 | Array(string) | [] |  |
@@ -31,9 +32,9 @@
 | defaultCheckedItems | 默认勾选的节点 | Array(string) | [] |  |
 | checkedItems | 当前勾选的节点 | Array(string) | - | 一旦设置必须通过onCheck方法去自行控制数组中的值 |
 | highlightLine | 是否高亮显示整个TreeItem所在的行 | boolean | false |  |
-| onSelect | 当点击选中某个TreeItem触发的回调函数 | function | - |  |
-| onCheck | 当勾选中某个TreeItem触发的回调函数 | function | - |  |
-| onExpand | 当展开某个TreeItem触发的回调函数 | function | - |  |
+| onSelect | 当点击选中某个TreeItem触发的回调函数 | function(id \| Array(id), e) | - | 当是单选时，返回单个id;多选时，返回数组 |
+| onCheck | 当勾选中某个TreeItem触发的回调函数 | function(Array(id), e) | - |  |
+| onExpand | 当展开某个TreeItem触发的回调函数 | function(Array(id), e) | - |  |
 
    
 * <Code type="normal">TreeItem</Code>的属性如下所示:

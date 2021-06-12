@@ -4,12 +4,8 @@ import {Tree} from 'react-windy-ui';
 export default function Tree9() {
   const [expandedItems, setItems] = useState(['Parent-1', 'Child-1-5']);
 
-  const expand = (id, isExpend, e) => {
-    if (isExpend) {
-      setItems(pre => [...pre, id]);
-    } else {
-      setItems(pre => pre.filter(itemId => id !== itemId));
-    }
+  const expand = (ids, e) => {
+    setItems(ids);
   };
 
   return <>
