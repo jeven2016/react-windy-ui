@@ -3,14 +3,12 @@ import {Select} from 'react-windy-ui';
 
 export default function Select7() {
   return <>
-    <Select style={{width: '20rem'}}
+    <Select style={{width: '30rem'}}
             activeBy='click'
             defaultValue="sh"
             multiSelect={true}
             searchable={true}
-            onSelect={(val) => console.log(val)}
-            onActiveChange={(next) => console.log(
-                `state changed to : ${next}`)}>
+            onSelect={(val) => console.log(val)}>
       <Select.Option value="bj">Beijing</Select.Option>
       <Select.Option value="nj">Nanjing</Select.Option>
       <Select.Option value="sh">Shanghai</Select.Option>

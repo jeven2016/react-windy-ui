@@ -1,14 +1,13 @@
 import React from 'react';
-import Cr1 from './samples/Cr1';
+import DocPage2 from '../../utils/DocPage2';
 
-const componentMapping = {
-  Cr1: <Cr1/>
-};
+const requireMd = require.context('!raw-loader!./md', false, /.md$/);
+const requireCode = require.context('!raw-loader!./samples', false, /.js$/);
+const requireJs = require.context('./samples', false, /.js$/);
 
-export default function CrIndex(props) {
-  return null;
- /* return <DocPage
-      importFunc={() => import('./doc.md')}
-      componentMapping={componentMapping}
-  />;*/
+export default function CrIndex() {
+  return <DocPage2
+    requireMd={requireMd}
+    requireJs={requireJs}
+    requireCode={requireCode}/>;
 }

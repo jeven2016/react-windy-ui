@@ -28,59 +28,57 @@ export default function Menu10() {
     </div>
 
     <div className="doc doc-row">
-      <div>
-        <Menu direction={horizontal ? 'horizontal' : 'vertical'}
-              popupSubMenu={popupSubMenu}
-              type={type}
-              onOpenedMenu={(data) => console.log(`==${data}`)}
-              icon={<IconHome/>}>
-          <Menu.SubMenu header="Navigation One" id="sub1"
-                        icon={<FontAwesomeIcon icon={faLaptop}/>}>
-            <Menu.Group header="Group1">
-              <Menu.Item id="item1">
-                Item1
-              </Menu.Item>
-              <Menu.Item id="item2">
-                Item2
-              </Menu.Item>
-            </Menu.Group>
-            <Menu.Group header="Group2">
-              <Menu.Item id="item3">
-                Item3
-              </Menu.Item>
-              <Menu.Item id="item4">
-                Item4
-              </Menu.Item>
-            </Menu.Group>
-            <Menu.SubMenu header="SubMenu" id="sub1_child">
-              <Menu.Item id="sub_item1">
-                SubMenu Item1
-              </Menu.Item>
-              <Menu.Item id="sub_item2">
-                SubMenu Item2
-              </Menu.Item>
-              <Menu.Item id="sub_item3">
-                SubMenu Item3
-              </Menu.Item>
-            </Menu.SubMenu>
-          </Menu.SubMenu>
-          <Menu.SubMenu header="Navigation Two" id="sub2"
-                        icon={<FontAwesomeIcon icon={faLaptop}/>}>
-            <Menu.Item id="item5">
-              Item5
+      <Menu direction={horizontal ? 'horizontal' : 'vertical'}
+            popupSubMenu={popupSubMenu}
+            type={type}
+            onOpenedMenu={(data) => console.log(`==${data}`)}
+            icon={<IconHome/>}>
+        <Menu.SubMenu header="Navigation One" id="sub1"
+                      icon={<FontAwesomeIcon icon={faLaptop}/>}>
+          <Menu.Group header="Group1">
+            <Menu.Item id="item1">
+              Item1
             </Menu.Item>
-            <Menu.Item id="item6">
-              Item6
+            <Menu.Item id="item2">
+              Item2
             </Menu.Item>
-            <Menu.Item id="item7">
-              Item7
+          </Menu.Group>
+          <Menu.Group header="Group2">
+            <Menu.Item id="item3">
+              Item3
             </Menu.Item>
-            <Menu.Item id="item8">
-              Item8
+            <Menu.Item id="item4">
+              Item4
+            </Menu.Item>
+          </Menu.Group>
+          <Menu.SubMenu header="SubMenu" id="sub1_child">
+            <Menu.Item id="sub_item1">
+              SubMenu Item1
+            </Menu.Item>
+            <Menu.Item id="sub_item2">
+              SubMenu Item2
+            </Menu.Item>
+            <Menu.Item id="sub_item3">
+              SubMenu Item3
             </Menu.Item>
           </Menu.SubMenu>
-        </Menu>
-      </div>
+        </Menu.SubMenu>
+        <Menu.SubMenu header="Navigation Two" id="sub2"
+                      icon={<FontAwesomeIcon icon={faLaptop}/>}>
+          <Menu.Item id="item5">
+            Item5
+          </Menu.Item>
+          <Menu.Item id="item6">
+            Item6
+          </Menu.Item>
+          <Menu.Item id="item7">
+            Item7
+          </Menu.Item>
+          <Menu.Item id="item8">
+            Item8
+          </Menu.Item>
+        </Menu.SubMenu>
+      </Menu>
     </div>
   </div>;
 }

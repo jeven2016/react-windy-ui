@@ -5,7 +5,7 @@ export default function Badge3() {
   const [color, setColor] = useState('#ff350e');
 
   return <>
-    <div className="doc doc-row">
+    <div className="doc doc-row space">
       <span style={{marginRight: '1rem', fontWeight: '600'}}>Color:</span>
       <Input value={color} onChange={(e) => setColor(e.target.value)}/>
     </div>

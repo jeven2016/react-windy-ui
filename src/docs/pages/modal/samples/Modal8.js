@@ -9,15 +9,15 @@ export default function Modal8() {
   return <>
     <Button type="primary" onClick={() => setActive(true)}>Open</Button>
 
-    <Modal active={active} type="primary" onCancel={close}
-           allowOverflow={true} style={{height: '80%'}}>
+    <Modal active={active} type="primary" onCancel={close} size="large"
+           autoOverflow={true} style={{width: '80%'}}>
       <Modal.Header>
         Modal Header
       </Modal.Header>
       <Modal.Body>
 
         {[...Array(30).keys()].map(
-            (value, index) => <span key={index}>Modal Content....<br/></span>)}
+          (value, index) => <span key={index}>Modal Content....<br/></span>)}
 
       </Modal.Body>
       <Modal.Footer align="center">

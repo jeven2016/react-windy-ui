@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/loader/md/loader2.md
 ---
 
 +++ zh_CN
-有三种大小的Loader可供使用, 可以将size属性设置为： small、medium、 large。  
+可以将size属性设置为： <Code>small</Code>、<Code>medium</Code>、 <Code>large</Code>。  
 
 +++ en_US
 Loader2

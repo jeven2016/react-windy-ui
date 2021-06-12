@@ -1,11 +1,21 @@
-import React, {useContext} from 'react';
+import React, {useContext, useRef} from 'react';
 import clsx from 'clsx';
 import {TabsContext} from './TabsCommon';
-import {isNil} from '../Utils';
-import {preventEvent} from '../event';
+import {isNil, nonNil, preventEvent} from '../Utils';
 import PropTypes from 'prop-types';
+import Ripple from "../common/Ripple";
+import {IconClear} from "../Icons";
 
 const TabItem = React.forwardRef((props, ref) => {
+  const rippleRef = useRef(null);
+
+  //bind ripple related event listeners
+  const updatedProps = Ripple.useRippleEvent({
+    rippleRef,
+    rootProps: props,
+    hasRipple: props.hasRipple,
+  });
+
   const {
     className = 'tab-item',
     extraClassName,
@@ -13,14 +23,18 @@ const TabItem = React.forwardRef((props, ref) => {
     children,
     value,
     removable,
+    hasRipple,
     ...otherProps
-  } = props;
+  } = updatedProps;
+
   const context = useContext(TabsContext);
   const isActive = !isNil(value) && value === context.active;
   const clsName = clsx(extraClassName, className,
       {active: isActive, disabled: disabled});
 
   const deleteIconClsName = clsx('item-icon', {disabled: disabled});
+
+  const showRipple = nonNil(hasRipple) ? hasRipple : context.hasRipple;
 
   const remove = (e) => {
     preventEvent(e);
@@ -40,9 +54,10 @@ const TabItem = React.forwardRef((props, ref) => {
     {
       isRemovable ? <div className={deleteIconClsName}
                          onClick={remove}>
-        x
+        <IconClear size="small"/>
       </div> : null
     }
+    {showRipple && <Ripple ref={rippleRef} color={context.rippleColor}/>}
   </div>;
 });
 
@@ -52,6 +67,7 @@ TabItem.propTypes = {
   disabled: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   removable: PropTypes.bool,
+  hasRipple: PropTypes.bool,
 };
 
 export default TabItem;

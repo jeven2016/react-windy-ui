@@ -51,7 +51,7 @@ export default function SamplePanel(props) {
     <Card block hasBorder hasBox={false}>
       <Card.Row extraClassName="doc title-row">
         <Row align="center">
-          <Col col={8}>
+          <Col col={6}>
             <div id={id} className="doc title-col">
               <TitleMarkDwon/>
               {
@@ -67,7 +67,7 @@ export default function SamplePanel(props) {
               }
             </div>
           </Col>
-          <Col col={4} style={{display: 'flex', justifyContent: 'flex-end'}}>
+          <Col col={6} style={{display: 'flex', justifyContent: 'flex-end'}}>
             <div>
               <Tooltip body="Source code">
                 <span style={{color: 'rgb(158, 155, 155)'}}>

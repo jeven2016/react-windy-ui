@@ -3,8 +3,9 @@ import clsx from 'clsx';
 import {animated, useSpring} from 'react-spring';
 
 import useResizeObserver from '../common/UseResizeObserver';
-import {isNil} from '../Utils';
+import {isNil, nonNil} from '../Utils';
 import PropTypes from 'prop-types';
+import usePrevious from "../common/UsePrevious";
 
 const CollapsePanel = React.forwardRef((props, ref) => {
   const {
@@ -14,7 +15,7 @@ const CollapsePanel = React.forwardRef((props, ref) => {
     children,
     style,
     innerStyle,
-    height: panelHeight,
+    height: initHeight,
     heightIncrement = 0,
     autoScaleHeight = true,
     ...otherProps
@@ -22,44 +23,43 @@ const CollapsePanel = React.forwardRef((props, ref) => {
   const clsName = clsx(extraClassName, className);
   const panelRef = useRef(null);
 
-  const initHeight = useMemo(() => {
-    if (!autoScaleHeight) {
-      if (!isNil(panelHeight)) {
-        return panelHeight;
-      }
+  //the init height
+  const startHeight = useMemo(() => {
+    if (!autoScaleHeight && nonNil(initHeight)) {
+      return initHeight;
     }
     return 0;
-  }, [autoScaleHeight, panelHeight]);
+  }, [autoScaleHeight, initHeight]);
 
-  const [panelRect, setPanelRect] = useState({height: initHeight});
+  //the panel height
+  const [panelHeight, setPanelHeight] = useState(startHeight);
 
-  useResizeObserver(panelRef, rect => setPanelRect({height: rect.height}),
-      autoScaleHeight);
+  //updated while the panel changed
+  useResizeObserver(panelRef, rect => setPanelHeight(rect.height),
+    autoScaleHeight);
 
   const toHeight = useMemo(() => {
     if (collapse) {
       return 0;
     }
-    return autoScaleHeight ? panelRect.height + heightIncrement : panelHeight;
+    return autoScaleHeight ? panelHeight + heightIncrement : panelHeight;
 
-  }, [collapse, autoScaleHeight, panelHeight, panelRect, heightIncrement]);
+  }, [collapse, autoScaleHeight, panelHeight, heightIncrement]);
 
+  //the spring animation has valid height calculated, but the height would be changed in newStyle while only the child panel changed
   const {height, opacity, maxHeight} = useSpring({
-    from: {
-      opacity: 0,
-      height: 0,
-      maxHeight: 0,
-    },
-    to: {
-      opacity: collapse ? 0 : 1,
-      height: toHeight,
-      maxHeight: toHeight,
-    }, config: {clamp: true, mass: 1, tesion: 100, friction: 15},
+    from: {opacity: 0, height: 0},
+    to: {opacity: collapse ? 0 : 1, height: toHeight,},
+    config: {clamp: true, mass: 1, tesion: 100, friction: 15},
   });
+
+  //set the height to 'auto' if the children panel instead of itself changed
+  const preCollapse = usePrevious(collapse);
+  const isSubPanelChanged = !collapse && !preCollapse;
 
   const newStyle = {
     ...style,
-    height: height,
+    height: isSubPanelChanged ? 'auto' : height,
     opacity: opacity,
     maxHeight: maxHeight,
   };

@@ -1,16 +1,8 @@
 import React from 'react';
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  InputGroup,
-  Select,
-  Tooltip,
-} from 'react-windy-ui';
+import {Button, Card, Form, Input, Row, Col} from 'react-windy-ui';
 
-export default function Form16() {
-  const {form} = Form.useForm({
+export default function Form6() {
+  const {form, watch} = Form.useForm({
     mode: 'onSubmit',
     shouldFocusError: false,
   });
@@ -25,55 +17,31 @@ export default function Form16() {
     <Card style={{minWidth: '80%'}} hasBox={false}>
       <Card.Row>
         <Form form={form} onSubmit={onSubmit} direction="horizontal"
-              labelCol={{col: 3}} controlCol={{col: 9}}>
+              labelCol={3}>
 
-          <Form.Item label="Gender"
-                     name="gender"
+          <Form.Item label="New Password"
+                     name="newPwd"
                      required={true}
                      rules={{
-                       required: 'The gender is required',
-                     }} justifyLabel="end">
-            <Select block placeholder="Please select the gender" defaultValue=""
-                    onSelect={(value) => console.log(value)}>
-              <Select.Option value="nj">Female</Select.Option>
-              <Select.Option value="sh">Male</Select.Option>
-              <Select.Option value="other">Other </Select.Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item rootItem={true} label="Phone Number" required={true}
+                       required: 'The password is required'
+                     }}
                      justifyLabel="end">
-            <Tooltip body="Phone Number: +86 13344666343">
-              <InputGroup block>
-                <InputGroup.Item autoScale={false} style={{flex: '0 1 6rem'}}>
-                  <Form.Item
-                      name="countryCode"
-                      simple={true}
-                      rules={{
-                        required: 'The country code is required',
-                      }}>
-                    <Select placeholder="Code" defaultValue=""
-                            onSelect={(value) => console.log(value)}>
-                      <Select.Option value="+86">+86</Select.Option>
-                      <Select.Option value="+87">+87</Select.Option>
-                      <Select.Option value="+88">+88</Select.Option>
-                    </Select>
-                  </Form.Item>
-                </InputGroup.Item>
-
-                <Form.Item
-                    name="phoneNumber"
-                    simple={true}
-                    rules={{
-                      required: 'The phone number is required',
-                    }}>
-                  <Input placeholder="Phone Number" defaultValue=""/>
-                </Form.Item>
-              </InputGroup>
-            </Tooltip>
+            <Input type="password" block/>
           </Form.Item>
 
-          <Form.Item compact={true} label="">
+          <Form.Item label="Confirm Password"
+                     name="confirmPwd"
+                     required={true}
+                     justifyLabel="end"
+                     rules={{
+                       required: 'The confirm password is required',
+                       validate: (value) => value === watch('newPwd')
+                         || "The confirm password doesn't match the password",
+                     }}>
+            <Input type="password" block/>
+          </Form.Item>
+
+          <Form.Item label="">
             <Button color="blue" nativeType="submit">Save</Button>
           </Form.Item>
         </Form>

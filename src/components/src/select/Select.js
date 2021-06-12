@@ -11,62 +11,54 @@ import {
   isCustomized,
   isNil,
   nonNil,
+  preventEvent,
 } from '../Utils';
 import Element from '../common/Element';
-import {
-  IconArrowDown,
-  IconArrowUp,
-  IconChecked2,
-  IconClear,
-  IconNoData,
-} from '../Icons';
+import {IconArrowDown, IconArrowUp, IconChecked2, IconClear, IconNoData,} from '../Icons';
 import useInternalState from '../common/useInternalState';
 import {PopupCtrlType} from '../common/Constants';
 import clsx from 'clsx';
-import Item from '../menu/Item';
-import {preventEvent} from '../event';
 import Loader from '../Loader';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import * as PropTypes from 'prop-types';
 import useEventCallback from '../common/useEventCallback';
 
+/**
+ * Option Component
+ */
 const Option = React.forwardRef((props, ref) => {
   const {
     value,
     children,
-    hasBackground = true,
     text,
     render,
     ...otherProps
   } = props;
 
-  return <Menu.Item id={value} hasBackground={hasBackground}
-                    ref={ref} {...otherProps}>
+  return <Menu.Item id={value} ref={ref} {...otherProps}>
     {children ? children : text}
   </Menu.Item>;
 });
 
-Option.Left = Item.Left;
-Option.Center = Item.Center;
-Option.Right = Item.Right;
 
 Option.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   text: PropTypes.node,
-  hasBackground: PropTypes.bool,
+  render: PropTypes.func
 };
 
-//todo select proptypes
+/**
+ * Select Component
+ */
 const Select = React.forwardRef((props, ref) => {
   const {
     extraClassName,
     className = 'select-menu popup',
+    compactMenu = false,//todo
     name,
     children,
     placeholder,
     style,
-    inputStyle,
-    inputProps,//todo, need to evaluate using props instead of input props( for form item)
     errorType, //for form
     size = 'medium',
     disabled = false,
@@ -76,7 +68,7 @@ const Select = React.forwardRef((props, ref) => {
     hasBorder = false,
     hasBox = true,
     activeBy = PopupCtrlType.click,
-    block = false,
+    block = true,
     defaultValue,
     value,
     onSelect,
@@ -87,7 +79,6 @@ const Select = React.forwardRef((props, ref) => {
     hasArrow = true,
     arrowIcon = <IconArrowDown/>,
     activeArrowIcon = <IconArrowUp/>,
-    removeIcon,
     defaultActive = false,
     active, //whether to show the popup
     onChange, //for changing value, same as onSelect
@@ -103,8 +94,7 @@ const Select = React.forwardRef((props, ref) => {
   } = props;
 
   //use a internal state to host the active state
-  const {state: isActive, setState: setActive, customized: customActive}
-      = useInternalState({
+  const [isActive, setActive] = useInternalState({
     props,
     stateName: 'active',
     defaultState: defaultActive,
@@ -125,21 +115,17 @@ const Select = React.forwardRef((props, ref) => {
   const rootRef = useRef();
   const multiSelectRef = useMultipleRefs(ref, rootRef);
 
-  const {
-    state: selectedValue,
-    setState: setValue,
-    customized: customValue,
-  } = useInternalState({
+  const [selectedValue, setValue] = useInternalState({
     props,
     stateName: 'value',
     defaultState: convertToArray(defaultValue),
     state: convertToArray(value),
   });
 
-  const ctrlStyle = searchable ? null : {cursor: 'pointer', ...inputStyle};
+  const ctrlStyle = searchable ? null : {cursor: 'pointer'};
 
   useEffect(() => {
-    if (!autoWidth || disabled) {
+    if (!autoWidth || disabled || !isActive) {
       return;
     }
 
@@ -148,9 +134,9 @@ const Select = React.forwardRef((props, ref) => {
     if (multiSelect && inputDomNode) {
       const decDomNode = detectRef.current;
       inputDomNode.style.width = decDomNode.width > searchInputWidth
-          ? `${decDomNode.width +
-          3}px`
-          : `${searchInputWidth}px`;
+        ? `${decDomNode.width +
+        3}px`
+        : `${searchInputWidth}px`;
     }
 
     //adjust the menu's width
@@ -166,7 +152,7 @@ const Select = React.forwardRef((props, ref) => {
         parentNode.style.width = `${width}px`;
       }
     }
-  }, [searchInputWidth, searchedValue, disabled, autoWidth, multiSelect]);
+  }, [searchInputWidth, searchedValue, disabled, autoWidth, multiSelect, isActive]);
 
   //get all items information
   const allItemsInfo = useMemo(() => {
@@ -206,15 +192,15 @@ const Select = React.forwardRef((props, ref) => {
     }
 
     return isNil(itemInfo.text)
-        ? itemInfo.children
-        : itemInfo.text;
+      ? itemInfo.children
+      : itemInfo.text;
   }, []);
 
   //get selected text for single selection
   const getSelectedText = useCallback(() => {
     if (multiSelect) {
       throw new Error(
-          'The method getSelectedText shouldn\'t be called for multiple selection.');
+        'The method getSelectedText shouldn\'t be called for multiple selection.');
     }
     if (selectedValue.length === 0) {
       return null;
@@ -239,13 +225,13 @@ const Select = React.forwardRef((props, ref) => {
   const getItemsBySearchValue = useCallback((itemValue) => {
     const childInfo = findItemInfo(itemValue);
     return isNil(childInfo) ? false : containsIgnoreCase(searchedValue,
-        getText(childInfo));
+      getText(childInfo));
   }, [findItemInfo, getText, searchedValue]);
 
   //filter the items base on the searchValue
   const filterItems = useCallback(() => {
     return children.filter(
-        (chd) => getItemsBySearchValue(chd.props.value));
+      (chd) => getItemsBySearchValue(chd.props.value));
   }, [children, getItemsBySearchValue]);
 
   const getDisplayItems = () => {
@@ -263,15 +249,20 @@ const Select = React.forwardRef((props, ref) => {
     }
     return React.Children.map(items, oneChild => {
       const newChild = <>
-        <Option.Center>{oneChild.props.children}</Option.Center>
+        {
+          oneChild.props.icon ?
+            <span className="icon-column" style={{color: 'inherit'}}>{oneChild.props.icon}</span> : null
+        }
+        <div className="item-info">{oneChild.props.children}</div>
         {
           checkSelected(oneChild.props.value)
-              ? <Option.Right><IconChecked2/></Option.Right>
-              : null
+            ? <span className="icon-column" style={{color: 'inherit'}}><IconChecked2/></span>
+            : null
         }
+
       </>;
       return React.cloneElement(oneChild,
-          {...oneChild.props, customizedChildren: true}, newChild);
+        {...oneChild.props, customizedChildren: true}, newChild);
     });
   };
 
@@ -308,7 +299,7 @@ const Select = React.forwardRef((props, ref) => {
     if (!isBlank(searchedValue)) {
       //check whether the searchedValue equals to one of the items
       return allItemsInfo.includes(
-          itemInfo => getText(itemInfo) === searchedValue);
+        itemInfo => getText(itemInfo) === searchedValue);
     }
     return true;
   }, [searchedValue, allItemsInfo, getText]);
@@ -358,100 +349,82 @@ const Select = React.forwardRef((props, ref) => {
     if (isActive === next) {
       return;
     }
-    if (!customActive) {
-      setActive(next);
-    }
+    setActive(next);
     onActiveChange && onActiveChange(next, e);
 
     const inputDom = inputRef.current;
     inputDom && inputDom.focus();
-  }, [isActive, customActive, setActive, onActiveChange]);
+  }, [isActive, setActive, onActiveChange]);
 
   const removeItem = useEventCallback((v, e) => {
-    if (!customValue) {
-      const rest = selectedValue.filter(val => val !== v);
-      setValue(rest);
-    }
+    const rest = selectedValue.filter(val => val !== v);
+    setValue(rest);
     onRemove && onRemove(v, e);
     preventEvent(e);
   });
 
-  let multiSelectCtrl;
-  multiSelectCtrl = useMemo(() => {
+  let multiSelectCtrl = useMemo(() => {
     if (!multiSelect) {
       return null;
     }
     let copiedProps = {
-      ...inputProps,
-      placeholder: realPlaceHolder,
       readOnly: !searchable,
       style: {pointerEvents: searchable ? 'cursor' : 'none', ...ctrlStyle},
       value: displayText,
       onChange: handleSearch,
       onBlur: handleBlur,
-      className: clsx('select-input', size, inputProps?.extraClassName),
+      className: clsx('select-input', size, {disabled}),
     };
 
     const multiSelCls = clsx('select-multiple', size,
-        {block, 'active': isActive, 'with-select-box': hasBox && isActive},
-        getErrorClsName(errorType));
+      {block, 'active': isActive, 'with-select-box': hasBox && isActive, disabled},
+      getErrorClsName(errorType));
 
     return <span className={multiSelCls}
                  style={style}
                  ref={multiSelectRef}>
         <span className="select-multiple-content">
-        {
-          selectedValue.map(findItemInfo).map(item =>
-              nonNil(item.render) ? item.render(
-                  {...item, removeItem: removeItem})
-                  : <span key={`item-${item.value}`} className="multi-item">
+          {
+            selectedValue.length === 0 && placeholder && <span className="placeholder-text ellipsis">
+            {placeholder}
+          </span>
+          }
+
+          {
+            selectedValue.map(findItemInfo).map(item => {
+              if (isNil(item)) {
+                return null;
+              }
+              return nonNil(item.render) ? item.render({...item, removeItem: removeItem})
+                : <span key={`item-${item.value}`} className={`multi-item ${size}`}>
                 <span>{getText(item)}</span>
-                <div className="icon-column" onClick={(e) => {
-                  removeItem(item.value, e);
+                <div className={`icon-column ${disabled ? "disabled" : ""}`} onClick={(e) => {
+                  !disabled && removeItem(item.value, e);
                 }}>
                   <IconClear size="small"/>
                 </div>
-              </span>,
-          )
-        }
+              </span>
+            })
+          }
           <input name={name} ref={inputMultiRef} {...copiedProps}/>
 
           <span ref={detectRef} className='search-text-detector'>
-        {/*this used to detect the width of the input value in pixel*/}
+            {/*this used to detect the width of the input value in pixel*/}
             {searchedValue}
           </span>
-          </span>
-          </span>;
-  }, [
-    block,
-    ctrlStyle,
-    displayText,
-    errorType,
-    findItemInfo,
-    getText,
-    handleBlur,
-    handleSearch,
-    inputMultiRef,
-    inputProps,
-    multiSelect,
-    multiSelectRef,
-    name,
-    realPlaceHolder,
-    removeItem,
-    searchable,
-    searchedValue,
-    selectedValue,
-    size,
-    style]);
+        </span>
+    </span>;
+  }, [block, ctrlStyle, disabled, displayText, errorType, findItemInfo, getText, handleBlur, handleSearch, hasBox, inputMultiRef, isActive, multiSelect, multiSelectRef, name, placeholder, removeItem, searchable, searchedValue, selectedValue, size, style]);
 
   const getCtrl = () => {
     if (multiSelect) {
       return multiSelectCtrl;
     }
 
-    const selectClsName = clsx('select', size, {
+    const selectClsName = clsx('select', size, getErrorClsName(errorType), {
       'with-select-box': hasBox && isActive,
       'active': isActive,
+      block,
       disabled,
     });
 
@@ -477,20 +450,11 @@ const Select = React.forwardRef((props, ref) => {
                ref={inputMultiRef}/>
       </div>
       {
-        hasArrow && <div className="icon-column">
+        hasArrow && <div className={`icon-column ${disabled ? "disabled" : ""}`}>
           {realIcon}
         </div>
       }
     </div>;
-
-    /* return <Input name={name} errorType={errorType}
-                   ref={inputMultiRef}
-                   disabled={disabled}
-                   block={block}
-                   size={size}
-                   {...copiedProps}
-                   rootRef={multiSelectRef}
-                   icon={realIcon}/>;*/
   };
 
   const selectHandler = useEventCallback((items, e) => {
@@ -503,32 +467,28 @@ const Select = React.forwardRef((props, ref) => {
       preventEvent(e);
     }
 
-    if (!customValue) {
-      setValue(itemsArray);
-      setSearchedValue(null);
-    }
-
+    setValue(itemsArray);
+    setSearchedValue(null);
     const item = multiSelect ? itemsArray : itemsArray[0];
-    if (onSelect) {
-      onSelect(item, e);
-    } else if (onChange) {
-      onChange(item, e);
-    }
+    onSelect && onSelect(item, e);
+
+    //for form, the form component need to get the name by name and it required to be triggered by onChange
+    onChange && onChange(item, e);
   });
 
   const popBody = useMemo(() => {
     return nonNil(finalItems) && finalItems.length === 0 ?
-        <Element className="no-data">
-          <IconNoData extraClassName="no-data-icon"/>
-          <span className="no-data-label">{noDataText}</span>
-        </Element>
-        : <Menu ref={menuRef} activeItems={selectedValue}
-                hasBox={false}
-                multiSelect={multiSelect}
-                onSelect={selectHandler}
-                {...menuProps}>
-          {finalItems}
-        </Menu>;
+      <Element className="no-data">
+        <IconNoData extraClassName="no-data-icon"/>
+        <span className="no-data-label">{noDataText}</span>
+      </Element>
+      : <Menu ref={menuRef} activeItems={selectedValue}
+              hasBox={false}
+              multiSelect={multiSelect}
+              onSelect={selectHandler}
+              {...menuProps}>
+        {finalItems}
+      </Menu>;
   }, [
     finalItems,
     menuProps,
@@ -543,17 +503,58 @@ const Select = React.forwardRef((props, ref) => {
   });
 
   return <Popup
-      active={isActive}
-      onChange={changeActive}
-      activeBy={activeBy}
-      className={clsx(extraClassName, className)}
-      ctrlRef={rootRef}
-      ctrlNode={getCtrl()}
-      body={popBody}
-      popupExtraClassName={popupCntExtraCls}
-      {...otherProps}
+    disabled={disabled}
+    active={isActive}
+    onChange={changeActive}
+    activeBy={activeBy}
+    className={clsx(extraClassName, className, {compact: compactMenu, 'non-compact': !compactMenu})}
+    ctrlRef={rootRef}
+    ctrlNode={getCtrl()}
+    body={popBody}
+    popupExtraClassName={popupCntExtraCls}
+    {...otherProps}
   />;
 });
+
+Select.propTypes = {
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  name: PropTypes.string,
+  placeholder: PropTypes.string,
+  style: PropTypes.object,
+  errorType: PropTypes.oneOf(['ok', 'warning', 'error']),
+  size: PropTypes.oneOf(['large', 'medium', 'small']), //the size of the button
+  disabled: PropTypes.bool,
+  searchable: PropTypes.bool,
+  autoWidth: PropTypes.bool,
+  multiSelect: PropTypes.bool,
+  hasBorder: PropTypes.bool,
+  hasBox: PropTypes.bool,
+  activeBy: PropTypes.oneOf(['hover', 'click']),
+  block: PropTypes.bool,
+  defaultValue: PropTypes.any,
+  value: PropTypes.any,
+  onSelect: PropTypes.func,
+  onSearch: PropTypes.func,
+  searchDelay: PropTypes.number,
+  noDataText: PropTypes.node,
+  searchInputWidth: PropTypes.number,
+  hasArrow: PropTypes.bool,
+  arrowIcon: PropTypes.node,
+  activeArrowIcon: PropTypes.node,
+  defaultActive: PropTypes.bool,
+  active: PropTypes.bool,
+  onChange: PropTypes.func,
+  onActiveChange: PropTypes.func,
+  onRemove: PropTypes.func,
+  popupExtraClassName: PropTypes.string,
+  menuProps: PropTypes.object,
+  removable: PropTypes.bool,
+  loaderType: PropTypes.string,
+  loading: PropTypes.bool,
+  compactMenu: PropTypes.bool,
+}
+
 
 Select.Option = Option;
 

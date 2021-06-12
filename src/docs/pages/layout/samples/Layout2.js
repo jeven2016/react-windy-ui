@@ -59,7 +59,7 @@ export default function Layout2() {
   return <>
     <div className="doc doc-row">
       <Toggle active={leftPosition} onChange={val => setPosition(val)}
-              content={{on: 'Left', off: 'Left'}}/>
+              label={{on: 'Left', off: 'Right'}}/>
     </div>
 
     <div style={{background: '#f5f6f7'}}>

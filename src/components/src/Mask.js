@@ -11,6 +11,7 @@ const Mask = React.forwardRef((props, ref) => {
     active,
     onClick,
     dark = true,
+    children,
     ...otherProps
   } = props;
   let drawerRef = useRef();
@@ -37,9 +38,11 @@ const Mask = React.forwardRef((props, ref) => {
     {
       transition.map(tranProps => {
         return tranProps.item &&
-            <animated.div ref={multiRef} className={clsName} key={tranProps.key}
-                          style={tranProps.props}
-                          onClick={onClick} {...otherProps}/>;
+          <animated.div ref={multiRef} className={clsName} key={tranProps.key}
+                        style={tranProps.props}
+                        onClick={onClick} {...otherProps}>
+            {children}
+          </animated.div>;
       })
     }
   </>;

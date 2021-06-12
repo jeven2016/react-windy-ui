@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
-import {contains, convertToArray, isNil, validate, max} from '../Utils';
+import {contains, convertToArray, isNil, max, validate} from '../Utils';
 import HeadCell from './HeadCell';
 import Checkbox from '../Checkbox';
 import Radio from '../Radio';
@@ -21,7 +21,6 @@ const TableHead = React.forwardRef((props, ref) => {
     canCheckAll,
     isCheckbox,
     rowData,
-    cellsData,
     checkedRowKeys,
     onCheckAll,
     defaultSortComparator,
@@ -100,7 +99,7 @@ const TableHead = React.forwardRef((props, ref) => {
 
     const isDesc = (() => {
       if (!isNil(sortedState)) {
-        if (sortedState.key === cell.showParam) {
+        if (sortedState.key === cell.paramName) {
           //the previous should be asc
           return sortedState.order === SortOrder.asc;
         }
@@ -113,16 +112,16 @@ const TableHead = React.forwardRef((props, ref) => {
     const sorter = data => data.sort(
         (next, pre) => {
           if (isDefaultSc) {
-            const result = sc(next[cell.showParam], pre[cell.showParam]);
+            const result = sc(next[cell.paramName], pre[cell.paramName]);
             return isDesc ? result : -result;
           }
-          return sc(next[cell.showParam], pre[cell.showParam],
+          return sc(next[cell.paramName], pre[cell.paramName],
               isDesc ? SortOrder.desc : SortOrder.asc);
         });
 
     setSortedState(
         {
-          key: cell.showParam,
+          key: cell.paramName,
           order: isDesc ? SortOrder.desc : SortOrder.asc,
           sorter: sorter,
         });
@@ -136,20 +135,20 @@ const TableHead = React.forwardRef((props, ref) => {
   const resetFilter = useCallback((cell, e) => {
     const values = store.getState().checkedValues;
 
-    if (!isNil(values[cell.showParam])) {
-      values[cell.showParam] = [];
+    if (!isNil(values[cell.paramName])) {
+      values[cell.paramName] = [];
     }
     store.setState({checkedValues: values});
   }, [store]);
 
   const showFilter = useCallback((cell, e) => {
-    setActiveFilter({key: cell.showParam});
+    setActiveFilter({key: cell.paramName});
   }, [setActiveFilter]);
 
   //filter the rows after clicking the OK Button
   const filter = useCallback((cell, e) => {
-    var values = store.getState().checkedValues[cell.showParam];
-    let others = [...filterParams.filter(f => f.key !== cell.showParam)];
+    var values = store.getState().checkedValues[cell.paramName];
+    let others = [...filterParams.filter(f => f.key !== cell.paramName)];
     let params = others;
 
     if (values) {
@@ -160,7 +159,7 @@ const TableHead = React.forwardRef((props, ref) => {
 
       const filterFunc = (row) => fc(values, row, cell);
       const current = values.map(
-          v => ({key: cell.showParam, filterValue: v, fc: filterFunc}));
+          v => ({key: cell.paramName, filterValue: v, fc: filterFunc}));
       params = [...current, ...others];
     }
     popupRef.current.changeActive(false);
@@ -194,7 +193,7 @@ const TableHead = React.forwardRef((props, ref) => {
             items.map((item, index) => {
               return <Card.Row key={item.value + index}>
                 <CheckComponent label={item.text} value={item.value}
-                                paramName={cell.showParam} store={store}/>
+                                paramName={cell.paramName} store={store}/>
               </Card.Row>;
             })
           }
@@ -211,8 +210,8 @@ const TableHead = React.forwardRef((props, ref) => {
         : null;
 
     const filterCls = clsx('filter', {
-      active: !isNil(activeFilter) && activeFilter.key === cell.showParam,
-      'with-items': filterParams.find(p => p.key === cell.showParam),
+      active: !isNil(activeFilter) && activeFilter.key === cell.paramName,
+      'with-items': filterParams.find(p => p.key === cell.paramName),
     });
 
     return <Popover popupInstanceRef={popupRef} autoWidth hasArrow={false}
@@ -265,12 +264,12 @@ const TableHead = React.forwardRef((props, ref) => {
       isDesc = sortOrder.order === SortOrder.desc;
       isAsc = !isDesc;
     } else if (!isNil(sortedState) && sortedState.key ===
-        cell.showParam) {
+        cell.paramName) {
       isDesc = sortedState.order === SortOrder.desc;
       isAsc = !isDesc;
     }
 
-    const key = cell.showParam + '-' + index;
+    const key = cell.paramName + '-' + index;
     return <HeadCell cell={cell}
                      scrollHeadRef={scrollHeadRef}
                      key={key}

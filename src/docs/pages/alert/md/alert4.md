@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/alert/md/alert4.md
 ---      
 
 +++ zh_CN   
- 如果不需要左侧图标或关闭的图标，则可以将hasIcon、hasCloseIcon设置成false。
+ 如果不需要左侧图标或关闭的图标，则可以将<Code>hasIcon</Code>、<Code>hasCloseIcon</Code>设置成false。
 
 
 +++ en_US   

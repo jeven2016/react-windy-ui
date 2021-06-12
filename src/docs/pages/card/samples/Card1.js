@@ -8,11 +8,11 @@ export default function Card1() {
   return <>
     <div className="doc doc-row">
       <Toggle active={hasBorder} onChange={val => enableBorder(val)}
-              content={{on: 'Border', off: 'Border'}}/>
+              label='Border'/>
     </div>
     <div className="doc doc-row">
       <Toggle active={hasBox} onChange={val => enableBox(val)}
-              content={{on: 'Box shadow', off: 'Box shadow'}}/>
+              label='Box shadow'/>
     </div>
 
     <Card hasBox={hasBox} hasBorder={hasBorder}>

@@ -10,7 +10,7 @@ export default function Alert5() {
                   onChange={() => setAutoClose(true)}/>
       </Tooltip>
     </div>
-    <Alert type="info" body="A info alert" autoClose={autoClose}
+    <Alert type="info" body="info alert" autoClose={autoClose}
            duration={3000}/>
   </>;
 }

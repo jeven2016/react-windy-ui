@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Tabs, Tooltip, Select} from 'react-windy-ui';
+import {Select, Tabs} from 'react-windy-ui';
 
 export default function Tabs4() {
   const [type, setType] = useState('normal');
@@ -10,16 +10,16 @@ export default function Tabs4() {
       ));
 
   return <>
-    <div className="doc doc-row">
-      <span style={{marginRight: '1rem', fontWeight: '600'}}>Type:</span>
+    <div className="doc doc-row space">
+      <span style={{fontWeight: '600'}}>Type:</span>
       <Select value={type} onSelect={value => setType(value)}>
         <Select.Option value="normal">normal</Select.Option>
         <Select.Option value="card">card</Select.Option>
         <Select.Option value="secondaryCard">secondaryCard</Select.Option>
       </Select>
     </div>
-    <div className="doc doc-row">
-      <span style={{marginRight: '1rem', fontWeight: '600'}}>Position:</span>
+    <div className="doc doc-row space">
+      <span style={{fontWeight: '600'}}>Position:</span>
       <Select value={position} onSelect={value => setPosition(value)}>
         <Select.Option value="top">top</Select.Option>
         <Select.Option value="bottom">bottom</Select.Option>

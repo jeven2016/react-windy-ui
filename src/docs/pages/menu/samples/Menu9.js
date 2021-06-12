@@ -27,10 +27,10 @@ export default function Menu9() {
       <Toggle active={compact} onChange={active => setCompact(active)}
               label="Compact"/>
     </div>
-    <div className="doc doc-row" style={{width: '20rem'}}>
-      <Menu defaultActiveItems={['item7']} id="test"
-            direction="vertical"
+    <div className="doc doc-row space">
+      <Menu direction="vertical"
             compact={compact}
+            defaultOpenedMenus={["sub1"]}
             onOpenedMenu={(data) => console.log(`open==${data}`)}
             onSelect={(data, e) => console.log(`select=${data}`)}
             type={type}>

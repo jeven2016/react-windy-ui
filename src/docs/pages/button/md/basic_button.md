@@ -8,10 +8,10 @@ editUrl: $BASE/docs/pages/button/md/basic_button.md
 ---      
 
 +++ zh_CN   
-除了默认按钮，还有<Code>primary</Code>、<Code>secondary</Code>两种类型的按钮。
+除了默认按钮，还有<Code>primary</Code>、<Code>secondary</Code>两种类型的按钮。   
 
 +++ en_US   
-todo
+dsdsfsdfdsfdsf
 
 +++ SampleCode  
 fileName: Basic_button

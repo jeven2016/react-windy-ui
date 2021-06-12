@@ -1,28 +1,32 @@
-import React from 'react';
-import {Pagination, Notification} from 'react-windy-ui';
+import React, {useState} from 'react';
+import {Pagination} from 'react-windy-ui';
 
 export default function Pagination2() {
+  const totalRecords = 1000;
+  const [pageRange, setPageRange] = useState(20);
+  const [page, setPage] = useState(5);
+  const [pageCount, setPageCount] = useState(totalRecords / pageRange);
 
-  const changePage = (pageNumber, pageRows, e) => {
-    Notification.mini(
-        {
-          body: `Page=${pageNumber}, rows per page=${pageRows}`,
-          position: 'topCenter',
-        });
-  };
+  const handlePageChange = (nextPage, pageRange, e) => {
+    setPage(nextPage);
+  }
 
-  const changeRowsLimit = (pageRows, e) => {
-    Notification.mini(
-        {
-          body: `Rows per page=${pageRows}`,
-          position: 'topCenter',
-        });
-  };
+  const handleRangeChange = (nextPageRange) => {
+    setPageRange(nextPageRange);
+    setPageCount(totalRecords / nextPageRange);
+  }
 
   return <>
     <div className="doc doc-row">
-      <Pagination pageCount={50} hasGo onChange={changePage}
-                  onChangeRows={changeRowsLimit}/>
+      <Pagination
+          pageCount={pageCount}
+          page={page}
+          hasPageRange={true}
+          pageRanges={[10, 20, 50, 100]}
+          pageRange={pageRange}
+          onChangeRange={handleRangeChange}
+          hasGo
+          onChange={handlePageChange}/>
     </div>
   </>;
 }

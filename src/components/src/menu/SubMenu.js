@@ -42,7 +42,7 @@ const SubMenu = React.forwardRef((props, ref) => {
     disabled: nonNil(disabled) ? disabled : ctx.disabled,
   };
 
-  //the direct child of menu should align the botom of the menu, others should  align right
+  //the direct child of menu should align the bottom of the menu, others should  align right
   const popupSubMenuPosition = useMemo(() => {
     if (!ctx.popupSubMenu) {
       return null;

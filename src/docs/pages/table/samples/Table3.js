@@ -21,27 +21,27 @@ const loadData = () => {
 const cells = [
   {
     head: 'ID',
-    showParam: 'key',
+    paramName: 'key',
   },
   {
     head: 'Name',
-    showParam: 'name',
+    paramName: 'name',
   },
   {
     head: 'Age',
-    showParam: 'age',
+    paramName: 'age',
   },
   {
     head: 'Address',
-    showParam: 'address',
+    paramName: 'address',
   },
 ];
 
 export default function Table3() {
   const [checkType, setCheckType] = useState('checkbox');
   return <>
-    <div className="doc doc-row">
-      <span style={{marginRight: '1rem', fontWeight: '600'}}>Type:</span>
+    <div className="doc doc-row space">
+      <span style={{fontWeight: '600'}}>Type:</span>
       <Select value={checkType} onSelect={value => setCheckType(value)}>
         <Select.Option value="radio">radio</Select.Option>
         <Select.Option value="checkbox">checkbox</Select.Option>
@@ -49,7 +49,6 @@ export default function Table3() {
     </div>
     <Table type="simple"
            hover={true}
-
            loadData={loadData}
            cells={cells}
            checkable={true}

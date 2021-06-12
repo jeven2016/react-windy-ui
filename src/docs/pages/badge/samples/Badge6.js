@@ -1,5 +1,5 @@
 import React from 'react';
-import {Badge, Button} from 'react-windy-ui';
+import {Badge} from 'react-windy-ui';
 
 export default function Badge6() {
 
@@ -7,22 +7,22 @@ export default function Badge6() {
 
     <Badge type="tag" color="info"
            style={{marginRight: '1rem'}}>
-      Info
+      55
     </Badge>
     <Badge type="tag" color="ok"
            style={{marginRight: '1rem'}}>
-      OK
+      66
     </Badge>
     <Badge type="tag" color="warning"
            style={{marginRight: '1rem'}}>
-      Warning
+      77
     </Badge>
     <Badge type="tag" color="error"
            style={{marginRight: '1rem'}}>
-      Danger
+      88
     </Badge>
     <Badge type="tag" color="dark">
-      Dark
+      99+
     </Badge>
   </>;
 

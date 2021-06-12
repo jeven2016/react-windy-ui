@@ -4,8 +4,7 @@ import {IconChecked, IconCheckedIndeterminate, IconUnChecked} from './Icons';
 import Element from './common/Element';
 import clsx from 'clsx';
 import useInternalState from './common/useInternalState';
-import {createColorClsName} from './Utils';
-import {preventEvent} from './event';
+import {createColorClsName, preventEvent} from './Utils';
 
 const Checkbox = React.forwardRef((props, ref) => {
   const {
@@ -29,11 +28,7 @@ const Checkbox = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
 
-  const {
-    state: checkState,
-    setState: setCheckState,
-    customized,
-  } = useInternalState({
+  const [checkState, setCheckState] = useInternalState({
     props,
     stateName: 'checked',
     defaultState: defaultChecked,
@@ -70,30 +65,28 @@ const Checkbox = React.forwardRef((props, ref) => {
       return;
     }
     const nextState = !checkState;
-    if (!customized) {
-      setCheckState(nextState);
-    }
+    setCheckState(nextState);
     onChange && onChange(nextState, e);
-  }, [onChange, checkState, customized, setCheckState, disabled]);
+  }, [onChange, checkState, setCheckState, disabled]);
 
   const iconColor = useMemo(() => createColorClsName({
     checkState, checkedColor, uncheckedColor,
   }), [checkState, checkedColor, uncheckedColor]);
 
   realIcon = useMemo(() => realIcon ? React.cloneElement(realIcon, {
-        onKeyDown: (e) => e.keyCode === 13 && handleClick(),
-        tabIndex: 0,
-        extraClassName: iconColor?.className || '',
-        style: showIndeterminateState
-            ? iconIndeterminateStyle
-            : ((!iconColor?.isClass && iconColor?.style) || {}),
-      }) : null,
-      [
-        realIcon,
-        iconColor,
-        showIndeterminateState,
-        iconIndeterminateStyle,
-        handleClick]);
+      onKeyDown: (e) => e.keyCode === 13 && handleClick(),
+      tabIndex: 0,
+      extraClassName: iconColor?.className || '',
+      style: showIndeterminateState
+        ? iconIndeterminateStyle
+        : ((!iconColor?.isClass && iconColor?.style) || {}),
+    }) : null,
+    [
+      realIcon,
+      iconColor,
+      showIndeterminateState,
+      iconIndeterminateStyle,
+      handleClick]);
 
   return <>
     <Element className={clsName} disabled={disabled} {...otherProps}

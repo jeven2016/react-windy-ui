@@ -58,8 +58,8 @@ const Item = React.forwardRef((props, ref) => {
   let iconContent = null;
   if (ctx.hasCollapseIcon) {
     const icon = isNil(ctx.collapseIcon)
-        ? <IconArrowRight/>
-        : ctx.collapseIcon;
+      ? <IconArrowRight/>
+      : ctx.collapseIcon;
 
     const contentClsName = clsx('icon-column', {
       disabled: isDisabled,
@@ -74,13 +74,13 @@ const Item = React.forwardRef((props, ref) => {
           hasBorder={ctx.hasBorder}
           hasBox={false}>
       <Card.Header
-          extraClassName={`collapse-header ${disabledClsName} ${isCollapsed
-              ? 'collapsed'
-              : ''}`}
-          hasBackground={hasBackground}
-          onClick={clickHeader}
-          style={{position: 'relative'}}
-          {...bind}>
+        extraClassName={`collapse-header ${disabledClsName} ${isCollapsed
+          ? 'collapsed'
+          : ''}`}
+        hasBackground={hasBackground}
+        onClick={clickHeader}
+        style={{position: 'relative'}}
+        {...bind}>
         <div className={`header-row`}>
           <div className={innerClsName}>
             {iconContent}
@@ -90,10 +90,10 @@ const Item = React.forwardRef((props, ref) => {
           </div>
           {
             items.map((item, index) =>
-                <div key={`more-${index}`}
-                     className={`header-more`}>
-                  {item}
-                </div>)
+              <div key={`more-${index}`}
+                   className={`header-more`}>
+                {item}
+              </div>)
           }
         </div>
         {

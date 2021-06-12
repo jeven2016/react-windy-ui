@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  Card,
-  Col,
-  Form,
-  Input,
-  Notification,
-  Row
-} from 'react-windy-ui';
+import {Button, Card, Form, Input, Notification} from 'react-windy-ui';
 
 export default function Form7() {
   const {form, watch} = Form.useForm({
@@ -28,7 +20,7 @@ export default function Form7() {
     <Card style={{minWidth: '80%'}} hasBox={false}>
       <Card.Row>
         <Form form={form} onSubmit={onSubmit} direction="horizontal"
-              labelCol={{col: 3}} controlCol={{col: 9}}>
+              labelCol={{sm: 12, md: 3}} controlCol={{sm: 12, md: 9}}>
 
           <Form.Item label="New Password"
                      name="newPwd"
@@ -47,17 +39,13 @@ export default function Form7() {
                      rules={{
                        required: 'The confirm password is required',
                        validate: (value) => value === watch('newPwd')
-                           || "The confirm password doesn't match the password",
+                         || "The confirm password doesn't match the password",
                      }}>
             <Input type="password" block/>
           </Form.Item>
 
-          <Form.Item>
-            <Row>
-              <Col col={9} xsOffset={3}>
-                <Button color="blue" nativeType="submit">Save</Button>
-              </Col>
-            </Row>
+          <Form.Item label="">
+            <Button color="blue" nativeType="submit">Save</Button>
           </Form.Item>
         </Form>
       </Card.Row>

@@ -10,19 +10,19 @@ export default function Table1() {
   return <>
     <div className="doc doc-row">
       <Toggle active={hasBox} onChange={val => setBox(val)}
-              content={{on: 'Box Shadown', off: 'Box Shadown'}}/>
+              label='Box Shadow'/>
     </div>
     <div className="doc doc-row">
       <Toggle active={hover} onChange={val => setHover(val)}
-              content={{on: 'Hover', off: 'Hover'}}/>
+              label='Hover'/>
     </div>
     <div className="doc doc-row">
       <Toggle active={hasBorder} onChange={val => setBorder(val)}
-              content={{on: 'Border', off: 'Border'}}/>
+              label='Border'/>
     </div>
 
-    <div className="doc doc-row">
-      <span style={{marginRight: '1rem', fontWeight: '600'}}>Type:</span>
+    <div className="doc doc-row space">
+      <span style={{fontWeight: '600'}}>Type:</span>
       <Select value={type} onSelect={value => setType(value)}>
         <Select.Option value="normal">normal</Select.Option>
         <Select.Option value="striped">striped</Select.Option>

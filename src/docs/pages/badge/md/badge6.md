@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/badge/md/badge6.md
 ---      
 
 +++ zh_CN   
-当type设置为tag值时, Badge将作为单独的Tag使用。
+当<Code>type</Code>设置为<Code>tag</Code>值时, Badge将作为单独的<Code>Tag</Code>使用。
 
 
 +++ en_US   

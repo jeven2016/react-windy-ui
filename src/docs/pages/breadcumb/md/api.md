@@ -17,7 +17,7 @@
 | className | 样式名称 | string | breadcrumb |  |
 | extraClassName | 额外添加的样式名称 | string | - |  |
 | hasBackground | 是否有背景 | boolean | false |  |
-| separator | 分隔符 | react node | - |  |
+| separator | 分隔符 | react node \| function | - | <Code>function(itemIndex, itemProps)</Code> |
 
 - <Code>Item</Code>的属性如下所示：
 
@@ -27,6 +27,7 @@
 | className | 样式名称 | string | breadcrumb |  |
 | extraClassName | 额外添加的样式名称 | string | - |  |
 | active | 是否显示激活状态 | boolean | false |  |
+| value | Item对应的value | any | - |  |
 
 +++ en_US
 

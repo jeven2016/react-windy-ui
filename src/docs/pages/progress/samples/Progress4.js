@@ -7,7 +7,7 @@ export default function Progress4() {
   const showTop = () => {
     Progress.showTop({
       style: {marginTop: '0px'},
-      type: 'warning',
+      type: 'info',
 
       //optional parameters
       // barStyle: {background: 'red'},

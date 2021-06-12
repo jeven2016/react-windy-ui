@@ -55,10 +55,12 @@ const Tooltip = React.forwardRef((props, ref) => {
       from: {
         transform: activeState ? 'scale(1)' : 'scale(0.9)',
         opacity: activeState ? 1 : 0,
+        disp: activeState? 1: 0
       },
       to: {
         transform: activeState ? 'scale(1)' : 'scale(0.9)',
         opacity: activeState ? 1 : 0,
+        disp: activeState? 1: 0
       },
     };
   };

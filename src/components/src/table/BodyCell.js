@@ -1,6 +1,8 @@
 import React from 'react';
 import useFixedComponent from './useFixedComponent';
 import clsx from 'clsx';
+import * as PropTypes from "prop-types";
+import Element from "../common/Element";
 
 export const BodyCell = React.forwardRef((props, ref) => {
   const {
@@ -26,5 +28,16 @@ export const BodyCell = React.forwardRef((props, ref) => {
 
   </>;
 });
+
+BodyCell.propTypes = {
+  store: PropTypes.object,
+  cell: PropTypes.object,
+  content: PropTypes.node,
+  tdKey: PropTypes.any,
+  scrollHeadRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+  ]),
+}
 
 export default BodyCell;

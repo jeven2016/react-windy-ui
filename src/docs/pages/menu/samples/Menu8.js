@@ -13,11 +13,10 @@ export default function Menu8() {
         <Radio value="normal">normal </Radio>
       </RadioGroup>
     </div>
-    <div className="doc doc-row">
+    <div className="doc doc-row space">
       <Menu defaultActiveItems={['item1']}
             id='test'
-            type={type}
-            style={{width: '250px'}}>
+            type={type}>
         <Menu.Item id="item1">
           Menu item1
         </Menu.Item>

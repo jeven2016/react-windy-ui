@@ -8,7 +8,7 @@ export default function Modal5() {
   const close = () => setActive(false);
 
   return <>
-    <div className="doc doc-row">
+    <div className="doc doc-row space">
       <span style={{marginRight: '1rem', fontWeight: '600'}}>Size:</span>
       <Select value={size} onSelect={value => setSize(value)}>
         <Select.Option value="small">small</Select.Option>
@@ -20,8 +20,7 @@ export default function Modal5() {
 
     <Button type="primary" onClick={() => setActive(true)}>Simple</Button>
 
-    <Modal active={active} size={size} onCancel={close}
-           alignCenter={true}>
+    <Modal active={active} size={size} onCancel={close}>
       <Modal.Header>
         Modal Header
       </Modal.Header>

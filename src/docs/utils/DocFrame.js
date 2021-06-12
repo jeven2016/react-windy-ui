@@ -1,6 +1,5 @@
 import Frame, {FrameContextConsumer} from 'react-frame-component';
 import React from 'react';
-import {Responsive, useMediaQuery} from 'react-windy-ui';
 
 const getStyles = () => {
   let head = '';

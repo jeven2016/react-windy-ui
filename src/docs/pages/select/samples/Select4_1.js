@@ -71,7 +71,7 @@ const Template2 = ({icon, title}) => {
 export default function Select4_1() {
   return <>
     {/*render content using text property*/}
-    <div className="doc doc-row">
+    <div className="doc doc-row space">
       <Select defaultValue="a"
               onSelect={(value) => console.log(value)}>
         <Select.Option value="a" text="Laptop">
@@ -101,7 +101,7 @@ export default function Select4_1() {
 
 
     {/* same content rendered in Option and Select*/}
-    <div className="doc doc-row">
+    <div className="doc doc-row space">
       <Select defaultValue="a"
               hasArrow={false}
               onSelect={(value) => console.log(value)}>
@@ -127,12 +127,12 @@ export default function Select4_1() {
     </div>
 
     {/*render different content using render() function*/}
-    <div className="doc doc-row">
+    <div className="doc doc-row space">
       <Select defaultValue="a"
               onSelect={(value) => console.log(value)}>
         <Select.Option value="a" render={() =>
-            <Template2 title="Laptop"
-                       icon={<FontAwesomeIcon icon={faLaptop}/>}/>}>
+          <Template2 title="Laptop"
+                     icon={<FontAwesomeIcon icon={faLaptop}/>}/>}>
 
           <Template title="Laptop"
                     desc="$500 (On Sale)"
@@ -140,8 +140,8 @@ export default function Select4_1() {
         </Select.Option>
         <Divider/>
         <Select.Option value="b" render={() =>
-            <Template2 title="Phone"
-                       icon={<FontAwesomeIcon icon={faMobileAlt}/>}/>}>
+          <Template2 title="Phone"
+                     icon={<FontAwesomeIcon icon={faMobileAlt}/>}/>}>
 
           <Template title="Phone"
                     desc="$300 (On Sale)"
@@ -149,8 +149,8 @@ export default function Select4_1() {
         </Select.Option>
         <Divider/>
         <Select.Option value="c" render={() =>
-            <Template2 title="Car"
-                       icon={<FontAwesomeIcon icon={faCar}/>}/>}>
+          <Template2 title="Car"
+                     icon={<FontAwesomeIcon icon={faCar}/>}/>}>
 
           <Template title="Car"
                     desc="$50,000 (On Sale)"

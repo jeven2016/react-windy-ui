@@ -8,10 +8,10 @@ export default function Tabs3() {
   return <>
     <div className="doc doc-row">
       <Toggle active={equalWidth} onChange={val => setEqualWidth(val)}
-              content={{on: 'Equal-width', off: 'Equal-width'}}/>
+              label='Equal-width'/>
     </div>
-    <div className="doc doc-row">
-      <span style={{marginRight: '1rem', fontWeight: '600'}}>Type:</span>
+    <div className="doc doc-row space">
+      <span style={{fontWeight: '600'}}>Type:</span>
       <Select value={type} onSelect={value => setType(value)}>
         <Select.Option value="normal">normal</Select.Option>
         <Select.Option value="card">card</Select.Option>

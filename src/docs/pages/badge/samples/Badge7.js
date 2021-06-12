@@ -6,7 +6,7 @@ export default function Badge7() {
 
   return <>
     <div className="doc doc-row">
-      <Toggle active={active} content={{on: 'Active', off: 'Active'}}
+      <Toggle active={active} label='Active'
               onChange={(val) => setActive(val)}/>
     </div>
     <Badge type="tag" color="info" active={active}>

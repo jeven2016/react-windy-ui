@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import clsx from 'clsx';
-import {preventEvent} from '../event';
+import {preventEvent} from '../Utils';
 
 const proxy = (method, disabled) => {
   return (e) => {

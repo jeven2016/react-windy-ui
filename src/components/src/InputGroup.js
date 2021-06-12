@@ -12,11 +12,12 @@ const InputGroup = React.forwardRef((props, ref) => {
     size = 'medium',
     className = 'input-group',
     extraClassName,
+    normal = true,
     children,  //todo
     ...otherProps
   } = props;
 
-  let clsName = clsx(extraClassName, className, {block: block});
+  let clsName = clsx(extraClassName, className, {block: block, normal});
   const ctx = useMemo(() => ({size, withinGroup: true}),
       [size]);
 
@@ -78,6 +79,7 @@ InputGroup.propTypes = {
   className: PropTypes.string, //the class name of button
   extraClassName: PropTypes.string, //the customized class need to add
   disabled: PropTypes.bool,
+  normal: PropTypes.bool,
 };
 
 Label.propTypes = {

@@ -57,7 +57,7 @@ const Button = React.forwardRef((props, ref) => {
   } = updatedProps;
 
   const isIconButton = (nonNil(leftIcon) || nonNil(rightIcon)) &&
-      React.Children.count(children) === 0;
+    React.Children.count(children) === 0;
 
   const realRippleColor = useMemo(() => {
     if (nonNil(rippleColor)) {
@@ -113,41 +113,41 @@ const Button = React.forwardRef((props, ref) => {
   const isLoading = loading && nonNil(loader);
 
   return (
-      <Element
-          className={className}
-          moreClassSuffix={clsName}
-          onClick={onClick}
-          disabled={disabled}
-          setDisabledAttr={true}
-          nativeType={nativeTypeDef.nativeElemType}
-          {...nativeTypeDef.nativeBtnType}
-          {...otherProps}
-          ref={ref}>
+    <Element
+      className={className}
+      moreClassSuffix={clsName}
+      onClick={onClick}
+      disabled={disabled}
+      setDisabledAttr={true}
+      nativeType={nativeTypeDef.nativeElemType}
+      {...nativeTypeDef.nativeBtnType}
+      {...otherProps}
+      ref={ref}>
         <span className="content-root">
           {
             isLoading && leftLoader
-            && React.cloneElement(loader, {style: {marginRight: '.5rem'}})
+            && React.cloneElement(loader, {style: {marginRight: '.5em'}})
           }
           {
             isNil(leftIcon) && isNil(rightIcon) ?
-                children
-                : <>
+              children
+              : <>
 
-                  {leftIcon}
-                  {children && <span className={contentClsName}>{children}</span>}
-                  {rightIcon}
-                </>
+                {leftIcon}
+                {children && <span className={contentClsName}>{children}</span>}
+                {rightIcon}
+              </>
           }
           {
             isLoading && !leftLoader &&
-            React.cloneElement(loader, {style: {marginLeft: '.5rem'}})
+            React.cloneElement(loader, {style: {marginLeft: '.5em'}})
           }
         </span>
-        {
-          hasRipple && !disabled &&
-          <Ripple ref={rippleRef} center={circle} color={realRippleColor}/>
-        }
-      </Element>
+      {
+        hasRipple && !disabled &&
+        <Ripple ref={rippleRef} center={circle} color={realRippleColor}/>
+      }
+    </Element>
   );
 });
 
@@ -158,7 +158,7 @@ Button.propTypes = {
   type: PropTypes.string,   //it can be 'primary', 'secondary', 'info', 'warning', 'error', etc.
   block: PropTypes.bool, //whether the button's width is '100%' and it occupies the whole row
   color: PropTypes.string, //the color, like "primary", "red"
-  directRef:  PropTypes.oneOfType([
+  directRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({current: PropTypes.instanceOf(Element)}),
   ]),

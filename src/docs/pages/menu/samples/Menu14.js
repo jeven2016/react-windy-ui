@@ -30,7 +30,7 @@ export default function Menu14() {
       <Toggle active={compact} onChange={active => setCompact(active)}
               content={{on: 'Compact', off: 'Compact'}}/>
     </div>
-    <div className="doc doc-row" style={{width: '20rem'}}>
+    <div className="doc doc-row space">
       <Menu compact={compact}
             openedMenus={openedMenus}
             onOpenedMenu={(ids) => {

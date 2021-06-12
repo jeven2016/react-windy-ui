@@ -1,9 +1,12 @@
 import React from 'react';
-import {Button} from 'react-windy-ui';
+import {Button, Space} from 'react-windy-ui';
 
 const SampleBtn17 = () => {
   return <>
-    <div className="doc inverted-row">
+    <Space gutter={{x: 8, y: 16}} wrap={true} style={{background: '#423e3e', padding: '8px'}}>
+      <Button color="white" hasOutlineBackground={false} outline
+              invertedOutline
+              hasMinWidth>white</Button>
       <Button color="gray" hasOutlineBackground={false} outline
               invertedOutline
               hasMinWidth>gray</Button>
@@ -20,7 +23,6 @@ const SampleBtn17 = () => {
               invertedOutline hasMinWidth>purple</Button>
       <Button color="violet" hasOutlineBackground={false} outline
               invertedOutline hasMinWidth>violet</Button>
-      <br/>
       <Button color="blue" hasOutlineBackground={false} outline
               invertedOutline
               hasMinWidth>blue</Button>
@@ -36,7 +38,7 @@ const SampleBtn17 = () => {
               invertedOutline hasMinWidth>orange</Button>
       <Button color="red" hasOutlineBackground={false} outline invertedOutline
               hasMinWidth>red</Button>
-    </div>
+    </Space>
   </>;
 };
 

@@ -1,12 +1,10 @@
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
 import {MenuContext} from '../common/Context';
-import {includes, isNil, nonNil} from '../Utils';
+import {includes, invoke, isNil, nonNil, preventEvent} from '../Utils';
 import {Action, getPaddingStyle} from './MenuUtils';
 import PropTypes from 'prop-types';
 import {animated, useSpring} from 'react-spring';
-import {preventEvent} from '../event';
-import Element from '../common/Element';
 import Tooltip from '../Tooltip';
 import {MenuType} from '../common/Constants';
 import Ripple from '../common/Ripple';
@@ -41,10 +39,17 @@ const Item = React.forwardRef((props, ref) => {
     style,
     ...otherProps
   } = updatedProps;
-  const {attach, detach, getState} = ctx.store;
-  const [active, setActive] = useState(null);
-  const isActive = isNil(active) ? includes(getState().activeItemsList, id)
-      : active;
+  const {attach, detach} = ctx.store;
+
+  //if the defaultActiveItems defined, ensure the initial active is correct
+  const [active, setActive] = useState(includes(ctx.activeItems, id));
+
+  const isActive = useMemo(() => {
+    if (ctx.customActive) {
+      return includes(ctx.activeItems, id)
+    }
+    return active
+  }, [ctx.customActive, ctx.activeItems, active, id]);
 
   const isDisabled = nonNil(disabled) ? disabled : ctx.disabled;
 
@@ -59,8 +64,10 @@ const Item = React.forwardRef((props, ref) => {
     if (isNil(id)) {
       return;
     }
+
+    //only register this listener for non-controlled items
     const listener = ({activeItemsList}) => {
-      if (!isDisabled && !isNil(id)) {
+      if (!isDisabled && nonNil(id)) {
         const nextActive = includes(activeItemsList, id);
         if (nextActive && !isActive) {
           setActive(true);
@@ -71,9 +78,10 @@ const Item = React.forwardRef((props, ref) => {
         }
       }
     };
-    attach(listener);
+
+    !ctx.customActive && attach(listener);
     return () => detach(listener);
-  }, [isActive, id, setActive, detach, attach, isDisabled]);
+  }, [ctx.customActive, isActive, id, setActive, detach, attach, isDisabled]);
 
   const clickHandler = useEventCallback((e) => {
     if (isDisabled) {
@@ -85,8 +93,8 @@ const Item = React.forwardRef((props, ref) => {
       ctx.dispatch({type: Action.clickHeader, id, e});
     }
 
-    onClick && onClick(e);
-    ctx.onClickItem && ctx.onClickItem(id, e);
+    invoke(onClick, e);
+    invoke(ctx.onClickItem, id, e);
   });
 
   const clsName = clsx(extraClassName, className, {
@@ -98,9 +106,9 @@ const Item = React.forwardRef((props, ref) => {
     'with-bg': hasBackground,
     'with-bottom-bar': hasBottomBar,
     'left-bar': ctx.type === MenuType.primary && ctx.primaryBarPosition ===
-        'left',
+      'left',
     'right-bar': ctx.type === MenuType.primary && ctx.primaryBarPosition ===
-        'right',
+      'right',
   });
 
   const content = useMemo(() => {
@@ -124,20 +132,20 @@ const Item = React.forwardRef((props, ref) => {
   }, [customizedChildren, icon, directChild, show, innerProps, children]);
 
   const paddingStyle = useMemo(() => ctx.autoIndent ?
-      getPaddingStyle({
-        ignored: ctx.popupSubMenu,
-        indentUnit: ctx.indentUnit,
-        indentation: ctx.indentation,
-        initIndent: ctx.initIndent,
-        level: level,
-      }) : null,
-      [
-        ctx.autoIndent,
-        ctx.indentUnit,
-        ctx.indentation,
-        ctx.initIndent,
-        ctx.popupSubMenu,
-        level]);
+    getPaddingStyle({
+      ignored: ctx.popupSubMenu,
+      indentUnit: ctx.indentUnit,
+      indentation: ctx.indentation,
+      initIndent: ctx.initIndent,
+      level: level,
+    }) : null,
+    [
+      ctx.autoIndent,
+      ctx.indentUnit,
+      ctx.indentation,
+      ctx.initIndent,
+      ctx.popupSubMenu,
+      level]);
 
   const renderCnt = <div ref={ref} className={clsName} {...otherProps}
                          onClick={clickHandler}
@@ -157,19 +165,6 @@ const Item = React.forwardRef((props, ref) => {
 
   return renderCnt;
 });
-
-Item.Left = React.forwardRef((props, ref) =>
-    <Element nativeType="span" className="left"
-             ref={ref} {...props}/>,
-);
-Item.Center = React.forwardRef((props, ref) =>
-    <Element nativeType="span" className="item-info"
-             ref={ref} {...props}/>,
-);
-Item.Right = React.forwardRef((props, ref) =>
-    <Element nativeType="span" className="right"
-             ref={ref} {...props}/>,
-);
 
 Item.propTypes = {
   className: PropTypes.string,

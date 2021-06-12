@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/badge/md/badge3.md
 ---      
 
 +++ zh_CN   
-如果默认的背景色无法满足需要，您还可以直接将color设置为其他颜色值，Badge将会应用这个颜色。
+如果默认的背景色无法满足需要，您还可以直接将<Code>color</Code>设置为其他颜色值，Badge将会应用这个颜色。
 
 
 +++ en_US   

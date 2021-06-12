@@ -35,11 +35,11 @@ export default function Layout5() {
 
         </Layout.Header>
         <Layout
-            style={{
-              marginTop: '4rem',
-              background: '#f8f9fa',
-              padding: '0 2rem',
-            }}>
+          style={{
+            marginTop: '4rem',
+            background: '#f8f9fa',
+            padding: '0 2rem',
+          }}>
           <Breadcrumb style={{margin: '0.5rem 0'}}>
             <Breadcrumb.Item>
               <IconHome style={{fontSize: '1.25em'}}/>
@@ -52,11 +52,11 @@ export default function Layout5() {
             </Breadcrumb.Item>
           </Breadcrumb>
           <Layout.Content
-              style={{
-                background: '#fff',
-                padding: '0 1rem',
-                marginBottom: '1rem',
-              }}>
+            style={{
+              background: '#fff',
+              padding: '0 1rem',
+              marginBottom: '1rem',
+            }}>
             <div style={{height: '500px'}}>
               Your Content<br/>
             </div>

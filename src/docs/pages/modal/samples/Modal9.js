@@ -7,6 +7,7 @@ export default function Modal9() {
     for (let i = 0; i < 5; i++) {
       setTimeout(() => Modal.info({
         header: 'Info' + i,
+        hasIcon: false,
         type: 'primary',
         body: <Button color="red" onClick={() => Modal.closeAll()}>
           Close All

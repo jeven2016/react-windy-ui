@@ -17,6 +17,8 @@ export const reversePosition = (position) => {
     case 'right':
       barPos = 'left';
       break;
+    default:
+      break;
   }
   return barPos;
 };
@@ -47,6 +49,8 @@ export const barAnimationConfig = (config, isTabCard, itemRect, tabRect,
       };
       break;
 
+    default:
+      break;
   }
 
   return {
@@ -105,33 +109,33 @@ export const filterProps = (sty, isHorizontal) => {
   }
   if (isHorizontal) {
     transform = transform.substring(0, transform.indexOf(',')) +
-        ', 0px, 0px';
+      ', 0px, 0px';
   } else {
     //remove unused X
     transform = 'translate3d(0px, ' +
-        transform.substring(transform.indexOf(',') + 1);
+      transform.substring(transform.indexOf(',') + 1);
   }
-  return {...sty, transform: transform};
+  return {...sty, transform: transform, touchAction: 'none'};
 };
 
 export const calcDistance = ({scrlRect, itemRect, tabCntRect, against, begin, end}) => {
   let distance;
   if (itemRect[end] <= tabCntRect[end]
-      && itemRect[begin] >= tabCntRect[begin]) {
+    && itemRect[begin] >= tabCntRect[begin]) {
     distance = scrlRect[begin] - tabCntRect[begin];
   } else if (itemRect[end] <= tabCntRect[end]) {
     distance = scrlRect[begin] - tabCntRect[begin] + tabCntRect[end] -
-        itemRect[end];
+      itemRect[end];
   } else {
     distance = scrlRect[begin] - tabCntRect[begin] -
-        (itemRect[end] - tabCntRect[end]);
+      (itemRect[end] - tabCntRect[end]);
   }
 
   return distance;
 };
 
 export const getTranslateValue = (
-    isHorizontal, scrlRect, tabCntRect, itemRect) => {
+  isHorizontal, scrlRect, tabCntRect, itemRect) => {
   let distance;
   let to;
   if (isHorizontal) {

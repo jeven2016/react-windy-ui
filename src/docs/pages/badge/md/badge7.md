@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/badge/md/badge7.md
 ---      
 
 +++ zh_CN   
-
+当<Code>active</Code>设置为<Code>true</Code>时， Badge将会显示。
 
 
 +++ en_US   

@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
-import {createContainer, execute, isNil, isString, validate} from './Utils';
+import {createContainer, execute, isNil, isString, nonNil, validate} from './Utils';
 import Alert from './Alert';
 import {Transition} from 'react-spring/renderprops';
 
@@ -52,7 +52,7 @@ const Notification = (props) => {
     rect = DEFAULT_CONFIG.rect,
   } = props;
   validate(Object.keys(PositionType).includes(position),
-      `The value(${position}) of the position is invalid.`);
+    `The value(${position}) of the position is invalid.`);
 
   const size = 'small'; //only one size provided
   const sizeClassName = SizeStyle[size];
@@ -94,7 +94,7 @@ const Notification = (props) => {
   }
 
   useEffect(() => {
-    if (!isNil(rect)) {
+    if (nonNil(rect)) {
       if (positionResult.isTop) {
         cntRef.current.style.top = rect.top;
       } else {
@@ -139,22 +139,22 @@ const Notification = (props) => {
   }, [positionResult]);
 
   return <div
-      className={`alert-container ${sizeClassName} ${PositionType[position]}`}
-      ref={cntRef}>
+    className={`alert-container ${sizeClassName} ${PositionType[position]}`}
+    ref={cntRef}>
     {
       //using <Transition> instead of useTransition, since useTransition always
       //print react worning log regarding memory leak
     }
     <Transition
-        config={{clamp: true, mass: 1, tesion: 150, friction: 15}}
-        items={queue}
-        keys={item => item.key}
-        from={animationFrom}
-        enter={{x: '0', opacity: '1', scale: 1}}
-        onDestroyed={(item) => {
-          item.onClose && item.onClose(item);
-        }}
-        leave={animationLeave}>
+      config={{clamp: true, mass: 1, tesion: 150, friction: 15}}
+      items={queue}
+      keys={item => item.key}
+      from={animationFrom}
+      enter={{x: '0', opacity: '1', scale: 1}}
+      onDestroyed={(item) => {
+        item.onClose && item.onClose(item);
+      }}
+      leave={animationLeave}>
       {
         item => tranProps => {
           delete item.rect;
@@ -177,7 +177,7 @@ const Notification = (props) => {
 };
 
 /**
- * Generate a key for inner Alert intances
+ * Generate a key for inner Alert instances
  * @returns {string}
  */
 const generateKey = () => {
@@ -194,12 +194,12 @@ const proxyMap = new Map();
 const send = (type, cfg) => {
   const key = generateKey();
   let msg = isString(cfg) ? {
-        ...DEFAULT_CONFIG,
-        key: key,
-        type: type,
-        body: cfg,
-      }
-      : {key: key, type: type, ...DEFAULT_CONFIG, ...cfg};
+      ...DEFAULT_CONFIG,
+      key: key,
+      type: type,
+      body: cfg,
+    }
+    : {key: key, type: type, ...DEFAULT_CONFIG, ...cfg};
 
   let proxy = proxyMap.get(msg.position);
   if (!proxy) {
@@ -214,7 +214,7 @@ const send = (type, cfg) => {
                                     containerObj.remove();
                                     proxyMap.delete(k);
                                   }}/>,
-        containerObj.container);
+      containerObj.container);
     proxy.add(msg);
   } else {
     proxy.add(msg);

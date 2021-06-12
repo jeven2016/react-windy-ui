@@ -21,19 +21,19 @@ const loadData = () => {
 const cells = [
   {
     head: 'ID',
-    showParam: 'key',
+    paramName: 'key',
   },
   {
     head: 'Name',
-    showParam: 'name',
+    paramName: 'name',
   },
   {
     head: 'Age',
-    showParam: 'age',
+    paramName: 'age',
   },
   {
     head: 'Address',
-    showParam: 'address',
+    paramName: 'address',
 
     format: (addressText) => {
       return <Tooltip body={`The address is ${addressText}`}>

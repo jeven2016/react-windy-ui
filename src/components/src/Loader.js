@@ -52,8 +52,8 @@ const Loader = React.forwardRef((props, ref) => {
   } = props;
 
   const directionCls = useMemo(() => direction === LoaderDirection.horizontal
-      ? 'loader-row'
-      : 'loader-column', [direction]);
+    ? 'loader-row'
+    : 'loader-column', [direction]);
 
   let clsName = clsx(extraClassName, className, directionCls, {
     active: active,
@@ -72,12 +72,12 @@ const Loader = React.forwardRef((props, ref) => {
       cnt = <span className="content">
         {
           React.Children.map(Array.from(Array(12), (val, i) => i + 1),
-              value => {
-                const itemCls = `segment${value}`;
-                return <span className={itemCls}>
+            value => {
+              const itemCls = `segment${value}`;
+              return <span className={itemCls}>
                   <span className="item"/>
                 </span>;
-              })
+            })
         }
       </span>;
     }
@@ -99,7 +99,7 @@ const Loader = React.forwardRef((props, ref) => {
   const bodyWithChildren = useMemo(() => {
     if (!isNil(children)) {
       const wrapperClsName = clsx('loader-wrapper',
-          {block, 'with-opacity': !darkMask, active});
+        {block, 'with-opacity': !darkMask, active});
       return <>
         <span className={wrapperClsName} ref={ref} {...otherProps}>
           <Mask active={active} onClick={onMaskClick}
@@ -134,7 +134,7 @@ const Loader = React.forwardRef((props, ref) => {
       };
     }
 
-    return <Modal alignCenter={true} active={active} style={mStyle}
+    return <Modal active={active} style={mStyle} canEsc={false}
                   type="secondary"
                   hasDefaultWidth={hasDefaultWidth}
                   hasMask={hasMask} onCancel={onMaskClick}>
@@ -168,14 +168,14 @@ Loader.propTypes = {
   extraClassName: PropTypes.string,
   text: PropTypes.node,
   block: PropTypes.bool,
-  color: PropTypes.string,
+  color: PropTypes.oneOf(['white', 'primary']),
   active: PropTypes.bool,
-  type: PropTypes.string,
-  size: PropTypes.string,
+  type: PropTypes.oneOf(Object.keys(LoaderType)),
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
   hasMask: PropTypes.bool,
   darkMask: PropTypes.bool,
   hasBackground: PropTypes.bool,
-  direction: PropTypes.string,
+  direction: PropTypes.oneOf(Object.keys(LoaderDirection)),
   modalStyle: PropTypes.object,
   global: PropTypes.bool,
   onMaskClick: PropTypes.func,

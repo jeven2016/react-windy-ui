@@ -9,6 +9,8 @@ import {Controller} from 'react-hook-form';
 import Checkbox from '../Checkbox';
 import Radio, {RadioGroup} from '../Radio';
 import Widget from './Widget';
+import Toggle from "../toggle";
+import TextField from "../textfield";
 
 export const useLabel = (props) => {
   const {
@@ -39,7 +41,7 @@ export const filterLabel = (chdArray) => {
 
 export const createErrorMessages = (ctx, name, rules) => {
   if (nonNil(rules)) {
-    return <FormMessage name={name} errors={ctx.errors}/>;
+    return <FormMessage name={name} errors={ctx.errors} key={`msg-${name}`}/>;
   }
   return null;
 };
@@ -47,13 +49,13 @@ export const createErrorMessages = (ctx, name, rules) => {
 export const createFormMessages = (ctx, children, messages = []) => {
   React.Children.forEach(children, chd => {
     validate(!chd.props?.rootItem,
-        'Root item cannot be embeded in other root item.');
+      'Root item cannot be embedded in other root item.');
 
     if (chd.type === FormItem && nonNil(chd.props.name)) {
       const rules = chd.props.rules;
       if (nonNil(rules)) {
         const itemErrMsg = createErrorMessages(ctx, chd.props.name,
-            rules);
+          rules);
 
         nonNil(itemErrMsg) && messages.push(itemErrMsg);
       }
@@ -67,12 +69,17 @@ export const createFormMessages = (ctx, children, messages = []) => {
   return messages;
 };
 
-export const cloneElement = (elem, props, control) => {
+export const cloneElement = (elem, props, ctx) => {
+  const control = ctx.control;
   let newProps;
   let originExCls = elem.props.extraClassName;
 
+  const errorType = elem.props.errorType;
+  const realEt = nonNil(errorType) ? errorType : props.errorType;
+
   //for Controller, the pureRules is used by controller and the ref should be excluded in this case
   const {pureRules, ref, ...restProps} = props;
+  const mergedProps = {...elem.props, ...restProps}
 
   let extraCls;
   switch (elem.type) {
@@ -80,27 +87,47 @@ export const cloneElement = (elem, props, control) => {
       originExCls = elem.props.inputProps?.extraClassName;
       extraCls = clsx(originExCls, 'form-control');
       newProps = {
-        ...elem.props,
-        ...restProps,
+        ...mergedProps,
         inputProps: {
           ...elem.props.inputProps,
           extraClassName: extraCls,
         },
+        errorType: realEt
       };
       //while the Controller is used, the rules should be moved from ref and
       //set via rules property of controller
       return <Controller as={Select}
+                         defaultValue=""
                          rules={pureRules}
                          control={control} {...newProps}/>;
+
+    case Toggle:
+      const cp = {
+        ...mergedProps,
+        extraClassName: clsx(originExCls, 'form-control'),
+        errorType: realEt
+      };
+      const name = cp.name;
+      delete cp.name;
+      return <Controller
+        name={name}
+        rules={pureRules}
+        render={({onChange, onBlur, value, ref: toggleRef}) => {
+          return <Toggle active={value} onChange={onChange} onBlur={onBlur} ref={toggleRef} {...cp}/>
+        }}
+        control={control}/>;
 
     case Checkbox:
     case Radio:
     case RadioGroup:
+    case TextField:
       const ctlProps = {
-        ...elem.props, ...restProps,
+        ...mergedProps,
         extraClassName: clsx(originExCls, 'form-control'),
+        errorType: realEt
       };
       return <Controller as={elem.type}
+                         defaultValue=""
                          rules={pureRules}
                          control={control} {...ctlProps}/>;
 
@@ -111,6 +138,7 @@ export const cloneElement = (elem, props, control) => {
         ...elem.props,
         ...restProps,
         extraClassName: extraCls,
+        errorType: realEt
       };
       return React.cloneElement(elem, newProps);
   }
@@ -121,7 +149,7 @@ export const cloneWidget = (widget, props, control) => {
   const formCtrlNode = widget.props.children;
 
   validate(React.Children.count(formCtrlNode) === 1,
-      'There should only be one child in "Form.Widget"');
+    'There should only be one child in "Form.Widget"');
 
   return React.cloneElement(widget, {
     children: cloneElement(formCtrlNode, props, control),
@@ -147,6 +175,6 @@ export const mapWidget = (chdArray, props, control) => {
     }
 
     return React.cloneElement(chd,
-        {children: mapWidget(chd.props.children, props, control)});
+      {children: mapWidget(chd.props.children, props, control)});
   });
 };

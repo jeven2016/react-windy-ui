@@ -25,20 +25,20 @@ const cellsData = [
 const cells = [
   {
     head: 'ID',
-    showParam: 'key',
+    paramName: 'key',
     sortable: true,
   },
   {
     head: 'Name',
-    showParam: 'name',
+    paramName: 'name',
   },
   {
     head: 'Age',
-    showParam: 'age',
+    paramName: 'age',
   },
   {
     head: 'Address',
-    showParam: 'address',
+    paramName: 'address',
   },
 ];
 
@@ -48,7 +48,7 @@ export default function Table5() {
   const [loading, setLoading] = useState(false);
 
   const sort = (cell) => {
-    if (cell.showParam === 'key') {
+    if (cell.paramName === 'key') {
       const nextOrder = order ? order.order === 'asc' ? 'desc' : 'asc'
           : 'desc';
 

@@ -1,36 +1,19 @@
-import React, {useState} from 'react';
-import {Button, Loader, Toggle} from 'react-windy-ui';
+import React from 'react';
+import {Button, Loader} from 'react-windy-ui';
 
 export default function Loader3() {
-  const [active, setActive] = useState(true);
 
   return <>
-    <div className="doc doc-row">
-      <Toggle active={active} onChange={val => setActive(val)}
-              content={{on: 'Active', off: 'Active'}}/>
-    </div>
     <div style={{display: 'flex', alignItems: 'center'}}>
 
-      <div className="doc doc-col">
-        <Button color="black">
-          <Loader active={active} size="small"/>
-          <span>Saving</span>
-        </Button>
-      </div>
-
-      <div className="doc doc-col">
-        <Button color="green" disabled>
-          <span>Saving</span>
-          <Loader type="secondary" active={active} size="small" color="white"/>
-        </Button>
-      </div>
-
-      <div className="doc doc-col">
-        <Button color="brown">
-          <span>Loading</span>
-          <Loader type="third" active={active} size="small" color="white"/>
-        </Button>
-      </div>
+      <Button type="primary" shape='round' loading={true}>Save</Button>
+      <Button color="purple" shape='round' loading={true} leftLoader={false}>
+        Save
+      </Button>
+      <Button color="green" loading={true}
+              loader={<Loader type="secondary" color="white" active={true} size="small"/>}>
+        Save
+      </Button>
     </div>
   </>;
 }

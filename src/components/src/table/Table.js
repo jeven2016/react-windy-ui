@@ -10,7 +10,8 @@ import getScrollbarWidth, {
   contains,
   convertToArray,
   invoke,
-  isNil, isNumber,
+  isNil,
+  isNumber,
   validate,
 } from '../Utils';
 import Checkbox from '../Checkbox';
@@ -20,10 +21,11 @@ import {initStore} from '../common/Store';
 import {checkScrollBar, filterLeaves, SortOrder} from './TableUtils';
 import BodyCell from './BodyCell';
 import TableHead from './TableHead';
+import * as PropTypes from "prop-types";
+import Element from "../common/Element";
 
 const Type = {
   normal: 'normal',
-  responsive: 'responsive',
   striped: 'striped',
   simple: 'simple',
 };
@@ -37,7 +39,7 @@ const SortComparator = (a, b) => a === b ? 0 : (a < b ? 1 : -1); //by desc
 
 const FilterComparator = (filteredValues, row, cell) => {
   for (let value of filteredValues) {
-    if (row[cell.showParam].toString().includes(value.toString())) {
+    if (row[cell.paramName].toString().includes(value.toString())) {
       return true;
     }
   }
@@ -75,7 +77,7 @@ const Table = React.forwardRef((props, ref) => {
     defaultOkText = 'OK',
     defaultResetText = 'Reset',
     defaultFilterComparator = FilterComparator,
-    filteredItems, //[value]
+    // filteredItems, //[value]
     onFilter,
 
     scrollY = false,
@@ -94,8 +96,7 @@ const Table = React.forwardRef((props, ref) => {
     validate(isCellsDefined, 'the cells should be provided');
   }
 
-  const {state: checkedRowKeys, setState: setChecked, customized: customCheck}
-      = useInternalState({
+  const [checkedRowKeys, setChecked, customCheck] = useInternalState({
     props,
     stateName: 'checkedRows',
     defaultState: convertToArray(defaultCheckedRows),
@@ -115,7 +116,7 @@ const Table = React.forwardRef((props, ref) => {
   const [filterParams, setFilterParams] = useState([]);
 
   //init a internal store
-  //{ checkedValues: {key: [values]} , the key corresponds the showParam
+  //{ checkedValues: {key: [values]} , the key corresponds the paramName
   const [store] = useState(() => initStore({
     checkedValues: {},
   }));
@@ -159,7 +160,6 @@ const Table = React.forwardRef((props, ref) => {
   const isCheckbox = checkType === CheckType.checkbox;
 
   const head = <TableHead cells={cells}
-                          customCheck={customCheck}
                           setChecked={setChecked}
                           checkable={checkable}
                           canCheckAll={canCheckAll}
@@ -227,7 +227,7 @@ const Table = React.forwardRef((props, ref) => {
 
       return <td className="cell-check">
         {isCheckbox ? <Checkbox checked={isRowChecked} onChange={checkRow}/>
-            : <Radio value={true} checked={isRowChecked} onChange={checkRow}/>}
+          : <Radio value={true} checked={isRowChecked} onChange={checkRow}/>}
       </td>;
     }
     return null;
@@ -248,7 +248,7 @@ const Table = React.forwardRef((props, ref) => {
           {selectTd}
           {
             realCellsData.map((cell, i) => {
-              let content = row[cell.showParam];
+              let content = row[cell.paramName];
               if (cell.format) {
                 content = invoke(cell.format, content, row, index);
               }
@@ -311,8 +311,8 @@ const Table = React.forwardRef((props, ref) => {
     var cols = leaves.map((c, index) => <col key={c.width + '-' + index}
                                              style={{
                                                width: isNumber(c.width)
-                                                   ? c.width + 'px'
-                                                   : c.width,
+                                                 ? c.width + 'px'
+                                                 : c.width,
                                              }}/>);
 
     if (scrollY && isHead) {
@@ -417,4 +417,62 @@ const Table = React.forwardRef((props, ref) => {
   return getBody();
 
 });
+
+Table.propTypes = {
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  instanceRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+  ]),
+  type: PropTypes.oneOf(Object.keys(Type)),
+  hover: PropTypes.bool,
+  hasBorder: PropTypes.bool,
+  loadData: PropTypes.oneOfType(
+    [PropTypes.array, PropTypes.func, PropTypes.object]),
+  cells: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.any,
+    head: PropTypes.node,
+    paramName: PropTypes.string,
+    autoEllipsis: PropTypes.bool,
+    fixed: PropTypes.oneOf(['left', 'right']),
+    sortable: PropTypes.bool,
+    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    filterable: PropTypes.bool,
+    filterConfig: PropTypes.shape({
+      filterItems: PropTypes.arrayOf(PropTypes.shape({
+        text: PropTypes.node,
+        value: PropTypes.any
+      }))
+    }),
+  })),
+  hasBox: PropTypes.bool,
+  checkable: PropTypes.bool,
+  checkType: PropTypes.oneOf(Object.keys(CheckType)),
+  canCheckAll: PropTypes.bool,
+  onCheckChange: PropTypes.func,
+  onCheckAll: PropTypes.func,
+  defaultCheckedRows: PropTypes.oneOfType(
+    [PropTypes.string, PropTypes.array]),
+  checkedRows: PropTypes.oneOfType(
+    [PropTypes.string, PropTypes.array]),
+  highlightCheckedRow: PropTypes.bool,
+  defaultSortComparator: PropTypes.func,
+  defaultSortOrder: PropTypes.string,
+  onSort: PropTypes.func,
+  sortOrder: PropTypes.shape({
+    key: PropTypes.any,
+    order: PropTypes.string
+  }),
+  defaultOkText: PropTypes.string,
+  defaultResetText: PropTypes.string,
+  defaultFilterComparator: PropTypes.func,
+  // filteredItems: PropTypes.arrayOf(PropTypes.string),
+  onFilter: PropTypes.func,
+  scrollY: PropTypes.bool,
+  bodyHeight: PropTypes.number,
+  scrollX: PropTypes.bool,
+  bodyWidth: PropTypes.number
+}
+
 export default Table;

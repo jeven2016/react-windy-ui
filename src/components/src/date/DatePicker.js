@@ -31,17 +31,17 @@ const initData = (temporaryDate, predefinedDate) => {
     //explicitly set by value or defaultValue parameter
     activeDate: predefinedDate,
 
-    isInitialDate: function() {
+    isInitialDate: function () {
       return isNil(this.activeDate);
     },
 
     //get current valid date
-    getValidDate: function() {
+    getValidDate: function () {
       return dayjs().year(this.initialDate.year).month(
-          this.initialDate.month).date(this.initialDate.date);
+        this.initialDate.month).date(this.initialDate.date);
     },
 
-    getValidStringDate: function() {
+    getValidStringDate: function () {
       const validDate = this.getValidDate();
       return {
         year: validDate.year(),
@@ -85,17 +85,14 @@ const DatePicker = React.forwardRef((props, ref) => {
   }, [type]);
 
   validate(!isNil(defaultValue) && dayjs(defaultValue).isValid(),
-      `the defaultValue '${defaultValue}' should be in valid date format ${getDateFormat()}`,
-      isNil(defaultValue));
+    `the defaultValue '${defaultValue}' should be in valid date format ${getDateFormat()}`,
+    isNil(defaultValue));
 
   validate(!isNil(value) && dayjs(value).isValid(),
-      `the value '${value}' should be in valid date format ${getDateFormat()}`,
-      isNil(value));
+    `the value '${value}' should be in valid date format ${getDateFormat()}`,
+    isNil(value));
 
-  const {
-    state: date,
-    customized,
-  } = useInternalState({
+  const [date, set, customized] = useInternalState({
     props,
     stateName: 'value',
     defaultState: !isNil(defaultValue) ? dayjs(defaultValue) : null,
@@ -106,7 +103,7 @@ const DatePicker = React.forwardRef((props, ref) => {
 
   //init a internal store
   const [store] = useState(() =>
-      initStore(initData(temporaryDate, date)),
+    initStore(initData(temporaryDate, date)),
   );
 
   //apply the value of customized properties for store
@@ -117,18 +114,18 @@ const DatePicker = React.forwardRef((props, ref) => {
   }, [customized, date, store]);
 
   const activePopup = useCallback(
-      (active) => {
-        if (isModalType) {
-          setActiveModal(active);
-        } else {
-          popupRef.current.changeActive(active);
-        }
-      }, [isModalType]);
+    (active) => {
+      if (isModalType) {
+        setActiveModal(active);
+      } else {
+        popupRef.current.changeActive(active);
+      }
+    }, [isModalType]);
 
   const isPopupActive = useCallback(
-      () => {
-        return isModalType ? activeModal : popupRef.current.isActive;
-      }, [activeModal, isModalType]);
+    () => {
+      return isModalType ? activeModal : popupRef.current.isActive;
+    }, [activeModal, isModalType]);
 
   const tryClosePopup = useCallback(() => {
     if (!autoClose) {
@@ -153,18 +150,18 @@ const DatePicker = React.forwardRef((props, ref) => {
   let pickerBody = null;
   if (realPopupType === PopupType.popup) {
     pickerBody = <Popup
-        ref={popupRef}
-        {...otherProps}
-        // offset={offset}
-        activeBy={PopupCtrlType.click}
-        position={position}
-        autoClose={false}
-        ctrlNode={popupCtrl}
-        body={popupBody}
-        hasBorder={false}
-        activePopup={activePopup}
-        hasBox={true}
-        zIndex={zIndex}/>;
+      ref={popupRef}
+      {...otherProps}
+      // offset={offset}
+      activeBy={PopupCtrlType.click}
+      position={position}
+      autoClose={false}
+      ctrlNode={popupCtrl}
+      body={popupBody}
+      hasBorder={false}
+      activePopup={activePopup}
+      hasBox={true}
+      zIndex={zIndex}/>;
   } else {
     pickerBody = <>
       {popupCtrl}

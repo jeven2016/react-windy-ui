@@ -1,20 +1,13 @@
 import React, {useCallback, useContext, useMemo} from 'react';
 import clsx from 'clsx';
 import {isBlank, isNil, nonNil, validate} from '../Utils';
-import {FormDirection, JustifyContentType} from '../common/Constants';
+import {adjustItems, FormDirection} from '../common/Constants';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
 import {useFormContext} from 'react-hook-form';
 import Widget from './Widget';
 import RootItem from './RootItem';
-import {
-  cloneElement,
-  cloneWidget,
-  createErrorMessages,
-  filterLabel,
-  mapWidget,
-  useLabel,
-} from './FormUtils';
+import {cloneElement, cloneWidget, createErrorMessages, filterLabel, mapWidget, useLabel,} from './FormUtils';
 import {FormItemContext} from '../common/Context';
 import FormLabel from './FormLabel';
 
@@ -24,8 +17,8 @@ const FormItem = React.forwardRef((props, ref) => {
     compact = false,//todo
     extraClassName,
     direction,
-    justify = JustifyContentType.start,
-    justifyLabel = JustifyContentType.start,
+    justify = "start",
+    justifyLabel = "start",
     labelCol,
     controlCol,
     name,
@@ -44,7 +37,7 @@ const FormItem = React.forwardRef((props, ref) => {
   const rootItemCtx = useContext(FormItemContext);
   if (nonNil(rules)) {
     validate(nonNil(name),
-        'The name is required while the rules is configured');
+      'The name is required while the rules is configured in Form.Item');
   }
 
   const itemDirection = isNil(direction) ? ctx.direction : direction;
@@ -54,7 +47,7 @@ const FormItem = React.forwardRef((props, ref) => {
   const formControlled = !isBlank(name) || nonNil(rules);
   const isHorizontal = itemDirection === FormDirection.horizontal;
 
-  let justifyCls = JustifyContentType[justify];
+  let justifyCls = adjustItems(justify);
   let clsName = clsx(extraClassName, className, itemDirection, justifyCls);
 
   const getCloneProps = useCallback(() => ({
@@ -72,14 +65,14 @@ const FormItem = React.forwardRef((props, ref) => {
     if (chdArray.length === 1) {
       //only one child found
       finalChd = chdArray[0].type === Widget ? cloneWidget(chdArray[0],
-          getCloneProps()) : cloneElement(chdArray[0], getCloneProps(),
-          ctx.control);
+        getCloneProps()) : cloneElement(chdArray[0], getCloneProps(),
+        ctx);
     } else {
       //deep find the widget
       finalChd = mapWidget(children, getCloneProps(), ctx.control);
     }
     return finalChd;
-  }, [formControlled, getCloneProps, ctx.control, children]);
+  }, [formControlled, getCloneProps, ctx, children]);
 
   const msg = useMemo(() => {
     if (!hasErrors || isNil(rules)) {
@@ -89,12 +82,13 @@ const FormItem = React.forwardRef((props, ref) => {
   }, [ctx, hasErrors, name, rules]);
 
   const getSimpleMsgRow = useCallback(() => {
-    if (!hasErrors && compact) {
+    //no extra message row inserted while no errors appear and the item is compact or inline
+    if (!hasErrors && (compact || itemDirection === FormDirection.inline)) {
       return null;
     }
 
     return <div className="message-row">{hasErrors && msg}</div>;
-  }, [compact, hasErrors, msg]);
+  }, [compact, hasErrors, itemDirection, msg]);
 
   const getOneMsgRow = useCallback(() => {
     if (!hasErrors && compact) {
@@ -114,7 +108,7 @@ const FormItem = React.forwardRef((props, ref) => {
     }
 
     return <Row extraClassName="message-row">
-      <Col extraClassName="item-label" {...itemLabelCol}> </Col>
+      <Col extraClassName="item-label msg-row-control" {...itemLabelCol}> </Col>
       <Col {...itemControlCol}>{hasErrors && msg}</Col>
     </Row>;
   }, [compact, hasErrors, itemControlCol, itemLabelCol, msg]);
@@ -140,10 +134,12 @@ const FormItem = React.forwardRef((props, ref) => {
     }
 
     if (!isHorizontal) {
-      return <>{realLabel}{finalChd}{getSimpleMsgRow()}</>;
+      return <>{realLabel}
+        <div>{finalChd}{getSimpleMsgRow()}</div>
+      </>;
     }
 
-    const labelJustifyCls = JustifyContentType[justifyLabel];
+    const labelJustifyCls = adjustItems(justifyLabel);
     const labelCls = clsx('item-label', labelJustifyCls);
 
     if (isNil(realLabel)) {
@@ -153,7 +149,7 @@ const FormItem = React.forwardRef((props, ref) => {
       </>;
     } else {
 
-      return <><Row>
+      return <><Row align="center">
         <Col extraClassName={labelCls} {...itemLabelCol}>{realLabel}</Col>
         <Col {...itemControlCol}>{finalChd}</Col>
       </Row>

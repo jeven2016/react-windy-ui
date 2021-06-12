@@ -25,7 +25,7 @@ Modal的属性如下所示：
 | active | 激活显示 | boolean | - |  |
 | autoClose | 是否允许自动关闭 | boolean | - | 点击右上角的关闭图标或黑色遮罩层时是否自动关闭  |
 | alignCenter | 是否居中显示 | boolean | true | 如果设置成false时，会在距离顶部某处显示，此时需要通过style设置对应的top值  |
-| allowOverflow | 是否允许内容区域垂直滚动 | boolean | true | 如果设置为true时，请给Modal窗体设置一个高度，这样Body区域超出会自动滚动显示 |
+| autoOverflow | 是否允许内容区域垂直滚动 | boolean | true | 如果设置为true时，请给Modal窗体设置一个高度，这样Body区域超出会自动滚动显示 |
 | hasDefaultWidth | 是否设置一个默认的宽度 | boolean | true | 如果设置为true时，Modal的宽度默认为90%；为false时，不设置宽度，宽度以内容的实际宽度为准。 |
 
 Mode.method()对应的方法如下所示：   
@@ -499,7 +499,7 @@ export default function Modal7() {
 <fieldset class="doc desc">
   <legend>提示</legend>
   <div class="doc desc-area">
-     当Body内容过多后，Modal内部会出现滚动条，将内容滚动显示。此时您需要将allowOverflow设置为true,
+     当Body内容过多后，Modal内部会出现滚动条，将内容滚动显示。此时您需要将autoOverflow设置为true,
      并同时给Modal设置一个整体的高度，而且Body会默认占据尽可能多的空间。
   </div>
 </fieldset>
@@ -517,7 +517,7 @@ export default function Modal8() {
     <Button type="primary" onClick={() => setActive(true)}>Open</Button>
 
     <Modal active={active} type="primary" onCancel={close}
-           allowOverflow={true} style={{height: '80%'}}>
+           autoOverflow={true} style={{height: '80%'}}>
       <Modal.Header>
         Modal Header
       </Modal.Header>

@@ -9,7 +9,7 @@
 +++  zh_CN
 ## API [editUrl]    
 
-Notification的全局配置属性如下所示    
+- <Code>Notification</Code>的全局配置属性    
 
 | 属性 | 名称 | 类型 | 默认值 | 描述 |
 | --- | --- | --- | --- | --- |
@@ -17,12 +17,15 @@ Notification的全局配置属性如下所示
 | duration | 消息持续显示的时间 | number | 5000ms |  |
 | hasCloseIcon | 是否显示关闭消息的Icon | boolean | true |  |
 | onClose | 关闭某个消息的回调 | function | - | 当消息被关闭时触发，同时会将消息对应的配置传入该方法。 |
-| rect | 上下左右四个方位的距离 | object | 所有默认值全部为1.5rem |  当topLeft时，可只设置rect中的top、left属性。当topRight时，可只设置rect中的top、right属性。当bottomLeft时，可只设置rect中的bottom、left属性。当bottomRight时，可只设置rect中的bottom、right属性。|
+| rect | 显示位置 | object | 所有默认值全部为1.5rem |  当topLeft时，可只设置rect中的<Code>top</Code>、<Code>left</Code>属性。 当topRight时，可只设置rect中的<Code>top</Code>、<Code>right</Code>属性。 当bottomLeft时，可只设置rect中的<Code>bottom</Code>、<Code>left</Code>属性。 当bottomRight时，可只设置rect中的<Code>bottom</Code>、<Code>right</Code>属性。 当topCenter时，可只设置rect中的<Code>top</Code>属性, 因为在水平方向上始终是居中显示的。 |
 
-您可以使用调用Notification的config方法去设置: Notification.config({...})。
+<Hcode>
+您可以使用Notification的config方法去设置: Notification.config({...})，
+通过Notification.getConfig()去获取现有的配置。
+</Hcode>
 
 <br/>
-每个消息可自定义设置的属性有  
+- 每个消息可自定义设置的属性有  
 
 | 属性 | 名称 | 类型 | 默认值 | 描述 |
 | --- | --- | --- | --- | --- |
@@ -33,8 +36,11 @@ Notification的全局配置属性如下所示
 | icon | Alert显示的图标 | react node | - |  |
 | onClose | 关闭消息的回调 | function | - | 当消息被关闭时触发 |
 | alertProps | Alert消息的配置对象 | object | - | 对应Alert组件的API属性，可参阅Alert的API |
-上面这些参数在显示各个消息时设置，比如Notification.info({duration: 3000, title: 'title' .....})。
 
+<Hcode>
+上面这些参数在显示各个消息时设置，比如Notification.info({duration: 3000, title: 'title' .....})。
+另外，除了alertProps其他的属性本身也是属于Alert的属性，也就是说针对Alert属性您可以通过alertProps去设置，也可以直接在config上设置。
+</Hcode>
 
 
 +++ en_US

@@ -1,16 +1,10 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
 import Items from './Items';
 import Panels from './Panels';
 import TabItem from './TabItem';
 import TabPanel from './TabPanel';
-import {
-  filterProps,
-  getTranslateValue,
-  nextPosition,
-  prePosition,
-  TabsContext,
-} from './TabsCommon';
+import {filterProps, getTranslateValue, nextPosition, prePosition, TabsContext,} from './TabsCommon';
 import {Direction, EventListener} from '../common/Constants';
 import {getRect, isNil} from '../Utils';
 import TabBar from './TabBar';
@@ -20,6 +14,8 @@ import PreBtn from './PreBtn';
 import {useEvent} from '../index';
 import useInternalState from '../common/useInternalState';
 import PropTypes from 'prop-types';
+import ItemContent from "./ItemContent";
+import useEventCallback from "../common/useEventCallback";
 
 const defaultConfig = {
   visiblePre: true,
@@ -30,14 +26,16 @@ const defaultConfig = {
 
 const Tabs = React.forwardRef((props, ref) => {
   const {
+    extraClassName,
+    className = 'tab',
+    hasRipple = true,
+    rippleColor = "#ccc",
     defaultActive,
     active,
     onChange,
     onRemove,
     removable,
-    className = 'tab',
     equalWidth = false,
-    extraClassName,
     position = 'top', //top, bottom, left, right
     hasBorder = true,
     cardBorder = 'full', //none, one, full
@@ -47,8 +45,8 @@ const Tabs = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const direction = position === 'top' || position === 'bottom'
-      ? Direction.horizontal
-      : Direction.vertical;
+    ? Direction.horizontal
+    : Direction.vertical;
   const scrollRef = useRef(null);
   const tabCntRef = useRef(null);
   const nextRef = useRef(null);
@@ -59,19 +57,19 @@ const Tabs = React.forwardRef((props, ref) => {
   const isTabCard = type === 'card';
 
   const [scrlSpringConfig, setScrlSpringConfig] = useState(defaultConfig);
-  const childArray = children ? React.Children.toArray(children) : [];
-  const tabItems = childArray.filter(chd => chd.type === Items);
-  const tabPanels = childArray.filter(chd => chd.type === Panels);
-  const tabItemsCount = tabItems ? tabItems[0].props.children.length : 0;
+  const childArray = useMemo(() => children ? React.Children.toArray(children) : [], [children]);
+  const tabItems = useMemo(() => childArray.filter(chd => chd.type === Items), [childArray]);
+  const tabPanels = useMemo(() => childArray.filter(chd => chd.type === Panels), [childArray]);
+  const tabItemsCount = useMemo(() => tabItems ? tabItems[0].props.children.length : 0, [tabItems]);
 
   const clsName = clsx(extraClassName, className, direction,
-      position, {
-        'tab-card': isTabCard,
-        'tab-card secondary-card': isSecondaryCard,
-        'with-btn': scrlSpringConfig.visiblePre || scrlSpringConfig.visibleNext,
-        'with-border': hasBorder,
-        scrollable,
-      });
+    position, {
+      'tab-card': isTabCard,
+      'tab-card secondary-card': isSecondaryCard,
+      'with-btn': scrlSpringConfig.visiblePre || scrlSpringConfig.visibleNext,
+      'with-border': hasBorder,
+      scrollable,
+    });
 
   const getFirstValue = useCallback(() => {
     let firstItem;
@@ -87,30 +85,20 @@ const Tabs = React.forwardRef((props, ref) => {
     return isNil(firstItem) ? null : firstItem.props.value;
   }, [children]);
 
-  const backupActive = isNil(defaultActive) && isNil(active)
-      ? getFirstValue()
-      : null;
-
-  const {
-    state: currentActive,
-    setState: setActive,
-    customized,
-  } = useInternalState({
+  const [currentActive, setActive, customized] = useInternalState({
     props,
     stateName: 'active',
     defaultState: defaultActive,
     state: active,
-    backupState: backupActive,
+    backupState: getFirstValue(),
   });
 
   const change = (value) => {
-    if (!customized) {
-      setActive(value);
-    }
+    setActive(value);
     onChange && onChange(value);
   };
 
-  const scrollTo = () => {
+  const scrollTo = useEventCallback(() => {
     if (!scrollable) {
       return;
     }
@@ -132,25 +120,25 @@ const Tabs = React.forwardRef((props, ref) => {
     //scroll to the active item
     let activeConfig = {};
     const activeItems = scrollRef.current.getElementsByClassName(
-        'tab-item active');
+      'tab-item active');
     if (activeItems.length > 0) {
       const item = activeItems[0];
       const itemRect = getRect(item);
 
       const {to: toStyleValue} = getTranslateValue(isHorizontal, scrlRect,
-          tabCntRect, itemRect);
+        tabCntRect, itemRect);
       activeConfig = {from: defaultConfig.from, to: {transform: toStyleValue}};
     }
     setScrlSpringConfig({...scrlSpringConfig, ...newState, ...activeConfig});
-  };
+  });
 
   useEffect(() => {
     scrollTo();
-  }, [direction, position, removable, tabItemsCount]);
+  }, [direction, position, removable, scrollTo, tabItemsCount]);
 
   useEvent(EventListener.resize, scrollTo);
 
-  const clickNext = () => {
+  const clickNext = useEventCallback(() => {
     if (scrlSpringConfig.disableNext) {
       return;
     }
@@ -179,13 +167,13 @@ const Tabs = React.forwardRef((props, ref) => {
     }
 
     setScrlSpringConfig(
-        {
-          ...scrlSpringConfig,
-          to: translateTo,
-        });
-  };
+      {
+        ...scrlSpringConfig,
+        to: translateTo,
+      });
+  });
 
-  const clickPre = () => {
+  const clickPre = useEventCallback(() => {
     if (scrlSpringConfig.disablePre) {
       return;
     }
@@ -210,48 +198,50 @@ const Tabs = React.forwardRef((props, ref) => {
       translateTo = {transform: `translate3d(${result.to}px, 0px, 0px)`};
     }
     setScrlSpringConfig({...scrlSpringConfig, to: translateTo});
-  };
+  });
 
   const tabBarContent = !isSecondaryCard && <TabBar
-      tabType={type}
-      scrollable={scrollable}
-      hasBorder={hasBorder}
-      cardBorder={cardBorder}
-      isTabCard={isTabCard}
-      position={position}
-      isHorizontal={isHorizontal}
-      isVertical={isVertical}
-      parentRef={scrollRef}
-      active={currentActive}/>;
+    tabType={type}
+    scrollable={scrollable}
+    hasBorder={hasBorder}
+    cardBorder={cardBorder}
+    isTabCard={isTabCard}
+    position={position}
+    isHorizontal={isHorizontal}
+    isVertical={isVertical}
+    parentRef={scrollRef}
+    active={currentActive}/>;
 
   const scrollContent = scrollable ? <Spring
-          from={scrlSpringConfig.from}
-          to={scrlSpringConfig.to}>
-        {
-          sp =>
-              <div className={`tab-scroll ${direction} ${equalWidth
-                  ? 'equal-width'
-                  : ''}`} ref={scrollRef}
-                   style={filterProps(sp, isHorizontal)}>
-                {tabItems}
-                {tabBarContent}
-              </div>
-        }
-      </Spring>
-      : <div className={`tab-scroll ${direction} ${equalWidth
-          ? 'equal-width'
-          : ''}`} ref={scrollRef}>
-        {tabItems}
-        {tabBarContent}
-      </div>;
+      from={scrlSpringConfig.from}
+      to={scrlSpringConfig.to}>
+      {
+        sp =>
+          <div className={`tab-scroll ${direction} ${equalWidth
+            ? 'equal-width'
+            : ''}`} ref={scrollRef}
+               style={filterProps(sp, isHorizontal)}>
+            {tabItems}
+            {tabBarContent}
+          </div>
+      }
+    </Spring>
+    : <div className={`tab-scroll ${direction} ${equalWidth
+      ? 'equal-width'
+      : ''}`} ref={scrollRef}>
+      {tabItems}
+      {tabBarContent}
+    </div>;
 
   const tabContClsName = clsx('tab-container', position, {
     'scrollable': scrollable &&
-        (scrlSpringConfig.visiblePre || scrlSpringConfig.visibleNext),
+      (scrlSpringConfig.visiblePre || scrlSpringConfig.visibleNext),
   });
 
   return <>
     <TabsContext.Provider value={{
+      hasRipple,
+      rippleColor,
       equalWidth,
       removable,
       tabItemsCount,
@@ -296,14 +286,16 @@ const Tabs = React.forwardRef((props, ref) => {
 });
 
 Tabs.propTypes = {
-  defaultActive: PropTypes.bool,
-  active: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  extraClassName: PropTypes.string,
+  className: PropTypes.string,
+  hasRipple: PropTypes.bool,
+  rippleColor: PropTypes.string,
+  defaultActive: PropTypes.any,
+  active: PropTypes.any,
   onChange: PropTypes.func,
   onRemove: PropTypes.func,
   removable: PropTypes.bool,
-  className: PropTypes.string,
   equalWidth: PropTypes.bool,
-  extraClassName: PropTypes.string,
   position: PropTypes.string,
   hasBorder: PropTypes.bool,
   cardBorder: PropTypes.string,
@@ -315,5 +307,6 @@ Tabs.Items = Items;
 Tabs.Panels = Panels;
 Tabs.TabItem = TabItem;
 Tabs.TabPanel = TabPanel;
+Tabs.ItemContent = ItemContent;
 
 export default Tabs;

@@ -32,7 +32,7 @@ export default function Form9() {
     //then call the api to save the data
   };
 
-  const gutter = {x: 8, y: 8};
+  const gutter = {x: 8};
   const colConf = {
     xs: 12,
     sm: 6,
@@ -45,25 +45,25 @@ export default function Form9() {
           <Row gutter={gutter}>
             <Col {...colConf}>
               <Form.Item
-                  direction="vertical"
-                  label="First Name"
-                  name="firstName"
-                  required={true}
-                  rules={{
-                    required: 'The first name is required',
-                  }}>
+                direction="vertical"
+                label="First Name"
+                name="firstName"
+                required={true}
+                rules={{
+                  required: 'The first name is required',
+                }}>
                 <Input block/>
               </Form.Item>
             </Col>
             <Col {...colConf}>
               <Form.Item
-                  direction="vertical"
-                  label="Last Name"
-                  name="lastName"
-                  required={true}
-                  rules={{
-                    required: 'The last name is required',
-                  }}>
+                direction="vertical"
+                label="Last Name"
+                name="lastName"
+                required={true}
+                rules={{
+                  required: 'The last name is required',
+                }}>
                 <Input block/>
               </Form.Item>
             </Col>
@@ -72,13 +72,13 @@ export default function Form9() {
           <Row gutter={gutter}>
             <Col>
               <Form.Item
-                  direction="vertical"
-                  label="Address"
-                  name="address"
-                  required={true}
-                  rules={{
-                    required: 'The address is required',
-                  }}>
+                direction="vertical"
+                label="Address"
+                name="address"
+                required={true}
+                rules={{
+                  required: 'The address is required',
+                }}>
                 <Input block/>
               </Form.Item>
             </Col>
@@ -120,11 +120,11 @@ export default function Form9() {
 
             <Col xs={12} sm={4}>
               <Form.Item
-                  label="Zip"
-                  name="Zip"
-                  rules={{
-                    required: 'The zip is required',
-                  }}>
+                label="Zip"
+                name="Zip"
+                rules={{
+                  required: 'The zip is required',
+                }}>
                 <Input placeholder="Zip" defaultValue=""/>
               </Form.Item>
             </Col>
@@ -133,13 +133,13 @@ export default function Form9() {
           <Row gutter={gutter}>
             <Col {...colConf}>
               <Form.Item
-                  direction="vertical"
-                  label="Contact"
-                  name="contact"
-                  required={true}
-                  rules={{
-                    required: 'This is required',
-                  }}>
+                direction="vertical"
+                label="Contact"
+                name="contact"
+                required={true}
+                rules={{
+                  required: 'This is required',
+                }}>
                 <RadioGroup>
                   <Radio value="email">Email</Radio>
                   <Radio value="phone">Phone</Radio>
@@ -148,9 +148,9 @@ export default function Form9() {
             </Col>
             <Col {...colConf}>
               <Form.Item
-                  direction="vertical"
-                  label="Introduction"
-                  name="introduction">
+                direction="vertical"
+                label="Introduction"
+                name="introduction">
                 <Input block/>
               </Form.Item>
             </Col>

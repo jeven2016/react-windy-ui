@@ -76,19 +76,20 @@ export default function Select5() {
     }
   };
 
-  return <>
-    <Select style={{width: '10rem'}}
-            defaultValue="shanghai"
-            position="bottomLeft"
-            autoWidth={false}
-            active={active}
-            onActiveChange={(next) => setActive(next)}>
+  return <div className="doc doc-row space">
+    <Select
+      defaultValue="shanghai"
+      position="bottomLeft"
+      autoWidth={false}
+      active={active}
+      onActiveChange={(next) => setActive(next)}>
 
       <Select.Option value="park" text="New York"
                      style={{borderBottom: '1px solid #ccc'}}>
         <Template title="Central Park"
                   desc=" 5 Ave to Central Park W, 59 St To 110 St, New York, NY 10019"/>
       </Select.Option>
+
       <Select.Option value="nanjing" text="Nanjing"
                      style={{borderBottom: '1px solid #ccc'}}>
         <Template title="Nanjing Presidential Palace Park"
@@ -124,13 +125,15 @@ export default function Select5() {
           <Input placeholder="Creat New" value={value} onChange={changValue}/>
           <InputGroup.Item autoScale={false}>
             <Tooltip body="Try to create one" position="bottom">
-              <Button onClick={(e) => {create(e);}}>+</Button>
+              <Button onClick={(e) => {
+                create(e);
+              }}>+</Button>
             </Tooltip>
           </InputGroup.Item>
         </InputGroup>
 
       </div>
     </Select>
-  </>;
+  </div>;
 
 }

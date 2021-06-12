@@ -32,16 +32,16 @@ const PureInput = React.forwardRef((props, ref) => {
   const inputSize = isNil(ctx.size) ? size : ctx.size;
 
   let clsName = clsx(extraClassName, className, inputSize,
-      getErrorClsName(errorType),
-      {
-        'read-only': readOnly,
-        'textarea': type === 'textarea',
-        block: block,
-        'within-group': ctx.withinGroup,
-        [borderTypeCls]: borderTypeCls,
-        'with-focus': canFocus,
-        'with-input-box': hasBox,
-      });
+    getErrorClsName(errorType),
+    {
+      'read-only': readOnly,
+      'textarea': type === 'textarea',
+      block: block,
+      'within-group': ctx.withinGroup,
+      [borderTypeCls]: borderTypeCls,
+      'with-focus': canFocus,
+      'with-input-box': hasBox,
+    });
 
   if (type.toLowerCase() === 'textarea') {
     return <Element nativeType="textarea"
@@ -53,14 +53,14 @@ const PureInput = React.forwardRef((props, ref) => {
   }
   const newProps = {type: type, ...otherProps};
   return (
-      <Element nativeType="input" ref={ref} className={clsName}
-               type="text"
-               autoComplete='off'
-               setDisabledAttr={true}
-               readOnly={readOnly}
-               disabled={disabled}
-               {...newProps}
-      />
+    <Element nativeType="input" ref={ref} className={clsName}
+             type="text"
+             autoComplete='off'
+             setDisabledAttr={true}
+             readOnly={readOnly}
+             disabled={disabled}
+             {...newProps}
+    />
   );
 
 });
@@ -99,17 +99,17 @@ const IconInput = React.forwardRef((props, ref) => {
     'with-input-box': hasBox,
   });
 
-  useEvent(EventListener.focus, function() {
+  useEvent(EventListener.focus, function () {
     !active && setActive(true);
   }, true, () => interInputRef.current);
 
-  useEvent(EventListener.blur, function() {
+  useEvent(EventListener.blur, function () {
     active && setActive(false);
   }, true, () => interInputRef.current);
 
   const restIcons = useCallback(() => {
     return React.Children.map(rightIcons,
-        node => <span className="icon-column right">{node}</span>);
+      node => <span className="icon-column right">{node}</span>);
   }, [rightIcons]);
 
   return <span className={clsName} {...rootProps} ref={rootRef}>
@@ -132,12 +132,13 @@ const Password = React.forwardRef((props, ref) => {
     toggleIcons = [<IconPwdVisible/>, <IconPwdInvisible/>],
     type = 'password',
     leftIcon,
+    rightIcons = [],
     ...otherProps
   } = props;
   validate(type === 'password', 'The type can only be password');
 
   validate(toggleIcons.length === 2,
-      'There should be two icons for switching.');
+    'There should be two icons for selection.');
   const [visible, setVisible] = useState(false);
 
   const change = useCallback((e) => {
@@ -145,28 +146,29 @@ const Password = React.forwardRef((props, ref) => {
   }, [setVisible]);
 
   const validIcon = useMemo(() => {
-    const rightIcon = visible ? toggleIcons[0] : toggleIcons[1];
-    return React.cloneElement(rightIcon, {
+    const finalIcon = visible ? toggleIcons[0] : toggleIcons[1];
+    return React.cloneElement(finalIcon, {
       onClick: change,
     });
   }, [visible, toggleIcons, change]);
 
   const inputType = visible ? 'text' : type;
-  const rightIcons = hasToggleIcon ? [validIcon] : [];
+  const preRightIcons = nonNil(rightIcons) ? rightIcons : [];
+  const icons = hasToggleIcon ? [...preRightIcons, validIcon] : [...preRightIcons];
   return <IconInput leftIcon={leftIcon} rootRef={rootRef} ref={ref}
                     type={inputType}
-                    rightIcons={rightIcons}  {...otherProps}/>;
+                    rightIcons={icons}  {...otherProps}/>;
 });
 
 /**
  * Input Component
  */
 const Input = React.forwardRef((props, ref) => {
-  const {rootRef, type, icon, ...otherProps} = props;
+  const {rootRef, type, icon, rightIcons, ...otherProps} = props;
   const isPwd = nonNil(type) && type.toLowerCase() === 'password';
-  if (nonNil(icon) || isPwd) {
+  if (nonNil(icon) || nonNil(rightIcons) || isPwd) {
     let TagName = isPwd ? Password : IconInput;
-    return <TagName type={type} rootRef={rootRef} icon={icon}
+    return <TagName type={type} rootRef={rootRef} icon={icon} rightIcons={rightIcons}
                     ref={ref}  {...otherProps}/>;
   }
   return <PureInput type={type} ref={ref} {...otherProps}/>;
@@ -187,7 +189,7 @@ IconInput.propTypes = {
   leftIcon: PropTypes.bool, // whether the icon is placed in left side of the input
   rightIcons: PropTypes.arrayOf(PropTypes.node),
   rootProps: PropTypes.object,
-  rootRef:  PropTypes.oneOfType([
+  rootRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({current: PropTypes.instanceOf(Element)}),
   ]),
@@ -211,14 +213,15 @@ PureInput.propTypes = {
 };
 
 Password.propTypes = {
-  rootRef:  PropTypes.oneOfType([
+  rootRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({current: PropTypes.instanceOf(Element)}),
   ]),
   hasToggleIcon: PropTypes.bool,
-  toggleIcons: PropTypes.array.length,
+  toggleIcons: PropTypes.arrayOf(PropTypes.node),
   type: PropTypes.string,
   leftIcon: PropTypes.bool,
+  rightIcons: PropTypes.arrayOf(PropTypes.node),
 };
 
 Input.IconInput = IconInput;

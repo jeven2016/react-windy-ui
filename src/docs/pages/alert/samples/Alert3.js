@@ -8,7 +8,7 @@ export default function Alert3() {
              color: 'white',
              background: 'rgba(20,163,24)',
              borderWidth: '0',
-             borderRadius: '0.25rem',
+             borderRadius: '0.5rem',
            }}
            iconStyle={{color: 'white'}}
            closeStyle={{color: 'white'}}
@@ -20,7 +20,7 @@ export default function Alert3() {
              color: 'white',
              background: '#0ca0ff',
              borderWidth: '0',
-             borderRadius: '0.25rem',
+             borderRadius: '0.5rem',
            }}
            iconStyle={{color: 'white'}}
            closeStyle={{color: 'white'}}
@@ -32,7 +32,7 @@ export default function Alert3() {
              color: 'white',
              background: 'rgb(236, 187, 33)',
              borderWidth: '0',
-             borderRadius: '0.25rem',
+             borderRadius: '0.5rem',
            }}
            iconStyle={{color: 'white'}}
            closeStyle={{color: 'white'}}
@@ -44,7 +44,7 @@ export default function Alert3() {
              color: 'white',
              background: '#d82b3a',
              borderWidth: '0',
-             borderRadius: '0.25rem',
+             borderRadius: '0.5rem',
            }}
            iconStyle={{color: 'white'}}
            closeStyle={{color: 'white'}}

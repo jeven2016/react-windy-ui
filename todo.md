@@ -10,6 +10,7 @@ Bugs:
 - TabBar的move方法无法useCallback, 使用后会出现max 调用的问题， 考虑store迁移; Tabs的useEffect-> scroll也有这个问题
 - Tabs6中当为left时，出现左侧蓝色条。
 - popup监听click改成mouseUp后，select的不允许关闭的例子失效。需要衡量是否能很修改
+- no icon for multi select 
 
 Enhance:
 
@@ -32,6 +33,11 @@ Enhance:
 - verify the useEventCallback won't be recreated multiple times
 - all components should reactor use EventCallback to bind the onXX events
 - select list supports virtual list feature for big data set (virtual-list)
+- change ok to success
+- improve AlignItemsType and JustifyContentType
+
+Doc:
+- Add new sample for Space's block attribute
 
 Note:
 - components 下的package需要修改为json后缀才可以发布版本，当前使用了阿里的源，发布时修改修改对应的.yarnrc和.npmrc去取消发布路径。
@@ -43,3 +49,17 @@ Other:
 - free pic: https://pixabay.com/photos/bay-beach-boat-exotic-idyllic-1867798/
   https://pixabay.com/photos/girl-teenager-dancing-outdoor-5391785/
 
+* react-spring interpolate function    
+
+```shell
+import {interpolate} from 'react-spring';
+
+ transform: interpolate([
+      nonNil(xyz) ? xyz.interpolate((x, y, z) => `translate3D(${x}, ${y},${z})`) : -1,
+      nonNil(scale) ? scale.interpolate(scale => `scale(${scale})`) : -1
+    ], (t, scale) => {
+      const tf = `${t ? t : ""} ${scale ? scale : ""}`
+      console.log(tf);
+      return tf;
+    })
+```

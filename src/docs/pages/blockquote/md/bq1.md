@@ -7,8 +7,7 @@ editUrl: $BASE/docs/pages/blockquote/md/bq1.md
 ---      
 
 +++ zh_CN   
-有三种类型的Blockquote可供选用，可以将type设置为
-<Code>空值</Code>、<Code>primary</Code>、<Code>secondary</Code>。
+有三种类型的Blockquote可供选用，除了默认值外，可以将<Code>type</Code>设置为<Code>primary</Code>、<Code>secondary</Code>。
 
 
 +++ en_US   

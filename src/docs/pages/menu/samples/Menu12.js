@@ -4,6 +4,10 @@ import {IconList, Menu, Radio, RadioGroup, Toggle} from 'react-windy-ui';
 export default function Menu12() {
   const [type, setType] = useState('primary');
   const [multiSelect, setMultiSelect] = useState(true);
+
+  const [activeItems, setActiveItems] = useState(['item1', 'item2']);
+  const [openMenus, setOpenMenus] = useState(['sub1']);
+
   return <>
     <div className="doc doc-row">
       <span style={{marginRight: '1rem', fontWeight: '600'}}>Type:</span>
@@ -19,12 +23,19 @@ export default function Menu12() {
               content={{on: 'Multi-Select', off: 'Multi-Select'}}/>
     </div>
 
-    <div className="doc doc-row" style={{width: '20rem'}}>
-      <Menu defaultActiveItems={['item1', 'item2']}
-            multiSelect={multiSelect}
-            onOpenedMenu={(data) => console.log(`open==${data}`)}
-            onSelect={(data, e) => console.log(`select=${data}`)}
-            type={type}>
+    <div className="doc doc-row space">
+      <Menu
+          activeItems={activeItems}
+          onSelect={(ids) => {
+            console.log(ids);
+            setActiveItems(ids)
+          }}
+          multiSelect={multiSelect}
+          defaultOpenedMenus={openMenus}
+          onOpenedMenu={(ids) => {
+            console.log(`open==${ids}`)
+          }}
+          type={type}>
         <Menu.SubMenu header="SubMenu 1" id="sub1" icon={<IconList/>}>
           <Menu.Item id="item1">
             Menu item1
@@ -82,9 +93,6 @@ export default function Menu12() {
       </Menu>
     </div>
 
-    <div className="doc doc-row">
-
-    </div>
   </>;
 
 }

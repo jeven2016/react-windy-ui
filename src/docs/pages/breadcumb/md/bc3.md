@@ -1,7 +1,7 @@
 ---   
 order: 3
 type: sample  
-zh_CN: 使用不同的分隔符 
+zh_CN: 自定义分隔符 
 en_US: Separator
 editUrl: $BASE/docs/pages/breadcumb/md/bc3.md
 ---      

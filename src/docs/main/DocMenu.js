@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {Menu} from 'react-windy-ui';
 import {Link, useRouteMatch} from 'react-router-dom';
 
@@ -6,32 +6,41 @@ export default function DocMenu(props) {
   const {hasBox = false, onSelectMenuItem} = props;
   const [overflow, setOverflow] = useState('hidden');
   const {url} = useRouteMatch();
+
+  const handleOverflow = useCallback((value, e) => {
+    setOverflow(value);
+    e.preventDefault();
+  }, [setOverflow]);
+
   return <Menu type="primary"
                hasBox={hasBox}
                hasRipple={false}
+               defaultActiveItems={['start']}
                onSelect={onSelectMenuItem}
                defaultOpenedMenus={['basic']}
-               onMouseEnter={() => {setOverflow('auto');}}
-               onMouseLeave={() => {setOverflow('hidden');}}
+               onTouchStart={(e) => {
+                 handleOverflow('auto', e);
+               }}
+               onMouseEnter={(e) => {
+                 handleOverflow('auto', e);
+               }}
+               onMouseLeave={(e) => {
+                 handleOverflow('hidden', e);
+               }}
                style={{
                  maxHeight: 'calc(100vh - 80px)',
                  overflow: overflow,
                  background: '#fff',
                }}>
-    <Menu.SubMenu header="基础组件" id="basic">
+    <Menu.Item id="start">
+      <Link to={`${url}/start`}>
+        快速开始
+      </Link>
+    </Menu.Item>
+    <Menu.SubMenu header="表单" id="basic">
       <Menu.Item id="btn">
         <Link to={`${url}/button`}>
           按钮 Button
-        </Link>
-      </Menu.Item>
-      <Menu.Item id="input">
-        <Link to={`${url}/input`}>
-          输入框 Input
-        </Link>
-      </Menu.Item>
-      <Menu.Item id="radio">
-        <Link to={`${url}/radio`}>
-          单选 Radio
         </Link>
       </Menu.Item>
       <Menu.Item id="chk">
@@ -39,24 +48,39 @@ export default function DocMenu(props) {
           多选 Checkbox
         </Link>
       </Menu.Item>
-      <Menu.Item id="toggle">
-        <Link to={`${url}/toggle`}>
-          开关 Toggle
-        </Link>
-      </Menu.Item>
-      <Menu.Item id="collapse">
-        <Link to={`${url}/collapse`}>
-          折叠框 Collapse
-        </Link>
-      </Menu.Item>
       <Menu.Item id="menu">
         <Link to={`${url}/menu`}>
           菜单 Menu
         </Link>
       </Menu.Item>
-      <Menu.Item id="navbar">
-        <Link to={`${url}/navbar`}>
-          导航条 Navbar
+      <Menu.Item id="input">
+        <Link to={`${url}/input`}>
+          输入框 Input
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="text-field">
+        <Link to={`${url}/text-field`}>
+          文本框 Text Field
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="radio">
+        <Link to={`${url}/radio`}>
+          单选 Radio
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="select">
+        <Link to={`${url}/select`}>
+          选择 Select
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="toggle">
+        <Link to={`${url}/toggle`}>
+          开关 Toggle
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="datepicker">
+        <Link to={`${url}/datepicker`}>
+          日期 DatePicker
         </Link>
       </Menu.Item>
       <Menu.Item id="form">
@@ -91,31 +115,21 @@ export default function DocMenu(props) {
           提示 Tooltip
         </Link>
       </Menu.Item>
-      <Menu.Item id="select">
-        <Link to={`${url}/select`}>
-          选择 Select
-        </Link>
-      </Menu.Item>
       <Menu.Item id="modal">
         <Link to={`${url}/modal`}>
           对话框 Modal
         </Link>
       </Menu.Item>
-      <Menu.Item id="datepicker">
-        <Link to={`${url}/datepicker`}>
-          DataPicker 日期选择
-        </Link>
-      </Menu.Item>
-    </Menu.SubMenu>
-    <Menu.SubMenu header="提示信息" id="info">
-      <Menu.Item id="badge">
-        <Link to={`${url}/badge`}>
-          标记 Badge
-        </Link>
-      </Menu.Item>
       <Menu.Item id="drawer">
         <Link to={`${url}/drawer`}>
           抽屉 Drawer
+        </Link>
+      </Menu.Item>
+    </Menu.SubMenu>
+    <Menu.SubMenu header="信息" id="info">
+      <Menu.Item id="badge">
+        <Link to={`${url}/badge`}>
+          标记 Badge
         </Link>
       </Menu.Item>
       <Menu.Item id="alert">
@@ -140,6 +154,11 @@ export default function DocMenu(props) {
       </Menu.Item>
     </Menu.SubMenu>
     <Menu.SubMenu header="数据展示" id="data">
+      <Menu.Item id="navbar">
+        <Link to={`${url}/navbar`}>
+          导航条 Navbar
+        </Link>
+      </Menu.Item>
       <Menu.Item id="tree">
         <Link to={`${url}/tree`}>
           树控件 Tree
@@ -167,6 +186,16 @@ export default function DocMenu(props) {
       </Menu.Item>
     </Menu.SubMenu>
     <Menu.SubMenu header="布局" id="layoutIndex">
+      <Menu.Item id="space">
+        <Link to={`${url}/space`}>
+          间距 Space
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="collapse">
+        <Link to={`${url}/collapse`}>
+          折叠框 Collapse
+        </Link>
+      </Menu.Item>
       <Menu.Item id="grid">
         <Link to={`${url}/grid`}>
           栅格 Grid
@@ -198,6 +227,18 @@ export default function DocMenu(props) {
         <Link to={`${url}/hooks`}>
           Hooks
         </Link>
+      </Menu.Item>
+      <Menu.Item id="theme">
+        皮肤
+      </Menu.Item>
+      <Menu.Item id="icons">
+        图标库
+      </Menu.Item>
+      <Menu.Item id="classes">
+        辅助样式
+      </Menu.Item>
+      <Menu.Item id="functions">
+        函数工具
       </Menu.Item>
     </Menu.SubMenu>
   </Menu>;

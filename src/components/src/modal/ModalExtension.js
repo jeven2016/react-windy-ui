@@ -1,19 +1,15 @@
-import React, {
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, {useEffect, useImperativeHandle, useMemo, useRef, useState,} from 'react';
 import * as ReactDOM from 'react-dom';
 import Modal from './Modal';
 import {Button, IconError, IconInfo, IconOk, IconWarning} from '../index';
-import {createContainer, execute, isNil} from '../Utils';
-import Row from '../grid/Row';
-import Col from '../grid/Col';
+import {createContainer, execute, isNil, nonNil} from '../Utils';
 import {IconQuestion} from '../Icons';
 import useMultipleRefs from '../common/UseMultipleRefs';
+import {ModalType} from "./ModalUtils";
+import ButtonGroup from "../ButtonGroup";
+import Divider from "../divider";
+import useEventCallback from "../common/useEventCallback";
+import PropTypes from "prop-types";
 
 const InfoType = {
   info: 'info',
@@ -31,42 +27,25 @@ const iconColorClass = {
   confirm: 'text color-blue',
 };
 
-const titleStyle = {
-  fontSize: '1.25em',
-  fontWeight: '500',
-  lineHeight: '1.5',
-};
-
-const contentStyle = {
-  display: 'flex',
-  flex: '0 1 100%',
-};
-
-const iconColStyle = {
-  display: 'flex',
-  fontSize: '2em',
-  marginRight: '0.5em',
-  flex: '0 0 2em',
-  justifyContent: 'flex-end',
-};
-
-const textColStyle = {
-  flex: '0 1 auto',
-};
-
 const SubModal = React.forwardRef((props, ref) => {
   const {
+    hasIcon = true,
+    compact = false,
+    type = ModalType.secondary,
     callback,
     infoType, header, title, body,
     okText, cancelText,
-    onOk, onCancel, icon, ...otherProps
+    onOk, onCancel, icon,
+    okButtonProps,
+    cancelButtonProps,
+    extraClassName,
+    ...otherProps
   } = props;
   const modalRef = useRef();
   const multiRef = useMultipleRefs(ref, modalRef);
-
   const [active, setActive] = useState(true);
   const [content, setContent] = useState(
-      {header: null, title: null, body: null, okText: null, cancelText: null});
+    {header: null, title: null, body: null, okText: null, cancelText: null});
   const okBtnRef = useRef(null);
 
   const modalHeader = useMemo(() => {
@@ -79,6 +58,7 @@ const SubModal = React.forwardRef((props, ref) => {
     return realHeader && <Modal.Header>{realHeader}</Modal.Header>;
   }, [header, content]);
 
+  const denseFooter = type === ModalType.secondary && isNil(modalHeader);
 
   //focus on the ok button by default
   useEffect(() => {
@@ -88,20 +68,20 @@ const SubModal = React.forwardRef((props, ref) => {
     }
   }, [okBtnRef]);
 
-  const closeModal = useCallback((e) => {
+  const closeModal = useEventCallback((e) => {
     setActive(false);
     callback();
-  }, [setActive, callback]);
+  });
 
-  const handleOk = useCallback((e) => {
+  const handleOk = useEventCallback((e) => {
     closeModal(e);
     onOk && onOk(e);
-  }, [closeModal, onOk]);
+  });
 
-  const handleCancel = useCallback((e) => {
+  const handleCancel = useEventCallback((e) => {
     closeModal(e);
     onCancel && onCancel(e);
-  }, [closeModal, onCancel]);
+  });
 
   useImperativeHandle(multiRef, () => ({
     close: handleCancel,
@@ -116,56 +96,71 @@ const SubModal = React.forwardRef((props, ref) => {
     }
     switch (infoType) {
       case InfoType.info:
-        return <IconInfo/>;
+        return <IconInfo size="large"/>;
       case InfoType.warning:
-        return <IconWarning/>;
+        return <IconWarning size="large"/>;
       case InfoType.error:
-        return <IconError/>;
+        return <IconError size="large"/>;
       case InfoType.success:
-        return <IconOk/>;
+        return <IconOk size="large"/>;
       case InfoType.confirm:
-        return <IconQuestion/>; //need to update
+        return <IconQuestion size="large"/>;
       default:
         return null;
     }
   }, [icon, infoType]);
 
+  const modalTitle = content.title || title;
+  const modalDesc = content.body || body;
+  const okBtnText = content.okText || okText;
+  const cancelBtnText = content.cancelText || cancelText;
+  const okProps = content.okButtonProps || okButtonProps;
+  const cancelProps = content.cancelButtonProps || cancelButtonProps;
+
   return <Modal active={active}
+                type={type}
+                extraClassName={`${extraClassName ? extraClassName : ""} ${compact ? "compact" : ""}`}
                 onCancel={handleCancel}
                 {...otherProps}>
     {modalHeader}
     <Modal.Body>
-      <div style={contentStyle}>
-        <div style={iconColStyle} className={iconColorClass[infoType]}>
-          {iconInfo}
-        </div>
-        <div style={textColStyle}>
-          <Row>
-            <Col sm={12} style={titleStyle}>{isNil(content.title)
-                ? title
-                : content.title}</Col>
-          </Row>
-          <Row style={{marginTop: '0.5rem'}}>
-            <Col sm={12}>{isNil(content.body) ? body : content.body}</Col>
-          </Row>
+      <div className={`body-content`}>
+        {
+          hasIcon && <div className={`icon-col ${iconColorClass[infoType]}`}>
+            {iconInfo}
+          </div>
+        }
+        <div className={`content`}>
+          {nonNil(modalTitle) && <div className='title'>{modalTitle}</div>}
+          {nonNil(modalDesc) && <div className='details'>{modalDesc}</div>}
         </div>
       </div>
     </Modal.Body>
+    {compact && <Divider/>}
     {
-      (!isNil(okText) || !isNil(cancelText)) &&
-      <Modal.Footer>
+      (nonNil(okText) || nonNil(cancelText)) &&
+      <Modal.Footer compact={!compact && denseFooter}>
         {
-          !isNil(okText) &&
-          <Button hasMinWidth={true} color="blue" ref={okBtnRef}
-                  onClick={handleOk}>{isNil(content.okText)
-              ? okText
-              : content.okText}</Button>
+          compact &&
+          <ButtonGroup block size="large">
+            {okBtnText && <Button color="blue" inverted hasBox={false} onClick={handleOk}{...okProps}>OK</Button>}
+            {okBtnText && cancelBtnText && <Divider direction="vertical"/>}
+            {cancelBtnText && <Button hasBox={false} onClick={handleCancel} {...cancelProps}>NO</Button>}
+          </ButtonGroup>
         }
 
         {
-          !isNil(cancelText) && <Button hasMinWidth={true}
-                                        onClick={handleCancel}>{isNil(
-              content.cancelText) ? cancelText : content.cancelText}</Button>
+          !compact && nonNil(okText) &&
+          <Button hasMinWidth={true} color="blue" ref={okBtnRef} onClick={handleOk} {...okProps}>
+            {okBtnText}
+          </Button>
+        }
+
+        {
+          !compact && nonNil(cancelText) &&
+          <Button hasMinWidth={true} onClick={handleCancel}  {...cancelProps}>
+            {cancelBtnText}
+          </Button>
         }
 
       </Modal.Footer>
@@ -203,6 +198,25 @@ const show = (infoType, config) => {
   };
 };
 
+SubModal.propTypes = {
+  extraClassName: PropTypes.string,
+  hasIcon: PropTypes.bool,
+  compact: PropTypes.bool,
+  type: PropTypes.oneOf(['primary', 'secondary', 'fullWindow', 'simple']),
+  callback: PropTypes.func,
+  infoType: PropTypes.string,
+  header: PropTypes.node,
+  title: PropTypes.node,
+  body: PropTypes.node,
+  okText: PropTypes.node,
+  cancelText: PropTypes.node,
+  onOk: PropTypes.func,
+  onCancel: PropTypes.func,
+  icon: PropTypes.node,
+  okButtonProps: PropTypes.object,
+  cancelButtonProps: PropTypes.object,
+}
+
 export default {
   info(config) {
     return show(InfoType.info, config);
@@ -218,6 +232,10 @@ export default {
   },
   confirm(config) {
     return show(InfoType.confirm, config);
+  },
+
+  compact(config) {
+    return show(InfoType.confirm, {...config, compact: true});
   },
 
   closeAll(delay = 100) {

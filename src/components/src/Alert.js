@@ -1,10 +1,12 @@
 import React, {useCallback, useEffect, useMemo} from 'react';
-import {execute, isNil, validate} from './Utils';
+import {execute, isNil, nonNil, validate} from './Utils';
 import clsx from 'clsx';
-import {IconError, IconInfo, IconOk, IconWarning} from './Icons';
+import {IconClear, IconError, IconInfo, IconOk, IconWarning} from './Icons';
 import {Transition} from 'react-spring/renderprops';
 import useInternalState from './common/useInternalState';
 import * as PropTypes from 'prop-types';
+import Button from "./button";
+import useEventCallback from "./common/useEventCallback";
 
 const AlertType = {
   simple: {clsName: 'alert-simple', icon: null},
@@ -18,14 +20,16 @@ const AlertType = {
 const Alert = React.forwardRef((props, ref) => {
   const {
     type = 'info',
-    children,
     className = 'alert',
     extraClassName,
+    children,
+    hasLeftBorder = false,
     duration = 5000,
     onClose,
     title,
     body,
     style,
+    filled = false,
     autoClose = false,
     hasCloseIcon = true,
     icon,
@@ -37,13 +41,9 @@ const Alert = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   validate(AlertType.hasOwnProperty(type),
-      `The type '${type}' is not acceptable.`);
+    `The type '${type}' is not acceptable.`);
 
-  const {
-    state: activeAlert,
-    setState: setActive,
-    customized,
-  } = useInternalState({
+  const [activeAlert, setActive] = useInternalState({
     props,
     stateName: 'active',
     defaultState: true,
@@ -52,12 +52,10 @@ const Alert = React.forwardRef((props, ref) => {
 
   let typeCls = AlertType[type].clsName;
 
-  const close = useCallback((e) => {
-    if (!customized) {
-      setActive(false);
-    }
+  const close = useEventCallback((e) => {
+    setActive(false);
     onClose && onClose(true, e);
-  }, [customized, setActive, onClose]);
+  });
 
   useEffect(() => {
     let timer;
@@ -69,7 +67,7 @@ const Alert = React.forwardRef((props, ref) => {
     }
 
     return () => {
-      !isNil(timer) && clearTimeout(timer);
+      nonNil(timer) && clearTimeout(timer);
     };
   }, [activeAlert, autoClose, duration, close]);
 
@@ -81,8 +79,8 @@ const Alert = React.forwardRef((props, ref) => {
         iconElementChild = icon;
       } else {
         iconElementChild = !isNil(AlertType[type])
-            ? AlertType[type].icon
-            : null;
+          ? AlertType[type].icon
+          : null;
       }
       if (iconElementChild) {
         iconElement = <div className="alert-icon"
@@ -93,6 +91,8 @@ const Alert = React.forwardRef((props, ref) => {
   }, [hasIcon, icon, type, iconStyle]);
 
   let clsName = clsx(extraClassName, className, {
+    filled,
+    'with-left-border': hasLeftBorder,
     'with-title': title,
     [typeCls]: typeCls,
   });
@@ -105,8 +105,8 @@ const Alert = React.forwardRef((props, ref) => {
       <div className="alert-content">
         {
           !isNil(title)
-              ? <div className="title">{title}</div>
-              : null
+            ? <div className="title">{title}</div>
+            : null
         }
         <div className="body">
           {body}{children}
@@ -115,31 +115,24 @@ const Alert = React.forwardRef((props, ref) => {
       </div>
       {
         hasCloseIcon ?
-            <button onClick={close} style={closeStyle}
-                    className="alert-close button close-btn">x
-            </button>
-            : null
+          <Button hasBorder={false} hasBox={false} onClick={close}
+                  hasRipple={false}
+                  style={closeStyle}
+                  extraClassName="alert-close"
+                  {...(filled ? {color: 'white'} : {})}>
+            <IconClear size="small"/>
+          </Button>
+          : null
       }
     </div>;
-  }, [
-    body,
-    children,
-    close,
-    closeStyle,
-    clsName,
-    hasCloseIcon,
-    iconElem,
-    otherProps,
-    ref,
-    style,
-    title]);
+  }, [body, children, close, closeStyle, clsName, filled, hasCloseIcon, iconElem, otherProps, ref, style, title]);
 
   return animated ? <Transition
-      items={activeAlert}
-      config={{clamp: true, mass: 1, tesion: 100, friction: 15}}
-      from={{opacity: 0, transform: 'scaleY(0)'}}
-      enter={{opacity: 1, transform: 'scaleY(1)'}}
-      leave={{opacity: 0, transform: 'scaleY(0)'}}>
+    items={activeAlert}
+    config={{clamp: true, mass: 1, tesion: 100, friction: 15}}
+    from={{opacity: 0, transform: 'scaleY(0)'}}
+    enter={{opacity: 1, transform: 'scaleY(1)'}}
+    leave={{opacity: 0, transform: 'scaleY(0)'}}>
     {
       (show) => show && (springProps => getContent(springProps))
     }
@@ -148,14 +141,16 @@ const Alert = React.forwardRef((props, ref) => {
 });
 
 Alert.propTypes = {
-  type: PropTypes.string,
+  type: PropTypes.oneOf(Object.keys(AlertType)),
   className: PropTypes.string,
   extraClassName: PropTypes.string,
+  hasLeftBorder: PropTypes.bool,
   duration: PropTypes.number,
   onClose: PropTypes.func,
   title: PropTypes.node,
   body: PropTypes.node,
   style: PropTypes.object,
+  filled: PropTypes.bool,
   autoClose: PropTypes.bool,
   hasCloseIcon: PropTypes.bool,
   icon: PropTypes.node,

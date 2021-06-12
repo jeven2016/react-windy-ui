@@ -50,7 +50,7 @@ const cells = [
   {
     key: 'ID',
     head: 'ID',
-    showParam: 'key',
+    paramName: 'key',
     sortable: true,
     fixed: 'left',
     width: '90px',
@@ -58,7 +58,7 @@ const cells = [
   {
     key: 'City',
     head: 'City',
-    showParam: 'name',
+    paramName: 'name',
     sortable: true,
     fixed: 'left',
     width: '110px',
@@ -66,54 +66,54 @@ const cells = [
   {
     key: 'Place',
     head: 'Place',
-    showParam: 'place',
+    paramName: 'place',
     sortable: true,
     width: '170px',
   },
   {
     key: 'desc',
     head: 'Description',
-    showParam: 'desc',
+    paramName: 'desc',
     width: '150px',
   },
   {
     key: 'Column1',
     head: 'Column1',
-    showParam: 'desc',
+    paramName: 'desc',
     width: '150px',
   },
   {
     key: 'Column2',
     head: 'Column2',
-    showParam: 'desc',
+    paramName: 'desc',
     width: '150px',
   },
   {
     key: 'Column3',
     head: 'Column3',
-    showParam: 'desc',
+    paramName: 'desc',
     width: '150px',
   },
   {
     key: 'Column4',
     head: 'Column4',
-    showParam: 'desc',
+    paramName: 'desc',
     width: '150px',
   },
   {
     key: 'Column5',
     head: 'Column5',
-    showParam: 'desc',
+    paramName: 'desc',
     width: '150px',
   },
   {
     head: 'Column6',
     width: '150px',
-    showParam: 'desc',  //don't supple the width for the last td in order to make this td occupy the rest space
+    paramName: 'desc',  //don't supple the width for the last td in order to make this td occupy the rest space
   },
   {
     head: 'Action',
-    showParam: 'actions',
+    paramName: 'actions',
     fixed: 'right',
   },
 ];

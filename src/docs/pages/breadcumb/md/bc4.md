@@ -7,7 +7,7 @@ editUrl: $BASE/docs/pages/breadcumb/md/bc4.md
 ---      
 
 +++ zh_CN   
-Breadcrumb的<Code>Item</Code>可以与其他组件一起搭配使用，比如这里的例子就在Item中结合使用了
+Breadcrumb的<Code>Item</Code>可以与其他组件一起搭配使用，比如这里使用了
     <Code>Tooltip</Code>和<Code>Dropdown</Code>组件。
 
 +++ en_US   

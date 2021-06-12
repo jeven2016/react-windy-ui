@@ -1,7 +1,7 @@
 import React from 'react';
-import {Button, Card, Form, IconAccount, Input} from 'react-windy-ui';
+import {Button, Form, IconAccount, Input} from 'react-windy-ui';
 
-export default function Form4() {
+export default function Form5() {
   //for more information of the form validation, refer to https://react-hook-form.com/api/
   const {form} = Form.useForm({
     //Validation will trigger on the submit event and invalid inputs will attach onChange event listeners to re-validate them.
@@ -17,33 +17,31 @@ export default function Form4() {
   const onError = (er, e) => console.log(er, e);
 
   return <>
-    <Card style={{maxWidth: '500px', minWidth: '350px'}} hasBox={false}>
-      <Card.Row>
-        <Form form={form} onSubmit={onSubmit} onError={onError}>
-          <Form.Item
-              name="name"
-              label="Name:"
-              rules={{
-                required: {
-                  value: true,
-                  message: 'The name is required'
-                }
-              }}>
-            <h5 className="text comment">please enter your name here</h5>
+    <div className="doc doc-row space">
+      <Form form={form} onSubmit={onSubmit} onError={onError}>
+        <Form.Item
+          name="name"
+          label="Name:"
+          rules={{
+            required: {
+              value: true,
+              message: 'The name is required'
+            }
+          }}>
+          <h5 className="text comment">please enter your name here</h5>
+          <div>
             <div>
-              <div>
-                <Form.Widget>
-                  <Input block icon={<IconAccount/>}/>
-                </Form.Widget>
-              </div>
+              <Form.Widget>
+                <Input block icon={<IconAccount/>}/>
+              </Form.Widget>
             </div>
-            <h5 className="text comment">Need Help ?</h5>
-          </Form.Item>
-          <Form.Item direction="horizontal" compact={true}>
-            <Button nativeType="submit" block color="blue">Submit</Button>
-          </Form.Item>
-        </Form>
-      </Card.Row>
-    </Card>
+          </div>
+          <h5 className="text comment">Need Help ?</h5>
+        </Form.Item>
+        <Form.Item direction="horizontal" compact={true}>
+          <Button nativeType="submit" block color="blue">Submit</Button>
+        </Form.Item>
+      </Form>
+    </div>
   </>;
 }

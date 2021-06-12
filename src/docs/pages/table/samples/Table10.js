@@ -62,7 +62,7 @@ const cells = [
   {
     key: 'ID',
     head: 'ID',
-    showParam: 'key',
+    paramName: 'key',
     sortable: true,
     fixed: 'left',
     width: '90',
@@ -90,7 +90,7 @@ const cells = [
       {
         key: 'name',
         head: 'Name',
-        showParam: 'name',
+        paramName: 'name',
         sortable: true,
         width: '100',
       },
@@ -101,7 +101,7 @@ const cells = [
           {
             key: 'City',
             head: 'City',
-            showParam: 'city',
+            paramName: 'city',
             sortable: true,
             width: '100',
           },
@@ -112,14 +112,14 @@ const cells = [
               {
                 key: 'building',
                 head: 'Building',
-                showParam: 'building',
+                paramName: 'building',
                 sortable: true,
                 width: '120',
               },
               {
                 key: 'door',
                 head: 'Door',
-                showParam: 'door',
+                paramName: 'door',
                 width: '120',
               },
             ],
@@ -134,12 +134,12 @@ const cells = [
   {
     key: 'desc',
     head: 'Description',
-    showParam: 'desc',
+    paramName: 'desc',
   },
 
   {
     head: 'Action',
-    showParam: 'actions',
+    paramName: 'actions',
     width: '150px',
     fixed: 'right',
   },

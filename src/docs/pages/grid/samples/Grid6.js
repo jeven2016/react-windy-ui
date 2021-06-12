@@ -7,9 +7,9 @@ export default function Grid6() {
       <div className="doc grid">
         <Tooltip body="xs=12 sm=4">
           <Row>
-            <Col xs={12} sm={4}>sm-4</Col>
-            <Col xs={12} sm={4}>sm-4</Col>
-            <Col xs={12} sm={4}>sm-4</Col>
+            <Col sm={4}>sm-4</Col>
+            <Col sm={4}>sm-4</Col>
+            <Col sm={4}>sm-4</Col>
           </Row>
         </Tooltip>
 
@@ -23,7 +23,7 @@ export default function Grid6() {
         </Row>
 
         <Tooltip
-            body="xs={12} sm={4} smOffset={4} md={2} mdOffset={2} lg={3} lgOffset={1}">
+          body="xs={12} sm={4} smOffset={4} md={2} mdOffset={2} lg={3} lgOffset={1}">
           <Row>
             <Col xs={12} sm={4} smOffset={4} md={2} mdOffset={2} lg={6}
                  lgOffset={3}>

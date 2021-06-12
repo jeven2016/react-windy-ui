@@ -1,13 +1,13 @@
 --- 
 order: 11
 type: sample
-zh_CN: Table
+zh_CN: 省略显示
 en_US: Table
 editUrl: $BASE/docs/pages/table/md/table11.md
 ---
 
 +++ zh_CN
-Table
+在cells中将<Code>autoEllipsis</Code>设置为<Code>true</Code>后，单元格内容超出后会省略显示。
 
 +++ en_US
 Table

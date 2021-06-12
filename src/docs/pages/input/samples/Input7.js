@@ -7,7 +7,7 @@ export default function Input7(props) {
   return <>
     <div className="doc doc-row">
       <Toggle active={hasBox} onChange={v => enableBox(v)}
-              content={{on: 'Box', off: 'Box'}}/>
+              label='Box'/>
     </div>
     <div className="doc doc-row space">
       <Input hasBox={hasBox} placeholder="large size" size='large'/>

@@ -1,3 +1,7 @@
+import clsx from "clsx";
+
+export const ColCount = 12;
+
 export const InputBorderType = {
   ok: 'input-ok',
   warning: 'input-warning',
@@ -81,31 +85,30 @@ export const PopupPosition = {
   rightBottom: 'rightBottom',
 };
 
-export const PopoverTriggerType = {
-  hover: 'hover',
-  click: 'click',
-};
-
-export const FlexAlign = {
-  left: 'flex-align left',
-  right: 'flex-align right',
-  center: 'flex-align center',
-};
-
 export const JustifyContentType = {
-  start: 'flex-adjust justify-start',
-  end: 'flex-adjust justify-end',
-  center: 'flex-adjust justify-center',
-  around: 'flex-adjust justify-around',
-  between: 'flex-adjust justify-between',
-  evenly: 'flex-adjust justify-evenly',
+  start: 'justify-start',
+  end: 'justify-end',
+  center: 'justify-center',
+  around: 'justify-around',
+  between: 'justify-between',
+  evenly: 'justify-evenly'
 };
 
 export const AlignItemsType = {
-  start: 'flex-adjust align-start',
-  end: 'flex-adjust align-end',
-  center: 'flex-adjust align-center',
+  start: 'align-start',
+  end: 'align-end',
+  center: 'align-center'
 };
+
+export function adjustItems(justifyContent/* value: start, center,...*/, alignItems/*value: start, end,...*/) {
+  const jc = JustifyContentType[justifyContent];
+  const al = AlignItemsType[alignItems];
+  return clsx({
+    "flex-adjust": jc || al,
+    [jc]: jc,
+    [al]: al
+  })
+}
 
 export const Active = {
   na: 'na',

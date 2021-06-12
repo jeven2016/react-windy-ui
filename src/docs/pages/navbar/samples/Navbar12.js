@@ -66,7 +66,7 @@ export default function Navbar12() {
 
             <Drawer active={activeDrawer}
                     style={{width: '50%'}}
-                    onChange={(e, show) => setActiveDrawer(show)}>
+                    onChange={(show) => setActiveDrawer(show)}>
               <Menu hasBox={false} onSelect={() => setActiveDrawer(false)}>
                 <Menu.Item id="user">User</Menu.Item>
                 <Menu.Item id="role">Role</Menu.Item>

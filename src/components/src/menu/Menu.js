@@ -9,10 +9,11 @@ import {MenuContext} from '../common/Context';
 import {Action, fillLevel, MenuDirection, MenuType} from './MenuUtils';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import {convertToArray, execute, includes, isCustomized, isNil} from '../Utils';
-import {EventListener, JustifyContentType} from '../common/Constants';
+import {adjustItems, EventListener} from '../common/Constants';
 import {initStore} from '../common/Store';
 import useEvent from '../common/UseEvent';
 import useEventCallback from '../common/useEventCallback';
+import usePrevious from "../common/UsePrevious";
 
 /**
  * Menu Component
@@ -55,7 +56,7 @@ const Menu = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const isDark = type === MenuType.dark;
-  const clsName = clsx(extraClassName, className, JustifyContentType[justify]);
+  const clsName = clsx(extraClassName, className, adjustItems(justify));
   const menuRef = useRef(null);
   const multiRef = useMultipleRefs(ref, menuRef);
 
@@ -66,36 +67,38 @@ const Menu = React.forwardRef((props, ref) => {
   const customOpen = isCustomized(props, 'openedMenus');
   const preTimeoutRef = useRef(null); //previous close timer
 
-  //init a internal store
+  //init a internal store for defaultXXXX fields
   const [store] = useState(() => initStore({
     activeItemsList: convertToArray(defaultActiveItems),
     openList: defaultOpenList,
   }));
 
-  //apply the customized properties
-  useEffect(() => {
-    if (customActive) {
-      store.setState({activeItemsList: activeItems});
-    }
-    if (customOpen) {
-      store.setState({openList: openedMenus});
-    }
-  }, [activeItems, openedMenus, store, compact, customActive, customOpen]);
+  //while the field is not customized, the store would be changed in Item and then the memorized data would get
+  //outdated data, so remove the useMemo()
+  const realActiveItems = () => customActive ? activeItems
+    : store.getState().activeItemsList;
+  const realOpenList = () => customOpen ? openedMenus
+    : store.getState().openList;
 
-  //for handling the menu switched from compact/popup to other type
+  const preCompact = usePrevious(compact);
+  const prePopupSubMenu = usePrevious(popupSubMenu);
+
+  // for handling the menu switched from compact/popup to other type
   useEffect(() => {
     //it the menu is changed to compact or popup submenu, no submenus should pop up meanwhile
-    if (compact || popupSubMenu) {
+    if ((!preCompact && compact) || (!prePopupSubMenu && popupSubMenu)) {
       store.setState({openList: []});
-    } else {
-      //if it reverts to non-popup submenu, to retrieve previous open list
-      //to show
+    }
+
+    //changed from compact/popup submenu to normal menu
+    if ((preCompact && !compact) || (prePopupSubMenu && !popupSubMenu)) {
+      //revert to previous open list
       const pre = preExpandList.current;
       if (pre) {
         store.setState({openList: pre});
       }
     }
-  }, [compact, popupSubMenu, preExpandList, store]);
+  }, [compact, popupSubMenu, preCompact, preExpandList, prePopupSubMenu, store]);
 
   const isPopup = popupSubMenu || compact;
 
@@ -112,9 +115,9 @@ const Menu = React.forwardRef((props, ref) => {
   //switch compact/popup
   //1. compact, don't show expanded menu，
   //2. show last expanded menus while switching to other other menu types
-  useEvent(EventListener.click, function() {
+  useEvent(EventListener.click, function () {
     //clicking the document will cause the opened popup submenu to be closed
-    if (isPopup && store.getState().openList.length > 0) {
+    if (isPopup && realOpenList().length > 0) {
       store.setState({openList: []});
     }
   }, isPopup);
@@ -154,10 +157,10 @@ const Menu = React.forwardRef((props, ref) => {
 
   const clickItemHandler = useEventCallback(({id, e}) => {
     let nextList = [id];
-    const list = store.getState().activeItemsList;
+    const list = realActiveItems();
     if (multiSelect) {
       nextList = list.includes(id) ? [...list.filter(item => item !== id)] :
-          [...list, id];
+        [...list, id];
     }
 
     if (!customActive) {
@@ -176,11 +179,11 @@ const Menu = React.forwardRef((props, ref) => {
       }
       onOpenedMenu && onOpenedMenu([], e);
     }
-
   });
 
   const openMenuHandler = useEventCallback(({id, e, directChild}) => {
-    if (isNil(id) || includes(store.getState().openList, id)) {
+    const oList = realOpenList();
+    if (isNil(id) || includes(oList, id)) {
       return;
     }
 
@@ -192,11 +195,11 @@ const Menu = React.forwardRef((props, ref) => {
         clearTimeout(preTimer);
       }
       //if this submenu is direct child of menu, that means only one submenu should
-      //open later
+      //be opened later
       nextList = directChild ? [id]
-          : store.getState().openList.concat(id);
+        : oList.concat(id);
     } else {
-      nextList = store.getState().openList.concat(id);
+      nextList = oList.concat(id);
       preExpandList.current = nextList;
     }
     if (!customOpen) {
@@ -210,27 +213,28 @@ const Menu = React.forwardRef((props, ref) => {
    * 50 mill-seconds to check whether need to notify the updates and rerender the nodes afterwards.
    * If the mouse leaves from submenu1 and focus on submenu2, we don't want the callback invoked twice (one is due to mouse leaving,
    * the other is due to mouse entering). Instead the callback should be invoked once and the opened list
-   * should only include the last focused submenu's id.
+   * should only include the id of last focused submenu.
    */
   const closeMenuHandler = useEventCallback(({id, e}) => {
+    const oList = realOpenList();
     const {updateState, notifyChanges, getState, setState} = store;
-    if (isNil(id) || !includes(getState().openList, id)) {
+    if (isNil(id) || !includes(oList, id)) {
       return;
     }
 
-    const restList = [...getState().openList.filter(it => it !== id)];
+    const restList = [...oList.filter(it => it !== id)];
     if (isPopup) {
       //only update the store
       updateState({openList: restList});
 
       const preTimeout = preTimeoutRef.current;
       if (!isNil(preTimeout)) {
-        //exits if there already be a timer running
+        //exit if there already be a timer running
         return;
       }
 
-      //delay 50 mills to notify that the open list is changed
-      preTimeoutRef.current = execute(function() {
+      //delay 50 mills to notify the open list is changed
+      preTimeoutRef.current = execute(function () {
         preTimeoutRef.current = null;
         if (!customOpen) {
           notifyChanges();
@@ -249,6 +253,10 @@ const Menu = React.forwardRef((props, ref) => {
 
   const ctx = {
     store,
+    customActive,
+    customOpen,
+    activeItems: realActiveItems(),
+    openList: realOpenList(),
     dispatch,
     initIndent,
     indentation,
@@ -305,13 +313,13 @@ Menu.propTypes = {
   multiSelect: PropTypes.bool,
   compact: PropTypes.bool,
   defaultActiveItems: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.number, PropTypes.array]),
+    [PropTypes.string, PropTypes.number, PropTypes.array]),
   activeItems: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.number, PropTypes.array]),
+    [PropTypes.string, PropTypes.number, PropTypes.array]),
   defaultOpenedMenus: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.number, PropTypes.array]),
+    [PropTypes.string, PropTypes.number, PropTypes.array]),
   openedMenus: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.number, PropTypes.array]),
+    [PropTypes.string, PropTypes.number, PropTypes.array]),
   onOpenedMenu: PropTypes.func,
   primaryBarPosition: PropTypes.oneOf(['left', 'right']),
   selectable: PropTypes.bool,

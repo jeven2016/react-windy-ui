@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Loader, Toggle} from 'react-windy-ui';
 
 export default function Loader4() {
@@ -8,22 +8,22 @@ export default function Loader4() {
 
   const loaderColor = !hasBg && hasMask ? 'white' : 'blue';
 
-  const delayClose = useCallback(() => {
+  const delayClose = () => {
     const timeout = setTimeout(() => {
       setActive(false);
       clearTimeout(timeout);
     }, 3000);
-  }, []);
+  };
 
   return <>
     <div className="doc doc-row">
       <Toggle active={hasMask} onChange={val => setMask(val)}
-              content={{on: 'Mask', off: 'Mask'}}/>
+              label='Mask'/>
     </div>
 
     <div className="doc doc-row">
       <Toggle active={hasBg} onChange={val => setBg(val)}
-              content={{on: 'Background', off: 'Background'}}/>
+              label='Background'/>
     </div>
 
     <Button type="primary" onClick={() => {

@@ -3,6 +3,7 @@ order: 5
 type: sample
 zh_CN: 使用JSON数据生成Tree
 en_US: Sample
+onlyVisible: false
 editUrl: $BASE/docs/pages/tree/md/tree5.md
 ---
 

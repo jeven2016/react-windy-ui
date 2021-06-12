@@ -12,6 +12,7 @@ import Loader from '../Loader';
 import useMounted from '../common/UseUnmounted';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import useEventCallback from "../common/useEventCallback";
 
 const ProgressType = {
   info: 'info',
@@ -38,7 +39,8 @@ const TOP_DEFAULT_PROPS = {
 const Progress = React.forwardRef((props, ref) => {
   const {
     active = true,
-    className = 'progress', extraClassName,
+    className = 'progress',
+    extraClassName,
     percentValue,
     type = 'info',
     hasStripe = false,
@@ -157,9 +159,9 @@ const ProgressNotifier = React.forwardRef((props, ref) => {
     timer = execute(updateLoadingState, random(timeOutStart, timeOutEnd));
   }
 
-  const clearTimer = () => {
+  const clearTimer = useEventCallback(() => {
     !isNil(timer) && clearTimeout(timer);
-  };
+  });
 
   //expose a complete function
   useImperativeHandle(ref, () => ({

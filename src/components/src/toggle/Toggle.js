@@ -19,6 +19,7 @@ const Toggle = React.forwardRef((props, ref) => {
     defaultActive = false,
     active,
     block = false,
+    errorType, //no default style for this component
     disabled = false,
     style,
     label,
@@ -26,14 +27,14 @@ const Toggle = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
 
-  const {state: isActive, setState: setActive, customized} = useInternalState({
+  const [isActive, setActive, customized] = useInternalState({
     props,
     stateName: 'active',
     defaultState: defaultActive,
     state: active,
   });
 
-  let isOn = customized ? active : isActive;
+  let isOn = isActive;
   let clsName = clsx('toggle', {
     on: isOn,
     off: !isOn,
@@ -89,27 +90,27 @@ const Toggle = React.forwardRef((props, ref) => {
 
   const currentStyle = useMemo(() => {
     let offset = type === ToggleType.normal ? {
-          leftOffset: 'translate3d(-5%,0,0)',
-          rightOffset: 'translate3d(-95%,0,0)',
-        }
-        : {
-          leftOffset: 'translate3d(0.2rem,-50%,0)',
-          rightOffset: 'translate3d(-1.7rem,-50%,0)',
-        };
+        leftOffset: 'translate3d(-5%,0,0)',
+        rightOffset: 'translate3d(-95%,0,0)',
+      }
+      : {
+        leftOffset: 'translate3d(0.2rem,-50%,0)',
+        rightOffset: 'translate3d(-1.7rem,-50%,0)',
+      };
 
     return {
       left: isOn ? '100%' : '0%',
       transform: isOn
-          ? offset.rightOffset
-          : offset.leftOffset,
+        ? offset.rightOffset
+        : offset.leftOffset,
     };
   }, [isOn, type]);
 
   const barContent = type === ToggleType.normal ? <span
-      className="bar"> {getContent(true)}</span> : null;
+    className="bar"> {getContent(true)}</span> : null;
 
   const infoContent = type !== ToggleType.normal ? <span
-      className={`info ${isOn ? 'on' : 'off'}`}>
+    className={`info ${isOn ? 'on' : 'off'}`}>
     {getContent(true, '\u00A0')}
       </span> : null;
 
@@ -130,6 +131,7 @@ const Toggle = React.forwardRef((props, ref) => {
   return <div className={clsx(extraClassName, className, {block: block})}
               style={style}>
     <button ref={ref}
+            type="button"
             className={buttonClsName}
             disabled={disabled}
             onClick={clickToggle} {...otherProps}>
@@ -137,9 +139,9 @@ const Toggle = React.forwardRef((props, ref) => {
         {barContent}
         {infoContent}
         <Spring
-            from={currentStyle}
-            to={currentStyle}
-            config={{clamp: true, mass: 1, tesion: 100, friction: 15}}
+          from={currentStyle}
+          to={currentStyle}
+          config={{clamp: true, mass: 1, tesion: 100, friction: 15}}
         >
           {
             springProps => (<span className="ball" style={springProps}>
@@ -171,6 +173,7 @@ Toggle.propTypes = {
       showInBar: PropTypes.bool,
     })]),
   onChange: PropTypes.func,
+  errorType: PropTypes.string,
 };
 
 export default Toggle;
