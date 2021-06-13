@@ -1,22 +1,22 @@
 import React, {useState} from "react";
-import {Button, PopConfirm, Select} from 'react-windy-ui';
+import {Button, PopConfirm, TextField} from 'react-windy-ui';
 
 export default function Pc4() {
   const [justifyFooter, setJustify] = useState("end");
 
   return <>
     <div className="doc doc-row">
-      <span style={{
-        marginRight: '1rem',
-        fontWeight: '600'
-      }}>Justify Footer:</span>
-
-      <Select defaultValue="end"
-              onSelect={(value) => setJustify(value)}>
-        <Select.Option value="start">start</Select.Option>
-        <Select.Option value="center">center</Select.Option>
-        <Select.Option value="end">end</Select.Option>
-      </Select>
+      <TextField select={true}
+                 size="small"
+                 defaultValue="start"
+                 onChange={(value) => setJustify(value)}
+                 label="Justify Footer"
+                 style={{width: '15rem'}}
+                 required={true}>
+        <option value="start">start</option>
+        <option value="center">center</option>
+        <option value="end">end</option>
+      </TextField>
     </div>
 
     <PopConfirm body="Are you sure to delete?" justifyFooter={justifyFooter}>

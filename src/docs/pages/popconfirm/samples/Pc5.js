@@ -1,24 +1,24 @@
 import React, {useState} from "react";
-import {Button, PopConfirm, Select} from 'react-windy-ui';
+import {Button, PopConfirm, TextField} from 'react-windy-ui';
 
 export default function Pc5() {
   const [position, setPosition] = useState("topLeft");
 
   return <>
     <div className="doc doc-row">
-      <span style={{
-        marginRight: '1rem',
-        fontWeight: '600'
-      }}>Position:</span>
-
-      <Select defaultValue="topRight"
-              onSelect={(value) => setPosition(value)}>
-        <Select.Option value="topRight">TopRight</Select.Option>
-        <Select.Option value="topLeft">TopLeft</Select.Option>
-        <Select.Option value="top">Top</Select.Option>
-        <Select.Option value="right">Right</Select.Option>
-        <Select.Option value="bottom">Bottom</Select.Option>
-      </Select>
+      <TextField select={true}
+                 size="small"
+                 defaultValue="start"
+                 onChange={(value) => setPosition(value)}
+                 label="Position"
+                 style={{width: '15rem'}}
+                 required={true}>
+        <option value="topRight">topRight</option>
+        <option value="topLeft">topLeft</option>
+        <option value="top">top</option>
+        <option value="right">right</option>
+        <option value="bottom">bottom</option>
+      </TextField>
     </div>
 
     <PopConfirm body="Are you sure to delete?" position={position}>
