@@ -1,6 +1,6 @@
 import React, {useCallback, useContext, useLayoutEffect, useMemo} from 'react';
 import {loadMdFiles} from './parseMd';
-import {isNil} from '../../components/src/Utils';
+import {isNil} from 'lodash';
 import {compiler} from 'markdown-to-jsx';
 import SamplePanel from './SamplePanel';
 import {StoreContext} from 'react-windy-ui';
@@ -83,20 +83,20 @@ export default function DocPage2(props) {
         if (comp.data.title?.type === Type.text) {
           return <section className="doc markdown" key={comp.key}>
             {compiler(updateEditUrl(comp.data.content[locale],
-                comp.data.title.editUrl), mdOpts)}
+              comp.data.title.editUrl), mdOpts)}
           </section>;
         }
 
         if (comp.data.title?.type === Type.sample) {
           return <SamplePanel
-              key={comp.key}
-              id={comp.key}
-              editUrl={comp.data.title.editUrl}
-              title={comp.data.title[locale]}
-              comp={comp.data.component}
-              code={comp.data.code}
-              desc={comp.data.content[locale]}
-              markdownOptions={mdOpts}/>;
+            key={comp.key}
+            id={comp.key}
+            editUrl={comp.data.title.editUrl}
+            title={comp.data.title[locale]}
+            comp={comp.data.component}
+            code={comp.data.code}
+            desc={comp.data.content[locale]}
+            markdownOptions={mdOpts}/>;
         }
       })
     }

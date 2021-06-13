@@ -1,7 +1,7 @@
 import React from 'react';
 import {Affix, Button} from 'react-windy-ui';
 import DocFrame, {FrameContextConsumer} from "../../../utils/DocFrame";
-import {Space} from "../../../../components/src";
+import {Space} from "react-windy-ui";
 
 export default function Affix2() {
 

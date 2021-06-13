@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 import {Button, ButtonGroup, Progress, Card} from 'react-windy-ui';
-import {IconError, IconOk, IconWarning} from '../../../../components/src';
+import {IconError, IconOk, IconWarning} from 'react-windy-ui';
 
 export default function Progress5() {
   const [value, setValue] = useState(5);

@@ -6,7 +6,7 @@ import pic2 from '../../../style/imgs/pic_p2.jpg';
 import pic3 from '../../../style/imgs/pic_p3.jpg';
 import pic4 from '../../../style/imgs/pic_p4.jpg';
 import pic5 from '../../../style/imgs/pic_p5.jpg';
-import useMediaQuery from "../../../../components/src/media_query/UseMediaQuery";
+import {useMediaQuery} from "react-windy-ui";
 
 export default function Cr2() {
   const [index, setIndex] = useState(0);

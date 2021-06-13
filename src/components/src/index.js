@@ -83,7 +83,8 @@ export {
   IconLock,
   IconEdit,
   IconPwdVisible,
-  IconPwdInvisible
+  IconPwdInvisible,
+  IconArrowDropDown
 } from './Icons';
 
 export {

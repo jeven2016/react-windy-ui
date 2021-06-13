@@ -1,5 +1,5 @@
 import React from 'react';
-import useLazyImport from '../../components/src/common/UseLazyImport';
+import {useLazyImport} from 'react-windy-ui';
 
 /**
  * Reading a particular text form a markdown file

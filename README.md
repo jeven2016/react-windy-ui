@@ -1,96 +1,48 @@
-For documentation, please refer to this link:  http://super666.cn
+## documentation
+For documentation, please refer to this link:  ```http://super666.cn```
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## React Windy UI
+![preview](static/pic.png)
 
 
-### run with pm2
-* install pm2
-```shell
-npm install pm2@latest -g  
-//or
-yarn global add pm2
+## 这个框架的由来
+我们都需要一个框架，却往往又陷入讨厌和贬低这个框架的泥潭里。 为何不自己做一个呢？这样至少可以少一个让自己讨厌的理由，这便是我要做一套UI 框架的初衷。 
+因为讨厌反复去学别的框架，所以自己做一个，也希望有机会被别的人所讨厌， 也许到那个时候也算是一种成功吧。  
+
+最初这个框架取名为Wui， 首字母W是英文单词轮子的首字母。意指这是一个轮子项目，虽然一开始只是抱着尽量去做的想法， 只是没有想到能坚持到现在。
+最初还是2016年启动，那个时候只想做一套基于scss的web皮肤框架，但越到后面 越是发现，走组件化的路子是不可避免的。
+于是借着react的东风，便从2018年启动了react组建化的工作。这么多年， 从最初一个人，坚持原型设计，再到参考和借鉴其他框架，着实费了不少精力和时间。
+但是当这个成果慢慢到收获的时候，一切 都那么充实。不多说了，继续努力，坚持下去，终有收获的那天的。
+
+## How to install
+You can install by npm or yarn:
+```js
+npm install react-windy-ui
+or
+yarn add react-windy-ui
 ```
-*  start the doc application in background
-```shell
-pm2 start --name react-windy-ui npm -- start
 
+## Create a sample project
+* create a project 'my-app' by create-react-app tool
+```js
+yarn create react-app my-app
+# or
+npx create-react-app my-app
 ```
-* check the list of apps
-```shell
-pm2 list
+* install react-windy-ui 
+```js
+npm install
+npm install react-windy-ui
 ```
-* stop the app
-```shell
-pm2 stop <app name>
+
+* modify the App.js 
+```js
+import React from 'react';
+import { Button } from 'react-windy-ui';
+import 'react-windy-ui/dist/wui.css'; #import the default theme file
+const App = () => {
+  return <Button type="primary">Hello</Button>
+};
+export default App;
 ```
-* (Optional) delete the service
-```shell
-pm2 delete <app name>
-```
+* run this project and there should be a button on the page
