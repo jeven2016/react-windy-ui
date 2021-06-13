@@ -1,6 +1,6 @@
 import React from 'react';
 import {Checkbox, IconHome} from 'react-windy-ui';
-import {IconSearch} from '../../../../components/src';
+import {IconSearch} from 'react-windy-ui';
 
 export default function Checkbox3() {
 

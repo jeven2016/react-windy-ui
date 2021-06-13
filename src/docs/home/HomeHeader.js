@@ -1,7 +1,7 @@
 import React, {useCallback, useContext, useState} from 'react';
 import {Affix, Dropdown, IconList, Navbar, Popover} from 'react-windy-ui';
 import {Link} from 'react-router-dom';
-import {StoreContext} from '../../components/src';
+import {StoreContext} from 'react-windy-ui';
 import intl from 'react-intl-universal';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {

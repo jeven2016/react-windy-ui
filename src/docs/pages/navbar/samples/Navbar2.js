@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {Dropdown, Navbar, Toggle} from 'react-windy-ui';
-import {Button, IconList, Tooltip} from '../../../../components/src';
+import {Button, IconList, Tooltip} from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGithub, faTwitter} from '@fortawesome/free-brands-svg-icons';
-import {IconArrowDropDown} from '../../../../components/src/Icons';
+import {IconArrowDropDown} from 'react-windy-ui';
 
 export default function Navbar2() {
   const [bg, setBg] = useState(false);

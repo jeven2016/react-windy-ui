@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Button, Space, Select} from 'react-windy-ui';
-import {Divider} from "../../../../components/src";
+import {Divider} from "react-windy-ui";
 
 export default function Space4() {
   const [align, setAlign] = useState('center');

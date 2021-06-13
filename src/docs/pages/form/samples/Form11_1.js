@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Card, Form, IconClear, Input} from 'react-windy-ui';
-import {IconChecked} from "../../../../components/src";
+import {IconChecked} from "react-windy-ui";
 
 export default function Form7() {
   const {

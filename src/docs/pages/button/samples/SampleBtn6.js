@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, IconList} from 'react-windy-ui';
-import {IconChecked, IconSearch} from '../../../../components/src';
+import {IconChecked, IconSearch} from 'react-windy-ui';
 
 const SampleBtn6 = () => {
   return <>
