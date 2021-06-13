@@ -1,4 +1,4 @@
-## documentation
+## Documentation
 For documentation, please refer to this link:  ```http://super666.cn```
 
 ## React Windy UI
