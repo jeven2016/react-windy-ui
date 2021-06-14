@@ -126,7 +126,7 @@ export default function DocMenu(props) {
         </Link>
       </Menu.Item>
     </Menu.SubMenu>
-    <Menu.SubMenu header="信息" id="info">
+    <Menu.SubMenu header="信息提示" id="info">
       <Menu.Item id="badge">
         <Link to={`${url}/badge`}>
           标记 Badge
@@ -154,6 +154,11 @@ export default function DocMenu(props) {
       </Menu.Item>
     </Menu.SubMenu>
     <Menu.SubMenu header="数据展示" id="data">
+      <Menu.Item id="avatar">
+        <Link to={`${url}/avatar`}>
+          头像 Avatar
+        </Link>
+      </Menu.Item>
       <Menu.Item id="navbar">
         <Link to={`${url}/navbar`}>
           导航条 Navbar

@@ -35,6 +35,7 @@ Enhance:
 - select list supports virtual list feature for big data set (virtual-list)
 - change ok to success
 - improve AlignItemsType and JustifyContentType
+- 弹出菜单，重新定位，当超出可视窗口; 宽度调整到不超出窗口的长度
 
 Doc:
 - Add new sample for Space's block attribute

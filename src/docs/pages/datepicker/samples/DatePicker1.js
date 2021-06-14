@@ -8,10 +8,10 @@ export default function DatePicker1() {
   };
 
   return <>
-    <div className="doc doc-row">
+    <div className="doc doc-row space">
       <DatePicker onChange={change}/>
     </div>
-    <div className="doc doc-row">
+    <div className="doc doc-row space">
       <DatePicker defaultValue="2018-10-11" onChange={change}/>
     </div>
   </>;

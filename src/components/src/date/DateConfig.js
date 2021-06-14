@@ -4,7 +4,7 @@ import Button from '../button';
 import dayjs from 'dayjs';
 
 export const DataConfig = {
-  columnCount: 7 * 6,
+  columnCount: 7 * 5,
   format: {
     year: 'YYYY',
     month: 'YYYY-MM',

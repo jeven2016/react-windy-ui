@@ -42,6 +42,7 @@ import {QuickManuContext} from '../utils/DocUtils';
 import SpaceIndex from "../pages/space/SpaceIndex";
 import TextFieldIndex from "../pages/text_field/TextFieldIndex";
 import StartIndex from "../pages/start/StartIndex";
+import AvatarIndex from "../pages/avatar/AvatarIndex";
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -212,6 +213,7 @@ function DocCenter(props) {
                 <RouteLoader route={Route} path={`${url}/start`}>
                   <StartIndex/>
                 </RouteLoader>
+                <RouteLoader route={Route} path={`${url}/avatar`} render={() => <AvatarIndex/>}/>
                 <RouteLoader route={Route} path={`${url}/`}>
                   <StartIndex/>
                 </RouteLoader>
