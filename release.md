@@ -3,7 +3,7 @@
 * Tree: async loading of tree items
 * refactor useInternalState hook
 
-### 0.5.0
+### 0.5.2
 * Toggle: support form's defaultValue, other components need to double check as well
 * Ripple: fix a ripple issue of setTimeout
 * Affix: unable to fix bottom
