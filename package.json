@@ -4,10 +4,11 @@
   "scripts": {
     "clean": "lerna clean",
     "bootstrap": "lerna bootstrap --hoist",
-    "start": "lerna --scope docs run start",
+    "start": "yarn run build:wui && lerna --scope docs run start",
     "build:docs": "lerna --scope docs run build",
-    "build:cmp": "lerna --scope react-windy-ui run build",
-    "publish": "lerna publish --skip-git --force-publish react-windy-ui"
+    "build:cmp": "yarn run build:wui && lerna --scope react-windy-ui run build && mv packages/components/wui.css packages/components/dist",
+    "build:wui": "lerna --scope wui run buildRwui && cp packages/Wui/dist/default/wui-modern-0.5.3.min.css packages/components/wui.css",
+    "publish": "cd packages/components && npm publish"
   },
   "workspaces": [
     "packages/*"
