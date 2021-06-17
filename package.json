@@ -3,7 +3,6 @@
   "private": true,
   "scripts": {
     "clean": "lerna clean",
-    "bootstrap": "lerna bootstrap --hoist",
     "start": "yarn run build:wui && lerna --scope docs run start",
     "build:docs": "lerna --scope docs run build",
     "build:cmp": "yarn run build:wui && lerna --scope react-windy-ui run build && mv packages/components/wui.css packages/components/dist",
