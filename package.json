@@ -6,7 +6,7 @@
     "start": "yarn run build:wui && lerna --scope docs run start",
     "build:docs": "lerna --scope docs run build",
     "build:cmp": "yarn run build:wui && lerna --scope react-windy-ui run build && mv packages/components/wui.css packages/components/dist",
-    "build:wui": "lerna --scope wui run buildRwui && cp packages/Wui/dist/default/wui-modern-0.5.3.min.css packages/components/wui.css",
+    "build:wui": "lerna --scope wui run buildRwui && cp packages/Wui/dist/default/*.min.css packages/components/wui.css",
     "build:theme": "lerna --scope wui run buildRwuiThemes",
     "publish": "cd packages/components && npm publish"
   },
