@@ -5,10 +5,10 @@ import img from "../../../style/imgs/girl.jpg";
 export default function Avatar1() {
   return <Space>
     <Avatar>B</Avatar>
-    <Avatar extraClassName="bg-color-primary">B</Avatar>
+    <Avatar hasBox={false} extraClassName="bg-color-primary">B</Avatar>
     <Avatar style={{background: '#49b847'}}>B</Avatar>
     <Avatar src={img}/>
-    <Avatar><IconAccount/></Avatar>
+    <Avatar hasBox={false}><IconAccount/></Avatar>
   </Space>;
 
 }

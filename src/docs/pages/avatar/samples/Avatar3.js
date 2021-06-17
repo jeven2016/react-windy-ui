@@ -10,7 +10,7 @@ export default function Avatar3() {
                  size="small"
                  defaultValue="circle"
                  onChange={(value) => setShape(value)}
-                 label="Size"
+                 label="Shape"
                  style={{width: '15rem'}}>
         <option value="circle">circle</option>
         <option value="square">square</option>

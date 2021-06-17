@@ -73,12 +73,6 @@ export default function HomeContent() {
             </Button>
           </div>
           <div className="line">
-            <span> {intl.get('global.home.current.release')}</span>
-            <Badge type="tag" color="error" style={{marginLeft: '1rem'}}>
-              {intl.get('global.home.current.release.version')}
-            </Badge>
-          </div>
-          <div className="line">
             <Row>
               <Col xs={12} sm={6} smOffset={3}>
                 <Row>

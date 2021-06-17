@@ -1,13 +1,14 @@
 ---   
-order: 2
+order: 5
 type: sample  
-zh_CN: 简单示例 5
-en_US: Simple Sample
+zh_CN: 分组
+en_US: Group
+onlyVisible: false
 editUrl: $BASE/docs/pages/avatar/md/avatar5.md
 ---      
 
 +++ zh_CN   
-
+通过<Code>max</Code>指定分组最多显示的头像数，剩下的会被隐藏。
 
 +++ en_US   
 
