@@ -27,7 +27,6 @@ const Loading = () => {
 
 export default function DocHome() {
   const [lang, setLang] = useState({initDone: false, currentLocale: 'zh_CN'});
-  console.log("change");
   const [store] = useState(() =>
       initStore('init'),
   );
