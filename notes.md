@@ -1,7 +1,4 @@
-### Change version
-```js
-lenar version versionString 
-```
+
 ## Start Documentation
 ```
  yarn start
@@ -9,6 +6,10 @@ lenar version versionString
 
 ## Publish a new version to NPM
 ```
+ crate branch in wui and root directory 
+ 
+ ensure all changes to be committed before changing version 
+ 
  lenar version newVersion
  
  yarn run build:cmp
@@ -18,7 +19,7 @@ lenar version versionString
  yarn run publish
 ```
 
-## Build a theme file in css format
+## Build a css theme file
 ```js
 yarn run build:theme 
 
