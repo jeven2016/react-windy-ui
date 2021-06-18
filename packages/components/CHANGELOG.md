@@ -1,7 +1,11 @@
-### 0.5.2 - 0.5.6
+### 0.5.1 - 0.5.6
 fix bugs for new project structure
+* Avatar: fix a issue of group that the margin-left doesn't take effect
+* DatePicker: remove the store implementation
+* Card: bug fix of 'rise' animation
 
-### 0.5.2
+
+### 0.5.0
 * Toggle: support form's defaultValue, other components need to double check as well
 * Ripple: fix a ripple issue of setTimeout
 * Affix: unable to fix bottom

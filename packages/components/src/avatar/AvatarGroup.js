@@ -52,7 +52,7 @@ const AvatarGroup = React.forwardRef((props, ref) => {
       end: max
     }), extraElem] : children
   }, [chdArray, children, displayMore, max, extraElem, sliceElems]);
-  const clsName = clsx(extraClassName, className, 'left');
+  const clsName = clsx(extraClassName, className, 'align-left');
 
   return <div className={clsName} ref={ref} {...rest}>
     {chd}

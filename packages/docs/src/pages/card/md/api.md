@@ -33,6 +33,7 @@
 | extraClassName | 额外添加的样式名称 | string | - |  |
 | block | 将宽度设置为100%的行宽 | boolean | false |  |
 | autoScale | 是否可以自动缩放 | boolean | false |  |
+| rise | 是否显示突起的动画效果 | boolean | false | rise和autoScale只能选择一个设置为true  |
 | hasBorder | 是否有边框 | boolean | false |  |
 | hasBox | 是否显示阴影 | boolean | true |  |
 | hasWidth | 是否有一个默认的宽度 | boolean | true |  |

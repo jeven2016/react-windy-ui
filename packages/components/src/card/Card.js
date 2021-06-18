@@ -14,6 +14,7 @@ const Card = React.forwardRef(
       block = false, autoScale = false,
       hasBorder = false, hasBox = true,
       hasWidth = true,
+      rise = false,
       ...otherProps
     } = props;
     return useElement({...otherProps}, ref, className,
@@ -23,6 +24,7 @@ const Card = React.forwardRef(
         'global-with-border': hasBorder,
         'global-with-box': hasBox,
         scale: autoScale,
+        rise
       });
   });
 

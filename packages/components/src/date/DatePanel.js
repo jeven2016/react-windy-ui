@@ -5,10 +5,10 @@ import YearRangesPanel from './YearRangesPanel';
 import MonthsPanel from './MonthsPanel';
 import DayPanel from './DayPanel';
 
-export default function YearBody(props) {
+export default function DatePanel(props) {
   const {type} = props;
   const [panelType, setPanelType] = useState(type);
-console.log('type='+panelType)
+
   return <>
     {panelType === PickerPanel.year &&
     <YearsPanel setPanelType={setPanelType}/>}

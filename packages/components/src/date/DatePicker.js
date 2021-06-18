@@ -10,7 +10,7 @@ import DateInput from './DateInput';
 import {getFormatter, PickerPanel, PopupType} from './DateUtils';
 import Modal from '../modal';
 import {DateContext} from '../common/Context';
-import YearBody from './YearBody';
+import DatePanel from './DatePanel';
 
 var isoWeek = require('dayjs/plugin/isoWeek');
 var customParseFormat = require('dayjs/plugin/customParseFormat');
@@ -144,7 +144,7 @@ const DatePicker = React.forwardRef((props, ref) => {
   }, []);
 
   const popupBody = useMemo(() => {
-    return <YearBody type={type}/>;
+    return <DatePanel type={type}/>;
   }, [type]);
 
   let pickerBody = null;

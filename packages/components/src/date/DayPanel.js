@@ -109,7 +109,7 @@ export default function DayPanel(props) {
     setPanelType(PickerPanel.month);
   }, [setPanelType]);
 
-  return <Card extraClassName={dataPickerClsName}>
+  return <Card extraClassName={dataPickerClsName} hasWidth={false}>
     <DateTitle date={date} setPanelType={setPanelType}/>
     <Card.Row>
       <div className="dp-body">
