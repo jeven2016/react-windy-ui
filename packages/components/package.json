@@ -23,6 +23,7 @@
   "homepage": "https://github.com/jeven2016/react-windy-ui",
   "files": [
     "CHANGELOG.md",
+    "readme.md",
     "dist",
     "index.js"
   ],
