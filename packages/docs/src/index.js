@@ -5,7 +5,7 @@ import 'core-js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
-import 'react-windy-ui/wui.css';
+import 'react-windy-ui/dist/wui.css';
 import './style/doc.scss';
 import DocHome from './DocHome';
 import {HashRouter as Router} from 'react-router-dom';
