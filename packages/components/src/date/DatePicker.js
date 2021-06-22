@@ -1,16 +1,17 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {DataConfig} from './DateConfig';
 import Popup from '../popup/Popup';
 import {PopupCtrlType} from '../common/Constants';
 import dayjs from 'dayjs';
 import useInternalState from '../common/useInternalState';
 import {initStore} from '../common/Store';
-import {isNil, validate} from '../Utils';
+import {isNil, nonNil, validate} from '../Utils';
 import DateInput from './DateInput';
 import {getFormatter, PickerPanel, PopupType} from './DateUtils';
 import Modal from '../modal';
 import {DateContext} from '../common/Context';
 import DatePanel from './DatePanel';
+import useEventCallback from "../common/useEventCallback";
 
 var isoWeek = require('dayjs/plugin/isoWeek');
 var customParseFormat = require('dayjs/plugin/customParseFormat');
@@ -21,7 +22,7 @@ const initData = (temporaryDate, predefinedDate) => {
   return {
     //the initial date to display, it could be the activeDate or
     //a temporary date changed from GUI, this date can be changed in GUI.
-    //But if the activeDate is set the initialDate should be in consistent with it //todo
+    //But while the activeDate is set ,the initialDate should be in consistent with it //todo
     initialDate: {
       year: temporaryDate.year(),
       month: temporaryDate.month(),
@@ -80,38 +81,47 @@ const DatePicker = React.forwardRef((props, ref) => {
 
   const isModalType = realPopupType === PopupType.modal;
 
-  const getDateFormat = useCallback(() => {
+  const dateFormat = useMemo(() => {
     return getFormatter(type);
   }, [type]);
 
   validate(!isNil(defaultValue) && dayjs(defaultValue).isValid(),
-    `the defaultValue '${defaultValue}' should be in valid date format ${getDateFormat()}`,
+    `the defaultValue '${defaultValue}' should be in valid date format.}`,
     isNil(defaultValue));
 
   validate(!isNil(value) && dayjs(value).isValid(),
-    `the value '${value}' should be in valid date format ${getDateFormat()}`,
+    `the value '${value}' should be in valid date format}`,
     isNil(value));
 
-  const [date, set, customized] = useInternalState({
+  const [date, setDate, customized] = useInternalState({
     props,
     stateName: 'value',
-    defaultState: !isNil(defaultValue) ? dayjs(defaultValue) : null,
-    state: !isNil(value) ? dayjs(value) : null,
+    defaultState: nonNil(defaultValue) ? dayjs(defaultValue) : null,
+    state: nonNil(value) ? dayjs(value) : null,
   });
 
-  const temporaryDate = date || dayjs();
+  //use temp date if no date is specified
+  const [tempDate, setTempDate] = useState(date || dayjs());
+
+  const updateDate = useCallback((newDate) => {
+    setDate(newDate);
+    console.log(defaultValue)
+    console.log(date);
+
+    setTempDate(tempDate);
+  }, []);
 
   //init a internal store
   const [store] = useState(() =>
-    initStore(initData(temporaryDate, date)),
+    initStore(initData(date || dayjs(), date)),
   );
 
   //apply the value of customized properties for store
-  useEffect(() => {
-    if (customized) {
-      store.setState({activeDate: date});
-    }
-  }, [customized, date, store]);
+  /*  useEffect(() => {
+      if (customized) {
+        store.setState({tempDate: date});
+      }
+    }, [customized, date, store]);*/
 
   const activePopup = useCallback(
     (active) => {
@@ -138,6 +148,14 @@ const DatePicker = React.forwardRef((props, ref) => {
   const tryShowPopup = useCallback(() => {
     !isPopupActive() && activePopup(true);
   });
+
+  const selectDay = useEventCallback((selectedDate) => {
+    if (autoClose) {
+      activePopup(false);
+    }
+    setDate(selectedDate);
+    onChange(selectedDate.format(dateFormat), selectedDate);
+  })
 
   const popupCtrl = useMemo(() => {
     return <DateInput/>;
@@ -175,9 +193,14 @@ const DatePicker = React.forwardRef((props, ref) => {
   }
 
   return <DateContext.Provider value={{
-    onChange,
+    date,
+    setDate,
+    tempDate,
+    setActiveDate: setTempDate,
+    dateFormat,
+    onChange: selectDay,
+
     autoClose,
-    getDateFormat,
     columnCount,
     hasTitle,
     store,

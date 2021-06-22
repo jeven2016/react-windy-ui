@@ -1,59 +1,32 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, {useCallback, useContext, useState,} from 'react';
 import {IconCalendar, IconClear, Input} from '../index';
-import {isBlank, isNil} from '../Utils';
+import {isBlank, nonNil} from '../Utils';
 import * as dayjs from 'dayjs';
 import {DateContext} from '../common/Context';
 
 const DateInput = React.forwardRef((props, ref) => {
-  const {store, getDateFormat, placeholder, tryShowPopup} = useContext(
-      DateContext);
-  const {attach, detach, getState, setState} = store;
+  const {date, setDate, dateFormat, placeholder, tryShowPopup} = useContext(
+    DateContext);
   const [showClear, setShowClear] = useState(false);
-  const activeDate = getState().activeDate;
+  const [textDate, setTextDate] = useState(() => nonNil(date) ? date.format(dateFormat) : '');
 
-  //used to display the initial input value
-  const stringDate = useMemo(() => {
-    if (!isNil(activeDate)) {
-      return activeDate.format(getDateFormat());
-    }
-    return '';
-  }, [activeDate, getDateFormat]);
-
-  const [textDate, setTextDate] = useState(stringDate);
-
-  useEffect(() => {
-    const listener = ({activeDate}) => {
-      if (!isNil(activeDate)) {
-        setTextDate(activeDate.format(getDateFormat()));
-      }
-    };
-    attach(listener);
-    return () => detach(listener);
-  }, [attach, detach, getDateFormat]);
+  console.log(date)
 
   const change = useCallback((e) => {
-    const value = e.target.value;
-    const date = dayjs(value, getDateFormat());
-    if (date.isValid()) {
-      setState({activeDate: date});
-    }
-    setTextDate(value);
+   /* if (selectedDate.isValid()) {
+      setDate(selectedDate);
+    }*/
+    // setTextDate(e.target.value);
     tryShowPopup();
     // eslint-disable-next-line no-undef
-  }, [getDateFormat, setState, tryShowPopup]);
+  }, [dateFormat, tryShowPopup]);
 
   const handleValue = useCallback((e) => {
-    const date = dayjs(textDate, getDateFormat());
+    const date = dayjs(textDate, dateFormat);
     if (!date.isValid()) {
       setTextDate('');
     }
-  }, [textDate, getDateFormat]);
+  }, [textDate, dateFormat]);
 
   const mouseEnter = useCallback(() => {
     if (!isBlank(textDate)) {

@@ -9,19 +9,17 @@ export default function DatePanel(props) {
   const {type} = props;
   const [panelType, setPanelType] = useState(type);
 
-  return <>
-    {panelType === PickerPanel.year &&
-    <YearsPanel setPanelType={setPanelType}/>}
+  switch (panelType) {
+    case PickerPanel.year:
+      return <YearsPanel setPanelType={setPanelType}/>;
 
-    {panelType === PickerPanel.yearRange &&
-    <YearRangesPanel setPanelType={setPanelType}/>}
+    case PickerPanel.yearRange:
+      return <YearRangesPanel setPanelType={setPanelType}/>;
 
-    {panelType === PickerPanel.month &&
-    <MonthsPanel setPanelType={setPanelType}/>}
+    case PickerPanel.month:
+      return <MonthsPanel setPanelType={setPanelType}/>;
 
-    {
-      panelType === PickerPanel.date &&
-      <DayPanel setPanelType={setPanelType}/>
-    }
-  </>;
+    default :
+      return <DayPanel setPanelType={setPanelType}/>;
+  }
 }

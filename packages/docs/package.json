@@ -7,6 +7,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "concurrently": "^6.2.0",
     "dayjs": "^1.8.34",
     "lz-string": "^1.4.4",
     "markdown-to-jsx": "^6.11.4",

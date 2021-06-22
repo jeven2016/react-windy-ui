@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "clean": "lerna clean",
-    "start": "yarn run build:cmp && lerna --scope docs run start",
+    "start": "concurrently \"yarn run startDocs\" \"yarn run watch:wui\" ",
+    "startDocs": "yarn run build:cmp && lerna --scope docs run start",
     "build:docs": "yarn run build:cmp && lerna --scope docs run build",
     "build:cmp": "yarn run build:wui && lerna --scope react-windy-ui run build && mv packages/components/wui.css packages/components/dist",
     "build:wui": "lerna --scope wui run buildRwui && cp packages/Wui/dist/default/*.min.css packages/components/wui.css",
@@ -34,13 +35,11 @@
     "css-loader": "4.3.0",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
-    "eslint": "^7.11.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-testing-library": "^3.9.2",
     "eslint-webpack-plugin": "^2.1.0",
@@ -82,8 +81,10 @@
   },
   "devDependencies": {
     "copy-and-watch": "^0.1.5",
-    "raw-loader": "^4.0.1",
-    "lerna": "^3.22.1"
+    "eslint": "^7.29.0",
+    "eslint-plugin-react": "^7.24.0",
+    "lerna": "^3.22.1",
+    "raw-loader": "^4.0.1"
   },
   "jest": {
     "roots": [
