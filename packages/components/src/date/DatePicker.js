@@ -107,7 +107,6 @@ const DatePicker = React.forwardRef((props, ref) => {
     setDate(newDate);
     console.log(defaultValue)
     console.log(date);
-
     setTempDate(tempDate);
   }, []);
 
@@ -130,6 +129,7 @@ const DatePicker = React.forwardRef((props, ref) => {
       } else {
         popupRef.current.changeActive(active);
       }
+
     }, [isModalType]);
 
   const isPopupActive = useCallback(
