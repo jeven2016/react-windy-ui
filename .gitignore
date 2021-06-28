@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules
 /.pnp
 .pnp.js
 
@@ -30,3 +30,9 @@ package-lock.json
 /src/components/dist/
 /dist/
 /.gradle/
+/packages/docs/.eslintcache
+/packages/docs/build/
+/packages/components/dist/
+/packages/components/wui.css
+
+*.log
