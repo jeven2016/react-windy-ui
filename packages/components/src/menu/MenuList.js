@@ -50,7 +50,7 @@ export default function MenuList(props) {
       opacity: showPopup ? 1 : 0,
       disp: showPopup ? 1 : 0,
     },
-    config: {clamp: true, mass: 1, tesion: 100, friction: 15},
+    // config: {clamp: true, mass: 1, tesion: 100, friction: 15},
   });
 
   const interpolateOffset = (offset) => {

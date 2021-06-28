@@ -1,42 +1,45 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {DateContext} from '../common/Context';
-import {isNil} from '../Utils';
-import dayjs from 'dayjs';
 import {PickerPanel} from './DateUtils';
 import Card from '../card';
+import dayjs from "dayjs";
 
 export default function DateTitle(props) {
   const {
-    date,
     setPanelType,
     ...otherProps
   } = props;
-  const ctx = useContext(DateContext);
-  if (!ctx.hasTitle) {
+  const {hasTitle, config, date, type} = useContext(DateContext);
+  const currDate = useMemo(() => date || dayjs(), [date]);
+
+
+  let currentDayOfWeek = config.locale.dayOfWeek[currDate.day()];
+  let currentMonth = config.locale.month[currDate.month()];
+
+  const isYearType = type === PickerPanel.year;
+  const isDateType = type === PickerPanel.date;
+  let txtContent = useMemo(() =>
+    <span>{isDateType && currentDayOfWeek + ','} {currentMonth} {isDateType && currDate.date()}
+                  </span>, [currDate, currentDayOfWeek, currentMonth, isDateType]);
+
+  if (!hasTitle) {
     return null;
   }
-  const displayDate = isNil(date) ? dayjs() : date;//display the active date or today
-  let currentDayOfWeek = ctx.config.locale.dayOfWeek[displayDate.day()];
-  let currentMonth = ctx.config.locale.month[displayDate.month()];
-
-  let txtContent = ctx.leftTitle ? <div>
-        <div>{currentDayOfWeek},</div>
-        <div>{currentMonth} {displayDate.date()}</div>
-      </div>
-      : <span>{currentDayOfWeek}, {currentMonth} {displayDate.date()}
-                  </span>;
 
   return <Card.Header extraClassName="date-picker-header">
     <div className="date-picker-title" {...otherProps}>
       <div>
       <span className="year-info"
             onClick={() => setPanelType(PickerPanel.year)}>
-      {displayDate.year()}
+      {currDate.year()}
       </span>
       </div>
-      <div className="detail-info">
-        {txtContent}
-      </div>
+      {
+        !isYearType &&
+        <div className="detail-info">
+          {txtContent}
+        </div>
+      }
     </div>
   </Card.Header>;
 }

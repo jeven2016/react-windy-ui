@@ -36,6 +36,7 @@ Enhance:
 - change ok to success
 - improve AlignItemsType and JustifyContentType
 - 弹出菜单，重新定位，当超出可视窗口; 宽度调整到不超出窗口的长度
+- validate参数校验出错后不整个页面崩溃
 
 Doc:
 - Add new sample for Space's block attribute

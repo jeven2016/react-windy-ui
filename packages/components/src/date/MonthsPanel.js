@@ -1,97 +1,65 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, {useCallback, useContext, useMemo,} from 'react';
 import Card from '../card';
 import DateTitle from './DateTitle';
 import Button from '../button';
-import {IconArrowLeft, IconArrowRight} from '../Icons';
 import {DateContext} from '../common/Context';
-import clsx from 'clsx';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
-import {PickerPanel, usePanel, usePanelHead} from './DateUtils';
-import dayjs from 'dayjs';
-import {isNil} from '../Utils';
+import {getDisplayDate, PickerPanel, useCloseButton, usePanel, usePanelHead} from './DateUtils';
+import {isNil} from "../Utils";
+import useEventCallback from "../common/useEventCallback";
+import Divider from "../divider";
 
 const MonthsPanel = React.forwardRef((props, ref) => {
   const {
+    date,
+    tempDate,
+    setTempDate,
+    type,
+    onChange,
+    config,
     setPanelType,
-  } = props;
+    autoClose,
+    tryClosePopup
+  } = useContext(DateContext);
 
-  const ctx = useContext(DateContext);
-  const {getState, setState, attach, detach} = ctx.store;
-  const currentYear = getState().getValidDate().get('year');
-  const [startYear, setStartYear] = useState(currentYear);
-
-  console.log("updating....")
-  useEffect(() => {
-    const listener = ({activeDate}) => {
-      if (!isNil(activeDate)) {
-        setStartYear(activeDate.year());
-        console.log("setStartYear....")
-      }
-    };
-    attach(listener);
-    return () => detach(listener);
-  }, [attach, detach]);
-
-  const dataPickerClsName = clsx('date-picker', {
-    'left-title': ctx.leftTitle,
-  });
+  const currDate = useMemo(() => getDisplayDate(date, tempDate), [date, tempDate]);
+  const startYear = currDate.year();
+  const currMonth = currDate.month();
 
   const selectMonth = useCallback((month, e) => {
-    const newInitDate = {
-      initialDate: {
-        ...getState().initialDate,
-        month: month,
-      },
-    };
-    if (ctx.type !== PickerPanel.month) {
+    if (type !== PickerPanel.month) {
       setPanelType(PickerPanel.date);
-      setState(newInitDate);
+      setTempDate(pre => ({date: pre.date.month(month), changed: true}));
     } else {
-      const newActiveDate = dayjs().year(getState().initialDate.year).month(
-          month);
-
-      if (!ctx.customizedDate) {
-        setState({
-          activeDate: newActiveDate,
-          ...newInitDate,
-        });
-      }
-      // ctx.tryClosePopup();
-      ctx.onChange &&
-      ctx.onChange(newActiveDate.format(ctx.getDateFormat()), newActiveDate);
+      onChange(currDate.month(month), false, e);
     }
-  }, [ctx, getState, setPanelType, setState]);
+  }, [currDate, onChange, setPanelType, setTempDate, type]);
 
   const checkMonth = useCallback((month) => {
-    console.log("checking startYear")
-    const activeDate = ctx.activeDate;
-    if (isNil(activeDate)) {
-      return false;
-    }
-    return startYear === activeDate.year() && month === activeDate.month();
-  }, [ctx.activeDate, startYear]);
+    const isSameMonth = month === currMonth;
+    return isNil(date) ? isSameMonth : date.year() === currDate.year() && isSameMonth;
+  }, [currDate, currMonth, date]);
+
+  const isGrayBtn = useCallback((month) => {
+    const isActive = checkMonth(month);
+    return !isActive || isNil(date);
+  }, [checkMonth, date]);
 
   const monthCnt = useMemo(() => {
     const rows = [];
 
     let cols = [];
     for (let i = 0; i < 12; i++) {
-      if (i !== 0 && i % 3 === 0) {
+      if (i > 0 && i % 3 === 0) {
         rows.push(<Row key={'row-' + i}>{cols}</Row>);
         cols = [];
       }
       const col = <Col justify="center" key={`col-${i}`}>
-        <Button inverted initOutlineColor type="primary"
+        <Button inverted initOutlineColor type={isGrayBtn(i) ? 'gray' : 'primary'}
                 onClick={(e) => selectMonth(i, e)}
                 active={checkMonth(i)}>
-          {ctx.config.locale.month[i]}
+          {config.locale.month[i]}
         </Button>
       </Col>;
       cols.push(col);
@@ -101,50 +69,45 @@ const MonthsPanel = React.forwardRef((props, ref) => {
       }
     }
     return rows;
-  }, [checkMonth, ctx.config.locale.month, selectMonth]);
+  }, [checkMonth, config.locale.month, isGrayBtn, selectMonth]);
 
-  const setPreYear = useCallback((type) => {
-    const preInitDate = getState().initialDate;
-    const preYear = preInitDate.year - 1;
-    setState({initialDate: {...preInitDate, year: preYear}});
-    setStartYear(preYear);
-  }, [getState, setState]);
+  console.log(monthCnt)
 
-  const setNextYear = useCallback(() => {
-    const preInitDate = getState().initialDate;
-    const nextYear = preInitDate.year + 1;
-    setState({initialDate: {...preInitDate, year: nextYear}});
-    setStartYear(nextYear);
-  }, [getState, setState]);
+  const changeYear = useEventCallback(() => {
+    setPanelType(PickerPanel.year);
+  });
+
+  const closeBtn = useCloseButton(autoClose, tryClosePopup, config);
 
   return <>
-    <Card extraClassName={dataPickerClsName}>
-      <DateTitle date={getState().activeDate} setPanelType={setPanelType}/>
+    <Card extraClassName='date-picker' hasWidth={false}>
+      <DateTitle setPanelType={setPanelType}/>
       <Card.Row>
         <div className="dp-body">
           <div className="date-picker-info">
-          <span className="previous">
-              <Button size="small" inverted circle onClick={setPreYear}>
-               <IconArrowLeft/>
-              </Button>
-          </span>
+            <span className="previous"/>
             <span className="content">
              <span className="year-range">
-               {usePanelHead(startYear)}
+               {usePanelHead(startYear, changeYear)}
              </span>
            </span>
-            <span className="next">
-              <Button size="small" inverted circle onClick={setNextYear}>
-                <IconArrowRight/>
-              </Button>
-          </span>
+            <span className="next"/>
           </div>
           {usePanel(monthCnt)}
         </div>
       </Card.Row>
-      <Card.Row>
-
-      </Card.Row>
+      {
+        !autoClose && <>
+          <Divider/>
+          <Card.Footer extraClassName="date-picker-footer">
+            <div className="left">
+            </div>
+            <div className="right">
+              {closeBtn}
+            </div>
+          </Card.Footer>
+        </>
+      }
     </Card>
   </>;
 });

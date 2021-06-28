@@ -64,7 +64,7 @@ const Modal = React.forwardRef((props, ref) => {
   const modalType = isFullWindow ? 'primary full-window' : type;
   const clsName = clsx(extraClassName, className,
     {
-      center: center && type !== ModalType.simple,
+      center: center,
       'with-width': !isFullWindow && hasDefaultWidth,
       [modalType]: modalType,
       [ModalSizeStyle[size]]: !isFullWindow && ModalSizeStyle[size],
@@ -106,10 +106,10 @@ const Modal = React.forwardRef((props, ref) => {
     ...style,
     opacity,
     transform: interpolate([
-      xyz.interpolate((x, y, z) => `translate3d(${x}, ${y},${z})`),
-      scale.interpolate(scale => `scale(${scale})`)
+      xyz.to((x, y, z) => `translate3d(${x}, ${y},${z})`),
+      scale.to(scale => `scale(${scale})`)
     ], (t, scale) => `${t ? t : ""} ${scale ? scale : ""}`),
-    display: disp.interpolate(disp => disp === 0 ? 'none' : 'initial')
+    display: disp.to(disp => disp === 0 ? 'none' : 'initial')
   };
 
   return <ModalContext.Provider value={{

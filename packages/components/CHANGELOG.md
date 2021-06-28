@@ -1,9 +1,13 @@
-### 0.5.1 - 0.5.6
+### 0.5.1 - 0.5.10
 fix bugs for new project structure
 * Avatar: fix a issue of group that the margin-left doesn't take effect
 * DatePicker: remove the store implementation
 * Card: bug fix of 'rise' animation
-
+* Icons: remove the width and height properties of svg
+* Function validation: log the error via console.error() method instead of throwing an error
+* Modal: update the top property for simple modal
+* DatePicker: remove the animation of head and body
+* react-spring: upgrade from v8 to v9
 
 ### 0.5.0
 * Toggle: support form's defaultValue, other components need to double check as well

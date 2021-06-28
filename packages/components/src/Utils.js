@@ -216,7 +216,8 @@ export const validate = (condition, message, ignore) => {
     return;
   }
   if (!condition) {
-    throw new Error(message);
+    // throw new Error(message);
+    console && console.error(message);
   }
 };
 

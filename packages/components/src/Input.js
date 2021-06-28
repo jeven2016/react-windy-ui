@@ -109,8 +109,8 @@ const IconInput = React.forwardRef((props, ref) => {
 
   const restIcons = useCallback(() => {
     return React.Children.map(rightIcons,
-      node => <span className="icon-column right">{node}</span>);
-  }, [rightIcons]);
+      node => <span className="icon-column right" unselectable="on" {...iconProps}>{node}</span>);
+  }, [iconProps, rightIcons]);
 
   return <span className={clsName} {...rootProps} ref={rootRef}>
     {leftIcon && restIcons()}

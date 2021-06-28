@@ -1,57 +1,24 @@
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {DataConfig} from './DateConfig';
 import Popup from '../popup/Popup';
 import {PopupCtrlType} from '../common/Constants';
 import dayjs from 'dayjs';
 import useInternalState from '../common/useInternalState';
-import {initStore} from '../common/Store';
-import {isNil, nonNil, validate} from '../Utils';
+import {isBlank, nonNil, validate} from '../Utils';
 import DateInput from './DateInput';
-import {getFormatter, PickerPanel, PopupType} from './DateUtils';
+import {convertDate, getFormatter, PickerPanel, PopupType} from './DateUtils';
 import Modal from '../modal';
 import {DateContext} from '../common/Context';
-import DatePanel from './DatePanel';
 import useEventCallback from "../common/useEventCallback";
+import YearsPanel from "./YearsPanel";
+import YearRangesPanel from "./YearRangesPanel";
+import MonthsPanel from "./MonthsPanel";
+import DayPanel from "./DayPanel";
 
 var isoWeek = require('dayjs/plugin/isoWeek');
 var customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(isoWeek);
 dayjs.extend(customParseFormat);
-
-const initData = (temporaryDate, predefinedDate) => {
-  return {
-    //the initial date to display, it could be the activeDate or
-    //a temporary date changed from GUI, this date can be changed in GUI.
-    //But while the activeDate is set ,the initialDate should be in consistent with it //todo
-    initialDate: {
-      year: temporaryDate.year(),
-      month: temporaryDate.month(),
-      date: temporaryDate.date(),
-    },
-
-    //explicitly set by value or defaultValue parameter
-    activeDate: predefinedDate,
-
-    isInitialDate: function () {
-      return isNil(this.activeDate);
-    },
-
-    //get current valid date
-    getValidDate: function () {
-      return dayjs().year(this.initialDate.year).month(
-        this.initialDate.month).date(this.initialDate.date);
-    },
-
-    getValidStringDate: function () {
-      const validDate = this.getValidDate();
-      return {
-        year: validDate.year(),
-        month: validDate.month(),
-        date: validDate.date(),
-      };
-    },
-  };
-};
 
 const DatePicker = React.forwardRef((props, ref) => {
   const {
@@ -61,7 +28,7 @@ const DatePicker = React.forwardRef((props, ref) => {
     value,
     leftTitle = false,
     autoClose = true,
-    placeholder = 'Year-Month-Day',
+    placeholder,
     position = 'bottomLeft',
     onChange,
     onClose,
@@ -72,55 +39,45 @@ const DatePicker = React.forwardRef((props, ref) => {
     popupType = PopupType.popup,
     type = PickerPanel.date,
     clearable = true,
+    minYear = 1000,
 
     ...otherProps
   } = props;
   const popupRef = useRef(null);
   const [activeModal, setActiveModal] = useState(false);
-  const [realPopupType, setRealPopupType] = useState(popupType);
-
-  const isModalType = realPopupType === PopupType.modal;
+  const [panelType, setPanelType] = useState(null);
+  const isModalType = popupType === PopupType.modal;
+  const realPanelType = panelType || type;
 
   const dateFormat = useMemo(() => {
     return getFormatter(type);
   }, [type]);
+  const defaultDate = convertDate(defaultValue, dateFormat);
+  const realDate = convertDate(value, dateFormat);
 
-  validate(!isNil(defaultValue) && dayjs(defaultValue).isValid(),
-    `the defaultValue '${defaultValue}' should be in valid date format.}`,
-    isNil(defaultValue));
+  useEffect(() => {
+    //value can be blank
+    validate(nonNil(defaultDate), `the defaultValue '${defaultValue}' should be in valid date format.}`,
+      isBlank(defaultValue));
 
-  validate(!isNil(value) && dayjs(value).isValid(),
-    `the value '${value}' should be in valid date format}`,
-    isNil(value));
+    validate(nonNil(realDate), `the value '${value}' should be in valid date format}`, isBlank(value));
+
+    nonNil(defaultDate) && !isBlank(defaultValue)
+    && validate(defaultDate.year() >= minYear, `The year should be greater than ${minYear}`);
+
+    nonNil(realDate) && !isBlank(value)
+    && validate(realDate.year() >= minYear, `The year should be greater than ${minYear}`);
+  }, [dateFormat, defaultDate, defaultValue, minYear, realDate, value]);
 
   const [date, setDate, customized] = useInternalState({
     props,
     stateName: 'value',
-    defaultState: nonNil(defaultValue) ? dayjs(defaultValue) : null,
-    state: nonNil(value) ? dayjs(value) : null,
+    defaultState: defaultDate,
+    state: realDate
   });
 
   //use temp date if no date is specified
-  const [tempDate, setTempDate] = useState(date || dayjs());
-
-  const updateDate = useCallback((newDate) => {
-    setDate(newDate);
-    console.log(defaultValue)
-    console.log(date);
-    setTempDate(tempDate);
-  }, []);
-
-  //init a internal store
-  const [store] = useState(() =>
-    initStore(initData(date || dayjs(), date)),
-  );
-
-  //apply the value of customized properties for store
-  /*  useEffect(() => {
-      if (customized) {
-        store.setState({tempDate: date});
-      }
-    }, [customized, date, store]);*/
+  const [tempDate, setTempDate] = useState({date: date || dayjs(), changed: false});
 
   const activePopup = useCallback(
     (active) => {
@@ -138,39 +95,63 @@ const DatePicker = React.forwardRef((props, ref) => {
     }, [activeModal, isModalType]);
 
   const tryClosePopup = useCallback(() => {
-    if (!autoClose) {
-      return;
-    }
-
     isPopupActive() && activePopup(false);
-  });
+  }, [activePopup, isPopupActive]);
 
   const tryShowPopup = useCallback(() => {
     !isPopupActive() && activePopup(true);
-  });
+  }, [activePopup, isPopupActive]);
 
-  const selectDay = useEventCallback((selectedDate) => {
-    if (autoClose) {
+  const selectDay = useEventCallback((selectedDate, showPopup = false, e) => {
+    setDate(selectedDate);
+
+    //reset the following properties
+    setTempDate({date: dayjs(), changed: false});
+    setPanelType(null);
+
+    const stringDate = selectedDate ? selectedDate.format(dateFormat) : '';
+    if (autoClose && !showPopup) {
       activePopup(false);
     }
-    setDate(selectedDate);
-    onChange(selectedDate.format(dateFormat), selectedDate);
-  })
+    onChange && onChange(stringDate, selectedDate, e);
+  });
+
+  // handler for popup is closing
+  const handleClose = useCallback((active) => {
+    //if popup is closing and the tempDate hasn't been reset
+    if (!active && tempDate.changed) {
+      setTempDate(pre => ({...pre, changed: false}));
+    }
+
+    !active && nonNil(panelType) && setPanelType(null);
+  }, [panelType, tempDate.changed]);
 
   const popupCtrl = useMemo(() => {
     return <DateInput/>;
   }, []);
 
   const popupBody = useMemo(() => {
-    return <DatePanel type={type}/>;
-  }, [type]);
+    switch (realPanelType) {
+      case PickerPanel.year:
+        return <YearsPanel/>;
 
-  let pickerBody = null;
-  if (realPopupType === PopupType.popup) {
+      case PickerPanel.yearRange:
+        return <YearRangesPanel/>;
+
+      case PickerPanel.month:
+        return <MonthsPanel/>;
+
+      default :
+        return <DayPanel/>;
+    }
+  }, [realPanelType]);
+
+  let pickerBody;
+  if (popupType === PopupType.popup) {
     pickerBody = <Popup
       ref={popupRef}
+      onChange={handleClose}
       {...otherProps}
-      // offset={offset}
       activeBy={PopupCtrlType.click}
       position={position}
       autoClose={false}
@@ -183,8 +164,11 @@ const DatePicker = React.forwardRef((props, ref) => {
   } else {
     pickerBody = <>
       {popupCtrl}
-      <Modal type="simple" active={activeModal} hasDefaultWidth={false}
-             onCancel={() => activePopup(false)}>
+      <Modal type="simple" center active={activeModal} hasDefaultWidth={false}
+             onCancel={() => {
+               handleClose(false);
+               activePopup(false);
+             }}>
         <Modal.Body>
           {popupBody}
         </Modal.Body>
@@ -192,20 +176,22 @@ const DatePicker = React.forwardRef((props, ref) => {
     </>;
   }
 
+
   return <DateContext.Provider value={{
     date,
-    setDate,
+    // setDate: updateDate,
     tempDate,
-    setActiveDate: setTempDate,
+    setTempDate, //should be removed later
     dateFormat,
     onChange: selectDay,
+    panelType: realPanelType,
+    setPanelType,
 
     autoClose,
     columnCount,
     hasTitle,
-    store,
     config,
-    placeholder,
+    placeholder: placeholder || dateFormat,
     activePopup,
     customizedDate: customized,
     leftTitle,

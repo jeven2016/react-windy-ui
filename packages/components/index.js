@@ -1,4 +1,5 @@
 import DatePicker from './src/date/DatePicker';
+import TimePicker from './src/date/TimePicker';
 import Pagination from './src/Pagination.js';
 //new
 import Button from './src/button/Button';
@@ -95,5 +96,6 @@ export {
   InputGroup,
   Navbar,
   DatePicker,
-  Pagination,
+  TimePicker,
+  Pagination
 };

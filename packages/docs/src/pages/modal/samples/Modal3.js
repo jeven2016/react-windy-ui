@@ -6,6 +6,7 @@ export default function Modal3() {
   const [type, setType] = useState('fullWindow');
 
   const close = () => setActive(false);
+  const modalStyle = type === 'simple' ? {style: {top: '10rem'}} : {};
 
   return <>
     <div className="doc doc-row space">
@@ -19,7 +20,7 @@ export default function Modal3() {
     </div>
     <Button type="primary" onClick={() => setActive(true)}>Open</Button>
 
-    <Modal active={active} type={type} onCancel={close}
+    <Modal active={active} type={type} onCancel={close}  {...modalStyle}
            size="large">
       <Modal.Header>
         Modal Header
