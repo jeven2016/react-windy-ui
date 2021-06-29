@@ -8,7 +8,7 @@ import {filterProps, getTranslateValue, nextPosition, prePosition, TabsContext,}
 import {Direction, EventListener} from '../common/Constants';
 import {getRect, isNil} from '../Utils';
 import TabBar from './TabBar';
-import {Spring} from 'react-spring/renderprops';
+import {animated, Spring} from 'react-spring';
 import NextBtn from './NextBtn';
 import PreBtn from './PreBtn';
 import {useEvent} from '../index';
@@ -20,8 +20,8 @@ import useEventCallback from "../common/useEventCallback";
 const defaultConfig = {
   visiblePre: true,
   visibleNext: true,
-  from: {transform: 'translate3d(0px, 0px, 0px)'},
-  to: {transform: 'translate3d(0px, 0px, 0px)'},
+  from: {transform: [0, 0, 0]},
+  to: {transform: [0, 0, 0]},
 };
 
 const Tabs = React.forwardRef((props, ref) => {
@@ -57,6 +57,7 @@ const Tabs = React.forwardRef((props, ref) => {
   const isTabCard = type === 'card';
 
   const [scrlSpringConfig, setScrlSpringConfig] = useState(defaultConfig);
+
   const childArray = useMemo(() => children ? React.Children.toArray(children) : [], [children]);
   const tabItems = useMemo(() => childArray.filter(chd => chd.type === Items), [childArray]);
   const tabPanels = useMemo(() => childArray.filter(chd => chd.type === Panels), [childArray]);
@@ -125,9 +126,9 @@ const Tabs = React.forwardRef((props, ref) => {
       const item = activeItems[0];
       const itemRect = getRect(item);
 
-      const {to: toStyleValue} = getTranslateValue(isHorizontal, scrlRect,
+      const {to: transformTo} = getTranslateValue(isHorizontal, scrlRect,
         tabCntRect, itemRect);
-      activeConfig = {from: defaultConfig.from, to: {transform: toStyleValue}};
+      activeConfig = {from: defaultConfig.from, to: {transform: transformTo}};
     }
     setScrlSpringConfig({...scrlSpringConfig, ...newState, ...activeConfig});
   });
@@ -154,7 +155,7 @@ const Tabs = React.forwardRef((props, ref) => {
         orientation: 'bottom',
         axis: 'y',
       });
-      translateTo = {transform: `translate3d(0px, ${result.to}px, 0px)`};
+      translateTo = [0, result.to, 0];
     } else {
       result = nextPosition({
         tabCntRect,
@@ -163,14 +164,13 @@ const Tabs = React.forwardRef((props, ref) => {
         orientation: 'right',
         axis: 'x',
       });
-      translateTo = {transform: `translate3d(${result.to}px, 0px, 0px)`};
+      translateTo = [result.to, 0, 0];
     }
 
-    setScrlSpringConfig(
-      {
-        ...scrlSpringConfig,
-        to: translateTo,
-      });
+    setScrlSpringConfig({
+      ...scrlSpringConfig,
+      to: {transform: translateTo},
+    });
   });
 
   const clickPre = useEventCallback(() => {
@@ -187,7 +187,7 @@ const Tabs = React.forwardRef((props, ref) => {
         against: 'height',
         axis: 'y',
       });
-      translateTo = {transform: `translate3d(0px, ${result.to}px, 0px)`};
+      translateTo = [0, result.to, 0];
     } else {
       result = prePosition({
         tabCntRect,
@@ -195,9 +195,9 @@ const Tabs = React.forwardRef((props, ref) => {
         against: 'width',
         axis: 'x',
       });
-      translateTo = {transform: `translate3d(${result.to}px, 0px, 0px)`};
+      translateTo = [result.to, 0, 0];
     }
-    setScrlSpringConfig({...scrlSpringConfig, to: translateTo});
+    setScrlSpringConfig({...scrlSpringConfig, to: {transform: translateTo}});
   });
 
   const tabBarContent = !isSecondaryCard && <TabBar
@@ -217,13 +217,13 @@ const Tabs = React.forwardRef((props, ref) => {
       to={scrlSpringConfig.to}>
       {
         sp =>
-          <div className={`tab-scroll ${direction} ${equalWidth
+          <animated.div className={`tab-scroll ${direction} ${equalWidth
             ? 'equal-width'
             : ''}`} ref={scrollRef}
-               style={filterProps(sp, isHorizontal)}>
+                        style={filterProps(sp, isHorizontal)}>
             {tabItems}
             {tabBarContent}
-          </div>
+          </animated.div>
       }
     </Spring>
     : <div className={`tab-scroll ${direction} ${equalWidth

@@ -82,7 +82,8 @@ const Ripple = React.forwardRef((props, ref) => {
     createRipple({rippleX, rippleY, rippleSize});
   }, [center, createRipple]);
 
-  const transitions = useTransition(rippleArray, null, {
+  const transitions = useTransition(rippleArray, {
+    keys: item => item.key,
     from: {opacity: 0.1, transform: 'scale(0)'},
     enter: {opacity: 0.3, transform: 'scale(1)'},
     leave: {opacity: 0},
@@ -91,29 +92,24 @@ const Ripple = React.forwardRef((props, ref) => {
 
   return <div className='ripple' ref={rippleRef}>
     {
-      transitions.map(({item, props: styleProps}) => {
+      transitions((style, item) => {
         const {
           rippleX,
           key,
           rippleY,
           rippleSize,
         } = item;
-
-        try {
-          return <animated.span
-            className="content"
-            key={key}
-            style={{
-              ...styleProps,
-              background: color,
-              left: rippleX - rippleSize / 2,
-              top: rippleY - rippleSize / 2,
-              width: rippleSize,
-              height: rippleSize,
-            }}/>;
-        } catch (e) {
-          console.log(e)
-        }
+        return <animated.span
+          className="content"
+          key={key}
+          style={{
+            ...style,
+            background: color,
+            left: rippleX - rippleSize / 2,
+            top: rippleY - rippleSize / 2,
+            width: rippleSize,
+            height: rippleSize,
+          }}/>;
       })
 
     }

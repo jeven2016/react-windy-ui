@@ -20,6 +20,7 @@
 | onChange | Drawer显示或关闭触发的回调 | function(active, e) | - |  |
 | hasMask | 是否显示黑色背景 | boolean | true |  |
 | hasAnchor | 是否显示打开Drawer的快捷图标 | boolean | false |  |
+| anchor | 显示的Anchor内容 | react node | <IconList\/> |  |
 | autoClose | 点击背景是否触发自动关闭 | boolean | true |  |
 | position | 显示的位置 | string | left | 可以设置为: <Code>left</Code>, <Code>top</Code>, <Code>right</Code>, <Code>bottom</Code>  |
 | header | header节点 | react node | - |   |

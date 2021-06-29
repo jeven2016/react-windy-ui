@@ -29,6 +29,7 @@ const Drawer = React.forwardRef((props, ref) => {
     onChange,
     hasMask = true,
     hasAnchor = false,
+    anchor = <IconList/>,
     autoClose = true,
     position = Position.left,
     children,
@@ -38,7 +39,7 @@ const Drawer = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   validate(Position.hasOwnProperty(position),
-      `The position '${position}' is not acceptable.`);
+    `The position '${position}' is not acceptable.`);
 
   const dwRef = useRef(null);
   const multiRef = useMultipleRefs(ref, dwRef);
@@ -65,7 +66,8 @@ const Drawer = React.forwardRef((props, ref) => {
     [position]: position,
   });
 
-  const transition = useTransition(active, null, {
+  const transition = useTransition(active, {
+    key: active,
     config: {clamp: true, mass: 1, tesion: 100, friction: 15},
     from: {display: 'none', [position]: '-100%'},
     enter: item => async next => {
@@ -83,7 +85,8 @@ const Drawer = React.forwardRef((props, ref) => {
   }, [onChange]);
 
   const showAnchor = hasAnchor && !active;
-  const anchorTransition = useTransition(!active, null, {
+  const anchorTransition = useTransition(!active, {
+    key: active,
     config: {clamp: true, mass: 1, tesion: 100, friction: 15},
     from: {opacity: 1, transform: 'scale(0.5)'},
     enter: {opacity: 1, transform: 'scale(1)'},
@@ -93,22 +96,21 @@ const Drawer = React.forwardRef((props, ref) => {
   return <>
     {
       showAnchor &&
-      anchorTransition.map(anchorProps => anchorProps.item &&
-          <animated.div key={anchorProps.key} style={anchorProps.props}
-                        className={`mask-anchor ${position}`}
-                        onClick={clickAnchorHandler}>
-            <IconList/>
-          </animated.div>)
+      anchorTransition((tranStyles, item) => item &&
+        <animated.div style={tranStyles}
+                      className={`mask-anchor ${position}`}
+                      onClick={clickAnchorHandler}>
+          {anchor}
+        </animated.div>)
     }
 
     {hasMask && <Mask active={active} onClick={close}/>}
 
     {
-      transition.map((tranProps) => {
-        return tranProps.item && <animated.div className={clsName}
-                                               key={tranProps.key}
-                                               style={{...style, ...tranProps.props}}
-                                               ref={multiRef} {...otherProps}>
+      transition((tranStyles, item) => {
+        return item && <animated.div className={clsName}
+                                     style={{...style, ...tranStyles}}
+                                     ref={multiRef} {...otherProps}>
           <Card>
             {header && <><Card.Header>{header}</Card.Header><Divider/></>}
             <Card.Body>
@@ -117,7 +119,6 @@ const Drawer = React.forwardRef((props, ref) => {
 
             {footer && <><Divider/><Card.Footer>{footer}</Card.Footer></>}
           </Card>
-
         </animated.div>;
       })
     }
@@ -132,6 +133,7 @@ Drawer.propTypes = {
   onChange: PropTypes.func,
   hasMask: PropTypes.bool,
   hasAnchor: PropTypes.bool,
+  anchor: PropTypes.node,
   autoClose: PropTypes.bool,
   position: PropTypes.string,
   header: PropTypes.node,

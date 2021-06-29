@@ -19,9 +19,10 @@ const Mask = React.forwardRef((props, ref) => {
 
   let clsName = clsx(extraClassName, className, {dark});
 
-  //Transition used for mount/unount components, that means the dom node will be
+  //Transition used for mount/unmount components, that means the dom node will be
   //removed & recreated
-  const transition = useTransition(active, null, {
+  const transitions = useTransition(active, {
+    key: active,
     config: config.friction,
     from: {display: 'none', opacity: 0},
     enter: item => async next => {
@@ -36,10 +37,10 @@ const Mask = React.forwardRef((props, ref) => {
 
   return <>
     {
-      transition.map(tranProps => {
-        return tranProps.item &&
-          <animated.div ref={multiRef} className={clsName} key={tranProps.key}
-                        style={tranProps.props}
+      transitions((tranStyles, item) => {
+        return item &&
+          <animated.div ref={multiRef} className={clsName}
+                        style={tranStyles}
                         onClick={onClick} {...otherProps}>
             {children}
           </animated.div>;

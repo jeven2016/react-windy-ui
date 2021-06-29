@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
-import {Spring} from 'react-spring/renderprops';
+import {Spring, animated} from 'react-spring';
 import {
   barAnimationConfig,
   handleProps,
@@ -69,9 +69,8 @@ const TabBar = React.forwardRef((props, ref) => {
 
   return <Spring from={config.from} to={config.to}>
     {springProps =>
-      <div className={barClsName} ref={tabBarRef} {...otherProps}
-           style={handleProps(isTabCard, barPosition,
-             springProps)}/>
+      <animated.div className={barClsName} ref={tabBarRef} {...otherProps}
+                    style={handleProps(isTabCard, barPosition, springProps)}/>
     }
   </Spring>;
 });

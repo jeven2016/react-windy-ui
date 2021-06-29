@@ -263,7 +263,7 @@ export const execute = (handler, timeout) => {
 };
 
 export const invoke = (callback, ...args) => {
-  return !isNil(callback) && (callback)(...args);
+  return nonNil(callback) && (callback)(...args);
 };
 
 export const getRect = (domNode) => {

@@ -1,7 +1,7 @@
 import React, {useCallback, useMemo} from 'react';
 import {isNil, isObject} from '../Utils';
 import clsx from 'clsx';
-import {Spring} from 'react-spring/renderprops';
+import {animated, useSpring} from 'react-spring';
 import PropTypes from 'prop-types';
 import useInternalState from '../common/useInternalState';
 
@@ -88,23 +88,27 @@ const Toggle = React.forwardRef((props, ref) => {
     !isNil(onChange) && onChange(newActive, e);
   }, [disabled, isActive, customized, onChange, setActive]);
 
-  const currentStyle = useMemo(() => {
-    let offset = type === ToggleType.normal ? {
-        leftOffset: 'translate3d(-5%,0,0)',
-        rightOffset: 'translate3d(-95%,0,0)',
-      }
-      : {
-        leftOffset: 'translate3d(0.2rem,-50%,0)',
-        rightOffset: 'translate3d(-1.7rem,-50%,0)',
-      };
+  const isNormal = useMemo(() => type === ToggleType.normal, [type]);
+
+  const unitSetting = useMemo(() =>
+    isNormal ? {x: '%', y: '',} : {x: 'rem', y: '%'}, [isNormal]);
+
+  const toStyle = useMemo(() => {
+    let leftXyz, rightXyz;
+
+    if (isNormal) {
+      leftXyz = [-5, 0, 0];
+      rightXyz = [-95, 0, 0];
+    } else {
+      leftXyz = [0.2, -50, 0];
+      rightXyz = [-1.7, -50, 0];
+    }
 
     return {
       left: isOn ? '100%' : '0%',
-      transform: isOn
-        ? offset.rightOffset
-        : offset.leftOffset,
+      transform: isOn ? rightXyz : leftXyz,
     };
-  }, [isOn, type]);
+  }, [isNormal, isOn]);
 
   const barContent = type === ToggleType.normal ? <span
     className="bar"> {getContent(true)}</span> : null;
@@ -128,8 +132,16 @@ const Toggle = React.forwardRef((props, ref) => {
     disabled,
   });
 
-  return <div className={clsx(extraClassName, className, {block: block})}
-              style={style}>
+  const {left, transform} = useSpring({
+    to: toStyle,
+    config: {clamp: true, mass: 1, tesion: 100, friction: 15,},
+  });
+
+  const getTranslate = useCallback((x, y, z) => `translate3d(${x}${unitSetting.x}, ${y}${unitSetting.y}, ${z})`,
+    [unitSetting.x, unitSetting.y]);
+
+  return <animated.div className={clsx(extraClassName, className, {block: block})}
+                       style={style}>
     <button ref={ref}
             type="button"
             className={buttonClsName}
@@ -138,22 +150,16 @@ const Toggle = React.forwardRef((props, ref) => {
       <span className={clsName}>
         {barContent}
         {infoContent}
-        <Spring
-          from={currentStyle}
-          to={currentStyle}
-          config={{clamp: true, mass: 1, tesion: 100, friction: 15}}
-        >
-          {
-            springProps => (<span className="ball" style={springProps}>
-              {getContent(false)}
-
-            </span>)
-          }
-          </Spring>
+        <animated.span className="ball" style={{
+          left: left,
+          transform: transform.to(getTranslate)
+        }}>
+            {getContent(false)}
+        </animated.span>
       </span>
     </button>
     {normalLabel}
-  </div>;
+  </animated.div>;
 
 });
 

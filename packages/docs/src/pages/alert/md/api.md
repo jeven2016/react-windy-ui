@@ -30,7 +30,7 @@ editUrl: $BASE/docs/pages/alert/md/api.md
 | iconStyle | Alert类型的图标样式 | object | - |  |
 | closeStyle | 关闭图标的样式 | object | - |  |
 | active | 激活显示 | boolean | - | 如果不需要自行控制Alert的显示和关闭，可以不用设置，默认情况下加载后就显示 |
-| animated | 是否有动画效果 | boolean | true |  |
+| hasAnimation | 是否有动画效果 | boolean | true |  |
 
 +++ en_US
 

@@ -15,7 +15,6 @@ const TimePicker = React.forwardRef((props, ref) => {
 
   // Set the drag hook and define component movement based on gesture data
   const bind = useDrag(({down, movement: [mx, my]}) => {
-    console.log("hello")
     setAxis({x: down ? mx : 0, y: down ? my : 0})
   })
 

@@ -82,7 +82,7 @@ Carousel.propTypes = {
   className: ProperTypes.string,
   position: ProperTypes.oneOf(Object.keys(IndicatorPosition)),
   hasIndicators: ProperTypes.bool,
-  indicatorType: Object.keys(IndicatorType), //'circle', 'bar'
+  indicatorType: ProperTypes.oneOf(Object.keys(IndicatorType)), //'circle', 'bar'
   axis: ProperTypes.oneOf(['x', 'x-reverse']), //'x','y', 'x-reverse', 'y-reserve'
   onChange: ProperTypes.func,
   interval: ProperTypes.number,

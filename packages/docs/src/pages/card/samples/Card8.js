@@ -9,10 +9,10 @@ export default function Card8() {
     <Card style={{width: '18rem'}}>
       <Card.Header>
         <Row align="center">
-          <Col col={6}>
-            <div className="flex-adjust align-center text bold color-blue">Title</div>
+          <Col col={6} flexCol={true} justify="start">
+            <span className="text bold color-blue">Title</span>
           </Col>
-          <Col col={6} justify="end" style={{color: '#0ca0ff'}}>
+          <Col col={6} flexCol={true} justify="end" style={{color: '#0ca0ff'}}>
             <Dropdown position="bottomRight" title={<Button inverted color="blue" circle hasBox={false}>
               <FontAwesomeIcon icon={faListUl}/>
             </Button>}>

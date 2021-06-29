@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
 import {createContainer, execute, isNil, isString, nonNil, validate} from './Utils';
 import Alert from './Alert';
-import {Transition} from 'react-spring/renderprops';
+import {to, useTransition} from 'react-spring';
 
 const SizeStyle = {
   small: 'alert-container-width-sm',
@@ -87,7 +87,7 @@ const Notification = (props) => {
       timerMap.current.set(msg.key, timer);
     }
     setQueue(q => [...q, msg]);
-  }, [timerMap, setQueue, removeMsg]);
+  }, [removeMsg]);
 
   if (!msgStore.initialized()) {
     msgStore.attach({add: addMsg});
@@ -115,63 +115,49 @@ const Notification = (props) => {
     };
   }, [onUnmount, position]);
 
-  const animationFrom = useMemo(() => {
-    let x = '0%';//center
 
-    if (positionResult.isLeft) {
-      x = '-100%';
-    }
-    if (positionResult.isRight) {
-      x = '100%';
-    }
-    return {x: x, opacity: '0', scale: positionResult.isCenter ? 0 : 1};
-  }, [positionResult]);
+  const scale = useMemo(() => positionResult.isCenter ? 0 : 1, [positionResult.isCenter]);
 
-  const animationLeave = useMemo(() => {
+  const animation = useMemo(() => {
     let x = '0%';//center
     if (positionResult.isLeft) {
-      x = '-100%';
+      x = '-120%';
     }
     if (positionResult.isRight) {
-      x = '100%';
+      x = '120%';
     }
-    return {x, opacity: 0, scale: positionResult.isCenter ? 0 : 1};
-  }, [positionResult]);
+    return {x, scale, opacity: 0};
+  }, [positionResult.isLeft, positionResult.isRight, scale]);
+
+  const transitions = useTransition(queue, {
+    config: {clamp: true, mass: 1, tesion: 150, friction: 15},
+    keys: item => item.key,
+    from: animation,
+    enter: {x: '0%', scale: 1, opacity: 1},
+    leave: animation,
+    onDestroyed: (item) => item.onClose && item.onClose(item)
+  });
 
   return <div
     className={`alert-container ${sizeClassName} ${PositionType[position]}`}
     ref={cntRef}>
     {
-      //using <Transition> instead of useTransition, since useTransition always
-      //print react worning log regarding memory leak
+      transitions(({x, scale}, item) => {
+        delete item.rect;
+        const {alertProps: {style: alterSty, ...alterOthers}, ...others} = item;
+        const alertStyle = {
+          ...alterSty,
+          // opacity: opacity,
+          transform: to([x, scale], (realX, realScale) => `translate3d(${realX}, 0, 0) scaleY(${realScale})`),
+        };
+        const alertConfig = {...others, ...alterOthers};
+        return <Alert {...alertConfig}
+                      hasAnimation={false}
+                      style={alertStyle}
+                      active={true}
+                      onClose={() => removeMsg(item.key)}/>;
+      })
     }
-    <Transition
-      config={{clamp: true, mass: 1, tesion: 150, friction: 15}}
-      items={queue}
-      keys={item => item.key}
-      from={animationFrom}
-      enter={{x: '0', opacity: '1', scale: 1}}
-      onDestroyed={(item) => {
-        item.onClose && item.onClose(item);
-      }}
-      leave={animationLeave}>
-      {
-        item => tranProps => {
-          delete item.rect;
-          const {alertProps: {style: alterSty, ...alterOthers}, ...others} = item;
-          const alertStyle = {
-            ...alterSty,
-            opacity: tranProps.opacity,
-            transform: `translate3d(${tranProps.x}, 0, 0) scaleY(${tranProps.scale})`,
-          };
-          const alertConfig = {...others, ...alterOthers};
-          return <Alert {...alertConfig}
-                        animated={false}
-                        style={alertStyle}
-                        active={true}
-                        onClose={() => removeMsg(item.key)}/>;
-        }}
-    </Transition>
   </div>;
 
 };

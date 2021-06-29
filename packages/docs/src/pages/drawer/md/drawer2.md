@@ -3,6 +3,7 @@ order: 2
 type: sample
 zh_CN: 显示位置
 en_US: Drawer Position
+onlyVisible: false
 editUrl: $BASE/docs/pages/drawer/md/drawer2.md
 ---
 

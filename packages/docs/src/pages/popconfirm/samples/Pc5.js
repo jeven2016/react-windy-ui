@@ -8,7 +8,7 @@ export default function Pc5() {
     <div className="doc doc-row">
       <TextField select={true}
                  size="small"
-                 defaultValue="start"
+                 defaultValue={position}
                  onChange={(value) => setPosition(value)}
                  label="Position"
                  style={{width: '15rem'}}
