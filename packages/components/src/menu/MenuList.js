@@ -64,10 +64,10 @@ export default function MenuList(props) {
                          onMouseEnter={handleMouseEnter}
                          onMouseLeave={handleMouseLeave}
                          style={{
-                           transform: springProps.offset.interpolate(
+                           transform: springProps.offset.to(
                              interpolateOffset),
                            opacity: springProps.opacity,
-                           display: springProps.disp.interpolate(disp => disp === 0 ? 'none' : 'flex')
+                           display: springProps.disp.to(disp => disp === 0 ? 'none' : 'flex')
                          }}>{content}</animated.div>;
   }
 

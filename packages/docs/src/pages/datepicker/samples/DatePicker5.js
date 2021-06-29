@@ -23,7 +23,7 @@ export default function DatePicker5() {
       <DatePicker onChange={change} type="date" hasTitle={hasTitle} autoClose={autoClose}/>
     </div>
 
-    {/*<TimePicker/>*/}
+    <TimePicker/>
 
   </>;
 }

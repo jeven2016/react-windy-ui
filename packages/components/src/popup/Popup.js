@@ -190,7 +190,7 @@ const Popup = React.forwardRef((props, ref) => {
 
   const mergedProps = {
     ...popupStyle, ...otherProps, ...springProps,
-    display: springProps.disp.interpolate(disp => disp === 0 ? 'none' : 'flex'),
+    display: springProps.disp.to(disp => disp === 0 ? 'none' : 'flex'),
     zIndex: zIndex,
   };
 

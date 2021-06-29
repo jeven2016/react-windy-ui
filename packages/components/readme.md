@@ -1,7 +1,7 @@
-#A UI framework built with Wui sass project and React.
+## A UI framework built with Wui sass project and React.
 
 ## Documentation
-For documentation, please refer to this link:  ```http://super666.cn```
+For documentation, please refer to this link:  ```http://react-windy-ui.super666.cn/```
 
 
 
