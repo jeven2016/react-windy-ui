@@ -8,6 +8,8 @@ fix bugs for new project structure
 * Modal: update the top property for simple modal
 * DatePicker: remove the animation of head and body
 * react-spring: upgrade from v8 to v9
+* Toggle: remove box-shadow property
+* Grid Col: support flex 
 
 ### 0.5.0
 * Toggle: support form's defaultValue, other components need to double check as well

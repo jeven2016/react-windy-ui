@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useMemo} from 'react';
 import {execute, isNil, nonNil, validate} from './Utils';
 import clsx from 'clsx';
 import {IconClear, IconError, IconInfo, IconOk, IconWarning} from './Icons';
-import {Transition} from 'react-spring/renderprops';
+import {animated, useTransition} from 'react-spring';
 import useInternalState from './common/useInternalState';
 import * as PropTypes from 'prop-types';
 import Button from "./button";
@@ -37,7 +37,7 @@ const Alert = React.forwardRef((props, ref) => {
     iconStyle,
     closeStyle,
     active,
-    animated = true,//whether to show / close with animation
+    hasAnimation = true,//whether to show / close with animation
     ...otherProps
   } = props;
   validate(AlertType.hasOwnProperty(type),
@@ -98,8 +98,8 @@ const Alert = React.forwardRef((props, ref) => {
   });
 
   const getContent = useCallback((extraProps) => {
-    return <div className={clsName} {...otherProps} ref={ref}
-                style={{...style, ...extraProps}}>
+    return <animated.div className={clsName} {...otherProps} ref={ref}
+                         style={{...style, ...extraProps}}>
       {iconElem}
 
       <div className="alert-content">
@@ -124,20 +124,19 @@ const Alert = React.forwardRef((props, ref) => {
           </Button>
           : null
       }
-    </div>;
+    </animated.div>;
   }, [body, children, close, closeStyle, clsName, filled, hasCloseIcon, iconElem, otherProps, ref, style, title]);
 
-  return animated ? <Transition
-    items={activeAlert}
-    config={{clamp: true, mass: 1, tesion: 100, friction: 15}}
-    from={{opacity: 0, transform: 'scaleY(0)'}}
-    enter={{opacity: 1, transform: 'scaleY(1)'}}
-    leave={{opacity: 0, transform: 'scaleY(0)'}}>
-    {
-      (show) => show && (springProps => getContent(springProps))
-    }
-  </Transition> : activeAlert && getContent();
+  const transitions = useTransition(activeAlert, {
+    key: activeAlert,
+    from: {opacity: 0, transform: 'scaleY(0)'},
+    enter: {opacity: 1, transform: 'scaleY(1)'},
+    leave: {opacity: 0, transform: 'scaleY(0)'},
+    config: {clamp: true, mass: 1, tesion: 100, friction: 15}
+  });
 
+  return hasAnimation ? transitions((tranStyles, show) => show && getContent(tranStyles))
+    : activeAlert && getContent();
 });
 
 Alert.propTypes = {

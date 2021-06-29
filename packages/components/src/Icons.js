@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import {Spring} from 'react-spring/renderprops';
+import {Spring, animated} from 'react-spring';
 import {validate} from './Utils';
 
 const IconSize = ['large', 'medium', 'small'];
@@ -344,8 +344,7 @@ export const IconRadioChecked = React.forwardRef((props, ref) => {
       from={{number: 0}}
       to={{number: 5}}>
       {
-        springProps =>
-          <circle cx="12" cy="12" r={springProps.number}/>
+        ({number}) => <animated.circle cx="12" cy="12" r={number}/>
       }
     </Spring>
   </svg>;

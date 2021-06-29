@@ -5,7 +5,7 @@ import Slider from './Slider';
 import Content from './Content';
 import Split from './Split';
 import Footer from './Footer';
-import {Spring} from 'react-spring/renderprops';
+import {Spring, animated} from 'react-spring';
 import {isNil} from '../Utils';
 import PropTypes from 'prop-types';
 
@@ -31,22 +31,22 @@ const Layout = React.forwardRef((props, ref) => {
   }
 
   return <Spring
-      from={{
-        [collapseAttribute.attr]: collapse
-            ? collapseAttribute.minValue
-            : collapseAttribute.maxValue,
-      }}
-      to={{
-        [collapseAttribute.attr]: collapse
-            ? collapseAttribute.maxValue
-            : collapseAttribute.minValue,
-      }}
-      config={{clamp: true, mass: 1, tesion: 100, friction: 15}}>
+    from={{
+      [collapseAttribute.attr]: collapse
+        ? collapseAttribute.minValue
+        : collapseAttribute.maxValue,
+    }}
+    to={{
+      [collapseAttribute.attr]: collapse
+        ? collapseAttribute.maxValue
+        : collapseAttribute.minValue,
+    }}
+    config={{clamp: true, mass: 1, tesion: 100, friction: 15}}>
     {
       springProps => {
         const newStyle = {...style, ...springProps};
-        return <div ref={ref} className={clsName}
-                    style={newStyle} {...otherProps}/>;
+        return <animated.div ref={ref} className={clsName}
+                             style={newStyle} {...otherProps}/>;
       }
     }
   </Spring>;

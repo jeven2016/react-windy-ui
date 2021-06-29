@@ -16,7 +16,7 @@ export default function Notification1() {
     </Button>
 
     <Button onClick={() =>
-      Notification.ok({
+      Notification.error({
         title: 'Message',
         body: 'Hello, this is a message.',
         filled: true,

@@ -48,7 +48,9 @@
 | xlOffset | xlOffset尺寸下偏移的列数 | number | - |  |
 | order | 顺序 | number | - | 值越小排列越靠前 |
 | gutter | 指定列在垂直、水平方向的间隔 | object | - | x指水平方向上的间隔(像素)，y指垂直方向上的间隔(像素)。 可在Row上定义，Col上的gutter配置会覆盖Row上配置的值|
-
+| flexCol | 是否转化为flex布局的Col  | boolean | false | 默认为block, 设置为flex布局后，里面的内容会在水平和垂直方位上居中显示  |
+| justify | 指定列下的元素在水平方向的排列方式 | string | center | flexCol为true时生效。值可以是: <Code>start</Code>、<Code>center</Code>、<Code>end</Code>、<Code>around</Code>、<Code>between</Code>、<Code>evenly</Code> |
+| align | 指定列下的元素在垂直方向的排列方式 | string | center | flexCol为true时生效。值可以是: <Code>start</Code>、<Code>center</Code>、<Code>end</Code> |
 
 
 +++ en_US

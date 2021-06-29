@@ -5,7 +5,7 @@ import useEvent from '../common/UseEvent';
 import {EventListener} from '../common/Constants';
 import {updateBodyStyle} from '../Utils';
 import Mask from '../Mask';
-import {animated, config, interpolate, useSpring} from 'react-spring';
+import {animated, config, to, useSpring} from 'react-spring';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import PropTypes from 'prop-types';
 import useEventCallback from "../common/useEventCallback";
@@ -79,7 +79,7 @@ const Modal = React.forwardRef((props, ref) => {
     onCancel && onCancel(e);
   });
 
-  const from = useMemo(() => {
+  const fromStyle = useMemo(() => {
     if (isFullWindow) {
       return createFullWindowStyle(false);
     }
@@ -87,7 +87,7 @@ const Modal = React.forwardRef((props, ref) => {
     return createCenterStyle(false, center);
   }, [center, isFullWindow]);
 
-  const to = useMemo(() => {
+  const toStyle = useMemo(() => {
     if (isFullWindow) {
       return createFullWindowStyle(active);
     }
@@ -98,14 +98,14 @@ const Modal = React.forwardRef((props, ref) => {
 
   const {opacity, xyz, scale, disp} = useSpring({
     config: config.friction,
-    from: from,
-    to: to,
+    from: fromStyle,
+    to: toStyle,
   });
 
   const modalStyle = {
     ...style,
     opacity,
-    transform: interpolate([
+    transform: to([
       xyz.to((x, y, z) => `translate3d(${x}, ${y},${z})`),
       scale.to(scale => `scale(${scale})`)
     ], (t, scale) => `${t ? t : ""} ${scale ? scale : ""}`),

@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useMemo} from 'react';
-import {createColorClsName, isNil, nonNil, preventEvent} from './Utils';
+import {createColorClsName, invoke, isNil, nonNil, preventEvent} from './Utils';
 import {IconRadioChecked, IconRadioUnChecked} from './Icons';
 import PropTypes from 'prop-types';
 import useInternalState from './common/useInternalState';
@@ -68,20 +68,11 @@ const Radio = React.forwardRef((props, ref) => {
     }
     const nextState = !checkState;
     setCheckState(nextState);
-    if (existsGroup) {
-      //call radio group's callback
-      ctx.onChange && ctx.onChange(value, e);
-    } else {
-      onChange && onChange(value, e);
-    }
-  }, [
-    existsGroup,
-    value,
-    onChange,
-    checkState,
-    setCheckState,
-    disabled,
-    ctx]);
+
+    const nextValue = nonNil(value) ? value : nextState;
+    const callback = existsGroup ? ctx.onChange : onChange;
+    invoke(callback, nextValue, e);
+  }, [disabled, ctx, checkState, setCheckState, value, existsGroup, onChange]);
 
   const iconColor = useMemo(() => createColorClsName({
     checkState, checkedColor, uncheckedColor,

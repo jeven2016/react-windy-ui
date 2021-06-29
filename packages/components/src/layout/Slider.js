@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import {Spring} from 'react-spring/renderprops';
+import {animated, Spring} from 'react-spring';
 import {isNil, isNumber} from '../Utils';
 import PropTypes from 'prop-types';
 
@@ -40,12 +40,12 @@ const Slider = React.forwardRef((props, ref) => {
     {
       springProps => {
         const newProps = {...style, ...springProps};
-        return <div ref={ref} className={clsName}
-                    style={newProps} {...otherProps}>
+        return <animated.div ref={ref} className={clsName}
+                             style={newProps} {...otherProps}>
           <div className="slider-inner">
             {children}
           </div>
-        </div>;
+        </animated.div>;
       }
     }
   </Spring>;

@@ -99,7 +99,6 @@ export const mergeChildren = (jsonData, partialData, id) => {
 };
 
 export const parseChildren = (providedJsonData, children, jsonData) => {
-  console.log("parseChildren....")
   var newChildren = providedJsonData ? jsonData : children;
   let root = {
     id: RootId,

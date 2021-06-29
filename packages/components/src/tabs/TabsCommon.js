@@ -107,15 +107,14 @@ export const filterProps = (sty, isHorizontal) => {
   if (!transform) {
     return sty;
   }
-  if (isHorizontal) {
-    transform = transform.substring(0, transform.indexOf(',')) +
-      ', 0px, 0px';
-  } else {
-    //remove unused X
-    transform = 'translate3d(0px, ' +
-      transform.substring(transform.indexOf(',') + 1);
-  }
-  return {...sty, transform: transform, touchAction: 'none'};
+  const translate = isHorizontal ? transform.to((x) => `translate3d(${x}px, 0px, 0px)`) :
+    transform.to((x, y, z) => `translate3d(0px, ${y}px, ${z}px)`);
+
+  return {
+    ...sty,
+    transform: translate,
+    touchAction: 'none'
+  };
 };
 
 export const calcDistance = ({scrlRect, itemRect, tabCntRect, against, begin, end}) => {
@@ -148,7 +147,7 @@ export const getTranslateValue = (
       end: 'right',
     });
 
-    to = `translate3d(${distance}px, 0px, 0px)`;
+    to = [distance, 0, 0];
   } else {
     distance = calcDistance({
       scrlRect,
@@ -158,7 +157,7 @@ export const getTranslateValue = (
       begin: 'top',
       end: 'bottom',
     });
-    to = `translate3d(0px, ${distance}px, 0px)`;
+    to = [0, distance, 0];
   }
   return {distance, to};
 };

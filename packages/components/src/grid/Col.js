@@ -3,6 +3,7 @@ import {inRange, isBlank, isInteger, isNil, nonNil} from '../Utils';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {RowContext} from "../common/Context";
+import {adjustItems, AlignItemsType, JustifyContentType} from "../common/Constants";
 
 const Col = React.forwardRef((props, ref) => {
   const {
@@ -14,6 +15,9 @@ const Col = React.forwardRef((props, ref) => {
     xsOffset, smOffset, mdOffset, lgOffset, xlOffset,
     order,
     style,
+    flexCol = false,
+    justify = 'center',
+    align = 'center',
     ...otherProps
   } = props;
   const {rowGutter} = useContext(RowContext);
@@ -61,8 +65,8 @@ const Col = React.forwardRef((props, ref) => {
   if (isBlank(cls)) {
     cls = 'col';
   }
-
-  let clsName = clsx(extraClassName, className, {
+  const justifyCls = flexCol ? adjustItems(justify, align) : null;
+  let clsName = clsx(extraClassName, className, justifyCls, {
     [cls]: cls,
   });
 
@@ -100,6 +104,9 @@ Col.propTypes = {
   xlOffset: PropTypes.number,
   order: PropTypes.number,
   gutter: PropTypes.shape({x: PropTypes.number, y: PropTypes.number}),
+  flexCol: PropTypes.bool,
+  justify: PropTypes.oneOf(Object.keys(JustifyContentType)),
+  align: PropTypes.oneOf(Object.keys(AlignItemsType)),
 };
 
 export default Col;
