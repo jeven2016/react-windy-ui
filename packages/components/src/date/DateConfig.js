@@ -48,3 +48,9 @@ export const DataConfig = {
     },
   },
 };
+
+export const TimeType = {
+  hour: 'hour',
+  minute: 'minute',
+  second: 'second'
+}
