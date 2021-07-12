@@ -22,8 +22,5 @@ export default function DatePicker5() {
     <div className="doc doc-row space">
       <DatePicker onChange={change} type="date" hasTitle={hasTitle} autoClose={autoClose}/>
     </div>
-
-    <TimePicker/>
-
   </>;
 }

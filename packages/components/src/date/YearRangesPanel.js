@@ -11,6 +11,10 @@ import useEventCallback from "../common/useEventCallback";
 import Divider from "../divider";
 
 const YearRangesPanel = React.forwardRef((props, ref) => {
+  const {
+    hasFooter = true, //internal use
+    ...rest
+  } = props;
   const {date, tempDate, setTempDate, setPanelType, autoClose, tryClosePopup, config} = useContext(DateContext);
   const [startYear, yearRange] = useYearRange(date, tempDate);
 
@@ -59,7 +63,7 @@ const YearRangesPanel = React.forwardRef((props, ref) => {
   const closeBtn = useCloseButton(autoClose, tryClosePopup, config);
 
   return <>
-    <Card extraClassName='date-picker' hasWidth={false}>
+    <Card extraClassName='date-picker' hasWidth={false} hasBox={false} {...rest}>
       <DateTitle setPanelType={setPanelType}/>
       <Card.Row>
         <div className="dp-body">
@@ -84,7 +88,7 @@ const YearRangesPanel = React.forwardRef((props, ref) => {
         </div>
       </Card.Row>
       {
-        !autoClose && <>
+        !autoClose && hasFooter && <>
           <Divider/>
           <Card.Footer extraClassName="date-picker-footer">
             <div className="left">

@@ -33,8 +33,8 @@
   "dependencies": {
     "@hookform/error-message": "^0.0.4",
     "clsx": "^1.0.4",
-    "dayjs": "^1.8.34",
-    "lodash": "^4.17.11",
+    "dayjs": "^1.10.5",
+    "lodash": "^4.17.21",
     "prop-types": "^15.7.2",
     "react-hook-form": "^6.15.5",
     "react-spring": "^9.2.3",

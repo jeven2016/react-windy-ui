@@ -43,6 +43,7 @@ import SpaceIndex from "../pages/space/SpaceIndex";
 import TextFieldIndex from "../pages/text_field/TextFieldIndex";
 import StartIndex from "../pages/start/StartIndex";
 import AvatarIndex from "../pages/avatar/AvatarIndex";
+import TimeIndex from "../pages/time/TimeIndex";
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -214,6 +215,7 @@ function DocCenter(props) {
                   <StartIndex/>
                 </RouteLoader>
                 <RouteLoader route={Route} path={`${url}/avatar`} render={() => <AvatarIndex/>}/>
+                <RouteLoader route={Route} path={`${url}/timepicker`} render={() => <TimeIndex/>}/>
                 <RouteLoader route={Route} path={`${url}/`}>
                   <StartIndex/>
                 </RouteLoader>

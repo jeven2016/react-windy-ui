@@ -4,6 +4,8 @@ export const DataConfig = {
     year: 'YYYY',
     month: 'YYYY-MM',
     date: 'YYYY-MM-DD',
+    dateTime: 'YYYY-MM-DD HH:mm:ss',
+    time: 'HH:mm:ss'
   },
   locale: {
     today: "Today",

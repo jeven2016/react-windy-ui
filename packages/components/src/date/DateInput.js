@@ -1,11 +1,11 @@
 import React, {useCallback, useContext, useMemo, useState,} from 'react';
-import {IconCalendar, IconError, Input} from '../index';
+import {IconError, Input} from '../index';
 import {isBlank, isNil} from '../Utils';
 import {DateContext} from '../common/Context';
 import {convertDate} from "./DateUtils";
 
 const DateInput = React.forwardRef((props, ref) => {
-  const {date, dateFormat, placeholder, onChange, tryShowPopup} = useContext(DateContext);
+  const {date, dateFormat, placeholder, onChange, icon} = useContext(DateContext);
   const [showClear, setShowClear] = useState(false);
   const [textDate, setTextDate] = useState('');
 
@@ -50,7 +50,7 @@ const DateInput = React.forwardRef((props, ref) => {
     }
   }, [onChange, showClear]);
 
-  const icon = useMemo(() => showClear ? <IconError/> : <IconCalendar/>, [showClear]);
+  const realIcon = useMemo(() => showClear ? <IconError/> : icon, [icon, showClear]);
 
   return <Input
     placeholder={placeholder}
@@ -58,7 +58,7 @@ const DateInput = React.forwardRef((props, ref) => {
     rootRef={ref}
     value={inputValue}
     onChange={change}
-    onClick={tryShowPopup}
+    {...props}
     rootProps={{
       onMouseEnter: handleMouseEnter,
       onMouseLeave: handleMouseLeave
@@ -67,7 +67,7 @@ const DateInput = React.forwardRef((props, ref) => {
     iconProps={{
       onClick: clearInput
     }}
-    icon={icon}/>;
+    icon={realIcon}/>;
 });
 
 export default DateInput;

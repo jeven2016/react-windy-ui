@@ -98,6 +98,7 @@ export default function DocPage2(props) {
             desc={comp.data.content[locale]}
             markdownOptions={mdOpts}/>;
         }
+        return null;
       })
     }
   </>;

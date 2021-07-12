@@ -16,5 +16,8 @@ export default function DatePicker1() {
     <div className="doc doc-row space">
       <DatePicker defaultValue="2018-10-11" onChange={(dateString) => console.log(dateString)}/>
     </div>
+    <div className="doc doc-row space">
+      <DatePicker type="dateTime"/>
+    </div>
   </>;
 }

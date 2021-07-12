@@ -8,7 +8,7 @@ export default function DatePicker2() {
     month: '请选择月份',
     year: '请选择年份'
   }
-console.log(type);
+
   return <InputGroup size="small" style={{maxWidth: '60%'}}>
     <InputGroup.Item autoScale={false}>
       <Select defaultValue={type} style={{width: '7rem'}}

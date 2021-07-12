@@ -20,23 +20,28 @@ import dayjs from "dayjs";
 
 export default function DayPanel(props) {
   const {
+    hasFooter = true,
+  } = props;
+
+  const {
     date,
     tempDate,
-    leftTitle,
     columnCount,
     onChange,
     setTempDate,
     autoClose,
     config,
     tryClosePopup,
-    setPanelType
+    setPanelType,
+    type
   } = useContext(DateContext);
 
   //if the panel is update while user select an other year/month
   const currDate = useMemo(() => getDisplayDate(date, tempDate), [date, tempDate]);
-  const dataPickerClsName = clsx('date-picker', {
-    'left-title': leftTitle,
-  });
+  const dataPickerClsName = clsx('date-picker');
+
+  const showPopup = type === PickerPanel.dateTime;
+  console.log(type)
 
   const generateDays = useCallback(() => {
     let columns = createDateColumns({
@@ -44,6 +49,7 @@ export default function DayPanel(props) {
       date: date,
       tempDate: tempDate,
       onChange: onChange,
+      showPopup
     });
 
     return <tbody>
@@ -56,7 +62,6 @@ export default function DayPanel(props) {
     </tbody>;
   }, [columnCount, date, onChange, tempDate]);
 
-  // console.log(date.format('YYYY-MM-DD'));
   const change = useCallback((type, e) => {
     let nextDate = currDate.clone();
     switch (type) {
@@ -80,11 +85,11 @@ export default function DayPanel(props) {
     }
 
     if (type === DateActionType.today) {
-      onChange(nextDate, false, e);
+      onChange(nextDate, showPopup, e);
     } else {
       setTempDate({date: nextDate, changed: true});
     }
-  }, [currDate, onChange, setTempDate]);
+  }, [showPopup, currDate, onChange, setTempDate]);
 
   const changeYearPanel = useCallback(() => {
     setPanelType(PickerPanel.year);
@@ -95,7 +100,7 @@ export default function DayPanel(props) {
   }, [setPanelType]);
   const closeBtn = useCloseButton(autoClose, tryClosePopup, config);
 
-  return <Card extraClassName={dataPickerClsName} hasWidth={false}>
+  return <Card extraClassName={dataPickerClsName} hasWidth={false} hasBox={false}>
     <DateTitle setPanelType={setPanelType}/>
     <Card.Row>
       <div className="dp-body">
@@ -152,7 +157,7 @@ export default function DayPanel(props) {
       </div>
     </Card.Row>
     {
-      !autoClose && <>
+      !autoClose && hasFooter && <>
         <Divider/>
         <Card.Footer extraClassName="date-picker-footer">
           <div className="left">
