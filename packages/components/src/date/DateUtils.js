@@ -198,4 +198,14 @@ export const useCloseButton = (autoClose, tryClosePopup, config) => {
 
 export const preYear = (year, rangeNumber = 100) => (year - rangeNumber) <= 1000 ? 1000 : year - rangeNumber;
 export const nextYear = (year, rangeNumber = 100) => year + rangeNumber > 3000 ? 3000 : year + rangeNumber;
-;
+
+export const createTimeItems = ({max, onClick}) => {
+  return <>
+    {
+      [...Array(max).keys()].map(i => <div className="tp-item" key={i} onClick={onClick.bind(null, i)}>
+          {i < 10 ? '0' : ''}{i}
+        </div>
+      )}
+  </>;
+
+}

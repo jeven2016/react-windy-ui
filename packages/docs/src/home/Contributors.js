@@ -25,7 +25,7 @@ export default function Contributors() {
           <h5 className="text comment">Contributor</h5>
         </Col>
       </Row>
-      <Row gutter={{y: 16}}>
+      {/*<Row gutter={{y: 16}}>
         <Col col={2} style={{display: 'flex', alignItems: 'center'}}>
           <img src="https://avatars.githubusercontent.com/u/21193241?v=4" style={{borderRadius: "50%"}}
                width={50} height={50} alt="Contributor"/>
@@ -45,7 +45,7 @@ export default function Contributors() {
           <h3>Jasmine Liu</h3>
           <h5 className="text comment">Contributor</h5>
         </Col>
-      </Row>
+      </Row>*/}
     </Card>
   </>;
 }

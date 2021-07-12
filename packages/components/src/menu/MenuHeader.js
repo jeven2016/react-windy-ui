@@ -70,7 +70,7 @@ const MenuHeader = React.forwardRef((props, ref) => {
     }
     return <animated.div className="header-icon icon-arrow"
                          style={{
-                           transform: springProps.rotation.interpolate(
+                           transform: springProps.rotation.to(
                                r => `rotate(${r}deg)`),
                          }}>
       {arrowIcon}

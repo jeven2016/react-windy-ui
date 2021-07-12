@@ -120,7 +120,7 @@ const TextField = React.forwardRef((props, ref) => {
     }, [moveLabel, shape, shouldLabelFixed])
 
     const {labelTop, labelTransform} = useSpring({
-      from: labelMovement,
+      // from: labelMovement,
       to: labelMovement,
       config: {duration: 150},
     });

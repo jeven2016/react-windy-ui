@@ -254,7 +254,7 @@ export const createContainer = (id) => {
   };
 };
 
-export const execute = (handler, timeout) => {
+export const execute = (handler, timeout = 100) => {
   const timer = setTimeout(() => {
     handler();
     clearTimeout(timer);

@@ -79,11 +79,10 @@ const Badge = React.forwardRef((props, ref) => {
     <div className={clsName} {...otherProps}>
       <animated.div className="content" style={{
         ...contentStyle,
-        // opacity: x.interpolate({range: [0, 1], output: [0.8, 1]}),
-        transform: x.interpolate({
+        transform: x.to({
           range: [0, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 1],
           output: [1, 0.97, 0.9, 1.3, 0.9, 1.3, 1.03, 1],
-        }).interpolate(val => type === BadgeType.tag
+        }).to(val => type === BadgeType.tag
           ? `scale(${val})`
           : `translate(50%, -50%) scale(${val})`),
         display: active ? 'inline-flex' : 'none', ...contentBackground,

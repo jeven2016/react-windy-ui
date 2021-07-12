@@ -6,14 +6,14 @@ export default function Toggle1() {
     <div className="doc doc-row">
       <Toggle/>
     </div>
-    {/*<div className="doc doc-row">*/}
-    {/*  <Toggle type="normal"/>*/}
-    {/*</div>*/}
-    {/*<div className="doc doc-row">*/}
-    {/*  <Toggle type="primary"/>*/}
-    {/*</div>*/}
-    {/*<div className="doc doc-row">*/}
-    {/*  <Toggle defaultActive type="secondary"/>*/}
-    {/*</div>*/}
+    <div className="doc doc-row">
+      <Toggle type="normal"/>
+    </div>
+    <div className="doc doc-row">
+      <Toggle type="primary"/>
+    </div>
+    <div className="doc doc-row">
+      <Toggle defaultActive type="secondary"/>
+    </div>
   </>;
 }

@@ -1,29 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import intl from 'react-intl-universal';
-import {Badge, Button, Col, Row} from 'react-windy-ui';
+import {Button, Col, Row} from 'react-windy-ui';
 import HomeHeader from './HomeHeader';
 import HomeIcon from './HomeIcon';
-import {animated, useSpring, useTransition} from 'react-spring';
 import jetbrains from '../style/imgs/jetbrains.png';
 
-const calc = (x, y) => [
-  -(y - window.innerHeight / 2) / 20,
-  (x - window.innerWidth / 2) / 20,
-  1.1];
-const trans = (
-    x, y,
-    s) => `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`;
-
 export default function HomeContent() {
-  const [props, set] = useSpring(
-      () => ({xys: [0, 0, 1], config: {mass: 5, tension: 350, friction: 40}}));
-  const [items] = useState('Windy UI');
-
-  const transitions = useTransition(items, item => item, {
-    from: {transform: 'translate3d(0,-80px,0)', opacity: 0},
-    enter: {transform: 'translate3d(0,0px,0)', opacity: 1},
-    leave: {transform: 'translate3d(0,-80px,0)', opacity: 0},
-  });
 
   return <>
     <div className="doc home">
@@ -32,24 +14,14 @@ export default function HomeContent() {
         <div className="banner"
         >
           <div className="title text color-white">
-
-            <animated.div onMouseMove={({clientX: x, clientY: y}) => set(
-                {xys: calc(x, y)})}
-                          onMouseLeave={() => set({xys: [0, 0, 1]})}
-                          style={{transform: props.xys.interpolate(trans)}}>
-              <HomeIcon style={{
-                fontSize: '3rem',
-              }}/>
-              {
-                transitions.map(({item, props, key}) =>
-                    <animated.div key={key}
-                                  style={{
-                                    display: 'inline-block',
-                                    paddingLeft: '1rem', ...props,
-                                  }}>{item}</animated.div>,
-                )
-              }
-            </animated.div>
+            <HomeIcon style={{
+              fontSize: '3rem',
+            }}/>
+            <div style={{
+              display: 'inline-block',
+              paddingLeft: '1rem',
+            }}>Windy UI
+            </div>
           </div>
           <div className="content">
             {intl.get('global.home.content')}
