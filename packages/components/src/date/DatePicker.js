@@ -3,7 +3,7 @@ import {DataConfig} from './DateConfig';
 import dayjs from 'dayjs';
 import useInternalState from '../common/useInternalState';
 import {isBlank, nonNil, validate} from '../Utils';
-import {convertDate, getFormatter, PickerPanel, PopupType} from './DateUtils';
+import {convertDate, PickerPanel, PopupType} from './DateUtils';
 import {DateContext} from '../common/Context';
 import useEventCallback from "../common/useEventCallback";
 import YearsPanel from "./YearsPanel";
@@ -13,7 +13,6 @@ import DayPanel from "./DayPanel";
 import {IconCalendar} from "../Icons";
 import Wrapper from "./Wrapper";
 import DateTimePanel from "./DateTimePanel";
-import TimePickerBody from "./TimePickerBody";
 
 var isoWeek = require('dayjs/plugin/isoWeek');
 var customParseFormat = require('dayjs/plugin/customParseFormat');
@@ -22,35 +21,41 @@ dayjs.extend(customParseFormat);
 
 const DatePicker = React.forwardRef((props, ref) => {
   const {
-    extraClassName,
     hasTitle = true,
     defaultValue,
     value,
     placeholder,
     onChange,
-    onClose,
-    onOpen,
+    // onClose,
+    // onOpen,
     config = DataConfig,
-    columnCount = DataConfig.columnCount,
     popupType = PopupType.popup,
     type = PickerPanel.date,
     minYear = 1000,
     icon = <IconCalendar/>,
+    format = {},
+    disabled,
+    hasFooter = true,
     ...rest
   } = props;
+  const columnCount = DataConfig.columnCount;
   const wrapperRef = useRef();
   const [panelType, setPanelType] = useState(null);
   const realPanelType = panelType || type;
 
   const dateFormat = useMemo(() => {
-    return getFormatter(type);
-  }, [type]);
+    const mergedFormat = {...DataConfig.format, ...format};
+    const fmt = mergedFormat[type];
+    validate(nonNil(fmt), `No valid date formatter found for type "${type}" in config ${mergedFormat}`);
+    return fmt;
+  }, [format, type]);
+
   const defaultDate = convertDate(defaultValue, dateFormat);
   const realDate = convertDate(value, dateFormat);
 
   useEffect(() => {
     //value can be blank
-    validate(nonNil(defaultDate), `the defaultValue '${defaultValue}' should be in valid date format.}`,
+    validate(nonNil(defaultDate), `)the defaultValue '${defaultValue}' should be in valid date format.}`,
       isBlank(defaultValue));
 
     validate(nonNil(realDate), `the value '${value}' should be in valid date format}`, isBlank(value));
@@ -105,28 +110,29 @@ const DatePicker = React.forwardRef((props, ref) => {
     let panel;
     switch (realPanelType) {
       case PickerPanel.year:
-        panel = <YearsPanel {...rest}/>;
+        panel = <YearsPanel hasFooter={hasFooter} {...rest}/>;
         break;
 
       case PickerPanel.yearRange:
-        panel = <YearRangesPanel  {...rest}/>;
+        panel = <YearRangesPanel hasFooter={hasFooter}  {...rest}/>;
         break;
 
       case PickerPanel.month:
-        panel = <MonthsPanel  {...rest}/>;
+        panel = <MonthsPanel hasFooter={hasFooter}  {...rest}/>;
         break;
 
       default:
-        panel = <DayPanel/>;
+        panel = <DayPanel hasFooter={hasFooter}/>;
     }
     if (type === PickerPanel.dateTime) {
       panel = React.cloneElement(panel, {hasFooter: false, autoClose: false});
       return <DateTimePanel datePanel={panel}/>
     }
     return panel;
-  }, [realPanelType, rest, type]);
+  }, [hasFooter, realPanelType, rest, type]);
 
   return <DateContext.Provider value={{
+    disabled,
     icon,
     date,
     tempDate,
@@ -144,6 +150,8 @@ const DatePicker = React.forwardRef((props, ref) => {
     type,
   }}>
     <Wrapper
+      ctrlRef={ref}
+      disabled={disabled}
       ref={wrapperRef}
       body={popupBody}
       popupType={popupType}

@@ -52,10 +52,6 @@ export const usePanel = (content, isNode = false) => {
   </Spring>;*/
 };
 
-export const getFormatter = (type) => {
-  return DataConfig.format[type];
-};
-
 export const getDisplayDate = (date, tempDate) => {
   const realTempDate = tempDate.date;
   if (tempDate.changed) {

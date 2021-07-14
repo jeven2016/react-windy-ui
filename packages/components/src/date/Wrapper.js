@@ -7,20 +7,30 @@ import DateInput from "./DateInput";
 
 const Wrapper = React.forwardRef((props, ref) => {
   const {
+    disabled,
     position = 'bottomLeft',
     body,
     popupType = PopupType.popup,
     zIndex = 2000,
     onPopupChange,
+    ctrlRef,
     ...rest
   } = props;
   const popupRef = useRef(null);
   const [activeModal, setActiveModal] = useState(false);
   const isModalType = popupType === PopupType.modal;
 
+  const handleInputClick = useCallback((next = true) => {
+    if (isModalType) {
+      console.log(next)
+      setActiveModal(next);
+      onPopupChange && onPopupChange(next);
+    }
+  }, [isModalType, onPopupChange]);
+
   const popupCtrl = useMemo(() => {
-    return <DateInput {...rest}/>;
-  }, [rest]);
+    return <DateInput ref={ctrlRef} onClick={handleInputClick} {...rest}/>;
+  }, [ctrlRef, handleInputClick, rest]);
 
   const activePopup = useCallback((active) => {
     if (isModalType) {
@@ -48,6 +58,7 @@ const Wrapper = React.forwardRef((props, ref) => {
     //note: the popup isn't controlled since the active property isn't set
     pickerBody = <Popup
       ref={popupRef}
+      disabled={disabled}
       onChange={onPopupChange}
       activeBy={PopupCtrlType.click}
       position={position}
@@ -55,7 +66,6 @@ const Wrapper = React.forwardRef((props, ref) => {
       ctrlNode={popupCtrl}
       body={body}
       hasBorder={false}
-      activePopup={activePopup}
       hasBox={true}
       zIndex={zIndex}
       {...rest}/>;
@@ -63,9 +73,7 @@ const Wrapper = React.forwardRef((props, ref) => {
     pickerBody = <>
       {popupCtrl}
       <Modal ref={popupRef} type="simple" center active={activeModal} hasDefaultWidth={false}
-             onCancel={() => {
-               onPopupChange && onPopupChange(false);
-             }}>
+             onCancel={() => handleInputClick(false)}>
         <Modal.Body>
           {body}
         </Modal.Body>

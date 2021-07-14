@@ -1,11 +1,15 @@
 import React, {useCallback, useContext, useMemo, useState,} from 'react';
 import {IconError, Input} from '../index';
-import {isBlank, isNil} from '../Utils';
+import {isBlank, isNil, preventEvent} from '../Utils';
 import {DateContext} from '../common/Context';
 import {convertDate} from "./DateUtils";
 
 const DateInput = React.forwardRef((props, ref) => {
-  const {date, dateFormat, placeholder, onChange, icon} = useContext(DateContext);
+  const {
+    onClick,
+    ...rest
+  } = props;
+  const {date, dateFormat, placeholder, onChange, icon, disabled} = useContext(DateContext);
   const [showClear, setShowClear] = useState(false);
   const [textDate, setTextDate] = useState('');
 
@@ -42,26 +46,33 @@ const DateInput = React.forwardRef((props, ref) => {
     showClear && setShowClear(false);
   }, [dateFormat, inputValue, showClear]);
 
+  const handleInputClick = useCallback((e) => !disabled && onClick && onClick(true, e),
+    [disabled, onClick]);
+
   const clearInput = useCallback((e) => {
     if (showClear) {
       setShowClear(false);
       setTextDate('');
       onChange && onChange(null, false, e);
+      preventEvent(e);
     }
   }, [onChange, showClear]);
 
   const realIcon = useMemo(() => showClear ? <IconError/> : icon, [icon, showClear]);
 
   return <Input
+    disabled={disabled}
     placeholder={placeholder}
     size="medium"
     rootRef={ref}
     value={inputValue}
     onChange={change}
-    {...props}
+
+    {...rest}
     rootProps={{
       onMouseEnter: handleMouseEnter,
-      onMouseLeave: handleMouseLeave
+      onMouseLeave: handleMouseLeave,
+      onClick: handleInputClick
     }}
     onFocus={handleMouseEnter}
     iconProps={{

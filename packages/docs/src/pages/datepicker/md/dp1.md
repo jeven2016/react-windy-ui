@@ -1,14 +1,15 @@
 --- 
 order: 1
 type: sample
-zh_CN: DatePicker1
+zh_CN: 简单示例
 en_US: DatePicker1
 onlyVisible: false
 editUrl: $BASE/docs/pages/datepicker/md/dp1.md
 ---
 
 +++ zh_CN
-DatePicker1
+DatePicker通过<Code>defaultValue</Code>或<Code>value</Code>指定初始值，通过<Code>onChange</Code>处理选定的日期。
+
 
 +++ en_US
 DatePicker1

@@ -10,6 +10,7 @@ fix bugs for new project structure
 * react-spring: upgrade from v8 to v9
 * Toggle: remove box-shadow property
 * Grid Col: support flex 
+* IconInput: fix disabled issue
 
 ### 0.5.0
 * Toggle: support form's defaultValue, other components need to double check as well

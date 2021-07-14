@@ -33,7 +33,7 @@ export default function DayPanel(props) {
     config,
     tryClosePopup,
     setPanelType,
-    type
+    type,
   } = useContext(DateContext);
 
   //if the panel is update while user select an other year/month
@@ -60,7 +60,7 @@ export default function DayPanel(props) {
     <tr>{slice(columns, 28, 35)}</tr>
     <tr>{slice(columns, 35, 42)}</tr>
     </tbody>;
-  }, [columnCount, date, onChange, tempDate]);
+  }, [columnCount, date, onChange, showPopup, tempDate]);
 
   const change = useCallback((type, e) => {
     let nextDate = currDate.clone();
