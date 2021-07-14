@@ -185,8 +185,8 @@ export const useYearRange = (date, tempDate) => {
   return [startYear, yearRange, currentYear];
 };
 
-export const useCloseButton = (autoClose, tryClosePopup, config) => {
-  return !autoClose && <Button type="primary" size="small" inverted onClick={tryClosePopup}>{config.locale.ok}</Button>;
+export const useCloseButton = (autoClose, tryClosePopup, locale) => {
+  return !autoClose && <Button type="primary" size="small" inverted onClick={tryClosePopup}>{locale.ok}</Button>;
 }
 
 export const preYear = (year, rangeNumber = 100) => (year - rangeNumber) <= 1000 ? 1000 : year - rangeNumber;
@@ -201,4 +201,11 @@ export const createTimeItems = ({max, onClick}) => {
       )}
   </>;
 
+};
+
+export const getLocaleResources = (locale, config)=>{
+  const key = 'locale_' + locale;
+  const defaultLocaleCfg = DataConfig[key];
+  const newLocalConfig = nonNil(config) ? config[key] : {};
+  return {...defaultLocaleCfg, ...newLocalConfig};
 }

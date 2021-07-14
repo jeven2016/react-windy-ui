@@ -1,11 +1,11 @@
 import React, {useCallback, useContext, useMemo, useRef} from "react";
 import TimePickerBody from "./TimePickerBody";
 import {DateContext} from "../common/Context";
-import {DateActionType, getDisplayDate, useCloseButton} from "./DateUtils";
+import {getDisplayDate, useCloseButton} from "./DateUtils";
 import dayjs from "dayjs";
 import Divider from "../divider";
 import Card from "../card";
-import {Button} from "../index";
+import Button from "../button";
 
 const DateTimePanel = React.forwardRef((props, ref) => {
   const {
@@ -17,8 +17,9 @@ const DateTimePanel = React.forwardRef((props, ref) => {
     date,
     tempDate,
     onChange,
-    config,
-    tryClosePopup
+    locale,
+    tryClosePopup,
+    hasFooter
   } = useContext(DateContext);
 
   const wrapperRef = useRef();
@@ -38,7 +39,7 @@ const DateTimePanel = React.forwardRef((props, ref) => {
     hasTitle={true}
     wrapperRef={wrapperRef}
   />;
-  const closeBtn = useCloseButton(false, tryClosePopup, config);
+  const closeBtn = useCloseButton(false, tryClosePopup, locale);
 
   return <div className="datetime-picker card" ref={ref} style={{width: '35rem'}} {...rest}>
     <div className="picker-panels">
@@ -50,21 +51,25 @@ const DateTimePanel = React.forwardRef((props, ref) => {
       </div>
     </div>
 
-    <Divider/>
-    <Card.Footer extraClassName="date-picker-footer">
+    {
+      hasFooter && <>
+        <Divider/>
+        <Card.Footer extraClassName="date-picker-footer">
 
-      <div className="left">
-        <Button extraClassName="today-btn" type="primary"
-                size="small" inverted
-                onClick={(e) => onChange(dayjs(), false, e)}>
-          {config.locale.today}
-        </Button>
-      </div>
-      <div className="right">
-        {closeBtn}
-      </div>
+          <div className="left">
+            <Button extraClassName="today-btn" type="primary"
+                    size="small" inverted
+                    onClick={(e) => onChange(dayjs(), false, e)}>
+              {locale.today}
+            </Button>
+          </div>
+          <div className="right">
+            {closeBtn}
+          </div>
+        </Card.Footer>
+      </>
+    }
 
-    </Card.Footer>
   </div>
 
 

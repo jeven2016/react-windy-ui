@@ -33,30 +33,33 @@ const DateInput = React.forwardRef((props, ref) => {
   }, [dateFormat, onChange]);
 
   const handleMouseEnter = useCallback(() => {
-    if (!isBlank(inputValue)) {
+    if (!disabled && !isBlank(inputValue)) {
       setShowClear(true);
     }
-  }, [inputValue]);
+  }, [disabled, inputValue]);
 
   const handleMouseLeave = useCallback(() => {
+    if (disabled) {
+      return;
+    }
     const inputDate = convertDate(inputValue, dateFormat);
     if (!inputDate || !inputDate.isValid()) {
       setTextDate('');
     }
     showClear && setShowClear(false);
-  }, [dateFormat, inputValue, showClear]);
+  }, [dateFormat, disabled, inputValue, showClear]);
 
   const handleInputClick = useCallback((e) => !disabled && onClick && onClick(true, e),
     [disabled, onClick]);
 
   const clearInput = useCallback((e) => {
-    if (showClear) {
+    if (!disabled && showClear) {
       setShowClear(false);
       setTextDate('');
       onChange && onChange(null, false, e);
       preventEvent(e);
     }
-  }, [onChange, showClear]);
+  }, [disabled, onChange, showClear]);
 
   const realIcon = useMemo(() => showClear ? <IconError/> : icon, [icon, showClear]);
 

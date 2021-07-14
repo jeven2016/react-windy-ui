@@ -22,7 +22,6 @@ const Wrapper = React.forwardRef((props, ref) => {
 
   const handleInputClick = useCallback((next = true) => {
     if (isModalType) {
-      console.log(next)
       setActiveModal(next);
       onPopupChange && onPopupChange(next);
     }
@@ -67,8 +66,7 @@ const Wrapper = React.forwardRef((props, ref) => {
       body={body}
       hasBorder={false}
       hasBox={true}
-      zIndex={zIndex}
-      {...rest}/>;
+      zIndex={zIndex}/>;
   } else {
     pickerBody = <>
       {popupCtrl}

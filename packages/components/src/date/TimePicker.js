@@ -4,10 +4,11 @@ import Wrapper from "./Wrapper";
 import useEventCallback from "../common/useEventCallback";
 import {DateContext} from '../common/Context';
 import useInternalState from "../common/useInternalState";
-import {convertDate, PopupType} from "./DateUtils";
+import {convertDate, getLocaleResources, PopupType} from "./DateUtils";
 import {IconTime} from "../Icons";
 import dayjs from "dayjs";
 import {isBlank, nonNil, validate} from "../Utils";
+import {DataConfig} from "./DateConfig";
 
 
 const TimePicker = React.forwardRef((props, ref) => {
@@ -18,6 +19,8 @@ const TimePicker = React.forwardRef((props, ref) => {
     placeholder,
     onChange,
     popupType = PopupType.popup,
+    locale = 'zh_CN',
+    config = DataConfig,
     ...rest
   } = props;
   const wrapperRef = useRef();
@@ -37,6 +40,8 @@ const TimePicker = React.forwardRef((props, ref) => {
     defaultState: defaultDate,
     state: realDate,
   });
+
+  const realLocale = useMemo(() => getLocaleResources(locale, config), [config, locale]);
 
   const initialDate = useMemo(() => dayjs(), []);
 
@@ -61,7 +66,8 @@ const TimePicker = React.forwardRef((props, ref) => {
                                     onSelectTime={selectTime}
                                     wrapperRef={wrapperRef}
                                     dateFormat={dateFormat}
-                                    {...rest}/>;
+                                    locale={realLocale}
+  />;
 
   return <DateContext.Provider value={{
     icon: <IconTime/>,
@@ -71,9 +77,11 @@ const TimePicker = React.forwardRef((props, ref) => {
     onChange: changeInput,
   }}>
     <Wrapper
+      ctrlRef={ref}
       ref={wrapperRef}
       popupType={popupType}
-      body={popupBody}/>
+      body={popupBody}
+      {...rest}/>
   </DateContext.Provider>;
 });
 

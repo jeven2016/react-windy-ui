@@ -1,25 +1,28 @@
 import React, {useState} from "react";
-import {Button, Input} from "react-windy-ui";
-import dayjs from "dayjs";
+import {TextField, TimePicker, Notification} from "react-windy-ui";
 
 export default function TP2() {
-  const [format, setFormat] = useState("H:M:S");
-  const [value, setValue] = useState('');
-  const [result, setResult] = useState('===');
+  const [popupType, setPopupType] = useState('popup');
 
-  const check = () => {
-    const isValid = dayjs(value, format, false).isValid();
-    console.log(isValid);
-    setResult(isValid);
-  }
+  const change = (textFormat, date) => {
+    Notification.info(
+      `textFormat=${textFormat}, date=${date}`);
+  };
+
   return <>
-    <div className="doc doc-row space">
-      <Input value={format} onChange={e => setFormat(e.target.value)} placeholder="format"/>
-      <Input value={value} onChange={e => setValue(e.target.value)} placeholder="time"/>
-      <Button onClick={check}>Check</Button>
-      <div>
-        Check result: {result}
-      </div>
+    <div className="doc doc-row">
+      <TextField select={true}
+                 size="small"
+                 value={popupType}
+                 onChange={(value) => setPopupType(value)}
+                 label="Popup Type"
+                 style={{width: '15rem'}}>
+        <option value="popup">popup</option>
+        <option value="modal">modal</option>
+      </TextField>
     </div>
-  </>
+    <div className="doc doc-row space">
+      <TimePicker onChange={change} popupType={popupType}/>
+    </div>
+  </>;
 };

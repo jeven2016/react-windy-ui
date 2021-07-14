@@ -17,6 +17,7 @@ const TimePickerBody = React.forwardRef((props, ref) => {
     onSelectTime,
     hasFooter = true,
     hasTitle = false,
+    locale,
     dateFormat = DataConfig.format.time
   } = props;
 
@@ -57,10 +58,14 @@ const TimePickerBody = React.forwardRef((props, ref) => {
         <Divider/>
         <Card.Footer extraClassName="date-picker-footer">
           <div className="left">
-            <Button type="primary" size="small" inverted onClick={selectNow}>Now</Button>
+            <Button type="primary" size="small" inverted onClick={selectNow}>
+              {locale.now}
+            </Button>
           </div>
           <div className="right">
-            <Button type="primary" size="small" inverted onClick={close}>OK</Button>
+            <Button type="primary" size="small" inverted onClick={close}>
+              {locale.ok}
+            </Button>
           </div>
         </Card.Footer>
       </>

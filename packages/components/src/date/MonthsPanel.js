@@ -12,19 +12,16 @@ import Divider from "../divider";
 
 const MonthsPanel = React.forwardRef((props, ref) => {
   const {
-    hasFooter = true,
-  } = props;
-
-  const {
     date,
     tempDate,
     setTempDate,
     type,
     onChange,
-    config,
+    locale,
     setPanelType,
     autoClose,
     tryClosePopup,
+    hasFooter
   } = useContext(DateContext);
 
   const currDate = useMemo(() => getDisplayDate(date, tempDate), [date, tempDate]);
@@ -63,7 +60,7 @@ const MonthsPanel = React.forwardRef((props, ref) => {
         <Button inverted initOutlineColor type={isGrayBtn(i) ? 'gray' : 'primary'}
                 onClick={(e) => selectMonth(i, e)}
                 active={checkMonth(i)}>
-          {config.locale.month[i]}
+          {locale.month[i]}
         </Button>
       </Col>;
       cols.push(col);
@@ -73,18 +70,16 @@ const MonthsPanel = React.forwardRef((props, ref) => {
       }
     }
     return rows;
-  }, [checkMonth, config.locale.month, isGrayBtn, selectMonth]);
-
-  console.log(monthCnt)
+  }, [checkMonth, locale.month, isGrayBtn, selectMonth]);
 
   const changeYear = useEventCallback(() => {
     setPanelType(PickerPanel.year);
   });
 
-  const closeBtn = useCloseButton(autoClose, tryClosePopup, config);
+  const closeBtn = useCloseButton(autoClose, tryClosePopup, locale);
 
   return <>
-    <Card extraClassName='date-picker' hasWidth={false} hasBox={false}>
+    <Card extraClassName='date-picker' hasWidth={false} hasBox={false} ref={ref} {...props}>
       <DateTitle setPanelType={setPanelType}/>
       <Card.Row>
         <div className="dp-body">

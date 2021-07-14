@@ -3,7 +3,7 @@ import {DataConfig} from './DateConfig';
 import dayjs from 'dayjs';
 import useInternalState from '../common/useInternalState';
 import {isBlank, nonNil, validate} from '../Utils';
-import {convertDate, PickerPanel, PopupType} from './DateUtils';
+import {convertDate, getLocaleResources, PickerPanel, PopupType} from './DateUtils';
 import {DateContext} from '../common/Context';
 import useEventCallback from "../common/useEventCallback";
 import YearsPanel from "./YearsPanel";
@@ -13,6 +13,7 @@ import DayPanel from "./DayPanel";
 import {IconCalendar} from "../Icons";
 import Wrapper from "./Wrapper";
 import DateTimePanel from "./DateTimePanel";
+import PropTypes from "prop-types";
 
 var isoWeek = require('dayjs/plugin/isoWeek');
 var customParseFormat = require('dayjs/plugin/customParseFormat');
@@ -26,8 +27,6 @@ const DatePicker = React.forwardRef((props, ref) => {
     value,
     placeholder,
     onChange,
-    // onClose,
-    // onOpen,
     config = DataConfig,
     popupType = PopupType.popup,
     type = PickerPanel.date,
@@ -36,7 +35,9 @@ const DatePicker = React.forwardRef((props, ref) => {
     format = {},
     disabled,
     hasFooter = true,
-    ...rest
+    locale = 'zh_CN',
+    inline = false,
+    ...rest //the rest properties will passed into DateInput component
   } = props;
   const columnCount = DataConfig.columnCount;
   const wrapperRef = useRef();
@@ -49,6 +50,8 @@ const DatePicker = React.forwardRef((props, ref) => {
     validate(nonNil(fmt), `No valid date formatter found for type "${type}" in config ${mergedFormat}`);
     return fmt;
   }, [format, type]);
+
+  const realLocale = useMemo(() => getLocaleResources(locale, config), [config, locale]);
 
   const defaultDate = convertDate(defaultValue, dateFormat);
   const realDate = convertDate(value, dateFormat);
@@ -85,7 +88,7 @@ const DatePicker = React.forwardRef((props, ref) => {
     setPanelType(null);
 
     const stringDate = selectedDate ? selectedDate.format(dateFormat) : '';
-    if (!showPopup) {
+    if (!inline && !showPopup) {
       wrapperRef.current.togglePopup();
     }
     onChange && onChange(stringDate, selectedDate, e);
@@ -103,22 +106,22 @@ const DatePicker = React.forwardRef((props, ref) => {
 
   const tryClosePopup = useEventCallback(() => {
     const wrapper = wrapperRef.current;
-    wrapper.togglePopup();
+    wrapper?.togglePopup();
   });
 
   const popupBody = useMemo(() => {
     let panel;
     switch (realPanelType) {
       case PickerPanel.year:
-        panel = <YearsPanel hasFooter={hasFooter} {...rest}/>;
+        panel = <YearsPanel/>;
         break;
 
       case PickerPanel.yearRange:
-        panel = <YearRangesPanel hasFooter={hasFooter}  {...rest}/>;
+        panel = <YearRangesPanel/>;
         break;
 
       case PickerPanel.month:
-        panel = <MonthsPanel hasFooter={hasFooter}  {...rest}/>;
+        panel = <MonthsPanel/>;
         break;
 
       default:
@@ -129,7 +132,7 @@ const DatePicker = React.forwardRef((props, ref) => {
       return <DateTimePanel datePanel={panel}/>
     }
     return panel;
-  }, [hasFooter, realPanelType, rest, type]);
+  }, [hasFooter, realPanelType, type]);
 
   return <DateContext.Provider value={{
     disabled,
@@ -146,18 +149,42 @@ const DatePicker = React.forwardRef((props, ref) => {
     columnCount,
     hasTitle: hasTitle && type !== PickerPanel.dateTime,
     config,
+    locale: realLocale,
     customizedDate: customized,
     type,
+    hasFooter
   }}>
-    <Wrapper
-      ctrlRef={ref}
-      disabled={disabled}
-      ref={wrapperRef}
-      body={popupBody}
-      popupType={popupType}
-      onPopupChange={handlePopup}/>
+    {
+      inline ? React.cloneElement(popupBody, {ref: ref, ...rest}) : <Wrapper
+        ctrlRef={ref}
+        disabled={disabled}
+        ref={wrapperRef}
+        body={popupBody}
+        popupType={popupType}
+        onPopupChange={handlePopup}
+        {...rest}/>
+    }
+
   </DateContext.Provider>;
 
 });
+
+DatePicker.propTypes = {
+  hasTitle: PropTypes.bool,
+  defaultValue: PropTypes.string,
+  value: PropTypes.string,
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func,
+  config: PropTypes.object,
+  popupType: PropTypes.oneOf(Object.keys(PopupType)),
+  type: PropTypes.oneOf(Object.keys(PickerPanel)),
+  minYear: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  // icon: PropTypes.node,
+  format: PropTypes.object,
+  disabled: PropTypes.bool,
+  hasFooter: PropTypes.bool,
+  locale: PropTypes.string,
+  inline: PropTypes.bool,
+}
 
 export default DatePicker;

@@ -5,6 +5,8 @@ export default function DatePicker5() {
   const [hasTitle, set] = useState(false);
   const [hasFooter, enableFooter] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [chinese, setChinese] = useState(true);
+  const [readonly, setReadonly] = useState(true);
 
   const change = (textFormat, date) => {
     Notification.info(
@@ -24,8 +26,17 @@ export default function DatePicker5() {
       <Toggle active={disabled} onChange={val => setDisabled(val)}
               label='Disabled'/>
     </div>
+    <div className="doc doc-row">
+      <Toggle active={readonly} onChange={val => setReadonly(val)}
+              label='Readonly'/>
+    </div>
+    <div className="doc doc-row">
+      <Toggle active={chinese} onChange={val => setChinese(val)}
+              label={{on: 'Chinese', off: 'English'}}/>
+    </div>
     <div className="doc doc-row space">
-      <DatePicker onChange={change} type="date" hasTitle={hasTitle}
+      <DatePicker readOnly={readonly} onChange={change} type="date" hasTitle={hasTitle}
+                  locale={chinese ? 'zh_CN' : 'en_US'}
                   hasFooter={hasFooter} disabled={disabled}/>
     </div>
   </>;
