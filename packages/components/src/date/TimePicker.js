@@ -21,6 +21,7 @@ const TimePicker = React.forwardRef((props, ref) => {
     popupType = PopupType.popup,
     locale = 'zh_CN',
     config = DataConfig,
+    inline = false,
     ...rest
   } = props;
   const wrapperRef = useRef();
@@ -67,7 +68,7 @@ const TimePicker = React.forwardRef((props, ref) => {
                                     wrapperRef={wrapperRef}
                                     dateFormat={dateFormat}
                                     locale={realLocale}
-  />;
+                                    inline={inline}/>;
 
   return <DateContext.Provider value={{
     icon: <IconTime/>,
@@ -76,12 +77,15 @@ const TimePicker = React.forwardRef((props, ref) => {
     placeholder,
     onChange: changeInput,
   }}>
-    <Wrapper
-      ctrlRef={ref}
-      ref={wrapperRef}
-      popupType={popupType}
-      body={popupBody}
-      {...rest}/>
+    {
+      inline ? popupBody :
+        <Wrapper
+          ctrlRef={ref}
+          ref={wrapperRef}
+          popupType={popupType}
+          body={popupBody}
+          {...rest}/>
+    }
   </DateContext.Provider>;
 });
 

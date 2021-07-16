@@ -1,9 +1,9 @@
 --- 
 order: 1
 type: sample
-zh_CN: 弹出框类型
+zh_CN: 内嵌显示
 en_US: Simple Sample
-editUrl: $BASE/docs/pages/time/md/TP2.md
+editUrl: $BASE/docs/pages/time/md/TP4.md
 ---
 
 +++ zh_CN
@@ -12,4 +12,4 @@ editUrl: $BASE/docs/pages/time/md/TP2.md
 Simple Sample
 
 +++ SampleCode
-fileName: TP2
+fileName: TP4

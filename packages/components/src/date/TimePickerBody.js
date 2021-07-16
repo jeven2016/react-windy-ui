@@ -18,7 +18,8 @@ const TimePickerBody = React.forwardRef((props, ref) => {
     hasFooter = true,
     hasTitle = false,
     locale,
-    dateFormat = DataConfig.format.time
+    dateFormat = DataConfig.format.time,
+    inline,
   } = props;
 
   const dataPickerClsName = clsx('time-picker');
@@ -54,7 +55,7 @@ const TimePickerBody = React.forwardRef((props, ref) => {
       </div>
     </Card.Row>
     {
-      hasFooter && <>
+      hasFooter && !inline && <>
         <Divider/>
         <Card.Footer extraClassName="date-picker-footer">
           <div className="left">

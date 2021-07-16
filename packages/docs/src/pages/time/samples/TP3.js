@@ -1,9 +1,7 @@
 import React, {useState} from "react";
-import {TimePicker, Notification, Toggle} from "react-windy-ui";
+import {Notification, TimePicker, Toggle} from "react-windy-ui";
 
 export default function TP3() {
-  const [hasTitle, set] = useState(false);
-  const [hasFooter, enableFooter] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [chinese, setChinese] = useState(true);
   const [readonly, setReadonly] = useState(true);

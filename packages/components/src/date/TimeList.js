@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useMemo, useRef} from "react";
 import {animated, useSpring} from "react-spring";
 import {createTimeItems} from "./DateUtils";
-import {useGesture} from "react-use-gesture";
+import {useGesture} from "@use-gesture/react";
 import useMultipleRefs from "../common/UseMultipleRefs";
 import useEventCallback from "../common/useEventCallback";
-import {execute, isNil, round} from "../Utils";
+import {execute, isNil, max, round} from "../Utils";
 
 const TimeList = React.forwardRef((props, ref) => {
   const {
@@ -38,7 +38,8 @@ const TimeList = React.forwardRef((props, ref) => {
     api.start({y: currentItemY});
   }, [api, currentItemY, time, timeType]);
 
-  const move = useCallback(({my, event}) => {
+  const move = useCallback(({my, event, direction, elapsedTime}) => {
+    const [, directionY] = direction
     //if the mouse is not pressed down that means the drag action is finished
     //present the nearest item
     if (my >= middleItemIndex * itemHeight) {
@@ -53,14 +54,22 @@ const TimeList = React.forwardRef((props, ref) => {
     } else {
       //for switching from one item to another, the time always changed and the api.start will be triggered in
       //useEffect, so we don't have to call api.start().
-      let itemIndex = round(Math.abs(my - indicatorStart) / itemHeight);
+      const increment = (elapsedTime < 230 ? Math.floor((230 - elapsedTime) / 5) : 0) * directionY;
+      let itemIndex = round(Math.abs(my - indicatorStart) / itemHeight - increment);
+      if (itemIndex < 0) {
+        itemIndex = 0;
+      }
+      if (itemIndex > maxValue - 1) {
+        itemIndex = maxValue - 1;
+      }
+      console.log(itemIndex)
       //indicatorStart - index * itemHeight = my
       execute(() => changeTime(timeType, itemIndex, event));
     }
   }, [api, changeTime, indicatorStart, itemHeight, maxValue, middleItemIndex, timeType]);
 
   const bind = useGesture({
-    onDrag: ({event, down, movement: [, my], tap}) => {
+    onDrag: ({event, down, offset: [, my], tap, direction, elapsedTime}) => {
       //ignore the tap event
       if (tap) {
         return;
@@ -68,20 +77,21 @@ const TimeList = React.forwardRef((props, ref) => {
       if (down) {
         api.start({y: my});
       } else {
-        move({event, my});
+        move({event, my, elapsedTime, direction});
       }
-    }
+    },
   }, {
     drag: {
-      initial: () => [0, y.get()],
+      from: () => [0, y.get()],
       axis: 'y',
       bounds: {bottom: indicatorStart, top: -(maxValue - middleItemIndex) * itemHeight},
       rubberband: true,
       filterTaps: true,
-      useTouch: true,
-      swipeDistance: [100, 100]
+      pointer: {
+        touch: true
+      }
     }
-  })
+  });
 
   const clickItem = useEventCallback((index, e) => {
     execute(() => changeTime(timeType, index));
@@ -90,7 +100,7 @@ const TimeList = React.forwardRef((props, ref) => {
   const hourItems = useMemo(() => createTimeItems({max: maxValue, onClick: clickItem}),
     [clickItem, maxValue]);
 
-  return <div className="tp-wrapper" {...bind()}>
+  return <div className="tp-wrapper"  {...bind()}>
     <animated.div className="tp-list" style={{y}} ref={multiRef}>
       {hourItems}
     </animated.div>
