@@ -357,10 +357,10 @@ const Select = React.forwardRef((props, ref) => {
   }, [isActive, setActive, onActiveChange]);
 
   const removeItem = useEventCallback((v, e) => {
+    preventEvent(e);
     const rest = selectedValue.filter(val => val !== v);
     setValue(rest);
     onRemove && onRemove(v, e);
-    preventEvent(e);
   });
 
   let multiSelectCtrl = useMemo(() => {
@@ -460,11 +460,11 @@ const Select = React.forwardRef((props, ref) => {
   const selectHandler = useEventCallback((items, e) => {
     const itemsArray = convertToArray(items);
     if (multiSelect) {
+      //prevent the popup from being closed
+      preventEvent(e);
       if (!isActive) {
         changeActive(true, e);
       }
-      //prevent the popup from being closed
-      preventEvent(e);
     }
 
     setValue(itemsArray);

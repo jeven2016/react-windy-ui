@@ -15,25 +15,26 @@ const TimePicker = React.forwardRef((props, ref) => {
   const {
     time,
     defaultTime,
-    dateFormat = "HH:mm:ss",
+    format = DataConfig.format.time,
     placeholder,
     onChange,
     popupType = PopupType.popup,
     locale = 'zh_CN',
     config = DataConfig,
     inline = false,
+    icon = <IconTime/>,
     ...rest
   } = props;
   const wrapperRef = useRef();
-  const defaultDate = useMemo(() => convertDate(defaultTime, [dateFormat, 'H:M:S']), [dateFormat, defaultTime]);
-  const realDate = useMemo(() => convertDate(time, dateFormat), [dateFormat, time]);
+  const defaultDate = useMemo(() => convertDate(defaultTime, [format, 'H:M:S']), [format, defaultTime]);
+  const realDate = useMemo(() => convertDate(time, format), [format, time]);
 
   useEffect(() => {
-    validate(nonNil(defaultDate), `the defaultValue '${defaultTime}' should be in valid date format.${dateFormat}`,
+    validate(nonNil(defaultDate), `the defaultValue '${defaultTime}' should be in valid date format.${format}`,
       isBlank(defaultTime));
 
-    validate(nonNil(realDate), `the value '${time}' should be in valid date format ${dateFormat}}`, isBlank(time));
-  }, [dateFormat, defaultDate, defaultTime, realDate, time]);
+    validate(nonNil(realDate), `the value '${time}' should be in valid date format ${format}}`, isBlank(time));
+  }, [format, defaultDate, defaultTime, realDate, time]);
 
   const [timeValue, setTimeValue] = useInternalState({
     props,
@@ -49,7 +50,7 @@ const TimePicker = React.forwardRef((props, ref) => {
   const selectTime = useEventCallback((selectedTime, showPopup, e) => {
     if (!timeValue?.isSame(selectedTime)) {
       setTimeValue(selectedTime);
-      onChange && onChange(selectedTime?.format(dateFormat) || null, selectedTime, e);
+      onChange && onChange(selectedTime?.format(format) || null, selectedTime, e);
     }
 
     if (!showPopup) {
@@ -66,14 +67,14 @@ const TimePicker = React.forwardRef((props, ref) => {
                                     initialDate={initialDate}
                                     onSelectTime={selectTime}
                                     wrapperRef={wrapperRef}
-                                    dateFormat={dateFormat}
+                                    dateFormat={format}
                                     locale={realLocale}
                                     inline={inline}/>;
 
   return <DateContext.Provider value={{
-    icon: <IconTime/>,
+    icon,
     date: timeValue,
-    dateFormat,
+    dateFormat: format,
     placeholder,
     onChange: changeInput,
   }}>

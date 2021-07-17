@@ -54,10 +54,10 @@ const DateInput = React.forwardRef((props, ref) => {
 
   const clearInput = useCallback((e) => {
     if (!disabled && showClear) {
+      preventEvent(e);
       setShowClear(false);
       setTextDate('');
       onChange && onChange(null, false, e);
-      preventEvent(e);
     }
   }, [disabled, onChange, showClear]);
 

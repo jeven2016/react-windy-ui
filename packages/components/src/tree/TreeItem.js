@@ -88,9 +88,9 @@ const TreeItem = React.forwardRef((props, ref) => {
                   showIndeterminateState={showIndeterminateState}
                   iconIndeterminateStyle={{color: '#0ca0ff'}}
                   onChange={(isChecked, e) => {
+                    preventEvent(e);
                     treeContext.checkItem &&
                     treeContext.checkItem(id, isChecked, e);
-                    preventEvent(e);
                   }}/>
       </div>;
     }

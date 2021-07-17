@@ -20,7 +20,7 @@ const Wrapper = React.forwardRef((props, ref) => {
   const [activeModal, setActiveModal] = useState(false);
   const isModalType = popupType === PopupType.modal;
 
-  const handleInputClick = useCallback((next = true) => {
+  const handleInputClick = useCallback((next = true,e) => {
     if (isModalType) {
       setActiveModal(next);
       onPopupChange && onPopupChange(next);

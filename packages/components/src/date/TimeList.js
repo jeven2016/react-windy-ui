@@ -4,7 +4,7 @@ import {createTimeItems} from "./DateUtils";
 import {useGesture} from "@use-gesture/react";
 import useMultipleRefs from "../common/UseMultipleRefs";
 import useEventCallback from "../common/useEventCallback";
-import {execute, isNil, max, round} from "../Utils";
+import {execute, isNil, round} from "../Utils";
 
 const TimeList = React.forwardRef((props, ref) => {
   const {
@@ -62,7 +62,6 @@ const TimeList = React.forwardRef((props, ref) => {
       if (itemIndex > maxValue - 1) {
         itemIndex = maxValue - 1;
       }
-      console.log(itemIndex)
       //indicatorStart - index * itemHeight = my
       execute(() => changeTime(timeType, itemIndex, event));
     }
