@@ -60,6 +60,9 @@ export default function HomeFooter() {
           </Popover>
         </div>
       </Col>
+      <Col col={12} flexCol style={{fontSize: '.8rem'}}>
+        <a href="https://beian.miit.gov.cn/" target="_blank">苏ICP备18064205号</a>
+      </Col>
     </Row>
   </div>;
 }
