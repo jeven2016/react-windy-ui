@@ -1,3 +1,6 @@
+### 0.6.0
+
+
 ### 0.5.1 - 0.5.8
 fix bugs for new project structure
 * Avatar: fix a issue of group that the margin-left doesn't take effect
