@@ -69,6 +69,23 @@ export const createFormMessages = (ctx, children, messages = []) => {
   return messages;
 };
 
+const getControlledWidget = ({TagType, name, rules, control, defaultValue, restProps}) => {
+  let refFunc = TagType === Select ? (ref) => ({ctrlRef: ref}) : (ref) => ({ref: ref});
+  return <Controller
+    defaultValue={defaultValue}
+    name={name}
+    rules={rules}
+    control={control}
+    render={({field: {onChange, onBlur, value, ref},}) =>
+      <TagType {...restProps}
+               {...refFunc(ref)}
+               onChange={onChange}
+               onBlur={onBlur}
+               value={value}
+               ctrlRef={ref}/>}
+  />
+};
+
 export const cloneElement = (elem, props, ctx) => {
   const control = ctx.control;
   let newProps;
@@ -78,7 +95,7 @@ export const cloneElement = (elem, props, ctx) => {
   const realEt = nonNil(errorType) ? errorType : props.errorType;
 
   //for Controller, the pureRules is used by controller and the ref should be excluded in this case
-  const {pureRules, ref, ...restProps} = props;
+  const {pureRules, ...restProps} = props;
   const mergedProps = {...elem.props, ...restProps}
 
   let extraCls;
@@ -96,10 +113,18 @@ export const cloneElement = (elem, props, ctx) => {
       };
       //while the Controller is used, the rules should be moved from ref and
       //set via rules property of controller
-      return <Controller as={Select}
-                         defaultValue=""
-                         rules={pureRules}
-                         control={control} {...newProps}/>;
+      return <Controller
+        defaultValue=""
+        name={newProps.name}
+        rules={pureRules}
+        control={control}
+        render={({field: {onChange, onBlur, value, ref},}) =>
+          <Select {...newProps}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  ctrlRef={ref}/>}
+      />;
 
     case Toggle:
       const cp = {
@@ -112,7 +137,7 @@ export const cloneElement = (elem, props, ctx) => {
       return <Controller
         name={name}
         rules={pureRules}
-        render={({onChange, onBlur, value, ref: toggleRef}) => {
+        render={({field: {onChange, onBlur, value, ref: toggleRef}}) => {
           return <Toggle active={value} onChange={onChange} onBlur={onBlur} ref={toggleRef} {...cp}/>
         }}
         control={control}/>;
@@ -126,15 +151,20 @@ export const cloneElement = (elem, props, ctx) => {
         extraClassName: clsx(originExCls, 'form-control'),
         errorType: realEt
       };
-      return <Controller as={elem.type}
-                         defaultValue=""
-                         rules={pureRules}
-                         control={control} {...ctlProps}/>;
+      const TagType = elem.type;
+      return <Controller
+        name={ctlProps.name}
+        defaultValue=""
+        rules={pureRules}
+        control={control}
+        render={({field: {onChange, onBlur, value, ref}}) => {
+          return <TagType value={value} onChange={onChange} onBlur={onBlur} ref={ref} {...ctlProps}/>
+        }}
+      />;
 
     default:
       extraCls = clsx(originExCls, 'form-control');
       newProps = {
-        ref: ref,
         ...elem.props,
         ...restProps,
         extraClassName: extraCls,
@@ -146,15 +176,16 @@ export const cloneElement = (elem, props, ctx) => {
 };
 
 export const cloneWidget = (widget, props, control) => {
-  const formCtrlNode = widget.props.children;
+    const formCtrlNode = widget.props.children;
 
-  validate(React.Children.count(formCtrlNode) === 1,
-    'There should only be one child in "Form.Widget"');
+    validate(React.Children.count(formCtrlNode) === 1,
+      'There should only be one child in "Form.Widget"');
 
-  return React.cloneElement(widget, {
-    children: cloneElement(formCtrlNode, props, control),
-  });
-};
+    return React.cloneElement(widget, {
+      children: cloneElement(formCtrlNode, props, control),
+    });
+  }
+;
 
 //An alternative is using lodash get & set functions to update the widget by
 // path

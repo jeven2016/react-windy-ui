@@ -13,6 +13,8 @@ export default function Form1() {
     //then call the api to save the data
   };
 
+  const {reset} = form;
+
   return <div className="doc doc-row space">
     <Form form={form} onSubmit={onSubmit}>
       <Form.Item label="Username" name="username" required rules={{required: 'The username is required'}}>
@@ -27,7 +29,10 @@ export default function Form1() {
       <Form.Item>
         <Row gutter={{x: 16}}>
           <Col><Button nativeType="submit" color="blue" block>Sign In</Button></Col>
-          <Col><Button nativeType="reset" block>Reset</Button></Col>
+          <Col><Button nativeType="reset" block onClick={() => reset({
+            username: '',
+            password: ''
+          })}>Reset</Button></Col>
         </Row>
       </Form.Item>
     </Form>

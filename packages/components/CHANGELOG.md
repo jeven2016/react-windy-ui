@@ -1,5 +1,5 @@
 ### 0.6.0
-
+* react-hook-form: upgrade to v7
 
 ### 0.5.1 - 0.5.8
 fix bugs for new project structure

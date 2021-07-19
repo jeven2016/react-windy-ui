@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useMemo} from 'react';
+import React, {useCallback, useContext, useEffect, useMemo} from 'react';
 import clsx from 'clsx';
 import {isBlank, isNil, nonNil, validate} from '../Utils';
 import {adjustItems, FormDirection} from '../common/Constants';
@@ -35,10 +35,11 @@ const FormItem = React.forwardRef((props, ref) => {
   } = props;
   const ctx = useFormContext();
   const rootItemCtx = useContext(FormItemContext);
-  if (nonNil(rules)) {
+
+  useEffect(() => {
     validate(nonNil(name),
       'The name is required while the rules is configured in Form.Item');
-  }
+  }, [name]);
 
   const itemDirection = isNil(direction) ? ctx.direction : direction;
   const itemLabelCol = isNil(labelCol) ? ctx.labelCol : labelCol;
@@ -51,10 +52,11 @@ const FormItem = React.forwardRef((props, ref) => {
   let clsName = clsx(extraClassName, className, itemDirection, justifyCls);
 
   const getCloneProps = useCallback(() => ({
-    ref: ctx.register(rules),
-    name: name,
+    // ref: ctx.register(rules),
+    // name: name,
+    ...ctx.register(name, rules),
     errorType: hasErrors ? 'error' : null,
-    pureRules: rules,
+    // pureRules: rules,
   }), [ctx, rules, name, hasErrors]);
 
   const updateWidget = useCallback((chdArray) => {

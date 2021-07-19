@@ -31,13 +31,13 @@
     "dist/*"
   ],
   "dependencies": {
-    "@hookform/error-message": "^0.0.4",
+    "@hookform/error-message": "^2.0.0",
     "@use-gesture/react": "^10.0.0-beta.21",
-    "clsx": "^1.0.4",
+    "clsx": "^1.1.1",
     "dayjs": "^1.10.5",
     "lodash": "^4.17.21",
     "prop-types": "^15.7.2",
-    "react-hook-form": "^6.15.5",
+    "react-hook-form": "^7.11.1",
     "react-spring": "^9.2.3",
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",

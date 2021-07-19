@@ -19,7 +19,7 @@ export default function Form9() {
     mode: 'onSubmit',
     shouldFocusError: false,
     defaultValues: {
-      accept: false,
+      accept: true,
     },
   });
 
