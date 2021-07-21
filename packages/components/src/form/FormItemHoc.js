@@ -1,7 +1,7 @@
 import React, {useCallback, useContext, useEffect, useMemo} from 'react';
 import clsx from 'clsx';
 import {isBlank, isNil, nonNil, validate} from '../Utils';
-import {adjustItems, FormDirection} from '../common/Constants';
+import {adjustItems, FormDirection, JustifyContentType} from '../common/Constants';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
 import {useFormContext} from 'react-hook-form';
@@ -10,6 +10,7 @@ import RootItem from './RootItem';
 import {cloneElement, cloneWidget, createErrorMessages, filterLabel, mapWidget, useLabel,} from './FormUtils';
 import {FormItemContext} from '../common/Context';
 import FormLabel from './FormLabel';
+import PropTypes from "prop-types";
 
 const FormItem = React.forwardRef((props, ref) => {
   const {
@@ -28,7 +29,6 @@ const FormItem = React.forwardRef((props, ref) => {
     hasRequiredIcon,
     iconPosition,
     children,
-    simple,
     ...otherProps
   } = props;
   const ctx = useFormContext();
@@ -168,7 +168,7 @@ const FormItem = React.forwardRef((props, ref) => {
     itemControlCol,
     getGridMsgRow]);
 
-  return simple ? chd : <div ref={ref} className={clsName} {...otherProps}>
+  return <div ref={ref} className={clsName} {...otherProps}>
     {chd}
   </div>;
 });
@@ -185,5 +185,26 @@ const FormItemHoc = React.forwardRef((props, ref) => {
 
   return <FormItem {...rest}/>;
 });
+
+FormItem.propTypes = {
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
+  direction: PropTypes.oneOf(Object.keys(FormDirection)),
+  justify: PropTypes.oneOf(Object.keys(JustifyContentType)),
+  justifyLabel: PropTypes.oneOf(Object.keys(JustifyContentType)),
+  labelCol: PropTypes.object,
+  controlCol: PropTypes.object,
+  name: PropTypes.string,
+  label: PropTypes.node,
+  rules: PropTypes.object,
+  required: PropTypes.bool,
+  hasRequiredIcon: PropTypes.bool,
+  iconPosition: PropTypes.oneOf(['left', 'right']),
+};
+
+
+FormItemHoc.propTypes = {
+  rootItem: PropTypes.bool
+};
 
 export default FormItemHoc;

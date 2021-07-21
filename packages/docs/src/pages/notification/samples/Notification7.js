@@ -19,10 +19,7 @@ export default function Notification7() {
   return <>
     <div className="doc doc-row">
       <Toggle defaultActive={true} onChange={active => toggle(active)}
-              content={{
-                on: 'Auto close',
-                off: 'Auto close',
-              }}/>
+              label='Auto close'/>
     </div>
     <Button type="primary" onClick={() => sendMessage()}>Message</Button>
   </>;
