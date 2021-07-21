@@ -92,7 +92,6 @@ const Select = React.forwardRef((props, ref) => {
     ctrlRef,
     ...otherProps
   } = props;
-
   //use a internal state to host the active state
   const [isActive, setActive] = useInternalState({
     props,
@@ -121,8 +120,7 @@ const Select = React.forwardRef((props, ref) => {
     defaultState: convertToArray(defaultValue),
     state: convertToArray(value),
   });
-
-  const ctrlStyle = searchable ? null : {cursor: 'pointer'};
+  const ctrlStyle = useMemo(() => searchable ? null : {cursor: 'pointer'}, [searchable]);
 
   useEffect(() => {
     if (!autoWidth || disabled || !isActive) {

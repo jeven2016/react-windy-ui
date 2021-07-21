@@ -58,10 +58,10 @@ const DatePicker = React.forwardRef((props, ref) => {
 
   useEffect(() => {
     //value can be blank
-    validate(nonNil(defaultDate), `)the defaultValue '${defaultValue}' should be in valid date format.}`,
+    validate(nonNil(defaultDate), `)the defaultValue '${defaultValue}' should be in valid date format '${dateFormat}'.}`,
       isBlank(defaultValue));
 
-    validate(nonNil(realDate), `the value '${value}' should be in valid date format}`, isBlank(value));
+    validate(nonNil(realDate), `the value '${value}' should be in valid date format '${dateFormat}'.`, isBlank(value));
 
     nonNil(defaultDate) && !isBlank(defaultValue)
     && validate(defaultDate.year() >= minYear, `The year should be greater than ${minYear}`);

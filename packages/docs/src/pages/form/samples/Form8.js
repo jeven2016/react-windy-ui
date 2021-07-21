@@ -1,16 +1,7 @@
 import React from 'react';
-import {
-  Button,
-  Card,
-  Col,
-  Form,
-  Input,
-  Notification,
-  Row,
-  Select
-} from 'react-windy-ui';
+import {Button, Card, Col, Form, Input, Notification, Row, Select} from 'react-windy-ui';
 
-export default function Form7() {
+export default function Form8() {
   const {form, watch} = Form.useForm({
     mode: 'onSubmit',
     shouldFocusError: false,
@@ -23,9 +14,10 @@ export default function Form7() {
       body: `${JSON.stringify(data)}`
     });
     //then call the api to save the data
+    //......
   };
 
-  //watch the gender select and get the it's value to display the name input
+  //watch the gender select and check it's value to decide if name input should present
   const genderField = watch('gender', '');
 
   return <>
@@ -50,12 +42,12 @@ export default function Form7() {
 
           {
             genderField !== '' && <Form.Item
-                name="name"
-                label="Name"
-                required={true}
-                rules={{
-                  required: 'The name is required',
-                }} justifyLabel="end">
+              name="name"
+              label="Name"
+              required={true}
+              rules={{
+                required: 'The name is required',
+              }} justifyLabel="end">
               <Input block placeholder="Name"/>
             </Form.Item>
           }

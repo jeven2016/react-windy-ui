@@ -4,6 +4,7 @@ import {Button, Col, Form, Input, Row} from 'react-windy-ui';
 export default function Form1() {
   const form = Form.useForm({
     //Validation will trigger on the submit event and invalid inputs will attach onChange event listeners to re-validate them.
+    //for more information, you can refer to : https://react-hook-form.com/api/useform
     mode: 'onSubmit',
   });
 
@@ -11,6 +12,7 @@ export default function Form1() {
   const onSubmit = (data, e) => {
     console.log('onSubmit', data, e);
     //then call the api to save the data
+    //......
   };
 
   const {reset} = form;

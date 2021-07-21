@@ -2,21 +2,23 @@ import React from 'react';
 import {
   Button,
   Card,
+  DatePicker,
   Form,
   IconAccount,
   IconLock,
   Input,
   InputGroup,
+  Radio,
+  RadioGroup,
   Select,
   Space,
-  RadioGroup,
-  Radio
+  TextField
 } from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPhone} from '@fortawesome/free-solid-svg-icons';
 
 export default function Form10() {
-  const {form, setValue} = Form.useForm({
+  const {form, setValue, reset} = Form.useForm({
     mode: 'onSubmit',
   });
 
@@ -26,14 +28,28 @@ export default function Form10() {
   };
 
   const fill = () => {
-    setValue('Username', 'Jack');
-    setValue("pwd", 'pwd');
-    setValue("age", '55');
-    setValue("gender", 'male');
-    setValue("countryCode", '+87');
-    setValue("phoneNumber", '18933432134');
-    setValue("hobby", ['Skating', 'Swimming']);
-    setValue("nationality", 'US');
+    // setValue('username', 'Jack', {shouldValidate: true});
+    // setValue("pwd", 'pwd', {shouldValidate: true});
+    // setValue("age", '55', {shouldValidate: true});
+    // setValue("gender", 'male', {shouldValidate: true});
+    // setValue("countryCode", '+87', {shouldValidate: true});
+    // setValue("phoneNumber", '18933432134', {shouldValidate: true});
+    // setValue("hobby", ['Skating', 'Swimming'], {shouldValidate: true});
+    // setValue("nationality", 'US', {shouldValidate: true});
+    // setValue("birthday", '2021-06-12', {shouldValidate: true});
+
+    //or using reset()
+    reset({
+      username: 'Jack',
+      pwd: 'pwd',
+      age: '55',
+      gender: 'male',
+      countryCode: '+87',
+      phoneNumber: '18933432134',
+      hobby: ['Skating', 'Swimming'],
+      nationality: 'US',
+      birthday: '2021-06-12'
+    })
   }
 
   return <>
@@ -42,7 +58,7 @@ export default function Form10() {
         <Form form={form} onSubmit={onSubmit} direction="horizontal"
               labelCol={{lg: 3, md: 12}} controlCol={{lg: 9, md: 12}}>
 
-          <Form.Item label="Username" required name="Username" rules={{
+          <Form.Item label="Username" required name="username" rules={{
             required: 'The username is required',
           }} justifyLabel="end">
             <Input leftIcon block placeholder="Username"
@@ -123,9 +139,14 @@ export default function Form10() {
             </Select>
           </Form.Item>
 
+          <Form.Item label="Birthday" required name="birthday" rules={{
+            required: 'The birthday is required'
+          }} justifyLabel="end">
+            <DatePicker/>
+          </Form.Item>
+
           <Form.Item label="Nationality" required name="nationality" rules={{
-            required: true,
-            message: 'The nationality is required'
+            required: 'The nationality is required'
           }} justifyLabel="end">
             <RadioGroup onChange={(val) => console.log(val)}>
               <Radio value="China">
@@ -140,6 +161,11 @@ export default function Form10() {
             </RadioGroup>
           </Form.Item>
 
+          <Form.Item label="Description" required name="desc" rules={{
+            required: 'The description is required'
+          }} justifyLabel="end">
+            <TextField label="Enter something" required size="small" block/>
+          </Form.Item>
 
           <Form.Item label="" compact={true}>
             <Space>

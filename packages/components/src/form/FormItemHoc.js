@@ -27,8 +27,6 @@ const FormItem = React.forwardRef((props, ref) => {
     required = false,
     hasRequiredIcon,
     iconPosition,
-    renderMessage,
-    equalWidth,
     children,
     simple,
     ...otherProps
@@ -37,9 +35,9 @@ const FormItem = React.forwardRef((props, ref) => {
   const rootItemCtx = useContext(FormItemContext);
 
   useEffect(() => {
-    validate(nonNil(name),
+    nonNil(rules) && validate(nonNil(name),
       'The name is required while the rules is configured in Form.Item');
-  }, [name]);
+  }, [name, rules]);
 
   const itemDirection = isNil(direction) ? ctx.direction : direction;
   const itemLabelCol = isNil(labelCol) ? ctx.labelCol : labelCol;
@@ -52,11 +50,9 @@ const FormItem = React.forwardRef((props, ref) => {
   let clsName = clsx(extraClassName, className, itemDirection, justifyCls);
 
   const getCloneProps = useCallback(() => ({
-    // ref: ctx.register(rules),
-    // name: name,
     ...ctx.register(name, rules),
     errorType: hasErrors ? 'error' : null,
-    // pureRules: rules,
+    pureRules: rules,
   }), [ctx, rules, name, hasErrors]);
 
   const updateWidget = useCallback((chdArray) => {
@@ -115,7 +111,7 @@ const FormItem = React.forwardRef((props, ref) => {
     </Row>;
   }, [compact, hasErrors, itemControlCol, itemLabelCol, msg]);
 
-  const labelComp = useLabel(props);
+  const labelComp = useLabel({label, required, hasRequiredIcon, iconPosition,});
 
   let chd = useMemo(() => {
     const chdArray = React.Children.toArray(children);
