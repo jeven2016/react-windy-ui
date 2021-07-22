@@ -164,6 +164,11 @@ export default function DocMenu(props) {
           头像 Avatar
         </Link>
       </Menu.Item>
+      <Menu.Item id="list">
+        <Link to={`${url}/list`}>
+          列表 List
+        </Link>
+      </Menu.Item>
       <Menu.Item id="navbar">
         <Link to={`${url}/navbar`}>
           导航条 Navbar

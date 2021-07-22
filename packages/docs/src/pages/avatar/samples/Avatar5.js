@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Avatar, IconAccount, Tooltip} from 'react-windy-ui';
 import img from "../../../style/imgs/girl.jpg";
 
-export default function Avatar4() {
+export default function Avatar5() {
   const [shape] = useState("circle");
   return <>
     <div className="doc doc-row">

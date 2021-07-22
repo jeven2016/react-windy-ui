@@ -1,3 +1,8 @@
+### 0.6.1
+* AvatarGroup: fix a issue relates Popover 
+* New component: List
+
+
 ### 0.6.0
 * react-hook-form: upgrade to v7
 * Notification: adapt the body's width
