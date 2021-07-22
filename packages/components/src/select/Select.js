@@ -114,6 +114,8 @@ const Select = React.forwardRef((props, ref) => {
   const rootRef = useRef();
   const multiSelectRef = useMultipleRefs(ref, rootRef);
 
+  console.log(ref?.current);
+
   const [selectedValue, setValue] = useInternalState({
     props,
     stateName: 'value',
