@@ -100,24 +100,30 @@ const IconInput = React.forwardRef((props, ref) => {
   });
 
   useEvent(EventListener.focus, function () {
-    !active && setActive(true);
+    !disabled && !active && setActive(true);
   }, true, () => interInputRef.current);
 
   useEvent(EventListener.blur, function () {
-    active && setActive(false);
+    !disabled && active && setActive(false);
   }, true, () => interInputRef.current);
 
   const restIcons = useCallback(() => {
     return React.Children.map(rightIcons,
-      node => <span className="icon-column right" unselectable="on" {...iconProps}>{node}</span>);
-  }, [iconProps, rightIcons]);
+      node => <span className={`icon-column right${disabled ? " disabled" : ""}`}
+                    unselectable="on" {...iconProps}>{node}</span>);
+  }, [disabled, iconProps, rightIcons]);
 
   return <span className={clsName} {...rootProps} ref={rootRef}>
     {leftIcon && restIcons()}
     <PureInput ref={multiInputRef} canFocus={false} placeholder={placeholder}
                size={size}
                disabled={disabled} {...otherProps}/>
-    {icon && <span className="icon-column" unselectable="on" {...iconProps}>{icon}</span>}
+    {
+      icon &&
+      <span className={`icon-column ${disabled ? " disabled" : ""}`} unselectable="on" {...iconProps}>
+        {icon}
+      </span>
+    }
     {!leftIcon && restIcons()}
   </span>;
 });

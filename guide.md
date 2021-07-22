@@ -47,3 +47,12 @@ yarn run build:theme
 ```js
 yarn run watch:wui
 ```
+
+
+## Others
+```js
+//remove dependency
+yarn workspace react-windy-ui remove react-use-gesture
+yarn workspace react-windy-ui add react-use-gesture
+
+```

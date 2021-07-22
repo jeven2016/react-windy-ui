@@ -87,7 +87,7 @@ export default function Form12() {
           <Toggle/>
         </Form.Item>
 
-        <Form.Item>
+        <Form.Item compact={true}>
           <Space gutter={{x: 8, y: 8}}>
             <Button color="blue" nativeType="submit">Submit</Button>
             <Button onClick={async () => {

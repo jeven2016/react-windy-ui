@@ -1,59 +1,93 @@
-import React, {useCallback, useRef} from 'react';
-import clsx from "clsx";
-import Card from "../card";
-import TimeList from "./TimeList";
+import React, {useEffect, useMemo, useRef} from "react";
+import TimePickerBody from "./TimePickerBody";
+import Wrapper from "./Wrapper";
+import useEventCallback from "../common/useEventCallback";
+import {DateContext} from '../common/Context';
 import useInternalState from "../common/useInternalState";
-import {isBlank, nonNil} from "../Utils";
-import {convertDate, useCloseButton} from "./DateUtils";
-import Divider from "../divider";
-import {Button} from "../index";
-import {TimeType} from "./DateConfig";
+import {convertDate, getLocaleResources, PopupType} from "./DateUtils";
+import {IconTime} from "../Icons";
 import dayjs from "dayjs";
+import {isBlank, nonNil, validate} from "../Utils";
+import {DataConfig} from "./DateConfig";
 
 
 const TimePicker = React.forwardRef((props, ref) => {
   const {
     time,
     defaultTime,
-    timeFormat = "HH:mm:ss",
+    format = DataConfig.format.time,
+    placeholder,
     onChange,
-
+    popupType = PopupType.popup,
+    locale = 'zh_CN',
+    config = DataConfig,
+    inline = false,
+    icon = <IconTime/>,
+    ...rest
   } = props;
+  const wrapperRef = useRef();
+  const defaultDate = useMemo(() => convertDate(defaultTime, [format, 'H:M:S']), [format, defaultTime]);
+  const realDate = useMemo(() => convertDate(time, format), [format, time]);
+
+  useEffect(() => {
+    validate(nonNil(defaultDate), `the defaultValue '${defaultTime}' should be in valid date format.${format}`,
+      isBlank(defaultTime));
+
+    validate(nonNil(realDate), `the value '${time}' should be in valid date format ${format}}`, isBlank(time));
+  }, [format, defaultDate, defaultTime, realDate, time]);
 
   const [timeValue, setTimeValue] = useInternalState({
     props,
     stateName: 'time',
-    defaultState: !isBlank(defaultTime) ? convertDate(defaultTime, timeFormat) : null,
-    state: !isBlank(time) ? convertDate(defaultTime, timeFormat) : null,
+    defaultState: defaultDate,
+    state: realDate,
   });
 
-  const dataPickerClsName = clsx('time-picker');
+  const realLocale = useMemo(() => getLocaleResources(locale, config), [config, locale]);
 
-  const changeTime = useCallback((type, value) => {
-    const latestTime = nonNil(timeValue) ? timeValue[type](value) : (dayjs())[type](value);
-    setTimeValue(latestTime);
-    console.log(latestTime.format(timeFormat));
-  }, [setTimeValue, timeFormat, timeValue]);
+  const initialDate = useMemo(() => dayjs(), []);
 
-  return <Card extraClassName={dataPickerClsName} hasWidth={false} ref={ref}>
-    <div className="tp-body">
-      <TimeList maxValue={24} changeTime={changeTime} timeType={TimeType.hour} time={timeValue}/>
-      <TimeList maxValue={60} changeTime={changeTime} timeType={TimeType.minute} time={timeValue}/>
-      <TimeList maxValue={60} changeTime={changeTime} timeType={TimeType.second} time={timeValue}/>
+  const selectTime = useEventCallback((selectedTime, showPopup, e) => {
+    if (!timeValue?.isSame(selectedTime)) {
+      setTimeValue(selectedTime);
+      onChange && onChange(selectedTime?.format(format) || null, selectedTime, e);
+    }
 
-      <div className="tp-mask"/>
-      <div className="tp-indicator"/>
-    </div>
-    <Divider/>
-    <Card.Footer extraClassName="date-picker-footer">
-      <div className="left">
-        <Button type="primary" size="small" inverted>Now</Button>
-      </div>
-      <div className="right">
-        <Button type="primary" size="small" inverted>OK</Button>
-      </div>
-    </Card.Footer>
-  </Card>;
+    if (!showPopup) {
+      wrapperRef.current.togglePopup();
+    }
+  });
+
+  const changeInput = useEventCallback((value, e) => {
+    selectTime(value, e);
+  });
+
+  const popupBody = <TimePickerBody time={timeValue}
+                                    setTime={setTimeValue}
+                                    initialDate={initialDate}
+                                    onSelectTime={selectTime}
+                                    wrapperRef={wrapperRef}
+                                    dateFormat={format}
+                                    locale={realLocale}
+                                    inline={inline}/>;
+
+  return <DateContext.Provider value={{
+    icon,
+    date: timeValue,
+    dateFormat: format,
+    placeholder,
+    onChange: changeInput,
+  }}>
+    {
+      inline ? popupBody :
+        <Wrapper
+          ctrlRef={ref}
+          ref={wrapperRef}
+          popupType={popupType}
+          body={popupBody}
+          {...rest}/>
+    }
+  </DateContext.Provider>;
 });
 
 export default TimePicker;

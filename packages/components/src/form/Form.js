@@ -25,11 +25,7 @@ const Form = React.forwardRef((props, ref) => {
   } = props;
 
   let clsName = clsx(extraClassName, className, direction);
-
-  let submit = onSubmit;
-  if (nonNil(form)) {
-    submit = form.handleSubmit(onSubmit, onError);
-  }
+  let submit = nonNil(form) ? form.handleSubmit(onSubmit, onError) : onSubmit;
 
   const colDefinition = useMemo(() => {
     let labelDef, ctrlDef;
@@ -50,8 +46,11 @@ const Form = React.forwardRef((props, ref) => {
     return {label: labelCol, ctrl: controlCol};
   }, [controlCol, labelCol]);
 
-  return <FormProvider {...form} direction={direction} labelCol={colDefinition.label}
-                       controlCol={colDefinition.ctrl}>
+  return <FormProvider direction={direction}
+                       labelCol={colDefinition.label}
+                       errors={form?.formState?.errors}
+                       controlCol={colDefinition.ctrl}
+                       {...form}>
     <RootElement onSubmit={submit}
                  className={clsName} {...otherProps}
                  ref={ref}/>

@@ -11,6 +11,8 @@ import Radio, {RadioGroup} from '../Radio';
 import Widget from './Widget';
 import Toggle from "../toggle";
 import TextField from "../textfield";
+import DatePicker from "../date/DatePicker";
+import TimePicker from "../date/TimePicker";
 
 export const useLabel = (props) => {
   const {
@@ -69,6 +71,29 @@ export const createFormMessages = (ctx, children, messages = []) => {
   return messages;
 };
 
+const getControlledWidget = ({TagType, name, rules, control, defaultValue, valueName, restProps}) => {
+  let refFunc;
+
+  if (TagType === Select) {
+    refFunc = (ref, value) => ({ctrlRef: ref, [valueName]: value});
+  } else {
+    refFunc = (ref, value) => ({ref: ref, [valueName]: value});
+  }
+  return <Controller
+    defaultValue={defaultValue || ''}
+    name={name}
+    rules={rules}
+    control={control}
+    render={({field: {onChange, onBlur, value, ref},}) =>
+      <TagType {...restProps}
+               {...refFunc(ref, value)}
+               onChange={onChange}
+               onBlur={onBlur}/>}
+  />
+};
+
+const specialElemTypes = [Toggle, Checkbox, Radio, RadioGroup, TextField, TimePicker];
+
 export const cloneElement = (elem, props, ctx) => {
   const control = ctx.control;
   let newProps;
@@ -78,83 +103,90 @@ export const cloneElement = (elem, props, ctx) => {
   const realEt = nonNil(errorType) ? errorType : props.errorType;
 
   //for Controller, the pureRules is used by controller and the ref should be excluded in this case
-  const {pureRules, ref, ...restProps} = props;
-  const mergedProps = {...elem.props, ...restProps}
+  const {pureRules, ...restProps} = props;
+  const mergedProps = {...elem.props, ...restProps};
+  const elemType = elem.type;
 
   let extraCls;
-  switch (elem.type) {
-    case Select :
-      originExCls = elem.props.inputProps?.extraClassName;
-      extraCls = clsx(originExCls, 'form-control');
-      newProps = {
-        ...mergedProps,
-        inputProps: {
-          ...elem.props.inputProps,
-          extraClassName: extraCls,
-        },
-        errorType: realEt
-      };
-      //while the Controller is used, the rules should be moved from ref and
-      //set via rules property of controller
-      return <Controller as={Select}
-                         defaultValue=""
-                         rules={pureRules}
-                         control={control} {...newProps}/>;
-
-    case Toggle:
-      const cp = {
-        ...mergedProps,
-        extraClassName: clsx(originExCls, 'form-control'),
-        errorType: realEt
-      };
-      const name = cp.name;
-      delete cp.name;
-      return <Controller
-        name={name}
-        rules={pureRules}
-        render={({onChange, onBlur, value, ref: toggleRef}) => {
-          return <Toggle active={value} onChange={onChange} onBlur={onBlur} ref={toggleRef} {...cp}/>
-        }}
-        control={control}/>;
-
-    case Checkbox:
-    case Radio:
-    case RadioGroup:
-    case TextField:
-      const ctlProps = {
-        ...mergedProps,
-        extraClassName: clsx(originExCls, 'form-control'),
-        errorType: realEt
-      };
-      return <Controller as={elem.type}
-                         defaultValue=""
-                         rules={pureRules}
-                         control={control} {...ctlProps}/>;
-
-    default:
-      extraCls = clsx(originExCls, 'form-control');
-      newProps = {
-        ref: ref,
-        ...elem.props,
-        ...restProps,
+  if (elemType === Select) {
+    originExCls = elem.props.inputProps?.extraClassName;
+    extraCls = clsx(originExCls, 'form-control');
+    newProps = {
+      ...mergedProps,
+      inputProps: {
+        ...elem.props.inputProps,
         extraClassName: extraCls,
-        errorType: realEt
-      };
-      return React.cloneElement(elem, newProps);
+      },
+      errorType: realEt
+    };
+    //while the Controller is used, the rules should be moved from ref and
+    //set via rules property of controller
+    return getControlledWidget({
+      TagType: elemType,
+      name: newProps.name,
+      rules: pureRules,
+      control,
+      defaultValue: newProps.defaultValue,
+      valueName: 'value',
+      restProps: {...newProps}
+    });
   }
+
+  if (elemType === DatePicker || specialElemTypes.includes(elemType)) {
+    newProps = {
+      ...mergedProps,
+      extraClassName: clsx(originExCls, 'form-control'),
+      errorType: realEt,
+    };
+    const {name, defaultValue, ...rest} = newProps;
+
+    let valueName;
+    let defaultValueName;
+    if (elemType === Toggle) {
+      valueName = 'active';
+      defaultValueName = 'defaultActive';
+    } else if (elemType === Checkbox) {
+      valueName = 'checked';
+      defaultValueName = 'defaultChecked';
+    } else {
+      valueName = 'value';
+      defaultValueName = 'defaultValue';
+    }
+
+    return getControlledWidget({
+      TagType: elemType,
+      name,
+      rules: pureRules,
+      control,
+      defaultValue: defaultValue,
+      valueName,
+      restProps: {[defaultValueName]: defaultValue, ...rest}
+    });
+  }
+
+  extraCls = clsx(originExCls, 'form-control');
+  newProps = {
+    ...elem.props,
+    ...restProps,
+    extraClassName: extraCls,
+    errorType: realEt
+  };
+  return React.cloneElement(elem, newProps);
+
 
 };
 
 export const cloneWidget = (widget, props, control) => {
-  const formCtrlNode = widget.props.children;
+    const formCtrlNode = widget.props.children;
 
-  validate(React.Children.count(formCtrlNode) === 1,
-    'There should only be one child in "Form.Widget"');
+    validate(React.Children.count(formCtrlNode) === 1,
+      'There should only be one child in "Form.Widget"');
 
-  return React.cloneElement(widget, {
-    children: cloneElement(formCtrlNode, props, control),
-  });
-};
+    return React.cloneElement(widget, {
+      children: cloneElement(formCtrlNode, props, control),
+    });
+  }
+;
 
 //An alternative is using lodash get & set functions to update the widget by
 // path

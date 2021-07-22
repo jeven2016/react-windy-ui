@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {Button, Divider, Form, Input, Select, Space} from 'react-windy-ui';
+import {Button, Form, Input, Select, Space} from 'react-windy-ui';
 
 export default function Form2() {
   const [direction, setDirection] = useState('inline');
+  const isHorizontal = direction === 'horizontal';
 
   const form = Form.useForm({
     //Validation will trigger on the submit event and invalid inputs will attach onChange event listeners to re-validate them.
@@ -30,15 +31,15 @@ export default function Form2() {
     <div className="doc doc-row">
       <Form form={form} onSubmit={onSubmit}
             direction={direction}
-            labelCol={direction === 'horizontal' ? {col: 3} : null}
-            controlCol={direction === 'horizontal' ? {col: 9} : null}>
+            labelCol={isHorizontal ? {col: 3} : null}
+            controlCol={isHorizontal ? {col: 9} : null}>
         <Form.Item name="name" label="Name" justifyLabel="end" required rules={{required: 'The name is required'}}>
           <Input placeholder="Name"/>
         </Form.Item>
         <Form.Item name="city" label="City" justifyLabel="end" required rules={{required: 'The city is required'}}>
           <Input placeholder="City"/>
         </Form.Item>
-        <Form.Item label={direction === 'horizontal' ? '' : null}>
+        <Form.Item label={isHorizontal ? '' : null}>
           <Button color="blue" nativeType="submit">
             Save
           </Button>

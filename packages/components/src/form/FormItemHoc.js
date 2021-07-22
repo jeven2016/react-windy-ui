@@ -1,7 +1,7 @@
-import React, {useCallback, useContext, useMemo} from 'react';
+import React, {useCallback, useContext, useEffect, useMemo} from 'react';
 import clsx from 'clsx';
 import {isBlank, isNil, nonNil, validate} from '../Utils';
-import {adjustItems, FormDirection} from '../common/Constants';
+import {adjustItems, FormDirection, JustifyContentType} from '../common/Constants';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
 import {useFormContext} from 'react-hook-form';
@@ -10,6 +10,7 @@ import RootItem from './RootItem';
 import {cloneElement, cloneWidget, createErrorMessages, filterLabel, mapWidget, useLabel,} from './FormUtils';
 import {FormItemContext} from '../common/Context';
 import FormLabel from './FormLabel';
+import PropTypes from "prop-types";
 
 const FormItem = React.forwardRef((props, ref) => {
   const {
@@ -27,18 +28,16 @@ const FormItem = React.forwardRef((props, ref) => {
     required = false,
     hasRequiredIcon,
     iconPosition,
-    renderMessage,
-    equalWidth,
     children,
-    simple,
     ...otherProps
   } = props;
   const ctx = useFormContext();
   const rootItemCtx = useContext(FormItemContext);
-  if (nonNil(rules)) {
-    validate(nonNil(name),
+
+  useEffect(() => {
+    nonNil(rules) && validate(nonNil(name),
       'The name is required while the rules is configured in Form.Item');
-  }
+  }, [name, rules]);
 
   const itemDirection = isNil(direction) ? ctx.direction : direction;
   const itemLabelCol = isNil(labelCol) ? ctx.labelCol : labelCol;
@@ -51,8 +50,7 @@ const FormItem = React.forwardRef((props, ref) => {
   let clsName = clsx(extraClassName, className, itemDirection, justifyCls);
 
   const getCloneProps = useCallback(() => ({
-    ref: ctx.register(rules),
-    name: name,
+    ...ctx.register(name, rules),
     errorType: hasErrors ? 'error' : null,
     pureRules: rules,
   }), [ctx, rules, name, hasErrors]);
@@ -113,7 +111,7 @@ const FormItem = React.forwardRef((props, ref) => {
     </Row>;
   }, [compact, hasErrors, itemControlCol, itemLabelCol, msg]);
 
-  const labelComp = useLabel(props);
+  const labelComp = useLabel({label, required, hasRequiredIcon, iconPosition,});
 
   let chd = useMemo(() => {
     const chdArray = React.Children.toArray(children);
@@ -170,7 +168,7 @@ const FormItem = React.forwardRef((props, ref) => {
     itemControlCol,
     getGridMsgRow]);
 
-  return simple ? chd : <div ref={ref} className={clsName} {...otherProps}>
+  return <div ref={ref} className={clsName} {...otherProps}>
     {chd}
   </div>;
 });
@@ -187,5 +185,26 @@ const FormItemHoc = React.forwardRef((props, ref) => {
 
   return <FormItem {...rest}/>;
 });
+
+FormItem.propTypes = {
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
+  direction: PropTypes.oneOf(Object.keys(FormDirection)),
+  justify: PropTypes.oneOf(Object.keys(JustifyContentType)),
+  justifyLabel: PropTypes.oneOf(Object.keys(JustifyContentType)),
+  labelCol: PropTypes.object,
+  controlCol: PropTypes.object,
+  name: PropTypes.string,
+  label: PropTypes.node,
+  rules: PropTypes.object,
+  required: PropTypes.bool,
+  hasRequiredIcon: PropTypes.bool,
+  iconPosition: PropTypes.oneOf(['left', 'right']),
+};
+
+
+FormItemHoc.propTypes = {
+  rootItem: PropTypes.bool
+};
 
 export default FormItemHoc;

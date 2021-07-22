@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Card, Form, Input, Row, Col} from 'react-windy-ui';
+import {Button, Card, Form, Input} from 'react-windy-ui';
 
 export default function Form6() {
   const {form, watch} = Form.useForm({
@@ -12,7 +12,6 @@ export default function Form6() {
     //then call the api to save the data
   };
 
-  console.log('parent updated');
   return <>
     <Card style={{minWidth: '80%'}} hasBox={false}>
       <Card.Row>

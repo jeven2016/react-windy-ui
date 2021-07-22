@@ -1,4 +1,8 @@
-### 0.5.1 - 0.5.10
+### 0.6.0
+* react-hook-form: upgrade to v7
+* Notification: adapt the body's width
+
+### 0.5.1 - 0.5.8
 fix bugs for new project structure
 * Avatar: fix a issue of group that the margin-left doesn't take effect
 * DatePicker: remove the store implementation
@@ -10,6 +14,8 @@ fix bugs for new project structure
 * react-spring: upgrade from v8 to v9
 * Toggle: remove box-shadow property
 * Grid Col: support flex 
+* IconInput: fix disabled issue
+* TimePicker: finished
 
 ### 0.5.0
 * Toggle: support form's defaultValue, other components need to double check as well

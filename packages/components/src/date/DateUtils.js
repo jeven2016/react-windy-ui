@@ -4,11 +4,6 @@ import {DataConfig} from './DateConfig';
 import {isNil, isNumber, nonNil} from "../Utils";
 import dayjs from "dayjs";
 
-export const DpDirection = {
-  horizontal: 'horizontal',
-  vertical: 'vertical',
-};
-
 export const DateActionType = {
   nextYear: 'nextYear',
   nextMonth: 'nextMonth',
@@ -31,6 +26,7 @@ export const PickerPanel = {
   yearRange: 'yearRange',
   month: 'month',
   date: 'date',
+  dateTime: 'dateTime'
 };
 
 export const usePanelHead = (content, onClick, isNode = false) => {
@@ -56,10 +52,6 @@ export const usePanel = (content, isNode = false) => {
   </Spring>;*/
 };
 
-export const getFormatter = (type) => {
-  return DataConfig.format[type];
-};
-
 export const getDisplayDate = (date, tempDate) => {
   const realTempDate = tempDate.date;
   if (tempDate.changed) {
@@ -82,9 +74,9 @@ const isActiveDay = (activeDate, displayDate, selectedDate) => {
   return activeDate.date() === selectedDate;
 };
 
-const selectDay = (displayDate, day, onChange, e) => {
+const selectDay = (displayDate, day, onChange, showPopup, e) => {
   const selectedDate = displayDate.date(day);
-  onChange(selectedDate, false, e);
+  onChange(selectedDate, showPopup, e);
 };
 
 const getKey = (date, suffix) => {
@@ -95,7 +87,8 @@ export const createDateColumns = ({
                                     date,
                                     columnCount,
                                     tempDate,
-                                    onChange
+                                    onChange,
+                                    showPopup
                                   }) => {
   const currDate = getDisplayDate(date, tempDate);
   const displayDate = currDate.clone();
@@ -116,7 +109,7 @@ export const createDateColumns = ({
     key = `prev-${getKey(displayDate, i)}`;
     td = (<td key={key}>
       <Button hasBox={false} hasRipple={false} size="small" inverted circle={true} color="gray"
-              onClick={selectDay.bind(null, lastMonthDate, daysOfLastMonth - i, onChange)}>
+              onClick={selectDay.bind(null, lastMonthDate, daysOfLastMonth - i, onChange, showPopup)}>
         {daysOfLastMonth - i}
       </Button>
     </td>);
@@ -141,7 +134,7 @@ export const createDateColumns = ({
         size="small"
         inverted={true}
         circle={true}
-        onClick={selectDay.bind(null, displayDate, dateToProcess, onChange)}>
+        onClick={selectDay.bind(null, displayDate, dateToProcess, onChange, showPopup)}>
         {dateToProcess}
       </Button>
     </td>);
@@ -155,7 +148,7 @@ export const createDateColumns = ({
     key = `next-${getKey(displayDate, i)}`;
     td = <td key={'next-' + key}>
       <Button key={i + 1} hasBox={false} hasRipple={false} inverted circle={true} size="small" color="blue"
-              onClick={selectDay.bind(null, displayDate.add(1, 'months'), i + 1, onChange)}>
+              onClick={selectDay.bind(null, displayDate.add(1, 'months'), i + 1, onChange, showPopup)}>
         {i + 1}
       </Button>
     </td>;
@@ -192,8 +185,8 @@ export const useYearRange = (date, tempDate) => {
   return [startYear, yearRange, currentYear];
 };
 
-export const useCloseButton = (autoClose, tryClosePopup, config) => {
-  return !autoClose && <Button type="primary" size="small" inverted onClick={tryClosePopup}>{config.locale.ok}</Button>;
+export const useCloseButton = (autoClose, tryClosePopup, locale) => {
+  return !autoClose && <Button type="primary" size="small" inverted onClick={tryClosePopup}>{locale.ok}</Button>;
 }
 
 export const preYear = (year, rangeNumber = 100) => (year - rangeNumber) <= 1000 ? 1000 : year - rangeNumber;
@@ -208,4 +201,11 @@ export const createTimeItems = ({max, onClick}) => {
       )}
   </>;
 
+};
+
+export const getLocaleResources = (locale, config)=>{
+  const key = 'locale_' + locale;
+  const defaultLocaleCfg = DataConfig[key];
+  const newLocalConfig = nonNil(config) ? config[key] : {};
+  return {...defaultLocaleCfg, ...newLocalConfig};
 }

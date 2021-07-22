@@ -1,13 +1,14 @@
 --- 
 order: 1
 type: sample
-zh_CN: DatePicker2
-en_US: DatePicker2
+zh_CN: DatePicker类型
+en_US: DatePicker Type
 editUrl: $BASE/docs/pages/datepicker/md/dp2.md
 ---
 
 +++ zh_CN
-DatePicker2
+可以通过Type属性设置不同类型的<Code>DatePicker</Code>。
+<Code>Type</Code>的值可以是：<Code>year</Code>, <Code>month</Code>, <Code>date</Code>, <Code>dateTime</Code>几种类型。
 
 +++ en_US
 DatePicker2

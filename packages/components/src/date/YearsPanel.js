@@ -20,8 +20,9 @@ const YearsPanel = React.forwardRef((props, ref) => {
     onChange,
     autoClose,
     tryClosePopup,
-    config,
-    setPanelType
+    locale,
+    setPanelType,
+    hasFooter
   } = useContext(DateContext);
   const [startYear, yearRange, currentYear] = useYearRange(date, tempDate);
 
@@ -58,7 +59,6 @@ const YearsPanel = React.forwardRef((props, ref) => {
             hasRipple={false}
             inverted={true}
             type={isGrayBtn(year) ? 'gray' : 'primary'}
-            size="small"
             active={checkActive(year)}
             onClick={selectYear.bind(null, year)}>
             {year}
@@ -87,10 +87,10 @@ const YearsPanel = React.forwardRef((props, ref) => {
     setPanelType(PickerPanel.yearRange);
   }, [setPanelType]);
 
-  const closeBtn = useCloseButton(autoClose, tryClosePopup, config);
+  const closeBtn = useCloseButton(autoClose, tryClosePopup, locale);
 
   return <>
-    <Card extraClassName='date-picker' hasWidth={false}>
+    <Card extraClassName='date-picker' hasWidth={false} hasBox={false} ref={ref} {...props}>
       <DateTitle setPanelType={setPanelType}/>
       <Card.Row>
         <div className="dp-body">
@@ -116,7 +116,7 @@ const YearsPanel = React.forwardRef((props, ref) => {
         </div>
       </Card.Row>
       {
-        !autoClose && <>
+        !autoClose && hasFooter && <>
           <Divider/>
           <Card.Footer extraClassName="date-picker-footer">
             <div className="left">

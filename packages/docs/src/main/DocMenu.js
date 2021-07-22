@@ -83,6 +83,11 @@ export default function DocMenu(props) {
           日期 DatePicker
         </Link>
       </Menu.Item>
+      <Menu.Item id="timepicker">
+        <Link to={`${url}/timepicker`}>
+          时间 TimePicker
+        </Link>
+      </Menu.Item>
       <Menu.Item id="form">
         <Link to={`${url}/form`}>
           表单 Form

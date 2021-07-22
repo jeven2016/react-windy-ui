@@ -11,6 +11,7 @@ import set from 'lodash/set';
 import slice from 'lodash/slice';
 import without from 'lodash/without';
 import isEqual from 'lodash/isEqual';
+import round from 'lodash/round';
 
 import {PopupPosition} from './common/Constants';
 import clsx from 'clsx';
@@ -35,6 +36,7 @@ export {
   get,
   set,
   isEqual,
+  round
 };
 
 export const isNil = (value) => value == null;

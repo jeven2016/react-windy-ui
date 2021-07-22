@@ -9,12 +9,12 @@ export default function DateTitle(props) {
     setPanelType,
     ...otherProps
   } = props;
-  const {hasTitle, config, date, type} = useContext(DateContext);
+  const {hasTitle, locale, date, type} = useContext(DateContext);
   const currDate = useMemo(() => date || dayjs(), [date]);
 
 
-  let currentDayOfWeek = config.locale.dayOfWeek[currDate.day()];
-  let currentMonth = config.locale.month[currDate.month()];
+  let currentDayOfWeek = locale.dayOfWeek[currDate.day()];
+  let currentMonth = locale.month[currDate.month()];
 
   const isYearType = type === PickerPanel.year;
   const isDateType = type === PickerPanel.date;

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import useContainer from '../common/UseContainer';
 import {ContainerId, EventListener, PopupCtrlType, PopupPosition,} from '../common/Constants';
 import {animated, useSpring} from 'react-spring';
-import {execute, isNil, isString, place, preventEvent} from '../Utils';
+import {execute, isNil, isString, place} from '../Utils';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import useResizeObserver from '../common/UseResizeObserver';
 import useEvent from '../common/UseEvent';
@@ -278,7 +278,7 @@ const Popup = React.forwardRef((props, ref) => {
       return;
     }
 
-    changeActive(true, e);
+    !activePopup && changeActive(true, e);
   });
 
   const handleKeyDown = useEventCallback((e) => {

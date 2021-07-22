@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import Card from '../card';
 import {Button, IconArrowLeft, IconArrowRight} from '../index';
 import {IconLeftDoubleArrows, IconRightDoubleArrows} from '../Icons';
-import {slice} from '../Utils';
+import {nonNil, slice} from '../Utils';
 import DateTitle from './DateTitle';
 import {
   createDateColumns,
@@ -20,30 +20,37 @@ import dayjs from "dayjs";
 
 export default function DayPanel(props) {
   const {
+    hasFooter: hasLocalFooter,
+  } = props;
+
+  const {
     date,
     tempDate,
-    leftTitle,
     columnCount,
     onChange,
     setTempDate,
     autoClose,
-    config,
+    locale,
     tryClosePopup,
-    setPanelType
+    setPanelType,
+    type,
+    hasFooter: hasGlobalFooter
   } = useContext(DateContext);
+
+  const hasFooter = nonNil(hasLocalFooter) ? hasLocalFooter : hasGlobalFooter;
 
   //if the panel is update while user select an other year/month
   const currDate = useMemo(() => getDisplayDate(date, tempDate), [date, tempDate]);
-  const dataPickerClsName = clsx('date-picker', {
-    'left-title': leftTitle,
-  });
+  const dataPickerClsName = clsx('date-picker');
 
+  const showPopup = type === PickerPanel.dateTime;
   const generateDays = useCallback(() => {
     let columns = createDateColumns({
       columnCount: columnCount,
       date: date,
       tempDate: tempDate,
       onChange: onChange,
+      showPopup
     });
 
     return <tbody>
@@ -54,9 +61,8 @@ export default function DayPanel(props) {
     <tr>{slice(columns, 28, 35)}</tr>
     <tr>{slice(columns, 35, 42)}</tr>
     </tbody>;
-  }, [columnCount, date, onChange, tempDate]);
+  }, [columnCount, date, onChange, showPopup, tempDate]);
 
-  // console.log(date.format('YYYY-MM-DD'));
   const change = useCallback((type, e) => {
     let nextDate = currDate.clone();
     switch (type) {
@@ -80,11 +86,11 @@ export default function DayPanel(props) {
     }
 
     if (type === DateActionType.today) {
-      onChange(nextDate, false, e);
+      onChange(nextDate, showPopup, e);
     } else {
       setTempDate({date: nextDate, changed: true});
     }
-  }, [currDate, onChange, setTempDate]);
+  }, [showPopup, currDate, onChange, setTempDate]);
 
   const changeYearPanel = useCallback(() => {
     setPanelType(PickerPanel.year);
@@ -93,9 +99,9 @@ export default function DayPanel(props) {
   const changeMonthPanel = useCallback(() => {
     setPanelType(PickerPanel.month);
   }, [setPanelType]);
-  const closeBtn = useCloseButton(autoClose, tryClosePopup, config);
+  const closeBtn = useCloseButton(autoClose, tryClosePopup, locale);
 
-  return <Card extraClassName={dataPickerClsName} hasWidth={false}>
+  return <Card extraClassName={dataPickerClsName} hasWidth={false} hasBox={false}>
     <DateTitle setPanelType={setPanelType}/>
     <Card.Row>
       <div className="dp-body">
@@ -114,7 +120,7 @@ export default function DayPanel(props) {
             usePanelHead(<span className="content">
                 <Button extraClassName="range-btn" inverted hasBox={false}
                         onClick={changeMonthPanel}>
-                  {config.locale.monthDetails[currDate.month()]}
+                  {locale.monthDetails[currDate.month()]}
                 </Button>
                 <Button extraClassName="range-btn" inverted hasBox={false}
                         onClick={changeYearPanel}>
@@ -139,7 +145,7 @@ export default function DayPanel(props) {
             usePanel(<table className="date-picker-table">
               <thead>
               <tr>
-                {config.locale.days.map(
+                {locale.days.map(
                   (day, index) => <th key={day + index}>{day}</th>)}
               </tr>
               </thead>
@@ -152,14 +158,14 @@ export default function DayPanel(props) {
       </div>
     </Card.Row>
     {
-      !autoClose && <>
+      !autoClose && hasFooter && <>
         <Divider/>
         <Card.Footer extraClassName="date-picker-footer">
           <div className="left">
             <Button extraClassName="today-btn" type="primary"
                     size="small" inverted
                     onClick={(e) => change(DateActionType.today)}>
-              {config.locale.today}
+              {locale.today}
             </Button>
           </div>
           <div className="right">

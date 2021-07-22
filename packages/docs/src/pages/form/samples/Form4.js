@@ -6,6 +6,9 @@ export default function Form4() {
   const form = Form.useForm({
     //Validation will trigger on the submit event and invalid inputs will attach onChange event listeners to re-validate them.
     mode: 'onSubmit',
+    defaultValues: {
+      username: 'Name'
+    }
   });
 
   const onSubmit = (data, e) => {
@@ -30,7 +33,6 @@ export default function Form4() {
           },
         }}>
           <Input
-            defaultValue='Name'
             leftIcon
             block
             placeholder="Username"
