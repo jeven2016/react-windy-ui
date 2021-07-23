@@ -19,22 +19,38 @@ const List = React.forwardRef((props, ref) => {
         A city is a large human settlement0
       </div>
       <Divider/>
+      <div className="list-item">
+        <div className="list-avatar">
+          <Avatar hasBox={false} size="small" extraClassName="bg-color-green">B</Avatar>
+        </div>
+        <div className="list-text">
+          <div className="list-title">Photo</div>
+        </div>
+        <div className="list-actions vertical">
+          <div className="list-action">
+            <Button inverted hasBox={false} size="small">Edit</Button>
+          </div>
+        </div>
+      </div>
+      <Divider/>
 
-      <div className="list-panel vertical">
+      <div className="list-item vertical">
         <div className="list-content vertical">
-          <div className="list-panel-info ">
-            <div className="list-avatar">
-              <Avatar hasBox={false} extraClassName="bg-color-green">B</Avatar>
-            </div>
-            <div className="list-text">
-              <div className="list-title">Photo</div>
-              <div className="list-desc">Jan 20, 2021</div>
+          <div className="list-details ">
+            <div className="list-line">
+              <div className="list-avatar">
+                <Avatar hasBox={false} size="small" extraClassName="bg-color-green">B</Avatar>
+              </div>
+              <div className="list-text">
+                <div className="list-title">Photo</div>
+                <div className="list-desc">Jan 20, 2021</div>
+              </div>
             </div>
           </div>
           <div className="list-actions vertical">
-          <span className="list-action">
-            <Button inverted hasBox={false} size="small">Edit</Button>
-          </span>
+            <div className="list-action">
+              <Button inverted hasBox={false} size="small">Edit</Button>
+            </div>
             <span className="list-action">
             <Button inverted hasBox={false} size="small">Add</Button>
           </span>
@@ -56,20 +72,28 @@ const List = React.forwardRef((props, ref) => {
       </div>
       <Divider/>
 
-      <div className="list-panel">
+      <div className="list-item">
         <div className="list-content">
-          <div className="list-panel-info">
-            <div className="list-avatar">
-              <Avatar size="small" hasBox={false} extraClassName="bg-color-green">B</Avatar>
-            </div>
-            <div className="list-text">
-              <div className="list-title">Photo</div>
-              <div className="list-desc">A city is distinguished from other human settlements by its relatively great
-                size, but also by its functions and its special symbolic status, which may be conferred by a central
-                authority.
+          <div className="list-details">
+            <div className="list-line">
+              <div className="list-avatar">
+                <Avatar size="small" hasBox={false} extraClassName="bg-color-green">B</Avatar>
+              </div>
+              <div className="list-text">
+                <div className="list-title">Photo</div>
+                <div className="list-desc">A city is distinguished from other human settlements by its relatively great
+                  size, but also by its functions and its special symbolic status, which may be conferred by a central
+                  authority.
+                </div>
               </div>
             </div>
+            <div className="list-line-content">
+              A city is distinguished from other human settlements by its relatively great
+              size, but also by its functions and its special symbolic status, which may be conferred by a central
+              authority.
+            </div>
           </div>
+
           <div className="list-actions">
           <span className="list-action">
             <Button inverted hasBox={false} size="small">Edit</Button>
