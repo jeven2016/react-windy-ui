@@ -3,7 +3,7 @@ import Element from './Element';
 import clsx from 'clsx';
 import {adjustItems} from './Constants';
 
-const useElement = (props, ref, defaultClassName, cls = {}, newStyle = {}) => {
+const useElement = (props, ref, defaultClassName, extraClass = {}, newStyle = {}) => {
   const {
     className = defaultClassName,
     extraClassName,
@@ -13,7 +13,7 @@ const useElement = (props, ref, defaultClassName, cls = {}, newStyle = {}) => {
   } = props;
 
   const justifyCls = adjustItems(justify);
-  let clsName = clsx(extraClassName, className, cls, {
+  let clsName = clsx(extraClassName, className, extraClass, {
     [justifyCls]: justifyCls,
   });
 
