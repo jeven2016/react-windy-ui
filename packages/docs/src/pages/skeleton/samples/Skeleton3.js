@@ -3,7 +3,7 @@ import {Avatar, Card, List, Skeleton, Toggle} from "react-windy-ui";
 import pic from '../../../style/imgs/pic_p2.jpg'
 
 function SkeletonComponent({loading}) {
-  return loading ? <Card style={{width: '15rem'}}>
+  return loading ? <Card style={{width: '20rem'}} hasBox={false}>
     <Card.Row>
       <Skeleton>
         <Skeleton.Item height={150}/>
@@ -20,8 +20,8 @@ function SkeletonComponent({loading}) {
         <Skeleton.Item height={12}/>
       </Skeleton>
     </Card.Row>
-  </Card> : <Card style={{width: '15rem'}}>
-    <Card.CardImage style={{padding: '1rem'}}>
+  </Card> : <Card style={{width: '20rem'}}>
+    <Card.CardImage autoScale>
       <Card.Image src={pic} style={{height: '150px'}}>
       </Card.Image>
     </Card.CardImage>
@@ -39,7 +39,6 @@ function SkeletonComponent({loading}) {
           </h6>
         </List.Item>
       </List>
-
     </Card.Body>
 
   </Card>;
