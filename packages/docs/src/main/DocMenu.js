@@ -169,6 +169,11 @@ export default function DocMenu(props) {
           列表 List
         </Link>
       </Menu.Item>
+      <Menu.Item id="skeleton">
+        <Link to={`${url}/skeleton`}>
+          骨架屏 Skeleton
+        </Link>
+      </Menu.Item>
       <Menu.Item id="navbar">
         <Link to={`${url}/navbar`}>
           导航条 Navbar

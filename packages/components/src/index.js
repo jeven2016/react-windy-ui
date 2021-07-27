@@ -55,6 +55,7 @@ export {default as Space} from './space/Space';
 export {default as TextField} from './textfield';
 export {default as Avatar} from './avatar';
 export {default as List} from './list';
+export {default as Skeleton} from './skeleton';
 
 export {
   IconInfo,

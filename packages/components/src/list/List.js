@@ -100,7 +100,7 @@ const Item = React.forwardRef((props, ref) => {
 
     return <div className={clsName} ref={ref} {...rest}>
       {body}
-      {type === ItemType.panel && <div className="list-more">{more}</div>}
+      {type === ItemType.panel && actionArray.length > 0 && <div className="list-more">{more}</div>}
       {rippleExists && <Ripple ref={rippleRef} color={rippleColor}/>}
     </div>;
   }
