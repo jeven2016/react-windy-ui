@@ -9,7 +9,7 @@ const ItemType = {
   line: 'line',
   simple: 'simple',
   panel: 'panel'
-}
+};
 
 const Item = React.forwardRef((props, ref) => {
     const rippleRef = useRef(null);
@@ -138,14 +138,14 @@ Item.propTypes = {
   moreElements: PropTypes.oneOfType([PropTypes.node, PropTypes.array]),
   hasRipple: PropTypes.bool,
   rippleColor: PropTypes.string
-}
+};
 
 List.propTypes = {
   className: PropTypes.string,
   extraClassName: PropTypes.string,
   header: PropTypes.node,
   footer: PropTypes.node,
-}
+};
 
 List.Item = Item;
 
