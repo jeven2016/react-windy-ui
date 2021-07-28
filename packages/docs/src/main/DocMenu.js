@@ -204,6 +204,11 @@ export default function DocMenu(props) {
           分页 Pagination
         </Link>
       </Menu.Item>
+      <Menu.Item id="typography">
+        <Link to={`${url}/typography`}>
+          排版 Typography
+        </Link>
+      </Menu.Item>
     </Menu.SubMenu>
     <Menu.SubMenu header="布局" id="layoutIndex">
       <Menu.Item id="container">

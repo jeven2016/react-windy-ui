@@ -294,6 +294,11 @@ body {
 
   &.desc-row {
     text-indent: 2rem;
+    font-size: .95em;
+
+    p {
+      line-height: 1.8rem;
+    }
   }
 
   &.doc-col {
