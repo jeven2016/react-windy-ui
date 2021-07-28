@@ -206,6 +206,11 @@ export default function DocMenu(props) {
       </Menu.Item>
     </Menu.SubMenu>
     <Menu.SubMenu header="布局" id="layoutIndex">
+      <Menu.Item id="container">
+        <Link to={`${url}/container`}>
+          容器 Container
+        </Link>
+      </Menu.Item>
       <Menu.Item id="space">
         <Link to={`${url}/space`}>
           间距 Space

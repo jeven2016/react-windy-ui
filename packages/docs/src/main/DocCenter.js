@@ -46,6 +46,7 @@ import AvatarIndex from "../pages/avatar/AvatarIndex";
 import TimeIndex from "../pages/time/TimeIndex";
 import ListIndex from "../pages/list/ListIndex";
 import SkeletonIndex from "../pages/skeleton/SkeletonIndex";
+import ContainerIndex from "../pages/container/ContainerIndex";
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -220,6 +221,7 @@ function DocCenter(props) {
                 <RouteLoader route={Route} path={`${url}/timepicker`} render={() => <TimeIndex/>}/>
                 <RouteLoader route={Route} path={`${url}/list`} render={() => <ListIndex/>}/>
                 <RouteLoader route={Route} path={`${url}/skeleton`} render={() => <SkeletonIndex/>}/>
+                <RouteLoader route={Route} path={`${url}/container`} render={() => <ContainerIndex/>}/>
                 <RouteLoader route={Route} path={`${url}/`}>
                   <StartIndex/>
                 </RouteLoader>

@@ -1,17 +1,17 @@
 import React, {useMemo} from "react";
 import clsx from "clsx";
+import * as PropTypes from "prop-types";
 
 const SkeletonType = {
-  line: 'line',
+  square: 'square',
   circle: 'circle'
-
 }
 
 const SkeletonItem = React.forwardRef((props, ref) => {
   const {
     className = 'skeleton-item',
     extraClassName,
-    type = SkeletonType.line,
+    type = SkeletonType.square,
     width,
     height,
     style,
@@ -32,6 +32,20 @@ const Skeleton = React.forwardRef((props, ref) => {
 
   return <div className={className} {...rest}/>;
 });
+
+SkeletonItem.propTypes = {
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
+  type: PropTypes.oneOf(Object.keys(SkeletonType)),
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  style: PropTypes.object
+}
+
+Skeleton.propTypes = {
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
+}
 
 Skeleton.Item = SkeletonItem;
 
