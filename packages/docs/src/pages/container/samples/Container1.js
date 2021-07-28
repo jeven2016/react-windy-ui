@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import DocFrame, {FrameContextConsumer} from "../../../utils/DocFrame";
-import {Radio, RadioGroup, Space, Toggle} from "react-windy-ui";
+import {Container, Radio, RadioGroup, Space, Toggle} from "react-windy-ui";
 
 
 export default function Container1() {
@@ -29,14 +29,8 @@ export default function Container1() {
     <DocFrame width={width} height='270px' hasBox={true}>
       <FrameContextConsumer>
         {
-          //represent the content in a individual iframe
-          () => <div className={`w-container w-container-${size}`}>
-            <div className="w-container-body">
-                
-            </div>
-
-          </div>
-
+          //represent the container in a individual iframe
+          () => <Container size={size} style={{backgroundColor: 'rgb(207, 232, 252)'}}/>
         }
       </FrameContextConsumer>
     </DocFrame>

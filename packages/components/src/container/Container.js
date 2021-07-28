@@ -17,10 +17,14 @@ const Container = React.forwardRef((props, ref) => {
     className = 'w-container',
     extraClassName,
     children,
-    size = 'sm',
+    size,
+    autoAdjust = false,
     ...rest
   } = props;
-  const clsName = clsx(extraClassName, className, {[`w-container-${size}`]: size});
+  const clsName = clsx(extraClassName, className, {
+    [`w-container-${size}`]: size,
+    [`w-container-auto`]: autoAdjust
+  });
 
   return <div className={clsName} ref={ref}>
     <Body size={size} {...rest}>
