@@ -17,6 +17,7 @@
 body {
   font: 1rem/1.5 -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   background-color: #fff;
+  letter-spacing: 0.03em;
 }
 
 .root {
@@ -298,6 +299,7 @@ body {
 
     p {
       line-height: 1.8rem;
+      letter-spacing: 0.03em;
     }
   }
 

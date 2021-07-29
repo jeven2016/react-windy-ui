@@ -1,5 +1,7 @@
-import React from "react";
+import React, {useMemo} from "react";
 import clsx from "clsx";
+import {isBlank, nonNil} from "../Utils";
+import Tooltip from "../Tooltip";
 
 const TypographyType = {
   h1: 'h1',
@@ -15,7 +17,7 @@ const Typography = React.forwardRef((props, ref) => {
   const {
     className,
     extraClassName,
-    type,
+    // type,
     color,
     disabled,
     mark,
@@ -25,16 +27,46 @@ const Typography = React.forwardRef((props, ref) => {
     deleted,
     strong,
     italic,
-    display = 'span',//it has the highest priority
-    nativeType,
+    nativeType = 'span',//it has the highest priority
+    bold = false,
+    align, //left,right, center
+    children,
+    autoEllipsis = false,
+    hasTooltip = false,
     ...rest
   } = props;
-  const clsName = clsx(extraClassName, className);
+  let clsName = useMemo(() => {
+    const cls = clsx(extraClassName, className, {
+      [`color-${color}`]: color,
+      bold,
+      disabled,
+      underline,
+      italic,
+      deleted,
+      strong,
+      ellipsis: autoEllipsis
+    });
+    return isBlank(cls) ? null : `text ${cls}`;
+  }, [autoEllipsis, bold, className, color, deleted, disabled, extraClassName, italic, strong, underline])
 
 
-  return <div className={clsName} ref={ref} {...rest}>
+  const Tag = nativeType;
 
-  </div>
+  return useMemo(() => {
+    const content = <Tag className={clsName} ref={ref} {...rest}>
+      {
+        strong ? <strong>{children}</strong> : children
+      }
+    </Tag>;
+
+    if (hasTooltip && nonNil(children)) {
+      return <Tooltip body={children}>{content}</Tooltip>;
+    }
+
+    return content;
+
+  }, [children, clsName, hasTooltip, ref, rest, strong]);
+
 });
 
 export default Typography;
