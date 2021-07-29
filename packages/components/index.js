@@ -59,6 +59,7 @@ export {default as List} from './src/list';
 export {default as Skeleton} from './src/skeleton';
 export {default as Container} from './src/container';
 export {default as Typography} from './src/typography';
+export {default as Stepper} from './src/stepper';
 
 export {
   IconInfo,

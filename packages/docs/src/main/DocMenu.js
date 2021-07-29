@@ -209,6 +209,11 @@ export default function DocMenu(props) {
           排版 Typography
         </Link>
       </Menu.Item>
+      <Menu.Item id="stepper">
+        <Link to={`${url}/stepper`}>
+          步骤条 Stepper
+        </Link>
+      </Menu.Item>
     </Menu.SubMenu>
     <Menu.SubMenu header="布局" id="layoutIndex">
       <Menu.Item id="container">

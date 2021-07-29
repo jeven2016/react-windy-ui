@@ -5,7 +5,8 @@ export default function Radio8() {
   return <>
     <div className="doc doc-row space">
       {/*you can add more ButtonGroup props for RadioGroup*/}
-      <RadioGroup block={true} direction="vertical" defaultValue="green" button={true} onChange={(val) => console.log(val)}>
+      <RadioGroup block={true} direction="vertical" defaultValue="green" button={true}
+                  onChange={(val) => console.log(val)}>
         {/*you can add more Button props for Radio*/}
         <Radio value="purple" color="purple">
           purple
