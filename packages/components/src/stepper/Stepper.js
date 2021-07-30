@@ -65,9 +65,14 @@ const Step = React.forwardRef((props, ref) => {
   });
 
   const vConnectorClsName = clsx('w-step-vertical-connector', {'with-dot': dotIcon});
+  const stepConnectorClsName = clsx('w-step-single-connector', {
+    active: index <= activeStep,
+    normal: !dotIcon,
+    'w-dot-connector': dotIcon
+  });
 
   return <div className={clsName} ref={ref} {...rest}>
-    {validVerticalStep && <div className='w-step-single-connector'/>}
+    {validVerticalStep && index > 0 && <div className={stepConnectorClsName}/>}
     <span className={iconClsName}>{realIcon}</span>
     <div className='w-step-content'>
         <span className={titleClsName}>
