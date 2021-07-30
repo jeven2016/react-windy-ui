@@ -1,7 +1,9 @@
-import React, {useContext, useMemo} from "react";
+import React, {useContext, useEffect, useMemo} from "react";
 import clsx from "clsx";
 import {StepperContext} from "../common/Context";
 import {IconChecked2} from "../Icons";
+import {Direction} from "../common/Constants";
+import {validate} from "../Utils";
 
 const Step = React.forwardRef((props, ref) => {
   const {
@@ -9,41 +11,77 @@ const Step = React.forwardRef((props, ref) => {
     extraClassName,
     children,
     index,
-    header,
-    direction = 'horizontal',
+    title,
+    subtitle,
+    icon,
     ...rest
   } = props;
-  const clsName = clsx(extraClassName, className, direction);
-  const {activeStep, count} = useContext(StepperContext);
+
+  const {
+    activeStep,
+    count,
+    borderedIcon,
+    isVertical,
+    dotIcon,
+    reverse,
+    grayDot,
+    stepDirection,
+    isVerticalStep
+  } = useContext(StepperContext);
+
+  const validVerticalStep = !isVertical && isVerticalStep;
+  const clsName = clsx(extraClassName, className, stepDirection, {'vertical-step': validVerticalStep});
+  const isActive = useMemo(() => reverse ? index === (count - activeStep - 1) : index === activeStep,
+    [activeStep, count, index, reverse]);
+  const isChecked = useMemo(() => reverse ? index > count - activeStep - 1 : index < activeStep,
+    [activeStep, count, index, reverse]);
+
+  const titleClsName = clsx('w-step-title', {
+    active: isActive,
+    checked: isChecked,
+    'vertical-step': validVerticalStep
+  });
+  const bodyClsName = clsx('w-step-body', {active: isActive, checked: isChecked, 'vertical-body': isVertical});
 
   const realIcon = useMemo(() => {
-    if (activeStep === index) {
-      return <IconChecked2/>
+    if (dotIcon) {
+      return null;
     }
-    return index + 1;
-  }, [activeStep, index]);
+    if (icon) {
+      return icon;
+    }
+    if (index >= activeStep) {
+      return index + 1;
+    }
+    return <IconChecked2/>;
+  }, [activeStep, dotIcon, icon, index]);
 
-  const chd = useMemo(() => {
-    const iconClsName = clsx('w-step-icon', direction);
-    return <div className={clsName} ref={ref} {...rest}>
-      <span className={iconClsName}>
-        {realIcon}
-      </span>
-      <div className='w-step-content'>
-        <span className='w-step-title'>
-          {header}
-          {index < count - 1 && <div className='w-step-connector'/>}
+  const iconClsName = clsx('w-step-icon', stepDirection, {
+    active: isActive,
+    checked: isChecked,
+    'with-border': !grayDot && borderedIcon,
+    'w-dot': dotIcon,
+    'w-gray-dot': grayDot
+  });
+
+  const vConnectorClsName = clsx('w-step-vertical-connector', {'with-dot': dotIcon});
+
+  return <div className={clsName} ref={ref} {...rest}>
+    {validVerticalStep && <div className='w-step-single-connector'/>}
+    <span className={iconClsName}>{realIcon}</span>
+    <div className='w-step-content'>
+        <span className={titleClsName}>
+          <span className='w-step-title-info'>{title}</span>
+          {subtitle && <span className='w-step-subtitle'>{subtitle}</span>}
+          {index < count - 1 && !isVertical && !isVerticalStep && <div className='w-step-connector'/>}
         </span>
-        <div className='w-step-body'>{children}</div>
-
-      </div>
-
+      <div className={bodyClsName}>{children}</div>
     </div>
 
-  }, [children, clsName, count, direction, header, index, realIcon, ref, rest]);
-
-  return chd;
+    {isVertical && index < count - 1 && <div className={vConnectorClsName}/>}
+  </div>;
 });
+
 
 const Stepper = React.forwardRef((props, ref) => {
   const {
@@ -51,12 +89,27 @@ const Stepper = React.forwardRef((props, ref) => {
     extraClassName,
     activeStep,
     children,
+    borderedIcon = true,
+    direction = Direction.horizontal,
+    stepDirection = Direction.horizontal,
+    dotIcon = false,
+    reverse = false,
+    grayDot = false,
     ...rest
   } = props;
-  const clsName = clsx(extraClassName, className);
 
-  const chdArray = useMemo(() => React.Children.toArray(children), [children]);
-  console.log(chdArray.length)
+  console.log(`${direction}, ${stepDirection}`)
+  useEffect(() => {
+    stepDirection === Direction.vertical && validate(direction !== stepDirection,
+      "The direction cannot be vertical while the stepDirection is vertical")
+  }, [direction, stepDirection]);
+
+  const clsName = clsx(extraClassName, className, direction);
+
+  const chdArray = useMemo(() => {
+    const array = React.Children.toArray(children);
+    return reverse ? array.reverse() : array;
+  }, [children, reverse]);
   const childrenCount = useMemo(() => chdArray.length, [chdArray.length]);
 
   const chd = useMemo(() => chdArray.map((child, index) =>
@@ -64,8 +117,15 @@ const Stepper = React.forwardRef((props, ref) => {
 
   const ctxValue = useMemo(() => ({
     activeStep,
+    borderedIcon,
+    dotIcon,
+    reverse,
+    grayDot,
+    isVertical: direction === Direction.vertical,
+    isVerticalStep: stepDirection === Direction.vertical,
+    stepDirection,
     count: childrenCount
-  }), [activeStep, childrenCount]);
+  }), [activeStep, borderedIcon, childrenCount, direction, dotIcon, grayDot, reverse, stepDirection]);
 
   return <StepperContext.Provider value={ctxValue}>
     <div className={clsName} ref={ref} {...rest}>

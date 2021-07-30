@@ -37,7 +37,7 @@
 | ref | 根节点Dom对象的引用 | function \| ref | - | 当需要获取到根节点的dom对象时可设置此属性 |
 | className | 样式名称 | string | form |  |
 | extraClassName | 额外添加的样式名称 | string | - |  |
-| direction | 布局方向 | string | vertical | 值可以是: <Code>vertical</Code>, <Code>horizontal</Code>, <Code>inline</Code> |
+| stepDirection | 布局方向 | string | vertical | 值可以是: <Code>vertical</Code>, <Code>horizontal</Code>, <Code>inline</Code> |
 | nativeType | 当前表单的根节点类型 | string | form | 默认根节点是<Code>form</code> |
 | labelCol | Label的布局设定 | object | - | 使用<Code>[Grid](http://super666.cn:3000/#/docs/grid)</Code>中的<Code>Col定义</Code>，定义不同窗口大小下的布局。结构可以是<Code>{col,xs,sm,md,lg,xg}</Code> |
 | controlCol | 输入控件所处的列 | object | - | 使用<Code>[Grid](http://super666.cn:3000/#/docs/grid)</Code>中的<Code>Col定义</Code>，定义不同窗口大小下的布局。结构可以是<Code>{col,xs,sm,md,lg,xg}</Code> |
@@ -51,7 +51,7 @@
 | ref | 根节点Dom对象的引用 | function \| ref | - | 当需要获取到根节点的dom对象时可设置此属性 |
 | className | 样式名称 | string | form-item |  |
 | extraClassName | 额外添加的样式名称 | string | - |  |
-| direction | Item内覆盖全局的布局方向 | string | vertical | 值可以是: <Code>vertical</Code>, <Code>horizontal</Code>, <Code>inline</Code> |
+| stepDirection | Item内覆盖全局的布局方向 | string | vertical | 值可以是: <Code>vertical</Code>, <Code>horizontal</Code>, <Code>inline</Code> |
 | compact | 在Form中是否以紧凑模式显示 | boolean | false | 当值为true时， 不会添加一个空行，显示错误信息 |
 | justify | 指定列在水平方向的排列方式 | string | start | 值可以是: <Code>start</Code>、<Code>center</Code>、<Code>end</Code>、<Code>around</Code>、<Code>between</Code>、<Code>evenly</Code> |
 | justifyLabel | Label列在水平方向的排列方式  | string | start | 定义与justify属性相同 |

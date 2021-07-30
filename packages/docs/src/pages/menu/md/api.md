@@ -30,7 +30,7 @@ editUrl: $BASE/docs/pages/menu/md/api.md
 | hasArrow | 是否有折叠\/展开的箭头 | boolean | true |  |
 | collapsable | 是否支持折叠 | boolean | true |  |
 | justify | 水平排列Item的方式 | string | start | 值可以是： <Code>start</Code>，<Code>end</Code>, <Code>center</Code>, <Code>around</Code>, <Code>between</Code>, <Code>evenly</Code> |
-| direction | 菜单的布局方向 | string | vertical | 值可以是： <Code>horizontal（水平布局</Code>），<Code>vertical（垂直布局）</Code>   |
+| stepDirection | 菜单的布局方向 | string | vertical | 值可以是： <Code>horizontal（水平布局</Code>），<Code>vertical（垂直布局）</Code>   |
 | type | 类型 | string | normal | 可设置为： <Code>normal</Code>, <Code>primary</Code>, <Code>dark</Code>   |
 | popupSubMenu | 是否弹出子菜单 | boolean | false |   |
 | autoIndent | Menu是否自动缩进 | boolean | true  | 值为<Code>true</Code>时菜单选项会自动添加<Code>padding-left</Code>属性   |
