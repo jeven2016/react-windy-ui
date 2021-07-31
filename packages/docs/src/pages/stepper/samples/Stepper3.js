@@ -11,7 +11,6 @@ export default function Stepper3() {
         <Stepper.Step title="Step One" subtitle="Subtitle">{desc}</Stepper.Step>
         <Stepper.Step title="Step Two" subtitle="Subtitle">{desc}</Stepper.Step>
         <Stepper.Step title="Step Three" subtitle="Subtitle">{desc}</Stepper.Step>
-        <Stepper.Step title="Step Four" subtitle="Subtitle">{desc}</Stepper.Step>
       </Stepper>
     </div>
   </>
