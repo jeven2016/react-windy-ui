@@ -35,6 +35,19 @@ editUrl: $BASE/docs/pages/container/md/api.md
 | rippleColor | 水纹的颜色 | string | \#ccc | 颜色字符串值，例如<Code>'#333'</Code> |
 
 
+- <Code><strong>Step</strong></Code>
+
+| 属性 | 名称 | 类型 | 默认值 | 描述 |
+| --- | --- | --- | --- | --- |
+| ref | Dom对象的引用 | function \| ref | - | 当需要获取dom对象时可设置此属性 |
+| className | 样式名称 | string | w-step |  |
+| extraClassName | 样式名称 | string | - |  |
+| title | 标题内容 | react node | - | |
+| subtitle | 子标题内容 | react node | - | |
+| icon | 图标 | react node | - | |
+| errorType | 错误类型 | string | - | 值可以是: <Code>error</Code>, <Code>warning</Code> |
+| disabled | 是否禁用 | boolean | false | |
+| status | 当前Step的状态 | string | - | 值可以是： <Code>finished</Code>, <Code>processing</Code>, <Code>todo</Code>|
 
 +++ en_US
 
