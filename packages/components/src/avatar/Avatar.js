@@ -36,7 +36,8 @@ const Avatar = React.forwardRef((props, ref) => {
   });
   const rootCls = clsx("avatar-root", {'non-accessory': !isAccessory})
 
-  const avatarNode = <div className={clsName} style={style} {...rest} >
+  const avatarNodeProps = useMemo(() => isNil(accessory) ? {ref: ref, ...rest} : rest, [accessory, ref, rest]);
+  const avatarNode = <div className={clsName} style={style} {...avatarNodeProps} >
     <div className="wrapper">
       {nonNil(src) && <img className="avatar-img" src={src} alt={alt} {...imgProps}/>}
       {children}

@@ -17,17 +17,11 @@ function getTranslate(position, activePopup, startOffset) {
   const transOffset = startOffset + 5;
 
   let x = 0, y = 0;
-  if (position.startsWith('top')) {
+  if (position.startsWith('top') || position.startsWith('left')) {
     y = -transOffset;
   }
-  if (position.startsWith('bottom')) {
+  if (position.startsWith('bottom') || position.startsWith('right')) {
     y = transOffset;
-  }
-  if (position.startsWith('left')) {
-    x = -transOffset;
-  }
-  if (position.startsWith('right')) {
-    x = transOffset;
   }
   return {
     transform: activePopup
@@ -155,6 +149,10 @@ const Popup = React.forwardRef((props, ref) => {
 
   //get the controller node
   const ctrl = useMemo(() => {
+    if (isNil(ctrlNode)) {
+      return null;
+    }
+
     const disabledStyle = {
       cursor: 'not-allowed',
       opacity: 0.7,

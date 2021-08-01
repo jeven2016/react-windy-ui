@@ -6,6 +6,8 @@ import useInternalState from './common/useInternalState';
 import clsx from 'clsx';
 import Element from './common/Element';
 import {RadioGroupContext} from './common/Context';
+import Button from "./button";
+import ButtonGroup from "./ButtonGroup";
 
 /**
  * Radio Component
@@ -55,7 +57,7 @@ const Radio = React.forwardRef((props, ref) => {
   }, [checkedIcon, uncheckedIcon, checkState]);
 
   const realErrType = nonNil(errorType) ? errorType : ctx.errorType;
-  const clsName = clsx(extraClassName, className, alignLabel, {
+  const clsName = !ctx.button && clsx(extraClassName, className, alignLabel, {
     checked: checkState,
     unchecked: !checkState,
     [`check-${realErrType}`]: realErrType,
@@ -74,22 +76,28 @@ const Radio = React.forwardRef((props, ref) => {
     invoke(callback, nextValue, e);
   }, [disabled, ctx, checkState, setCheckState, value, existsGroup, onChange]);
 
-  const iconColor = useMemo(() => createColorClsName({
+  const iconColor = useMemo(() => !ctx.button && createColorClsName({
     checkState, checkedColor, uncheckedColor,
-  }), [checkState, checkedColor, uncheckedColor]);
+  }), [checkState, checkedColor, ctx.button, uncheckedColor]);
 
-  realIcon = useMemo(() => realIcon ? React.cloneElement(realIcon, {
+  realIcon = useMemo(() => realIcon && !ctx.button ? React.cloneElement(realIcon, {
       onKeyDown: (e) => e.keyCode === 13 && handleClick(),
       tabIndex: 0,
       extraClassName: iconColor?.className || '',
       style: (!iconColor?.isClass && iconColor?.style) || {},
     }) : null,
-    [iconColor, realIcon, handleClick]);
+    [realIcon, ctx.button, iconColor?.className, iconColor?.isClass, iconColor?.style, handleClick]);
 
-  return <>
-    <Element className={clsName}
-             disabled={disabled || ctx.disabled} {...otherProps}
-             onClick={handleClick} ref={ref}>
+  return useMemo(() => {
+    if (ctx.button) {
+      return <Button active={checkState} disabled={disabled || ctx.disabled} onClick={handleClick} ref={ref} outline
+                     hasBox={false} initOutlineColor
+                     type="primary" {...otherProps}>{children}</Button>
+    }
+
+    return <Element className={clsName}
+                    disabled={disabled || ctx.disabled} {...otherProps}
+                    onClick={handleClick} ref={ref}>
       {realIcon}
       <input type="radio" value={checkState} disabled={disabled}
              className="hidden-input" tabIndex="-1"/>
@@ -99,8 +107,9 @@ const Radio = React.forwardRef((props, ref) => {
           {children}
         </span>
       }
-    </Element>
-  </>;
+    </Element>;
+  }, [checkState, children, clsName, ctx.button, ctx.disabled, disabled, handleClick, label, otherProps, realIcon, ref]);
+
 });
 
 Radio.propTypes = {
@@ -118,6 +127,7 @@ Radio.propTypes = {
   checkedIcon: PropTypes.node,
   uncheckedIcon: PropTypes.node,
   errorType: PropTypes.oneOf(['ok', 'warning', 'error']),
+  button: PropTypes.bool
 };
 
 /**
@@ -133,6 +143,7 @@ const RadioGroup = React.forwardRef((props, ref) => {
     onChange,
     disabled,
     errorType,
+    button = false,
     ...otherProps
   } = props;
   const clsName = clsx(className, extraClassName);
@@ -155,11 +166,19 @@ const RadioGroup = React.forwardRef((props, ref) => {
       selectedValue,
       existsGroup: true,
       errorType,
+      button,
     };
-  }, [handleChange, disabled, selectedValue, errorType]);
+  }, [handleChange, disabled, selectedValue, errorType, button]);
+
+  const chd = useMemo(() => {
+    if (button) {
+      return <ButtonGroup ref={ref} {...otherProps}>{children}</ButtonGroup>
+    }
+    return <span className={clsName} ref={ref} {...otherProps}>{children}</span>;
+  }, [button, children, clsName, otherProps, ref]);
 
   return <RadioGroupContext.Provider value={ctx}>
-    <span className={clsName} ref={ref} {...otherProps}>{children}</span>
+    {chd}
   </RadioGroupContext.Provider>;
 });
 
@@ -171,6 +190,7 @@ RadioGroup.propTypes = {
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
   errorType: PropTypes.oneOf(['ok', 'warning', 'error']),
+  button: PropTypes.bool,
 };
 
 export default Radio;

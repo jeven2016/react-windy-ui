@@ -151,3 +151,32 @@ export const EventListener = {
 export const ContainerId = {
   popup: 'wui-popup',
 };
+
+export const Colors = {
+  comment: 'comment',
+  primary: 'primary',
+  secondary: 'secondary',
+  success: 'success',
+  ok: 'ok',
+  warning: 'warning',
+  danger: 'danger',
+  error: 'error',
+  cyan: 'cyan',
+  black: 'black',
+  blue: 'blue',
+  brown: 'brown',
+  dark: 'dark',
+  green: 'green',
+  gray: 'gray',
+  'gray-darker': 'gray-darker',
+  light: 'light',
+  'light-gray': 'light-gray',
+  orange: 'orange',
+  pink: 'pink',
+  purple: 'purple',
+  red: 'red',
+  yellow: 'yellow',
+  teal: 'teal',
+  violet: 'violet',
+  white: 'white',
+}

@@ -21,7 +21,7 @@ Enhance:
 - Navbar里面的Input背景色已经Icon的颜色跟primary不匹配
 - Navbar10 sample， 无法在iframe中与Affix结合使用
 - icons redesign
-- remove useInternalActive
+- remove useInternalActive  --Done
 - replacing with scroll-into-view-if-needed
 - replace onChange to onActiveChange for switching state, the onChange is used for native value
   changing
@@ -37,6 +37,7 @@ Enhance:
 - improve AlignItemsType and JustifyContentType
 - 弹出菜单，重新定位，当超出可视窗口; 宽度调整到不超出窗口的长度
 - validate参数校验出错后不整个页面崩溃
+- Typography支持文字折叠
 
 Doc:
 - Add new sample for Space's block attribute

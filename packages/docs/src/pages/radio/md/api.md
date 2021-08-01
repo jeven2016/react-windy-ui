@@ -43,6 +43,7 @@ RadioGroup的属性如下所示
 | onChange | 状态变化触发的回调 | function | - | 当设置了value时，需要在onChange中设置value属性值 |
 | disabled | 是否禁用 | boolean | false |  |
 | errorType | Form中对应的错误类型 | string | - | 值可以为：<Code>ok</Code>, <Code>warning</Code>, <Code>error</Code> |
+| button | 是否显示成按钮形态 | boolean | false | 当值为true时， 在Radio上设置的属性都会透传到对应的Button上;相应的在RadioGroup上设置的属性，实际上会在ButtonGroup上应用 |
 
 +++ en_US
 ## API [editUrl]     

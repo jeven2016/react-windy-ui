@@ -24,7 +24,7 @@
 | hasMask | 是否有背景层 | boolean | true | |
 | darkMask | 是否显示黑色的背景层 | boolean | true | |
 | hasBackground | 是否有背景色 | boolean | true | |
-| direction | Loader内容区域的排列方向 | string | vertical | 值可以设置为: <Code>horizontal</Code>, <Code>vertical</Code> |
+| stepDirection | Loader内容区域的排列方向 | string | vertical | 值可以设置为: <Code>horizontal</Code>, <Code>vertical</Code> |
 | modalStyle | Loader对话框的样式对象 | object | - |  |
 | global | 是否全局显示一个Loader  | boolean | false |  |
 | onMaskClick | 点击背景层的回调  | function | - |  |

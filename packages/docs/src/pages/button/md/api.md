@@ -50,7 +50,7 @@ editUrl: $BASE/docs/pages/button/md/api.md
 | ref | Dom对象的引用 | function \| Ref | - | 当需要获取到按dom对象时可设置此属性 |
 | className | 样式名称 | string | button-group |  |
 | extraClassName | 额外添加的样式名称 | string | - |  |
-| direction | 排列方向 | string | horizontal | 值可以是：<Code>horizontal</Code>, <Code>vertical</Code> |
+| stepDirection | 排列方向 | string | horizontal | 值可以是：<Code>horizontal</Code>, <Code>vertical</Code> |
 | block | 将宽度设置为100%的行宽 | boolean | `false` |  |
 | size | 按钮的尺寸 | string | medium | 值可以是: <Code>large</Code>, <Code>medium</Code>, <Code>small</Code>, 默认为medium     |   
 

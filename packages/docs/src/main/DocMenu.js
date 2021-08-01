@@ -164,6 +164,16 @@ export default function DocMenu(props) {
           头像 Avatar
         </Link>
       </Menu.Item>
+      <Menu.Item id="list">
+        <Link to={`${url}/list`}>
+          列表 List
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="skeleton">
+        <Link to={`${url}/skeleton`}>
+          骨架屏 Skeleton
+        </Link>
+      </Menu.Item>
       <Menu.Item id="navbar">
         <Link to={`${url}/navbar`}>
           导航条 Navbar
@@ -194,8 +204,23 @@ export default function DocMenu(props) {
           分页 Pagination
         </Link>
       </Menu.Item>
+      <Menu.Item id="typography">
+        <Link to={`${url}/typography`}>
+          排版 Typography
+        </Link>
+      </Menu.Item>
+      <Menu.Item id="stepper">
+        <Link to={`${url}/stepper`}>
+          步骤条 Stepper
+        </Link>
+      </Menu.Item>
     </Menu.SubMenu>
     <Menu.SubMenu header="布局" id="layoutIndex">
+      <Menu.Item id="container">
+        <Link to={`${url}/container`}>
+          容器 Container
+        </Link>
+      </Menu.Item>
       <Menu.Item id="space">
         <Link to={`${url}/space`}>
           间距 Space

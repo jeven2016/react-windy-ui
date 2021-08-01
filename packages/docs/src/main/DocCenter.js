@@ -44,6 +44,11 @@ import TextFieldIndex from "../pages/text_field/TextFieldIndex";
 import StartIndex from "../pages/start/StartIndex";
 import AvatarIndex from "../pages/avatar/AvatarIndex";
 import TimeIndex from "../pages/time/TimeIndex";
+import ListIndex from "../pages/list/ListIndex";
+import SkeletonIndex from "../pages/skeleton/SkeletonIndex";
+import ContainerIndex from "../pages/container/ContainerIndex";
+import TypographyIndex from "../pages/typography/TypographyIndex";
+import StepperIndex from "../pages/stepper/StepperIndex";
 
 function DocCenter(props) {
   // The `path` lets us build <Route> paths that are
@@ -216,6 +221,11 @@ function DocCenter(props) {
                 </RouteLoader>
                 <RouteLoader route={Route} path={`${url}/avatar`} render={() => <AvatarIndex/>}/>
                 <RouteLoader route={Route} path={`${url}/timepicker`} render={() => <TimeIndex/>}/>
+                <RouteLoader route={Route} path={`${url}/list`} render={() => <ListIndex/>}/>
+                <RouteLoader route={Route} path={`${url}/skeleton`} render={() => <SkeletonIndex/>}/>
+                <RouteLoader route={Route} path={`${url}/container`} render={() => <ContainerIndex/>}/>
+                <RouteLoader route={Route} path={`${url}/typography`} render={() => <TypographyIndex/>}/>
+                <RouteLoader route={Route} path={`${url}/stepper`} render={() => <StepperIndex/>}/>
                 <RouteLoader route={Route} path={`${url}/`}>
                   <StartIndex/>
                 </RouteLoader>

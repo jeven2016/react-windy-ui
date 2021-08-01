@@ -1,3 +1,9 @@
+### 0.6.1
+* AvatarGroup: fix a issue relates Popover 
+* New component: List
+* Tooltip supports: selectable TextField(fixed), DatePicker, TimePicker, Dropdown(fixed), Select --- TODO
+
+
 ### 0.6.0
 * react-hook-form: upgrade to v7
 * Notification: adapt the body's width
