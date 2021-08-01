@@ -3,7 +3,7 @@ order: 3
 type: sample  
 zh_CN: 自定义Alert
 en_US: Customized Alert
-editUrl: $BASE/docs/pages/alert/md/alert3.md
+editUrl: $BASE/pages/alert/md/alert3.md
 ---      
 
 +++ zh_CN   

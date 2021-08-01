@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 普通的Notification
 en_US: Notification
-editUrl: $BASE/docs/pages/notification/md/notification1.md
+editUrl: $BASE/pages/notification/md/notification1.md
 ---
 
 +++ zh_CN  

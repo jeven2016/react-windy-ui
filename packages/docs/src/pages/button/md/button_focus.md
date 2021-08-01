@@ -3,7 +3,7 @@ order: 14
 type: sample  
 zh_CN: 按钮Focus 
 en_US: Focus
-editUrl: $BASE/docs/pages/button/md/button_focus.md
+editUrl: $BASE/pages/button/md/button_focus.md
 ---      
 
 +++ zh_CN   

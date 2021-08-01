@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 简单示例
 en_US: Radio
-editUrl: $BASE/docs/pages/radio/md/radio1.md
+editUrl: $BASE/pages/radio/md/radio1.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 单选/多选表格行
 en_US: Table
-editUrl: $BASE/docs/pages/table/md/table3.md
+editUrl: $BASE/pages/table/md/table3.md
 ---
 
 +++ zh_CN

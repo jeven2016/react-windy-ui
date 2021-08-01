@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 简单示例
 en_US: popover
-editUrl: $BASE/docs/pages/popover/md/pop1.md
+editUrl: $BASE/pages/popover/md/pop1.md
 ---
 
 +++ zh_CN

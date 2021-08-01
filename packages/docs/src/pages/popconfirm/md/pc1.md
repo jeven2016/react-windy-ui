@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 简单示例
 en_US: PopConfirm
-editUrl: $BASE/docs/pages/popconfirm/md/pc1.md
+editUrl: $BASE/pages/popconfirm/md/pc1.md
 ---
 
 +++ zh_CN

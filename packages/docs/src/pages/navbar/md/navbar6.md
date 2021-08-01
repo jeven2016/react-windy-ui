@@ -3,7 +3,7 @@ order: 6
 type: sample
 zh_CN: 小窗口下始终显示的List
 en_US: navbar
-editUrl: $BASE/docs/pages/navbar/md/navbar5.md
+editUrl: $BASE/pages/navbar/md/navbar5.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@ order: 5
 type: sample  
 zh_CN: 自定义文字背景
 en_US: Header and tail
-editUrl: $BASE/docs/pages/blockquote/md/bq5.md
+editUrl: $BASE/pages/blockquote/md/bq5.md
 ---      
 
 +++ zh_CN   

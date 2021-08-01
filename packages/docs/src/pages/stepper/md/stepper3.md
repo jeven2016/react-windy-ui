@@ -4,7 +4,7 @@ type: sample
 title: 垂直显示   
 zh_CN: 垂直显示   
 en_US: Sample
-editUrl: $BASE/docs/pages/stepper/md/stepper3.md
+editUrl: $BASE/pages/stepper/md/stepper3.md
 ---      
 
 +++ zh_CN   

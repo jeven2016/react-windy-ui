@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: JSON数据
 en_US: Table
-editUrl: $BASE/docs/pages/table/md/table2.md
+editUrl: $BASE/pages/table/md/table2.md
 ---
 
 +++ zh_CN

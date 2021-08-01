@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: Input Group
 en_US: Input Group
-editUrl: $BASE/docs/pages/input/md/input4.md
+editUrl: $BASE/pages/input/md/input4.md
 ---
 
 +++ zh_CN

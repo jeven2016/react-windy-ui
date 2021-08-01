@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 简单示例
 en_US: Sample
-editUrl: $BASE/docs/pages/carousel/md/Cr1.md
+editUrl: $BASE/pages/carousel/md/Cr1.md
 ---
 
 +++ zh_CN

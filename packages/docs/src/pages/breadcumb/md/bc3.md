@@ -3,7 +3,7 @@ order: 3
 type: sample  
 zh_CN: 自定义分隔符 
 en_US: Separator
-editUrl: $BASE/docs/pages/breadcumb/md/bc3.md
+editUrl: $BASE/pages/breadcumb/md/bc3.md
 ---      
 
 +++ zh_CN   

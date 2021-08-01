@@ -5,7 +5,7 @@ title: 简单示例
 zh_CN: 禁用Step   
 en_US: Sample
 onlyVisible: false
-editUrl: $BASE/docs/pages/stepper/md/stepper9_1.md
+editUrl: $BASE/pages/stepper/md/stepper9_1.md
 ---      
 
 +++ zh_CN   

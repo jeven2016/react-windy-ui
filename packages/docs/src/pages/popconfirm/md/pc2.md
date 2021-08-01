@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: 处理按钮的点击
 en_US: PopConfirm
-editUrl: $BASE/docs/pages/popconfirm/md/pc2.md
+editUrl: $BASE/pages/popconfirm/md/pc2.md
 ---
 
 +++ zh_CN

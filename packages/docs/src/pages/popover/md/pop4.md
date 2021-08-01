@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 自行控制菜单的关闭
 en_US: popover
-editUrl: $BASE/docs/pages/popover/md/pop4.md
+editUrl: $BASE/pages/popover/md/pop4.md
 ---
 
 +++ zh_CN

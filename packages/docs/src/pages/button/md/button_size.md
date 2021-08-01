@@ -3,7 +3,7 @@ order: 5
 type: sample  
 zh_CN: 按钮尺寸
 en_US: Button Size
-editUrl: $BASE/docs/pages/button/md/button_size.md
+editUrl: $BASE/pages/button/md/button_size.md
 ---     
 
 

@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: 简单示例
 en_US: Simple Collapse
-editUrl: $BASE/docs/pages/collapse/md/collapse2.md
+editUrl: $BASE/pages/collapse/md/collapse2.md
 ---
 
 +++ zh_CN

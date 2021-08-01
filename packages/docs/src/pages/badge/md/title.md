@@ -3,7 +3,7 @@ order: 0
 type: text
 zh_CN: 标记 Badge
 en_US: Badge
-editUrl: $BASE/docs/pages/badge/md/title.md
+editUrl: $BASE/pages/badge/md/title.md
 ---
 
 +++  zh_CN 

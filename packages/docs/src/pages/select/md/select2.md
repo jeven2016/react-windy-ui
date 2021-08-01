@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: 可以搜索的Select
 en_US: Select
-editUrl: $BASE/docs/pages/select/md/select2.md
+editUrl: $BASE/pages/select/md/select2.md
 ---
 
 +++ zh_CN

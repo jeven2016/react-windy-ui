@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 水平排列
 en_US: Horizontal 
-editUrl: $BASE/docs/pages/grid/md/grid3.md
+editUrl: $BASE/pages/grid/md/grid3.md
 ---
 
 +++ zh_CN

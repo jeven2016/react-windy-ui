@@ -1,7 +1,7 @@
 ---
 order: 0
 type: text
-editUrl: $BASE/docs/pages/carousel/md/title.md
+editUrl: $BASE/pages/carousel/md/title.md
 ---
 
 +++  zh_CN 

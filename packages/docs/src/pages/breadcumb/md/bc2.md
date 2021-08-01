@@ -3,7 +3,7 @@ order: 2
 type: sample  
 zh_CN: 背景色 
 en_US: Background
-editUrl: $BASE/docs/pages/breadcumb/md/bc2.md
+editUrl: $BASE/pages/breadcumb/md/bc2.md
 ---      
 
 +++ zh_CN   

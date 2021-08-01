@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 自定义搜索
 en_US: Select
-editUrl: $BASE/docs/pages/select/md/select4.md
+editUrl: $BASE/pages/select/md/select4.md
 ---
 
 +++ zh_CN

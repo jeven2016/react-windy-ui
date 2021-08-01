@@ -3,7 +3,7 @@ order: 0
 type: text
 zh_CN: 引用 Blockquote
 en_US: Blockquote
-editUrl: $BASE/docs/pages/blockquote/md/title.md
+editUrl: $BASE/pages/blockquote/md/title.md
 ---
 
 +++  zh_CN 

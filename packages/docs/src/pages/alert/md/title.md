@@ -3,7 +3,7 @@ order: 0
 type: text
 zh_CN: 告警提示 Alert
 en_US: Alert
-editUrl: $BASE/docs/pages/alert/md/title.md
+editUrl: $BASE/pages/alert/md/title.md
 ---
 
 +++  zh_CN 

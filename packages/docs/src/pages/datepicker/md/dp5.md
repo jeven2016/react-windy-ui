@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 设置更多属性
 en_US: DatePicker5
-editUrl: $BASE/docs/pages/datepicker/md/dp5.md
+editUrl: $BASE/pages/datepicker/md/dp5.md
 ---
 
 +++ zh_CN

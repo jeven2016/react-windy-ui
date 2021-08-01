@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: 简化版
 en_US: Pagination
-editUrl: $BASE/docs/pages/pagination/md/pagination5.md
+editUrl: $BASE/pages/pagination/md/pagination5.md
 ---
 
 +++ zh_CN

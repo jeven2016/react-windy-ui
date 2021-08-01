@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 全局显示的进度条
 en_US: progress
-editUrl: $BASE/docs/pages/progress/md/progress3.md
+editUrl: $BASE/pages/progress/md/progress3.md
 ---
 
 +++ zh_CN

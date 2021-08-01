@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 弹出框类型
 en_US: Simple Sample
-editUrl: $BASE/docs/pages/time/md/TP2.md
+editUrl: $BASE/pages/time/md/TP2.md
 ---
 
 +++ zh_CN

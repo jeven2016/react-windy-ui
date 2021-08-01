@@ -3,7 +3,7 @@ order: 8
 type: sample
 zh_CN: 自定义背景色
 en_US: navbar
-editUrl: $BASE/docs/pages/navbar/md/navbar8.md
+editUrl: $BASE/pages/navbar/md/navbar8.md
 ---
 
 +++ zh_CN

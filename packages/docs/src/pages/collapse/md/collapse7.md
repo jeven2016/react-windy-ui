@@ -3,7 +3,7 @@ order: 7
 type: sample
 zh_CN: 禁用Collapse
 en_US: Disable Collapse
-editUrl: $BASE/docs/pages/collapse/md/collapse7.md
+editUrl: $BASE/pages/collapse/md/collapse7.md
 ---
 
 +++ zh_CN

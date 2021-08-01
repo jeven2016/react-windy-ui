@@ -3,7 +3,7 @@ order: 3
 type: sample  
 zh_CN: 自定义背景色
 en_US: background
-editUrl: $BASE/docs/pages/badge/md/badge3.md
+editUrl: $BASE/pages/badge/md/badge3.md
 ---      
 
 +++ zh_CN   

@@ -4,7 +4,7 @@ type: sample
 zh_CN: 多选
 en_US: Select
 onlyVisible: false
-editUrl: $BASE/docs/pages/select/md/select7.md
+editUrl: $BASE/pages/select/md/select7.md
 ---
 
 +++ zh_CN

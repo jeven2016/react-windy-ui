@@ -3,7 +3,7 @@ order: 0
 type: text
 zh_CN: 折叠框 Collapse
 en_US: Collapse
-editUrl: $BASE/docs/pages/collapse/md/title.md
+editUrl: $BASE/pages/collapse/md/title.md
 ---
 
 +++  zh_CN 

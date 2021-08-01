@@ -3,7 +3,7 @@ order: 3
 type: sample  
 zh_CN: Avatar 形状  
 en_US: Shape
-editUrl: $BASE/docs/pages/avatar/md/avatar3.md
+editUrl: $BASE/pages/avatar/md/avatar3.md
 ---      
 
 +++ zh_CN   

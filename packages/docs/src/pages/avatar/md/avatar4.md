@@ -3,7 +3,7 @@ order: 4
 type: sample  
 zh_CN: 显示徽标
 en_US: Badge
-editUrl: $BASE/docs/pages/avatar/md/avatar4.md
+editUrl: $BASE/pages/avatar/md/avatar4.md
 ---      
 
 +++ zh_CN   

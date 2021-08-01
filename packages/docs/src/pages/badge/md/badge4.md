@@ -3,7 +3,7 @@ order: 4
 type: sample  
 zh_CN: 显示文字类的标记
 en_US: Display text
-editUrl: $BASE/docs/pages/badge/md/badge4.md
+editUrl: $BASE/pages/badge/md/badge4.md
 ---      
 
 +++ zh_CN   

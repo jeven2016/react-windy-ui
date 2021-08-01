@@ -3,7 +3,7 @@
   type: text
   zh_CN: 删格 Grid
   en_US: Grid
-  editUrl: $BASE/docs/pages/grid/md/title.md
+  editUrl: $BASE/pages/grid/md/title.md
 ---      
 
 +++  zh_CN

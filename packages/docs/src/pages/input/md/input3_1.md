@@ -3,7 +3,7 @@ order: 3.1
 type: sample
 zh_CN: Password
 en_US: Password
-editUrl: $BASE/docs/pages/input/md/input3_1.md
+editUrl: $BASE/pages/input/md/input3_1.md
 ---
 
 +++ zh_CN   

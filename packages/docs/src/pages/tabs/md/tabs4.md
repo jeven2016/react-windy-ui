@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 可滚动的Tabs
 en_US: Tabs
-editUrl: $BASE/docs/pages/tabs/md/tabs4.md
+editUrl: $BASE/pages/tabs/md/tabs4.md
 ---
 
 +++ zh_CN

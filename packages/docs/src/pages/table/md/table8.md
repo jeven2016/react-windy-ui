@@ -3,7 +3,7 @@ order: 8
 type: sample
 zh_CN: 固定表头
 en_US: Table
-editUrl: $BASE/docs/pages/table/md/table8.md
+editUrl: $BASE/pages/table/md/table8.md
 ---
 
 +++ zh_CN

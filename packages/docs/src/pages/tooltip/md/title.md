@@ -3,7 +3,7 @@
   type: text
   zh_CN: 提示 Tooltip
   en_US: Tooltip
-  editUrl: $BASE/docs/pages/tooltip/md/title.md
+  editUrl: $BASE/pages/tooltip/md/title.md
 ---      
 
 +++  zh_CN

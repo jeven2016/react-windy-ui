@@ -3,7 +3,7 @@ order: 2
 type: sample  
 zh_CN: 头像尺寸 
 en_US: Sizee
-editUrl: $BASE/docs/pages/avatar/md/avatar2.md
+editUrl: $BASE/pages/avatar/md/avatar2.md
 ---      
 
 +++ zh_CN   

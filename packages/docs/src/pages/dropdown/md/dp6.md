@@ -3,7 +3,7 @@ order: 6
 type: sample
 zh_CN: 自行控制菜单的关闭
 en_US: Simple Sample
-editUrl: $BASE/docs/pages/dropdown/md/dp6.md
+editUrl: $BASE/pages/dropdown/md/dp6.md
 ---
 
 +++ zh_CN  

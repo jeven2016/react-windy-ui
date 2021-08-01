@@ -3,7 +3,7 @@ order: 1.2
 type: sample
 zh_CN: 在Option中显示Icon
 en_US: Option
-editUrl: $BASE/docs/pages/select/md/select1_2.md
+editUrl: $BASE/pages/select/md/select1_2.md
 ---
 
 +++ zh_CN

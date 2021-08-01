@@ -3,7 +3,7 @@ order: 14
 type: sample
 zh_CN: 禁用SubMenu和Item
 en_US: Disabled SubMenu/Item
-editUrl: $BASE/docs/pages/menu/md/Menu14.md
+editUrl: $BASE/pages/menu/md/Menu14.md
 ---
 
 +++ zh_CN

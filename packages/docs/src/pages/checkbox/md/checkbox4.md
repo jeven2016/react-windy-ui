@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 禁用Checkbox
 en_US: Disabled Checkbox
-editUrl: $BASE/docs/pages/checkbox/md/checkbox4.md
+editUrl: $BASE/pages/checkbox/md/checkbox4.md
 ---
 
 +++ zh_CN

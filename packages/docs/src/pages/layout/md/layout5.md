@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: 将Header固定在顶部
 en_US: Fixed header
-editUrl: $BASE/docs/pages/layout/md/layout5.md
+editUrl: $BASE/pages/layout/md/layout5.md
 ---
 
 +++ zh_CN

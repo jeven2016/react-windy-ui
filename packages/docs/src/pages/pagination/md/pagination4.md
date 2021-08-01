@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 添加更多元素
 en_US: Pagination
-editUrl: $BASE/docs/pages/pagination/md/pagination4.md
+editUrl: $BASE/pages/pagination/md/pagination4.md
 ---
 
 +++ zh_CN

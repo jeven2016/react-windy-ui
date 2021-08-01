@@ -3,7 +3,7 @@ order: 0
 type: text
 zh_CN: 下拉菜单 Dropdown
 en_US: Dropdown
-editUrl: $BASE/docs/pages/dropdown/md/title.md
+editUrl: $BASE/pages/dropdown/md/title.md
 ---
 
 +++  zh_CN 

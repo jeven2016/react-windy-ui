@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 处理Item的点击事件
 en_US: Handle click event
-editUrl: $BASE/docs/pages/dropdown/md/dp4.md
+editUrl: $BASE/pages/dropdown/md/dp4.md
 ---
 
 +++ zh_CN

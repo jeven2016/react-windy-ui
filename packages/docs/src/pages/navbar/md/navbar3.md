@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: Item的水平排列
 en_US: navbar
-editUrl: $BASE/docs/pages/navbar/md/navbar3.md
+editUrl: $BASE/pages/navbar/md/navbar3.md
 ---
 
 +++ zh_CN

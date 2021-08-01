@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 全局显示的Loader
 en_US: Global Loader
-editUrl: $BASE/docs/pages/loader/md/loader4.md
+editUrl: $BASE/pages/loader/md/loader4.md
 ---
 
 +++ zh_CN

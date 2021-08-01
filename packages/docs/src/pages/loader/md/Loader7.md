@@ -3,7 +3,7 @@ order: 7
 type: sample
 zh_CN: 使用Loader包裹其他容器
 en_US: Loader
-editUrl: $BASE/docs/pages/loader/md/loader7.md
+editUrl: $BASE/pages/loader/md/loader7.md
 ---
 
 +++ zh_CN

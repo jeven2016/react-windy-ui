@@ -3,7 +3,7 @@ order: 1.1
 type: sample
 zh_CN: 设置初始显示页
 en_US: Pagination
-editUrl: $BASE/docs/pages/pagination/md/pagination1.md
+editUrl: $BASE/pages/pagination/md/pagination1.md
 ---
 
 +++ zh_CN

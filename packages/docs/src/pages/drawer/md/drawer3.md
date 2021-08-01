@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 显示Drawer的快捷图标
 en_US: Drawer3
-editUrl: $BASE/docs/pages/drawer/md/drawer3.md
+editUrl: $BASE/pages/drawer/md/drawer3.md
 ---
 
 +++ zh_CN

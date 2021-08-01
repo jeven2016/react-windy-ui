@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 垂直排列
 en_US: Vertical 
-editUrl: $BASE/docs/pages/grid/md/grid4.md
+editUrl: $BASE/pages/grid/md/grid4.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@
   type: text
   zh_CN: 加载 Loader
   en_US: Loader
-  editUrl: $BASE/docs/pages/loader/md/title.md
+  editUrl: $BASE/pages/loader/md/title.md
 ---      
 
 +++  zh_CN

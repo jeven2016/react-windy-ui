@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 选择框
 en_US:  Select 
-editUrl: $BASE/docs/pages/text-field/md/TextField6.md
+editUrl: $BASE/pages/text-field/md/TextField6.md
 ---
 
 +++ zh_CN

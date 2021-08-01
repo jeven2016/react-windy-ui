@@ -3,7 +3,7 @@ order: 100
 type: text 
 zh_CN: API 
 en_US: API 
-editUrl: $BASE/docs/pages/menu/md/api.md
+editUrl: $BASE/pages/menu/md/api.md
 ---      
 
 +++ zh_CN

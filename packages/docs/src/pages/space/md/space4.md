@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 垂直方向的排列
 en_US: Space
-editUrl: $BASE/docs/pages/space/md/space4.md
+editUrl: $BASE/pages/space/md/space4.md
 ---
 
 +++ zh_CN

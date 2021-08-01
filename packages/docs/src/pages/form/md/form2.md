@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: 布局
 en_US: Layout
-editUrl: $BASE/docs/pages/form/md/form2.md
+editUrl: $BASE/pages/form/md/form2.md
 ---
 
 +++ zh_CN

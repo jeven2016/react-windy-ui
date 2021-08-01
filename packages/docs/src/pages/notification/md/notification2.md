@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: Notification的类型
 en_US: Notification
-editUrl: $BASE/docs/pages/notification/md/notification2.md
+editUrl: $BASE/pages/notification/md/notification2.md
 ---
 
 +++ zh_CN  

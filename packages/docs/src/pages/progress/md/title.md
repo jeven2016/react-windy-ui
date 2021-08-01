@@ -3,7 +3,7 @@
   type: text
   zh_CN: 进度 Progress 
   en_US: Progress
-  editUrl: $BASE/docs/pages/progress/md/title.md
+  editUrl: $BASE/pages/progress/md/title.md
 ---      
 
 +++  zh_CN

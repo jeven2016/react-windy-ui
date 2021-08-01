@@ -4,7 +4,7 @@ type: sample
 zh_CN: Select尺寸
 en_US: Select
 onlyVisible: false
-editUrl: $BASE/docs/pages/select/md/select11.md
+editUrl: $BASE/pages/select/md/select11.md
 ---
 
 +++ zh_CN

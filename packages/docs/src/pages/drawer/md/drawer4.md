@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 显示Header和Footer
 en_US: Header and footer
-editUrl: $BASE/docs/pages/drawer/md/drawer4.md
+editUrl: $BASE/pages/drawer/md/drawer4.md
 ---
 
 +++ zh_CN

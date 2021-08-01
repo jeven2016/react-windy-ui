@@ -3,7 +3,7 @@ order: 9
 type: sample  
 zh_CN: 背景色
 en_US: Background
-editUrl: $BASE/docs/pages/card/md/card9.md
+editUrl: $BASE/pages/card/md/card9.md
 ---      
 
 +++ zh_CN   

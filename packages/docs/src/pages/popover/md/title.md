@@ -3,7 +3,7 @@
   type: text
   zh_CN: 弹出框 Popover
   en_US: Popover
-  editUrl: $BASE/docs/pages/popconfirm/md/title.md
+  editUrl: $BASE/pages/popconfirm/md/title.md
 ---      
 
 +++  zh_CN

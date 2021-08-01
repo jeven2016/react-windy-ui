@@ -3,7 +3,7 @@ order: 6
 type: sample
 zh_CN: 清除过滤和排序
 en_US: Table
-editUrl: $BASE/docs/pages/table/md/table6.md
+editUrl: $BASE/pages/table/md/table6.md
 ---
 
 +++ zh_CN

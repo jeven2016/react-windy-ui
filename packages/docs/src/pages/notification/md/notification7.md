@@ -3,7 +3,7 @@ order: 7
 type: sample
 zh_CN: 取消延时关闭
 en_US: Notification
-editUrl: $BASE/docs/pages/notification/md/notification7.md
+editUrl: $BASE/pages/notification/md/notification7.md
 ---
 
 +++ zh_CN  

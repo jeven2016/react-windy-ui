@@ -4,7 +4,7 @@ type: sample
 zh_CN: 关联属性的校验
 en_US: Form
 onlyVisible: false
-editUrl: $BASE/docs/pages/form/md/form6.md
+editUrl: $BASE/pages/form/md/form6.md
 ---
 
 +++ zh_CN

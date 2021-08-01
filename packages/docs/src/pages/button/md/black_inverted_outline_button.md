@@ -3,7 +3,7 @@ order: 18
 type: sample  
 zh_CN: 设置按钮的背景色
 en_US: Black Inverted Outline Button
-editUrl: $BASE/docs/pages/button/md/black_inverted_outline_button.md
+editUrl: $BASE/pages/button/md/black_inverted_outline_button.md
 ---      
 
 +++ zh_CN   

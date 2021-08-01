@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 简单示例
 en_US: progress
-editUrl: $BASE/docs/pages/progress/md/progress1.md
+editUrl: $BASE/pages/progress/md/progress1.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@ order: 6
 type: sample
 zh_CN: 自适应宽度
 en_US: Disabled popover
-editUrl: $BASE/docs/pages/popover/md/pop6.md
+editUrl: $BASE/pages/popover/md/pop6.md
 ---
 
 +++ zh_CN  

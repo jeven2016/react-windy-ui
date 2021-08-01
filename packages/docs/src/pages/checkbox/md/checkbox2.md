@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: 默认选中
 en_US: Checked by default
-editUrl: $BASE/docs/pages/checkbox/md/checkbox2.md
+editUrl: $BASE/pages/checkbox/md/checkbox2.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@ order: 6
 type: sample
 zh_CN: Box阴影
 en_US: Box Shadow
-editUrl: $BASE/docs/pages/input/md/input7.md
+editUrl: $BASE/pages/input/md/input7.md
 ---
 
 +++ zh_CN   

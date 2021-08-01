@@ -3,7 +3,7 @@ order: 2.1
 type: sample
 zh_CN: Icon 输入框的尺寸
 en_US: The size of icon input
-editUrl: $BASE/docs/pages/input/md/input2_1.md
+editUrl: $BASE/pages/input/md/input2_1.md
 ---
 
 +++ zh_CN

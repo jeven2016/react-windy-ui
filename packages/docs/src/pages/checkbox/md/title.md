@@ -3,7 +3,7 @@ order: 0
 type: text
 zh_CN: 多选框 Checkbox
 en_US: Checkbox
-editUrl: $BASE/docs/pages/checkbox/md/title.md
+editUrl: $BASE/pages/checkbox/md/title.md
 ---
 
 +++  zh_CN 

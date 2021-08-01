@@ -3,7 +3,7 @@ order: 9
 type: sample
 zh_CN: 自定义展开节点
 en_US: Sample
-editUrl: $BASE/docs/pages/tree/md/tree9.md
+editUrl: $BASE/pages/tree/md/tree9.md
 ---
 
 +++ zh_CN   

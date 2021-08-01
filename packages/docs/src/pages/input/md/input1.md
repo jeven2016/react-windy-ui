@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 输入框的尺寸 
 en_US: Size
-editUrl: $BASE/docs/pages/input/md/input1.md
+editUrl: $BASE/pages/input/md/input1.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: Icon 输入框
 en_US: Icon Input
-editUrl: $BASE/docs/pages/input/md/input2.md
+editUrl: $BASE/pages/input/md/input2.md
 ---
 
 +++ zh_CN

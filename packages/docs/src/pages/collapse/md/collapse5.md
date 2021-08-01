@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: 在左侧或右侧显示Icon
 en_US: Icon
-editUrl: $BASE/docs/pages/collapse/md/collapse5.md
+editUrl: $BASE/pages/collapse/md/collapse5.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@ order: 0
 type: text
 zh_CN: 抽屉 Drawer
 en_US: Drawer
-editUrl: $BASE/docs/pages/drawer/md/title.md
+editUrl: $BASE/pages/drawer/md/title.md
 ---
 
 +++  zh_CN 

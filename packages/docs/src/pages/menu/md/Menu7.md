@@ -3,7 +3,7 @@ order: 7
 type: sample
 zh_CN: 自定义Menu的高度
 en_US: Menu7
-editUrl: $BASE/docs/pages/menu/md/Menu7.md
+editUrl: $BASE/pages/menu/md/Menu7.md
 ---
 
 +++ zh_CN

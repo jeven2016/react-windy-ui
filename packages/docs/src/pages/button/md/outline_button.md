@@ -3,7 +3,7 @@ order: 8
 type: sample  
 zh_CN: 边框按钮
 en_US: Outlined Button
-editUrl: $BASE/docs/pages/button/md/outline_button.md
+editUrl: $BASE/pages/button/md/outline_button.md
 ---     
 
 

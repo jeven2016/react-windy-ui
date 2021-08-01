@@ -3,7 +3,7 @@ order: 1
 type: sample  
 zh_CN: 背景和边框 
 en_US: Background and border
-editUrl: $BASE/docs/pages/card/md/card1.md
+editUrl: $BASE/pages/card/md/card1.md
 ---      
 
 +++ zh_CN   

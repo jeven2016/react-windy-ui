@@ -4,7 +4,7 @@ type: sample
 zh_CN: 小窗口下的显示
 en_US: navbar
 onlyVisible: false
-editUrl: $BASE/docs/pages/navbar/md/navbar4.md
+editUrl: $BASE/pages/navbar/md/navbar4.md
 ---
 
 +++ zh_CN

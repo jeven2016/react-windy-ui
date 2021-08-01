@@ -3,7 +3,7 @@ order: 6
 type: sample  
 zh_CN: 图片
 en_US: Picture
-editUrl: $BASE/docs/pages/card/md/card6.md
+editUrl: $BASE/pages/card/md/card6.md
 ---      
 
 +++ zh_CN   

@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 自动调整宽度
 en_US: container
-editUrl: $BASE/docs/pages/container/md/container2.md
+editUrl: $BASE/pages/container/md/container2.md
 ---
 
 +++ zh_CN 

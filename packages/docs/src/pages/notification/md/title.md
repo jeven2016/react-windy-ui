@@ -3,7 +3,7 @@
   type: text
   zh_CN: 通知 Notification
   en_US: Notification
-  editUrl: $BASE/docs/pages/notification/md/title.md
+  editUrl: $BASE/pages/notification/md/title.md
 ---      
 
 +++  zh_CN

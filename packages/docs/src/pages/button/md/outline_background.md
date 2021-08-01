@@ -3,7 +3,7 @@ order: 8.2
 type: sample  
 zh_CN: 边框按钮的背景颜色
 en_US: Initial background of outline button
-editUrl: $BASE/docs/pages/button/md/outline_background.md
+editUrl: $BASE/pages/button/md/outline_background.md
 ---      
 
 +++ zh_CN   

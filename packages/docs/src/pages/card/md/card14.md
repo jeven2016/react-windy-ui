@@ -3,7 +3,7 @@ order: 14
 type: sample  
 zh_CN: 窗帘
 en_US: Loading
-editUrl: $BASE/docs/pages/card/md/card14.md
+editUrl: $BASE/pages/card/md/card14.md
 ---      
 
 +++ zh_CN   

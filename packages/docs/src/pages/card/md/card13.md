@@ -3,7 +3,7 @@ order: 13
 type: sample  
 zh_CN: 显示加载状态
 en_US: Loading
-editUrl: $BASE/docs/pages/card/md/card13.md
+editUrl: $BASE/pages/card/md/card13.md
 ---      
 
 +++ zh_CN   

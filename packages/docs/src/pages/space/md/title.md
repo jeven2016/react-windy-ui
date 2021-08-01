@@ -3,7 +3,7 @@
   type: text
   zh_CN: 间距 Space
   en_US: Table
-  editUrl: $BASE/docs/pages/space/md/title.md
+  editUrl: $BASE/pages/space/md/title.md
 ---      
 
 +++  zh_CN

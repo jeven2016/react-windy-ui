@@ -3,7 +3,7 @@ order: 7
 type: sample
 zh_CN: 按钮形态
 en_US: Button Style
-editUrl: $BASE/docs/pages/radio/md/radio8.md
+editUrl: $BASE/pages/radio/md/radio8.md
 ---
 
 +++ zh_CN

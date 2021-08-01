@@ -3,7 +3,7 @@
   type: text
   zh_CN: API
   en_US: API
-  editUrl: $BASE/docs/pages/layout/md/api.md
+  editUrl: $BASE/pages/layout/md/api.md
 ---      
 
 +++  zh_CN

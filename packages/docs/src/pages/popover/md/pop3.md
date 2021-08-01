@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 显示位置
 en_US: popover
-editUrl: $BASE/docs/pages/popover/md/pop3.md
+editUrl: $BASE/pages/popover/md/pop3.md
 ---
 
 +++ zh_CN

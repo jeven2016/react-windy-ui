@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 可折叠的Slider
 en_US: Slider
-editUrl: $BASE/docs/pages/layout/md/layout4.md
+editUrl: $BASE/pages/layout/md/layout4.md
 ---
 
 +++ zh_CN

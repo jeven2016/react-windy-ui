@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: 激活弹出菜单
 en_US: Pop menu
-editUrl: $BASE/docs/pages/dropdown/md/dp2.md
+editUrl: $BASE/pages/dropdown/md/dp2.md
 ---
 
 +++ zh_CN

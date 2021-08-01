@@ -3,7 +3,7 @@ order: 6
 type: sample
 zh_CN: 禁用输入框
 en_US: Disabled Input
-editUrl: $BASE/docs/pages/input/md/input6.md
+editUrl: $BASE/pages/input/md/input6.md
 ---
 
 +++ zh_CN

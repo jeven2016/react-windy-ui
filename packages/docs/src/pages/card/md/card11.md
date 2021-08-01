@@ -3,7 +3,7 @@ order: 11
 type: sample  
 zh_CN: 图片墙
 en_US: Wall
-editUrl: $BASE/docs/pages/card/md/card11.md
+editUrl: $BASE/pages/card/md/card11.md
 ---      
 
 +++ zh_CN   

@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: Radio Group
 en_US: Radio
-editUrl: $BASE/docs/pages/radio/md/radio5.md  
+editUrl: $BASE/pages/radio/md/radio5.md  
 ---   
 
 +++ zh_CN   

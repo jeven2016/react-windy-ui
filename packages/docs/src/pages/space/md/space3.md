@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 自定义间距
 en_US: Space
-editUrl: $BASE/docs/pages/space/md/space3.md
+editUrl: $BASE/pages/space/md/space3.md
 ---
 
 +++ zh_CN

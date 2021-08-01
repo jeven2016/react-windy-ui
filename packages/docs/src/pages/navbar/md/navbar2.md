@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: Primary类型
 en_US: Primary
-editUrl: $BASE/docs/pages/navbar/md/navbar2.md
+editUrl: $BASE/pages/navbar/md/navbar2.md
 ---
 
 +++ zh_CN

@@ -4,7 +4,7 @@ type: sample
 title: Solid circle   
 zh_CN: 实心圆图标   
 en_US: Solid circle
-editUrl: $BASE/docs/pages/stepper/md/stepper4.md
+editUrl: $BASE/pages/stepper/md/stepper4.md
 ---      
 
 +++ zh_CN   

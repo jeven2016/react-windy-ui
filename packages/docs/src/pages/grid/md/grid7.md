@@ -3,7 +3,7 @@ order: 7
 type: sample
 zh_CN: 等宽和固定某列固定一列宽度
 en_US: Grid7 
-editUrl: $BASE/docs/pages/grid/md/grid7.md
+editUrl: $BASE/pages/grid/md/grid7.md
 ---
 
 +++ zh_CN

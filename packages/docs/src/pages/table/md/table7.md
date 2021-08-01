@@ -3,7 +3,7 @@ order: 7
 type: sample
 zh_CN: 加自定义的元素
 en_US: Table
-editUrl: $BASE/docs/pages/table/md/table7.md
+editUrl: $BASE/pages/table/md/table7.md
 ---
 
 +++ zh_CN

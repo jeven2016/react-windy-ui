@@ -3,7 +3,7 @@
   type: text
   zh_CN: 布局 Layout
   en_US: Layout
-  editUrl: $BASE/docs/pages/layout/md/title.md
+  editUrl: $BASE/pages/layout/md/title.md
 ---      
 
 +++  zh_CN

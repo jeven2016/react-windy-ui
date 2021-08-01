@@ -5,7 +5,7 @@ title: 简单示例
 zh_CN: 简单示例   
 en_US: Sample
 onlyVisible: false
-editUrl: $BASE/docs/pages/affix/md/affix1.md
+editUrl: $BASE/pages/affix/md/affix1.md
 ---      
 
 +++ zh_CN   

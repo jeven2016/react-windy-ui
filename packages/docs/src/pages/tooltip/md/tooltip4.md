@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 不同背景色
 en_US: tooltip
-editUrl: $BASE/docs/pages/tooltip/md/tooltip4.md
+editUrl: $BASE/pages/tooltip/md/tooltip4.md
 ---
 
 +++ zh_CN

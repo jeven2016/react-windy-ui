@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: List的Panel类型
 en_US: Structure
-editUrl: $BASE/docs/pages/list/md/list3.md
+editUrl: $BASE/pages/list/md/list3.md
 ---
 
 +++ zh_CN

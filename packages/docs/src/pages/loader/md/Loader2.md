@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: Loader的大小
 en_US: Loader
-editUrl: $BASE/docs/pages/loader/md/loader2.md
+editUrl: $BASE/pages/loader/md/loader2.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: 显示的位置
 en_US: tooltip
-editUrl: $BASE/docs/pages/tooltip/md/tooltip2.md
+editUrl: $BASE/pages/tooltip/md/tooltip2.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: Input Group组合示例
 en_US: Input Group
-editUrl: $BASE/docs/pages/input/md/input5.md
+editUrl: $BASE/pages/input/md/input5.md
 ---
 
 +++ zh_CN

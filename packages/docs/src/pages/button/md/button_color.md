@@ -3,7 +3,7 @@ order: 7
 type: sample  
 zh_CN: 按钮颜色
 en_US: Button Color
-editUrl: $BASE/docs/pages/button/md/button_color.md
+editUrl: $BASE/pages/button/md/button_color.md
 ---     
 
 

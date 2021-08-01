@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 数据校验
 en_US: Data Validation
-editUrl: $BASE/docs/pages/form/md/form4.md
+editUrl: $BASE/pages/form/md/form4.md
 ---
 
 +++ zh_CN

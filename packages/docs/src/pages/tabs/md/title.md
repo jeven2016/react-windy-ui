@@ -3,7 +3,7 @@
   type: text
   zh_CN: 选项卡 Tabs
   en_US: Tabs
-  editUrl: $BASE/docs/pages/tabs/md/title.md
+  editUrl: $BASE/pages/tabs/md/title.md
 ---      
 
 +++  zh_CN

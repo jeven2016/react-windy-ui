@@ -3,7 +3,7 @@ order: 8
 type: sample
 zh_CN: 不使用黑色背景去遮罩内容区域
 en_US: Loader
-editUrl: $BASE/docs/pages/loader/md/loader8.md
+editUrl: $BASE/pages/loader/md/loader8.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 设置label所在的位置
 en_US: Radio
-editUrl: $BASE/docs/pages/radio/md/radio4.md
+editUrl: $BASE/pages/radio/md/radio4.md
 ---
 
 +++ zh_CN

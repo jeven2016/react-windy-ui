@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: DatePicker类型
 en_US: DatePicker Type
-editUrl: $BASE/docs/pages/datepicker/md/dp2.md
+editUrl: $BASE/pages/datepicker/md/dp2.md
 ---
 
 +++ zh_CN

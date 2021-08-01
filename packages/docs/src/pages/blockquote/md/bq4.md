@@ -3,7 +3,7 @@ order: 4
 type: sample  
 zh_CN: 显示头部和尾部
 en_US: Header and footer
-editUrl: $BASE/docs/pages/blockquote/md/bq4.md
+editUrl: $BASE/pages/blockquote/md/bq4.md
 ---      
 
 +++ zh_CN   

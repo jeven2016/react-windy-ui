@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 日期格式化
 en_US: Date Format
-editUrl: $BASE/docs/pages/datepicker/md/dp2.md
+editUrl: $BASE/pages/datepicker/md/dp2.md
 ---
 
 +++ zh_CN
