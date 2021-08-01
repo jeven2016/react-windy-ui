@@ -2,7 +2,9 @@
 For documentation, please refer to this link:  ```http://super666.cn```
 
 ## React Windy UI
-![preview](static/pic.png)
+![preview](pic.png)
+
+- ***Current release: 0.6.1***
 
 
 ## 这个框架的由来
@@ -13,6 +15,18 @@ For documentation, please refer to this link:  ```http://super666.cn```
 最初还是2016年启动，那个时候只想做一套基于scss的web皮肤框架，但越到后面 越是发现，走组件化的路子是不可避免的。
 于是借着react的东风，便从2018年启动了react组建化的工作。这么多年， 从最初一个人，坚持原型设计，再到参考和借鉴其他框架，着实费了不少精力和时间。
 但是当这个成果慢慢到收获的时候，一切 都那么充实。不多说了，继续努力，坚持下去，终有收获的那天的。
+
+We all need a framework, but we often fall into the quagmire of hating and degrading this framework. 
+Why not make one yourself? In this way, at least one less reason to hate, this is my original intention to make a UI framework. 
+Because I hate to learn other frameworks repeatedly, I make one myself and hope to have the opportunity to be hated by other people. Maybe it will be a success by then.
+
+Originally, this framework was named Wui, with the first letter W being the first letter of the English word wheel.
+It means that this is a wheel project, although at the beginning it was just the idea of doing it as much as possible.
+But I didn't expect to stick to it till now, it was initially launched in 2016. At that time, I only wanted to build a web skin framework based on scss.
+Therefore, with the help of react, the work of react formation was started in 2018. For so many years, it took a lot of energy and time from 
+the first person to insist on prototyping, and then to refer to and learn from other frameworks. 
+But when the results slowly reach the harvest, everything is so fulfilling.
+Not much to say, continue to work hard, persevere, and there will be a harvest that day.
 
 ## How to install
 You can install by npm or yarn:
