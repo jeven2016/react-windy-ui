@@ -1,14 +1,14 @@
 ---   
 order: 1  
 type: sample  
-title: 简单示例   
-zh_CN: 简单示例   
+title: 垂直显示   
+zh_CN: 垂直显示   
 en_US: Sample
 editUrl: $BASE/docs/pages/stepper/md/stepper3.md
 ---      
 
 +++ zh_CN   
-
+将<Code>direction</Code>设置为<Code>vertical</Code>，Stepper将垂直显示。
 
 +++ en_US   
 Stepper2

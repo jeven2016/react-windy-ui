@@ -41,10 +41,11 @@ body {
   &.code {
     margin: 0 .15em;
     padding: 0 .15em;
-    font-size: .9em;
+    font-size: .8em;
     background: #f2f4f5;
     border: 1px solid #f0f0f0;
-    border-radius: .15em;
+    border-radius: .25em;
+    font-weight: 500;
     color: #e41f4d;
 
     &.normal {
@@ -199,19 +200,19 @@ body {
         }
 
         &:nth-of-type(2) {
-          width: 20rem;
+          width: 25rem;
         }
 
         &:nth-of-type(3) {
-          width: 15rem;
+          width: 20rem;
         }
 
         &:nth-of-type(4) {
-          width: 15rem;
+          width: 10rem;
         }
 
         &:nth-of-type(5) {
-          width: 40%;
+          width: 35%;
         }
       }
 

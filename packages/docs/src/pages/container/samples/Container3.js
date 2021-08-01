@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import DocFrame, {FrameContextConsumer} from "../../../utils/DocFrame";
-import {Breadcrumb, Container, IconHome, IconList, Layout, Menu, Navbar} from "react-windy-ui";
+import {Breadcrumb, Container, IconHome, IconList, Layout, Menu, Navbar, Toggle} from "react-windy-ui";
 
 
 function getMenu() {
@@ -112,13 +112,18 @@ function MyLayout() {
 export default function Container1() {
   const [smallWindow] = useState(false);
   const width = smallWindow ? '500px' : '100%';
+
+  const [autoAdjust, setAdjust] = useState(false);
   return <>
+    <div className="doc doc-row space">
+      <Toggle onChange={(value) => setAdjust(value)} label="Auto Adjust"/>
+    </div>
     {/*the doc frame is an iframe and only for demo*/}
     <DocFrame width={width} height='460px' hasBox={true}>
       <FrameContextConsumer>
         {
           //represent the container in a individual iframe
-          () => <Container autoAdjust={true}>
+          () => <Container autoAdjust={autoAdjust}>
             <MyLayout/>
           </Container>
         }

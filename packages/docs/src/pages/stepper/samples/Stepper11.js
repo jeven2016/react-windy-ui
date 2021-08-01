@@ -23,13 +23,15 @@ export default function Stepper10() {
       <List>
         <List.Item
           type="simple"
-          icon={<Button inverted hasBox={false} leftIcon={<IconArrowLeft/>} onClick={pre}>Previous</Button>}
+          icon={<Button size="small" inverted hasBox={false} leftIcon={<IconArrowLeft/>}
+                        onClick={pre}>Previous</Button>}
           title={<Progress percentValue={activeStep}
                            hasContent={false}
                            hasStripe
                            hasAnimation
                            style={{height: '.25rem', padding: '0 .5rem'}}/>}
-          actions={<Button inverted hasBox={false} rightIcon={<IconArrowRight/>} onClick={next}>Next</Button>}
+          actions={<Button size="small" inverted hasBox={false} rightIcon={<IconArrowRight/>}
+                           onClick={next}>Next</Button>}
         />
       </List>
     </div>

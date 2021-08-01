@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Stepper} from "react-windy-ui";
+import {Stepper} from "react-windy-ui";
 
 export default function Stepper9() {
   const [activeStep, setStep] = useState(-1);
@@ -27,12 +27,6 @@ export default function Stepper9() {
       </Stepper>
     </div>
 
-    <div className="doc doc-row">
-      <Button type="primary" onClick={() => {
-        const next = activeStep + 1;
-        setStep(next > 2 ? -1 : next);
-      }}>Change</Button>
-    </div>
 
   </>
 };

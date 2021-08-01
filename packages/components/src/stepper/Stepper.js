@@ -6,6 +6,7 @@ import {Direction} from "../common/Constants";
 import {nonNil, validate} from "../Utils";
 import useInternalState from "../common/useInternalState";
 import Ripple from "../common/Ripple";
+import * as PropTypes from "prop-types";
 
 const ErrorType = {
   'error': 'error',
@@ -256,6 +257,39 @@ const Stepper = React.forwardRef((props, ref) => {
     </div>
   </StepperContext.Provider>;
 });
+
+Step.propTypes = {
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
+  title: PropTypes.node,
+  subtitle: PropTypes.node,
+  icon: PropTypes.node,
+  errorType: PropTypes.oneOf(Object.keys(ErrorType)),
+  disabled: PropTypes.bool,
+  status: PropTypes.oneOf(Object.keys(StatusType)),
+}
+
+Stepper.propTypes = {
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
+  activeStep: PropTypes.number,
+  defaultActiveStep: PropTypes.number,
+  borderedIcon: PropTypes.bool,
+  direction: PropTypes.oneOf(Object.keys(Direction)),
+  stepDirection: PropTypes.oneOf(Object.keys(Direction)),
+  dotIcon: PropTypes.bool,
+  reverse: PropTypes.bool,
+  solidDot: PropTypes.bool,
+  grayDot: PropTypes.bool,
+  errorType: PropTypes.oneOf(Object.keys(ErrorType)),
+  errorIcon: PropTypes.node,
+  warningIcon: PropTypes.node,
+  showErrorIcon: PropTypes.bool,
+  showIcon: PropTypes.bool,
+  onClick: PropTypes.func,
+  hasRipple: PropTypes.bool,
+  rippleColor: PropTypes.string,
+}
 
 Stepper.Step = Step;
 

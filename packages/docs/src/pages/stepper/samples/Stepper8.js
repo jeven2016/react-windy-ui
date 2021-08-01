@@ -7,7 +7,7 @@ export default function Stepper8() {
 
   return <>
     <div className="doc doc-row space">
-      <RadioGroup value={errorType} button={true} onClick={(val) => setErrorType(val)}>
+      <RadioGroup value={errorType} button={true} onChange={(val) => setErrorType(val)}>
         <Radio value="error">error</Radio>
         <Radio value="warning">warning</Radio>
         <Radio value="normal">normal</Radio>

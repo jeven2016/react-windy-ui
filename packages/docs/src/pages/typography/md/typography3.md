@@ -8,7 +8,7 @@ editUrl: $BASE/docs/pages/typography/md/typography3.md
 ---
 
 +++ zh_CN
-
+文本行省略显示，还可以添加<Code>tooltip</Code>。
 
 +++ en_US
 Tree
