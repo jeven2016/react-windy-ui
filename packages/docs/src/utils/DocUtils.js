@@ -9,7 +9,7 @@ export const QuickManuContext = React.createContext([]);
 
 export const getEditUrl = (editUrl) => {
   return editUrl.replace('$BASE',
-    'https://github.com/jeven2016/react-windy-ui/tree/0.6.1/src');
+    'https://github.com/jeven2016/react-windy-ui/tree/master/packages/docs/src');
 };
 
 export const hcodeMarkdownOptions = {
