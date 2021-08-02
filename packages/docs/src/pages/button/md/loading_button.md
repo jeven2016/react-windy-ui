@@ -3,7 +3,7 @@ order: 12.1
 type: sample  
 zh_CN: 加载状态
 en_US: Loading
-editUrl: $BASE/docs/pages/button/md/loading_button.md
+editUrl: $BASE/pages/button/md/loading_button.md
 ---     
 
 

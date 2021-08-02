@@ -3,7 +3,7 @@ order: 12
 type: sample
 zh_CN: 结合使用Drawer
 en_US: navbar
-editUrl: $BASE/docs/pages/navbar/md/navbar12.md
+editUrl: $BASE/pages/navbar/md/navbar12.md
 ---
 
 +++ zh_CN

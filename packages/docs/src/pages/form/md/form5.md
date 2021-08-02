@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: 更复杂的结构
 en_US: Form
-editUrl: $BASE/docs/pages/form/md/form5.md
+editUrl: $BASE/pages/form/md/form5.md
 ---
 
 +++ zh_CN

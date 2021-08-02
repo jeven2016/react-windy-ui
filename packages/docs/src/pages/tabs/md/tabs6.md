@@ -3,7 +3,7 @@ order: 6
 type: sample
 zh_CN: 内嵌在Card中
 en_US: Tabs
-editUrl: $BASE/docs/pages/tabs/md/tabs6.md
+editUrl: $BASE/pages/tabs/md/tabs6.md
 ---
 
 +++ zh_CN

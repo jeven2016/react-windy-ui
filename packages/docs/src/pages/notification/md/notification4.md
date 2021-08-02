@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 全局设置
 en_US: Notification
-editUrl: $BASE/docs/pages/notification/md/notification4.md
+editUrl: $BASE/pages/notification/md/notification4.md
 ---
 
 +++ zh_CN  

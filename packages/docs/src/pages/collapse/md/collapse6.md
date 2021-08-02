@@ -3,7 +3,7 @@ order: 6
 type: sample
 zh_CN: 在右侧显示自定义的内容
 en_US: Customized content
-editUrl: $BASE/docs/pages/collapse/md/collapse6.md
+editUrl: $BASE/pages/collapse/md/collapse6.md
 ---
 
 +++ zh_CN

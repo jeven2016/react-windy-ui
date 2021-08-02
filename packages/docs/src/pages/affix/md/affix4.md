@@ -5,7 +5,7 @@ title: disabled和block属性
 zh_CN: disabled和block属性      
 en_US: Sample
 onlyVisible: false
-editUrl: $BASE/docs/pages/affix/md/affix4.md
+editUrl: $BASE/pages/affix/md/affix4.md
 ---      
 
 +++ zh_CN   

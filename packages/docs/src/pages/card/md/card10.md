@@ -3,7 +3,7 @@ order: 10
 type: sample  
 zh_CN: 使用Grid布局
 en_US: Grid layout
-editUrl: $BASE/docs/pages/card/md/card10.md
+editUrl: $BASE/pages/card/md/card10.md
 ---      
 
 +++ zh_CN   

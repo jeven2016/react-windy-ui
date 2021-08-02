@@ -3,7 +3,7 @@ order: 9
 type: sample  
 zh_CN: 行级按钮
 en_US: Block Button
-editUrl: $BASE/docs/pages/button/md/block_button.md
+editUrl: $BASE/pages/button/md/block_button.md
 ---     
 
 

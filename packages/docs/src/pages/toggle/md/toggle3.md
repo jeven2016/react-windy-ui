@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: Toggle Label
 en_US: Toggle Label
-editUrl: $BASE/docs/pages/toggle/md/toggle3.md
+editUrl: $BASE/pages/toggle/md/toggle3.md
 ---
 
 +++ zh_CN

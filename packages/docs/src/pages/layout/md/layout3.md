@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 将Slider与Content衔接在一起
 en_US: Slider and content
-editUrl: $BASE/docs/pages/layout/md/layout3.md
+editUrl: $BASE/pages/layout/md/layout3.md
 ---
 
 +++ zh_CN

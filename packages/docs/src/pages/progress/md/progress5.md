@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: 分段显示
 en_US: progress
-editUrl: $BASE/docs/pages/progress/md/progress5.md
+editUrl: $BASE/pages/progress/md/progress5.md
 ---
 
 +++ zh_CN

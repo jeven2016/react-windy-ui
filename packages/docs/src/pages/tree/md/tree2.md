@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: Tree的其他设置
 en_US: Sample
-editUrl: $BASE/docs/pages/tree/md/tree2.md
+editUrl: $BASE/pages/tree/md/tree2.md
 ---
 
 +++ zh_CN

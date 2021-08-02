@@ -3,7 +3,7 @@ order: 6
 type: sample
 zh_CN: 水平方向
 en_US: Loader
-editUrl: $BASE/docs/pages/loader/md/loader6.md
+editUrl: $BASE/pages/loader/md/loader6.md
 ---
 
 +++ zh_CN

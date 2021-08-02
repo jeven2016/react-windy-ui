@@ -3,7 +3,7 @@
   type: text
   zh_CN: 排版 Typography
   en_US: Typography
-  editUrl: $BASE/docs/pages/typography/md/title.md
+  editUrl: $BASE/pages/typography/md/title.md
 ---      
 
 +++  zh_CN

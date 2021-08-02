@@ -3,7 +3,7 @@
   type: text
   zh_CN: 表格 Table
   en_US: Table
-  editUrl: $BASE/docs/pages/table/md/title.md
+  editUrl: $BASE/pages/table/md/title.md
 ---      
 
 +++  zh_CN

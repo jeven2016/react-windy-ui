@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: Toggle宽度
 en_US: Toggle width
-editUrl: $BASE/docs/pages/toggle/md/toggle2.md
+editUrl: $BASE/pages/toggle/md/toggle2.md
 ---
 
 +++ zh_CN

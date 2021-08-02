@@ -5,7 +5,7 @@ title: 简单示例
 zh_CN: 指定Step的错误显示   
 en_US: Sample
 onlyVisible: false
-editUrl: $BASE/docs/pages/stepper/md/stepper8.md
+editUrl: $BASE/pages/stepper/md/stepper8.md
 ---      
 
 +++ zh_CN   

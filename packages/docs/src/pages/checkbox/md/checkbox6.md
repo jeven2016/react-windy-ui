@@ -3,7 +3,7 @@ order: 6
 type: sample
 zh_CN: 设置label所在的位置
 en_US: Label's Position
-editUrl: $BASE/docs/pages/checkbox/md/checkbox6.md
+editUrl: $BASE/pages/checkbox/md/checkbox6.md
 ---
 
 +++ zh_CN

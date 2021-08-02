@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: 偏移量
 en_US: Offset
-editUrl: $BASE/docs/pages/grid/md/grid2.md
+editUrl: $BASE/pages/grid/md/grid2.md
 ---
 
 +++ zh_CN

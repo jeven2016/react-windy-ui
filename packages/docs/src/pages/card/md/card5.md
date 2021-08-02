@@ -3,7 +3,7 @@ order: 5
 type: sample  
 zh_CN: 在卡片Footer中放置其他组件 
 en_US: Card5
-editUrl: $BASE/docs/pages/card/md/card5.md
+editUrl: $BASE/pages/card/md/card5.md
 ---      
 
 +++ zh_CN   

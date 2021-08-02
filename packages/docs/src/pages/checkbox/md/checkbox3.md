@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 设置不同的颜色
 en_US: Color
-editUrl: $BASE/docs/pages/checkbox/md/checkbox3.md
+editUrl: $BASE/pages/checkbox/md/checkbox3.md
 ---
 
 +++ zh_CN

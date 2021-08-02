@@ -3,7 +3,7 @@ order: 2
 type: sample  
 zh_CN: Header的背景色 
 en_US: Header background
-editUrl: $BASE/docs/pages/card/md/card2.md
+editUrl: $BASE/pages/card/md/card2.md
 ---      
 
 +++ zh_CN   

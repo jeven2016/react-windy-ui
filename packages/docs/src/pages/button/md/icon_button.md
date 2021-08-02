@@ -3,7 +3,7 @@ order: 5.2
 type: sample  
 zh_CN: Icon按钮   
 en_US: Icon Button  
-editUrl: $BASE/docs/pages/button/md/icon_button.md
+editUrl: $BASE/pages/button/md/icon_button.md
 ---      
 
 +++ zh_CN   

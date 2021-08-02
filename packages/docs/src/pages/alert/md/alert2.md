@@ -3,7 +3,7 @@ order: 2
 type: sample  
 zh_CN: Title和body 
 en_US: Title and body 
-editUrl: $BASE/docs/pages/alert/md/alert2.md
+editUrl: $BASE/pages/alert/md/alert2.md
 ---      
 
 +++ zh_CN   

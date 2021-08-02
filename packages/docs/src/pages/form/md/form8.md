@@ -3,7 +3,7 @@ order: 8
 type: sample
 zh_CN: 使用watch函数
 en_US: Form
-editUrl: $BASE/docs/pages/form/md/form8.md
+editUrl: $BASE/pages/form/md/form8.md
 ---
 
 +++ zh_CN

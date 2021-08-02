@@ -4,7 +4,7 @@ type: sample
 zh_CN: 与Affix的结合使用
 en_US: navbar
 onlyVisible: false
-editUrl: $BASE/docs/pages/navbar/md/navbar10.md
+editUrl: $BASE/pages/navbar/md/navbar10.md
 ---
 
 +++ zh_CN

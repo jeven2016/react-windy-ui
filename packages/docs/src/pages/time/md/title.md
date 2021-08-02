@@ -3,7 +3,7 @@
   type: text
   zh_CN: 时间 TimePicker
   en_US: TimePicker
-  editUrl: $BASE/docs/pages/time/md/title.md
+  editUrl: $BASE/pages/time/md/title.md
 ---      
 
 +++  zh_CN

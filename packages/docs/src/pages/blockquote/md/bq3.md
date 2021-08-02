@@ -3,7 +3,7 @@ order: 3
 type: sample  
 zh_CN: 阴影  
 en_US: Box Shadow
-editUrl: $BASE/docs/pages/blockquote/md/bq3.md
+editUrl: $BASE/pages/blockquote/md/bq3.md
 ---      
 
 +++ zh_CN   

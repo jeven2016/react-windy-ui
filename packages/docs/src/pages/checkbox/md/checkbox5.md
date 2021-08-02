@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: Checkbox的中间状态
 en_US: Indeterminate state
-editUrl: $BASE/docs/pages/checkbox/md/checkbox5.md
+editUrl: $BASE/pages/checkbox/md/checkbox5.md
 ---
 
 +++ zh_CN

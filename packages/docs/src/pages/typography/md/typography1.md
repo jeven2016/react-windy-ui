@@ -4,7 +4,7 @@ type: sample
 zh_CN: 标题组件
 en_US: Sample
 onlyVisible: false
-editUrl: $BASE/docs/pages/typography/md/typography1.md
+editUrl: $BASE/pages/typography/md/typography1.md
 ---
 
 +++ zh_CN

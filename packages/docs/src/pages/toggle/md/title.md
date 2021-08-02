@@ -3,7 +3,7 @@
   type: text
   zh_CN: 开关 Toggle
   en_US: Toggle
-  editUrl: $BASE/docs/pages/toggle/md/title.md
+  editUrl: $BASE/pages/toggle/md/title.md
 ---      
 
 +++  zh_CN

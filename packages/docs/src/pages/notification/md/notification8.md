@@ -3,7 +3,7 @@ order: 8
 type: sample
 zh_CN: 简洁类型的消息
 en_US: Notification
-editUrl: $BASE/docs/pages/notification/md/notification8.md
+editUrl: $BASE/pages/notification/md/notification8.md
 ---
 
 +++ zh_CN  

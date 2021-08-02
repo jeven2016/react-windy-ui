@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: 删除TabItem
 en_US: Tabs
-editUrl: $BASE/docs/pages/tabs/md/tabs5.md
+editUrl: $BASE/pages/tabs/md/tabs5.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@ order: 11
 type: sample
 zh_CN: 自定义表单
 en_US: Form
-editUrl: $BASE/docs/pages/form/md/form11.md
+editUrl: $BASE/pages/form/md/form11.md
 ---
 
 +++ zh_CN

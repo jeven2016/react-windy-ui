@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 显示位置
 en_US: Notification
-editUrl: $BASE/docs/pages/notification/md/notification3.md
+editUrl: $BASE/pages/notification/md/notification3.md
 ---
 
 +++ zh_CN  

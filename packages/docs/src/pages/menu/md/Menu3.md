@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: Menu的排列方向
 en_US: Menu stepDirection
-editUrl: $BASE/docs/pages/menu/md/Menu3.md
+editUrl: $BASE/pages/menu/md/Menu3.md
 ---
 
 +++ zh_CN

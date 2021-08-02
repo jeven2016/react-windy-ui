@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: 禁用状态
 en_US: Disabled popover
-editUrl: $BASE/docs/pages/popover/md/pop5.md
+editUrl: $BASE/pages/popover/md/pop5.md
 ---
 
 +++ zh_CN  

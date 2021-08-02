@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: 在窗口顶部显示的Modal
 en_US: Modal
-editUrl: $BASE/docs/pages/menu/md/modal2.md
+editUrl: $BASE/pages/menu/md/modal2.md
 ---
 
 +++ zh_CN

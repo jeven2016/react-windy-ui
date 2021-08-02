@@ -3,7 +3,7 @@ order: 17
 type: sample  
 zh_CN: 深色背景下的Outline按钮 
 en_US: Inverted Outline Button 
-editUrl: $BASE/docs/pages/button/md/inverted_outline_button.md
+editUrl: $BASE/pages/button/md/inverted_outline_button.md
 ---      
 
 +++ zh_CN   

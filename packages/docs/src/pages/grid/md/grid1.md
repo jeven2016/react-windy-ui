@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 固定宽度
 en_US: Fixed width
-editUrl: $BASE/docs/pages/grid/md/grid1.md
+editUrl: $BASE/pages/grid/md/grid1.md
 ---
 
 +++ zh_CN

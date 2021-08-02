@@ -3,7 +3,7 @@ order: 2
 type: sample  
 zh_CN: 背景和边框  
 en_US: Background and border
-editUrl: $BASE/docs/pages/blockquote/md/bq2.md
+editUrl: $BASE/pages/blockquote/md/bq2.md
 ---      
 
 +++ zh_CN   

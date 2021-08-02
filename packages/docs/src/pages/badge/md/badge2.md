@@ -3,7 +3,7 @@ order: 2
 type: sample  
 zh_CN: 不同颜色的Badge
 en_US: Color
-editUrl: $BASE/docs/pages/badge/md/badge2.md
+editUrl: $BASE/pages/badge/md/badge2.md
 ---      
 
 +++ zh_CN   

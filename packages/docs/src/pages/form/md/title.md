@@ -3,7 +3,7 @@ order: 0
 type: text
 zh_CN: 表单 Form
 en_US: Form
-editUrl: $BASE/docs/pages/form/md/title.md
+editUrl: $BASE/pages/form/md/title.md
 ---
 
 +++  zh_CN 

@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: 菜单的显示位置
 en_US: Menu Position
-editUrl: $BASE/docs/pages/dropdown/md/dp5.md
+editUrl: $BASE/pages/dropdown/md/dp5.md
 ---
 
 +++ zh_CN

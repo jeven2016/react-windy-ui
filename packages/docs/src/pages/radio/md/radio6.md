@@ -3,7 +3,7 @@ order: 6
 type: sample
 zh_CN: 使用value和onChange方法自定义实现状态的切换
 en_US: Radio
-editUrl: $BASE/docs/pages/radio/md/radio6.md
+editUrl: $BASE/pages/radio/md/radio6.md
 ---
 
 +++ zh_CN

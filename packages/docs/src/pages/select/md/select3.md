@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 显示搜索中状态
 en_US: Select
-editUrl: $BASE/docs/pages/select/md/select3.md
+editUrl: $BASE/pages/select/md/select3.md
 ---
 
 +++ zh_CN

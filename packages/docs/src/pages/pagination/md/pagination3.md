@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 自定义属性
 en_US: Pagination
-editUrl: $BASE/docs/pages/pagination/md/pagination3.md
+editUrl: $BASE/pages/pagination/md/pagination3.md
 ---
 
 +++ zh_CN

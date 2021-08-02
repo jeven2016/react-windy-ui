@@ -3,7 +3,7 @@ order: 0
 type: text
 zh_CN: 图钉 Affix
 en_US: Alert
-editUrl: $BASE/docs/pages/affix/md/title.md
+editUrl: $BASE/pages/affix/md/title.md
 ---
 
 +++  zh_CN 

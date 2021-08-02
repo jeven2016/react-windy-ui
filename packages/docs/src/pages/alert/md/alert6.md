@@ -3,7 +3,7 @@ order: 6
 type: sample  
 zh_CN: Alert的显示和关闭
 en_US: Dispaly and close
-editUrl: $BASE/docs/pages/alert/md/alert6.md
+editUrl: $BASE/pages/alert/md/alert6.md
 ---      
 
 +++ zh_CN   

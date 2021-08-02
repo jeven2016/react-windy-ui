@@ -3,7 +3,7 @@
   type: text
   zh_CN: 单选 Radio
   en_US: Radio
-  editUrl: $BASE/docs/pages/radio/md/title.md
+  editUrl: $BASE/pages/radio/md/title.md
 ---      
 
 +++  zh_CN

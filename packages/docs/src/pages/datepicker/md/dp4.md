@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 弹出框类型
 en_US: Popup Type
-editUrl: $BASE/docs/pages/datepicker/md/dp4.md
+editUrl: $BASE/pages/datepicker/md/dp4.md
 ---
 
 +++ zh_CN

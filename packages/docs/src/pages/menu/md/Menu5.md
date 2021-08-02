@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: Item占据剩余空间
 en_US: Menu5
-editUrl: $BASE/docs/pages/menu/md/Menu5.md
+editUrl: $BASE/pages/menu/md/Menu5.md
 ---
 
 +++ zh_CN

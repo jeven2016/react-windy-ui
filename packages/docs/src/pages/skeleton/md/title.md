@@ -3,7 +3,7 @@ order: 0
 type: text
 zh_CN: 骨架屏 Skeleton
 en_US: Skeleton
-editUrl: $BASE/docs/pages/alert/md/title.md
+editUrl: $BASE/pages/alert/md/title.md
 ---
 
 +++  zh_CN 

@@ -4,7 +4,7 @@ type: sample
 zh_CN: 简单示例
 en_US: DatePicker1
 onlyVisible: false
-editUrl: $BASE/docs/pages/datepicker/md/dp1.md
+editUrl: $BASE/pages/datepicker/md/dp1.md
 ---
 
 +++ zh_CN

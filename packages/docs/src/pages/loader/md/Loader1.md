@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: Loader简单示例
 en_US: Loader
-editUrl: $BASE/docs/pages/loader/md/loader1.md
+editUrl: $BASE/pages/loader/md/loader1.md
 ---
 
 +++ zh_CN

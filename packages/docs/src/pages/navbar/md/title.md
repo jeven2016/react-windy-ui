@@ -3,7 +3,7 @@
   type: text
   zh_CN: 导航条 Navbar
   en_US: NavBar
-  editUrl: $BASE/docs/pages/navbar/md/title.md
+  editUrl: $BASE/pages/navbar/md/title.md
 ---      
 
 +++  zh_CN

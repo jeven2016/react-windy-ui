@@ -3,7 +3,7 @@ order: 10
 type: sample  
 zh_CN: 禁用按钮
 en_US: Disabled Button
-editUrl: $BASE/docs/pages/button/md/disable_button.md
+editUrl: $BASE/pages/button/md/disable_button.md
 ---     
 
 

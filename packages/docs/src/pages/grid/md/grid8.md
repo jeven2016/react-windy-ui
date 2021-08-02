@@ -3,7 +3,7 @@ order: 7
 type: sample
 zh_CN: 间距
 en_US: Gutter 
-editUrl: $BASE/docs/pages/grid/md/grid8.md
+editUrl: $BASE/pages/grid/md/grid8.md
 ---
 
 +++ zh_CN

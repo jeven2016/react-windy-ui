@@ -3,7 +3,7 @@ order: 11
 type: sample
 zh_CN: 自动隐藏Navbar
 en_US: navbar
-editUrl: $BASE/docs/pages/navbar/md/navbar11.md
+editUrl: $BASE/pages/navbar/md/navbar11.md
 ---
 
 +++ zh_CN

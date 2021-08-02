@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 简单示例
 en_US: Two types of Drawer
-editUrl: $BASE/docs/pages/drawer/md/drawer1.md
+editUrl: $BASE/pages/drawer/md/drawer1.md
 ---
 
 +++ zh_CN

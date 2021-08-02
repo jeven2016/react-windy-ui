@@ -3,7 +3,7 @@ order: 8.1
 type: sample  
 zh_CN: 边框按钮的初始颜色
 en_US: Initial color of outline button
-editUrl: $BASE/docs/pages/button/md/init_outline_color.md
+editUrl: $BASE/pages/button/md/init_outline_color.md
 ---      
 
 +++ zh_CN   

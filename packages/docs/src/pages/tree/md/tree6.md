@@ -4,7 +4,7 @@ type: sample
 zh_CN: 异步读取JSON数据生成Tree
 en_US: Sample
 onlyVisible: false
-editUrl: $BASE/docs/pages/tree/md/tree6.md
+editUrl: $BASE/pages/tree/md/tree6.md
 ---
 
 +++ zh_CN

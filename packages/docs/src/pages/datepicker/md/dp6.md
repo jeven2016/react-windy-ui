@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 内嵌显示
 en_US: Inline
-editUrl: $BASE/docs/pages/datepicker/md/dp6.md
+editUrl: $BASE/pages/datepicker/md/dp6.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 上下结构
 en_US: Structure
-editUrl: $BASE/docs/pages/layout/md/layout1.md
+editUrl: $BASE/pages/layout/md/layout1.md
 ---
 
 +++ zh_CN

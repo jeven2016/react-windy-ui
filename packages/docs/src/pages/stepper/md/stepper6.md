@@ -5,7 +5,7 @@ title: Step文字
 zh_CN: Step文字   
 en_US: Sample
 onlyVisible: false
-editUrl: $BASE/docs/pages/stepper/md/stepper6.md
+editUrl: $BASE/pages/stepper/md/stepper6.md
 ---      
 
 +++ zh_CN   

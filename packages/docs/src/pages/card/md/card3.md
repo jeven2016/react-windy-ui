@@ -3,7 +3,7 @@ order: 3
 type: sample  
 zh_CN: 分隔条 
 en_US: Divider
-editUrl: $BASE/docs/pages/card/md/card3.md
+editUrl: $BASE/pages/card/md/card3.md
 ---      
 
 +++ zh_CN   

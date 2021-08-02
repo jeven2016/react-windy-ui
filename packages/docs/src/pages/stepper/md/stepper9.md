@@ -5,7 +5,7 @@ title: 简单示例
 zh_CN: 导航风格   
 en_US: Sample
 onlyVisible: false
-editUrl: $BASE/docs/pages/stepper/md/stepper9.md
+editUrl: $BASE/pages/stepper/md/stepper9.md
 ---      
 
 +++ zh_CN   

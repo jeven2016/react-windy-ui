@@ -3,7 +3,7 @@ order: 6
 type: sample
 zh_CN: 自定义弹出框和按钮
 en_US: PopConfirm
-editUrl: $BASE/docs/pages/popconfirm/md/pc6.md
+editUrl: $BASE/pages/popconfirm/md/pc6.md
 ---
 
 +++ zh_CN

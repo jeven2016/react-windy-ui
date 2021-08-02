@@ -3,7 +3,7 @@ order: 6
 type: sample
 zh_CN: 给Item设置背景色和下边框
 en_US: Menu6
-editUrl: $BASE/docs/pages/menu/md/Menu6.md
+editUrl: $BASE/pages/menu/md/Menu6.md
 ---
 
 +++ zh_CN

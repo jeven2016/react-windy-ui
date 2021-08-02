@@ -3,7 +3,7 @@ order: 8
 type: sample
 zh_CN: Body内容超出自动滚动显示
 en_US: Modal Body
-editUrl: $BASE/docs/pages/menu/md/modal8.md
+editUrl: $BASE/pages/menu/md/modal8.md
 ---
 
 +++ zh_CN

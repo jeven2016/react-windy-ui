@@ -3,7 +3,7 @@ order: 10
 type: sample  
 zh_CN: 完整的Form示例  
 en_US: Form
-editUrl: $BASE/docs/pages/form/md/form10.md  
+editUrl: $BASE/pages/form/md/form10.md  
 ---  
 
 +++ zh_CN  

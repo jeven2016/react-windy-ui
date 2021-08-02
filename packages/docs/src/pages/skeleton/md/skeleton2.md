@@ -4,7 +4,7 @@ type: sample
 zh_CN: 卡片布局
 en_US: Skeleton2
 onlyVisible: false
-editUrl: $BASE/docs/pages/skeleton/md/skeleton2.md
+editUrl: $BASE/pages/skeleton/md/skeleton2.md
 ---
 
 +++ zh_CN  

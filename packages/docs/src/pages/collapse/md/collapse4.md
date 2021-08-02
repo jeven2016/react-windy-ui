@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 设置更多属性
 en_US: More fields
-editUrl: $BASE/docs/pages/collapse/md/collapse4.md
+editUrl: $BASE/pages/collapse/md/collapse4.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@ order: 2
 type: sample  
 zh_CN: 对应不同Error类型的按钮  
 en_US: Error Style
-editUrl: $BASE/docs/pages/button/md/error_type_button.md
+editUrl: $BASE/pages/button/md/error_type_button.md
 ---      
 
 

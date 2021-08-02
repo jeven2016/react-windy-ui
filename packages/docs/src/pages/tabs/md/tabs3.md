@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 三种类型
 en_US: Tabs
-editUrl: $BASE/docs/pages/tabs/md/tabs3.md
+editUrl: $BASE/pages/tabs/md/tabs3.md
 ---
 
 +++ zh_CN

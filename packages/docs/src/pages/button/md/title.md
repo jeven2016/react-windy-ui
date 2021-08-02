@@ -3,7 +3,7 @@ order: 0
 type: text
 zh_CN: 按钮 Button
 en_US: Button
-editUrl: $BASE/docs/pages/button/md/title.md
+editUrl: $BASE/pages/button/md/title.md
 ---
 
 +++  zh_CN 
@@ -20,4 +20,11 @@ editUrl: $BASE/docs/pages/button/md/title.md
 +++  en_US 
 ## Button [editUrl] 
 
-English description for button.
+Button, as one of the most commonly used web controls, Windy UI provides a variety of styles of buttons for your need.
+
+- Buttons for primary and secondary colors  
+- Buttons corresponding to warning levels (error, warning, success)  
+- Circle button  
+- Bordered button  
+- Text button  
+- There is also the water wave effect after clicking, and the shadow border when selected, etc.  

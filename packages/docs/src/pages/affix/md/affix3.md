@@ -4,7 +4,7 @@ type: sample
 title: 底部固定   
 zh_CN: 底部固定   
 en_US: Sample
-editUrl: $BASE/docs/pages/affix/md/affix3.md
+editUrl: $BASE/pages/affix/md/affix3.md
 ---      
 
 +++ zh_CN   

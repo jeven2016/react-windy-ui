@@ -3,7 +3,7 @@ order: 6
 type: sample  
 zh_CN: 圆形按钮
 en_US: Circle Button
-editUrl: $BASE/docs/pages/button/md/circle_button.md
+editUrl: $BASE/pages/button/md/circle_button.md
 ---     
 
 

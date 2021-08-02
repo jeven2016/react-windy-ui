@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 在Card中使用
 en_US: Structure
-editUrl: $BASE/docs/pages/list/md/list5.md
+editUrl: $BASE/pages/list/md/list5.md
 ---
 
 +++ zh_CN

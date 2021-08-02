@@ -3,7 +3,7 @@ order: 10
 type: sample
 zh_CN: 嵌套分组的表头
 en_US: Table
-editUrl: $BASE/docs/pages/table/md/table10.md
+editUrl: $BASE/pages/table/md/table10.md
 ---
 
 +++ zh_CN

@@ -4,7 +4,7 @@ type: sample
 zh_CN: 子菜单SubMenu
 en_US: Menu9
 onlyVisible: false
-editUrl: $BASE/docs/pages/menu/md/Menu9.md
+editUrl: $BASE/pages/menu/md/Menu9.md
 ---
 
 +++ zh_CN

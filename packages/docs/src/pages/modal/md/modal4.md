@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: Modal的背景颜色
 en_US: Modal background
-editUrl: $BASE/docs/pages/menu/md/modal4.md
+editUrl: $BASE/pages/menu/md/modal4.md
 ---
 
 +++ zh_CN

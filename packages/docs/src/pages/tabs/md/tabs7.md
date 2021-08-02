@@ -3,7 +3,7 @@ order: 7
 type: sample
 zh_CN: ItemContent
 en_US: Tabs
-editUrl: $BASE/docs/pages/tabs/md/tabs7.md
+editUrl: $BASE/pages/tabs/md/tabs7.md
 ---
 
 +++ zh_CN

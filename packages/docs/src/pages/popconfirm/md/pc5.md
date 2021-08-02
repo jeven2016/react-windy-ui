@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: 设置弹出框的位置
 en_US: PopConfirm
-editUrl: $BASE/docs/pages/popconfirm/md/pc5.md
+editUrl: $BASE/pages/popconfirm/md/pc5.md
 ---
 
 +++ zh_CN

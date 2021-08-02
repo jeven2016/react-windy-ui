@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: 设置按钮的对齐方式
 en_US: PopConfirm
-editUrl: $BASE/docs/pages/popconfirm/md/pc4.md
+editUrl: $BASE/pages/popconfirm/md/pc4.md
 ---
 
 +++ zh_CN

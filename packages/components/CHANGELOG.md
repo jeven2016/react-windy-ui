@@ -1,3 +1,8 @@
+### 0.6.2
+* new Components: List, Container, Typography, Stepper
+* fix packages issue: all components cannot be imported from 'react-windy-ui'
+* some changes to package structure 
+
 ### 0.6.1
 * AvatarGroup: fix a issue relates Popover 
 * New component: List

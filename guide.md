@@ -24,15 +24,19 @@ yarn install
 ```
  create branch in wui and root directory 
  
- ensure all changes to be committed before changing version 
+ # ensure the branches create have been push before changing version 
  
  lenar version newVersion
+ 
+ # change "main": "dist/index.js" in component/package.json
  
  yarn run build:cmp
  
  npm login
  
  yarn run publish
+ 
+ finally, revert component/package.json
 ```
 
 ## Build a css theme file

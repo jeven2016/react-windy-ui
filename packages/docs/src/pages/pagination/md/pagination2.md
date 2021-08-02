@@ -4,7 +4,7 @@ type: sample
 zh_CN: 自行控制分页
 en_US: Pagination
 onlyVisible: false
-editUrl: $BASE/docs/pages/pagination/md/pagination2.md
+editUrl: $BASE/pages/pagination/md/pagination2.md
 ---
 
 +++ zh_CN

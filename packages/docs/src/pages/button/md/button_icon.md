@@ -3,7 +3,7 @@ order: 13
 type: sample  
 zh_CN: Inverted按钮 
 en_US: Inverted Button
-editUrl: $BASE/docs/pages/button/md/inverted_button.md
+editUrl: $BASE/pages/button/md/inverted_button.md
 ---      
 
 +++ zh_CN   

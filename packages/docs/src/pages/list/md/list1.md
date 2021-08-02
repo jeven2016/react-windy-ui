@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 简单示例
 en_US: Structure
-editUrl: $BASE/docs/pages/list/md/list1.md
+editUrl: $BASE/pages/list/md/list1.md
 ---
 
 +++ zh_CN

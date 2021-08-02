@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: 相同宽度的TabItem
 en_US: Tabs
-editUrl: $BASE/docs/pages/tabs/md/tabs2.md
+editUrl: $BASE/pages/tabs/md/tabs2.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@ order: 7
 type: sample
 zh_CN: 添加Icon图标
 en_US: Sample
-editUrl: $BASE/docs/pages/tree/md/tree7.md
+editUrl: $BASE/pages/tree/md/tree7.md
 ---
 
 +++ zh_CN

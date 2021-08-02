@@ -3,7 +3,7 @@ order: 7
 type: sample
 zh_CN: 在Navbar中放置其他组件
 en_US: navbar
-editUrl: $BASE/docs/pages/navbar/md/navbar7.md
+editUrl: $BASE/pages/navbar/md/navbar7.md
 ---
 
 +++ zh_CN

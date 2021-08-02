@@ -3,7 +3,7 @@ order: 8
 type: sample
 zh_CN: 自定义示例
 en_US: Tabs
-editUrl: $BASE/docs/pages/tabs/md/tabs8.md
+editUrl: $BASE/pages/tabs/md/tabs8.md
 ---
 
 +++ zh_CN

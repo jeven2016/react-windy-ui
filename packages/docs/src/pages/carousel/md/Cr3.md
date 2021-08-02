@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 指示器属性设置
 en_US: Sample
-editUrl: $BASE/docs/pages/carousel/md/Cr3.md
+editUrl: $BASE/pages/carousel/md/Cr3.md
 ---
 
 +++ zh_CN

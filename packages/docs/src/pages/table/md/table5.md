@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: 自定义排序
 en_US: Table
-editUrl: $BASE/docs/pages/table/md/table5.md
+editUrl: $BASE/pages/table/md/table5.md
 ---
 
 +++ zh_CN

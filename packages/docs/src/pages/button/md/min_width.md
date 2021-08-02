@@ -3,7 +3,7 @@ order: 4
 type: sample  
 zh_CN: 最小宽度
 en_US: Min width
-editUrl: $BASE/docs/pages/button/md/min_width.md
+editUrl: $BASE/pages/button/md/min_width.md
 ---     
 
 

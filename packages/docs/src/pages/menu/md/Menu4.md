@@ -3,7 +3,7 @@ order: 4
 type: sample
 zh_CN: Item在水平方向上的排列
 en_US: Menu4
-editUrl: $BASE/docs/pages/menu/md/Menu4.md
+editUrl: $BASE/pages/menu/md/Menu4.md
 ---
 
 +++ zh_CN

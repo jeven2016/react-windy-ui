@@ -4,7 +4,7 @@ type: sample
 zh_CN: 分组
 en_US: Group
 onlyVisible: false
-editUrl: $BASE/docs/pages/avatar/md/avatar5.md
+editUrl: $BASE/pages/avatar/md/avatar5.md
 ---      
 
 +++ zh_CN   

@@ -3,7 +3,7 @@ order: 12
 type: sample  
 zh_CN: 缩放效果
 en_US: Scale
-editUrl: $BASE/docs/pages/card/md/card12.md
+editUrl: $BASE/pages/card/md/card12.md
 ---      
 
 +++ zh_CN   

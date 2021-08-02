@@ -4,7 +4,7 @@ type: sample
 zh_CN: 多选Menu
 en_US: Menu12
 onlyVisible: false
-editUrl: $BASE/docs/pages/menu/md/Menu12.md
+editUrl: $BASE/pages/menu/md/Menu12.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 手风琴
 en_US: Accordion
-editUrl: $BASE/docs/pages/collapse/md/collapse3.md
+editUrl: $BASE/pages/collapse/md/collapse3.md
 ---
 
 +++ zh_CN

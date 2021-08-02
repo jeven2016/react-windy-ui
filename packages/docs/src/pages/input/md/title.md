@@ -3,7 +3,7 @@
   type: text
   zh_CN: 输入框 Input 
   en_US: Input
-  editUrl: $BASE/docs/pages/input/md/title.md
+  editUrl: $BASE/pages/input/md/title.md
 ---      
 
 +++  zh_CN

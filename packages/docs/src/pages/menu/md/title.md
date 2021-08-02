@@ -3,7 +3,7 @@
   type: text
   zh_CN: 菜单 Menu
   en_US: Menu
-  editUrl: $BASE/docs/pages/menu/md/title.md
+  editUrl: $BASE/pages/menu/md/title.md
 ---      
 
 +++  zh_CN

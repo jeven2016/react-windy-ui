@@ -4,7 +4,7 @@ type: sample
 zh_CN: 加载示例
 en_US: Skeleton3
 onlyVisible: false
-editUrl: $BASE/docs/pages/skeleton/md/skeleton3.md
+editUrl: $BASE/pages/skeleton/md/skeleton3.md
 ---
 
 +++ zh_CN

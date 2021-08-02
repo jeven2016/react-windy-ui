@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: Toggle类型
 en_US: Toggle type
-editUrl: $BASE/docs/pages/toggle/md/toggle1.md
+editUrl: $BASE/pages/toggle/md/toggle1.md
 ---
 
 +++ zh_CN

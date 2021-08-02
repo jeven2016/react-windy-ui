@@ -4,7 +4,7 @@ type: sample
 title: 货流信息   
 zh_CN: 货流信息   
 en_US: Sample
-editUrl: $BASE/docs/pages/stepper/md/stepper5.md
+editUrl: $BASE/pages/stepper/md/stepper5.md
 ---      
 
 +++ zh_CN   

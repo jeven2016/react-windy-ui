@@ -3,7 +3,7 @@ order: 7
 type: sample
 zh_CN: 禁用RadioGroup
 en_US: Radio
-editUrl: $BASE/docs/pages/radio/md/radio7.md
+editUrl: $BASE/pages/radio/md/radio7.md
 ---
 
 +++ zh_CN

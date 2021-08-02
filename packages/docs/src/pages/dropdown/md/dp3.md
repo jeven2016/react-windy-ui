@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 组合使用
 en_US: Integrate with other components
-editUrl: $BASE/docs/pages/dropdown/md/dp3.md
+editUrl: $BASE/pages/dropdown/md/dp3.md
 ---
 
 +++ zh_CN

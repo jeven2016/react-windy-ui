@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: 排序
 en_US: Order 
-editUrl: $BASE/docs/pages/grid/md/grid5.md
+editUrl: $BASE/pages/grid/md/grid5.md
 ---
 
 +++ zh_CN

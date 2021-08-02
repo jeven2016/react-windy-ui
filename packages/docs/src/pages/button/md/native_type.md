@@ -3,7 +3,7 @@ order: 3
 type: sample  
 zh_CN: 原生HTML类型   
 en_US: Native type  
-editUrl: $BASE/docs/pages/button/md/native_type.md
+editUrl: $BASE/pages/button/md/native_type.md
 ---     
 
 

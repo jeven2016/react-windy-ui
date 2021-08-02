@@ -3,7 +3,7 @@
   type: text
   zh_CN: 树控件 Tree
   en_US: Tree
-  editUrl: $BASE/docs/pages/tree/md/title.md
+  editUrl: $BASE/pages/tree/md/title.md
 ---      
 
 +++  zh_CN

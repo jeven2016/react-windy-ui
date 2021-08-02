@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 可折叠的Panel
 en_US: Collapse Panel
-editUrl: $BASE/docs/pages/collapse/md/collapse1.md
+editUrl: $BASE/pages/collapse/md/collapse1.md
 ---
 
 +++ zh_CN

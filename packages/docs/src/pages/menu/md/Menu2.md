@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: Menu类型
 en_US: Menu Type
-editUrl: $BASE/docs/pages/menu/md/Menu2.md
+editUrl: $BASE/pages/menu/md/Menu2.md
 ---
 
 +++ zh_CN

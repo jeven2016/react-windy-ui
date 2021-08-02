@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: 设置不同的颜色
 en_US: Radio
-editUrl: $BASE/docs/pages/radio/md/radio2.md
+editUrl: $BASE/pages/radio/md/radio2.md
 ---
 
 +++ zh_CN

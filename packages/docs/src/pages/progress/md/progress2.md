@@ -3,7 +3,7 @@ order: 2
 type: sample
 zh_CN: 显示条纹和动画效果
 en_US: progress
-editUrl: $BASE/docs/pages/progress/md/progress2.md
+editUrl: $BASE/pages/progress/md/progress2.md
 ---
 
 +++ zh_CN

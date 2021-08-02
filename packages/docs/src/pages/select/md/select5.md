@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: 构建复杂的Select
 en_US: Select
-editUrl: $BASE/docs/pages/select/md/select5.md
+editUrl: $BASE/pages/select/md/select5.md
 ---
 
 +++ zh_CN

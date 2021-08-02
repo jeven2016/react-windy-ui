@@ -3,7 +3,7 @@ order: 6
 type: sample  
 zh_CN: 显示小型徽章
 en_US: Simple Sample
-editUrl: $BASE/docs/pages/avatar/md/avatar6.md
+editUrl: $BASE/pages/avatar/md/avatar6.md
 ---      
 
 +++ zh_CN   

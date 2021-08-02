@@ -3,7 +3,7 @@ order: 11
 type: sample
 zh_CN: 分组
 en_US: Group
-editUrl: $BASE/docs/pages/menu/md/Menu11.md
+editUrl: $BASE/pages/menu/md/Menu11.md
 ---
 
 +++ zh_CN

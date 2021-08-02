@@ -3,7 +3,7 @@ order: 6
 type: sample
 zh_CN: 固定左侧的Slider
 en_US: Slider
-editUrl: $BASE/docs/pages/layout/md/layout6.md
+editUrl: $BASE/pages/layout/md/layout6.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@
   type: text
   zh_CN: 对话框 Modal
   en_US: Modal
-  editUrl: $BASE/docs/pages/menu/md/title.md
+  editUrl: $BASE/pages/menu/md/title.md
 ---      
 
 +++  zh_CN

@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 不同的类型
 en_US: Type
-editUrl: $BASE/docs/pages/input/md/input3.md
+editUrl: $BASE/pages/input/md/input3.md
 ---
 
 +++ zh_CN   

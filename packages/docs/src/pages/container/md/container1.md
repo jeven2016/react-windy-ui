@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 限定最大宽度
 en_US: container
-editUrl: $BASE/docs/pages/container/md/container1.md
+editUrl: $BASE/pages/container/md/container1.md
 ---
 
 +++ zh_CN 

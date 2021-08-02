@@ -3,7 +3,7 @@ order: 13
 type: sample
 zh_CN: 更多属性
 en_US: More
-editUrl: $BASE/docs/pages/menu/md/Menu13.md
+editUrl: $BASE/pages/menu/md/Menu13.md
 ---
 
 +++ zh_CN

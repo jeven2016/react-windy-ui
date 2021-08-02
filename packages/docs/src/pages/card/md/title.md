@@ -3,7 +3,7 @@ order: 0
 type: text
 zh_CN: 卡片 Card
 en_US: Card
-editUrl: $BASE/docs/pages/card/md/title.md
+editUrl: $BASE/pages/card/md/title.md
 ---
 
 +++  zh_CN 

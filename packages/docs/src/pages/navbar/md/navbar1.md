@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 简单示例
 en_US: navbar
-editUrl: $BASE/docs/pages/navbar/md/navbar1.md
+editUrl: $BASE/pages/navbar/md/navbar1.md
 ---
 
 +++ zh_CN

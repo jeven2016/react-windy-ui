@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: 自适应宽度
 en_US: Loader
-editUrl: $BASE/docs/pages/loader/md/loader5.md
+editUrl: $BASE/pages/loader/md/loader5.md
 ---
 
 +++ zh_CN

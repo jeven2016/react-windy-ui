@@ -3,7 +3,7 @@
   type: text
   zh_CN: 快速开始
   en_US: Get Started
-  editUrl: $BASE/docs/pages/start/md/title.md
+  editUrl: $BASE/pages/start/md/title.md
 ---      
 
 +++  zh_CN

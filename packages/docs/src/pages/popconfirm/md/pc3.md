@@ -3,7 +3,7 @@ order: 3
 type: sample
 zh_CN: 自定义按钮文字及图标
 en_US: PopConfirm
-editUrl: $BASE/docs/pages/popconfirm/md/pc3.md
+editUrl: $BASE/pages/popconfirm/md/pc3.md
 ---
 
 +++ zh_CN

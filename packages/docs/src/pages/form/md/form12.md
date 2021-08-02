@@ -3,7 +3,7 @@ order: 12
 type: sample
 zh_CN: 部分校验
 en_US: Form
-editUrl: $BASE/docs/pages/form/md/form12.md
+editUrl: $BASE/pages/form/md/form12.md
 ---
 
 +++ zh_CN

@@ -3,7 +3,7 @@
   type: text
   zh_CN: 确认 PopConfirm  
   en_US: PopConfirm
-  editUrl: $BASE/docs/pages/popconfirm/md/title.md
+  editUrl: $BASE/pages/popconfirm/md/title.md
 ---      
 
 +++  zh_CN

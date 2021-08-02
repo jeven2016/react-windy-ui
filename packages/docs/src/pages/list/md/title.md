@@ -3,7 +3,7 @@
   type: text
   zh_CN: 列表 List
   en_US: List
-  editUrl: $BASE/docs/pages/list/md/title.md
+  editUrl: $BASE/pages/list/md/title.md
 ---      
 
 +++  zh_CN

@@ -1,7 +1,7 @@
 ---
 order: 0
 type: text
-editUrl: $BASE/docs/pages/breadcumb/md/title.md
+editUrl: $BASE/pages/breadcumb/md/title.md
 ---
 
 +++  zh_CN 

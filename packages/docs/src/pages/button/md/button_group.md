@@ -3,7 +3,7 @@ order: 11
 type: sample  
 zh_CN: 按钮组 
 en_US: Button Group
-editUrl: $BASE/docs/pages/button/md/button_group.md
+editUrl: $BASE/pages/button/md/button_group.md
 ---      
 
 +++ zh_CN   

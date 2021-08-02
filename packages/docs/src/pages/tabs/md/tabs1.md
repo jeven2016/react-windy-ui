@@ -4,7 +4,7 @@ type: sample
 zh_CN: 简单示例
 en_US: Tabs
 onlyVisible: false
-editUrl: $BASE/docs/pages/tabs/md/tabs1.md
+editUrl: $BASE/pages/tabs/md/tabs1.md
 ---
 
 +++ zh_CN

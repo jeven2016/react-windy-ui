@@ -3,7 +3,7 @@ order: 1
 type: sample
 zh_CN: 简单示例
 en_US: tooltip
-editUrl: $BASE/docs/pages/tooltip/md/tooltip1.md
+editUrl: $BASE/pages/tooltip/md/tooltip1.md
 ---
 
 +++ zh_CN

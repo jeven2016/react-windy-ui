@@ -4,7 +4,7 @@ type: sample
 title: 简单示例   
 zh_CN: 简单示例   
 en_US: Sample
-editUrl: $BASE/docs/pages/alert/md/alert1.md
+editUrl: $BASE/pages/alert/md/alert1.md
 ---      
 
 +++ zh_CN   

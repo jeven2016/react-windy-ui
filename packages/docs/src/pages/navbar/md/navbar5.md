@@ -3,7 +3,7 @@ order: 5
 type: sample
 zh_CN: 在右侧显示的Switch
 en_US: navbar
-editUrl: $BASE/docs/pages/navbar/md/navbar5.md
+editUrl: $BASE/pages/navbar/md/navbar5.md
 ---
 
 +++ zh_CN

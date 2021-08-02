@@ -3,7 +3,7 @@ order: 5
 type: sample  
 zh_CN: 结合其他组件使用
 en_US: Integrate with other components
-editUrl: $BASE/docs/pages/breadcumb/md/bc5.md
+editUrl: $BASE/pages/breadcumb/md/bc5.md
 ---      
 
 +++ zh_CN   

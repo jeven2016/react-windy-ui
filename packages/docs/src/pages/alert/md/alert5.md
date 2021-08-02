@@ -3,7 +3,7 @@ order: 5
 type: sample  
 zh_CN: 延时关闭
 en_US: Delay
-editUrl: $BASE/docs/pages/alert/md/alert5.md
+editUrl: $BASE/pages/alert/md/alert5.md
 ---      
 
 +++ zh_CN   
