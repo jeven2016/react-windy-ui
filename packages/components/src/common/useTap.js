@@ -5,7 +5,7 @@ function getCallbackHandlers(callback) {
   // flush cache if we have too many items
   if (cache.length > 10000) {
     if (typeof console !== 'undefined' && 'log' in console) {
-      console.log('tapOrClick cache flushed after 10000 items; check your renders if this happens often')
+      console && console.log('tapOrClick cache flushed after 10000 items; check your renders if this happens often')
     }
     cache.length = 0
   }

@@ -1,12 +1,13 @@
 import React, {useMemo} from 'react';
 import clsx from 'clsx';
 import {isBlank, isNil, nonNil} from '../Utils';
-import {adjustItems, FormDirection} from '../common/Constants';
+import {adjustItems, Direction, FormDirection, JustifyContentType} from '../common/Constants';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
 import {useFormContext} from 'react-hook-form';
 import {createFormMessages, filterLabel, useLabel} from './FormUtils';
 import {FormItemContext} from '../common/Context';
+import PropTypes from "prop-types";
 
 const RootItem = React.forwardRef((props, ref) => {
   const {
@@ -102,5 +103,19 @@ const RootItem = React.forwardRef((props, ref) => {
     </div>}
   </FormItemContext.Provider>;
 });
+
+
+RootItem.propTypes = {
+  rootItem: PropTypes.bool,
+  direction: PropTypes.oneOf(Object.keys(Direction)),
+  justify: PropTypes.oneOf(Object.keys(JustifyContentType)),
+  justifyLabel: PropTypes.oneOf(Object.keys(JustifyContentType)),
+  labelCol: PropTypes.object,
+  controlCol: PropTypes.object,
+  simple: PropTypes.bool,
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
+  compact: PropTypes.bool,
+};
 
 export default RootItem;

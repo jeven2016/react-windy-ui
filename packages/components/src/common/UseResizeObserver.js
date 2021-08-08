@@ -75,7 +75,7 @@ export default function useResizeObserver(
     try {
       nonNil(node) && ro.observe(node);
     } catch (e) {
-      console.log(node);
+      console && console.log(node);
     }
 
 

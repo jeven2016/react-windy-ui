@@ -168,7 +168,7 @@ Loader.propTypes = {
   extraClassName: PropTypes.string,
   text: PropTypes.node,
   block: PropTypes.bool,
-  color: PropTypes.oneOf(['white', 'primary']),
+  color: PropTypes.oneOf(['white', 'primary', 'blue']),
   active: PropTypes.bool,
   type: PropTypes.oneOf(Object.keys(LoaderType)),
   size: PropTypes.oneOf(['small', 'medium', 'large']),

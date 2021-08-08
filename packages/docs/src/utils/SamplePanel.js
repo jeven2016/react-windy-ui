@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import {
   Button,
   Card,
@@ -7,14 +7,16 @@ import {
   Divider,
   IconEdit,
   Row,
-  Tooltip,
+  Tooltip, useEvent,
 } from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCode, faCopy} from '@fortawesome/free-solid-svg-icons';
 import markdown from './Markdown';
 import Hcode from './Hcode';
 import SandboxButton from './SandboxButton';
-import {getEditUrl} from './DocUtils';
+import {getEditUrl, QuickManuContext} from './DocUtils';
+import {useScroll} from "@use-gesture/react";
+import {EventListener} from "react-windy-ui/src/common/Constants";
 
 /**
  * With markdownOptions , you can directly load a react component in markdwon file
@@ -38,6 +40,10 @@ import {getEditUrl} from './DocUtils';
 export default function SamplePanel(props) {
   const {id, title, comp, code, desc, markdownOptions, editUrl} = props;
   const [collapse, setCollapse] = useState(true);
+  const ref = useRef(null);
+
+  const ctx = useContext(QuickManuContext);
+  const {quickManuStore} = ctx;
 
   //the component don't need to render for multiple times
   const renderComp = useMemo(() => comp, [comp]);
@@ -45,10 +51,22 @@ export default function SamplePanel(props) {
   const TitleMarkDwon = markdown({text: title, markdownOptions});
 
   const realEditUrl = useMemo(() => editUrl && getEditUrl(editUrl),
-      [editUrl]);
+    [editUrl]);
+
+  //todo
+  const scroll = useCallback((e) => {
+    const cardRect = ref.current.getBoundingClientRect();
+    if (cardRect.top <= 112 && cardRect.top >= 73) {
+      // quickManuStore.updateState({id: id});
+      // quickManuStore.notifyChanges();
+      // console.log("setId=" + id)
+    }
+  }, [id, quickManuStore]);
+
+  useEvent(EventListener.scroll, scroll, true, window);
 
   return <>
-    <Card block hasBorder hasBox={false}>
+    <Card block hasBorder hasBox={false} ref={ref}>
       <Card.Row extraClassName="doc title-row">
         <Row align="center">
           <Col col={6}>
@@ -80,14 +98,14 @@ export default function SamplePanel(props) {
 
               <Tooltip body="Run in CodeSandbox">
                 <span
-                    style={{color: 'rgb(158, 155, 155)', marginLeft: '.25rem'}}>
+                  style={{color: 'rgb(158, 155, 155)', marginLeft: '.25rem'}}>
                     <SandboxButton code={code}/>
                 </span>
               </Tooltip>
 
               <Tooltip body="Copy code">
                 <span
-                    style={{color: 'rgb(158, 155, 155)', marginLeft: '.25rem'}}>
+                  style={{color: 'rgb(158, 155, 155)', marginLeft: '.25rem'}}>
                 <Button inverted circle size="small">
                   <FontAwesomeIcon icon={faCopy}/>
                 </Button>
