@@ -7,8 +7,8 @@
     "startDocs": "yarn run build:cmp && lerna --scope docs run start",
     "build:docs": "yarn run build:cmp && lerna --scope docs run build",
     "build:cmp": "yarn run build:wui && lerna --scope react-windy-ui run build && mv packages/components/wui.css packages/components/dist",
-    "build:wui": "lerna --scope wui run buildRwui && cp packages/Wui/dist/default/*.min.css packages/components/wui.css",
-    "watch:wui": "lerna --scope wui run watch-copy-default  -- --copyTo=/home/jujucom/Desktop/workspace/projects/react-windy-ui/packages/components/dist/",
+    "build:wui": "lerna --scope wui run buildRwui && cp packages/Wui/dist/wui.min.css packages/components/wui.css",
+    "watch:wui": "lerna --scope wui run watch-copy-default  -- --theme=default --copyTo=/home/jujucom/Desktop/workspace/projects/react-windy-ui/packages/components/dist/",
     "build:theme": "lerna --scope wui run buildRwuiThemes",
     "publish": "cd packages/components && npm publish"
   },

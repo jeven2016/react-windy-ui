@@ -52,6 +52,24 @@ yarn run build:theme
 yarn run watch:wui
 ```
 
+## Develop a theme
+* modify the packages.json in root directory  
+
+Change the following line:
+```javascript
+"build:wui": "lerna --scope wui run buildRwui && cp packages/Wui/dist/wui-dark.min.css packages/components/wui.css",
+```
+ensure it is replaced by this line:
+```javascript
+"build:wui": "lerna --scope wui run buildRwuiThemes && cp packages/Wui/dist/wui-dark.min.css packages/components/wui.css",
+```
+
+* update the watch task  
+Ensure the theme paramter is specified with your new theme name
+```javascript
+  "watch:wui": "lerna --scope wui run watch-copy-default  -- --theme=dark --copyTo=/home/jujucom/Desktop/workspace/projects/react-windy-ui/packages/components/dist/",
+```
+
 
 ## Others
 ```js
