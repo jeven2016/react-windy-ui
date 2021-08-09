@@ -70,7 +70,7 @@ export default function DocPage2(props) {
     result.forEach(({key, data}) => {
       const text = data.title[locale];
       if (key && text) {
-        menuList.push({id: key, text});
+        menuList.push({id: key, key: key, text});
       }
     });
 
@@ -81,7 +81,7 @@ export default function DocPage2(props) {
     {
       result.map(comp => {
         if (comp.data.title?.type === Type.text) {
-          return <section className="doc markdown" key={comp.key}>
+          return <section className="doc markdown" key={comp.key} id={comp.key}>
             {compiler(updateEditUrl(comp.data.content[locale],
               comp.data.title.editUrl), mdOpts)}
           </section>;

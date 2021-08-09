@@ -94,7 +94,6 @@ export default function Form10() {
               <InputGroup.Item autoScale={false} style={{flex: '0 1 5rem'}}>
                 <Form.Item
                   name="countryCode"
-                  simple={true}
                   rules={{
                     required: 'The country code is required',
                   }}>
@@ -107,7 +106,6 @@ export default function Form10() {
               </InputGroup.Item>
               <Form.Item
                 name="phoneNumber"
-                simple={true}
                 rules={{
                   required: 'The phone number is required',
                 }}>

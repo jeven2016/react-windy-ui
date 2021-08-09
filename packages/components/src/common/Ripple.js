@@ -158,22 +158,22 @@ const useRippleEvent = ({rippleRef, rootProps = {}, hasRipple = true}) => {
   const mouseLeaveCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
     onMouseLeave);
 
-  const touchStartCb = useRippleCallback(hasRipple, rippleRef, startMethod,
-    onTouchStart);
-
-  const touchEndCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
-    onTouchEnd);
-
-  const touchMoveCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
-    onTouchMove);
+  // const touchStartCb = useRippleCallback(hasRipple, rippleRef, startMethod,
+  //   onTouchStart);
+  //
+  // const touchEndCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
+  //   onTouchEnd);
+  //
+  // const touchMoveCb = useRippleCallback(hasRipple, rippleRef, stopMethod,
+  //   onTouchMove);
 
   return {
     onMouseDown: mouseDownCb,
     onMouseUp: mouseUpCb,
     onMouseLeave: mouseLeaveCb,
-    onTouchStart: touchStartCb,
-    onTouchEnd: touchEndCb,
-    onTouchMove: touchMoveCb,
+    // onTouchStart: touchStartCb,
+    // onTouchEnd: touchEndCb,
+    // onTouchMove: touchMoveCb,
     ...others,
   };
 };

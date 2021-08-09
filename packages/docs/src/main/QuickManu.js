@@ -6,13 +6,13 @@ import {QuickManuContext} from '../utils/DocUtils';
 
 export default function QuickManu() {
   // const history = useHistory();
-  const [items, setItems] = useState([]);
-
   const ctx = useContext(QuickManuContext);
   const {quickManuStore} = ctx;
+  const [items, setItems] = useState([]);
+  const realItems = items && items.length > 0 ? items : quickManuStore.getState().list;
 
   useEffect(() => {
-    const listener = ({list}) => {
+    const listener = ({list, id}) => {
       setItems(list);
     };
     quickManuStore.attach(listener);
@@ -28,8 +28,8 @@ export default function QuickManu() {
       }
     }}>
       {
-        items.map(item => <Menu.Item key={item.id}
-                                     id={item.id}>{item.text}</Menu.Item>)
+        realItems.map(item => <Menu.Item key={item.id}
+                                         id={item.id}>{item.text}</Menu.Item>)
       }
     </Menu>
   </>;

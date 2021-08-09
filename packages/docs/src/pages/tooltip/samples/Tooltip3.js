@@ -22,7 +22,6 @@ export default function Tooltip3() {
 
       <Tooltip active={active}
                onChange={(val) => {
-                 console.log(`Please change active state to ${val}`);
                  !locked && setActive(val);
                }}
                body={<span>A tooltip</span>}>
