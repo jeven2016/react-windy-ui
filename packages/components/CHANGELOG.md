@@ -1,3 +1,8 @@
+### 0.6.3
+* Ripple: made a improvement for mobile browser
+* Form: correct the color of error message
+* Col: the content cannot align center
+
 ### 0.6.2
 * new Components: List, Container, Typography, Stepper
 * fix packages issue: all components cannot be imported from 'react-windy-ui'

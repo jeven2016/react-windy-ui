@@ -13,6 +13,7 @@
   "global.home.current.release.version": "0.6.1",
   "global.home.desc1": "Design for more user-friendly websites, compatible with various of devices",
   "doc.menu.start": "Get Started",
+  "doc.menu.formIndex": "Form",
   "doc.menu.form": "Form",
   "doc.menu.button": "Button",
   "doc.menu.checkbox": "Checkbox",

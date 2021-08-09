@@ -4,7 +4,7 @@ const MenuConfig = {
   basic: {
     type: 'subMenu',
     id: 'basicIndex',
-    label: 'doc.menu.form',
+    label: 'doc.menu.formIndex',
 
     items: {
       button: 'doc.menu.button',

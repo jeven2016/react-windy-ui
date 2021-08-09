@@ -62,7 +62,7 @@ function DocCenter(props) {
         </Drawer>
       }
 
-      <Row gutter={{x: 16, y: 32}}>
+      <Row>
         {
           isMinLg &&
           <Col col={2} extraClassName="doc left-col">
