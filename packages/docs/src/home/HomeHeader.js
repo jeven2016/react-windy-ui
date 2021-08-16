@@ -1,20 +1,16 @@
 import React, {useCallback, useContext, useState} from 'react';
-import {Affix, Dropdown, IconList, Navbar, Popover} from 'react-windy-ui';
+import {Affix, Dropdown, IconList, Navbar, Popover, StoreContext} from 'react-windy-ui';
 import {Link} from 'react-router-dom';
-import {StoreContext} from 'react-windy-ui';
 import intl from 'react-intl-universal';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-  faBook,
-  faLaptopHouse,
-  faLightbulb,
-  faSignLanguage
-} from "@fortawesome/free-solid-svg-icons";
+import {faBook, faLaptopHouse, faLightbulb, faSignLanguage} from "@fortawesome/free-solid-svg-icons";
 import Contributors from "./Contributors";
+import {DocThemeContext} from "../common/DocConstants";
 
 export default function HomeHeader({transparent = false}) {
   const [barExtraCls, setBarExtraCls] = useState(null);
   const {supportLocals, locale, changeLocale} = useContext(StoreContext);
+  const {theme}= useContext(DocThemeContext);
 
   const setLocale = useCallback((id) => {
     id !== locale && changeLocale(id);
@@ -41,8 +37,8 @@ export default function HomeHeader({transparent = false}) {
           <Navbar.List>
             <Navbar.Item hasBar>
               <FontAwesomeIcon icon={faBook} style={{marginRight: '.5rem'}}/>
-              <Link to="/docs">{intl.get(
-                  'global.home.link.documentation')}</Link>
+              <Link to={`/docs/${theme}`}>{intl.get(
+                'global.home.link.documentation')}</Link>
             </Navbar.Item>
             <Navbar.Item hasBar>
               <FontAwesomeIcon icon={faLaptopHouse}
@@ -55,7 +51,7 @@ export default function HomeHeader({transparent = false}) {
               <Popover body={<Contributors/>} activeBy="click"
                        position="bottomRight">
                 <span style={{color: '#fff'}}>{intl.get(
-                    'global.home.link.contribute')}</span>
+                  'global.home.link.contribute')}</span>
               </Popover>
             </Navbar.Item>
             <Navbar.Item>
@@ -63,17 +59,17 @@ export default function HomeHeader({transparent = false}) {
                                style={{marginRight: '.5rem'}}/>
               <Dropdown activeBy="hover"
                         title={<span>{intl.get(
-                            'global.home.link.language')}</span>}
+                          'global.home.link.language')}</span>}
                         onSelect={setLocale}>
                 <Dropdown.Menu>
                   {
                     supportLocals.map(
-                        sl => <Dropdown.Item id={sl} key={sl}
-                                             extraClassName={sl === locale
-                                                 ? 'doc selected-item'
-                                                 : null}>
-                          {intl.get(`locale.${sl}`)}
-                        </Dropdown.Item>)
+                      sl => <Dropdown.Item id={sl} key={sl}
+                                           extraClassName={sl === locale
+                                             ? 'doc selected-item'
+                                             : null}>
+                        {intl.get(`locale.${sl}`)}
+                      </Dropdown.Item>)
                   }
                 </Dropdown.Menu>
               </Dropdown>

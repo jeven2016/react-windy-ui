@@ -1,3 +1,5 @@
+$title-background: #252323;
+
 @mixin set-border-width($left-bd-width,$top-bd-width,$right-bd-width,$bottom-bd-width) {
   @if $left-bd-width != null {
     border-left-width: $left-bd-width;
@@ -29,7 +31,7 @@ body {
 .doc {
   &.left-col {
     height: calc(100vh - 80px);
-    background: #fff;
+    //background: #fff;
   }
 
   &.content-col {
@@ -187,9 +189,11 @@ body {
         white-space: nowrap;
         text-align: left;
         padding: 0.5rem;
-        color: #6c757d;
+        //color: #6c757d;
+        color: #fff;
         font-weight: 700;
-        background-color: #f5f5f5;
+        //background-color: #f5f5f5;
+        background: $title-background;
 
         border: 0 solid #ccc;
         border-bottom-width: 1px;
@@ -291,6 +295,7 @@ body {
     &.space {
       max-width: 300px;
     }
+
   }
 
   &.desc-row {
@@ -316,9 +321,8 @@ body {
 
       > div[class^=col] {
         padding: .5rem;
-        background-color: #ccc;
         border: 1px solid rgba(86, 61, 124, 0.2);
-        background-color: rgba(86, 61, 124, 0.15);
+        background: rgba(7, 143, 251, .15);
       }
 
     }
@@ -327,7 +331,7 @@ body {
 
   &.nav-menu {
     font-size: .9em;
-    background: #fff;
+    //background: #fff;
     padding: 1rem;
     color: #807e82;
 
@@ -338,6 +342,10 @@ body {
 
   &.title-row {
     background: #f5f5f5;
+
+    &.dark {
+      background: $title-background;
+    }
 
     h3 {
       display: inline-block;
@@ -363,6 +371,22 @@ body {
   }
 }
 
+.doc.dark {
+  &.code {
+    background: #2c2b2b;
+    border: none;
+    color: rgba(255, 255, 255, .8);
+  }
+
+  &.content-col {
+    border-left: 1px solid #777676;
+    border-right: 1px solid #777676;
+  }
+
+  &.nav-menu {
+    color: #fff;
+  }
+}
 
 .banner-container {
   //used

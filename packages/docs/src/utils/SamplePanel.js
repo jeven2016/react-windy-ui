@@ -1,22 +1,13 @@
 import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
-import {
-  Button,
-  Card,
-  Col,
-  Collapse,
-  Divider,
-  IconEdit,
-  Row,
-  Tooltip, useEvent,
-} from 'react-windy-ui';
+import {Button, Card, Col, Collapse, Divider, IconEdit, Row, Tooltip, useEvent,} from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCode, faCopy} from '@fortawesome/free-solid-svg-icons';
 import markdown from './Markdown';
 import Hcode from './Hcode';
 import SandboxButton from './SandboxButton';
 import {getEditUrl, QuickManuContext} from './DocUtils';
-import {useScroll} from "@use-gesture/react";
 import {EventListener} from "react-windy-ui/src/common/Constants";
+import {DocThemeContext} from "../common/DocConstants";
 
 /**
  * With markdownOptions , you can directly load a react component in markdwon file
@@ -61,13 +52,14 @@ export default function SamplePanel(props) {
       // quickManuStore.notifyChanges();
       // console.log("setId=" + id)
     }
-  }, [id, quickManuStore]);
+  }, []);
 
   useEvent(EventListener.scroll, scroll, true, window);
+  const {theme} = useContext(DocThemeContext);
 
   return <>
     <Card block hasBorder hasBox={false} ref={ref}>
-      <Card.Row extraClassName="doc title-row">
+      <Card.Row extraClassName={`doc title-row ${theme}`}>
         <Row align="center">
           <Col col={6}>
             <div id={id} className="doc title-col">

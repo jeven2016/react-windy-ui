@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useContext, useMemo, useState} from 'react';
 import HomeHeader from '../home/HomeHeader';
 import {Affix, Card, Col, Drawer, initStore, Responsive, RouteLoader, Row, useMediaQuery,} from 'react-windy-ui';
 import DocMenu from './DocMenu';
@@ -7,9 +7,12 @@ import {Route, Switch, useHistory, useRouteMatch} from 'react-router-dom';
 import QuickManu from './QuickManu';
 import {QuickManuContext} from '../utils/DocUtils';
 import RouteConfig from "../common/RouteConfig";
+import {DocThemeContext} from "../common/DocConstants";
 
 
 function DocCenter(props) {
+  const {theme} = useContext(DocThemeContext);
+
   // The `path` lets us build <Route> paths that are
   // relative to the parent route, while the `url` lets
   // us build relative links.
@@ -72,7 +75,7 @@ function DocCenter(props) {
             </Affix>
           </Col>
         }
-        <Col {...contentProps} extraClassName="doc content-col">
+        <Col {...contentProps} extraClassName={`doc content-col ${theme}`}>
           <Card block hasBox={false}>
             <Card.Row extraClassName="doc page-container">
               <Switch>

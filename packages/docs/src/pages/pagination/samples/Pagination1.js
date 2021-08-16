@@ -14,6 +14,7 @@ export default function Pagination1() {
     </div>
     <div className="doc doc-row" style={{marginTop: smallWindow ? '4rem' : 0}}>
       <Pagination pageCount={50} defaultPage={49} siblingCount={1} hasPageRange={true}
+                  defaultPageRange={10}
                   pageRanges={[10, 20, 30]}/>
     </div>
   </>;

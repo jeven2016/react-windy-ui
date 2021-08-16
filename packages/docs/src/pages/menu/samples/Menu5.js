@@ -6,7 +6,7 @@ export default function Menu5() {
     <div className="doc doc-row">
       <Menu defaultActiveItems={['item1']}
             direction="horizontal">
-        <Menu.Item id="item1" align="left" style={{background: '#e8f0f6'}}>
+        <Menu.Item id="item1" align="left">
           Left Menu
         </Menu.Item>
         <Menu.Item id="item2">
@@ -21,7 +21,7 @@ export default function Menu5() {
         <Menu.Item id="item2">
           Menu Item2
         </Menu.Item>
-        <Menu.Item id="item3" align="right" style={{background: '#e8f0f6'}}>
+        <Menu.Item id="item3" align="right">
           Right Menu
         </Menu.Item>
       </Menu>

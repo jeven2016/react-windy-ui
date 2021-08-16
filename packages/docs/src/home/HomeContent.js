@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import intl from 'react-intl-universal';
 import {Button, Col, Row} from 'react-windy-ui';
 import HomeHeader from './HomeHeader';
 import HomeIcon from './HomeIcon';
 import jetbrains from '../style/imgs/jetbrains.png';
+import {DocThemeContext} from "../common/DocConstants";
 
 export default function HomeContent() {
+  const {theme} = useContext(DocThemeContext);
 
   return <>
     <div className="doc home">
@@ -28,7 +30,7 @@ export default function HomeContent() {
           </div>
 
           <div className="line">
-            <Button nativeType="a" href="#/docs" type="white" size="large"
+            <Button nativeType="a" href={`#/docs/${theme}`} type="white" size="large"
                     hasMinWidth hasOutlineBackground={false}
                     outline
                     invertedOutline>
