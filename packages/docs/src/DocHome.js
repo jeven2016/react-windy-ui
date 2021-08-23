@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {initStore, RouteLoader, StoreContext} from 'react-windy-ui';
 import intl from 'react-intl-universal';
@@ -49,10 +49,10 @@ export default function DocHome() {
     switchLocale(nextLang).then(() => setLang(pre => ({...pre, currentLocale: nextLang})));
   }, [switchLocale]);
 
-  const theme = useMemo(() => defaultTheme, []);
+  const [theme, setTheme] = useState(defaultTheme);//todo
   return <>
     <React.Suspense fallback={<Loading/>}>
-      <DocThemeContext.Provider value={{theme}}>
+      <DocThemeContext.Provider value={{theme, setTheme}}>
         <StoreContext.Provider
           value={{
             supportLocals: Object.keys(locales),

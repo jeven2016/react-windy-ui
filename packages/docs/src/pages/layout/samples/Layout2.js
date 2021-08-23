@@ -1,13 +1,5 @@
 import React, {useState} from 'react';
-import {
-  Breadcrumb,
-  IconHome,
-  IconList,
-  Layout,
-  Menu,
-  Navbar,
-  Toggle,
-} from 'react-windy-ui';
+import {Breadcrumb, IconHome, IconList, Layout, Menu, Navbar, Toggle,} from 'react-windy-ui';
 
 function getMenu(position) {
   return <Menu defaultActiveItems={['item2']}
@@ -62,7 +54,7 @@ export default function Layout2() {
               label={{on: 'Left', off: 'Right'}}/>
     </div>
 
-    <div style={{background: '#f5f6f7'}}>
+    <div>
       <Layout.Header>
         <Navbar type="primary"
                 hasBox={false}
@@ -92,7 +84,7 @@ export default function Layout2() {
       </Layout.Header>
 
       <Layout.Split style={{flexDirection: flexDirection}}>
-        <Layout.Slider style={{background: '#fff'}}>
+        <Layout.Slider extraClassName="doc doc-content">
           {getMenu(leftPosition)}
         </Layout.Slider>
 
@@ -110,7 +102,6 @@ export default function Layout2() {
           </Breadcrumb>
 
           <Layout.Content style={{
-            background: '#fff',
             minHeight: '15rem',
             padding: '1rem',
           }}>
@@ -118,7 +109,7 @@ export default function Layout2() {
           </Layout.Content>
         </Layout>
       </Layout.Split>
-      <Layout.Footer style={{textAlign: 'center', background: '#f8f9fa'}}>
+      <Layout.Footer style={{textAlign: 'center'}}>
         <span>react-windy-ui ©2020 All rights reserved</span>
       </Layout.Footer>
     </div>

@@ -3,7 +3,7 @@ import {Breadcrumb, IconHome, IconList, Layout, Navbar} from 'react-windy-ui';
 
 export default function Layout1() {
   return <>
-    <Layout style={{background: '#f5f6f7'}}>
+    <Layout>
       <Layout.Header>
         <Navbar type="primary"
                 hasBorder={false}>
@@ -43,8 +43,8 @@ export default function Layout1() {
           </Breadcrumb.Item>
         </Breadcrumb>
         <Layout.Content
+          extraClassName="doc doc-content"
             style={{
-              background: '#fff',
               minHeight: '15rem',
               padding: '1rem',
               marginBottom: '1rem',

@@ -128,8 +128,8 @@ export const createDateColumns = ({
         hasRipple={false}
         hasBox={false}
         key={`day-${dateToProcess}`}
-        extraClassName="day"
         active={active}
+        extraClassName="day"
         color={active && nonNil(date) ? 'primary' : 'gray'}
         size="small"
         inverted={true}
@@ -203,7 +203,7 @@ export const createTimeItems = ({max, onClick}) => {
 
 };
 
-export const getLocaleResources = (locale, config)=>{
+export const getLocaleResources = (locale, config) => {
   const key = 'locale_' + locale;
   const defaultLocaleCfg = DataConfig[key];
   const newLocalConfig = nonNil(config) ? config[key] : {};

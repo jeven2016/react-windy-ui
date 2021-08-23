@@ -1,13 +1,5 @@
 import React, {useState} from 'react';
-import {
-  Breadcrumb,
-  IconHome,
-  IconList,
-  Layout,
-  Menu,
-  Navbar,
-  Toggle,
-} from 'react-windy-ui';
+import {Breadcrumb, IconHome, IconList, Layout, Menu, Navbar, Toggle,} from 'react-windy-ui';
 
 function getMenu(position) {
   return <Menu defaultActiveItems={['item2']}
@@ -56,7 +48,7 @@ export default function Layout3() {
   const flexDirection = leftPosition ? 'row' : 'row-reverse';
 
   const borderStyle = leftPosition ? {borderRight: '1px solid #f0f0f0'}
-      : {borderLeft: '1px solid #f0f0f0'};
+    : {borderLeft: '1px solid #f0f0f0'};
 
   return <>
     <div className="doc doc-row">
@@ -64,7 +56,7 @@ export default function Layout3() {
               label={{on: 'Left', off: 'Right'}}/>
     </div>
 
-    <div style={{background: '#f5f6f7'}}>
+    <div>
       <Layout.Header>
         <Navbar type="primary"
                 hasBox={false}
@@ -93,7 +85,7 @@ export default function Layout3() {
         </Navbar>
       </Layout.Header>
 
-      <Layout style={{background: '#f8f9fa', padding: '0 1rem'}}>
+      <Layout style={{padding: '0 1rem'}}>
         <Breadcrumb style={{margin: '0.5rem 0'}}>
           <Breadcrumb.Item>
             <IconHome style={{fontSize: '1.25em'}}/>
@@ -107,13 +99,11 @@ export default function Layout3() {
         </Breadcrumb>
         <Layout.Split style={{flexDirection: flexDirection}}>
           <Layout.Slider style={{
-            background: '#fff',
             ...borderStyle,
           }}>
             {getMenu(leftPosition)}
           </Layout.Slider>
           <Layout.Content style={{
-            background: '#fff',
             minHeight: '15rem',
             padding: '1rem',
           }}>
@@ -122,7 +112,7 @@ export default function Layout3() {
         </Layout.Split>
       </Layout>
 
-      <Layout.Footer style={{textAlign: 'center', background: '#f8f9fa'}}>
+      <Layout.Footer style={{textAlign: 'center'}}>
         <span>react-windy-ui ©2020 All rights reserved</span>
       </Layout.Footer>
     </div>

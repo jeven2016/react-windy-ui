@@ -32,7 +32,6 @@ export default function SamplePanel(props) {
   const {id, title, comp, code, desc, markdownOptions, editUrl} = props;
   const [collapse, setCollapse] = useState(true);
   const ref = useRef(null);
-
   const ctx = useContext(QuickManuContext);
   const {quickManuStore} = ctx;
 
@@ -109,7 +108,7 @@ export default function SamplePanel(props) {
       </Card.Row>
       <Divider/>
       <Card.Row>
-        <div className="doc comp-container" id="SampleBtn1">
+        <div className={`doc comp-container ${theme}`} id={`${id}-cmp`}>
           <div className="doc btn-area">
             {renderComp}
           </div>

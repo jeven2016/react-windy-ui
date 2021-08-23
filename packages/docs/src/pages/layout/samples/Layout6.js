@@ -1,12 +1,5 @@
 import React, {useState} from 'react';
-import {
-  Breadcrumb,
-  Button,
-  IconHome,
-  IconList,
-  Layout,
-  Menu,
-} from 'react-windy-ui';
+import {Breadcrumb, Button, IconHome, IconList, Layout, Menu,} from 'react-windy-ui';
 import DocFrame from '../../../utils/DocFrame';
 
 function getMenu(collapse) {
@@ -56,19 +49,18 @@ export default function Layout6() {
 
   return <>
     <DocFrame width="100%" height='330px'>
-      <div style={{background: '#f5f6f7'}}>
+      <div>
         <Layout.Split>
           <Layout.Slider
-              minWidth="0px"
-              collapse={collapse}
-              style={{
-                background: '#000',
-                position: 'fixed',
-                height: '100%',
-                overflowY: 'auto',
-                left: 0,
-                top: 0,
-              }}>
+            minWidth="0px"
+            collapse={collapse}
+            style={{
+              position: 'fixed',
+              height: '100%',
+              overflowY: 'auto',
+              left: 0,
+              top: 0,
+            }}>
             <h2 style={{
               textAlign: 'center',
               color: 'white',
@@ -81,7 +73,7 @@ export default function Layout6() {
                   style={{padding: '0 2rem', overflowY: 'auto'}}>
             <Breadcrumb style={{margin: '0.5rem 0'}}>
               <Breadcrumb.Item>
-                <Button size="small" extraClassName="clear-border"
+                <Button size="small" hasBorder={false} hasBox={false}
                         onClick={() => setCollapse(pre => !pre)}>
                   <IconList/>
                 </Button>
@@ -98,13 +90,12 @@ export default function Layout6() {
             </Breadcrumb>
 
             <Layout.Content style={{
-              background: '#fff',
               minHeight: '15rem',
               padding: '1rem',
             }}>
               Your Content
             </Layout.Content>
-            <Layout.Footer style={{textAlign: 'center', background: '#f8f9fa'}}>
+            <Layout.Footer style={{textAlign: 'center'}}>
               <span>react-windy-ui ©2020 All rights reserved</span>
             </Layout.Footer>
           </Layout>
