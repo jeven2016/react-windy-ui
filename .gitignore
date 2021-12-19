@@ -36,3 +36,4 @@ package-lock.json
 /packages/components/wui.css
 
 *.log
+*.lock
