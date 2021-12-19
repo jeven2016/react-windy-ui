@@ -4,7 +4,7 @@ import {Button, Space} from 'react-windy-ui';
 const SampleBtn18 = () => {
   return <>
     <Space gutter={{x: 8, y: 16}} wrap={true} style={{background: '#423e3e', padding: '8px'}}>
-      <Button color="gray" hasOutlineBackground outline invertedOutline
+      <Button  hasOutlineBackground outline invertedOutline
               hasMinWidth>gray</Button>
       <Button color="black" hasOutlineBackground outline invertedOutline
               hasMinWidth>black</Button>

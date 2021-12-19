@@ -108,7 +108,7 @@ export const createDateColumns = ({
   for (let i = firstDay - 2; i >= 0; i--) {
     key = `prev-${getKey(displayDate, i)}`;
     td = (<td key={key}>
-      <Button hasBox={false} hasRipple={false} size="small" inverted circle={true} color="gray"
+      <Button hasBox={false} hasRipple={false} size="small" inverted circle={true}
               onClick={selectDay.bind(null, lastMonthDate, daysOfLastMonth - i, onChange, showPopup)}>
         {daysOfLastMonth - i}
       </Button>
@@ -130,7 +130,7 @@ export const createDateColumns = ({
         key={`day-${dateToProcess}`}
         active={active}
         extraClassName="day"
-        color={active && nonNil(date) ? 'primary' : 'gray'}
+        color={active && nonNil(date) ? 'primary' : 'secondary'}
         size="small"
         inverted={true}
         circle={true}

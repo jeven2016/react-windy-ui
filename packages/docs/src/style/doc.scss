@@ -71,7 +71,11 @@ body {
                   rgba(99, 65, 249, 0.9) 15%,
                   rgba(10, 95, 248, 0.9) 50%,
                   rgba(33, 180, 212, 0.9) 85%);
-          background-size: cover;
+          //background: radial-gradient(circle at left top,
+          //        rgba(129, 38, 96, 0.9) 15%,
+          //        rgba(70, 28, 100, 0.9) 50%,
+          //        rgba(67, 13, 76, 0.9) 85%);
+          //background-size: cover;
         }
       }
     }
@@ -104,13 +108,13 @@ body {
   }
 
   &.home-footer {
-    //used
+    height: 60px;
     background: #333;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     width: 100%;
-    padding: 2rem 15%;
+    padding: .5rem 5%;
     color: #fff;
 
     .footer-panel {
@@ -149,12 +153,22 @@ body {
 
 
   &.home {
+    //height: calc(100vh - 60px);
+    height: 100vh;
     width: 100%;
     background: radial-gradient(circle at left top,
-            rgba(99, 65, 249, 0.9) 15%,
-            rgba(10, 95, 248, 0.9) 50%,
-            rgba(33, 180, 212, 0.9) 85%);
+            rgba(98, 72, 213, 0.9) 15%,
+            rgba(12, 63, 153, 0.9) 50%,
+            rgba(38, 16, 135, 0.9) 85%);
+    //background: radial-gradient(circle at left top,
+    //        rgba(129, 38, 96, 0.9) 15%,
+    //        rgba(70, 28, 100, 0.9) 50%,
+    //        rgba(67, 13, 76, 0.9) 85%);
     background-size: cover;
+
+    //&.dark {
+    //  background: radial-gradient(circle at left top, rgba(83, 83, 84, .9) 15%, rgba(70, 70, 70, .9) 50%, rgba(32, 33, 33, .9) 85%);
+    //}
   }
 
   &.inverted-row {
@@ -416,8 +430,6 @@ body {
 }
 
 .banner-container {
-  //used
-  padding: 1rem 0 1rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -452,6 +464,13 @@ body {
 
   .line {
     text-align: center;
+
+    &.foot-line {
+      position: fixed;
+      bottom: 1rem;
+      left: 50%;
+      transform: translate3d(-50%, 0, 0);
+    }
 
     > .button {
       width: 10rem;

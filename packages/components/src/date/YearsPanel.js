@@ -58,7 +58,7 @@ const YearsPanel = React.forwardRef((props, ref) => {
             hasBox={false}
             hasRipple={false}
             inverted={true}
-            type={isGrayBtn(year) ? 'gray' : 'primary'}
+            type={isGrayBtn(year) ? 'secondary' : 'primary'}
             active={checkActive(year)}
             onClick={selectYear.bind(null, year)}>
             {year}

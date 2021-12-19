@@ -1,8 +1,8 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Redirect, Route, Switch} from 'react-router-dom';
-import {initStore, RouteLoader, StoreContext} from 'react-windy-ui';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
+import {Redirect, Route, Switch, useHistory} from 'react-router-dom';
+import {CssThemeProvider, initStore, Loader, RouteLoader, StoreContext} from 'react-windy-ui';
 import intl from 'react-intl-universal';
-import {defaultTheme, DocThemeContext} from "./common/DocConstants";
+import {DocThemeContext} from "./common/DocConstants";
 
 // locale data
 const locales = {
@@ -23,7 +23,8 @@ const barStyle = {
 };
 
 const Loading = () => {
-  return 'Loading the page...';
+  // return 'Loading the page...';
+  return  <Loader type="third" active={true} size="small" style={{marginRight: '1rem'}}/>;
 };
 
 export default function DocHome() {
@@ -49,7 +50,13 @@ export default function DocHome() {
     switchLocale(nextLang).then(() => setLang(pre => ({...pre, currentLocale: nextLang})));
   }, [switchLocale]);
 
-  const [theme, setTheme] = useState(defaultTheme);//todo
+  const {theme, change} = useContext(CssThemeProvider.context);
+  const history = useHistory();
+  const setTheme = useCallback((themeName) => {
+    change(themeName);
+    history.push(`/docs/${themeName}`);
+  }, [change, history]);
+
   return <>
     <React.Suspense fallback={<Loading/>}>
       <DocThemeContext.Provider value={{theme, setTheme}}>

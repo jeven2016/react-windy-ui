@@ -45,8 +45,11 @@ export default function SamplePanel(props) {
 
   //todo
   const scroll = useCallback((e) => {
+    if(!ref.current){
+      return;
+    }
     const cardRect = ref.current.getBoundingClientRect();
-    if (cardRect.top <= 112 && cardRect.top >= 73) {
+    if (cardRect && cardRect.top <= 112 && cardRect.top >= 73) {
       // quickManuStore.updateState({id: id});
       // quickManuStore.notifyChanges();
       // console.log("setId=" + id)

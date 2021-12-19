@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useMemo, useState} from 'react';
+import React, {useCallback, useContext, useMemo} from 'react';
 import clsx from 'clsx';
 import {IconArrowRightBlack, IconHome} from '../Icons';
 import Checkbox from '../Checkbox';
@@ -59,8 +59,8 @@ const TreeItem = React.forwardRef((props, ref) => {
 
   //check if the node is in loading
   const isAsyncLoading = useMemo(() =>
-    treeContext.showLoading && isAsyncLoadItem &&
-    treeContext.loadingIds.includes(id)
+      treeContext.showLoading && isAsyncLoadItem &&
+      treeContext.loadingIds.includes(id)
     , [treeContext.showLoading, treeContext.loadingIds, isAsyncLoadItem, id]);
 
   const iconNode = useMemo(() => {
@@ -126,9 +126,8 @@ const TreeItem = React.forwardRef((props, ref) => {
     let {spanClick, divClick} = getClickHandler();
 
     return <div className="title-info" onClick={divClick}>
-      <span className={`label-info ${!treeContext.highlightLine && isSelected
-        ? 'active'
-        : ''}`} onClick={spanClick}>{label}</span>
+      <span className={`label-info ${isSelected ? 'active' : ''}`}
+            onClick={spanClick}>{label}</span>
     </div>;
   };
 

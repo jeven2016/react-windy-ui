@@ -25,8 +25,8 @@ function getTranslate(position, activePopup, startOffset) {
   }
   return {
     transform: activePopup
-      ? 'translate3d(0px, 0px, 0px)'
-      : `translate3d(${x}px, ${y}px, 0px)`,
+        ? 'translate3d(0px, 0px, 0px)'
+        : `translate3d(${x}px, ${y}px, 0px)`,
   };
 }
 
@@ -105,18 +105,19 @@ const Popup = React.forwardRef((props, ref) => {
     const popupDom = realPopupRef.current;
     if (ctrlDom && popupDom && popupDom.style.display !== 'none') {
       place(popupDom, ctrlDom, position, offset);
-      popupDom.getElementsByClassName('popup-mask').forEach(popupMask => {
-        popupMask.style.top = -(offset + 3) + 'px';
-      });
+      const masks = popupDom.getElementsByClassName('popup-mask') || [];
+      for (let mask of masks) {
+        mask.style.top = -(offset + 3) + 'px';
+      }
     }
   });
 
   useResizeObserver(() => realCtrlRef.current,
-    updatePosition
-    , true, () => true);
+      updatePosition
+      , true, () => true);
 
   useResizeObserver(document.body,
-    updatePosition, true, () => true);
+      updatePosition, true, () => true);
 
   useEvent(EventListener.scroll, updatePosition);
 
@@ -127,14 +128,14 @@ const Popup = React.forwardRef((props, ref) => {
   }, [position, activePopup, offset]);
 
   const animationSetting = useMemo(
-    () => animationFunc ? animationFunc(activePopup) : {
-      from: {transform: 'translate3d(0px, 0px, 0px)', opacity: 0, disp: 0},
-      to: {
-        transform: transform.transform,
-        opacity: activePopup ? 1 : 0,
-        disp: activePopup ? 1 : 0,
-      },
-    }, [activePopup, animationFunc, transform.transform]);
+      () => animationFunc ? animationFunc(activePopup) : {
+        from: {transform: 'translate3d(0px, 0px, 0px)', opacity: 0, disp: 0},
+        to: {
+          transform: transform.transform,
+          opacity: activePopup ? 1 : 0,
+          disp: activePopup ? 1 : 0,
+        },
+      }, [activePopup, animationFunc, transform.transform]);
 
   const springProps = useSpring({
     from: animationSetting.from,
@@ -170,8 +171,8 @@ const Popup = React.forwardRef((props, ref) => {
     if (disabled) {
       finalProps.disabled = true;
       finalProps.style = finalProps.style
-        ? {...finalProps.style, ...disabledStyle}
-        : disabledStyle;
+          ? {...finalProps.style, ...disabledStyle}
+          : disabledStyle;
     }
 
     return React.cloneElement(ctrlNode, finalProps);
@@ -187,6 +188,8 @@ const Popup = React.forwardRef((props, ref) => {
   const popupCntClsName = clsx(popupExtraClassName, 'popup-content');
 
   const mergedProps = {
+    left: 0,
+    top: 0,
     ...popupStyle, ...otherProps, ...springProps,
     display: springProps.disp.to(disp => disp === 0 ? 'none' : 'flex'),
     zIndex: zIndex,
@@ -210,50 +213,50 @@ const Popup = React.forwardRef((props, ref) => {
   });
 
   const handleHover = useEventCallback(
-    (e, nextActive, eventType, forceUpdate = false) => {
-      if (hidePopup || disabled || !isHover) {
-        return;
-      }
-      if (!forceUpdate) {
-        //the hover event should only be fired by controller or popup.
-        //the menu items or popover-arrow cannot trigger closing the popup.
-        //
-        // but firefox doesn't support fromElement/toElement, so using relatedTarget instead.
-        //for mouseEnter : relatedTarget == fromElement
-        //for mouseEnter : relatedTarget == toElement
-        const isValidOver = eventType === EventListener.mouseEnter &&
-          !realPopupRef.current.contains(e.relatedTarget) &&
-          realPopupRef.current.contains(e.target);
-
-        //for mouse leave, the mouse should move from popup to outside
-        const isValidOut = eventType === EventListener.mouseLeave &&
-          realPopupRef.current.contains(e.target) &&
-          !realPopupRef.current.contains(e.relatedTarget);
-
-        if (!isValidOver && !isValidOut) {
+      (e, nextActive, eventType, forceUpdate = false) => {
+        if (hidePopup || disabled || !isHover) {
           return;
         }
-      }
+        if (!forceUpdate) {
+          //the hover event should only be fired by controller or popup.
+          //the menu items or popover-arrow cannot trigger closing the popup.
+          //
+          // but firefox doesn't support fromElement/toElement, so using relatedTarget instead.
+          //for mouseEnter : relatedTarget == fromElement
+          //for mouseEnter : relatedTarget == toElement
+          const isValidOver = eventType === EventListener.mouseEnter &&
+              !realPopupRef.current.contains(e.relatedTarget) &&
+              realPopupRef.current.contains(e.target);
 
-      if (!nextActive) {
-        //if the popup is already closed or there's a closing timer running at this time
-        if (!isNil(preCloseRef.current) || !activePopup) {
+          //for mouse leave, the mouse should move from popup to outside
+          const isValidOut = eventType === EventListener.mouseLeave &&
+              realPopupRef.current.contains(e.target) &&
+              !realPopupRef.current.contains(e.relatedTarget);
+
+          if (!isValidOver && !isValidOut) {
+            return;
+          }
+        }
+
+        if (!nextActive) {
+          //if the popup is already closed or there's a closing timer running at this time
+          if (!isNil(preCloseRef.current) || !activePopup) {
+            return;
+          }
+          preCloseRef.current = execute(() => {
+            changeActive(nextActive, e);
+          }, delayClose);
           return;
         }
-        preCloseRef.current = execute(() => {
+
+        if (nextActive) {
+          clearCloseTimer();
+          if (activePopup) {
+            return;
+          }
           changeActive(nextActive, e);
-        }, delayClose);
-        return;
-      }
-
-      if (nextActive) {
-        clearCloseTimer();
-        if (activePopup) {
-          return;
         }
-        changeActive(nextActive, e);
-      }
-    });
+      });
 
   const handleBackgroundClick = useEventCallback((e) => {
     if (!activePopup || realCtrlRef.current.contains(e.target)) {
@@ -305,22 +308,22 @@ const Popup = React.forwardRef((props, ref) => {
   // close the popup while clicking the window (listens on window instead of document)
   //this works better for DateTimePicker while clicking the date button
   useEvent('mouseup', (e) => handleBackgroundClick(e),
-    true, window);
+      true, window);
 
   useEvent(EventListener.mouseEnter,
-    (e) => handleHover(e, true, EventListener.mouseEnter, true),
-    isHover,
-    realCtrlRef);
+      (e) => handleHover(e, true, EventListener.mouseEnter, true),
+      isHover,
+      realCtrlRef);
 
   useEvent(EventListener.mouseLeave,
-    (e) => handleHover(e, false, EventListener.mouseLeave, true),
-    isHover,
-    realCtrlRef);
+      (e) => handleHover(e, false, EventListener.mouseLeave, true),
+      isHover,
+      realCtrlRef);
 
   useEvent(EventListener.focus,
-    (e) => handleHover(e, true, EventListener.focus, true),
-    isHover,
-    realCtrlRef);
+      (e) => handleHover(e, true, EventListener.focus, true),
+      isHover,
+      realCtrlRef);
 
   /*useEvent(EventListener.blur,
       (e) => handleHover(e, false, EventListener.blur, true),
@@ -328,29 +331,29 @@ const Popup = React.forwardRef((props, ref) => {
       realCtrlRef);*/
 
   useEvent(EventListener.click,
-    useCallback((e) => handleClick(e), [handleClick]),
-    !isHover,
-    realCtrlRef,
-    false);
+      useCallback((e) => handleClick(e), [handleClick]),
+      !isHover,
+      realCtrlRef,
+      false);
 
   useEvent(EventListener.keyDown,
-    (e) => handleKeyDown(e),
-    true,
-    realCtrlRef);
+      (e) => handleKeyDown(e),
+      true,
+      realCtrlRef);
 
   useEvent(EventListener.mouseEnter,
-    (e) => {
-      handleHover(e, true, EventListener.mouseEnter);
-    },
-    isHover,
-    realPopupRef);
+      (e) => {
+        handleHover(e, true, EventListener.mouseEnter);
+      },
+      isHover,
+      realPopupRef);
 
   useEvent(EventListener.mouseLeave,
-    (e) => {
-      handleHover(e, false, EventListener.mouseLeave);
-    },
-    isHover,
-    realPopupRef);
+      (e) => {
+        handleHover(e, false, EventListener.mouseLeave);
+      },
+      isHover,
+      realPopupRef);
 
   const portal = ReactDOM.createPortal(popup, rootElem);
 

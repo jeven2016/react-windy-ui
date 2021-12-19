@@ -73,7 +73,7 @@ const Button = React.forwardRef((props, ref) => {
   }, [color, rippleColor, type]);
 
   let clsName = {
-    default: isNil(type) && isNil(color),
+    secondary: isNil(type) && isNil(color),
     normal: !outline && !inverted,
     inverted: inverted,
     [type]: type,

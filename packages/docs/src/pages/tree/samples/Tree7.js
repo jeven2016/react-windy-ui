@@ -3,7 +3,7 @@ import {IconHome, IconOk, IconSearch, Tree} from 'react-windy-ui';
 
 export default function Tree7() {
   return <div style={{width: '300px'}}>
-    <Tree onSelect={(ids, e) => console.log(ids)}>
+    <Tree onSelect={(ids, e) => console.log(ids)} highlightLine>
       <Tree.TreeItem id="Parent-1" label="Parent-1" icon={<IconHome/>}>
         <Tree.TreeItem id="Child-1-1" label="Child-1-1" icon={<IconHome/>}
                        moreElements={[

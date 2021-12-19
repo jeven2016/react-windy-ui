@@ -80,7 +80,7 @@ export default function HomeHeader({transparent = false}) {
                           'global.home.link.theme')}</span>}
                         onSelect={changeTheme}>
                 <Dropdown.Menu>
-                  <Dropdown.Item id="normal">{intl.get("doc.themes.default")}</Dropdown.Item>
+                  <Dropdown.Item id="default">{intl.get("doc.themes.default")}</Dropdown.Item>
                   <Dropdown.Item id="dark">{intl.get("doc.themes.dark")}</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

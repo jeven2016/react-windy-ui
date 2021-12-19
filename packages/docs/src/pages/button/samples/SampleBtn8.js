@@ -3,7 +3,7 @@ import {Button} from 'react-windy-ui';
 
 const SampleBtn8 = () => {
   return <>
-    <Button color="gray" outline hasMinWidth>gray</Button>
+    <Button  outline hasMinWidth>gray</Button>
     <Button color="black" outline hasMinWidth>black</Button>
     <Button color="brown" outline hasMinWidth>brown</Button>
     <Button color="pink" outline hasMinWidth>pink</Button>
