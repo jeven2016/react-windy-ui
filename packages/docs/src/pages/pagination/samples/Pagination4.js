@@ -13,7 +13,7 @@ export default function Pagination4() {
                     "Details",
                   ]}
                   rightItems={[
-                    <span style={{color: '#333', padding: '0 .5rem'}}>Total: 100 Rows</span>,
+                    <span style={{padding: '0 .5rem'}}>Total: 100 Rows</span>,
                   ]}/>
     </div>
   </>;

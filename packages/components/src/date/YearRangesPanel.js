@@ -40,7 +40,7 @@ const YearRangesPanel = React.forwardRef((props, ref) => {
                          extraClassName={year >= yearRange.begin + 100
                            ? 'other-year'
                            : null}>
-          <Button inverted initOutlineColor color="gray" hasBox={false}
+          <Button inverted initOutlineColor  hasBox={false}
                   extraClassName="range-btn"
                   onClick={selectRange.bind(null, year)}>
             {year}-{year + 9}

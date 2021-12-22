@@ -1,5 +1,6 @@
 import React from "react";
 
+// const ButtonIndex = React.lazy(() => import('../pages/button/ButtonIndex'));
 const ButtonIndex = React.lazy(() => import('../pages/button/ButtonIndex'));
 const InputIndex = React.lazy(() => import( '../pages/input/InputIndex'));
 const CheckboxIndex = React.lazy(() => import( '../pages/checkbox/CheckboxIndex'));

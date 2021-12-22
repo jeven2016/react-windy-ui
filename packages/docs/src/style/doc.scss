@@ -1,3 +1,5 @@
+$title-background: #252323;
+
 @mixin set-border-width($left-bd-width,$top-bd-width,$right-bd-width,$bottom-bd-width) {
   @if $left-bd-width != null {
     border-left-width: $left-bd-width;
@@ -16,7 +18,6 @@
 
 body {
   font: 1rem/1.5 -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-  background-color: #fff;
   letter-spacing: 0.03em;
 }
 
@@ -30,7 +31,7 @@ body {
 .doc {
   &.left-col {
     height: calc(100vh - 80px);
-    background: #fff;
+    //background: #fff;
   }
 
   &.content-col {
@@ -70,7 +71,11 @@ body {
                   rgba(99, 65, 249, 0.9) 15%,
                   rgba(10, 95, 248, 0.9) 50%,
                   rgba(33, 180, 212, 0.9) 85%);
-          background-size: cover;
+          //background: radial-gradient(circle at left top,
+          //        rgba(129, 38, 96, 0.9) 15%,
+          //        rgba(70, 28, 100, 0.9) 50%,
+          //        rgba(67, 13, 76, 0.9) 85%);
+          //background-size: cover;
         }
       }
     }
@@ -81,9 +86,9 @@ body {
       transition: line-height .3s;
 
       &.affix-fixed {
-        line-height: 5rem;
-        background: #333;
-        padding: 0 10%;
+        line-height: 4rem;
+        background: #292929;
+        padding: 0 5%;
       }
 
       > .title {
@@ -103,13 +108,13 @@ body {
   }
 
   &.home-footer {
-    //used
+    height: 60px;
     background: #333;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     width: 100%;
-    padding: 2rem 15%;
+    padding: .5rem 5%;
     color: #fff;
 
     .footer-panel {
@@ -148,12 +153,22 @@ body {
 
 
   &.home {
+    //height: calc(100vh - 60px);
+    height: 100vh;
     width: 100%;
     background: radial-gradient(circle at left top,
-            rgba(99, 65, 249, 0.9) 15%,
-            rgba(10, 95, 248, 0.9) 50%,
-            rgba(33, 180, 212, 0.9) 85%);
+            rgba(98, 72, 213, 0.9) 15%,
+            rgba(12, 63, 153, 0.9) 50%,
+            rgba(38, 16, 135, 0.9) 85%);
+    //background: radial-gradient(circle at left top,
+    //        rgba(129, 38, 96, 0.9) 15%,
+    //        rgba(70, 28, 100, 0.9) 50%,
+    //        rgba(67, 13, 76, 0.9) 85%);
     background-size: cover;
+
+    //&.dark {
+    //  background: radial-gradient(circle at left top, rgba(83, 83, 84, .9) 15%, rgba(70, 70, 70, .9) 50%, rgba(32, 33, 33, .9) 85%);
+    //}
   }
 
   &.inverted-row {
@@ -191,7 +206,6 @@ body {
         color: #6c757d;
         font-weight: 700;
         background-color: #f5f5f5;
-
         border: 0 solid #ccc;
         border-bottom-width: 1px;
 
@@ -235,16 +249,38 @@ body {
     ul {
       list-style: none;
 
-      > li, ll {
+      > li {
         list-style: circle;
         margin-left: 2rem;
         padding: 0.25rem 0;
+      }
+    }
+
+    &.dark {
+      th {
+        background: $title-background;
+        color: #fff;
       }
     }
   }
 
   &.comp-container {
     min-height: 5rem;
+
+    &.dark {
+      &#card1-cmp,
+      &#card2-cmp,
+      &#card3-cmp,
+      &#card4-cmp,
+      &#card5-cmp,
+      &#card8-cmp,
+      &#card9-cmp,
+      &#card10-cmp,
+      &#card14-cmp {
+        padding: 1rem;
+        background: #333 !important;
+      }
+    }
   }
 
   &.page-container {
@@ -292,6 +328,7 @@ body {
     &.space {
       max-width: 300px;
     }
+
   }
 
   &.desc-row {
@@ -317,9 +354,8 @@ body {
 
       > div[class^=col] {
         padding: .5rem;
-        background-color: #ccc;
         border: 1px solid rgba(86, 61, 124, 0.2);
-        background-color: rgba(86, 61, 124, 0.15);
+        background: rgba(7, 143, 251, .15);
       }
 
     }
@@ -328,7 +364,7 @@ body {
 
   &.nav-menu {
     font-size: .9em;
-    background: #fff;
+    //background: #fff;
     padding: 1rem;
     color: #807e82;
 
@@ -339,6 +375,10 @@ body {
 
   &.title-row {
     background: #f5f5f5;
+
+    &.dark {
+      background: $title-background;
+    }
 
     h3 {
       display: inline-block;
@@ -364,10 +404,32 @@ body {
   }
 }
 
+.doc.dark {
+  &.code {
+    background: #2c2b2b;
+    border: none;
+    color: rgba(255, 255, 255, .8);
+  }
+
+  &.content-col {
+    border-left: none;
+    border-right: none;
+  }
+
+  &.nav-menu {
+    color: #fff;
+  }
+
+  &.home-header,
+  &.comp-container {
+    .navbar.primary {
+      background: #292929;
+    }
+  }
+
+}
 
 .banner-container {
-  //used
-  padding: 1rem 0 1rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -402,6 +464,13 @@ body {
 
   .line {
     text-align: center;
+
+    &.foot-line {
+      position: fixed;
+      bottom: 1rem;
+      left: 50%;
+      transform: translate3d(-50%, 0, 0);
+    }
 
     > .button {
       width: 10rem;

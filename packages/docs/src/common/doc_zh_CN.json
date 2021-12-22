@@ -6,6 +6,7 @@
   "global.home.link.template": "模板",
   "global.home.link.contribute": "贡献力量",
   "global.home.link.language": "Language",
+  "global.home.link.theme": "皮肤",
   "global.home.content": "基于React, Wui并支持响应式布局的UI框架",
   "global.home.button.start": "快速开始",
   "global.home.button.github": "Github",
@@ -63,5 +64,8 @@
   "doc.menu.theme": "皮肤",
   "doc.menu.icons": "图标库",
   "doc.menu.classes": "辅助样式",
-  "doc.menu.functions": "函数工具"
+  "doc.menu.functions": "函数工具",
+
+  "doc.themes.default": "默认皮肤",
+  "doc.themes.dark": "黑色皮肤"
 }

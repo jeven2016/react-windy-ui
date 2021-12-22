@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import useEventCallback from "../common/useEventCallback";
 import {nonNil} from "../Utils";
 import {ThemeContext} from "../common/Context";
+import {validate} from "../Utils";
 
 
 const Status = {
@@ -24,6 +25,8 @@ const createLink = (linkConfig) => {
 
   return link;
 };
+
+
 
 /**
  * refer to : https://github.com/JoseRFelix/react-css-theme-switcher/blob/master/src/index.tsx
@@ -59,17 +62,13 @@ export const CssThemeProvider = (props) => {
       return;
     }
 
-    if (!themeMap.hasOwnProperty(newTheme)) {
-      console.warn(`The theme(${newTheme}) doesn't exist.`);
-      return;
-    }
+    validate(themeMap.hasOwnProperty(newTheme), `The theme(${newTheme}) doesn't exist.`)
 
     setStatus(Status.loading);
 
     //remove the old link
     const oldLink = document.getElementById(linkId);
     nonNil(oldLink) && oldLink.remove();
-
 
     const linkElem = createLink({
       id: linkId,
@@ -101,6 +100,8 @@ export const CssThemeProvider = (props) => {
 }
 
 export const useTheme = () => useContext(ThemeContext);
+
+CssThemeProvider.context = ThemeContext;
 
 CssThemeProvider.propTypes = {
   injectId: PropTypes.string,

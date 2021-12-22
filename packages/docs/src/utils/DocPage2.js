@@ -5,6 +5,7 @@ import {compiler} from 'markdown-to-jsx';
 import SamplePanel from './SamplePanel';
 import {StoreContext} from 'react-windy-ui';
 import {defaultMarkdownOptions, getEditUrl, QuickManuContext} from './DocUtils';
+import {DocThemeContext} from "../common/DocConstants";
 
 const Type = {
   sample: 'sample',
@@ -18,6 +19,7 @@ export default function DocPage2(props) {
     requireCode,
     markdownOptions,
   } = props;
+  const {theme} = useContext(DocThemeContext);
   const {locale} = useContext(StoreContext);
   const mdOpts = useMemo(() => {
     let mdOptions = defaultMarkdownOptions;
@@ -81,7 +83,7 @@ export default function DocPage2(props) {
     {
       result.map(comp => {
         if (comp.data.title?.type === Type.text) {
-          return <section className="doc markdown" key={comp.key} id={comp.key}>
+          return <section className={`doc markdown ${theme}`} key={comp.key} id={comp.key}>
             {compiler(updateEditUrl(comp.data.content[locale],
               comp.data.title.editUrl), mdOpts)}
           </section>;

@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import clsx from 'clsx';
+import {DocThemeContext} from "../common/DocConstants";
 
 export default function Code(props) {
   const {children, type} = props;
-  const clsName = clsx('doc code', {
+  const {theme} = useContext(DocThemeContext);
+
+  const clsName = clsx(`doc code ${theme}`, {
     'normal': type === 'normal',
   });
   return <span className={clsName}>{children}</span>;

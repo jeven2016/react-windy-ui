@@ -57,7 +57,7 @@ const MonthsPanel = React.forwardRef((props, ref) => {
         cols = [];
       }
       const col = <Col justify="center" key={`col-${i}`}>
-        <Button inverted initOutlineColor type={isGrayBtn(i) ? 'gray' : 'primary'}
+        <Button inverted initOutlineColor type={isGrayBtn(i) ? 'secondary' : 'primary'}
                 onClick={(e) => selectMonth(i, e)}
                 active={checkMonth(i)}>
           {locale.month[i]}

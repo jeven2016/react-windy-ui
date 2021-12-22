@@ -4,7 +4,7 @@ import {Button} from 'react-windy-ui';
 const SampleBtn7 = () => {
   //todo: should update the doc
   return <>
-    <Button color="gray" hasMinWidth>gray</Button>
+    <Button  hasMinWidth>gray</Button>
     <Button color="black" hasMinWidth>black</Button>
     <Button color="brown" hasMinWidth>brown</Button>
     <Button color="pink" hasMinWidth>pink</Button>

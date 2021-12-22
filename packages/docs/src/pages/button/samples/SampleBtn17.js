@@ -7,7 +7,7 @@ const SampleBtn17 = () => {
       <Button color="white" hasOutlineBackground={false} outline
               invertedOutline
               hasMinWidth>white</Button>
-      <Button color="gray" hasOutlineBackground={false} outline
+      <Button  hasOutlineBackground={false} outline
               invertedOutline
               hasMinWidth>gray</Button>
       <Button color="black" hasOutlineBackground={false} outline

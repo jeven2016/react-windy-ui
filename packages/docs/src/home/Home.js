@@ -8,7 +8,7 @@ export default function Home() {
   return <>
     <HomeContent/>
     <MobileContent/>
-    <HomeFooter/>
+    {/*<HomeFooter/>*/}
   </>;
 
 }

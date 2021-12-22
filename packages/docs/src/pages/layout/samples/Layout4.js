@@ -1,13 +1,5 @@
 import React, {useState} from 'react';
-import {
-  Breadcrumb,
-  IconHome,
-  IconList,
-  Layout,
-  Menu,
-  Navbar,
-  Toggle,
-} from 'react-windy-ui';
+import {Breadcrumb, IconHome, IconList, Layout, Menu, Navbar, Toggle,} from 'react-windy-ui';
 
 function getMenu(position, collapse) {
   return <Menu defaultActiveItems={['item2']}
@@ -63,7 +55,7 @@ export default function Layout4() {
               label={{on: 'Collapse', off: 'Collapse'}}/>
     </div>
 
-    <div style={{background: '#f5f6f7'}}>
+    <div>
       <Layout.Header>
         <Navbar type="primary"
                 hasBox={false}
@@ -93,7 +85,7 @@ export default function Layout4() {
       </Layout.Header>
 
       <Layout.Split style={{flexDirection: flexDirection}}>
-        <Layout.Slider style={{background: '#000'}} collapse={collapse} autoHide={false}>
+        <Layout.Slider collapse={collapse} autoHide={false}>
           {getMenu(leftPosition, collapse)}
         </Layout.Slider>
 
@@ -111,7 +103,6 @@ export default function Layout4() {
           </Breadcrumb>
 
           <Layout.Content style={{
-            background: '#fff',
             minHeight: '15rem',
             padding: '1rem',
           }}>
@@ -119,7 +110,7 @@ export default function Layout4() {
           </Layout.Content>
         </Layout>
       </Layout.Split>
-      <Layout.Footer style={{textAlign: 'center', background: '#f8f9fa'}}>
+      <Layout.Footer style={{textAlign: 'center'}}>
         <span>react-windy-ui ©2020 All rights reserved</span>
       </Layout.Footer>
     </div>

@@ -20,7 +20,7 @@ export default function Menu12() {
     </div>
     <div className="doc doc-row">
       <Toggle active={multiSelect} onChange={active => setMultiSelect(active)}
-              content={{on: 'Multi-Select', off: 'Multi-Select'}}/>
+              label={{on: 'Multi-Select', off: 'Multi-Select'}}/>
     </div>
 
     <div className="doc doc-row space">

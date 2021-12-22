@@ -1,22 +1,13 @@
 import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
-import {
-  Button,
-  Card,
-  Col,
-  Collapse,
-  Divider,
-  IconEdit,
-  Row,
-  Tooltip, useEvent,
-} from 'react-windy-ui';
+import {Button, Card, Col, Collapse, Divider, IconEdit, Row, Tooltip, useEvent,} from 'react-windy-ui';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCode, faCopy} from '@fortawesome/free-solid-svg-icons';
 import markdown from './Markdown';
 import Hcode from './Hcode';
 import SandboxButton from './SandboxButton';
 import {getEditUrl, QuickManuContext} from './DocUtils';
-import {useScroll} from "@use-gesture/react";
 import {EventListener} from "react-windy-ui/src/common/Constants";
+import {DocThemeContext} from "../common/DocConstants";
 
 /**
  * With markdownOptions , you can directly load a react component in markdwon file
@@ -41,7 +32,6 @@ export default function SamplePanel(props) {
   const {id, title, comp, code, desc, markdownOptions, editUrl} = props;
   const [collapse, setCollapse] = useState(true);
   const ref = useRef(null);
-
   const ctx = useContext(QuickManuContext);
   const {quickManuStore} = ctx;
 
@@ -55,19 +45,23 @@ export default function SamplePanel(props) {
 
   //todo
   const scroll = useCallback((e) => {
+    if(!ref.current){
+      return;
+    }
     const cardRect = ref.current.getBoundingClientRect();
-    if (cardRect.top <= 112 && cardRect.top >= 73) {
+    if (cardRect && cardRect.top <= 112 && cardRect.top >= 73) {
       // quickManuStore.updateState({id: id});
       // quickManuStore.notifyChanges();
       // console.log("setId=" + id)
     }
-  }, [id, quickManuStore]);
+  }, []);
 
   useEvent(EventListener.scroll, scroll, true, window);
+  const {theme} = useContext(DocThemeContext);
 
   return <>
     <Card block hasBorder hasBox={false} ref={ref}>
-      <Card.Row extraClassName="doc title-row">
+      <Card.Row extraClassName={`doc title-row ${theme}`}>
         <Row align="center">
           <Col col={6}>
             <div id={id} className="doc title-col">
@@ -117,7 +111,7 @@ export default function SamplePanel(props) {
       </Card.Row>
       <Divider/>
       <Card.Row>
-        <div className="doc comp-container" id="SampleBtn1">
+        <div className={`doc comp-container ${theme}`} id={`${id}-cmp`}>
           <div className="doc btn-area">
             {renderComp}
           </div>

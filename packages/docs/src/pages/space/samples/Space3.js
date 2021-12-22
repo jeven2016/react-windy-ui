@@ -8,7 +8,7 @@ export default function Space3() {
 
     <Space gutter={{x: 8, y: 16}}
            wrap={true}>
-      <Button color="gray" hasOutlineBackground={false} outline
+      <Button  hasOutlineBackground={false} outline
               invertedOutline
               hasMinWidth>gray</Button>
       <Button color="black" hasOutlineBackground={false} outline

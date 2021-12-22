@@ -6,6 +6,7 @@
   "global.home.link.template": "Template",
   "global.home.link.contribute": "Contribute",
   "global.home.link.language": "语言",
+  "global.home.link.theme": "Themes",
   "global.home.content": "A responsive design system built with React, Wui.",
   "global.home.button.start": "Get Started",
   "global.home.button.github": "Github",
@@ -64,5 +65,7 @@
   "doc.menu.theme": "Theme",
   "doc.menu.icons": "Icons",
   "doc.menu.classes": "Auxiliary Classes",
-  "doc.menu.functions": "Functions"
+  "doc.menu.functions": "Functions",
+  "doc.themes.default": "Default Theme",
+  "doc.themes.dark": "Dark Theme"
 }

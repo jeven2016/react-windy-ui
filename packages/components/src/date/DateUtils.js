@@ -108,7 +108,7 @@ export const createDateColumns = ({
   for (let i = firstDay - 2; i >= 0; i--) {
     key = `prev-${getKey(displayDate, i)}`;
     td = (<td key={key}>
-      <Button hasBox={false} hasRipple={false} size="small" inverted circle={true} color="gray"
+      <Button hasBox={false} hasRipple={false} size="small" inverted circle={true}
               onClick={selectDay.bind(null, lastMonthDate, daysOfLastMonth - i, onChange, showPopup)}>
         {daysOfLastMonth - i}
       </Button>
@@ -128,9 +128,9 @@ export const createDateColumns = ({
         hasRipple={false}
         hasBox={false}
         key={`day-${dateToProcess}`}
-        extraClassName="day"
         active={active}
-        color={active && nonNil(date) ? 'primary' : 'gray'}
+        extraClassName="day"
+        color={active && nonNil(date) ? 'primary' : 'secondary'}
         size="small"
         inverted={true}
         circle={true}
@@ -203,7 +203,7 @@ export const createTimeItems = ({max, onClick}) => {
 
 };
 
-export const getLocaleResources = (locale, config)=>{
+export const getLocaleResources = (locale, config) => {
   const key = 'locale_' + locale;
   const defaultLocaleCfg = DataConfig[key];
   const newLocalConfig = nonNil(config) ? config[key] : {};

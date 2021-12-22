@@ -50,7 +50,7 @@ export default function DocMenu(props) {
                style={{
                  maxHeight: 'calc(100vh - 80px)',
                  overflow: overflow,
-                 background: '#fff',
+                 // background: '#fff',
                }}>
     {menuCotent}
   </Menu>;

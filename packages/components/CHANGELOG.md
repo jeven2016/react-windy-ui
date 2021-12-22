@@ -1,3 +1,10 @@
+# 0.6.5
+* New dark theme and corresponding component
+* Change the initial position (left and top) of Popup
+
+### 0.6.4
+* correct release version
+
 ### 0.6.3
 * Ripple: made a improvement for mobile browser
 * Form: correct the color of error message

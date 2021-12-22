@@ -8,7 +8,7 @@ export default function Pagination5() {
       <Pagination pageCount={10} simple/>
     </div>
 
-   {/* <div className="doc doc-row space" style={{width: '400px'}}>
+    {/* <div className="doc doc-row space" style={{width: '400px'}}>
       <Pagination pageCount={10} simple hasGo={true}
                   onChange={(page) => console.log(page)}/>
     </div>*/}
@@ -24,6 +24,11 @@ export default function Pagination5() {
         background: 'white'
       }}>
         <Pagination pageCount={10} simple
+                    style={{
+                      background: '#000',
+                      height: '3rem',
+                      color: 'white'
+                    }}
                     buttonProps={{
                       inverted: true,
                       outline: false,
@@ -32,6 +37,8 @@ export default function Pagination5() {
                       style: {
                         borderColor: 'transparent',
                         margin: '0 .25rem',
+                        color: 'white',
+                        borderRadius: '0'
                       },
                     }}
                     renderPre={() => <span style={{margin: '.25rem .5rem'}}>Previous</span>}

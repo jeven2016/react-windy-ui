@@ -37,7 +37,6 @@ export default function Layout5() {
         <Layout
           style={{
             marginTop: '4rem',
-            background: '#f8f9fa',
             padding: '0 2rem',
           }}>
           <Breadcrumb style={{margin: '0.5rem 0'}}>
@@ -53,7 +52,6 @@ export default function Layout5() {
           </Breadcrumb>
           <Layout.Content
             style={{
-              background: '#fff',
               padding: '0 1rem',
               marginBottom: '1rem',
             }}>
@@ -62,7 +60,7 @@ export default function Layout5() {
             </div>
           </Layout.Content>
         </Layout>
-        <Layout.Footer style={{textAlign: 'center', background: '#f8f9fa'}}>
+        <Layout.Footer style={{textAlign: 'center'}}>
           <span>react-windy-ui ©2020 All rights reserved</span>
         </Layout.Footer>
       </Layout>

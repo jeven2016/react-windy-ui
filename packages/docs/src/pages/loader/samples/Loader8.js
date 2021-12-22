@@ -11,7 +11,7 @@ export default function Loader8() {
   return <>
     <div className="doc doc-row">
       <Toggle active={active} onChange={val => setActive(val)}
-              content={{on: 'Active', off: 'Active'}}/>
+              label='Active'/>
     </div>
 
     <Loader type="third" color="blue"
