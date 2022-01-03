@@ -1,7 +1,7 @@
-import {isArray, isNil} from '../Utils';
+import { isArray, isNil } from '../Utils';
 
 const validateOneChild = (props) => {
-  const {children} = props;
+  const { children } = props;
   if (isNil(children)) {
     throw new Error('No child found in this popover.');
   }
@@ -11,6 +11,4 @@ const validateOneChild = (props) => {
   }
 };
 
-export {
-  validateOneChild,
-};
+export { validateOneChild };

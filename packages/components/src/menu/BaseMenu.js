@@ -1,11 +1,11 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import clsx from 'clsx';
 import MenuHeader from './MenuHeader';
-import {Action, MenuDirection} from './MenuUtils';
+import { Action, MenuDirection } from './MenuUtils';
 import MenuList from './MenuList';
 import useMultipleRefs from '../common/UseMultipleRefs';
-import {MenuContext} from '../common/Context';
-import {execute, includes, isNil, preventEvent} from '../Utils';
+import { MenuContext } from '../common/Context';
+import { execute, includes, isNil, preventEvent } from '../Utils';
 import PropTypes from 'prop-types';
 import useEventCallback from '../common/useEventCallback';
 
@@ -28,7 +28,7 @@ const BaseMenu = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
   const ctx = useContext(MenuContext);
-  const {attach, detach, getState} = ctx.store;
+  const { attach, detach, getState } = ctx.store;
 
   //only works for non popup submenu and the id is not specified
   const [collapse, setCollapse] = useState(null);
@@ -39,31 +39,32 @@ const BaseMenu = React.forwardRef((props, ref) => {
 
   const isOpen = useMemo(() => {
     if (ctx.customOpen) {
-      return includes(ctx.openList, id)
+      return includes(ctx.openList, id);
     }
-    return internalOpen
+    return internalOpen;
   }, [ctx.customOpen, ctx.openList, internalOpen, id]);
 
   //handle collapsable submenu
   const collapseHandler = useEventCallback((e) => {
     if (isNil(id)) {
-      setCollapse(pre => {
+      setCollapse((pre) => {
         setCollapse(!pre);
       });
       return;
     }
 
     if (popupSubMenu && internalRef.current.contains(e.target)) {
-      preventEvent(e);//do not fire the document's event listener
+      preventEvent(e); //do not fire the document's event listener
       return;
     }
 
     //the id should exists in the list ,and then it can be removed that means to collapse the panel
-    const toCollapse = ctx.customOpen ? ctx.openList.includes(id)
+    const toCollapse = ctx.customOpen
+      ? ctx.openList.includes(id)
       : getState().openList.includes(id);
 
     const activeType = toCollapse ? Action.closeMenu : Action.openMenu;
-    ctx.dispatch({type: activeType, id, e, directChild: ctx.directChild});
+    ctx.dispatch({ type: activeType, id, e, directChild: ctx.directChild });
   });
 
   //handle popup submenu
@@ -71,7 +72,7 @@ const BaseMenu = React.forwardRef((props, ref) => {
     if (rootMenu || isNil(id) || ctx.customOpen) {
       return;
     }
-    const listener = ({openList}) => {
+    const listener = ({ openList }) => {
       const nextOpen = includes(openList, id);
       //to open
       if (nextOpen && !isOpen) {
@@ -99,7 +100,7 @@ const BaseMenu = React.forwardRef((props, ref) => {
       timeoutRef.current = null;
       clearTimeout(closeTimeout);
     }
-    ctx.dispatch({type: Action.openMenu, id, e, directChild: ctx.directChild});
+    ctx.dispatch({ type: Action.openMenu, id, e, directChild: ctx.directChild });
   });
 
   const mouseLeaveHandler = useEventCallback((e) => {
@@ -109,9 +110,8 @@ const BaseMenu = React.forwardRef((props, ref) => {
 
     //delay some mill-seconds to let mouse enter handler be invoked first
     timeoutRef.current = execute(function () {
-      ctx.dispatch({type: Action.closeMenu, id, e});
+      ctx.dispatch({ type: Action.closeMenu, id, e });
     }, 50);
-
   });
 
   const directionCls = MenuDirection.isVertical(ctx.direction)
@@ -123,36 +123,38 @@ const BaseMenu = React.forwardRef((props, ref) => {
     'non-compact': ctx.canCompact && !ctx.compact,
     'global-with-box': ctx.hasBox,
     'with-border-radius': ctx.hasBorderRadius,
-    [ctx.type]: ctx.type,
+    [ctx.type]: ctx.type
   });
 
-  return <>
-    <div ref={multiRef}
-         className={clsName} {...otherProps}>
-      {ctx.hasHeader && <MenuHeader icon={icon}
-                                    level={level}
-                                    handleCollapse={collapseHandler}
-                                    onMouseEnter={mouseEnterHandler}
-                                    onMouseLeave={mouseLeaveHandler}
-                                    menuVisible={isOpen}
-                                    hasBottomBar={hasBottomBar}
-                                    collapse={isNil(collapse)
-                                      ? !isOpen
-                                      : collapse}/>}
+  return (
+    <>
+      <div ref={multiRef} className={clsName} {...otherProps}>
+        {ctx.hasHeader && (
+          <MenuHeader
+            icon={icon}
+            level={level}
+            handleCollapse={collapseHandler}
+            onMouseEnter={mouseEnterHandler}
+            onMouseLeave={mouseLeaveHandler}
+            menuVisible={isOpen}
+            hasBottomBar={hasBottomBar}
+            collapse={isNil(collapse) ? !isOpen : collapse}
+          />
+        )}
 
-      <MenuList
-        popupSubMenu={popupSubMenu}
-        popupSubMenuPosition={popupSubMenuPosition}
-        collapse={isNil(collapse) ? !isOpen : collapse}
-        content={children}
-        handleMouseEnter={mouseEnterHandler}
-        handleMouseLeave={mouseLeaveHandler}
-        show={isOpen}
-        blockList={blockList}
-      />
-
-    </div>
-  </>;
+        <MenuList
+          popupSubMenu={popupSubMenu}
+          popupSubMenuPosition={popupSubMenuPosition}
+          collapse={isNil(collapse) ? !isOpen : collapse}
+          content={children}
+          handleMouseEnter={mouseEnterHandler}
+          handleMouseLeave={mouseLeaveHandler}
+          show={isOpen}
+          blockList={blockList}
+        />
+      </div>
+    </>
+  );
 });
 
 BaseMenu.propTypes = {
@@ -165,7 +167,7 @@ BaseMenu.propTypes = {
   blockList: PropTypes.bool,
   rootMenu: PropTypes.bool,
   hasBottomBar: PropTypes.bool,
-  level: PropTypes.number,
+  level: PropTypes.number
 };
 
 export default BaseMenu;

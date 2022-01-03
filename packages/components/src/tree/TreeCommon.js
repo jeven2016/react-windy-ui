@@ -1,5 +1,5 @@
 import React from 'react';
-import {convertToArray, isArray, isNil} from '../Utils';
+import { convertToArray, isArray, isNil } from '../Utils';
 import TreeItem from './TreeItem';
 
 export const RootId = '$$root$$';
@@ -7,7 +7,7 @@ export const RootId = '$$root$$';
 export const CheckedStatus = {
   indeterminate: 0,
   checked: 1,
-  unchecked: 2,
+  unchecked: 2
 };
 
 export const updateParentsStatus = (map, parent, status) => {
@@ -20,7 +20,7 @@ export const updateParentsStatus = (map, parent, status) => {
   if (status === CheckedStatus.checked) {
     //1. if all sibling nodes checked the parent node should be checked
     //2. if any sibling nodes unchecked the parent node should be indeterminate
-    const otherChdChecked = allChd.every(chd => {
+    const otherChdChecked = allChd.every((chd) => {
       let checkedNode = map.get(chd.getId());
       if (isNil(checkedNode)) {
         return false; // none checked
@@ -28,21 +28,21 @@ export const updateParentsStatus = (map, parent, status) => {
       return checkedNode === CheckedStatus.checked;
     });
 
-    map.set(parent.getId(),
-      otherChdChecked ? status : CheckedStatus.indeterminate);
+    map.set(parent.getId(), otherChdChecked ? status : CheckedStatus.indeterminate);
   } else {
     //1. if any sibling nodes checked the parent node should be indeterminate
     //2. if all sibling nodes unchecked the parent node should be unchecked
-    const otherChdUnChecked = allChd.filter(chd => chd.getId()).every(chd => {
-      let checkedNode = map.get(chd.getId());
-      if (isNil(checkedNode)) {
-        return true; // none checked
-      }
-      return checkedNode === CheckedStatus.unchecked;
-    });
+    const otherChdUnChecked = allChd
+      .filter((chd) => chd.getId())
+      .every((chd) => {
+        let checkedNode = map.get(chd.getId());
+        if (isNil(checkedNode)) {
+          return true; // none checked
+        }
+        return checkedNode === CheckedStatus.unchecked;
+      });
 
-    map.set(parent.getId(),
-      otherChdUnChecked ? status : CheckedStatus.indeterminate);
+    map.set(parent.getId(), otherChdUnChecked ? status : CheckedStatus.indeterminate);
   }
 
   updateParentsStatus(map, parent.getParent(), status);
@@ -50,7 +50,7 @@ export const updateParentsStatus = (map, parent, status) => {
 
 export const updateChildrenStatus = (map, node, status) => {
   const chdNodes = node.getChildren();
-  chdNodes.forEach(n => {
+  chdNodes.forEach((n) => {
     map.set(n.getId(), status);
     updateChildrenStatus(map, n, status);
   });
@@ -59,13 +59,14 @@ export const updateChildrenStatus = (map, node, status) => {
 function parseChild(child, nodes, chdNode, providedJsonData) {
   let id = providedJsonData ? child.id : child.props['id'];
   if (isNil(id)) {
-    throw new Error('The tree items should have \'id\' set.');
+    throw new Error("The tree items should have 'id' set.");
   }
 
   let isLeaf;
   if (providedJsonData) {
-    isLeaf = child.hasOwnProperty('isLeaf') ? child.isLeaf : convertToArray(
-      child.children).length === 0;
+    isLeaf = child.hasOwnProperty('isLeaf')
+      ? child.isLeaf
+      : convertToArray(child.children).length === 0;
   } else {
     isLeaf = React.Children.count(child.props.children) === 0;
   }
@@ -76,7 +77,7 @@ function parseChild(child, nodes, chdNode, providedJsonData) {
     label: providedJsonData ? child.label : child.props['label'],
     parentNode: chdNode,
     children: providedJsonData ? child.children : child.props.children,
-    isRoot: false,
+    isRoot: false
   });
 }
 
@@ -92,7 +93,7 @@ export const mergeChildren = (jsonData, partialData, id) => {
 
   const chdren = jsonData.children;
   if (chdren && isArray(chdren) && chdren.length > 0) {
-    chdren.forEach(child => {
+    chdren.forEach((child) => {
       mergeChildren(child, partialData, id);
     });
   }
@@ -106,7 +107,7 @@ export const parseChildren = (providedJsonData, children, jsonData) => {
     isLeaf: false,
     children: [newChildren], //react children
     parentNode: null, //TreeNode
-    isRoot: true,
+    isRoot: true
   };
   root.rootNode = new TreeNode(root.id, root.parentNode);
   var treeNodeMap = new Map(); //key: id, value: TreeNode
@@ -115,15 +116,16 @@ export const parseChildren = (providedJsonData, children, jsonData) => {
   let i = 0;
   while (nodes.length > 0) {
     if (i++ > 100000) {
-      throw new Error('too many loops taken or the number of tree nodes exceed the maximum value 10000.');
+      throw new Error(
+        'too many loops taken or the number of tree nodes exceed the maximum value 10000.'
+      );
     }
     let node = nodes.shift();
     if (isNil(node)) {
       continue;
     }
 
-    let chdNode = node.isRoot ? node.rootNode :
-      new TreeNode(node.id, node.parentNode);
+    let chdNode = node.isRoot ? node.rootNode : new TreeNode(node.id, node.parentNode);
     treeNodeMap.set(node.id, chdNode);
 
     if (!isNil(node.parentNode)) {
@@ -133,33 +135,31 @@ export const parseChildren = (providedJsonData, children, jsonData) => {
     if (isNil(node.children) || node.children.length === 0) {
       //if no children set and mark it as non-leaf node
       const isAsyncLoad = !node.isLeaf;
-      chdNode.setParam(
-        {isLeaf: !isAsyncLoad, asyncLoad: isAsyncLoad, label: node.label});
+      chdNode.setParam({ isLeaf: !isAsyncLoad, asyncLoad: isAsyncLoad, label: node.label });
     } else {
-      chdNode.setParam({isLeaf: false, label: node.label});
+      chdNode.setParam({ isLeaf: false, label: node.label });
       if (providedJsonData) {
-        node.children.forEach(
-          (child) => parseChild(child, nodes, chdNode, providedJsonData));
+        node.children.forEach((child) => parseChild(child, nodes, chdNode, providedJsonData));
       } else {
-        React.Children.forEach(node.children,
-          (child) => parseChild(child, nodes, chdNode, providedJsonData));
+        React.Children.forEach(node.children, (child) =>
+          parseChild(child, nodes, chdNode, providedJsonData)
+        );
       }
     }
   }
 
   return {
     rootNode: root.rootNode,
-    treeNodeMap,
+    treeNodeMap
   };
-
 };
 
-export const mapCheckedStatus = ({ids, treeData, autoCheckLeaves, map, checked}) => {
+export const mapCheckedStatus = ({ ids, treeData, autoCheckLeaves, map, checked }) => {
   const idArray = convertToArray(ids);
   for (let id of idArray) {
     let node = treeData.treeNodeMap.get(id);
     if (isNil(node)) {
-      throw new Error('No node exists with this id \'' + id + '\'.');
+      throw new Error("No node exists with this id '" + id + "'.");
     }
     //add this node into map
     map.set(id, checked);
@@ -184,16 +184,13 @@ export const getNode = (data) => {
   }
   const root = data.rootNode;
   const children = root.children;
-  return children.map(chd => {
+  return children.map((chd) => {
     return chd.toComponent();
   });
 };
 
 export class TreeNode {
-
-  constructor(
-    id, parent, children,
-    param = {isLeaf: false, label: null, asyncLoad: false}) {
+  constructor(id, parent, children, param = { isLeaf: false, label: null, asyncLoad: false }) {
     let validChildren = !isNil(children);
     if (validChildren && !Array.isArray(children)) {
       throw new Error('the children of this TreeNode should be a valid array.');
@@ -244,20 +241,22 @@ export class TreeNode {
   }
 
   handleChildren(children) {
-    const fun = (function (chd) {
-      return <TreeItem id={chd.getId()} label={chd.getParam()['label']}
-                       key={chd.getId()}>
-        {this.handleChildren(chd.getChildren())}
-      </TreeItem>;
-    }).bind(this);
+    const fun = function (chd) {
+      return (
+        <TreeItem id={chd.getId()} label={chd.getParam()['label']} key={chd.getId()}>
+          {this.handleChildren(chd.getChildren())}
+        </TreeItem>
+      );
+    }.bind(this);
 
     return children.map(fun);
   }
 
   toComponent() {
-    return <TreeItem id={this.id} label={this.getParam()['label']}
-                     key={this.id}>
-      {this.handleChildren(this.getChildren())}
-    </TreeItem>;
+    return (
+      <TreeItem id={this.id} label={this.getParam()['label']} key={this.id}>
+        {this.handleChildren(this.getChildren())}
+      </TreeItem>
+    );
   }
 }

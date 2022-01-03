@@ -1,7 +1,7 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import {InputGroupContext} from './common/Context';
+import { InputGroupContext } from './common/Context';
 
 /**
  * Input Group Component
@@ -13,13 +13,12 @@ const InputGroup = React.forwardRef((props, ref) => {
     className = 'input-group',
     extraClassName,
     normal = true,
-    children,  //todo
+    children, //todo
     ...otherProps
   } = props;
 
-  let clsName = clsx(extraClassName, className, {block: block, normal});
-  const ctx = useMemo(() => ({size, withinGroup: true}),
-      [size]);
+  let clsName = clsx(extraClassName, className, { block: block, normal });
+  const ctx = useMemo(() => ({ size, withinGroup: true }), [size]);
 
   const updatedChd = useMemo(() => {
     return React.Children.map(children, (chd) => {
@@ -27,29 +26,29 @@ const InputGroup = React.forwardRef((props, ref) => {
         return chd;
       }
 
-      return <Item autoScale={true}>
-        {chd}
-      </Item>;
+      return <Item autoScale={true}>{chd}</Item>;
     });
   }, [children]);
 
-  return <InputGroupContext.Provider value={ctx}>
-    <span ref={ref} className={clsName} {...otherProps}>
-      {updatedChd}
-    </span>
-  </InputGroupContext.Provider>;
+  return (
+    <InputGroupContext.Provider value={ctx}>
+      <span ref={ref} className={clsName} {...otherProps}>
+        {updatedChd}
+      </span>
+    </InputGroupContext.Provider>
+  );
 });
 
 /**
  * Item Component
  */
 const Item = React.forwardRef((props, ref) => {
-  const {extraClassName, autoScale = true, ...rest} = props;
+  const { extraClassName, autoScale = true, ...rest } = props;
   const clsName = clsx(extraClassName, 'item', {
     'auto-scale': autoScale,
-    'no-scale': !autoScale,
+    'no-scale': !autoScale
   });
-  return <div className={clsName} {...rest} ref={ref}/>;
+  return <div className={clsName} {...rest} ref={ref} />;
 });
 
 /**
@@ -59,18 +58,19 @@ const Label = React.forwardRef((props, ref) => {
   const {
     className = 'label',
     extraClassName,
-    hasBackground = true,//todo
-    compact = false,//todo
+    hasBackground = true, //todo
+    compact = false, //todo
     children,
     ...otherProps
   } = props;
   const labelCls = clsx(extraClassName, className);
-  let cntClsName = clsx('content',
-      {'with-bg': hasBackground, compact: compact});
+  let cntClsName = clsx('content', { 'with-bg': hasBackground, compact: compact });
 
-  return <div ref={ref} className={labelCls} {...otherProps}>
-    <div className={cntClsName}>{children}</div>
-  </div>;
+  return (
+    <div ref={ref} className={labelCls} {...otherProps}>
+      <div className={cntClsName}>{children}</div>
+    </div>
+  );
 });
 
 InputGroup.propTypes = {
@@ -79,19 +79,19 @@ InputGroup.propTypes = {
   className: PropTypes.string, //the class name of button
   extraClassName: PropTypes.string, //the customized class need to add
   disabled: PropTypes.bool,
-  normal: PropTypes.bool,
+  normal: PropTypes.bool
 };
 
 Label.propTypes = {
   className: PropTypes.string, //the class name of button
   extraClassName: PropTypes.string, //the customized class need to add
-  compact: PropTypes.bool,
+  compact: PropTypes.bool
 };
 
 Item.propTypes = {
   className: PropTypes.string, //the class name of button
   extraClassName: PropTypes.string, //the customized class need to add
-  autoScale: PropTypes.bool,
+  autoScale: PropTypes.bool
 };
 
 InputGroup.Label = Label;

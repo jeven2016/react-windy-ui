@@ -1,10 +1,10 @@
-import React, {useContext, useRef} from 'react';
+import React, { useContext, useRef } from 'react';
 import clsx from 'clsx';
-import {TabsContext} from './TabsCommon';
-import {isNil, nonNil, preventEvent} from '../Utils';
+import { TabsContext } from './TabsCommon';
+import { isNil, nonNil, preventEvent } from '../Utils';
 import PropTypes from 'prop-types';
-import Ripple from "../common/Ripple";
-import {IconClear} from "../Icons";
+import Ripple from '../common/Ripple';
+import { IconClear } from '../Icons';
 
 const TabItem = React.forwardRef((props, ref) => {
   const rippleRef = useRef(null);
@@ -13,7 +13,7 @@ const TabItem = React.forwardRef((props, ref) => {
   const updatedProps = Ripple.useRippleEvent({
     rippleRef,
     rootProps: props,
-    hasRipple: props.hasRipple,
+    hasRipple: props.hasRipple
   });
 
   const {
@@ -29,10 +29,9 @@ const TabItem = React.forwardRef((props, ref) => {
 
   const context = useContext(TabsContext);
   const isActive = !isNil(value) && value === context.active;
-  const clsName = clsx(extraClassName, className,
-      {active: isActive, disabled: disabled});
+  const clsName = clsx(extraClassName, className, { active: isActive, disabled: disabled });
 
-  const deleteIconClsName = clsx('item-icon', {disabled: disabled});
+  const deleteIconClsName = clsx('item-icon', { disabled: disabled });
 
   const showRipple = nonNil(hasRipple) ? hasRipple : context.hasRipple;
 
@@ -46,19 +45,22 @@ const TabItem = React.forwardRef((props, ref) => {
 
   const isRemovable = isNil(removable) ? context.removable : removable;
 
-  return <div className={clsName}
-              ref={ref}
-              onClick={() => !disabled && context.change(value)}
-              {...otherProps}>
-    <div className="item-label">{children}</div>
-    {
-      isRemovable ? <div className={deleteIconClsName}
-                         onClick={remove}>
-        <IconClear size="small"/>
-      </div> : null
-    }
-    {showRipple && <Ripple ref={rippleRef} color={context.rippleColor}/>}
-  </div>;
+  return (
+    <div
+      className={clsName}
+      ref={ref}
+      onClick={() => !disabled && context.change(value)}
+      {...otherProps}
+    >
+      <div className="item-label">{children}</div>
+      {isRemovable ? (
+        <div className={deleteIconClsName} onClick={remove}>
+          <IconClear size="small" />
+        </div>
+      ) : null}
+      {showRipple && <Ripple ref={rippleRef} color={context.rippleColor} />}
+    </div>
+  );
 });
 
 TabItem.propTypes = {
@@ -67,7 +69,7 @@ TabItem.propTypes = {
   disabled: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   removable: PropTypes.bool,
-  hasRipple: PropTypes.bool,
+  hasRipple: PropTypes.bool
 };
 
 export default TabItem;

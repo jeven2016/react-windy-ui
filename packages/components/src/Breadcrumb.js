@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import {invoke, isFunction} from "./Utils";
+import { invoke, isFunction } from './Utils';
 
 const Item = (props) => {
   const {
@@ -13,9 +13,13 @@ const Item = (props) => {
     ...otherProps
   } = props;
   let clsName = clsx(extraClassName, className, {
-    active,
+    active
   });
-  return <span className={clsName} {...otherProps}>{children}</span>;
+  return (
+    <span className={clsName} {...otherProps}>
+      {children}
+    </span>
+  );
 };
 
 const Breadcrumb = React.forwardRef((props, ref) => {
@@ -29,22 +33,24 @@ const Breadcrumb = React.forwardRef((props, ref) => {
   } = props;
 
   let clsName = clsx(extraClassName, className, {
-    'with-bg': hasBackground,
+    'with-bg': hasBackground
   });
 
   return (
     <div ref={ref} className={clsName} {...otherProps}>
-      {
-        React.Children.map(children, (chd, i) => {
-          if (i === 0) {
-            return chd;
-          }
-          return <>
-            <div className="bc-divider">{isFunction(separator) ? invoke(separator, i, chd.props) : separator}</div>
+      {React.Children.map(children, (chd, i) => {
+        if (i === 0) {
+          return chd;
+        }
+        return (
+          <>
+            <div className="bc-divider">
+              {isFunction(separator) ? invoke(separator, i, chd.props) : separator}
+            </div>
             {chd}
-          </>;
-        })
-      }
+          </>
+        );
+      })}
     </div>
   );
 });
@@ -60,7 +66,7 @@ Breadcrumb.propTypes = {
   extraClassName: PropTypes.string,
   className: PropTypes.string,
   hasBackground: PropTypes.bool,
-  separator: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  separator: PropTypes.oneOfType([PropTypes.node, PropTypes.func])
 };
 
 Breadcrumb.Item = Item;

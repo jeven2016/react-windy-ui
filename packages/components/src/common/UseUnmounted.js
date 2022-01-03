@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React, { useRef, useEffect } from 'react';
 
 const useUnmounted = () => {
   const unMountedRef = useRef(false);

@@ -1,14 +1,14 @@
-import {isNil} from '../Utils';
-import {invoke} from '../Utils';
+import { isNil } from '../Utils';
+import { invoke } from '../Utils';
 
 const multipleClickAction = (state, action) => {
-  const isItemClicked = !isNil(
-      (action.isSelectedByValue)(action.data.clickItem.value));
+  const isItemClicked = !isNil(action.isSelectedByValue(action.data.clickItem.value));
   let selectedItems = null;
   if (isItemClicked) {
     //remove the item
     selectedItems = state.selectedItems.filter(
-        item => item.value !== action.data.clickItem.value);
+      (item) => item.value !== action.data.clickItem.value
+    );
   } else {
     selectedItems = [...state.selectedItems, action.data.clickItem];
   }
@@ -18,10 +18,8 @@ const multipleClickAction = (state, action) => {
     ...state,
     searchedValue: null,
     selectedItems: selectedItems,
-    showFilteredItems: false,
+    showFilteredItems: false
   };
 };
 
-export {
-  multipleClickAction,
-};
+export { multipleClickAction };

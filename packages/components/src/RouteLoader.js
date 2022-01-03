@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {execute} from './Utils';
+import React, { useEffect } from 'react';
+import { execute } from './Utils';
 import Progress from './progress';
 
 const RouteLoader = (props) => {
@@ -17,7 +17,8 @@ const RouteLoader = (props) => {
     ...otherProps
   } = props;
 
-  execute(() =>
+  execute(
+    () =>
       Progress.showTop({
         showLoading: showLoading,
         type: type,
@@ -27,16 +28,20 @@ const RouteLoader = (props) => {
         incrementEnd: incrementEnd,
         maxValue: maxValue,
         style: progressStyle,
-        barStyle: barStyle,
-      }), 50);
+        barStyle: barStyle
+      }),
+    50
+  );
 
   useEffect(() => {
     Progress.closeTop();
   });
 
-  return <>
-    <NativeRoute {...otherProps}/>
-  </>;
+  return (
+    <>
+      <NativeRoute {...otherProps} />
+    </>
+  );
 };
 
 /**
@@ -47,7 +52,7 @@ const RouteLoader = (props) => {
 RouteLoader.routeFilter = (routeProps) => ({
   location: routeProps.location,
   history: routeProps.history,
-  match: routeProps.match,
+  match: routeProps.match
 });
 
 export default RouteLoader;

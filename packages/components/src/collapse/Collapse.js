@@ -2,8 +2,8 @@ import React from 'react';
 import CollapsePanel from './CollapsePanel';
 import Item from './Item';
 import clsx from 'clsx';
-import {convertToArray, DefaultColor, isNil} from '../Utils';
-import {CollapseContext} from '../common/Context';
+import { convertToArray, DefaultColor, isNil } from '../Utils';
+import { CollapseContext } from '../common/Context';
 import useInternalState from '../common/useInternalState';
 import PropTypes from 'prop-types';
 
@@ -11,7 +11,7 @@ const Collapse = React.forwardRef((props, ref) => {
   const {
     className = 'collapse',
     extraClassName,
-    defaultActive,//Array or single value
+    defaultActive, //Array or single value
     active, //Array or single value
     accordion = false,
     hasBorder = true,
@@ -28,14 +28,14 @@ const Collapse = React.forwardRef((props, ref) => {
   } = props;
   const clsName = clsx(extraClassName, className, {
     'with-border': hasBorder,
-    'global-with-box': hasBox,
+    'global-with-box': hasBox
   });
 
   const [currentActive, setActive] = useInternalState({
     props,
     stateName: 'active',
     defaultState: convertToArray(defaultActive),
-    state: convertToArray(active),
+    state: convertToArray(active)
   });
 
   const clickItem = (value, isCollapsed, e) => {
@@ -48,13 +48,13 @@ const Collapse = React.forwardRef((props, ref) => {
 
     if (isCollapsed && currentActive.includes(value)) {
       //collapse the item corresponding to this value
-      setActive(currentActive.filter(v => v !== value));
+      setActive(currentActive.filter((v) => v !== value));
     }
     if (!isCollapsed) {
       if (accordion) {
         setActive([value]);
       } else if (!currentActive.includes(value)) {
-        setActive(pre => [...pre, value]);
+        setActive((pre) => [...pre, value]);
       }
     }
     onChange && onChange(value, isCollapsed, e);
@@ -73,12 +73,11 @@ const Collapse = React.forwardRef((props, ref) => {
     disabled
   };
 
-  return <div className={clsName} {...otherProps}>
-    <CollapseContext.Provider
-      value={ctx}>
-      {children}
-    </CollapseContext.Provider>
-  </div>;
+  return (
+    <div className={clsName} {...otherProps}>
+      <CollapseContext.Provider value={ctx}>{children}</CollapseContext.Provider>
+    </div>
+  );
 });
 
 Collapse.propTypes = {
@@ -88,13 +87,15 @@ Collapse.propTypes = {
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.number,
-    PropTypes.arrayOf(PropTypes.number)]),
+    PropTypes.arrayOf(PropTypes.number)
+  ]),
   onChange: PropTypes.func,
   active: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.number,
-    PropTypes.arrayOf(PropTypes.number)]),
+    PropTypes.arrayOf(PropTypes.number)
+  ]),
   accordion: PropTypes.bool,
   hasBorder: PropTypes.bool,
   hasBox: PropTypes.bool,
@@ -102,7 +103,7 @@ Collapse.propTypes = {
   collapseIcon: PropTypes.node,
   iconPosition: PropTypes.oneOf(['left', 'right']),
   hasRipple: PropTypes.bool,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 Collapse.Panel = CollapsePanel;

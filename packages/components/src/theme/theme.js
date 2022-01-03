@@ -1,16 +1,15 @@
-import React, {useContext, useMemo, useState} from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import useEventCallback from "../common/useEventCallback";
-import {nonNil} from "../Utils";
-import {ThemeContext} from "../common/Context";
-import {validate} from "../Utils";
-
+import useEventCallback from '../common/useEventCallback';
+import { nonNil } from '../Utils';
+import { ThemeContext } from '../common/Context';
+import { validate } from '../Utils';
 
 const Status = {
   idle: 'idle',
   loading: 'loading',
   completed: 'completed'
-}
+};
 
 const createLink = (linkConfig) => {
   const link = document.createElement('link');
@@ -26,8 +25,6 @@ const createLink = (linkConfig) => {
   return link;
 };
 
-
-
 /**
  * refer to : https://github.com/JoseRFelix/react-css-theme-switcher/blob/master/src/index.tsx
  *
@@ -41,18 +38,21 @@ const createLink = (linkConfig) => {
  * @constructor
  */
 export const CssThemeProvider = (props) => {
-  const {defaultTheme, themeMap = {}, injectId = 'inject-link-id', linkId = 'theme-link-id', ...rest} = props;
+  const {
+    defaultTheme,
+    themeMap = {},
+    injectId = 'inject-link-id',
+    linkId = 'theme-link-id',
+    ...rest
+  } = props;
   const [status, setStatus] = useState(Status.idle);
   const [theme, setTheme] = useState();
 
   const insertTheme = useEventCallback((linkElem) => {
-    const injectNode = document.getElementById(injectId)
+    const injectNode = document.getElementById(injectId);
     const parent = injectNode?.parentNode;
     if (parent) {
-      return parent.insertBefore(
-        linkElem,
-        injectNode.nextSibling
-      );
+      return parent.insertBefore(linkElem, injectNode.nextSibling);
     }
     return document.head.appendChild(linkElem);
   });
@@ -62,7 +62,7 @@ export const CssThemeProvider = (props) => {
       return;
     }
 
-    validate(themeMap.hasOwnProperty(newTheme), `The theme(${newTheme}) doesn't exist.`)
+    validate(themeMap.hasOwnProperty(newTheme), `The theme(${newTheme}) doesn't exist.`);
 
     setStatus(Status.loading);
 
@@ -77,7 +77,7 @@ export const CssThemeProvider = (props) => {
       href: themeMap[newTheme],
       onload: () => {
         setStatus(Status.loaded);
-      },
+      }
     });
 
     //insert the link
@@ -89,15 +89,18 @@ export const CssThemeProvider = (props) => {
     nonNil(defaultTheme) && change(defaultTheme);
   }, [change, defaultTheme]);
 
-  const ctx = useMemo(() => ({
-    status,
-    theme,
-    change,
-    themes: Object.keys(themeMap)
-  }), [change, themeMap, status, theme]);
+  const ctx = useMemo(
+    () => ({
+      status,
+      theme,
+      change,
+      themes: Object.keys(themeMap)
+    }),
+    [change, themeMap, status, theme]
+  );
 
-  return <ThemeContext.Provider value={ctx} {...rest}/>
-}
+  return <ThemeContext.Provider value={ctx} {...rest} />;
+};
 
 export const useTheme = () => useContext(ThemeContext);
 
@@ -108,4 +111,4 @@ CssThemeProvider.propTypes = {
   linkId: PropTypes.string,
   defaultTheme: PropTypes.string,
   themeMap: PropTypes.object
-}
+};

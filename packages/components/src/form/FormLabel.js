@@ -14,15 +14,13 @@ const FormLabel = React.forwardRef((props, ref) => {
   const clsName = clsx(extraClassName, className);
   const existsIcon = required && hasRequiredIcon;
   const isLeftPos = iconPosition === 'left';
-  return <label className={clsName} {...otherProps} ref={ref}>
-    {existsIcon && isLeftPos && <span className="required-left-col">
-      *
-    </span>}
-    <span>{children}</span>
-    {existsIcon && !isLeftPos && <span className="required-right-col">
-      *
-    </span>}
-  </label>;
+  return (
+    <label className={clsName} {...otherProps} ref={ref}>
+      {existsIcon && isLeftPos && <span className="required-left-col">*</span>}
+      <span>{children}</span>
+      {existsIcon && !isLeftPos && <span className="required-right-col">*</span>}
+    </label>
+  );
 });
 
 export default FormLabel;

@@ -1,24 +1,24 @@
-import React, {useRef} from "react";
-import useInternalState from "../common/useInternalState";
-import Mask from "../Mask";
-import clsx from "clsx";
-import useEventCallback from "../common/useEventCallback";
-import useMultipleRefs from "../common/UseMultipleRefs";
-import useEvent from "../common/UseEvent";
-import {EventListener} from "../common/Constants";
-import PropTypes from "prop-types";
+import React, { useRef } from 'react';
+import useInternalState from '../common/useInternalState';
+import Mask from '../Mask';
+import clsx from 'clsx';
+import useEventCallback from '../common/useEventCallback';
+import useMultipleRefs from '../common/UseMultipleRefs';
+import useEvent from '../common/UseEvent';
+import { EventListener } from '../common/Constants';
+import PropTypes from 'prop-types';
 
 const TriggerType = {
   hover: 'hover',
   click: 'click'
-}
+};
 
 const Curtain = React.forwardRef((props, ref) => {
   const {
     disabled = false,
     triggerBy = TriggerType.hover,
     extraClassName,
-    className = "card-curtain",
+    className = 'card-curtain',
     clickMaskToChange = false, // whether to change automaticly
     defaultClose = false,
     close,
@@ -33,7 +33,7 @@ const Curtain = React.forwardRef((props, ref) => {
     props,
     stateName: 'close',
     defaultState: defaultClose,
-    state: close,
+    state: close
   });
   const isHover = triggerBy === TriggerType.hover;
 
@@ -57,8 +57,10 @@ const Curtain = React.forwardRef((props, ref) => {
     //somehow the mouseleave event may not be fired in mobile browser so this handler is useful
     if (curNode && currentClose) {
       if (e.target !== curNode) {
-        if (!clickMaskToChange && (maskRef.current.contains(e.target)
-          || internalRef.current.contains(e.target))) {
+        if (
+          !clickMaskToChange &&
+          (maskRef.current.contains(e.target) || internalRef.current.contains(e.target))
+        ) {
           //don't change while clicking the mask
           return;
         }
@@ -84,14 +86,15 @@ const Curtain = React.forwardRef((props, ref) => {
     }
   });
 
-  const clsName = clsx(extraClassName, className, {close: currentClose});
-  return <div className={clsName} ref={multiRef} onClick={click}  {...rest}>
-    {children}
-    <Mask ref={maskRef} active={currentClose} dark={darkMask}
-          className='curtain-mask'>
-      {closeContent}
-    </Mask>
-  </div>
+  const clsName = clsx(extraClassName, className, { close: currentClose });
+  return (
+    <div className={clsName} ref={multiRef} onClick={click} {...rest}>
+      {children}
+      <Mask ref={maskRef} active={currentClose} dark={darkMask} className="curtain-mask">
+        {closeContent}
+      </Mask>
+    </div>
+  );
 });
 
 Curtain.propTypes = {
@@ -105,6 +108,6 @@ Curtain.propTypes = {
   onChange: PropTypes.func,
   closeContent: PropTypes.node,
   darkMask: PropTypes.bool
-}
+};
 
 export default Curtain;

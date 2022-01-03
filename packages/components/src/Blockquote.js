@@ -1,20 +1,17 @@
 import React from 'react';
 import clsx from 'clsx';
 import useElement from './common/useElement';
-import {adjustItems, JustifyContentType} from './common/Constants';
+import { adjustItems, JustifyContentType } from './common/Constants';
 import PropTypes from 'prop-types';
 
-const Header = React.forwardRef(
-  (props, ref) => useElement(props, ref, 'header'));
+const Header = React.forwardRef((props, ref) => useElement(props, ref, 'header'));
 
-const Footer = React.forwardRef(
-  (props, ref) => {
-    const {justify = "start", ...otherProps} = props;
+const Footer = React.forwardRef((props, ref) => {
+  const { justify = 'start', ...otherProps } = props;
 
-    const justifyClsName = adjustItems(justify)
-    return useElement(otherProps, ref, 'footer',
-      {[justifyClsName]: justifyClsName});
-  });
+  const justifyClsName = adjustItems(justify);
+  return useElement(otherProps, ref, 'footer', { [justifyClsName]: justifyClsName });
+});
 
 const Blockquote = React.forwardRef((props, ref) => {
   const {
@@ -33,9 +30,9 @@ const Blockquote = React.forwardRef((props, ref) => {
     [type]: type,
     border: hasBorder,
     'with-bg': hasBackground,
-    'with-box': hasBox,
+    'with-box': hasBox
   });
-  return <div className={clsName} {...otherProps} ref={ref}/>;
+  return <div className={clsName} {...otherProps} ref={ref} />;
 });
 
 Blockquote.propTypes = {
@@ -45,18 +42,18 @@ Blockquote.propTypes = {
   hasBorder: PropTypes.bool,
   hasBox: PropTypes.bool,
   hasBackground: PropTypes.bool,
-  hasBorderRadius: PropTypes.bool,
+  hasBorderRadius: PropTypes.bool
 };
 
 Header.propTypes = {
   className: PropTypes.string,
-  extraClassName: PropTypes.string,
+  extraClassName: PropTypes.string
 };
 
 Footer.propTypes = {
   className: PropTypes.string,
   extraClassName: PropTypes.string,
-  justify: PropTypes.oneOf(Object.keys(JustifyContentType)),
+  justify: PropTypes.oneOf(Object.keys(JustifyContentType))
 };
 
 Blockquote.Header = Header;

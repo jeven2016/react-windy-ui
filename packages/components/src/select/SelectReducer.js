@@ -1,5 +1,5 @@
-import {multipleClickAction} from './ClickHandler';
-import {invoke} from '../Utils';
+import { multipleClickAction } from './ClickHandler';
+import { invoke } from '../Utils';
 
 const ActionType = {
   open: 'open',
@@ -7,14 +7,14 @@ const ActionType = {
   clickItem: 'clickItem',
   multipleClickItem: 'multipleClickItem',
   search: 'search',
-  removeItem: 'removeItem', //only for multi-select
+  removeItem: 'removeItem' //only for multi-select
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case ActionType.open:
       invoke(action.data.callback);
-      return {...state, activeIcon: true, showFilteredItems: false};
+      return { ...state, activeIcon: true, showFilteredItems: false };
 
     case ActionType.close:
       invoke(action.data.callback);
@@ -22,7 +22,7 @@ const reducer = (state, action) => {
         ...state,
         searchedValue: null,
         activeIcon: false,
-        showFilteredItems: false,
+        showFilteredItems: false
       };
 
     case ActionType.clickItem:
@@ -33,7 +33,7 @@ const reducer = (state, action) => {
         ...state,
         searchedValue: null,
         selectedItems: [data.clickItem],
-        showFilteredItems: false,
+        showFilteredItems: false
       };
 
     case ActionType.multipleClickItem:
@@ -42,10 +42,9 @@ const reducer = (state, action) => {
     case ActionType.removeItem:
       const paramData = action.data;
       invoke(paramData.preRemove, paramData.value);
-      const filterItems = state.selectedItems.filter(
-          item => item.value !== paramData.value);
+      const filterItems = state.selectedItems.filter((item) => item.value !== paramData.value);
       invoke(paramData.callback, filterItems);
-      return {...state, selectedItems: filterItems};
+      return { ...state, selectedItems: filterItems };
 
     case ActionType.search:
       const searchData = action.data;
@@ -54,12 +53,9 @@ const reducer = (state, action) => {
         ...state,
         searchedValue: searchData.searchedValue,
         selectedItem: searchData.selectedItem,
-        showFilteredItems: true,
+        showFilteredItems: true
       };
   }
 };
 
-export {
-  ActionType,
-  reducer,
-};
+export { ActionType, reducer };

@@ -1,9 +1,9 @@
-import React, {useContext, useMemo, useRef} from 'react';
+import React, { useContext, useMemo, useRef } from 'react';
 import CollapsePanel from './CollapsePanel';
 import Card from '../card/Card';
-import {convertToArray, isNil, nonNil} from '../Utils';
-import {CollapseContext} from '../common/Context';
-import {IconArrowRight} from '../Icons';
+import { convertToArray, isNil, nonNil } from '../Utils';
+import { CollapseContext } from '../common/Context';
+import { IconArrowRight } from '../Icons';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import Ripple from '../common/Ripple';
@@ -16,7 +16,7 @@ const Item = React.forwardRef((props, ref) => {
   //bind ripple related event listeners
   const bind = Ripple.useRippleEvent({
     rippleRef,
-    hasRipple: ctx.hasRipple,
+    hasRipple: ctx.hasRipple
   });
 
   const {
@@ -52,60 +52,52 @@ const Item = React.forwardRef((props, ref) => {
   const innerClsName = clsx('inner', {
     'left-icon-column': ctx.iconPosition === 'left',
     'right-icon-column': ctx.iconPosition === 'right',
-    disabled: isDisabled,
+    disabled: isDisabled
   });
 
   let iconContent = null;
   if (ctx.hasCollapseIcon) {
-    const icon = isNil(ctx.collapseIcon)
-      ? <IconArrowRight/>
-      : ctx.collapseIcon;
+    const icon = isNil(ctx.collapseIcon) ? <IconArrowRight /> : ctx.collapseIcon;
 
     const contentClsName = clsx('icon-column', {
       disabled: isDisabled,
-      expand: !isCollapsed,
+      expand: !isCollapsed
     });
     iconContent = <div className={contentClsName}>{icon}</div>;
   }
 
   const disabledClsName = isDisabled ? 'disabled' : '';
-  return <>
-    <Card block {...otherProps} ref={ref}
-          hasBorder={ctx.hasBorder}
-          hasBox={false}>
-      <Card.Header
-        extraClassName={`collapse-header ${disabledClsName} ${isCollapsed
-          ? 'collapsed'
-          : ''}`}
-        hasBackground={hasBackground}
-        onClick={clickHeader}
-        style={{position: 'relative'}}
-        {...bind}>
-        <div className={`header-row`}>
-          <div className={innerClsName}>
-            {iconContent}
-            <div className={`header-info ${disabledClsName}`}>
-              {header}
+  return (
+    <>
+      <Card block {...otherProps} ref={ref} hasBorder={ctx.hasBorder} hasBox={false}>
+        <Card.Header
+          extraClassName={`collapse-header ${disabledClsName} ${isCollapsed ? 'collapsed' : ''}`}
+          hasBackground={hasBackground}
+          onClick={clickHeader}
+          style={{ position: 'relative' }}
+          {...bind}
+        >
+          <div className={`header-row`}>
+            <div className={innerClsName}>
+              {iconContent}
+              <div className={`header-info ${disabledClsName}`}>{header}</div>
             </div>
-          </div>
-          {
-            items.map((item, index) =>
-              <div key={`more-${index}`}
-                   className={`header-more`}>
+            {items.map((item, index) => (
+              <div key={`more-${index}`} className={`header-more`}>
                 {item}
-              </div>)
-          }
-        </div>
-        {
-          ctx.hasRipple && !isDisabled &&
-          <Ripple ref={rippleRef} center={false} color={ctx.rippleColor}/>
-        }
-      </Card.Header>
-      <CollapsePanel value={value} collapse={isCollapsed}>
-        {children}
-      </CollapsePanel>
-    </Card>
-  </>;
+              </div>
+            ))}
+          </div>
+          {ctx.hasRipple && !isDisabled && (
+            <Ripple ref={rippleRef} center={false} color={ctx.rippleColor} />
+          )}
+        </Card.Header>
+        <CollapsePanel value={value} collapse={isCollapsed}>
+          {children}
+        </CollapsePanel>
+      </Card>
+    </>
+  );
 });
 
 Item.propTypes = {
@@ -114,7 +106,7 @@ Item.propTypes = {
   disabled: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   hasBackground: PropTypes.bool,
-  moreItems: PropTypes.arrayOf(PropTypes.node),
+  moreItems: PropTypes.arrayOf(PropTypes.node)
 };
 
 export default Item;

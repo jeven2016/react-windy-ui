@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import clsx from 'clsx';
 import getScrollbarWidth, {
   contains,
@@ -12,30 +6,30 @@ import getScrollbarWidth, {
   invoke,
   isNil,
   isNumber,
-  validate,
+  validate
 } from '../Utils';
 import Checkbox from '../Checkbox';
 import Radio from '../Radio';
 import useInternalState from '../common/useInternalState';
-import {initStore} from '../common/Store';
-import {checkScrollBar, filterLeaves, SortOrder} from './TableUtils';
+import { initStore } from '../common/Store';
+import { checkScrollBar, filterLeaves, SortOrder } from './TableUtils';
 import BodyCell from './BodyCell';
 import TableHead from './TableHead';
-import * as PropTypes from "prop-types";
-import Element from "../common/Element";
+import * as PropTypes from 'prop-types';
+import Element from '../common/Element';
 
 const Type = {
   normal: 'normal',
   striped: 'striped',
-  simple: 'simple',
+  simple: 'simple'
 };
 
 const CheckType = {
   checkbox: 'checkbox',
-  radio: 'radio',
+  radio: 'radio'
 };
 
-const SortComparator = (a, b) => a === b ? 0 : (a < b ? 1 : -1); //by desc
+const SortComparator = (a, b) => (a === b ? 0 : a < b ? 1 : -1); //by desc
 
 const FilterComparator = (filteredValues, row, cell) => {
   for (let value of filteredValues) {
@@ -100,7 +94,7 @@ const Table = React.forwardRef((props, ref) => {
     props,
     stateName: 'checkedRows',
     defaultState: convertToArray(defaultCheckedRows),
-    state: convertToArray(checkedRows),
+    state: convertToArray(checkedRows)
   });
 
   //a reference to popup so that we can close the popup by calling the instance's method
@@ -117,28 +111,34 @@ const Table = React.forwardRef((props, ref) => {
 
   //init a internal store
   //{ checkedValues: {key: [values]} , the key corresponds the paramName
-  const [store] = useState(() => initStore({
-    checkedValues: {},
-  }));
+  const [store] = useState(() =>
+    initStore({
+      checkedValues: {}
+    })
+  );
 
   const scrollHeadRef = useRef();
   const scrollBodyRef = useRef();
   const scrollBarWidthRef = useRef(getScrollbarWidth());
 
-  useImperativeHandle(instanceRef, () => ({
-    clearSort: () => {
-      setSortedState(null);
-    },
-    clearFilter: () => {
-      setActiveFilter(null);
-      setFilterParams([]);
-      store.setState({checkedValues: {}});
-    },
-    clearAll: () => {
-      instanceRef.current.clearSort();
-      instanceRef.current.clearFilter();
-    },
-  }), [instanceRef, store]);
+  useImperativeHandle(
+    instanceRef,
+    () => ({
+      clearSort: () => {
+        setSortedState(null);
+      },
+      clearFilter: () => {
+        setActiveFilter(null);
+        setFilterParams([]);
+        store.setState({ checkedValues: {} });
+      },
+      clearAll: () => {
+        instanceRef.current.clearSort();
+        instanceRef.current.clearFilter();
+      }
+    }),
+    [instanceRef, store]
+  );
 
   //for cells definition
   const cellsData = useMemo(() => convertToArray(cells), [cells]);
@@ -150,7 +150,7 @@ const Table = React.forwardRef((props, ref) => {
       data = sortedState.sorter(data);
     }
     if (filterParams.length > 0) {
-      filterParams.forEach(param => {
+      filterParams.forEach((param) => {
         data = data.filter(param.fc);
       });
     }
@@ -159,35 +159,39 @@ const Table = React.forwardRef((props, ref) => {
 
   const isCheckbox = checkType === CheckType.checkbox;
 
-  const head = <TableHead cells={cells}
-                          setChecked={setChecked}
-                          checkable={checkable}
-                          canCheckAll={canCheckAll}
-                          isCheckbox={isCheckbox}
-                          rowData={rowData}
-                          cellsData={cellsData}
-                          checkedRowKeys={checkedRowKeys}
-                          checkedRows={checkedRows}
-                          onCheckAll={onCheckAll}
-                          defaultSortComparator={defaultSortComparator}
-                          defaultSortOrder={defaultSortOrder}
-                          sortOrder={sortOrder}
-                          sortedState={sortedState}
-                          setSortedState={setSortedState}
-                          onSort={onSort}
-                          scrollHeadRef={scrollHeadRef}
-                          activeFilter={activeFilter}
-                          setFilterParams={setFilterParams}
-                          filterParams={filterParams}
-                          setActiveFilter={setActiveFilter}
-                          store={store}
-                          defaultOkText={defaultOkText}
-                          defaultResetText={defaultResetText}
-                          defaultFilterComparator={defaultFilterComparator}
-                          popupRef={popupRef}
-                          scrollY={scrollY}
-                          scrollBarWidthRef={scrollBarWidthRef}
-                          onCheckChange={onCheckChange}/>;
+  const head = (
+    <TableHead
+      cells={cells}
+      setChecked={setChecked}
+      checkable={checkable}
+      canCheckAll={canCheckAll}
+      isCheckbox={isCheckbox}
+      rowData={rowData}
+      cellsData={cellsData}
+      checkedRowKeys={checkedRowKeys}
+      checkedRows={checkedRows}
+      onCheckAll={onCheckAll}
+      defaultSortComparator={defaultSortComparator}
+      defaultSortOrder={defaultSortOrder}
+      sortOrder={sortOrder}
+      sortedState={sortedState}
+      setSortedState={setSortedState}
+      onSort={onSort}
+      scrollHeadRef={scrollHeadRef}
+      activeFilter={activeFilter}
+      setFilterParams={setFilterParams}
+      filterParams={filterParams}
+      setActiveFilter={setActiveFilter}
+      store={store}
+      defaultOkText={defaultOkText}
+      defaultResetText={defaultResetText}
+      defaultFilterComparator={defaultFilterComparator}
+      popupRef={popupRef}
+      scrollY={scrollY}
+      scrollBarWidthRef={scrollBarWidthRef}
+      onCheckChange={onCheckChange}
+    />
+  );
 
   const fixedHead = useMemo(() => {
     return head;
@@ -200,158 +204,180 @@ const Table = React.forwardRef((props, ref) => {
     return head;
   }, [scrollY, fixedHead, head]);
 
-  const checkOneHandler = useCallback((row, nextCheck, e) => {
-    if (!customCheck) {
-      if (nextCheck) {
-        if (isCheckbox) {
-          setChecked(pre => [...pre.filter(k => k !== row.key), row.key]);
+  const checkOneHandler = useCallback(
+    (row, nextCheck, e) => {
+      if (!customCheck) {
+        if (nextCheck) {
+          if (isCheckbox) {
+            setChecked((pre) => [...pre.filter((k) => k !== row.key), row.key]);
+          } else {
+            setChecked((pre) => [row.key]);
+          }
         } else {
-          setChecked(pre => [row.key]);
-        }
-      } else {
-        if (isCheckbox) {
-          setChecked(pre => [...pre.filter(k => k !== row.key)]);
-        } else {
-          setChecked(pre => []);
+          if (isCheckbox) {
+            setChecked((pre) => [...pre.filter((k) => k !== row.key)]);
+          } else {
+            setChecked((pre) => []);
+          }
         }
       }
-    }
-    onCheckChange && onCheckChange(row, nextCheck, e);
-  }, [customCheck, isCheckbox, onCheckChange, setChecked]);
+      onCheckChange && onCheckChange(row, nextCheck, e);
+    },
+    [customCheck, isCheckbox, onCheckChange, setChecked]
+  );
 
-  const getCheckForRow = useCallback((row, isRowChecked) => {
-    if (checkable) {
-      function checkRow(value, e) {
-        checkOneHandler(row, value, e);
+  const getCheckForRow = useCallback(
+    (row, isRowChecked) => {
+      if (checkable) {
+        function checkRow(value, e) {
+          checkOneHandler(row, value, e);
+        }
+
+        return (
+          <td className="cell-check">
+            {isCheckbox ? (
+              <Checkbox checked={isRowChecked} onChange={checkRow} />
+            ) : (
+              <Radio value={true} checked={isRowChecked} onChange={checkRow} />
+            )}
+          </td>
+        );
       }
-
-      return <td className="cell-check">
-        {isCheckbox ? <Checkbox checked={isRowChecked} onChange={checkRow}/>
-          : <Radio value={true} checked={isRowChecked} onChange={checkRow}/>}
-      </td>;
-    }
-    return null;
-  }, [checkOneHandler, checkable, isCheckbox]);
+      return null;
+    },
+    [checkOneHandler, checkable, isCheckbox]
+  );
 
   const body = useMemo(() => {
     const realCellsData = filterLeaves(cellsData);
-    return <tbody>
-    {
-      rowData.map((row, index) => {
-        const isRowChecked = contains(row.key, checkedRowKeys);
-        const selectTd = getCheckForRow(row, isRowChecked);
-        const trClsName = clsx({
-          'hl-tr': checkable && isRowChecked && highlightCheckedRow,
-        });
+    return (
+      <tbody>
+        {rowData.map((row, index) => {
+          const isRowChecked = contains(row.key, checkedRowKeys);
+          const selectTd = getCheckForRow(row, isRowChecked);
+          const trClsName = clsx({
+            'hl-tr': checkable && isRowChecked && highlightCheckedRow
+          });
 
-        return <tr className={trClsName} key={row.key}>
-          {selectTd}
-          {
-            realCellsData.map((cell, i) => {
-              let content = row[cell.paramName];
-              if (cell.format) {
-                content = invoke(cell.format, content, row, index);
-              }
-              return <BodyCell key={row.key + '-' + i}
-                               scrollHeadRef={scrollHeadRef} store={store}
-                               cell={cell} tdKey={row.key + '-' + i}
-                               content={content}/>;
-            })
+          return (
+            <tr className={trClsName} key={row.key}>
+              {selectTd}
+              {realCellsData.map((cell, i) => {
+                let content = row[cell.paramName];
+                if (cell.format) {
+                  content = invoke(cell.format, content, row, index);
+                }
+                return (
+                  <BodyCell
+                    key={row.key + '-' + i}
+                    scrollHeadRef={scrollHeadRef}
+                    store={store}
+                    cell={cell}
+                    tdKey={row.key + '-' + i}
+                    content={content}
+                  />
+                );
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    );
+  }, [cellsData, checkable, checkedRowKeys, getCheckForRow, highlightCheckedRow, rowData, store]);
+
+  const getColGroups = useCallback(
+    (isHead) => {
+      let leaves = [];
+      for (let cell of cellsData) {
+        let nodes = [cell];
+        while (nodes.length > 0) {
+          const node = nodes.shift();
+          if (isNil(node.children)) {
+            leaves.push(node);
+          } else {
+            nodes = nodes.concat(node.children);
           }
-        </tr>;
-      })
-    }
-    </tbody>;
-  }, [
-    cellsData,
-    checkable,
-    checkedRowKeys,
-    getCheckForRow,
-    highlightCheckedRow,
-    rowData,
-    store]);
-
-  const getColGroups = useCallback((isHead) => {
-    let leaves = [];
-    for (let cell of cellsData) {
-      let nodes = [cell];
-      while (nodes.length > 0) {
-        const node = nodes.shift();
-        if (isNil(node.children)) {
-          leaves.push(node);
-        } else {
-          nodes = nodes.concat(node.children);
         }
       }
-    }
 
-    //todo
-    if (!isNil(bodyWidth)) {
-      let totalWidth = 0;
-      const leafInfoArray = [];
-      leaves.forEach((leaf, i) => {
-        if (isNumber(leaf.width)) {
-          totalWidth += parseInt(leaf.width);
-        } else {
-          leafInfoArray.push({position: i});
-        }
-      });
+      //todo
+      if (!isNil(bodyWidth)) {
+        let totalWidth = 0;
+        const leafInfoArray = [];
+        leaves.forEach((leaf, i) => {
+          if (isNumber(leaf.width)) {
+            totalWidth += parseInt(leaf.width);
+          } else {
+            leafInfoArray.push({ position: i });
+          }
+        });
 
-      const size = leafInfoArray.length;
-      const leftWidth = bodyWidth - totalWidth;
-      const leftThWidth = size > 0 ? Math.floor(leftWidth / size) : -1;
+        const size = leafInfoArray.length;
+        const leftWidth = bodyWidth - totalWidth;
+        const leftThWidth = size > 0 ? Math.floor(leftWidth / size) : -1;
 
-      leafInfoArray.forEach(info => {
-        if (leftThWidth > 0) {
-          // leaves[info.position].width = leftThWidth;
-        }
-      });
+        leafInfoArray.forEach((info) => {
+          if (leftThWidth > 0) {
+            // leaves[info.position].width = leftThWidth;
+          }
+        });
+      }
+      var cols = leaves.map((c, index) => (
+        <col
+          key={c.width + '-' + index}
+          style={{
+            width: isNumber(c.width) ? c.width + 'px' : c.width
+          }}
+        />
+      ));
 
-    }
-    var cols = leaves.map((c, index) => <col key={c.width + '-' + index}
-                                             style={{
-                                               width: isNumber(c.width)
-                                                 ? c.width + 'px'
-                                                 : c.width,
-                                             }}/>);
-
-    if (scrollY && isHead) {
-      cols.push(<col key="scroll-y-col"
-                     style={{width: scrollBarWidthRef.current}}/>);
-    }
-    return <>
-      <colgroup>
-        {checkable && <col className="col-check"/>}
-        {cols}
-      </colgroup>
-    </>;
-  }, [bodyWidth, cellsData, checkable, scrollY]);
+      if (scrollY && isHead) {
+        cols.push(<col key="scroll-y-col" style={{ width: scrollBarWidthRef.current }} />);
+      }
+      return (
+        <>
+          <colgroup>
+            {checkable && <col className="col-check" />}
+            {cols}
+          </colgroup>
+        </>
+      );
+    },
+    [bodyWidth, cellsData, checkable, scrollY]
+  );
 
   const clsName = clsx(extraClassName, className, type, {
-    'hover': hover,
+    hover: hover,
     'clear-border': !hasBorder,
-    'global-with-box': hasBox,
+    'global-with-box': hasBox
   });
 
   //scroll the body and make sure the head scroll as well as same distance
-  const doScrollX = useCallback((e) => {
-    scrollHeadRef.current.scrollLeft = e.target.scrollLeft;
-    store.setState(checkScrollBar(scrollHeadRef));
-  }, [store]);
+  const doScrollX = useCallback(
+    (e) => {
+      scrollHeadRef.current.scrollLeft = e.target.scrollLeft;
+      store.setState(checkScrollBar(scrollHeadRef));
+    },
+    [store]
+  );
 
-  const getDataTable = useCallback((tblClsName, bodyStyle, others, hasHead) => {
-    return <table className={tblClsName} style={bodyStyle} {...others}
-                  ref={ref}>
-      {getColGroups(false)}
-      {hasHead && isJsonData && getHead()}
-      {isJsonData && body}
-      {!isJsonData && children}
-    </table>;
-  }, [body, children, getColGroups, getHead, isJsonData, ref]);
+  const getDataTable = useCallback(
+    (tblClsName, bodyStyle, others, hasHead) => {
+      return (
+        <table className={tblClsName} style={bodyStyle} {...others} ref={ref}>
+          {getColGroups(false)}
+          {hasHead && isJsonData && getHead()}
+          {isJsonData && body}
+          {!isJsonData && children}
+        </table>
+      );
+    },
+    [body, children, getColGroups, getHead, isJsonData, ref]
+  );
 
   const getBody = useCallback(() => {
-    const {style, ...others} = otherProps;
-    const bodyStyle = {...style, width: bodyWidth};
+    const { style, ...others } = otherProps;
+    const bodyStyle = { ...style, width: bodyWidth };
 
     //the width of head should be greater than the body's width, it should plus the width of the scroll bar
     let headWidth;
@@ -365,7 +391,7 @@ const Table = React.forwardRef((props, ref) => {
         }*/
     }
 
-    const headStyle = {...style};
+    const headStyle = { ...style };
     if (!isNil(headWidth)) {
       headStyle.width = headWidth;
     }
@@ -375,33 +401,31 @@ const Table = React.forwardRef((props, ref) => {
     }
 
     if (scrollY) {
-      return <>
-        <div className={`table-wrapper`}>
-          {
-            isJsonData && <div className="head-wrapper" ref={scrollHeadRef}>
-              <table className={`${clsName} scroll-head`}
-                     style={headStyle} {...others}>
-                {getColGroups(true)}
-                {getHead()}
-              </table>
+      return (
+        <>
+          <div className={`table-wrapper`}>
+            {isJsonData && (
+              <div className="head-wrapper" ref={scrollHeadRef}>
+                <table className={`${clsName} scroll-head`} style={headStyle} {...others}>
+                  {getColGroups(true)}
+                  {getHead()}
+                </table>
+              </div>
+            )}
+
+            <div
+              style={{ maxHeight: bodyHeight }}
+              className={'scroll-wrapper'}
+              ref={scrollBodyRef}
+              onScroll={doScrollX}
+            >
+              {getDataTable(clsName, bodyStyle, others, false)}
             </div>
-          }
-
-          <div style={{maxHeight: bodyHeight}} className={'scroll-wrapper'}
-               ref={scrollBodyRef} onScroll={doScrollX}>
-            {
-              getDataTable(clsName, bodyStyle, others, false)
-            }
           </div>
-        </div>
-      </>;
+        </>
+      );
     }
-    return <div className={`table-wrapper`}>
-      {
-        getDataTable(clsName, bodyStyle, others, true)
-      }
-    </div>;
-
+    return <div className={`table-wrapper`}>{getDataTable(clsName, bodyStyle, others, true)}</div>;
   }, [
     otherProps,
     bodyWidth,
@@ -412,10 +436,10 @@ const Table = React.forwardRef((props, ref) => {
     isJsonData,
     getColGroups,
     getHead,
-    doScrollX]);
+    doScrollX
+  ]);
 
   return getBody();
-
 });
 
 Table.propTypes = {
@@ -423,39 +447,40 @@ Table.propTypes = {
   className: PropTypes.string,
   instanceRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
   ]),
   type: PropTypes.oneOf(Object.keys(Type)),
   hover: PropTypes.bool,
   hasBorder: PropTypes.bool,
-  loadData: PropTypes.oneOfType(
-    [PropTypes.array, PropTypes.func, PropTypes.object]),
-  cells: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.any,
-    head: PropTypes.node,
-    paramName: PropTypes.string,
-    autoEllipsis: PropTypes.bool,
-    fixed: PropTypes.oneOf(['left', 'right']),
-    sortable: PropTypes.bool,
-    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    filterable: PropTypes.bool,
-    filterConfig: PropTypes.shape({
-      filterItems: PropTypes.arrayOf(PropTypes.shape({
-        text: PropTypes.node,
-        value: PropTypes.any
-      }))
-    }),
-  })),
+  loadData: PropTypes.oneOfType([PropTypes.array, PropTypes.func, PropTypes.object]),
+  cells: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.any,
+      head: PropTypes.node,
+      paramName: PropTypes.string,
+      autoEllipsis: PropTypes.bool,
+      fixed: PropTypes.oneOf(['left', 'right']),
+      sortable: PropTypes.bool,
+      width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      filterable: PropTypes.bool,
+      filterConfig: PropTypes.shape({
+        filterItems: PropTypes.arrayOf(
+          PropTypes.shape({
+            text: PropTypes.node,
+            value: PropTypes.any
+          })
+        )
+      })
+    })
+  ),
   hasBox: PropTypes.bool,
   checkable: PropTypes.bool,
   checkType: PropTypes.oneOf(Object.keys(CheckType)),
   canCheckAll: PropTypes.bool,
   onCheckChange: PropTypes.func,
   onCheckAll: PropTypes.func,
-  defaultCheckedRows: PropTypes.oneOfType(
-    [PropTypes.string, PropTypes.array]),
-  checkedRows: PropTypes.oneOfType(
-    [PropTypes.string, PropTypes.array]),
+  defaultCheckedRows: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  checkedRows: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   highlightCheckedRow: PropTypes.bool,
   defaultSortComparator: PropTypes.func,
   defaultSortOrder: PropTypes.string,
@@ -473,6 +498,6 @@ Table.propTypes = {
   bodyHeight: PropTypes.number,
   scrollX: PropTypes.bool,
   bodyWidth: PropTypes.number
-}
+};
 
 export default Table;

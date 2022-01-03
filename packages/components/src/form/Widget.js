@@ -1,13 +1,13 @@
-import React from "react";
-import {isNil} from "../Utils";
+import React from 'react';
+import { isNil } from '../Utils';
 
 const Widget = React.forwardRef((props, ref) => {
-  const {children} = props;
+  const { children } = props;
   let chd;
   if (!isNil(children)) {
     chd = React.Children.only(children);
   }
-  return <>{chd}</>
+  return <>{chd}</>;
 });
 
 export default Widget;

@@ -13,13 +13,13 @@ import without from 'lodash/without';
 import isEqual from 'lodash/isEqual';
 import round from 'lodash/round';
 
-import {PopupPosition} from './common/Constants';
+import { PopupPosition } from './common/Constants';
 import clsx from 'clsx';
 
 export const DefaultColor = {
   ripple: {
-    gray: '#9c9c9c',
-  },
+    gray: '#9c9c9c'
+  }
 };
 
 export {
@@ -54,13 +54,11 @@ export const isBlank = (value) => {
 export const startsWith = (first, next) => first.slice(0, next.length) === next;
 
 export const getScrollTop = (win) => {
-  return win.document.documentElement.scrollTop || win.pageYOffset
-    || win.document.body.scrollTop;
+  return win.document.documentElement.scrollTop || win.pageYOffset || win.document.body.scrollTop;
 };
 
 export const getScrollLeft = (win) => {
-  return win.document.documentElement.scrollLeft || win.pageXOffset
-    || win.document.body.scrollLeft;
+  return win.document.documentElement.scrollLeft || win.pageXOffset || win.document.body.scrollLeft;
 };
 
 export const getTransformOrigin = (type) => {
@@ -116,59 +114,41 @@ export const place = (dest, ctrl, type, offset = 0) => {
   }
 
   let posLeft = Math.floor(pos.left);
-  let left = 0, top = 0;
+  let left = 0,
+    top = 0;
   if (type === PopupPosition.bottom) {
-    left = scrollLeft + (posLeft
-      - (dest.offsetWidth
-        - ctrl.offsetWidth)
-      / 2) + 'px';
-    top = (pos.bottom + offset) + scrollTop + 'px';
+    left = scrollLeft + (posLeft - (dest.offsetWidth - ctrl.offsetWidth) / 2) + 'px';
+    top = pos.bottom + offset + scrollTop + 'px';
   }
 
   if (type === PopupPosition.top) {
-    left = scrollLeft + (posLeft
-      - (dest.offsetWidth
-        - ctrl.offsetWidth)
-      / 2) + 'px';
-    top = (pos.top - dest.offsetHeight
-      - offset)
-      + scrollTop + 'px';
+    left = scrollLeft + (posLeft - (dest.offsetWidth - ctrl.offsetWidth) / 2) + 'px';
+    top = pos.top - dest.offsetHeight - offset + scrollTop + 'px';
   }
 
   if (type === PopupPosition.left) {
-    left = scrollLeft + posLeft - dest.offsetWidth
-      - offset + 'px';
-    top = pos.top - (dest.offsetHeight
-      - ctrl.offsetHeight) / 2
-      + scrollTop
-      + 'px';
+    left = scrollLeft + posLeft - dest.offsetWidth - offset + 'px';
+    top = pos.top - (dest.offsetHeight - ctrl.offsetHeight) / 2 + scrollTop + 'px';
   }
 
   if (type === PopupPosition.leftTop) {
-    left = scrollLeft + posLeft - dest.offsetWidth
-      - offset + 'px';
-    top = pos.top + scrollTop - dest.offsetHeight
-      + pos.height + 'px';
+    left = scrollLeft + posLeft - dest.offsetWidth - offset + 'px';
+    top = pos.top + scrollTop - dest.offsetHeight + pos.height + 'px';
   }
 
   if (type === PopupPosition.leftBottom) {
-    left = scrollLeft + posLeft - dest.offsetWidth
-      - offset + 'px';
+    left = scrollLeft + posLeft - dest.offsetWidth - offset + 'px';
     top = pos.top + scrollTop + 'px';
   }
 
   if (type === PopupPosition.right) {
     left = scrollLeft + pos.right + offset + 'px';
-    top = pos.top - (dest.offsetHeight
-      - ctrl.offsetHeight) / 2
-      + scrollTop
-      + 'px';
+    top = pos.top - (dest.offsetHeight - ctrl.offsetHeight) / 2 + scrollTop + 'px';
   }
 
   if (type === PopupPosition.rightTop) {
     left = scrollLeft + pos.right + offset + 'px';
-    top = pos.top + scrollTop - dest.offsetHeight
-      + pos.height + 'px';
+    top = pos.top + scrollTop - dest.offsetHeight + pos.height + 'px';
   }
 
   if (type === PopupPosition.rightBottom) {
@@ -178,38 +158,28 @@ export const place = (dest, ctrl, type, offset = 0) => {
 
   if (type === PopupPosition.topLeft) {
     left = scrollLeft + posLeft + 'px';
-    top = pos.top - dest.offsetHeight - offset
-      + scrollTop
-      + 'px';
+    top = pos.top - dest.offsetHeight - offset + scrollTop + 'px';
   }
 
   if (type === PopupPosition.topRight) {
-    left = scrollLeft + pos.right
-      - dest.offsetWidth + 'px';
-    top = pos.top - dest.offsetHeight - offset
-      + scrollTop
-      + 'px';
+    left = scrollLeft + pos.right - dest.offsetWidth + 'px';
+    top = pos.top - dest.offsetHeight - offset + scrollTop + 'px';
   }
 
   if (type === PopupPosition.bottomLeft) {
     left = scrollLeft + posLeft + 'px';
-    top = pos.bottom + offset
-      + scrollTop
-      + 'px';
+    top = pos.bottom + offset + scrollTop + 'px';
   }
 
   if (type === PopupPosition.bottomRight) {
-    left = scrollLeft + pos.right
-      - dest.offsetWidth + 'px';
-    top = pos.bottom + offset
-      + scrollTop
-      + 'px';
+    left = scrollLeft + pos.right - dest.offsetWidth + 'px';
+    top = pos.bottom + offset + scrollTop + 'px';
   }
   dest.style.left = left;
   dest.style.top = top;
 
   return {
-    ctrlRect: pos,
+    ctrlRect: pos
   };
 };
 
@@ -252,7 +222,7 @@ export const createContainer = (id) => {
   return {
     container: root,
     id: id,
-    remove: remove,
+    remove: remove
   };
 };
 
@@ -265,7 +235,7 @@ export const execute = (handler, timeout = 100) => {
 };
 
 export const invoke = (callback, ...args) => {
-  return nonNil(callback) && (callback)(...args);
+  return nonNil(callback) && callback(...args);
 };
 
 export const getRect = (domNode) => {
@@ -363,7 +333,7 @@ export default function getScrollbarWidth() {
     width: '200px',
     height: '100px',
     overflow: 'hidden',
-    visibility: 'hidden',
+    visibility: 'hidden'
   };
 
   for (let key in oStyle) {
@@ -405,37 +375,32 @@ export const updateBodyStyle = (active) => {
     body.style.overflow = 'hidden';
     const barWidth = getScrollbarWidth();
     if (barWidth > 0) {
-      body.style.paddingRight = `${getScrollbarWidth() + "px"}`; //避免滚动条造成的页面抖动
+      body.style.paddingRight = `${getScrollbarWidth() + 'px'}`; //避免滚动条造成的页面抖动
     }
   }
-}
+};
 
 export function getErrorClsName(errorType) {
   const clsName = `border-info ${errorType}`;
-  return clsx({[clsName]: errorType});
+  return clsx({ [clsName]: errorType });
 }
 
 export const isColorValue = (val) => {
-  return !isNil(val) &&
-    (startsWith(val, '#') || startsWith(val, 'rgb'));
+  return !isNil(val) && (startsWith(val, '#') || startsWith(val, 'rgb'));
 };
 
 const checkColor = (checkState, checkedColor) => {
   if (checkState && nonNil(checkedColor)) {
     if (isColorValue(checkedColor)) {
-      return {isClass: false, style: {color: checkedColor}};
+      return { isClass: false, style: { color: checkedColor } };
     } else {
-      return {isClass: true, className: 'text color-' + checkedColor};
+      return { isClass: true, className: 'text color-' + checkedColor };
     }
   }
   return null;
 };
 
-export function createColorClsName({
-                                     checkState,
-                                     checkedColor,
-                                     uncheckedColor,
-                                   }) {
+export function createColorClsName({ checkState, checkedColor, uncheckedColor }) {
   let result = checkColor(checkState, checkedColor);
   if (isNil(result)) {
     result = checkColor(!checkState, uncheckedColor);

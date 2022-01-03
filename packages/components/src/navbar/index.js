@@ -1,37 +1,33 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import Navbar from './Navbar';
 import Switch from './Switch';
 import Element from '../common/Element';
-import {adjustItems} from '../common/Constants';
+import { adjustItems } from '../common/Constants';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import {NavbarContext} from '../common/Context';
-import {nonNil} from '../Utils';
+import { NavbarContext } from '../common/Context';
+import { nonNil } from '../Utils';
 
 /**
  * Title Component
  */
 const Title = React.forwardRef((props, ref) => {
-  const {
-    className = 'title',
-    children,
-    ...otherProps
-  } = props;
+  const { className = 'title', children, ...otherProps } = props;
 
-  const newChd = React.Children.map(children, chd => {
+  const newChd = React.Children.map(children, (chd) => {
     if (chd.type === Switch) {
       return chd;
     }
     return <div className="title-info">{chd}</div>;
   });
 
-  return <div className="left-bar">
-    <div className={className}
-         {...otherProps}
-         ref={ref}>
-      {newChd}
+  return (
+    <div className="left-bar">
+      <div className={className} {...otherProps} ref={ref}>
+        {newChd}
+      </div>
     </div>
-  </div>;
+  );
 });
 
 /**
@@ -46,20 +42,26 @@ const List = React.forwardRef((props, ref) => {
     style,
     ...otherProps
   } = props;
-  const {expandList, smallWindow} = useContext(NavbarContext);
+  const { expandList, smallWindow } = useContext(NavbarContext);
 
   let clsName = clsx(extraClassName, className, adjustItems(justify), {
-    'small-window': smallWindow,
+    'small-window': smallWindow
   });
 
   const newStyle = {
     ...style,
-    display: (expandList && smallWindow) || !smallWindow ? 'flex' : 'none',
+    display: (expandList && smallWindow) || !smallWindow ? 'flex' : 'none'
   };
 
-  return <Element nativeType={nativeType} className={clsName} ref={ref}
-                  style={newStyle}
-                  {...otherProps}/>;
+  return (
+    <Element
+      nativeType={nativeType}
+      className={clsName}
+      ref={ref}
+      style={newStyle}
+      {...otherProps}
+    />
+  );
 });
 
 /**
@@ -77,28 +79,35 @@ const Item = React.forwardRef((props, ref) => {
     ...otherProps
   } = props;
 
-  const {hasItemBackground: menuHasBg, menuHasBar} = useContext(NavbarContext);
+  const { hasItemBackground: menuHasBg, menuHasBar } = useContext(NavbarContext);
   let extraClass = clsx(extraClassName, {
     'with-bg': nonNil(hasBackground) ? hasBackground : menuHasBg,
     'with-bar': nonNil(hasBar) ? hasBar : menuHasBar,
     active: active,
-    compact,
+    compact
   });
 
-  return <Element className={className} extraClassName={extraClass} ref={ref}
-                  nativeType={nativeType} {...otherProps}/>;
+  return (
+    <Element
+      className={className}
+      extraClassName={extraClass}
+      ref={ref}
+      nativeType={nativeType}
+      {...otherProps}
+    />
+  );
 });
 
 Title.propTypes = {
   extraClassName: PropTypes.string,
-  className: PropTypes.string,
+  className: PropTypes.string
 };
 
 List.propTypes = {
   extraClassName: PropTypes.string,
   className: PropTypes.string,
   nativeType: PropTypes.string,
-  justify: PropTypes.string,
+  justify: PropTypes.string
 };
 
 Item.propTypes = {
@@ -108,7 +117,7 @@ Item.propTypes = {
   hasBackground: PropTypes.bool,
   hasBar: PropTypes.bool,
   active: PropTypes.bool,
-  compact: PropTypes.bool,
+  compact: PropTypes.bool
 };
 
 Navbar.List = List;

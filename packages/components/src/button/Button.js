@@ -1,14 +1,14 @@
-import React, {useMemo, useRef} from 'react';
+import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Element from '../common/Element';
-import {isNil, nonNil} from '../Utils';
+import { isNil, nonNil } from '../Utils';
 import Ripple from '../common/Ripple';
 import clsx from 'clsx';
 import Loader from '../Loader';
 
 const defaultRippleColor = {
   defaultButton: '#333',
-  other: '#fff',
+  other: '#fff'
 };
 
 /**
@@ -21,7 +21,7 @@ const Button = React.forwardRef((props, ref) => {
   const updatedProps = Ripple.useRippleEvent({
     rippleRef,
     rootProps: props,
-    hasRipple: props.hasRipple,
+    hasRipple: props.hasRipple
   });
 
   const {
@@ -51,13 +51,13 @@ const Button = React.forwardRef((props, ref) => {
     rightIcon,
     loading = false,
     leftLoader = true,
-    loader = <Loader type="primary" active={true} size="small"/>,
+    loader = <Loader type="primary" active={true} size="small" />,
     children,
     ...otherProps
   } = updatedProps;
 
-  const isIconButton = (nonNil(leftIcon) || nonNil(rightIcon)) &&
-    React.Children.count(children) === 0;
+  const isIconButton =
+    (nonNil(leftIcon) || nonNil(rightIcon)) && React.Children.count(children) === 0;
 
   const realRippleColor = useMemo(() => {
     if (nonNil(rippleColor)) {
@@ -91,7 +91,7 @@ const Button = React.forwardRef((props, ref) => {
     'without-box': !hasBox,
     'without-border': !hasBorder,
     'inverted-outline': invertedOutline,
-    'only-icon': isIconButton,
+    'only-icon': isIconButton
   };
 
   const nativeTypeDef = useMemo(() => {
@@ -99,16 +99,23 @@ const Button = React.forwardRef((props, ref) => {
 
     //the button has default behaviour of submit, so the type should be populated
     //to prevent the form be automatically submitted
-    const nativeBtnType = nativeType !== 'a' ? {
-      type: nativeType,
-    } : {};
-    return {nativeElemType, nativeBtnType};
+    const nativeBtnType =
+      nativeType !== 'a'
+        ? {
+            type: nativeType
+          }
+        : {};
+    return { nativeElemType, nativeBtnType };
   }, [nativeType]);
 
-  let contentClsName = useMemo(() => clsx('content', {
-    'left-content': nonNil(rightIcon),
-    'right-content': nonNil(leftIcon),
-  }), [leftIcon, rightIcon]);
+  let contentClsName = useMemo(
+    () =>
+      clsx('content', {
+        'left-content': nonNil(rightIcon),
+        'right-content': nonNil(leftIcon)
+      }),
+    [leftIcon, rightIcon]
+  );
 
   const isLoading = loading && nonNil(loader);
 
@@ -122,31 +129,22 @@ const Button = React.forwardRef((props, ref) => {
       nativeType={nativeTypeDef.nativeElemType}
       {...nativeTypeDef.nativeBtnType}
       {...otherProps}
-      ref={ref}>
-        <span className="content-root">
-          {
-            isLoading && leftLoader
-            && React.cloneElement(loader, {style: {marginRight: '.5em'}})
-          }
-          {
-            isNil(leftIcon) && isNil(rightIcon) ?
-              children
-              : <>
-
-                {leftIcon}
-                {children && <span className={contentClsName}>{children}</span>}
-                {rightIcon}
-              </>
-          }
-          {
-            isLoading && !leftLoader &&
-            React.cloneElement(loader, {style: {marginLeft: '.5em'}})
-          }
-        </span>
-      {
-        hasRipple && !disabled &&
-        <Ripple ref={rippleRef} center={circle} color={realRippleColor}/>
-      }
+      ref={ref}
+    >
+      <span className="content-root">
+        {isLoading && leftLoader && React.cloneElement(loader, { style: { marginRight: '.5em' } })}
+        {isNil(leftIcon) && isNil(rightIcon) ? (
+          children
+        ) : (
+          <>
+            {leftIcon}
+            {children && <span className={contentClsName}>{children}</span>}
+            {rightIcon}
+          </>
+        )}
+        {isLoading && !leftLoader && React.cloneElement(loader, { style: { marginLeft: '.5em' } })}
+      </span>
+      {hasRipple && !disabled && <Ripple ref={rippleRef} center={circle} color={realRippleColor} />}
     </Element>
   );
 });
@@ -155,12 +153,12 @@ Button.propTypes = {
   className: PropTypes.string, //the class name of button
   extraClassName: PropTypes.string, //the customized class need to add
   nativeType: PropTypes.oneOf(['button', 'reset', 'submit', 'a']), //the native html type, like 'button', 'reset' or 'submit'
-  type: PropTypes.string,   //it can be 'primary', 'secondary', 'info', 'warning', 'error', etc.
+  type: PropTypes.string, //it can be 'primary', 'secondary', 'info', 'warning', 'error', etc.
   block: PropTypes.bool, //whether the button's width is '100%' and it occupies the whole row
   color: PropTypes.string, //the color, like "primary", "red"
   directRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
   ]),
   active: PropTypes.bool, // active this button
   size: PropTypes.oneOf(['large', 'medium', 'small']), //the size of the button
@@ -182,7 +180,7 @@ Button.propTypes = {
   rightIcon: PropTypes.node,
   loading: PropTypes.bool,
   leftLoader: PropTypes.bool,
-  loader: PropTypes.node,
+  loader: PropTypes.node
 };
 
 export default Button;

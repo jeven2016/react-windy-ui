@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * Async import a module
@@ -9,9 +9,13 @@ import {useCallback, useEffect, useState} from 'react';
 const useLazyImport = (importFunc, eagerLoad = false) => {
   const [module, setModule] = useState(null);
   const load = useCallback(() => {
-    importFunc().then(md => {
-      setModule(md.default == null ? module : md.default);
-    }).catch(e => {throw e;});
+    importFunc()
+      .then((md) => {
+        setModule(md.default == null ? module : md.default);
+      })
+      .catch((e) => {
+        throw e;
+      });
   }, [importFunc, module]);
 
   useEffect(() => {

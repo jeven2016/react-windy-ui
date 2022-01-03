@@ -1,11 +1,11 @@
-import clsx from "clsx";
+import clsx from 'clsx';
 
 export const ColCount = 12;
 
 export const InputBorderType = {
   ok: 'input-ok',
   warning: 'input-warning',
-  error: 'input-error',
+  error: 'input-error'
 };
 
 export const NavbarFixedTypes = ['top', 'bottom'];
@@ -14,13 +14,13 @@ export const FixedTypes = ['top', 'bottom'];
 export const NavbarListAlign = {
   left: 'align-left',
   right: 'align-right',
-  center: 'align-center',
+  center: 'align-center'
 };
 
 export const MenuType = {
   float: 'float',
   primary: 'primary',
-  dark: 'dark',
+  dark: 'dark'
 };
 
 export const PopupCtrlType = {
@@ -28,31 +28,31 @@ export const PopupCtrlType = {
   click: 'click',
 
   isHover: (value) => value === PopupCtrlType.hover,
-  isClick: (value) => value === PopupCtrlType.click,
+  isClick: (value) => value === PopupCtrlType.click
 };
 
 export const DropdownTriggerType = {
   hover: 'hover',
-  click: 'click',
+  click: 'click'
 };
 
 export const DropdownType = {
   button: 'button',
   normal: 'normal',
-  simple: 'simple',
+  simple: 'simple'
 };
 
 export const DropdownClass = {
   button: 'button-dropdown',
   simple: 'simple dropdown',
-  normal: 'dropdown',
+  normal: 'dropdown'
 };
 
 export const DropdownPosition = {
   topLeft: 'top',
   topRight: 'top right',
   bottomLeft: '',
-  bottomRight: 'right',
+  bottomRight: 'right'
 };
 
 export const PositionClass = {
@@ -67,7 +67,7 @@ export const PositionClass = {
   leftBottom: 'left left-bottom',
   right: 'right center',
   rightTop: 'right right-top',
-  rightBottom: 'right right-bottom',
+  rightBottom: 'right right-bottom'
 };
 
 export const PopupPosition = {
@@ -82,7 +82,7 @@ export const PopupPosition = {
   leftBottom: 'leftBottom',
   right: 'right',
   rightTop: 'rightTop',
-  rightBottom: 'rightBottom',
+  rightBottom: 'rightBottom'
 };
 
 export const JustifyContentType = {
@@ -100,14 +100,17 @@ export const AlignItemsType = {
   center: 'align-center'
 };
 
-export function adjustItems(justifyContent/* value: start, center,...*/, alignItems/*value: start, end,...*/) {
+export function adjustItems(
+  justifyContent /* value: start, center,...*/,
+  alignItems /*value: start, end,...*/
+) {
   const jc = JustifyContentType[justifyContent];
   const al = AlignItemsType[alignItems];
   return clsx({
-    "flex-adjust": jc || al,
+    'flex-adjust': jc || al,
     [jc]: jc,
     [al]: al
-  })
+  });
 }
 
 export const Active = {
@@ -117,17 +120,17 @@ export const Active = {
 
   isNa: (value) => Active.na === value,
   isActive: (value) => Active.active === value,
-  convertBool: (boolValue) => boolValue ? Active.active : Active.disactive,
+  convertBool: (boolValue) => (boolValue ? Active.active : Active.disactive)
 };
 
 export const Direction = {
   horizontal: 'horizontal',
-  vertical: 'vertical',
+  vertical: 'vertical'
 };
 
 export const FormDirection = {
   ...Direction,
-  inline: 'inline',
+  inline: 'inline'
 };
 
 //=================================
@@ -145,11 +148,11 @@ export const EventListener = {
   select: 'select',
   touchStart: 'touchstart',
   touchEnd: 'touchend',
-  touchMove: 'touchmove',
+  touchMove: 'touchmove'
 };
 
 export const ContainerId = {
-  popup: 'wui-popup',
+  popup: 'wui-popup'
 };
 
 export const Colors = {
@@ -178,5 +181,5 @@ export const Colors = {
   yellow: 'yellow',
   teal: 'teal',
   violet: 'violet',
-  white: 'white',
-}
+  white: 'white'
+};

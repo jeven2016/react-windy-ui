@@ -1,8 +1,8 @@
 export const Action = {
-  clickItem: 'clickItem',
+  clickItem: 'clickItem'
 };
 
-export const dispatch = ({type, ...params}) => {
+export const dispatch = ({ type, ...params }) => {
   switch (type) {
     case Action.clickItem:
       // clickItemHandler(params);

@@ -1,10 +1,10 @@
-import {isNil} from '../Utils';
-import {useCallback} from 'react';
+import { isNil } from '../Utils';
+import { useCallback } from 'react';
 import clsx from 'clsx';
 
 export const CellFixedType = {
   right: 'right',
-  left: 'left',
+  left: 'left'
 };
 
 export const updatePosition = (th, siblingFunc, setPostion) => {
@@ -13,8 +13,7 @@ export const updatePosition = (th, siblingFunc, setPostion) => {
   const tagName = th.tagName;
   while (!isNil(preTh)) {
     //for thd the scrollbar is native, the position cannot be calculated width scroll-th
-    if (preTh.className.includes('fixed-cell') ||
-        preTh.className.includes('scroll-th')) {
+    if (preTh.className.includes('fixed-cell') || preTh.className.includes('scroll-th')) {
       position += preTh.offsetWidth;
     }
     preTh = siblingFunc(preTh);
@@ -23,35 +22,51 @@ export const updatePosition = (th, siblingFunc, setPostion) => {
 };
 
 export const updateStickPosition = (
-    cellRef, hasSiblingFixedRef, hasPreSiblingFixedRef, isLeftFixed,
-    isRightFixed, setStyle) => {
+  cellRef,
+  hasSiblingFixedRef,
+  hasPreSiblingFixedRef,
+  isLeftFixed,
+  isRightFixed,
+  setStyle
+) => {
   const th = cellRef.current;
-  hasSiblingFixedRef.current = !isNil(th.nextElementSibling) &&
-      th.nextElementSibling.className.includes('fixed-cell');
+  hasSiblingFixedRef.current =
+    !isNil(th.nextElementSibling) && th.nextElementSibling.className.includes('fixed-cell');
 
-  hasPreSiblingFixedRef.current = !isNil(th.previousElementSibling) &&
-      th.previousElementSibling.className.includes('fixed-cell');
+  hasPreSiblingFixedRef.current =
+    !isNil(th.previousElementSibling) && th.previousElementSibling.className.includes('fixed-cell');
 
   if (isLeftFixed) {
-    updatePosition(th, (thDomNode) => thDomNode.previousElementSibling,
-        (position) => setStyle({left: position}));
+    updatePosition(
+      th,
+      (thDomNode) => thDomNode.previousElementSibling,
+      (position) => setStyle({ left: position })
+    );
   }
 
   if (isRightFixed) {
-    updatePosition(th, (thDomNode) => thDomNode.nextElementSibling,
-        (position) => setStyle({right: position}));
+    updatePosition(
+      th,
+      (thDomNode) => thDomNode.nextElementSibling,
+      (position) => setStyle({ right: position })
+    );
   }
 };
 
 export const updateBoxShadow = (
-    showBox, isLeftFixed, hasSiblingFixedRef, isRightFixed,
-    hasPreSiblingFixedRef, setBox, isStartPostion, isEndPostion) => {
+  showBox,
+  isLeftFixed,
+  hasSiblingFixedRef,
+  isRightFixed,
+  hasPreSiblingFixedRef,
+  setBox,
+  isStartPostion,
+  isEndPostion
+) => {
   if (!showBox) {
-    const hasLeftBox = isLeftFixed && !isStartPostion &&
-        !hasSiblingFixedRef.current;
+    const hasLeftBox = isLeftFixed && !isStartPostion && !hasSiblingFixedRef.current;
 
-    const hasRightBox = isRightFixed && !isEndPostion &&
-        !hasPreSiblingFixedRef.current;
+    const hasRightBox = isRightFixed && !isEndPostion && !hasPreSiblingFixedRef.current;
 
     setBox(hasLeftBox || hasRightBox);
   } else {
@@ -74,22 +89,22 @@ export const checkScrollBar = (scrollHeadRef) => {
 
   return {
     isStartPostion,
-    isEndPostion,
+    isEndPostion
   };
 };
 
 export const getFixedCellCls = (cellFixed, showBox) => {
   return clsx({
     'fixed-cell': !isNil(cellFixed),
-    'right': !isNil(cellFixed) && cellFixed === CellFixedType.right,
-    'left': !isNil(cellFixed) && cellFixed === CellFixedType.left,
-    'with-cell-box': showBox,
+    right: !isNil(cellFixed) && cellFixed === CellFixedType.right,
+    left: !isNil(cellFixed) && cellFixed === CellFixedType.left,
+    'with-cell-box': showBox
   });
 };
 
 export const SortOrder = {
   asc: 'asc',
-  desc: 'desc',
+  desc: 'desc'
 };
 
 export const getNdoeDepth = (initDepth, cell) => {
@@ -97,7 +112,7 @@ export const getNdoeDepth = (initDepth, cell) => {
     return initDepth;
   }
   let maxDepth = initDepth;
-  cell.children.forEach(chd => {
+  cell.children.forEach((chd) => {
     const chdDepth = getNdoeDepth(initDepth + 1, chd);
     maxDepth = maxDepth > chdDepth ? maxDepth : chdDepth;
   });
@@ -110,7 +125,7 @@ export const getLeavesCount = (cell) => {
   }
 
   let leavesCount = 0;
-  cell.children.forEach(chd => {
+  cell.children.forEach((chd) => {
     leavesCount += getLeavesCount(chd);
   });
 
@@ -122,7 +137,7 @@ export const filterLeaves = (cellsArray, leaves) => {
     leaves = [];
   }
 
-  cellsArray.forEach(cell => {
+  cellsArray.forEach((cell) => {
     if (isNil(cell.children)) {
       leaves.push(cell);
     } else {
@@ -134,20 +149,20 @@ export const filterLeaves = (cellsArray, leaves) => {
 };
 
 /*
-  * level: {
-  *    nodes: [ {head: headText, setSpanType: row/col} ]
-  *    maxDepth: 2
-  * }
-  */
+ * level: {
+ *    nodes: [ {head: headText, setSpanType: row/col} ]
+ *    maxDepth: 2
+ * }
+ */
 export const traverse = (cellsArray, map, index) => {
   let level = map.get(index);
   if (isNil(level)) {
-    level = {nodes: [], maxDepth: 1};
+    level = { nodes: [], maxDepth: 1 };
     map.set(index, level);
   }
 
   for (let cell of cellsArray) {
-    let cellInfo = {...cell, head: cell.head};
+    let cellInfo = { ...cell, head: cell.head };
     level.nodes.push(cellInfo);
     const chd = cell.children;
     if (isNil(chd)) {

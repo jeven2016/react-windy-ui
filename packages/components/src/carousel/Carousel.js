@@ -1,25 +1,24 @@
 import React from 'react';
-import {autoPlay} from 'react-swipeable-views-utils';
+import { autoPlay } from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
 import clsx from 'clsx';
-import useInternalState from "../common/useInternalState";
-import useEventCallback from "../common/useEventCallback";
-import * as ProperTypes from "prop-types";
+import useInternalState from '../common/useInternalState';
+import useEventCallback from '../common/useEventCallback';
+import * as ProperTypes from 'prop-types';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const IndicatorPosition = {
-  left: "left",
-  top: "top",
-  right: "right",
-  bottom: "bottom"
+  left: 'left',
+  top: 'top',
+  right: 'right',
+  bottom: 'bottom'
 };
 
 const IndicatorType = {
   circle: 'circle',
   bar: 'bar'
 };
-
 
 const Carousel = React.forwardRef((props, ref) => {
   const {
@@ -44,35 +43,41 @@ const Carousel = React.forwardRef((props, ref) => {
     props,
     stateName: 'active',
     defaultState: defaultActive,
-    state: active,
+    state: active
   });
 
-  const change = useEventCallback(index => {
+  const change = useEventCallback((index) => {
     setActive(index);
     onChange && onChange(index);
   });
 
-  return <div className={clsName} style={style}>
-    <ul className={`indicators ${position}`}>
-      {hasIndicators && React.Children.map(children, (chd, i) =>
-        <li className={`${indicatorType} ${i === currentActive
-          ? 'active'
-          : ''}`}
-            onClick={(e) => change(i, e)}/>)}
-    </ul>
-    <AutoPlaySwipeableViews index={currentActive}
-                            enableMouseEvents
-                            animateTransitions={true}
-                            axis={axis}
-                            disabled={disabled}
-                            ignoreNativeScroll={true}
-                            onChangeIndex={(i) => change(i)}
-                            interval={interval}
-                            resistance
-                            {...otherProps}>
-      {children}
-    </AutoPlaySwipeableViews>
-  </div>;
+  return (
+    <div className={clsName} style={style}>
+      <ul className={`indicators ${position}`}>
+        {hasIndicators &&
+          React.Children.map(children, (chd, i) => (
+            <li
+              className={`${indicatorType} ${i === currentActive ? 'active' : ''}`}
+              onClick={(e) => change(i, e)}
+            />
+          ))}
+      </ul>
+      <AutoPlaySwipeableViews
+        index={currentActive}
+        enableMouseEvents
+        animateTransitions={true}
+        axis={axis}
+        disabled={disabled}
+        ignoreNativeScroll={true}
+        onChangeIndex={(i) => change(i)}
+        interval={interval}
+        resistance
+        {...otherProps}
+      >
+        {children}
+      </AutoPlaySwipeableViews>
+    </div>
+  );
 });
 
 Carousel.propTypes = {
@@ -86,7 +91,7 @@ Carousel.propTypes = {
   axis: ProperTypes.oneOf(['x', 'x-reverse']), //'x','y', 'x-reverse', 'y-reserve'
   onChange: ProperTypes.func,
   interval: ProperTypes.number,
-  disabled: ProperTypes.bool,
-}
+  disabled: ProperTypes.bool
+};
 
 export default Carousel;

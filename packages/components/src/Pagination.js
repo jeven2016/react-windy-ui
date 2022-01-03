@@ -1,18 +1,24 @@
-import React, {useMemo, useState} from 'react';
+import React, { useMemo, useState } from 'react';
 import Button from './button';
-import {IconArrowLeft, IconArrowRight, IconLeftDoubleArrows, IconMore, IconRightDoubleArrows,} from './Icons';
+import {
+  IconArrowLeft,
+  IconArrowRight,
+  IconLeftDoubleArrows,
+  IconMore,
+  IconRightDoubleArrows
+} from './Icons';
 import Select from './select';
-import {invoke, isBlank, isNil, isNumber} from './Utils';
+import { invoke, isBlank, isNil, isNumber } from './Utils';
 import useInternalState from './common/useInternalState';
 import InputGroup from './InputGroup';
 import Input from './Input';
 import Tooltip from './Tooltip';
 import clsx from 'clsx';
-import useEventCallback from "./common/useEventCallback";
-import PropTypes from "prop-types";
+import useEventCallback from './common/useEventCallback';
+import PropTypes from 'prop-types';
 
 const PageButton = React.forwardRef((props, ref) => {
-  const {left = true, onClick, buttonProps} = props;
+  const { left = true, onClick, buttonProps } = props;
   const [showIcon, setShow] = useState(false);
 
   const toggle = useEventCallback((value) => {
@@ -22,21 +28,28 @@ const PageButton = React.forwardRef((props, ref) => {
   const focus = useEventCallback(() => toggle(true));
   const blur = useEventCallback(() => toggle(false));
 
-  const arrowIcon = left ? <IconLeftDoubleArrows style={{fontSize: '1em'}}/> :
-    <IconRightDoubleArrows style={{fontSize: '1em'}}/>;
+  const arrowIcon = left ? (
+    <IconLeftDoubleArrows style={{ fontSize: '1em' }} />
+  ) : (
+    <IconRightDoubleArrows style={{ fontSize: '1em' }} />
+  );
 
-  return <Button inverted
-                 color="blue"
-                 hasBox={false}
-                 onClick={onClick}
-                 onMouseOver={focus}
-                 onMouseLeave={blur}
-                 onFocus={focus}
-                 onBlur={blur}
-                 {...buttonProps}>
-    {!showIcon && <IconMore/>}
-    {showIcon && arrowIcon}
-  </Button>;
+  return (
+    <Button
+      inverted
+      color="blue"
+      hasBox={false}
+      onClick={onClick}
+      onMouseOver={focus}
+      onMouseLeave={blur}
+      onFocus={focus}
+      onBlur={blur}
+      {...buttonProps}
+    >
+      {!showIcon && <IconMore />}
+      {showIcon && arrowIcon}
+    </Button>
+  );
 });
 
 const Pagination = React.forwardRef((props, ref) => {
@@ -72,14 +85,14 @@ const Pagination = React.forwardRef((props, ref) => {
     props,
     stateName: 'page',
     defaultState: defaultPage,
-    state: page,
+    state: page
   });
 
   const [limit, setLimit] = useInternalState({
     props,
     stateName: 'pageRange',
     defaultState: defaultPageRange,
-    state: pageRange,
+    state: pageRange
   });
 
   const [directPage, setDirectPage] = useState('');
@@ -103,39 +116,51 @@ const Pagination = React.forwardRef((props, ref) => {
   });
 
   const firstPageItem = useMemo(() => {
-    return <span className="item">
-        <Button outline initOutlineColor hasOutlineBackground={false}
-                hasBox={false}
-                onClick={(e) => goTo(1, e)}
-                active={currentPage === 1}
-                type="primary"
-                {...buttonProps}>
+    return (
+      <span className="item">
+        <Button
+          outline
+          initOutlineColor
+          hasOutlineBackground={false}
+          hasBox={false}
+          onClick={(e) => goTo(1, e)}
+          active={currentPage === 1}
+          type="primary"
+          {...buttonProps}
+        >
           <span className="page-text">1</span>
         </Button>
-      </span>;
+      </span>
+    );
   }, [buttonProps, currentPage, goTo]);
 
   const lastPageItem = useMemo(() => {
-    return <span className="item">
-        <Button outline initOutlineColor hasOutlineBackground={false}
-                hasBox={false}
-                onClick={(e) => goTo(pageCount, e)}
-                active={!isNil(pageCount) && currentPage === pageCount}
-                type="primary"
-                {...buttonProps}>
+    return (
+      <span className="item">
+        <Button
+          outline
+          initOutlineColor
+          hasOutlineBackground={false}
+          hasBox={false}
+          onClick={(e) => goTo(pageCount, e)}
+          active={!isNil(pageCount) && currentPage === pageCount}
+          type="primary"
+          {...buttonProps}
+        >
           <span className="page-text">{pageCount}</span>
         </Button>
-      </span>;
+      </span>
+    );
   }, [buttonProps, currentPage, goTo, pageCount]);
 
   const otherPageItems = useMemo(() => {
     const items = [];
 
     if (isNil(currentPage)) {
-      const occupy = (2 * siblingCount + 1);
+      const occupy = 2 * siblingCount + 1;
       const lastNumber = occupy > pageCount ? pageCount : occupy + 1;
       for (let i = 2; i < lastNumber; i++) {
-        items.push({value: i, active: false});
+        items.push({ value: i, active: false });
       }
     } else {
       //start
@@ -162,8 +187,7 @@ const Pagination = React.forwardRef((props, ref) => {
         if (i === 1 || i === pageCount) {
           continue;
         }
-        items.push(
-          {value: i, active: !isNil(currentPage) && i === currentPage});
+        items.push({ value: i, active: !isNil(currentPage) && i === currentPage });
       }
     }
     return items;
@@ -181,7 +205,6 @@ const Pagination = React.forwardRef((props, ref) => {
     } else {
       changePage(nextPage);
     }
-
   });
 
   const preIconItem = useMemo(() => {
@@ -189,10 +212,11 @@ const Pagination = React.forwardRef((props, ref) => {
       return null;
     }
 
-    return <span className="item">
-         <PageButton left={true} onClick={showPrePages}
-                     buttonProps={buttonProps}/>
-        </span>;
+    return (
+      <span className="item">
+        <PageButton left={true} onClick={showPrePages} buttonProps={buttonProps} />
+      </span>
+    );
   }, [buttonProps, otherPageItems, showPrePages]);
 
   const showNextPages = useEventCallback(() => {
@@ -207,19 +231,21 @@ const Pagination = React.forwardRef((props, ref) => {
     } else {
       changePage(nextPage);
     }
-
   });
 
   const nextIconItem = useMemo(() => {
-    if (otherPageItems.length === 0
-      || otherPageItems[otherPageItems.length - 1].value + 1 === pageCount) {
+    if (
+      otherPageItems.length === 0 ||
+      otherPageItems[otherPageItems.length - 1].value + 1 === pageCount
+    ) {
       return null;
     }
 
-    return <span className="item">
-           <PageButton left={false} onClick={showNextPages}
-                       buttonProps={buttonProps}/>
-        </span>;
+    return (
+      <span className="item">
+        <PageButton left={false} onClick={showNextPages} buttonProps={buttonProps} />
+      </span>
+    );
   }, [buttonProps, otherPageItems, pageCount, showNextPages]);
 
   const enterPage = useEventCallback((e) => {
@@ -239,31 +265,45 @@ const Pagination = React.forwardRef((props, ref) => {
   });
 
   const preBtn = useMemo(() => {
-    return hasPrevButton &&
-      <span className="item">
-          <Button outline initOutlineColor hasOutlineBackground={false}
-                  hasBox={false}
-                  disabled={currentPage <= 1}
-                  onClick={(e) => goTo(currentPage - 1, e)}
-                  type="primary"
-                  {...buttonProps}>
-            {renderPre ? renderPre() : <IconArrowLeft/>}
+    return (
+      hasPrevButton && (
+        <span className="item">
+          <Button
+            outline
+            initOutlineColor
+            hasOutlineBackground={false}
+            hasBox={false}
+            disabled={currentPage <= 1}
+            onClick={(e) => goTo(currentPage - 1, e)}
+            type="primary"
+            {...buttonProps}
+          >
+            {renderPre ? renderPre() : <IconArrowLeft />}
           </Button>
-        </span>;
+        </span>
+      )
+    );
   }, [buttonProps, currentPage, goTo, hasPrevButton, renderPre]);
 
   const nextBtn = useMemo(() => {
-    return hasNextButton &&
-      <span className="item">
-          <Button outline initOutlineColor hasOutlineBackground={false}
-                  hasBox={false}
-                  disabled={currentPage === pageCount}
-                  onClick={(e) => goTo(currentPage + 1, e)}
-                  type="primary"
-                  {...buttonProps}>
-             {renderNext ? renderNext() : <IconArrowRight/>}
+    return (
+      hasNextButton && (
+        <span className="item">
+          <Button
+            outline
+            initOutlineColor
+            hasOutlineBackground={false}
+            hasBox={false}
+            disabled={currentPage === pageCount}
+            onClick={(e) => goTo(currentPage + 1, e)}
+            type="primary"
+            {...buttonProps}
+          >
+            {renderNext ? renderNext() : <IconArrowRight />}
           </Button>
-        </span>;
+        </span>
+      )
+    );
   }, [buttonProps, currentPage, goTo, hasNextButton, pageCount, renderNext]);
 
   const jumpTo = useEventCallback((e) => {
@@ -298,11 +338,12 @@ const Pagination = React.forwardRef((props, ref) => {
   if (simple) {
     const displayPage = isBlank(currentPage) ? 1 : currentPage;
     const simpleClsName = clsx('simple-content');
-    return <div className={clsName} {...otherProps} ref={ref}>
-      {preBtn}
-      <div className={simpleClsName}>
-        {/*todo*/}
-        {/*  {
+    return (
+      <div className={clsName} {...otherProps} ref={ref}>
+        {preBtn}
+        <div className={simpleClsName}>
+          {/*todo*/}
+          {/*  {
           hasGo &&
           <Tooltip body={displayPage} hidePopup={isBlank(displayPage)}>
             <Input value={displayPage}
@@ -313,86 +354,98 @@ const Pagination = React.forwardRef((props, ref) => {
           </Tooltip>
         }
         {!hasGo && <span className="label">{currentPage}</span>}*/}
-        {<span className="label">{displayPage}</span>}
+          {<span className="label">{displayPage}</span>}
 
-        <span className="label">/</span>
-        <span className="label">{pageCount}</span>
+          <span className="label">/</span>
+          <span className="label">{pageCount}</span>
+        </div>
+        {nextBtn}
       </div>
-      {nextBtn}
-    </div>;
+    );
   }
 
-  return <>
-    <div className={clsName} {...otherProps} ref={ref}>
-      {
-        leftItems.map((item, index) => {
-          return <span className="item" key={`left-${index}`}>
-            {item}
-          </span>;
-        })
-      }
-      {preBtn}
-      {firstPageItem}
-      {preIconItem}
-      {
-        otherPageItems.map((item, index) => {
-          return <span className="item" key={`${item.value}-${index}`}>
-            <Button active={item.active} outline initOutlineColor hasBox={false}
-                    hasOutlineBackground={false}
-                    onClick={(e) => goTo(item.value, e)}
-                    type="primary"
-                    {...buttonProps}>
-              <span className="page-text">{item.value}</span>
-            </Button>
-          </span>;
-        })
-      }
+  return (
+    <>
+      <div className={clsName} {...otherProps} ref={ref}>
+        {leftItems.map((item, index) => {
+          return (
+            <span className="item" key={`left-${index}`}>
+              {item}
+            </span>
+          );
+        })}
+        {preBtn}
+        {firstPageItem}
+        {preIconItem}
+        {otherPageItems.map((item, index) => {
+          return (
+            <span className="item" key={`${item.value}-${index}`}>
+              <Button
+                active={item.active}
+                outline
+                initOutlineColor
+                hasBox={false}
+                hasOutlineBackground={false}
+                onClick={(e) => goTo(item.value, e)}
+                type="primary"
+                {...buttonProps}
+              >
+                <span className="page-text">{item.value}</span>
+              </Button>
+            </span>
+          );
+        })}
 
-      {nextIconItem}
-      {lastPageItem}
-      {nextBtn}
+        {nextIconItem}
+        {lastPageItem}
+        {nextBtn}
 
-      {
-        hasPageRange &&
-        <Select defaultValue={limit} onSelect={changePageLimit} size='small'
-                compactMenu={compactMenu}
-                block={false} {...selectProps}>
-          {
-            pageRanges.map((value, index) => {
-              const itemText = isNil(renderPageRanges) ? `${value}` :
-                invoke(renderPageRanges, value);
-              return <Select.Option value={value} key={`${value}-${index}`}
-                                    text={itemText}/>;
-            })
-          }
-        </Select>
-      }
+        {hasPageRange && (
+          <Select
+            defaultValue={limit}
+            onSelect={changePageLimit}
+            size="small"
+            compactMenu={compactMenu}
+            block={false}
+            {...selectProps}
+          >
+            {pageRanges.map((value, index) => {
+              const itemText = isNil(renderPageRanges)
+                ? `${value}`
+                : invoke(renderPageRanges, value);
+              return <Select.Option value={value} key={`${value}-${index}`} text={itemText} />;
+            })}
+          </Select>
+        )}
 
-      {
-        hasGo &&
-        <span className="go-item">
-          <InputGroup normal={false}>
-           <Button inverted type="primary" hasBox={false}
-                   onClick={(e) => goTo(directPage, e)}>跳至</Button>
-            <Tooltip body={directPage} hidePopup={isBlank(directPage)}>
-            <Input value={directPage} onChange={enterPage}
-                   className="input page-input"
-                   onKeyDown={jumpTo}
-                   onBlur={updateDirectPage}/>
-            </Tooltip>
-          </InputGroup>
-        </span>
-      }
-      {
-        rightItems.map((item, index) => {
-          return <span className="item" key={`right-${index}`}>
-            {item}
-          </span>;
-        })
-      }
-    </div>
-  </>;
-
+        {hasGo && (
+          <span className="go-item">
+            <InputGroup normal={false}>
+              <Button inverted type="primary" hasBox={false} onClick={(e) => goTo(directPage, e)}>
+                跳至
+              </Button>
+              <Tooltip body={directPage} hidePopup={isBlank(directPage)}>
+                <Input
+                  value={directPage}
+                  onChange={enterPage}
+                  className="input page-input"
+                  onKeyDown={jumpTo}
+                  onBlur={updateDirectPage}
+                />
+              </Tooltip>
+            </InputGroup>
+          </span>
+        )}
+        {rightItems.map((item, index) => {
+          return (
+            <span className="item" key={`right-${index}`}>
+              {item}
+            </span>
+          );
+        })}
+      </div>
+    </>
+  );
 });
 
 Pagination.propTypes = {
@@ -419,7 +472,7 @@ Pagination.propTypes = {
   compactMenu: PropTypes.bool,
   renderPre: PropTypes.func,
   renderNext: PropTypes.func,
-  selectProps: PropTypes.object,
-}
+  selectProps: PropTypes.object
+};
 
 export default Pagination;
