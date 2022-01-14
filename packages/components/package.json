@@ -65,7 +65,7 @@
     "react-dom": ">=16.12.0"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "http://localhost:8081/repository/npm-release/"
   },
   "release": {
     "publishDir": "dist"
