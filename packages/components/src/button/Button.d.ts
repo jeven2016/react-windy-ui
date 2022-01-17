@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 export type ButtonSize = 'large' | 'medium' | 'small';
 export type ButtonShape = 'circle' | 'round';
@@ -41,3 +41,8 @@ interface BaseButtonProps {
 //   Omit<React.AnchorHTMLAttributes<any>, 'type' | 'onClick'>;
 
 export type ButtonProps = BaseButtonProps & Omit<React.AnchorHTMLAttributes<any>, 'type'>;
+
+const Button: React.ForwardRefRenderFunction<any, ButtonProps>;
+
+export default Button;
+// export default function Button(props: ButtonProps): JSX.Element;
