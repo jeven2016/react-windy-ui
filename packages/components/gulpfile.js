@@ -42,3 +42,5 @@ const themPath = process.cwd().replace('/components', '') + '/Wui/dist/**/*.min.
 gulp.task('copy:theme', () => gulp.src(themPath).pipe(gulp.dest('dist')));
 
 gulp.task('build', gulp.series('clean:dist', 'build:js', 'copy:tsd', 'copy:theme'));
+//more task for gulp
+gulp.task('build', gulp.series('clean:dist', 'build:js', 'copy:tsd', 'copy:theme'));
