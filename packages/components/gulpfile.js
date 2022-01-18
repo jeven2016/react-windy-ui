@@ -41,6 +41,5 @@ gulp.task('copy:tsd', () => gulp.src('src/**/*.d.ts').pipe(gulp.dest('dist')));
 const themPath = process.cwd().replace('/components', '') + '/Wui/dist/**/*.min.css';
 gulp.task('copy:theme', () => gulp.src(themPath).pipe(gulp.dest('dist')));
 
-gulp.task('build', gulp.series('clean:dist', 'build:js', 'copy:tsd', 'copy:theme'));
-//more task for gulp
+//compile components
 gulp.task('build', gulp.series('clean:dist', 'build:js', 'copy:tsd', 'copy:theme'));
