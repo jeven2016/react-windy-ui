@@ -6,7 +6,7 @@
     "type": "git",
     "url": "git://github.com/jeven2016/react-windy-ui.git"
   },
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "type": "module",
   "types": "dist/index.d.ts",
   "keywords": [
