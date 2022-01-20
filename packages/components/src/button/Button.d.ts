@@ -35,6 +35,13 @@ interface BaseButtonProps {
   loading?: boolean;
   leftLoader?: boolean;
   loader?: React.ReactNode;
+
+  disabled?: boolean;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  loading?: boolean;
+  leftLoader?: boolean;
+  loader?: React.ReactNode;
 }
 
 // export type ButtonProps = BaseButtonProps &
@@ -44,5 +51,5 @@ export type ButtonProps = BaseButtonProps & Omit<React.AnchorHTMLAttributes<any>
 
 const Button: React.ForwardRefRenderFunction<any, ButtonProps>;
 
-export default Button;
-// export default function Button(props: ButtonProps): JSX.Element;
+// export default Button;
+export default function Button(props: ButtonProps): JSX.Element;
