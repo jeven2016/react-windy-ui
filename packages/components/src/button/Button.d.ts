@@ -51,5 +51,5 @@ export type ButtonProps = BaseButtonProps & Omit<React.AnchorHTMLAttributes<any>
 
 const Button: React.ForwardRefRenderFunction<any, ButtonProps>;
 
-// export default Button;
-export default function Button(props: ButtonProps): JSX.Element;
+export default Button;
+// export default function Button(props: ButtonProps): JSX.Element;
