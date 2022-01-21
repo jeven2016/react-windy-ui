@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 
 //invoke the callbacks
 //the callback should be invoked while the setState function completes where
@@ -12,5 +12,4 @@ export default function useInvoke(data, callback, dependency) {
     }
     initRenderRef.current = false;
   }, [dependency, callback]);
-
 }

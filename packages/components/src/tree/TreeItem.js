@@ -1,11 +1,11 @@
-import React, {useCallback, useContext, useMemo} from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import clsx from 'clsx';
-import {IconArrowRightBlack, IconHome} from '../Icons';
+import { IconArrowRightBlack, IconHome } from '../Icons';
 import Checkbox from '../Checkbox';
-import {TreeContext} from '../common/Context';
+import { TreeContext } from '../common/Context';
 import CollapsePanel from '../collapse/CollapsePanel';
-import {convertToArray, isNil, preventEvent} from '../Utils';
-import {CheckedStatus} from './TreeCommon';
+import { convertToArray, isNil, preventEvent } from '../Utils';
+import { CheckedStatus } from './TreeCommon';
 import PropTypes from 'prop-types';
 
 const TreeItem = React.forwardRef((props, ref) => {
@@ -39,8 +39,8 @@ const TreeItem = React.forwardRef((props, ref) => {
 
   const clsName = clsx(className, extraClassName);
 
-  const isSelected = treeContext.selectedItems.find(elem => elem === id);
-  const isExpanded = treeContext.expandedItems.find(elem => 'all' === elem || elem === id);
+  const isSelected = treeContext.selectedItems.find((elem) => elem === id);
+  const isExpanded = treeContext.expandedItems.find((elem) => 'all' === elem || elem === id);
 
   const isLeaf = useMemo(() => {
     if (isAsyncLoadItem) {
@@ -50,30 +50,32 @@ const TreeItem = React.forwardRef((props, ref) => {
   }, [isAsyncLoadItem, children]);
 
   const innerClsName = clsx('inner', {
-    'whole-line': treeContext.highlightLine,
+    'whole-line': treeContext.highlightLine
   });
 
-  const expandItem = useCallback((evt) => {
-    treeContext.expandItem && treeContext.expandItem(id, !isExpanded, evt);
-  }, [id, isExpanded, treeContext]);
+  const expandItem = useCallback(
+    (evt) => {
+      treeContext.expandItem && treeContext.expandItem(id, !isExpanded, evt);
+    },
+    [id, isExpanded, treeContext]
+  );
 
   //check if the node is in loading
-  const isAsyncLoading = useMemo(() =>
-      treeContext.showLoading && isAsyncLoadItem &&
-      treeContext.loadingIds.includes(id)
-    , [treeContext.showLoading, treeContext.loadingIds, isAsyncLoadItem, id]);
+  const isAsyncLoading = useMemo(
+    () => treeContext.showLoading && isAsyncLoadItem && treeContext.loadingIds.includes(id),
+    [treeContext.showLoading, treeContext.loadingIds, isAsyncLoadItem, id]
+  );
 
   const iconNode = useMemo(() => {
     let iconSpan;
     if (!isLeaf) {
-      iconSpan = isAsyncLoading ? <div
-          className="icon-column">{treeContext.loader}</div>
-        : <span onClick={expandItem}
-                className={`icon-column ${isExpanded
-                  ? 'expand'
-                  : ''
-                }`}>{
-          <IconArrowRightBlack/>}</span>;
+      iconSpan = isAsyncLoading ? (
+        <div className="icon-column">{treeContext.loader}</div>
+      ) : (
+        <span onClick={expandItem} className={`icon-column ${isExpanded ? 'expand' : ''}`}>
+          {<IconArrowRightBlack />}
+        </span>
+      );
     } else {
       iconSpan = <span className={`icon-column empty`}>&nbsp;</span>;
     }
@@ -83,25 +85,31 @@ const TreeItem = React.forwardRef((props, ref) => {
 
   const getCheckbox = useCallback(() => {
     if (treeContext.checkable) {
-      return <div className="icon-extra-column">
-        <Checkbox checked={checked}
-                  showIndeterminateState={showIndeterminateState}
-                  iconIndeterminateStyle={{color: '#0ca0ff'}}
-                  onChange={(isChecked, e) => {
-                    preventEvent(e);
-                    treeContext.checkItem &&
-                    treeContext.checkItem(id, isChecked, e);
-                  }}/>
-      </div>;
+      return (
+        <div className="icon-extra-column">
+          <Checkbox
+            checked={checked}
+            showIndeterminateState={showIndeterminateState}
+            iconIndeterminateStyle={{ color: '#0ca0ff' }}
+            onChange={(isChecked, e) => {
+              preventEvent(e);
+              treeContext.checkItem && treeContext.checkItem(id, isChecked, e);
+            }}
+          />
+        </div>
+      );
     }
     return null;
   }, [checked, id, showIndeterminateState, treeContext]);
 
-  const clickItem = useCallback((evt) => {
-    //unselect this item if clicking again while it has been selected for multi select scenario
-    const selected = !(treeContext.multiSelect && isSelected);
-    treeContext.selectItem && treeContext.selectItem(id, evt, selected);
-  }, [id, isSelected, treeContext]);
+  const clickItem = useCallback(
+    (evt) => {
+      //unselect this item if clicking again while it has been selected for multi select scenario
+      const selected = !(treeContext.multiSelect && isSelected);
+      treeContext.selectItem && treeContext.selectItem(id, evt, selected);
+    },
+    [id, isSelected, treeContext]
+  );
 
   const getClickHandler = useCallback(() => {
     let spanClick = null;
@@ -114,54 +122,52 @@ const TreeItem = React.forwardRef((props, ref) => {
     } else {
       spanClick = clickItem;
     }
-    return {spanClick, divClick};
-  }, [
-    clickItem,
-    expandItem,
-    isLeaf,
-    treeContext.highlightLine,
-    treeContext.onlySelectLeaf]);
+    return { spanClick, divClick };
+  }, [clickItem, expandItem, isLeaf, treeContext.highlightLine, treeContext.onlySelectLeaf]);
 
   const getTitle = () => {
-    let {spanClick, divClick} = getClickHandler();
+    let { spanClick, divClick } = getClickHandler();
 
-    return <div className="title-info" onClick={divClick}>
-      <span className={`label-info ${isSelected ? 'active' : ''}`}
-            onClick={spanClick}>{label}</span>
-    </div>;
+    return (
+      <div className="title-info" onClick={divClick}>
+        <span className={`label-info ${isSelected ? 'active' : ''}`} onClick={spanClick}>
+          {label}
+        </span>
+      </div>
+    );
   };
 
-  return <div className={clsName} {...otherProps} ref={ref}>
-    <div className="tree-title">
-      {
-        treeContext.highlightLine && isSelected ?
-          <div className="item-bg">&nbsp;</div> : null
-      }
+  return (
+    <div className={clsName} {...otherProps} ref={ref}>
+      <div className="tree-title">
+        {treeContext.highlightLine && isSelected ? <div className="item-bg">&nbsp;</div> : null}
 
-      <div className="title-row">
-        <div className={innerClsName}>
-          {iconNode}
-          {getCheckbox()}
-          {icon && <span className="icon-column"
-                         onClick={getClickHandler().spanClick}><IconHome/></span>}
-          {getTitle()}
-          {
-            elems.map((item, index) =>
-              <div key={`more-${index}`} className="icon-column">{item}</div>)
-          }
+        <div className="title-row">
+          <div className={innerClsName}>
+            {iconNode}
+            {getCheckbox()}
+            {icon && (
+              <span className="icon-column" onClick={getClickHandler().spanClick}>
+                <IconHome />
+              </span>
+            )}
+            {getTitle()}
+            {elems.map((item, index) => (
+              <div key={`more-${index}`} className="icon-column">
+                {item}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
 
-    {
-      !isNil(children) ? <div className="tree-panel">
-          <CollapsePanel collapse={!isExpanded}>
-            {children}
-          </CollapsePanel>
+      {!isNil(children) ? (
+        <div className="tree-panel">
+          <CollapsePanel collapse={!isExpanded}>{children}</CollapsePanel>
         </div>
-        : null
-    }
-  </div>;
+      ) : null}
+    </div>
+  );
 });
 
 TreeItem.propTypes = {
@@ -170,7 +176,7 @@ TreeItem.propTypes = {
   extraClassName: PropTypes.string,
   label: PropTypes.node,
   icon: PropTypes.node,
-  moreElements: PropTypes.arrayOf(PropTypes.node),
+  moreElements: PropTypes.arrayOf(PropTypes.node)
 };
 
 export default TreeItem;

@@ -1,21 +1,21 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import clsx from 'clsx';
-import {isBlank, isNil, nonNil} from '../Utils';
-import {adjustItems, Direction, FormDirection, JustifyContentType} from '../common/Constants';
+import { isBlank, isNil, nonNil } from '../Utils';
+import { adjustItems, Direction, FormDirection, JustifyContentType } from '../common/Constants';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
-import {useFormContext} from 'react-hook-form';
-import {createFormMessages, filterLabel, useLabel} from './FormUtils';
-import {FormItemContext} from '../common/Context';
-import PropTypes from "prop-types";
+import { useFormContext } from 'react-hook-form';
+import { createFormMessages, filterLabel, useLabel } from './FormUtils';
+import { FormItemContext } from '../common/Context';
+import PropTypes from 'prop-types';
 
 const RootItem = React.forwardRef((props, ref) => {
   const {
     children,
     rootItem,
     direction,
-    justify = "start",
-    justifyLabel = "start",
+    justify = 'start',
+    justifyLabel = 'start',
     labelCol,
     controlCol,
     simple,
@@ -60,29 +60,46 @@ const RootItem = React.forwardRef((props, ref) => {
     }
 
     if (!isHorizontal) {
-      return <>{labelComp}
-        <div>{chdArray}{errorMessages}</div>
-      </>;
+      return (
+        <>
+          {labelComp}
+          <div>
+            {chdArray}
+            {errorMessages}
+          </div>
+        </>
+      );
     } else {
-      return <><Row align='center'>
-        <Col extraClassName={labelCls} {...itemLabelCol}>{realLabel}</Col>
-        <Col {...itemControlCol}>{chdArray}</Col>
-      </Row>
-        {
-          //insert a empty row to this item
-          !hasErrors && !compact && <div className="message-row"/>
-        }
-        {hasErrors && errorMessages.map(
-          (err, index) => {
-            const errExisted = !isBlank(err.props.errors[err.props.name]);
-            return errExisted &&
-              <Row extraClassName="message-row" align='center' key={`e-${index}-${err.props.validationType}`}>
-                <Col extraClassName="item-label" {...itemLabelCol}/>
-                <Col {...itemControlCol}>{err}</Col>
-              </Row>
-          },
-        )}
-      </>;
+      return (
+        <>
+          <Row align="center">
+            <Col extraClassName={labelCls} {...itemLabelCol}>
+              {realLabel}
+            </Col>
+            <Col {...itemControlCol}>{chdArray}</Col>
+          </Row>
+          {
+            //insert a empty row to this item
+            !hasErrors && !compact && <div className="message-row" />
+          }
+          {hasErrors &&
+            errorMessages.map((err, index) => {
+              const errExisted = !isBlank(err.props.errors[err.props.name]);
+              return (
+                errExisted && (
+                  <Row
+                    extraClassName="message-row"
+                    align="center"
+                    key={`e-${index}-${err.props.validationType}`}
+                  >
+                    <Col extraClassName="item-label" {...itemLabelCol} />
+                    <Col {...itemControlCol}>{err}</Col>
+                  </Row>
+                )
+              );
+            })}
+        </>
+      );
     }
   }, [
     labelComp,
@@ -93,17 +110,23 @@ const RootItem = React.forwardRef((props, ref) => {
     itemLabelCol,
     itemControlCol,
     hasErrors,
-    compact]);
+    compact
+  ]);
 
   let justifyCls = adjustItems(justify);
   let clsName = clsx(extraClassName, className, itemDirection, justifyCls);
-  return <FormItemContext.Provider value={{rootItemControl: true}}>
-    {simple ? chd : <div ref={ref} className={clsName} {...rest}>
-      {chd}
-    </div>}
-  </FormItemContext.Provider>;
+  return (
+    <FormItemContext.Provider value={{ rootItemControl: true }}>
+      {simple ? (
+        chd
+      ) : (
+        <div ref={ref} className={clsName} {...rest}>
+          {chd}
+        </div>
+      )}
+    </FormItemContext.Provider>
+  );
 });
-
 
 RootItem.propTypes = {
   rootItem: PropTypes.bool,
@@ -115,7 +138,7 @@ RootItem.propTypes = {
   simple: PropTypes.bool,
   className: PropTypes.string,
   extraClassName: PropTypes.string,
-  compact: PropTypes.bool,
+  compact: PropTypes.bool
 };
 
 export default RootItem;

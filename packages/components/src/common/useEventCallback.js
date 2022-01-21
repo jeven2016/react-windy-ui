@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 
 /**
  * While the callback function depends ont state/props, it will be frequently recreated.
@@ -13,8 +13,7 @@ const useEventCallback = (func) => {
     ref.current = func;
   });
 
-  return React.useCallback((...args) =>
-      (0, ref.current)(...args), []);
+  return React.useCallback((...args) => (0, ref.current)(...args), []);
 };
 
 export default useEventCallback;

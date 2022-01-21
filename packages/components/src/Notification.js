@@ -1,11 +1,11 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
-import {createContainer, execute, isNil, isString, nonNil, validate} from './Utils';
+import { createContainer, execute, isNil, isString, nonNil, validate } from './Utils';
 import Alert from './Alert';
-import {to, useTransition} from 'react-spring';
+import { to, useTransition } from 'react-spring';
 
 const SizeStyle = {
-  small: 'alert-container-width-sm',
+  small: 'alert-container-width-sm'
 };
 
 const PositionType = {
@@ -13,7 +13,7 @@ const PositionType = {
   topLeft: 'top-left',
   topRight: 'top-right',
   bottomLeft: 'bottom-left',
-  bottomRight: 'bottom-right',
+  bottomRight: 'bottom-right'
 };
 
 let DEFAULT_CONFIG = {
@@ -25,14 +25,15 @@ let DEFAULT_CONFIG = {
     left: '1.5rem',
     right: '1.5rem',
     bottom: '1.5rem',
-    top: '1.5rem',
+    top: '1.5rem'
   },
-  alertProps: {style: {}},
+  alertProps: { style: {} }
 };
 
 const Proxy = () => {
-  let add, initialized = false;
-  const attachFunc = ({add: attachedAdd}) => {
+  let add,
+    initialized = false;
+  const attachFunc = ({ add: attachedAdd }) => {
     add = attachedAdd;
     initialized = true;
   };
@@ -40,7 +41,7 @@ const Proxy = () => {
   return {
     initialized: () => initialized,
     attach: attachFunc,
-    add: (msg) => add(msg),
+    add: (msg) => add(msg)
   };
 };
 
@@ -49,10 +50,12 @@ const Notification = (props) => {
     msgStore,
     position = DEFAULT_CONFIG.position,
     onUnmount,
-    rect = DEFAULT_CONFIG.rect,
+    rect = DEFAULT_CONFIG.rect
   } = props;
-  validate(Object.keys(PositionType).includes(position),
-    `The value(${position}) of the position is invalid.`);
+  validate(
+    Object.keys(PositionType).includes(position),
+    `The value(${position}) of the position is invalid.`
+  );
 
   const size = 'small'; //only one size provided
   const sizeClassName = SizeStyle[size];
@@ -67,30 +70,36 @@ const Notification = (props) => {
     const isCenter = lowerPosition.includes('center');
     const isTop = lowerPosition.includes('top');
     const isBottom = lowerPosition.includes('bottom');
-    return {isLeft, isCenter, isRight, isTop, isBottom};
+    return { isLeft, isCenter, isRight, isTop, isBottom };
   }, [lowerPosition]);
 
-  const removeMsg = useCallback((key) => {
-    const timer = timerMap.current.get(key);
-    if (!isNil(timer)) {
-      clearTimeout(timer);
-      timerMap.current.delete(key);
-    }
-    setQueue(pre => [...pre.filter(msg => msg.key !== key)]);
-  }, [timerMap, setQueue]);
+  const removeMsg = useCallback(
+    (key) => {
+      const timer = timerMap.current.get(key);
+      if (!isNil(timer)) {
+        clearTimeout(timer);
+        timerMap.current.delete(key);
+      }
+      setQueue((pre) => [...pre.filter((msg) => msg.key !== key)]);
+    },
+    [timerMap, setQueue]
+  );
 
-  const addMsg = useCallback((msg) => {
-    if (!isNil(msg.duration) && msg.duration > 0) {
-      const timer = execute(() => {
-        removeMsg(msg.key);
-      }, msg.duration);
-      timerMap.current.set(msg.key, timer);
-    }
-    setQueue(q => [...q, msg]);
-  }, [removeMsg]);
+  const addMsg = useCallback(
+    (msg) => {
+      if (!isNil(msg.duration) && msg.duration > 0) {
+        const timer = execute(() => {
+          removeMsg(msg.key);
+        }, msg.duration);
+        timerMap.current.set(msg.key, timer);
+      }
+      setQueue((q) => [...q, msg]);
+    },
+    [removeMsg]
+  );
 
   if (!msgStore.initialized()) {
-    msgStore.attach({add: addMsg});
+    msgStore.attach({ add: addMsg });
   }
 
   useEffect(() => {
@@ -115,51 +124,57 @@ const Notification = (props) => {
     };
   }, [onUnmount, position]);
 
-
-  const scale = useMemo(() => positionResult.isCenter ? 0 : 1, [positionResult.isCenter]);
+  const scale = useMemo(() => (positionResult.isCenter ? 0 : 1), [positionResult.isCenter]);
 
   const animation = useMemo(() => {
-    let x = '0%';//center
+    let x = '0%'; //center
     if (positionResult.isLeft) {
       x = '-120%';
     }
     if (positionResult.isRight) {
       x = '120%';
     }
-    return {x, scale, opacity: 0};
+    return { x, scale, opacity: 0 };
   }, [positionResult.isLeft, positionResult.isRight, scale]);
 
   const transitions = useTransition(queue, {
-    config: {clamp: true, mass: 1, tesion: 150, friction: 15},
-    keys: item => item.key,
+    config: { clamp: true, mass: 1, tesion: 150, friction: 15 },
+    keys: (item) => item.key,
     from: animation,
-    enter: {x: '0%', scale: 1, opacity: 1},
+    enter: { x: '0%', scale: 1, opacity: 1 },
     leave: animation,
     onDestroyed: (item) => item.onClose && item.onClose(item)
   });
 
-  return <div
-    className={`alert-container ${sizeClassName} ${PositionType[position]}`}
-    ref={cntRef}>
-    {
-      transitions(({x, scale}, item) => {
+  return (
+    <div className={`alert-container ${sizeClassName} ${PositionType[position]}`} ref={cntRef}>
+      {transitions(({ x, scale }, item) => {
         delete item.rect;
-        const {alertProps: {style: alterSty, ...alterOthers}, ...others} = item;
+        const {
+          alertProps: { style: alterSty, ...alterOthers },
+          ...others
+        } = item;
         const alertStyle = {
           ...alterSty,
           // opacity: opacity,
-          transform: to([x, scale], (realX, realScale) => `translate3d(${realX}, 0, 0) scaleY(${realScale})`),
+          transform: to(
+            [x, scale],
+            (realX, realScale) => `translate3d(${realX}, 0, 0) scaleY(${realScale})`
+          )
         };
-        const alertConfig = {...others, ...alterOthers};
-        return <Alert {...alertConfig}
-                      hasAnimation={false}
-                      style={alertStyle}
-                      active={true}
-                      onClose={() => removeMsg(item.key)}/>;
-      })
-    }
-  </div>;
-
+        const alertConfig = { ...others, ...alterOthers };
+        return (
+          <Alert
+            {...alertConfig}
+            hasAnimation={false}
+            style={alertStyle}
+            active={true}
+            onClose={() => removeMsg(item.key)}
+          />
+        );
+      })}
+    </div>
+  );
 };
 
 /**
@@ -179,13 +194,14 @@ const proxyMap = new Map();
  */
 const send = (type, cfg) => {
   const key = generateKey();
-  let msg = isString(cfg) ? {
-      ...DEFAULT_CONFIG,
-      key: key,
-      type: type,
-      body: cfg,
-    }
-    : {key: key, type: type, ...DEFAULT_CONFIG, ...cfg};
+  let msg = isString(cfg)
+    ? {
+        ...DEFAULT_CONFIG,
+        key: key,
+        type: type,
+        body: cfg
+      }
+    : { key: key, type: type, ...DEFAULT_CONFIG, ...cfg };
 
   let proxy = proxyMap.get(msg.position);
   if (!proxy) {
@@ -194,13 +210,17 @@ const send = (type, cfg) => {
     let containerObj = createContainer('notify-' + msg.position);
 
     //pass position into todo
-    ReactDOM.render(<Notification position={msg.position}
-                                  msgStore={proxy}
-                                  onUnmount={(k) => {
-                                    containerObj.remove();
-                                    proxyMap.delete(k);
-                                  }}/>,
-      containerObj.container);
+    ReactDOM.render(
+      <Notification
+        position={msg.position}
+        msgStore={proxy}
+        onUnmount={(k) => {
+          containerObj.remove();
+          proxyMap.delete(k);
+        }}
+      />,
+      containerObj.container
+    );
     proxy.add(msg);
   } else {
     proxy.add(msg);
@@ -212,7 +232,7 @@ export default {
     return DEFAULT_CONFIG;
   },
   config(cfg) {
-    DEFAULT_CONFIG = {...DEFAULT_CONFIG, ...cfg};
+    DEFAULT_CONFIG = { ...DEFAULT_CONFIG, ...cfg };
   },
 
   info(cfg) {
@@ -233,5 +253,5 @@ export default {
   },
   mini(cfg) {
     send('mini', cfg);
-  },
+  }
 };

@@ -1,28 +1,26 @@
-import React, {useCallback, useContext, useEffect, useMemo, useRef} from "react";
-import clsx from "clsx";
-import {StepperContext} from "../common/Context";
-import {IconChecked2, IconClear, IconWarning2} from "../Icons";
-import {Direction} from "../common/Constants";
-import {nonNil, validate} from "../Utils";
-import useInternalState from "../common/useInternalState";
-import Ripple from "../common/Ripple";
-import * as PropTypes from "prop-types";
+import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
+import clsx from 'clsx';
+import { StepperContext } from '../common/Context';
+import { IconChecked2, IconClear, IconWarning2 } from '../Icons';
+import { Direction } from '../common/Constants';
+import { nonNil, validate } from '../Utils';
+import useInternalState from '../common/useInternalState';
+import Ripple from '../common/Ripple';
+import * as PropTypes from 'prop-types';
 
 const ErrorType = {
-  'error': 'error',
-  'warning': 'warning',
-  'normal': 'normal'
+  error: 'error',
+  warning: 'warning',
+  normal: 'normal'
 };
 
-
 const StatusType = {
-  'finished': 'finished',
-  'processing': 'processing',
-  'todo': 'todo'
+  finished: 'finished',
+  processing: 'processing',
+  todo: 'todo'
 };
 
 const Step = React.forwardRef((props, ref) => {
-
   const {
     currentStep,
     changeStep,
@@ -51,7 +49,7 @@ const Step = React.forwardRef((props, ref) => {
   const updatedProps = Ripple.useRippleEvent({
     rippleRef,
     rootProps: props,
-    hasRipple: hasRipple,
+    hasRipple: hasRipple
   });
 
   const {
@@ -70,18 +68,30 @@ const Step = React.forwardRef((props, ref) => {
 
   const validVerticalStep = !isVertical && isVerticalStep;
 
-  const isCurrentActive = useMemo(() => reverse ? index === (count - currentStep - 1) : index === currentStep,
-    [count, currentStep, index, reverse]);
+  const isCurrentActive = useMemo(
+    () => (reverse ? index === count - currentStep - 1 : index === currentStep),
+    [count, currentStep, index, reverse]
+  );
 
-  const isActive = useMemo(() => nonNil(status) ? status === StatusType.processing : isCurrentActive,
-    [status, isCurrentActive]);
+  const isActive = useMemo(
+    () => (nonNil(status) ? status === StatusType.processing : isCurrentActive),
+    [status, isCurrentActive]
+  );
 
-  const isChecked = useMemo(() => nonNil(status) ? status === StatusType.finished :
-      (reverse ? index > count - currentStep - 1 : index < currentStep),
-    [status, reverse, index, count, currentStep]);
+  const isChecked = useMemo(
+    () =>
+      nonNil(status)
+        ? status === StatusType.finished
+        : reverse
+        ? index > count - currentStep - 1
+        : index < currentStep,
+    [status, reverse, index, count, currentStep]
+  );
 
-  const realErrType = useMemo(() => nonNil(stepErrorType) ? stepErrorType : errorType,
-    [errorType, stepErrorType]);
+  const realErrType = useMemo(
+    () => (nonNil(stepErrorType) ? stepErrorType : errorType),
+    [errorType, stepErrorType]
+  );
 
   const hasError = nonNil(stepErrorType) ? true : nonNil(errorType) && isActive;
   const isWarning = realErrType === ErrorType.warning;
@@ -99,7 +109,7 @@ const Step = React.forwardRef((props, ref) => {
   const titleClsName = clsx('w-step-title', {
     active: isActive,
     checked: isChecked,
-    'vertical-step': validVerticalStep,
+    'vertical-step': validVerticalStep
   });
 
   const bodyClsName = clsx('w-step-body', {
@@ -125,11 +135,22 @@ const Step = React.forwardRef((props, ref) => {
         return isWarning ? warningIcon : errorIcon;
       }
       if (isChecked) {
-        return <IconChecked2/>;
+        return <IconChecked2 />;
       }
     }
     return index + 1;
-  }, [dotIcon, errorIcon, hasError, icon, index, isChecked, isWarning, showErrorIcon, showIcon, warningIcon]);
+  }, [
+    dotIcon,
+    errorIcon,
+    hasError,
+    icon,
+    index,
+    isChecked,
+    isWarning,
+    showErrorIcon,
+    showIcon,
+    warningIcon
+  ]);
 
   const hasIconBorder = !solidDot && borderedIcon;
   const iconClsName = clsx('w-step-icon', stepDirection, {
@@ -143,37 +164,42 @@ const Step = React.forwardRef((props, ref) => {
     [`with-${realErrType}`]: hasError
   });
 
-  const vConnectorClsName = clsx('w-step-vertical-connector', {'with-dot': dotIcon});
+  const vConnectorClsName = clsx('w-step-vertical-connector', { 'with-dot': dotIcon });
   const stepConnectorClsName = clsx('w-step-single-connector', {
     active: isActive || isChecked,
     normal: !dotIcon,
     'w-dot-connector': dotIcon
   });
 
-  const handleChange = useCallback((e) => {
-    !disabled && changeStep(index, e);
-  }, [changeStep, disabled, index]);
+  const handleChange = useCallback(
+    (e) => {
+      !disabled && changeStep(index, e);
+    },
+    [changeStep, disabled, index]
+  );
 
-  return <div className={clsName} ref={ref} onClick={handleChange} {...rest}>
-    {validVerticalStep && index > 0 && <div className={stepConnectorClsName}/>}
-    <span className={iconClsName}>{realIcon}</span>
-    <div className='w-step-content'>
+  return (
+    <div className={clsName} ref={ref} onClick={handleChange} {...rest}>
+      {validVerticalStep && index > 0 && <div className={stepConnectorClsName} />}
+      <span className={iconClsName}>{realIcon}</span>
+      <div className="w-step-content">
         <span className={titleClsName}>
-          <span className='w-step-title-info ellipsis'>{title}</span>
-          {subtitle && <span className='w-step-subtitle'>{subtitle}</span>}
-          {index < count - 1 && !isVertical && !isVerticalStep && <div className='w-step-connector'/>}
+          <span className="w-step-title-info ellipsis">{title}</span>
+          {subtitle && <span className="w-step-subtitle">{subtitle}</span>}
+          {index < count - 1 && !isVertical && !isVerticalStep && (
+            <div className="w-step-connector" />
+          )}
         </span>
-      <div className={bodyClsName}>{children}</div>
+        <div className={bodyClsName}>{children}</div>
+      </div>
+
+      {isVertical && index < count - 1 && <div className={vConnectorClsName} />}
+      {hasRipple && !disabled && clickable && (
+        <Ripple ref={rippleRef} center={false} color={rippleColor} />
+      )}
     </div>
-
-    {isVertical && index < count - 1 && <div className={vConnectorClsName}/>}
-    {
-      hasRipple && !disabled && clickable &&
-      <Ripple ref={rippleRef} center={false} color={rippleColor}/>
-    }
-  </div>;
+  );
 });
-
 
 const Stepper = React.forwardRef((props, ref) => {
   const {
@@ -190,8 +216,8 @@ const Stepper = React.forwardRef((props, ref) => {
     solidDot = false,
     grayDot = false,
     errorType,
-    errorIcon = <IconClear/>,
-    warningIcon = <IconWarning2/>,
+    errorIcon = <IconClear />,
+    warningIcon = <IconWarning2 />,
     showErrorIcon = true,
     showIcon = true,
     onClick,
@@ -207,14 +233,20 @@ const Stepper = React.forwardRef((props, ref) => {
     state: activeStep
   });
 
-  const handleChange = useCallback((index, e) => {
-    setStep(index);
-    onClick && onClick(index, e);
-  }, [onClick, setStep]);
+  const handleChange = useCallback(
+    (index, e) => {
+      setStep(index);
+      onClick && onClick(index, e);
+    },
+    [onClick, setStep]
+  );
 
   useEffect(() => {
-    stepDirection === Direction.vertical && validate(direction !== stepDirection,
-      "The direction cannot be vertical while the stepDirection is vertical")
+    stepDirection === Direction.vertical &&
+      validate(
+        direction !== stepDirection,
+        'The direction cannot be vertical while the stepDirection is vertical'
+      );
   }, [direction, stepDirection]);
 
   const clsName = clsx(extraClassName, className, direction);
@@ -225,37 +257,62 @@ const Stepper = React.forwardRef((props, ref) => {
   }, [children, reverse]);
   const childrenCount = useMemo(() => chdArray.length, [chdArray.length]);
 
-  const chd = useMemo(() => chdArray.map((child, index) =>
-    React.cloneElement(child, {index})), [chdArray]);
+  const chd = useMemo(
+    () => chdArray.map((child, index) => React.cloneElement(child, { index })),
+    [chdArray]
+  );
 
-  const ctxValue = useMemo(() => ({
-    currentStep,
-    changeStep: handleChange,
-    borderedIcon,
-    dotIcon,
-    reverse,
-    solidDot,
-    grayDot,
-    isVertical: direction === Direction.vertical,
-    isVerticalStep: stepDirection === Direction.vertical,
-    stepDirection,
-    count: childrenCount,
-    errorType,
-    errorIcon,
-    warningIcon,
-    showErrorIcon,
-    showIcon,
-    onClick,
-    hasRipple,
-    rippleColor
-  }), [currentStep, handleChange, borderedIcon, dotIcon, reverse, solidDot,
-    grayDot, direction, stepDirection, childrenCount, errorType, errorIcon, warningIcon, showErrorIcon, showIcon, onClick, hasRipple, rippleColor]);
+  const ctxValue = useMemo(
+    () => ({
+      currentStep,
+      changeStep: handleChange,
+      borderedIcon,
+      dotIcon,
+      reverse,
+      solidDot,
+      grayDot,
+      isVertical: direction === Direction.vertical,
+      isVerticalStep: stepDirection === Direction.vertical,
+      stepDirection,
+      count: childrenCount,
+      errorType,
+      errorIcon,
+      warningIcon,
+      showErrorIcon,
+      showIcon,
+      onClick,
+      hasRipple,
+      rippleColor
+    }),
+    [
+      currentStep,
+      handleChange,
+      borderedIcon,
+      dotIcon,
+      reverse,
+      solidDot,
+      grayDot,
+      direction,
+      stepDirection,
+      childrenCount,
+      errorType,
+      errorIcon,
+      warningIcon,
+      showErrorIcon,
+      showIcon,
+      onClick,
+      hasRipple,
+      rippleColor
+    ]
+  );
 
-  return <StepperContext.Provider value={ctxValue}>
-    <div className={clsName} ref={ref} {...rest}>
-      {chd}
-    </div>
-  </StepperContext.Provider>;
+  return (
+    <StepperContext.Provider value={ctxValue}>
+      <div className={clsName} ref={ref} {...rest}>
+        {chd}
+      </div>
+    </StepperContext.Provider>
+  );
 });
 
 Step.propTypes = {
@@ -266,8 +323,8 @@ Step.propTypes = {
   icon: PropTypes.node,
   errorType: PropTypes.oneOf(Object.keys(ErrorType)),
   disabled: PropTypes.bool,
-  status: PropTypes.oneOf(Object.keys(StatusType)),
-}
+  status: PropTypes.oneOf(Object.keys(StatusType))
+};
 
 Stepper.propTypes = {
   className: PropTypes.string,
@@ -288,8 +345,8 @@ Stepper.propTypes = {
   showIcon: PropTypes.bool,
   onClick: PropTypes.func,
   hasRipple: PropTypes.bool,
-  rippleColor: PropTypes.string,
-}
+  rippleColor: PropTypes.string
+};
 
 Stepper.Step = Step;
 

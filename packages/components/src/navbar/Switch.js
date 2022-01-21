@@ -1,7 +1,7 @@
-import React, {useCallback, useContext} from 'react';
+import React, { useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../button';
-import {NavbarContext} from '../common/Context';
+import { NavbarContext } from '../common/Context';
 import useEventCallback from '../common/useEventCallback';
 
 const Switch = React.forwardRef((props, ref) => {
@@ -24,19 +24,23 @@ const Switch = React.forwardRef((props, ref) => {
     onClick && onClick(e);
   });
 
-  const {color, ...otherStyles} = style;
-  const others = {style: {...otherStyles}, ...otherProps};
-  return <Button inverted
-                 className={className}
-                 extraClassName={extraClassName}
-                 hasBox={false}
-                 hasBorder={false}
-                 rippleColor={rippleColor}
-                 size="large"
-                 circle={circle}
-                 ref={ref}
-                 onClick={click}
-                 {...others} />;
+  const { color, ...otherStyles } = style;
+  const others = { style: { ...otherStyles }, ...otherProps };
+  return (
+    <Button
+      inverted
+      className={className}
+      extraClassName={extraClassName}
+      hasBox={false}
+      hasBorder={false}
+      rippleColor={rippleColor}
+      size="large"
+      circle={circle}
+      ref={ref}
+      onClick={click}
+      {...others}
+    />
+  );
 });
 
 Switch.propTypes = {
@@ -45,7 +49,7 @@ Switch.propTypes = {
   onClick: PropTypes.func,
   circle: PropTypes.bool,
   rippleColor: PropTypes.string,
-  autoSwitch: PropTypes.bool,
+  autoSwitch: PropTypes.bool
 };
 
 export default Switch;

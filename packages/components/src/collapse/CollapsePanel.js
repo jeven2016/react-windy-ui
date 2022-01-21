@@ -1,11 +1,11 @@
-import React, {useMemo, useRef, useState} from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import clsx from 'clsx';
-import {animated, useSpring} from 'react-spring';
+import { animated, useSpring } from 'react-spring';
 
 import useResizeObserver from '../common/UseResizeObserver';
-import {isNil, nonNil} from '../Utils';
+import { isNil, nonNil } from '../Utils';
 import PropTypes from 'prop-types';
-import usePrevious from "../common/UsePrevious";
+import usePrevious from '../common/UsePrevious';
 
 const CollapsePanel = React.forwardRef((props, ref) => {
   const {
@@ -35,22 +35,20 @@ const CollapsePanel = React.forwardRef((props, ref) => {
   const [panelHeight, setPanelHeight] = useState(startHeight);
 
   //updated while the panel changed
-  useResizeObserver(panelRef, rect => setPanelHeight(rect.height),
-    autoScaleHeight);
+  useResizeObserver(panelRef, (rect) => setPanelHeight(rect.height), autoScaleHeight);
 
   const toHeight = useMemo(() => {
     if (collapse) {
       return 0;
     }
     return autoScaleHeight ? panelHeight + heightIncrement : panelHeight;
-
   }, [collapse, autoScaleHeight, panelHeight, heightIncrement]);
 
   //the spring animation has valid height calculated, but the height would be changed in newStyle while only the child panel changed
-  const {height, opacity, maxHeight} = useSpring({
-    from: {opacity: 0, height: 0},
-    to: {opacity: collapse ? 0 : 1, height: toHeight,},
-    config: {clamp: true, mass: 1, tesion: 100, friction: 15},
+  const { height, opacity, maxHeight } = useSpring({
+    from: { opacity: 0, height: 0 },
+    to: { opacity: collapse ? 0 : 1, height: toHeight },
+    config: { clamp: true, mass: 1, tesion: 100, friction: 15 }
   });
 
   //set the height to 'auto' if the children panel instead of itself changed
@@ -61,16 +59,16 @@ const CollapsePanel = React.forwardRef((props, ref) => {
     ...style,
     height: isSubPanelChanged ? 'auto' : height,
     opacity: opacity,
-    maxHeight: maxHeight,
+    maxHeight: maxHeight
   };
 
-  return <animated.div className={clsName}
-                       ref={ref}
-                       style={newStyle} {...otherProps}>
-    <div className="inner-container" ref={panelRef} style={innerStyle}>
-      {children}
-    </div>
-  </animated.div>;
+  return (
+    <animated.div className={clsName} ref={ref} style={newStyle} {...otherProps}>
+      <div className="inner-container" ref={panelRef} style={innerStyle}>
+        {children}
+      </div>
+    </animated.div>
+  );
 });
 
 CollapsePanel.propTypes = {
@@ -81,7 +79,7 @@ CollapsePanel.propTypes = {
   innerStyle: PropTypes.object,
   height: PropTypes.number,
   heightIncrement: PropTypes.number,
-  autoScaleHeight: PropTypes.bool,
+  autoScaleHeight: PropTypes.bool
 };
 
 export default CollapsePanel;

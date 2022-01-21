@@ -1,15 +1,10 @@
-import React from "react";
-import clsx from "clsx";
-
+import React from 'react';
+import clsx from 'clsx';
 
 const Body = React.forwardRef((props, ref) => {
-  const {
-    className = 'w-container-body',
-    extraClassName,
-    ...rest
-  } = props;
+  const { className = 'w-container-body', extraClassName, ...rest } = props;
   const clsName = clsx(extraClassName, className);
-  return <div className={clsName} ref={ref} {...rest}/>
+  return <div className={clsName} ref={ref} {...rest} />;
 });
 
 const Container = React.forwardRef((props, ref) => {
@@ -26,11 +21,13 @@ const Container = React.forwardRef((props, ref) => {
     [`w-container-auto`]: autoAdjust
   });
 
-  return <div className={clsName} ref={ref}>
-    <Body size={size} {...rest}>
-      {children}
-    </Body>
-  </div>
+  return (
+    <div className={clsName} ref={ref}>
+      <Body size={size} {...rest}>
+        {children}
+      </Body>
+    </div>
+  );
 });
 
 Container.Body = Body;

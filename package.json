@@ -6,7 +6,7 @@
     "start": "concurrently \"yarn run startDocs\" \"yarn run watch:wui\" ",
     "startDocs": "yarn run build:cmp && lerna --scope docs run start",
     "build:docs": "yarn run build:cmp && lerna --scope docs run build",
-    "build:cmp": "yarn run build:wui && lerna --scope react-windy-ui run build && lerna --scope wui run copy --  --copyTo=/home/jujucom/Desktop/workspace/projects/react-windy-ui/packages/components/dist/",
+    "build:cmp": "yarn run build:wui && lerna --scope react-windy-ui run build",
     "build:wui": "lerna --scope wui run build && lerna --scope wui run buildThemes",
     "watch:wui": "lerna --scope wui run watch -- --buildAll=true --copyTo=/home/jujucom/Desktop/workspace/projects/react-windy-ui/packages/components/dist/",
     "build:theme": "lerna --scope wui run buildThemes",

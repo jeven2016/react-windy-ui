@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {isNil, random} from '../Utils';
+import React, { useContext } from 'react';
+import { isNil, random } from '../Utils';
 
 /**
  * A internal store implementation that makes the child node be able to notify other child nodes
@@ -30,11 +30,11 @@ export const initStore = (initState = {}) => {
    * @param nextState
    */
   const updateState = (nextState) => {
-    internalState = {...internalState, ...nextState};
+    internalState = { ...internalState, ...nextState };
   };
 
   const notifyChanges = () => {
-    callbacks.forEach(c => {
+    callbacks.forEach((c) => {
       c(internalState);
     });
   };
@@ -73,7 +73,7 @@ export const initStore = (initState = {}) => {
     detach,
     callbacks,
     notifyChanges,
-    id,
+    id
   };
 };
 
@@ -84,13 +84,11 @@ export const initStore = (initState = {}) => {
 export const connect = (mapStateToProps) => {
   return function (Comp) {
     return function (props) {
-      const {store} = useContext(StoreContext);
+      const { store } = useContext(StoreContext);
       const stateToProps = mapStateToProps(store.getState());
       // const dispatchToProps = mapDispatchToProps(dispatch);
-      const newProps = {...props, ...stateToProps};
-      return (
-          <Comp {...newProps} />
-      );
+      const newProps = { ...props, ...stateToProps };
+      return <Comp {...newProps} />;
     };
   };
 };

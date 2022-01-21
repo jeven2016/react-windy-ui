@@ -1,9 +1,9 @@
-import React, {useContext, useRef} from 'react';
+import React, { useContext, useRef } from 'react';
 import Collapse from '../collapse/Collapse';
 import clsx from 'clsx';
-import {animated, useSpring} from 'react-spring';
-import {SubMenuDirection} from './MenuUtils';
-import {MenuContext} from '../common/Context';
+import { animated, useSpring } from 'react-spring';
+import { SubMenuDirection } from './MenuUtils';
+import { MenuContext } from '../common/Context';
 import usePrevious from '../common/UsePrevious';
 import PropTypes from 'prop-types';
 
@@ -14,10 +14,10 @@ export default function MenuList(props) {
     collapse,
     content,
     startOffset = 20,
-    show = false,// pop the submenu
+    show = false, // pop the submenu
     handleMouseEnter,
     handleMouseLeave,
-    blockList = false,
+    blockList = false
   } = props;
   const ctx = useContext(MenuContext);
   const listRef = useRef(null);
@@ -26,7 +26,7 @@ export default function MenuList(props) {
     'popup-list': popupSubMenu,
     [popupSubMenuPosition]: popupSubMenu && popupSubMenuPosition,
     [ctx.type]: popupSubMenu && ctx.type,
-    block: blockList,
+    block: blockList
   });
 
   const isBottomPos = SubMenuDirection.bottom.key === popupSubMenuPosition;
@@ -39,42 +39,43 @@ export default function MenuList(props) {
   const preCompact = usePrevious(ctx.compact);
   const isInitialCompact = preCompact !== ctx.compact && ctx.compact;
   // const showPopup = ctx.compact ? show && !isInitialCompact : show;
-  const showPopup = popupSubMenu ? show : ctx.compact && show &&
-    !isInitialCompact;
+  const showPopup = popupSubMenu ? show : ctx.compact && show && !isInitialCompact;
 
   //this animation is only applied for popup submenu
   const springProps = useSpring({
-    from: {offset: startOffset, opacity: 0, disp: 0},
+    from: { offset: startOffset, opacity: 0, disp: 0 },
     to: {
       offset: showPopup ? 0 : startOffset,
       opacity: showPopup ? 1 : 0,
-      disp: showPopup ? 1 : 0,
-    },
+      disp: showPopup ? 1 : 0
+    }
     // config: {clamp: true, mass: 1, tesion: 100, friction: 15},
   });
 
   const interpolateOffset = (offset) => {
-    return isBottomPos
-      ? `translate3d(0, ${offset}px, 0)`
-      : `translate3d(${offset}px, 0, 0)`;
+    return isBottomPos ? `translate3d(0, ${offset}px, 0)` : `translate3d(${offset}px, 0, 0)`;
   };
 
   if (popupSubMenu) {
-    return <animated.div ref={listRef} className={itemListClsName}
-                         onMouseEnter={handleMouseEnter}
-                         onMouseLeave={handleMouseLeave}
-                         style={{
-                           transform: springProps.offset.to(
-                             interpolateOffset),
-                           opacity: springProps.opacity,
-                           display: springProps.disp.to(disp => disp === 0 ? 'none' : 'flex')
-                         }}>{content}</animated.div>;
+    return (
+      <animated.div
+        ref={listRef}
+        className={itemListClsName}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          transform: springProps.offset.to(interpolateOffset),
+          opacity: springProps.opacity,
+          display: springProps.disp.to((disp) => (disp === 0 ? 'none' : 'flex'))
+        }}
+      >
+        {content}
+      </animated.div>
+    );
   }
 
   if (ctx.header && ctx.collapsable) {
-    return <Collapse.Panel collapse={collapse}>
-      {content}
-    </Collapse.Panel>;
+    return <Collapse.Panel collapse={collapse}>{content}</Collapse.Panel>;
   }
 
   return content;
@@ -89,5 +90,5 @@ MenuList.propTypes = {
   show: PropTypes.bool,
   handleMouseEnter: PropTypes.func,
   handleMouseLeave: PropTypes.func,
-  blockList: PropTypes.bool,
+  blockList: PropTypes.bool
 };

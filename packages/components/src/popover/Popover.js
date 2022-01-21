@@ -1,6 +1,6 @@
 import React from 'react';
-import {isNil} from '../Utils';
-import {PopupPosition, PositionClass} from '../common/Constants';
+import { isNil } from '../Utils';
+import { PopupPosition, PositionClass } from '../common/Constants';
 import Card from '../card';
 import Divider from '../divider';
 import clsx from 'clsx';
@@ -25,28 +25,27 @@ const Popover = React.forwardRef((props, ref) => {
   } = props;
   let positionClassName = clsx('popover-arrow', `${PositionClass[position]}`, {
     'with-box': hasBox,
-    'with-border': hasBorder,
+    'with-border': hasBorder
   });
   let clsName = clsx(extraClassName, className);
 
-  const popupBody = <div className={clsName}
-                         ref={ref}>
-    {hasArrow && <div className={positionClassName}/>}
-    <Card hasBox={hasBox} hasBorder={hasBorder} hasWidth={!autoWidth}>
-      {
-        isNil(header) ? null :
-            <>
-              <Card.Header>{header}</Card.Header>
-              <Divider/>
-            </>
-      }
-      <Card.Body>
-        {body}
-      </Card.Body>
-    </Card>
-  </div>;
+  const popupBody = (
+    <div className={clsName} ref={ref}>
+      {hasArrow && <div className={positionClassName} />}
+      <Card hasBox={hasBox} hasBorder={hasBorder} hasWidth={!autoWidth}>
+        {isNil(header) ? null : (
+          <>
+            <Card.Header>{header}</Card.Header>
+            <Divider />
+          </>
+        )}
+        <Card.Body>{body}</Card.Body>
+      </Card>
+    </div>
+  );
 
-  return <Popup
+  return (
+    <Popup
       ref={popupInstanceRef} //todo: need to update doc
       offset={offset}
       position={position}
@@ -54,8 +53,8 @@ const Popover = React.forwardRef((props, ref) => {
       ctrlNode={children}
       body={popupBody}
       {...otherProps}
-  />;
-
+    />
+  );
 });
 
 Popover.propTypes = {
@@ -67,7 +66,7 @@ Popover.propTypes = {
   hasArrow: PropTypes.bool,
   hasBox: PropTypes.bool,
   hasBorder: PropTypes.bool,
-  offset: PropTypes.number,
+  offset: PropTypes.number
 };
 
 export default Popover;

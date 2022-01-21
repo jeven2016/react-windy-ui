@@ -1,10 +1,10 @@
-import React, {useCallback, useMemo} from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import {IconChecked, IconCheckedIndeterminate, IconUnChecked} from './Icons';
+import { IconChecked, IconCheckedIndeterminate, IconUnChecked } from './Icons';
 import Element from './common/Element';
 import clsx from 'clsx';
 import useInternalState from './common/useInternalState';
-import {createColorClsName, preventEvent} from './Utils';
+import { createColorClsName, preventEvent } from './Utils';
 
 const Checkbox = React.forwardRef((props, ref) => {
   const {
@@ -16,14 +16,14 @@ const Checkbox = React.forwardRef((props, ref) => {
     onChange,
     label,
     children,
-    errorType,//ok, error, warning
+    errorType, //ok, error, warning
     checkedColor,
     uncheckedColor,
     alignLabel = 'right',
-    checkedIcon = <IconChecked/>,
-    uncheckedIcon = <IconUnChecked/>,
+    checkedIcon = <IconChecked />,
+    uncheckedIcon = <IconUnChecked />,
     showIndeterminateState = false,
-    iconIndeterminate = <IconCheckedIndeterminate/>,
+    iconIndeterminate = <IconCheckedIndeterminate />,
     iconIndeterminateStyle,
     ...otherProps
   } = props;
@@ -32,7 +32,7 @@ const Checkbox = React.forwardRef((props, ref) => {
     props,
     stateName: 'checked',
     defaultState: defaultChecked,
-    state: checked,
+    state: checked
   });
 
   let realIcon = useMemo(() => {
@@ -45,63 +45,79 @@ const Checkbox = React.forwardRef((props, ref) => {
       icon = uncheckedIcon;
     }
     return icon;
-  }, [
-    checkedIcon,
-    uncheckedIcon,
-    showIndeterminateState,
-    checkState,
-    iconIndeterminate]);
+  }, [checkedIcon, uncheckedIcon, showIndeterminateState, checkState, iconIndeterminate]);
 
   const clsName = clsx(extraClassName, className, alignLabel, {
     checked: checkState,
     unchecked: !checkState,
     indeterminate: showIndeterminateState,
-    [`check-${errorType}`]: errorType,
+    [`check-${errorType}`]: errorType
   });
 
-  const handleClick = useCallback((e) => {
-    if (disabled) {
-      preventEvent(e);
-      return;
-    }
-    const nextState = !checkState;
-    setCheckState(nextState);
-    onChange && onChange(nextState, e);
-  }, [onChange, checkState, setCheckState, disabled]);
-
-  const iconColor = useMemo(() => createColorClsName({
-    checkState, checkedColor, uncheckedColor,
-  }), [checkState, checkedColor, uncheckedColor]);
-
-  realIcon = useMemo(() => realIcon ? React.cloneElement(realIcon, {
-      onKeyDown: (e) => e.keyCode === 13 && handleClick(),
-      tabIndex: 0,
-      extraClassName: iconColor?.className || '',
-      style: showIndeterminateState
-        ? iconIndeterminateStyle
-        : ((!iconColor?.isClass && iconColor?.style) || {}),
-    }) : null,
-    [
-      realIcon,
-      iconColor,
-      showIndeterminateState,
-      iconIndeterminateStyle,
-      handleClick]);
-
-  return <>
-    <Element className={clsName} disabled={disabled} {...otherProps}
-             onClick={handleClick} ref={ref}>
-      {realIcon}
-      <input type="checkbox" value={checkState} disabled={disabled}
-             className="hidden-input" tabIndex="-1"/>
-      {
-        (label || children) && <span className="label">
-        {label}
-          {children}
-        </span>
+  const handleClick = useCallback(
+    (e) => {
+      if (disabled) {
+        preventEvent(e);
+        return;
       }
-    </Element>
-  </>;
+      const nextState = !checkState;
+      setCheckState(nextState);
+      onChange && onChange(nextState, e);
+    },
+    [onChange, checkState, setCheckState, disabled]
+  );
+
+  const iconColor = useMemo(
+    () =>
+      createColorClsName({
+        checkState,
+        checkedColor,
+        uncheckedColor
+      }),
+    [checkState, checkedColor, uncheckedColor]
+  );
+
+  realIcon = useMemo(
+    () =>
+      realIcon
+        ? React.cloneElement(realIcon, {
+            onKeyDown: (e) => e.keyCode === 13 && handleClick(),
+            tabIndex: 0,
+            extraClassName: iconColor?.className || '',
+            style: showIndeterminateState
+              ? iconIndeterminateStyle
+              : (!iconColor?.isClass && iconColor?.style) || {}
+          })
+        : null,
+    [realIcon, iconColor, showIndeterminateState, iconIndeterminateStyle, handleClick]
+  );
+
+  return (
+    <>
+      <Element
+        className={clsName}
+        disabled={disabled}
+        {...otherProps}
+        onClick={handleClick}
+        ref={ref}
+      >
+        {realIcon}
+        <input
+          type="checkbox"
+          value={checkState}
+          disabled={disabled}
+          className="hidden-input"
+          tabIndex="-1"
+        />
+        {(label || children) && (
+          <span className="label">
+            {label}
+            {children}
+          </span>
+        )}
+      </Element>
+    </>
+  );
 });
 
 Checkbox.propTypes = {
@@ -119,7 +135,7 @@ Checkbox.propTypes = {
   uncheckedColor: PropTypes.string,
   showIndeterminateState: PropTypes.bool,
   iconIndeterminate: PropTypes.object,
-  iconIndeterminateStyle: PropTypes.object,
+  iconIndeterminateStyle: PropTypes.object
 };
 
 export default Checkbox;

@@ -1,5 +1,5 @@
-import React, {useCallback} from 'react';
-import {isFunction, isNil} from '../Utils';
+import React, { useCallback } from 'react';
+import { isFunction, isNil } from '../Utils';
 
 export const setDirectRef = (ref, elem) => {
   if (isNil(ref)) {
@@ -15,10 +15,12 @@ export const setDirectRef = (ref, elem) => {
 
 const useMultipleRefs = (...refs) => {
   //refer to: https://github.com/facebook/react/issues/4533
-  return useCallback((refElem) => {
-    refs.forEach(ref => setDirectRef(ref, refElem))
-  }, [refs]);
+  return useCallback(
+    (refElem) => {
+      refs.forEach((ref) => setDirectRef(ref, refElem));
+    },
+    [refs]
+  );
 };
-
 
 export default useMultipleRefs;

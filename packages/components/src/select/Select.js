@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Popup from '../popup/Popup';
 import Menu from '../menu';
 import {
@@ -11,12 +11,12 @@ import {
   isCustomized,
   isNil,
   nonNil,
-  preventEvent,
+  preventEvent
 } from '../Utils';
 import Element from '../common/Element';
-import {IconArrowDown, IconArrowUp, IconChecked2, IconClear, IconNoData,} from '../Icons';
+import { IconArrowDown, IconArrowUp, IconChecked2, IconClear, IconNoData } from '../Icons';
 import useInternalState from '../common/useInternalState';
-import {PopupCtrlType} from '../common/Constants';
+import { PopupCtrlType } from '../common/Constants';
 import clsx from 'clsx';
 import Loader from '../Loader';
 import useMultipleRefs from '../common/UseMultipleRefs';
@@ -27,19 +27,14 @@ import useEventCallback from '../common/useEventCallback';
  * Option Component
  */
 const Option = React.forwardRef((props, ref) => {
-  const {
-    value,
-    children,
-    text,
-    render,
-    ...otherProps
-  } = props;
+  const { value, children, text, render, ...otherProps } = props;
 
-  return <Menu.Item id={value} ref={ref} {...otherProps}>
-    {children ? children : text}
-  </Menu.Item>;
+  return (
+    <Menu.Item id={value} ref={ref} {...otherProps}>
+      {children ? children : text}
+    </Menu.Item>
+  );
 });
-
 
 Option.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -54,7 +49,7 @@ const Select = React.forwardRef((props, ref) => {
   const {
     extraClassName,
     className = 'select-menu popup',
-    compactMenu = false,//todo
+    compactMenu = false, //todo
     name,
     children,
     placeholder,
@@ -77,8 +72,8 @@ const Select = React.forwardRef((props, ref) => {
     noDataText = 'Not Found',
     searchInputWidth = 16,
     hasArrow = true,
-    arrowIcon = <IconArrowDown/>,
-    activeArrowIcon = <IconArrowUp/>,
+    arrowIcon = <IconArrowDown />,
+    activeArrowIcon = <IconArrowUp />,
     defaultActive = false,
     active, //whether to show the popup
     onChange, //for changing value, same as onSelect
@@ -97,7 +92,7 @@ const Select = React.forwardRef((props, ref) => {
     props,
     stateName: 'active',
     defaultState: defaultActive,
-    state: active,
+    state: active
   });
 
   //the search value corresponds to item's text, it won't be exposed to outside caller
@@ -118,9 +113,9 @@ const Select = React.forwardRef((props, ref) => {
     props,
     stateName: 'value',
     defaultState: convertToArray(defaultValue),
-    state: convertToArray(value),
+    state: convertToArray(value)
   });
-  const ctrlStyle = useMemo(() => searchable ? null : {cursor: 'pointer'}, [searchable]);
+  const ctrlStyle = useMemo(() => (searchable ? null : { cursor: 'pointer' }), [searchable]);
 
   useEffect(() => {
     if (!autoWidth || disabled || !isActive) {
@@ -131,10 +126,8 @@ const Select = React.forwardRef((props, ref) => {
     //adjust the input's width
     if (multiSelect && inputDomNode) {
       const decDomNode = detectRef.current;
-      inputDomNode.style.width = decDomNode.width > searchInputWidth
-        ? `${decDomNode.width +
-        3}px`
-        : `${searchInputWidth}px`;
+      inputDomNode.style.width =
+        decDomNode.width > searchInputWidth ? `${decDomNode.width + 3}px` : `${searchInputWidth}px`;
     }
 
     //adjust the menu's width
@@ -158,7 +151,7 @@ const Select = React.forwardRef((props, ref) => {
       return [];
     }
 
-    return React.Children.map(children, child => {
+    return React.Children.map(children, (child) => {
       if (child.type !== Option) {
         return null;
       }
@@ -166,17 +159,20 @@ const Select = React.forwardRef((props, ref) => {
         value: child.props.value,
         text: child.props.text,
         children: child.props.children,
-        render: child.props.render,
+        render: child.props.render
       };
-    }).filter(elem => !isNil(elem));
+    }).filter((elem) => !isNil(elem));
   }, [children]);
 
-  const findItemInfo = useCallback((val) => {
-    return allItemsInfo.find(item => item.value === val);
-  }, [allItemsInfo]);
+  const findItemInfo = useCallback(
+    (val) => {
+      return allItemsInfo.find((item) => item.value === val);
+    },
+    [allItemsInfo]
+  );
 
   const checkSelected = (val) => {
-    return selectedValue.find(item => item === val);
+    return selectedValue.find((item) => item === val);
   };
 
   //get the value of an Option
@@ -189,16 +185,13 @@ const Select = React.forwardRef((props, ref) => {
       return invoke(itemInfo.render, itemInfo);
     }
 
-    return isNil(itemInfo.text)
-      ? itemInfo.children
-      : itemInfo.text;
+    return isNil(itemInfo.text) ? itemInfo.children : itemInfo.text;
   }, []);
 
   //get selected text for single selection
   const getSelectedText = useCallback(() => {
     if (multiSelect) {
-      throw new Error(
-        'The method getSelectedText shouldn\'t be called for multiple selection.');
+      throw new Error("The method getSelectedText shouldn't be called for multiple selection.");
     }
     if (selectedValue.length === 0) {
       return null;
@@ -220,16 +213,17 @@ const Select = React.forwardRef((props, ref) => {
   }, [selectedValue, multiSelect, searchedValue, getSelectedText]);
 
   //check whether the value partially equals to any item's value
-  const getItemsBySearchValue = useCallback((itemValue) => {
-    const childInfo = findItemInfo(itemValue);
-    return isNil(childInfo) ? false : containsIgnoreCase(searchedValue,
-      getText(childInfo));
-  }, [findItemInfo, getText, searchedValue]);
+  const getItemsBySearchValue = useCallback(
+    (itemValue) => {
+      const childInfo = findItemInfo(itemValue);
+      return isNil(childInfo) ? false : containsIgnoreCase(searchedValue, getText(childInfo));
+    },
+    [findItemInfo, getText, searchedValue]
+  );
 
   //filter the items base on the searchValue
   const filterItems = useCallback(() => {
-    return children.filter(
-      (chd) => getItemsBySearchValue(chd.props.value));
+    return children.filter((chd) => getItemsBySearchValue(chd.props.value));
   }, [children, getItemsBySearchValue]);
 
   const getDisplayItems = () => {
@@ -245,22 +239,27 @@ const Select = React.forwardRef((props, ref) => {
     if (!multiSelect) {
       return items;
     }
-    return React.Children.map(items, oneChild => {
-      const newChild = <>
-        {
-          oneChild.props.icon ?
-            <span className="icon-column" style={{color: 'inherit'}}>{oneChild.props.icon}</span> : null
-        }
-        <div className="item-info">{oneChild.props.children}</div>
-        {
-          checkSelected(oneChild.props.value)
-            ? <span className="icon-column" style={{color: 'inherit'}}><IconChecked2/></span>
-            : null
-        }
-
-      </>;
-      return React.cloneElement(oneChild,
-        {...oneChild.props, customizedChildren: true}, newChild);
+    return React.Children.map(items, (oneChild) => {
+      const newChild = (
+        <>
+          {oneChild.props.icon ? (
+            <span className="icon-column" style={{ color: 'inherit' }}>
+              {oneChild.props.icon}
+            </span>
+          ) : null}
+          <div className="item-info">{oneChild.props.children}</div>
+          {checkSelected(oneChild.props.value) ? (
+            <span className="icon-column" style={{ color: 'inherit' }}>
+              <IconChecked2 />
+            </span>
+          ) : null}
+        </>
+      );
+      return React.cloneElement(
+        oneChild,
+        { ...oneChild.props, customizedChildren: true },
+        newChild
+      );
     });
   };
 
@@ -296,20 +295,22 @@ const Select = React.forwardRef((props, ref) => {
   const searchHits = useMemo(() => {
     if (!isBlank(searchedValue)) {
       //check whether the searchedValue equals to one of the items
-      return allItemsInfo.includes(
-        itemInfo => getText(itemInfo) === searchedValue);
+      return allItemsInfo.includes((itemInfo) => getText(itemInfo) === searchedValue);
     }
     return true;
   }, [searchedValue, allItemsInfo, getText]);
 
-  const changeSearchValue = useCallback((nextValue) => {
-    setSearchedValue(nextValue);
-    onSearch && onSearch(nextValue);
-  }, [setSearchedValue, onSearch]);
+  const changeSearchValue = useCallback(
+    (nextValue) => {
+      setSearchedValue(nextValue);
+      onSearch && onSearch(nextValue);
+    },
+    [setSearchedValue, onSearch]
+  );
 
   const realIcon = useMemo(() => {
     if (loading) {
-      return <Loader type={loaderType} active size="small"/>;
+      return <Loader type={loaderType} active size="small" />;
     }
     if (multiSelect) {
       return null;
@@ -328,10 +329,10 @@ const Select = React.forwardRef((props, ref) => {
     removable,
     searchedValue,
     arrowIcon,
-    activeArrowIcon]);
+    activeArrowIcon
+  ]);
 
   const handleBlur = useCallback(() => {
-
     //if no item's text is same with searchedValue
     if (!searchHits) {
       //clear
@@ -343,20 +344,23 @@ const Select = React.forwardRef((props, ref) => {
     }
   }, [searchHits, changeSearchValue, searchDelay]);
 
-  const changeActive = useCallback((next, e) => {
-    if (isActive === next) {
-      return;
-    }
-    setActive(next);
-    onActiveChange && onActiveChange(next, e);
+  const changeActive = useCallback(
+    (next, e) => {
+      if (isActive === next) {
+        return;
+      }
+      setActive(next);
+      onActiveChange && onActiveChange(next, e);
 
-    const inputDom = inputRef.current;
-    inputDom && inputDom.focus();
-  }, [isActive, setActive, onActiveChange]);
+      const inputDom = inputRef.current;
+      inputDom && inputDom.focus();
+    },
+    [isActive, setActive, onActiveChange]
+  );
 
   const removeItem = useEventCallback((v, e) => {
     preventEvent(e);
-    const rest = selectedValue.filter(val => val !== v);
+    const rest = selectedValue.filter((val) => val !== v);
     setValue(rest);
     onRemove && onRemove(v, e);
   });
@@ -367,52 +371,80 @@ const Select = React.forwardRef((props, ref) => {
     }
     let copiedProps = {
       readOnly: !searchable,
-      style: {pointerEvents: searchable ? 'cursor' : 'none', ...ctrlStyle},
+      style: { pointerEvents: searchable ? 'cursor' : 'none', ...ctrlStyle },
       value: displayText,
       onChange: handleSearch,
       onBlur: handleBlur,
-      className: clsx('select-input', size, {disabled}),
+      className: clsx('select-input', size, { disabled })
     };
 
-    const multiSelCls = clsx('select-multiple', size,
-      {block, 'active': isActive, 'with-select-box': hasBox && isActive, disabled},
-      getErrorClsName(errorType));
+    const multiSelCls = clsx(
+      'select-multiple',
+      size,
+      { block, active: isActive, 'with-select-box': hasBox && isActive, disabled },
+      getErrorClsName(errorType)
+    );
 
-    return <span className={multiSelCls}
-                 style={style}
-                 ref={multiSelectRef}>
+    return (
+      <span className={multiSelCls} style={style} ref={multiSelectRef}>
         <span className="select-multiple-content">
-          {
-            selectedValue.length === 0 && placeholder && <span className="placeholder-text ellipsis">
-            {placeholder}
-          </span>
-          }
+          {selectedValue.length === 0 && placeholder && (
+            <span className="placeholder-text ellipsis">{placeholder}</span>
+          )}
 
-          {
-            selectedValue.map(findItemInfo).map(item => {
-              if (isNil(item)) {
-                return null;
-              }
-              return nonNil(item.render) ? item.render({...item, removeItem: removeItem})
-                : <span key={`item-${item.value}`} className={`multi-item ${size}`}>
+          {selectedValue.map(findItemInfo).map((item) => {
+            if (isNil(item)) {
+              return null;
+            }
+            return nonNil(item.render) ? (
+              item.render({ ...item, removeItem: removeItem })
+            ) : (
+              <span key={`item-${item.value}`} className={`multi-item ${size}`}>
                 <span>{getText(item)}</span>
-                <div className={`icon-column ${disabled ? "disabled" : ""}`} onClick={(e) => {
-                  !disabled && removeItem(item.value, e);
-                }}>
-                  <IconClear size="small"/>
+                <div
+                  className={`icon-column ${disabled ? 'disabled' : ''}`}
+                  onClick={(e) => {
+                    !disabled && removeItem(item.value, e);
+                  }}
+                >
+                  <IconClear size="small" />
                 </div>
               </span>
-            })
-          }
-          <input name={name} ref={inputMultiRef} {...copiedProps}/>
+            );
+          })}
+          <input name={name} ref={inputMultiRef} {...copiedProps} />
 
-          <span ref={detectRef} className='search-text-detector'>
+          <span ref={detectRef} className="search-text-detector">
             {/*this used to detect the width of the input value in pixel*/}
             {searchedValue}
           </span>
         </span>
-    </span>;
-  }, [block, ctrlStyle, disabled, displayText, errorType, findItemInfo, getText, handleBlur, handleSearch, hasBox, inputMultiRef, isActive, multiSelect, multiSelectRef, name, placeholder, removeItem, searchable, searchedValue, selectedValue, size, style]);
+      </span>
+    );
+  }, [
+    block,
+    ctrlStyle,
+    disabled,
+    displayText,
+    errorType,
+    findItemInfo,
+    getText,
+    handleBlur,
+    handleSearch,
+    hasBox,
+    inputMultiRef,
+    isActive,
+    multiSelect,
+    multiSelectRef,
+    name,
+    placeholder,
+    removeItem,
+    searchable,
+    searchedValue,
+    selectedValue,
+    size,
+    style
+  ]);
 
   const getCtrl = () => {
     if (multiSelect) {
@@ -421,38 +453,36 @@ const Select = React.forwardRef((props, ref) => {
 
     const selectClsName = clsx('select', size, getErrorClsName(errorType), {
       'with-select-box': hasBox && isActive,
-      'active': isActive,
+      active: isActive,
       block,
-      disabled,
+      disabled
     });
 
     const contentClsName = clsx('select-content  ', {
-      placeholder: isBlank(displayText),
+      placeholder: isBlank(displayText)
     });
 
-    return <div className={selectClsName} style={style}
-                ref={multiSelectRef}>
-      <div className="select-info ellipsis" unselectable="on">
-        <div className={contentClsName}
-             style={{display: !searchable ? 'flex' : 'none'}}>
-          {!isBlank(displayText) ? displayText : placeholder}
+    return (
+      <div className={selectClsName} style={style} ref={multiSelectRef}>
+        <div className="select-info ellipsis" unselectable="on">
+          <div className={contentClsName} style={{ display: !searchable ? 'flex' : 'none' }}>
+            {!isBlank(displayText) ? displayText : placeholder}
+          </div>
+          <input
+            className="select-input"
+            name={name}
+            value={displayText}
+            disabled={disabled}
+            placeholder={searchable ? realPlaceHolder : null}
+            style={{ display: searchable ? 'block' : 'none' }}
+            onChange={handleSearch}
+            onBlur={handleBlur}
+            ref={inputMultiRef}
+          />
         </div>
-        <input className="select-input"
-               name={name}
-               value={displayText}
-               disabled={disabled}
-               placeholder={searchable ? realPlaceHolder : null}
-               style={{display: searchable ? 'block' : 'none'}}
-               onChange={handleSearch}
-               onBlur={handleBlur}
-               ref={inputMultiRef}/>
+        {hasArrow && <div className={`icon-column ${disabled ? 'disabled' : ''}`}>{realIcon}</div>}
       </div>
-      {
-        hasArrow && <div className={`icon-column ${disabled ? "disabled" : ""}`}>
-          {realIcon}
-        </div>
-      }
-    </div>;
+    );
   };
 
   const selectHandler = useEventCallback((items, e) => {
@@ -475,43 +505,47 @@ const Select = React.forwardRef((props, ref) => {
   });
 
   const popBody = useMemo(() => {
-    return nonNil(finalItems) && finalItems.length === 0 ?
+    return nonNil(finalItems) && finalItems.length === 0 ? (
       <Element className="no-data">
-        <IconNoData extraClassName="no-data-icon"/>
+        <IconNoData extraClassName="no-data-icon" />
         <span className="no-data-label">{noDataText}</span>
       </Element>
-      : <Menu ref={menuRef} activeItems={selectedValue}
-              hasBox={false}
-              multiSelect={multiSelect}
-              onSelect={selectHandler}
-              {...menuProps}>
+    ) : (
+      <Menu
+        ref={menuRef}
+        activeItems={selectedValue}
+        hasBox={false}
+        multiSelect={multiSelect}
+        onSelect={selectHandler}
+        {...menuProps}
+      >
         {finalItems}
-      </Menu>;
-  }, [
-    finalItems,
-    menuProps,
-    multiSelect,
-    noDataText,
-    selectHandler,
-    selectedValue]);
+      </Menu>
+    );
+  }, [finalItems, menuProps, multiSelect, noDataText, selectHandler, selectedValue]);
 
   const popupCntExtraCls = clsx(popupExtraClassName, {
     'global-with-border': hasBorder,
-    'global-with-box': hasBox,
+    'global-with-box': hasBox
   });
 
-  return <Popup
-    disabled={disabled}
-    active={isActive}
-    onChange={changeActive}
-    activeBy={activeBy}
-    className={clsx(extraClassName, className, {compact: compactMenu, 'non-compact': !compactMenu})}
-    ctrlRef={rootRef}
-    ctrlNode={getCtrl()}
-    body={popBody}
-    popupExtraClassName={popupCntExtraCls}
-    {...otherProps}
-  />;
+  return (
+    <Popup
+      disabled={disabled}
+      active={isActive}
+      onChange={changeActive}
+      activeBy={activeBy}
+      className={clsx(extraClassName, className, {
+        compact: compactMenu,
+        'non-compact': !compactMenu
+      })}
+      ctrlRef={rootRef}
+      ctrlNode={getCtrl()}
+      body={popBody}
+      popupExtraClassName={popupCntExtraCls}
+      {...otherProps}
+    />
+  );
 });
 
 Select.propTypes = {
@@ -550,9 +584,8 @@ Select.propTypes = {
   removable: PropTypes.bool,
   loaderType: PropTypes.string,
   loading: PropTypes.bool,
-  compactMenu: PropTypes.bool,
-}
-
+  compactMenu: PropTypes.bool
+};
 
 Select.Option = Option;
 

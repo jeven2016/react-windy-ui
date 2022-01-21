@@ -1,9 +1,9 @@
-import React, {useCallback, useContext, useMemo} from 'react';
-import {inRange, isBlank, isInteger, isNil, nonNil} from '../Utils';
+import React, { useCallback, useContext, useMemo } from 'react';
+import { inRange, isBlank, isInteger, isNil, nonNil } from '../Utils';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import {RowContext} from "../common/Context";
-import {adjustItems, AlignItemsType, JustifyContentType} from "../common/Constants";
+import { RowContext } from '../common/Context';
+import { adjustItems, AlignItemsType, JustifyContentType } from '../common/Constants';
 
 const Col = React.forwardRef((props, ref) => {
   const {
@@ -11,8 +11,16 @@ const Col = React.forwardRef((props, ref) => {
     className = 'col-base',
     col,
     gutter,
-    xs, sm, md, lg, xl,
-    xsOffset, smOffset, mdOffset, lgOffset, xlOffset,
+    xs,
+    sm,
+    md,
+    lg,
+    xl,
+    xsOffset,
+    smOffset,
+    mdOffset,
+    lgOffset,
+    xlOffset,
     order,
     style,
     flexCol = false,
@@ -20,18 +28,15 @@ const Col = React.forwardRef((props, ref) => {
     align = 'center',
     ...otherProps
   } = props;
-  const {rowGutter} = useContext(RowContext);
+  const { rowGutter } = useContext(RowContext);
   const realGutter = nonNil(gutter) ? gutter : rowGutter;
 
-  [
-    col,
-    xs, sm, md, lg, xl, xsOffset,
-    smOffset, mdOffset, lgOffset,
-    xlOffset].forEach(value => {
+  [col, xs, sm, md, lg, xl, xsOffset, smOffset, mdOffset, lgOffset, xlOffset].forEach((value) => {
     if (nonNil(value) && !inRange(value, 1, 13)) {
       throw new Error(
-        'The value of col/xs/sm/md/lg/xl/xsOffset/smOffset/mdOffset'
-        + '/lgOffset/xlOffset, should be in a integer range [1,12].');
+        'The value of col/xs/sm/md/lg/xl/xsOffset/smOffset/mdOffset' +
+          '/lgOffset/xlOffset, should be in a integer range [1,12].'
+      );
     }
   });
   if (nonNil(order) && !isInteger(order)) {
@@ -45,17 +50,18 @@ const Col = React.forwardRef((props, ref) => {
     return '';
   }, []);
 
-  let cls = getClsName('col-xs-', xs)
-    + getClsName('col-sm-', sm)
-    + getClsName('col-md-', md)
-    + getClsName('col-lg-', lg)
-    + getClsName('col-xl-', xl)
-    + getClsName('offset-xs-', xsOffset)
-    + getClsName('offset-sm-', smOffset)
-    + getClsName('offset-md-', mdOffset)
-    + getClsName('offset-lg-', lgOffset)
-    + getClsName('offset-xl-', xlOffset)
-    + getClsName('order-', order);
+  let cls =
+    getClsName('col-xs-', xs) +
+    getClsName('col-sm-', sm) +
+    getClsName('col-md-', md) +
+    getClsName('col-lg-', lg) +
+    getClsName('col-xl-', xl) +
+    getClsName('offset-xs-', xsOffset) +
+    getClsName('offset-sm-', smOffset) +
+    getClsName('offset-md-', mdOffset) +
+    getClsName('offset-lg-', lgOffset) +
+    getClsName('offset-xl-', xlOffset) +
+    getClsName('order-', order);
 
   const isBlankCls = isBlank(cls);
   if (!isNil(col)) {
@@ -67,7 +73,7 @@ const Col = React.forwardRef((props, ref) => {
   }
   const justifyCls = flexCol ? adjustItems(justify, align) : null;
   let clsName = clsx(extraClassName, className, justifyCls, {
-    [cls]: cls,
+    [cls]: cls
   });
 
   const newSty = useMemo(() => {
@@ -80,12 +86,11 @@ const Col = React.forwardRef((props, ref) => {
 
     return {
       ...style,
-      padding: `${paddingY}px ${paddingX}px`,
+      padding: `${paddingY}px ${paddingX}px`
     };
   }, [realGutter, style]);
 
-  return <div ref={ref} className={clsName}
-              style={newSty} {...otherProps}/>;
+  return <div ref={ref} className={clsName} style={newSty} {...otherProps} />;
 });
 
 Col.propTypes = {
@@ -103,10 +108,10 @@ Col.propTypes = {
   lgOffset: PropTypes.number,
   xlOffset: PropTypes.number,
   order: PropTypes.number,
-  gutter: PropTypes.shape({x: PropTypes.number, y: PropTypes.number}),
+  gutter: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
   flexCol: PropTypes.bool,
   justify: PropTypes.oneOf(Object.keys(JustifyContentType)),
-  align: PropTypes.oneOf(Object.keys(AlignItemsType)),
+  align: PropTypes.oneOf(Object.keys(AlignItemsType))
 };
 
 export default Col;

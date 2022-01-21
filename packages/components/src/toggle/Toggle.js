@@ -1,14 +1,14 @@
-import React, {useCallback, useMemo} from 'react';
-import {isNil, isObject} from '../Utils';
+import React, { useCallback, useMemo } from 'react';
+import { isNil, isObject } from '../Utils';
 import clsx from 'clsx';
-import {animated, useSpring} from 'react-spring';
+import { animated, useSpring } from 'react-spring';
 import PropTypes from 'prop-types';
 import useInternalState from '../common/useInternalState';
 
 const ToggleType = {
   normal: 'normal',
   primary: 'primary',
-  secondary: 'secondary',
+  secondary: 'secondary'
 };
 
 const Toggle = React.forwardRef((props, ref) => {
@@ -31,7 +31,7 @@ const Toggle = React.forwardRef((props, ref) => {
     props,
     stateName: 'active',
     defaultState: defaultActive,
-    state: active,
+    state: active
   });
 
   let isOn = isActive;
@@ -39,7 +39,7 @@ const Toggle = React.forwardRef((props, ref) => {
     on: isOn,
     off: !isOn,
     disabled: disabled,
-    [type]: type,
+    [type]: type
   });
 
   const labelContent = useMemo(() => {
@@ -51,47 +51,55 @@ const Toggle = React.forwardRef((props, ref) => {
       onLabel = label?.on;
       offLabel = label?.off;
     }
-    return {on: onLabel, off: offLabel};
+    return { on: onLabel, off: offLabel };
   }, [label]);
 
-  const getContent = useCallback((isBarContent, defaultValue = null) => {
-    if (type === ToggleType.normal) {
-      return null;
-    }
-    if (isNil(label)) {
-      return defaultValue;
-    }
+  const getContent = useCallback(
+    (isBarContent, defaultValue = null) => {
+      if (type === ToggleType.normal) {
+        return null;
+      }
+      if (isNil(label)) {
+        return defaultValue;
+      }
 
-    if ((isBarContent && !label?.showInBar)) {
-      return defaultValue;
-    }
+      if (isBarContent && !label?.showInBar) {
+        return defaultValue;
+      }
 
-    if (!isBarContent && label?.showInBar) {
-      return defaultValue;
-    }
+      if (!isBarContent && label?.showInBar) {
+        return defaultValue;
+      }
 
-    return isOn ? labelContent.on : labelContent.off;
-  }, [isOn, label, labelContent.off, labelContent.on, type]);
+      return isOn ? labelContent.on : labelContent.off;
+    },
+    [isOn, label, labelContent.off, labelContent.on, type]
+  );
 
-  const clickToggle = useCallback((e) => {
-    if (disabled) {
-      return;
-    }
-    const newActive = !isActive;
-    //the active state is set by the other component
-    if (customized) {
+  const clickToggle = useCallback(
+    (e) => {
+      if (disabled) {
+        return;
+      }
+      const newActive = !isActive;
+      //the active state is set by the other component
+      if (customized) {
+        !isNil(onChange) && onChange(newActive, e);
+        return;
+      }
+
+      setActive(newActive);
       !isNil(onChange) && onChange(newActive, e);
-      return;
-    }
-
-    setActive(newActive);
-    !isNil(onChange) && onChange(newActive, e);
-  }, [disabled, isActive, customized, onChange, setActive]);
+    },
+    [disabled, isActive, customized, onChange, setActive]
+  );
 
   const isNormal = useMemo(() => type === ToggleType.normal, [type]);
 
-  const unitSetting = useMemo(() =>
-    isNormal ? {x: '%', y: '',} : {x: 'rem', y: '%'}, [isNormal]);
+  const unitSetting = useMemo(
+    () => (isNormal ? { x: '%', y: '' } : { x: 'rem', y: '%' }),
+    [isNormal]
+  );
 
   const toStyle = useMemo(() => {
     let leftXyz, rightXyz;
@@ -106,17 +114,17 @@ const Toggle = React.forwardRef((props, ref) => {
 
     return {
       left: isOn ? '100%' : '0%',
-      transform: isOn ? rightXyz : leftXyz,
+      transform: isOn ? rightXyz : leftXyz
     };
   }, [isNormal, isOn]);
 
-  const barContent = type === ToggleType.normal ? <span
-    className="bar"> {getContent(true)}</span> : null;
+  const barContent =
+    type === ToggleType.normal ? <span className="bar"> {getContent(true)}</span> : null;
 
-  const infoContent = type !== ToggleType.normal ? <span
-    className={`info ${isOn ? 'on' : 'off'}`}>
-    {getContent(true, '\u00A0')}
-      </span> : null;
+  const infoContent =
+    type !== ToggleType.normal ? (
+      <span className={`info ${isOn ? 'on' : 'off'}`}>{getContent(true, '\u00A0')}</span>
+    ) : null;
 
   const normalLabel = useMemo(() => {
     if (type !== ToggleType.normal || isNil(label)) {
@@ -129,38 +137,46 @@ const Toggle = React.forwardRef((props, ref) => {
 
   const buttonClsName = clsx('toggle-button', {
     block: block,
-    disabled,
+    disabled
   });
 
-  const {left, transform} = useSpring({
+  const { left, transform } = useSpring({
     to: toStyle,
-    config: {clamp: true, mass: 1, tesion: 100, friction: 15,},
+    config: { clamp: true, mass: 1, tesion: 100, friction: 15 }
   });
 
-  const getTranslate = useCallback((x, y, z) => `translate3d(${x}${unitSetting.x}, ${y}${unitSetting.y}, ${z})`,
-    [unitSetting.x, unitSetting.y]);
+  const getTranslate = useCallback(
+    (x, y, z) => `translate3d(${x}${unitSetting.x}, ${y}${unitSetting.y}, ${z})`,
+    [unitSetting.x, unitSetting.y]
+  );
 
-  return <animated.div className={clsx(extraClassName, className, {block: block})}
-                       style={style}>
-    <button ref={ref}
-            type="button"
-            className={buttonClsName}
-            disabled={disabled}
-            onClick={clickToggle} {...otherProps}>
-      <span className={clsName}>
-        {barContent}
-        {infoContent}
-        <animated.span className="ball" style={{
-          left: left,
-          transform: transform.to(getTranslate)
-        }}>
+  return (
+    <animated.div className={clsx(extraClassName, className, { block: block })} style={style}>
+      <button
+        ref={ref}
+        type="button"
+        className={buttonClsName}
+        disabled={disabled}
+        onClick={clickToggle}
+        {...otherProps}
+      >
+        <span className={clsName}>
+          {barContent}
+          {infoContent}
+          <animated.span
+            className="ball"
+            style={{
+              left: left,
+              transform: transform.to(getTranslate)
+            }}
+          >
             {getContent(false)}
-        </animated.span>
-      </span>
-    </button>
-    {normalLabel}
-  </animated.div>;
-
+          </animated.span>
+        </span>
+      </button>
+      {normalLabel}
+    </animated.div>
+  );
 });
 
 Toggle.propTypes = {
@@ -173,13 +189,15 @@ Toggle.propTypes = {
   disabled: PropTypes.bool,
   style: PropTypes.object,
   label: PropTypes.oneOfType([
-    PropTypes.string, PropTypes.shape({
+    PropTypes.string,
+    PropTypes.shape({
       on: PropTypes.node,
       off: PropTypes.node,
-      showInBar: PropTypes.bool,
-    })]),
+      showInBar: PropTypes.bool
+    })
+  ]),
   onChange: PropTypes.func,
-  errorType: PropTypes.string,
+  errorType: PropTypes.string
 };
 
 export default Toggle;

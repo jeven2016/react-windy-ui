@@ -1,27 +1,33 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import clsx from 'clsx';
 import Items from './Items';
 import Panels from './Panels';
 import TabItem from './TabItem';
 import TabPanel from './TabPanel';
-import {filterProps, getTranslateValue, nextPosition, prePosition, TabsContext,} from './TabsCommon';
-import {Direction, EventListener} from '../common/Constants';
-import {getRect, isNil} from '../Utils';
+import {
+  filterProps,
+  getTranslateValue,
+  nextPosition,
+  prePosition,
+  TabsContext
+} from './TabsCommon';
+import { Direction, EventListener } from '../common/Constants';
+import { getRect, isNil } from '../Utils';
 import TabBar from './TabBar';
-import {animated, Spring} from 'react-spring';
+import { animated, Spring } from 'react-spring';
 import NextBtn from './NextBtn';
 import PreBtn from './PreBtn';
-import {useEvent} from '../index';
+import { useEvent } from '../index';
 import useInternalState from '../common/useInternalState';
 import PropTypes from 'prop-types';
-import ItemContent from "./ItemContent";
-import useEventCallback from "../common/useEventCallback";
+import ItemContent from './ItemContent';
+import useEventCallback from '../common/useEventCallback';
 
 const defaultConfig = {
   visiblePre: true,
   visibleNext: true,
-  from: {transform: [0, 0, 0]},
-  to: {transform: [0, 0, 0]},
+  from: { transform: [0, 0, 0] },
+  to: { transform: [0, 0, 0] }
 };
 
 const Tabs = React.forwardRef((props, ref) => {
@@ -29,7 +35,7 @@ const Tabs = React.forwardRef((props, ref) => {
     extraClassName,
     className = 'tab',
     hasRipple = true,
-    rippleColor = "#ccc",
+    rippleColor = '#ccc',
     defaultActive,
     active,
     onChange,
@@ -44,9 +50,8 @@ const Tabs = React.forwardRef((props, ref) => {
     children,
     ...otherProps
   } = props;
-  const direction = position === 'top' || position === 'bottom'
-    ? Direction.horizontal
-    : Direction.vertical;
+  const direction =
+    position === 'top' || position === 'bottom' ? Direction.horizontal : Direction.vertical;
   const scrollRef = useRef(null);
   const tabCntRef = useRef(null);
   const nextRef = useRef(null);
@@ -58,23 +63,25 @@ const Tabs = React.forwardRef((props, ref) => {
 
   const [scrlSpringConfig, setScrlSpringConfig] = useState(defaultConfig);
 
-  const childArray = useMemo(() => children ? React.Children.toArray(children) : [], [children]);
-  const tabItems = useMemo(() => childArray.filter(chd => chd.type === Items), [childArray]);
-  const tabPanels = useMemo(() => childArray.filter(chd => chd.type === Panels), [childArray]);
-  const tabItemsCount = useMemo(() => tabItems ? tabItems[0].props.children.length : 0, [tabItems]);
+  const childArray = useMemo(() => (children ? React.Children.toArray(children) : []), [children]);
+  const tabItems = useMemo(() => childArray.filter((chd) => chd.type === Items), [childArray]);
+  const tabPanels = useMemo(() => childArray.filter((chd) => chd.type === Panels), [childArray]);
+  const tabItemsCount = useMemo(
+    () => (tabItems ? tabItems[0].props.children.length : 0),
+    [tabItems]
+  );
 
-  const clsName = clsx(extraClassName, className, direction,
-    position, {
-      'tab-card': isTabCard,
-      'tab-card secondary-card': isSecondaryCard,
-      'with-btn': scrlSpringConfig.visiblePre || scrlSpringConfig.visibleNext,
-      'with-border': hasBorder,
-      scrollable,
-    });
+  const clsName = clsx(extraClassName, className, direction, position, {
+    'tab-card': isTabCard,
+    'tab-card secondary-card': isSecondaryCard,
+    'with-btn': scrlSpringConfig.visiblePre || scrlSpringConfig.visibleNext,
+    'with-border': hasBorder,
+    scrollable
+  });
 
   const getFirstValue = useCallback(() => {
     let firstItem;
-    React.Children.forEach(children, child => {
+    React.Children.forEach(children, (child) => {
       if (isNil(firstItem) && child.type === Items) {
         const itemsArray = React.Children.toArray(child.props.children);
         if (itemsArray.length > 0 && itemsArray[0].type === TabItem) {
@@ -91,7 +98,7 @@ const Tabs = React.forwardRef((props, ref) => {
     stateName: 'active',
     defaultState: defaultActive,
     state: active,
-    backupState: getFirstValue(),
+    backupState: getFirstValue()
   });
 
   const change = (value) => {
@@ -120,17 +127,15 @@ const Tabs = React.forwardRef((props, ref) => {
 
     //scroll to the active item
     let activeConfig = {};
-    const activeItems = scrollRef.current.getElementsByClassName(
-      'tab-item active');
+    const activeItems = scrollRef.current.getElementsByClassName('tab-item active');
     if (activeItems.length > 0) {
       const item = activeItems[0];
       const itemRect = getRect(item);
 
-      const {to: transformTo} = getTranslateValue(isHorizontal, scrlRect,
-        tabCntRect, itemRect);
-      activeConfig = {from: defaultConfig.from, to: {transform: transformTo}};
+      const { to: transformTo } = getTranslateValue(isHorizontal, scrlRect, tabCntRect, itemRect);
+      activeConfig = { from: defaultConfig.from, to: { transform: transformTo } };
     }
-    setScrlSpringConfig({...scrlSpringConfig, ...newState, ...activeConfig});
+    setScrlSpringConfig({ ...scrlSpringConfig, ...newState, ...activeConfig });
   });
 
   useEffect(() => {
@@ -153,7 +158,7 @@ const Tabs = React.forwardRef((props, ref) => {
         scrlRect,
         against: 'height',
         orientation: 'bottom',
-        axis: 'y',
+        axis: 'y'
       });
       translateTo = [0, result.to, 0];
     } else {
@@ -162,14 +167,14 @@ const Tabs = React.forwardRef((props, ref) => {
         scrlRect,
         against: 'width',
         orientation: 'right',
-        axis: 'x',
+        axis: 'x'
       });
       translateTo = [result.to, 0, 0];
     }
 
     setScrlSpringConfig({
       ...scrlSpringConfig,
-      to: {transform: translateTo},
+      to: { transform: translateTo }
     });
   });
 
@@ -185,7 +190,7 @@ const Tabs = React.forwardRef((props, ref) => {
         tabCntRect,
         scrlRect,
         against: 'height',
-        axis: 'y',
+        axis: 'y'
       });
       translateTo = [0, result.to, 0];
     } else {
@@ -193,96 +198,105 @@ const Tabs = React.forwardRef((props, ref) => {
         tabCntRect,
         scrlRect,
         against: 'width',
-        axis: 'x',
+        axis: 'x'
       });
       translateTo = [result.to, 0, 0];
     }
-    setScrlSpringConfig({...scrlSpringConfig, to: {transform: translateTo}});
+    setScrlSpringConfig({ ...scrlSpringConfig, to: { transform: translateTo } });
   });
 
-  const tabBarContent = !isSecondaryCard && <TabBar
-    tabType={type}
-    scrollable={scrollable}
-    hasBorder={hasBorder}
-    cardBorder={cardBorder}
-    isTabCard={isTabCard}
-    position={position}
-    isHorizontal={isHorizontal}
-    isVertical={isVertical}
-    parentRef={scrollRef}
-    active={currentActive}/>;
+  const tabBarContent = !isSecondaryCard && (
+    <TabBar
+      tabType={type}
+      scrollable={scrollable}
+      hasBorder={hasBorder}
+      cardBorder={cardBorder}
+      isTabCard={isTabCard}
+      position={position}
+      isHorizontal={isHorizontal}
+      isVertical={isVertical}
+      parentRef={scrollRef}
+      active={currentActive}
+    />
+  );
 
-  const scrollContent = scrollable ? <Spring
-      from={scrlSpringConfig.from}
-      to={scrlSpringConfig.to}>
-      {
-        sp =>
-          <animated.div className={`tab-scroll ${direction} ${equalWidth
-            ? 'equal-width'
-            : ''}`} ref={scrollRef}
-                        style={filterProps(sp, isHorizontal)}>
-            {tabItems}
-            {tabBarContent}
-          </animated.div>
-      }
+  const scrollContent = scrollable ? (
+    <Spring from={scrlSpringConfig.from} to={scrlSpringConfig.to}>
+      {(sp) => (
+        <animated.div
+          className={`tab-scroll ${direction} ${equalWidth ? 'equal-width' : ''}`}
+          ref={scrollRef}
+          style={filterProps(sp, isHorizontal)}
+        >
+          {tabItems}
+          {tabBarContent}
+        </animated.div>
+      )}
     </Spring>
-    : <div className={`tab-scroll ${direction} ${equalWidth
-      ? 'equal-width'
-      : ''}`} ref={scrollRef}>
+  ) : (
+    <div className={`tab-scroll ${direction} ${equalWidth ? 'equal-width' : ''}`} ref={scrollRef}>
       {tabItems}
       {tabBarContent}
-    </div>;
+    </div>
+  );
 
   const tabContClsName = clsx('tab-container', position, {
-    'scrollable': scrollable &&
-      (scrlSpringConfig.visiblePre || scrlSpringConfig.visibleNext),
+    scrollable: scrollable && (scrlSpringConfig.visiblePre || scrlSpringConfig.visibleNext)
   });
 
-  return <>
-    <TabsContext.Provider value={{
-      hasRipple,
-      rippleColor,
-      equalWidth,
-      removable,
-      tabItemsCount,
-      onRemove,
-      active: currentActive,
-      change,
-      autoChange: !customized,
-      clickNext: clickNext,
-      clickPre: clickPre,
-      visiblePre: scrlSpringConfig.visiblePre,
-      visibleNext: scrlSpringConfig.visibleNext,
-    }}>
-      <div className={`tabs ${position}`}>
-        <div className={clsName} {...otherProps} ref={ref}>
-          {
-            scrollable && <PreBtn disabled={scrlSpringConfig.disablePre}
-                                  scrollRef={scrollRef}
-                                  tabCntRef={tabCntRef}
-                                  scrlSpringConfig={scrlSpringConfig}
-                                  isVertical={isVertical}
-                                  direction={direction}
-                                  setScrlSpringConfig={setScrlSpringConfig}/>
-          }
-          {
-            scrollable && <NextBtn disabled={scrlSpringConfig.disableNext}
-                                   ref={nextRef}
-                                   scrollRef={scrollRef}
-                                   tabCntRef={tabCntRef}
-                                   scrlSpringConfig={scrlSpringConfig}
-                                   isVertical={isVertical}
-                                   direction={direction}
-                                   setScrlSpringConfig={setScrlSpringConfig}/>
-          }
-          <div className={tabContClsName} ref={tabCntRef}>
-            {scrollContent}
+  return (
+    <>
+      <TabsContext.Provider
+        value={{
+          hasRipple,
+          rippleColor,
+          equalWidth,
+          removable,
+          tabItemsCount,
+          onRemove,
+          active: currentActive,
+          change,
+          autoChange: !customized,
+          clickNext: clickNext,
+          clickPre: clickPre,
+          visiblePre: scrlSpringConfig.visiblePre,
+          visibleNext: scrlSpringConfig.visibleNext
+        }}
+      >
+        <div className={`tabs ${position}`}>
+          <div className={clsName} {...otherProps} ref={ref}>
+            {scrollable && (
+              <PreBtn
+                disabled={scrlSpringConfig.disablePre}
+                scrollRef={scrollRef}
+                tabCntRef={tabCntRef}
+                scrlSpringConfig={scrlSpringConfig}
+                isVertical={isVertical}
+                direction={direction}
+                setScrlSpringConfig={setScrlSpringConfig}
+              />
+            )}
+            {scrollable && (
+              <NextBtn
+                disabled={scrlSpringConfig.disableNext}
+                ref={nextRef}
+                scrollRef={scrollRef}
+                tabCntRef={tabCntRef}
+                scrlSpringConfig={scrlSpringConfig}
+                isVertical={isVertical}
+                direction={direction}
+                setScrlSpringConfig={setScrlSpringConfig}
+              />
+            )}
+            <div className={tabContClsName} ref={tabCntRef}>
+              {scrollContent}
+            </div>
           </div>
+          {tabPanels}
         </div>
-        {tabPanels}
-      </div>
-    </TabsContext.Provider>
-  </>;
+      </TabsContext.Provider>
+    </>
+  );
 });
 
 Tabs.propTypes = {
@@ -300,7 +314,7 @@ Tabs.propTypes = {
   hasBorder: PropTypes.bool,
   cardBorder: PropTypes.string,
   type: PropTypes.string,
-  scrollable: PropTypes.bool,
+  scrollable: PropTypes.bool
 };
 
 Tabs.Items = Items;

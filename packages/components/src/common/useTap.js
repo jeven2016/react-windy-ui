@@ -1,77 +1,79 @@
-
-var cache = []
+var cache = [];
 
 function getCallbackHandlers(callback) {
   // flush cache if we have too many items
   if (cache.length > 10000) {
     if (typeof console !== 'undefined' && 'log' in console) {
-      console && console.log('tapOrClick cache flushed after 10000 items; check your renders if this happens often')
+      console &&
+        console.log(
+          'tapOrClick cache flushed after 10000 items; check your renders if this happens often'
+        );
     }
-    cache.length = 0
+    cache.length = 0;
   }
 
-  var handler = cache.filter(function(handler) {
-    return handler.callback === callback
-  })[0]
+  var handler = cache.filter(function (handler) {
+    return handler.callback === callback;
+  })[0];
 
   if (!handler) {
-    var state = {}
+    var state = {};
 
     handler = {
       callback: callback,
-      touchStart: function(event) {
+      touchStart: function (event) {
         if (event.defaultPrevented) {
-          return
+          return;
         }
 
-        clearTimeout(state.touchTimeout)
-        state.touchClick = true
-        callback(event)
+        clearTimeout(state.touchTimeout);
+        state.touchClick = true;
+        callback(event);
       },
-      touchEnd: function(event) {
+      touchEnd: function (event) {
         if (state.touchClick) {
-          state.touchTimeout = setTimeout(function() {
-            state.touchClick = false
-            state.touchTimeout = null
-          }, 300)
+          state.touchTimeout = setTimeout(function () {
+            state.touchClick = false;
+            state.touchTimeout = null;
+          }, 300);
         }
       },
-      click: function(event) {
+      click: function (event) {
         if (event.defaultPrevented || state.touchClick) {
-          return
+          return;
         }
-        callback(event)
+        callback(event);
       }
-    }
+    };
 
-    cache.push(handler)
+    cache.push(handler);
   }
 
-  return handler
+  return handler;
 }
 
 // event handlers are unnecessary server side
 if (typeof window === 'undefined') {
-  module.exports = function(callback, props) {
+  module.exports = function (callback, props) {
     if (props == null) {
-      props = {}
+      props = {};
     }
-    return props
-  }
+    return props;
+  };
 } else {
   module.exports = function tapOrClick(callback, props) {
     if (props == null) {
-      props = {}
+      props = {};
     } else if (typeof props !== 'object') {
-      throw new Error('Optional second argument to tapOrClick must be a mutable object')
+      throw new Error('Optional second argument to tapOrClick must be a mutable object');
     }
 
-    var handlers = getCallbackHandlers(callback)
+    var handlers = getCallbackHandlers(callback);
 
-    props.onTouchStart = handlers.touchStart
-    props.onTouchEnd = handlers.touchEnd
-    props.onClick = handlers.click
+    props.onTouchStart = handlers.touchStart;
+    props.onTouchEnd = handlers.touchEnd;
+    props.onClick = handlers.click;
 
-    return props
-  }
+    return props;
+  };
 }

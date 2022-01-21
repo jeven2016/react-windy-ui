@@ -14,10 +14,10 @@ const ButtonGroup = React.forwardRef((props, ref) => {
 
   let clsName = clsx(className, direction, {
     [size]: size,
-    block: block,
+    block: block
   });
 
-  return <Element ref={ref} className={clsName} {...otherProps}/>;
+  return <Element ref={ref} className={clsName} {...otherProps} />;
 });
 
 ButtonGroup.propTypes = {
@@ -25,7 +25,7 @@ ButtonGroup.propTypes = {
   className: PropTypes.string, //the class name of button
   extraClassName: PropTypes.string, //the customized class need to add
   size: PropTypes.string, //the size of the button
-  direction: PropTypes.oneOf(['horizontal', 'vertical']),
+  direction: PropTypes.oneOf(['horizontal', 'vertical'])
 };
 
 export default ButtonGroup;

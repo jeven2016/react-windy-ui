@@ -5,8 +5,8 @@ import Slider from './Slider';
 import Content from './Content';
 import Split from './Split';
 import Footer from './Footer';
-import {Spring, animated} from 'react-spring';
-import {isNil} from '../Utils';
+import { Spring, animated } from 'react-spring';
+import { isNil } from '../Utils';
 import PropTypes from 'prop-types';
 
 const Layout = React.forwardRef((props, ref) => {
@@ -18,7 +18,7 @@ const Layout = React.forwardRef((props, ref) => {
     collapseAttribute = {
       attr: 'marginLeft',
       minValue: '80px',
-      maxValue: '240px',
+      maxValue: '240px'
     },
 
     style,
@@ -27,29 +27,25 @@ const Layout = React.forwardRef((props, ref) => {
 
   let clsName = clsx(extraClassName, className);
   if (isNil(collapse)) {
-    return <div style={style} ref={ref} className={clsName} {...otherProps}/>;
+    return <div style={style} ref={ref} className={clsName} {...otherProps} />;
   }
 
-  return <Spring
-    from={{
-      [collapseAttribute.attr]: collapse
-        ? collapseAttribute.minValue
-        : collapseAttribute.maxValue,
-    }}
-    to={{
-      [collapseAttribute.attr]: collapse
-        ? collapseAttribute.maxValue
-        : collapseAttribute.minValue,
-    }}
-    config={{clamp: true, mass: 1, tesion: 100, friction: 15}}>
-    {
-      springProps => {
-        const newStyle = {...style, ...springProps};
-        return <animated.div ref={ref} className={clsName}
-                             style={newStyle} {...otherProps}/>;
-      }
-    }
-  </Spring>;
+  return (
+    <Spring
+      from={{
+        [collapseAttribute.attr]: collapse ? collapseAttribute.minValue : collapseAttribute.maxValue
+      }}
+      to={{
+        [collapseAttribute.attr]: collapse ? collapseAttribute.maxValue : collapseAttribute.minValue
+      }}
+      config={{ clamp: true, mass: 1, tesion: 100, friction: 15 }}
+    >
+      {(springProps) => {
+        const newStyle = { ...style, ...springProps };
+        return <animated.div ref={ref} className={clsName} style={newStyle} {...otherProps} />;
+      }}
+    </Spring>
+  );
 });
 
 Layout.propTypes = {
@@ -59,8 +55,8 @@ Layout.propTypes = {
   collapseAttribute: PropTypes.shape({
     attr: PropTypes.string,
     minValue: PropTypes.string,
-    maxValue: PropTypes.string,
-  }),
+    maxValue: PropTypes.string
+  })
 };
 
 Layout.Header = Header;

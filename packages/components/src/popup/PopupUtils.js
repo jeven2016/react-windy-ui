@@ -1,7 +1,7 @@
 import Input from '../Input';
 import Dropdown from '../dropdown';
 import Tooltip from '../Tooltip';
-import TextField from "../textfield";
+import TextField from '../textfield';
 
 /**
  * Construct a props object for passing ref for controller node
@@ -9,14 +9,16 @@ import TextField from "../textfield";
  * @param ctrlRef
  */
 export const getRefConfig = (ctrlNode, ctrlRef) => {
-  if ((ctrlNode?.type === Input && Input.isIconInput(ctrlNode))
-    || (ctrlNode?.type === TextField && ctrlNode.props.select)) {
-    return {rootRef: ctrlRef};
+  if (
+    (ctrlNode?.type === Input && Input.isIconInput(ctrlNode)) ||
+    (ctrlNode?.type === TextField && ctrlNode.props.select)
+  ) {
+    return { rootRef: ctrlRef };
   }
 
   const popupComps = [Dropdown, Tooltip];
   if (popupComps.includes(ctrlNode?.type)) {
-    return {ctrlRef: ctrlRef};
+    return { ctrlRef: ctrlRef };
   }
-  return {ref: ctrlRef};
+  return { ref: ctrlRef };
 };

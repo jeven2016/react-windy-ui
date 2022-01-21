@@ -1,8 +1,8 @@
-import React, {useMemo} from "react";
-import clsx from "clsx";
-import {isBlank, isColorValue, nonNil} from "../Utils";
-import Tooltip from "../Tooltip";
-import * as PropTypes from "prop-types";
+import React, { useMemo } from 'react';
+import clsx from 'clsx';
+import { isBlank, isColorValue, nonNil } from '../Utils';
+import Tooltip from '../Tooltip';
+import * as PropTypes from 'prop-types';
 
 const Typography = React.forwardRef((props, ref) => {
   const {
@@ -17,7 +17,7 @@ const Typography = React.forwardRef((props, ref) => {
     deleted,
     strong,
     italic,
-    nativeType = 'span',//it has the highest priority
+    nativeType = 'span', //it has the highest priority
     bold = false,
     // align, //left,right, center
     children,
@@ -41,28 +41,40 @@ const Typography = React.forwardRef((props, ref) => {
       ellipsis: autoEllipsis
     });
     return isBlank(cls) ? null : `text ${cls}`;
-  }, [autoEllipsis, bold, className, color, deleted, disabled, extraClassName, italic, strong, underline, validColor])
+  }, [
+    autoEllipsis,
+    bold,
+    className,
+    color,
+    deleted,
+    disabled,
+    extraClassName,
+    italic,
+    strong,
+    underline,
+    validColor
+  ]);
 
-  const sty = useMemo(() => isColorValue(color) ? {...style, color: color} : style,
-    [color, style]);
+  const sty = useMemo(
+    () => (isColorValue(color) ? { ...style, color: color } : style),
+    [color, style]
+  );
 
   const Tag = nativeType;
 
   return useMemo(() => {
-    const content = <Tag className={clsName} ref={ref} style={sty} {...rest}>
-      {
-        strong ? <strong>{children}</strong> : children
-      }
-    </Tag>;
+    const content = (
+      <Tag className={clsName} ref={ref} style={sty} {...rest}>
+        {strong ? <strong>{children}</strong> : children}
+      </Tag>
+    );
 
     if (hasTooltip && nonNil(children)) {
       return <Tooltip body={children}>{content}</Tooltip>;
     }
 
     return content;
-
   }, [children, clsName, hasTooltip, ref, rest, strong, sty]);
-
 });
 
 Typography.propTypes = {
@@ -82,7 +94,7 @@ Typography.propTypes = {
   bold: PropTypes.bool,
   // align: PropTypes.oneOf(['left', 'right', 'center']),
   autoEllipsis: PropTypes.bool,
-  hasTooltip: PropTypes.bool,
-}
+  hasTooltip: PropTypes.bool
+};
 
 export default Typography;

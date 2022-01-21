@@ -23,13 +23,13 @@ export const reversePosition = (position) => {
   return barPos;
 };
 
-export const barAnimationConfig = (config, isTabCard, itemRect, tabRect,
-                                   barPosition) => {
-  let to, tabCardTo = {};
+export const barAnimationConfig = (config, isTabCard, itemRect, tabRect, barPosition) => {
+  let to,
+    tabCardTo = {};
   if (isTabCard) {
     tabCardTo = {
       width: itemRect.width + 'px',
-      height: itemRect.height + 'px',
+      height: itemRect.height + 'px'
     };
   }
   switch (barPosition) {
@@ -37,7 +37,7 @@ export const barAnimationConfig = (config, isTabCard, itemRect, tabRect,
     case 'bottom':
       to = {
         width: itemRect.width + 'px',
-        left: (itemRect.left - tabRect.left) + 'px',
+        left: itemRect.left - tabRect.left + 'px'
       };
       break;
 
@@ -45,7 +45,7 @@ export const barAnimationConfig = (config, isTabCard, itemRect, tabRect,
     case 'right':
       to = {
         height: itemRect.height + 'px',
-        top: (itemRect.top - tabRect.top) + 'px',
+        top: itemRect.top - tabRect.top + 'px'
       };
       break;
 
@@ -55,7 +55,7 @@ export const barAnimationConfig = (config, isTabCard, itemRect, tabRect,
 
   return {
     from: config.to ? config.to : {},
-    to: {...to, ...tabCardTo},
+    to: { ...to, ...tabCardTo }
   };
 };
 
@@ -75,10 +75,11 @@ export const handleProps = (isTabCard, barPosition, styleProps) => {
   return styleProps;
 };
 
-export function nextPosition({tabCntRect, scrlRect, against, orientation, axis}) {
+export function nextPosition({ tabCntRect, scrlRect, against, orientation, axis }) {
   // const rest = scrlRect[against] + scrlRect[axis] - tabCntRect[axis];
   const rest = scrlRect[orientation] - tabCntRect[orientation];
-  let to, move = tabCntRect[against];
+  let to,
+    move = tabCntRect[against];
   if (rest >= move) {
     const offset = scrlRect[orientation] - move;
     if (offset < tabCntRect[orientation]) {
@@ -88,10 +89,10 @@ export function nextPosition({tabCntRect, scrlRect, against, orientation, axis})
   } else {
     to = -(scrlRect[against] - tabCntRect[against]) + 2;
   }
-  return {to};
+  return { to };
 }
 
-export function prePosition({tabCntRect, scrlRect, against, axis}) {
+export function prePosition({ tabCntRect, scrlRect, against, axis }) {
   const rest = tabCntRect[axis] - scrlRect[axis];
   let to;
   if (rest < tabCntRect[against]) {
@@ -99,7 +100,7 @@ export function prePosition({tabCntRect, scrlRect, against, axis}) {
   } else {
     to = scrlRect[axis] + tabCntRect[against] - tabCntRect[axis];
   }
-  return {to};
+  return { to };
 }
 
 export const filterProps = (sty, isHorizontal) => {
@@ -107,8 +108,9 @@ export const filterProps = (sty, isHorizontal) => {
   if (!transform) {
     return sty;
   }
-  const translate = isHorizontal ? transform.to((x) => `translate3d(${x}px, 0px, 0px)`) :
-    transform.to((x, y, z) => `translate3d(0px, ${y}px, ${z}px)`);
+  const translate = isHorizontal
+    ? transform.to((x) => `translate3d(${x}px, 0px, 0px)`)
+    : transform.to((x, y, z) => `translate3d(0px, ${y}px, ${z}px)`);
 
   return {
     ...sty,
@@ -117,24 +119,20 @@ export const filterProps = (sty, isHorizontal) => {
   };
 };
 
-export const calcDistance = ({scrlRect, itemRect, tabCntRect, against, begin, end}) => {
+export const calcDistance = ({ scrlRect, itemRect, tabCntRect, against, begin, end }) => {
   let distance;
-  if (itemRect[end] <= tabCntRect[end]
-    && itemRect[begin] >= tabCntRect[begin]) {
+  if (itemRect[end] <= tabCntRect[end] && itemRect[begin] >= tabCntRect[begin]) {
     distance = scrlRect[begin] - tabCntRect[begin];
   } else if (itemRect[end] <= tabCntRect[end]) {
-    distance = scrlRect[begin] - tabCntRect[begin] + tabCntRect[end] -
-      itemRect[end];
+    distance = scrlRect[begin] - tabCntRect[begin] + tabCntRect[end] - itemRect[end];
   } else {
-    distance = scrlRect[begin] - tabCntRect[begin] -
-      (itemRect[end] - tabCntRect[end]);
+    distance = scrlRect[begin] - tabCntRect[begin] - (itemRect[end] - tabCntRect[end]);
   }
 
   return distance;
 };
 
-export const getTranslateValue = (
-  isHorizontal, scrlRect, tabCntRect, itemRect) => {
+export const getTranslateValue = (isHorizontal, scrlRect, tabCntRect, itemRect) => {
   let distance;
   let to;
   if (isHorizontal) {
@@ -144,7 +142,7 @@ export const getTranslateValue = (
       itemRect,
       against: 'width',
       begin: 'left',
-      end: 'right',
+      end: 'right'
     });
 
     to = [distance, 0, 0];
@@ -155,9 +153,9 @@ export const getTranslateValue = (
       itemRect,
       against: 'height',
       begin: 'top',
-      end: 'bottom',
+      end: 'bottom'
     });
     to = [0, distance, 0];
   }
-  return {distance, to};
+  return { distance, to };
 };

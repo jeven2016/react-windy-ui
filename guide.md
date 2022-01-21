@@ -93,6 +93,10 @@ Ensure the theme paramter is specified with your new theme name
 then any changes detected in scss files will rebuild and override the old wui.css file with the theme file(wui-dark.min.css).
 
 
+### Wui copy task
+```javascript
+lerna --scope wui run copy --  --copyTo=/home/jujucom/Desktop/workspace/projects/react-windy-ui/packages/components/dist/
+```
 
 ## Others
 ```js
@@ -100,4 +104,18 @@ then any changes detected in scss files will rebuild and override the old wui.cs
 yarn workspace react-windy-ui remove react-use-gesture
 yarn workspace react-windy-ui add react-use-gesture
 
+```
+
+
+### publish repository
+modify in package.json or publish it explicitly by command arguments --registry
+```javascript
+public: 
+https://registry.npmjs.org/
+
+private:
+# for download
+  http://localhost:8081/repository/npm-public/
+# for publish
+  http://localhost:8081/repository/npm-release/
 ```

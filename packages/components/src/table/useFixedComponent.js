@@ -1,14 +1,15 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useMultipleRefs from '../common/UseMultipleRefs';
-import {isNil} from '../Utils';
+import { isNil } from '../Utils';
 import {
-  CellFixedType, checkScrollBar, getFixedCellCls,
+  CellFixedType,
+  checkScrollBar,
+  getFixedCellCls,
   updateBoxShadow,
-  updateStickPosition,
+  updateStickPosition
 } from './TableUtils';
 
-const useFixedComponent = ({ref, cell, store, scrollHeadRef}) => {
-
+const useFixedComponent = ({ ref, cell, store, scrollHeadRef }) => {
   const cellRef = useRef(null);
   const multiRef = useMultipleRefs(cellRef, ref);
 
@@ -18,22 +19,41 @@ const useFixedComponent = ({ref, cell, store, scrollHeadRef}) => {
   const hasPreSiblingFixedRef = useRef(false);
 
   const isLeftFixed = useMemo(
-      () => !isNil(cell.fixed) && cell.fixed === CellFixedType.left,
-      [cell.fixed]);
+    () => !isNil(cell.fixed) && cell.fixed === CellFixedType.left,
+    [cell.fixed]
+  );
 
   const isRightFixed = useMemo(
-      () => !isNil(cell.fixed) && cell.fixed === CellFixedType.right,
-      [cell.fixed]);
+    () => !isNil(cell.fixed) && cell.fixed === CellFixedType.right,
+    [cell.fixed]
+  );
 
-  const updateBox = useCallback((isStartPostion, isEndPostion) => {
-    updateBoxShadow(showBox, isLeftFixed, hasSiblingFixedRef, isRightFixed,
-        hasPreSiblingFixedRef, setBox, isStartPostion, isEndPostion);
-  }, [isLeftFixed, isRightFixed, showBox]);
+  const updateBox = useCallback(
+    (isStartPostion, isEndPostion) => {
+      updateBoxShadow(
+        showBox,
+        isLeftFixed,
+        hasSiblingFixedRef,
+        isRightFixed,
+        hasPreSiblingFixedRef,
+        setBox,
+        isStartPostion,
+        isEndPostion
+      );
+    },
+    [isLeftFixed, isRightFixed, showBox]
+  );
 
   useEffect(() => {
     if (isNil(style)) {
-      updateStickPosition(cellRef, hasSiblingFixedRef, hasPreSiblingFixedRef,
-          isLeftFixed, isRightFixed, setStyle);
+      updateStickPosition(
+        cellRef,
+        hasSiblingFixedRef,
+        hasPreSiblingFixedRef,
+        isLeftFixed,
+        isRightFixed,
+        setStyle
+      );
     }
 
     let listener;
@@ -42,7 +62,7 @@ const useFixedComponent = ({ref, cell, store, scrollHeadRef}) => {
       const result = checkScrollBar(scrollHeadRef);
       updateBox(result.isStartPostion, result.isEndPostion);
 
-      listener = ({isStartPostion, isEndPostion}) => {
+      listener = ({ isStartPostion, isEndPostion }) => {
         updateBox(isStartPostion, isEndPostion);
       };
       store.attach(listener);
@@ -57,13 +77,14 @@ const useFixedComponent = ({ref, cell, store, scrollHeadRef}) => {
     showBox,
     store,
     style,
-    updateBox]);
+    updateBox
+  ]);
 
   return {
     getFixedCellCls,
     multiRef,
     style,
-    showBox,
+    showBox
   };
 };
 

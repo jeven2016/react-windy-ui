@@ -1,15 +1,12 @@
-import React, {useCallback, useContext, useMemo, useState,} from 'react';
-import {IconError, Input} from '../index';
-import {isBlank, isNil, preventEvent} from '../Utils';
-import {DateContext} from '../common/Context';
-import {convertDate} from "./DateUtils";
+import React, { useCallback, useContext, useMemo, useState } from 'react';
+import { IconError, Input } from '../index';
+import { isBlank, isNil, preventEvent } from '../Utils';
+import { DateContext } from '../common/Context';
+import { convertDate } from './DateUtils';
 
 const DateInput = React.forwardRef((props, ref) => {
-  const {
-    onClick,
-    ...rest
-  } = props;
-  const {date, dateFormat, placeholder, onChange, icon, disabled} = useContext(DateContext);
+  const { onClick, ...rest } = props;
+  const { date, dateFormat, placeholder, onChange, icon, disabled } = useContext(DateContext);
   const [showClear, setShowClear] = useState(false);
   const [textDate, setTextDate] = useState('');
 
@@ -21,16 +18,19 @@ const DateInput = React.forwardRef((props, ref) => {
     return date.format(dateFormat);
   }, [date, dateFormat, textDate]);
 
-  const change = useCallback((e) => {
-    const value = e.target.value;
-    const currentDate = convertDate(value, dateFormat, true);
-    setTextDate(e.target.value);
+  const change = useCallback(
+    (e) => {
+      const value = e.target.value;
+      const currentDate = convertDate(value, dateFormat, true);
+      setTextDate(e.target.value);
 
-    setShowClear(!isBlank(value));
-    if (currentDate && currentDate.isValid()) {
-      onChange(currentDate, true, e);
-    }
-  }, [dateFormat, onChange]);
+      setShowClear(!isBlank(value));
+      if (currentDate && currentDate.isValid()) {
+        onChange(currentDate, true, e);
+      }
+    },
+    [dateFormat, onChange]
+  );
 
   const handleMouseEnter = useCallback(() => {
     if (!disabled && !isBlank(inputValue)) {
@@ -49,39 +49,46 @@ const DateInput = React.forwardRef((props, ref) => {
     showClear && setShowClear(false);
   }, [dateFormat, disabled, inputValue, showClear]);
 
-  const handleInputClick = useCallback((e) => !disabled && onClick && onClick(true, e),
-    [disabled, onClick]);
+  const handleInputClick = useCallback(
+    (e) => !disabled && onClick && onClick(true, e),
+    [disabled, onClick]
+  );
 
-  const clearInput = useCallback((e) => {
-    if (!disabled && showClear) {
-      preventEvent(e);
-      setShowClear(false);
-      setTextDate('');
-      onChange && onChange(null, false, e);
-    }
-  }, [disabled, onChange, showClear]);
+  const clearInput = useCallback(
+    (e) => {
+      if (!disabled && showClear) {
+        preventEvent(e);
+        setShowClear(false);
+        setTextDate('');
+        onChange && onChange(null, false, e);
+      }
+    },
+    [disabled, onChange, showClear]
+  );
 
-  const realIcon = useMemo(() => showClear ? <IconError/> : icon, [icon, showClear]);
+  const realIcon = useMemo(() => (showClear ? <IconError /> : icon), [icon, showClear]);
 
-  return <Input
-    disabled={disabled}
-    placeholder={placeholder}
-    size="medium"
-    rootRef={ref}
-    value={inputValue}
-    onChange={change}
-
-    {...rest}
-    rootProps={{
-      onMouseEnter: handleMouseEnter,
-      onMouseLeave: handleMouseLeave,
-      onClick: handleInputClick
-    }}
-    onFocus={handleMouseEnter}
-    iconProps={{
-      onClick: clearInput
-    }}
-    icon={realIcon}/>;
+  return (
+    <Input
+      disabled={disabled}
+      placeholder={placeholder}
+      size="medium"
+      rootRef={ref}
+      value={inputValue}
+      onChange={change}
+      {...rest}
+      rootProps={{
+        onMouseEnter: handleMouseEnter,
+        onMouseLeave: handleMouseLeave,
+        onClick: handleInputClick
+      }}
+      onFocus={handleMouseEnter}
+      iconProps={{
+        onClick: clearInput
+      }}
+      icon={realIcon}
+    />
+  );
 });
 
 export default DateInput;

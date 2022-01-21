@@ -1,8 +1,8 @@
-import React, {useMemo} from "react";
-import clsx from "clsx";
-import {adjustItems, AlignItemsType, Direction, JustifyContentType} from "../common/Constants";
-import {nonNil} from "../Utils";
-import PropTypes from "prop-types";
+import React, { useMemo } from 'react';
+import clsx from 'clsx';
+import { adjustItems, AlignItemsType, Direction, JustifyContentType } from '../common/Constants';
+import { nonNil } from '../Utils';
+import PropTypes from 'prop-types';
 
 const defaultX = 8;
 const defaultY = 16;
@@ -14,8 +14,8 @@ const Space = React.forwardRef((props, ref) => {
     block = false,
     blockItem = false,
     align = 'center',
-    justifyItem = "center",
-    alignItem = "center",
+    justifyItem = 'center',
+    alignItem = 'center',
     gutter,
     wrap = false,
     children,
@@ -39,7 +39,7 @@ const Space = React.forwardRef((props, ref) => {
     if (nonNil(y) || !isVertical) {
       return y;
     }
-    return defaultY
+    return defaultY;
   }, [gutter, isVertical]);
 
   const count = useMemo(() => {
@@ -47,7 +47,11 @@ const Space = React.forwardRef((props, ref) => {
   }, [children]);
 
   const newChd = useMemo(() => {
-    const itemClsName = clsx("space-item", {block: blockItem}, adjustItems(justifyItem, alignItem));
+    const itemClsName = clsx(
+      'space-item',
+      { block: blockItem },
+      adjustItems(justifyItem, alignItem)
+    );
     return React.Children.map(children, (chd, i) => {
       const sty = {};
       const notLastNode = i + 1 < count;
@@ -64,9 +68,11 @@ const Space = React.forwardRef((props, ref) => {
           sty.marginBottom = `${gutterY}px`;
         }
       }
-      return <div className={itemClsName} style={sty}>
-        {chd}
-      </div>
+      return (
+        <div className={itemClsName} style={sty}>
+          {chd}
+        </div>
+      );
     });
   }, [alignItem, blockItem, children, count, gutterX, gutterY, isVertical, justifyItem]);
 
@@ -76,9 +82,11 @@ const Space = React.forwardRef((props, ref) => {
     block
   });
 
-  return <div className={clsName} {...rest}>
-    {newChd}
-  </div>
+  return (
+    <div className={clsName} {...rest}>
+      {newChd}
+    </div>
+  );
 });
 
 Space.propTypes = {
@@ -87,10 +95,10 @@ Space.propTypes = {
   align: PropTypes.oneOf(Object.keys(AlignItemsType)),
   justifyItem: PropTypes.oneOf(Object.keys(JustifyContentType)),
   alignItem: PropTypes.oneOf(Object.keys(AlignItemsType)),
-  gutter: PropTypes.shape({x: PropTypes.number, y: PropTypes.number}),
+  gutter: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
   wrap: PropTypes.bool,
   direction: PropTypes.oneOf(Object.keys(Direction)),
   block: PropTypes.bool,
-  blockItem: PropTypes.bool,
-}
+  blockItem: PropTypes.bool
+};
 export default Space;

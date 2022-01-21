@@ -1,3 +1,15 @@
+# 0.6.7 (In progress)
+- Big change - release info:  
+  * Refactor with Typescript and generate a series of definition files (d.ts)
+  * Refactor to support modular components
+  * Enhancement for gracefully importing the existing sass module files
+  * Documentation in english
+  * Responsive features for all components 
+
+
+# 0.6.6
+* Fix 0.6.5 issues: deploy a invalid package.json into dist directory 
+
 # 0.6.5
 * New dark theme and corresponding component
 * Change the initial position (left and top) of Popup

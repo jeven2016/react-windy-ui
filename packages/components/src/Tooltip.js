@@ -1,9 +1,9 @@
-import React, {useMemo} from 'react';
-import {PopupCtrlType, PositionClass} from './common/Constants';
+import React, { useMemo } from 'react';
+import { PopupCtrlType, PositionClass } from './common/Constants';
 import clsx from 'clsx';
 import Popup from './popup/Popup';
 import * as PropTypes from 'prop-types';
-import {isColorValue, nonNil} from './Utils';
+import { isColorValue, nonNil } from './Utils';
 
 const Tooltip = React.forwardRef((props, ref) => {
   const {
@@ -23,9 +23,7 @@ const Tooltip = React.forwardRef((props, ref) => {
   } = props;
 
   const isColorString = isColorValue(background);
-  const bgClsName = (nonNil(background) && !isColorString)
-      ? `bg-color-${background}`
-      : null;
+  const bgClsName = nonNil(background) && !isColorString ? `bg-color-${background}` : null;
 
   let clsName = clsx(extraClassName, className, bgClsName);
 
@@ -35,37 +33,38 @@ const Tooltip = React.forwardRef((props, ref) => {
   const realStyleBg = useMemo(() => {
     const styleBg = tooltipStyle?.background;
     if (nonNil(styleBg)) {
-      return {background: styleBg};
+      return { background: styleBg };
     }
     if (isColorString) {
-      return {background: background};
+      return { background: background };
     }
     return null;
   }, [background, isColorString, tooltipStyle]);
 
-  const popupBody = <div className={clsName} ref={ref} style={realStyleBg}>
-    {
-      hasArrow &&
-      <div className={arrowClsName} style={realStyleBg}/>}
-    {body}
-  </div>;
+  const popupBody = (
+    <div className={clsName} ref={ref} style={realStyleBg}>
+      {hasArrow && <div className={arrowClsName} style={realStyleBg} />}
+      {body}
+    </div>
+  );
 
   const animationFunc = (activeState) => {
     return {
       from: {
         transform: activeState ? 'scale(1)' : 'scale(0.9)',
         opacity: activeState ? 1 : 0,
-        disp: activeState? 1: 0
+        disp: activeState ? 1 : 0
       },
       to: {
         transform: activeState ? 'scale(1)' : 'scale(0.9)',
         opacity: activeState ? 1 : 0,
-        disp: activeState? 1: 0
-      },
+        disp: activeState ? 1 : 0
+      }
     };
   };
 
-  return <Popup
+  return (
+    <Popup
       ref={popupInstanceRef}
       {...otherProps}
       animationFunc={animationFunc}
@@ -76,11 +75,11 @@ const Tooltip = React.forwardRef((props, ref) => {
       ctrlNode={children}
       body={popupBody}
       hasBorder={false}
-      popupBodyStyle={{...popupBodyStyle, background: 'transparent'}}
+      popupBodyStyle={{ ...popupBodyStyle, background: 'transparent' }}
       hasBox={false}
       zIndex={zIndex}
-  />;
-
+    />
+  );
 });
 
 Tooltip.propTypes = {
@@ -93,7 +92,7 @@ Tooltip.propTypes = {
   offset: PropTypes.number,
   background: PropTypes.string,
   tooltipStyle: PropTypes.object,
-  popupBodyStyle: PropTypes.object,
+  popupBodyStyle: PropTypes.object
 };
 
 export default Tooltip;

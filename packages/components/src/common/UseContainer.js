@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 
 /**
  * Creates DOM element to be used as React root.
@@ -10,10 +10,7 @@ export function useCreateRootElement(id) {
     if (!rootElem) {
       rootElem = document.createElement('div');
       rootElem.setAttribute('id', id);
-      document.body.insertBefore(
-          rootElem,
-          document.body.lastElementChild,
-      );
+      document.body.insertBefore(rootElem, document.body.lastElementChild);
     }
     rootRef.current = rootElem;
   }

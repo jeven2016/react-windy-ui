@@ -1,22 +1,22 @@
-import React, {useEffect, useImperativeHandle, useMemo, useRef, useState,} from 'react';
+import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import * as ReactDOM from 'react-dom';
 import Modal from './Modal';
-import {Button, IconError, IconInfo, IconOk, IconWarning} from '../index';
-import {createContainer, execute, isNil, nonNil} from '../Utils';
-import {IconQuestion} from '../Icons';
+import { Button, IconError, IconInfo, IconOk, IconWarning } from '../index';
+import { createContainer, execute, isNil, nonNil } from '../Utils';
+import { IconQuestion } from '../Icons';
 import useMultipleRefs from '../common/UseMultipleRefs';
-import {ModalType} from "./ModalUtils";
-import ButtonGroup from "../ButtonGroup";
-import Divider from "../divider";
-import useEventCallback from "../common/useEventCallback";
-import PropTypes from "prop-types";
+import { ModalType } from './ModalUtils';
+import ButtonGroup from '../ButtonGroup';
+import Divider from '../divider';
+import useEventCallback from '../common/useEventCallback';
+import PropTypes from 'prop-types';
 
 const InfoType = {
   info: 'info',
   warning: 'warning',
   error: 'error',
   success: 'success',
-  confirm: 'confirm',
+  confirm: 'confirm'
 };
 
 const iconColorClass = {
@@ -24,7 +24,7 @@ const iconColorClass = {
   warning: 'text color-yellow',
   error: 'text color-red',
   success: 'text color-green',
-  confirm: 'text color-blue',
+  confirm: 'text color-blue'
 };
 
 const SubModal = React.forwardRef((props, ref) => {
@@ -33,9 +33,15 @@ const SubModal = React.forwardRef((props, ref) => {
     compact = false,
     type = ModalType.secondary,
     callback,
-    infoType, header, title, body,
-    okText, cancelText,
-    onOk, onCancel, icon,
+    infoType,
+    header,
+    title,
+    body,
+    okText,
+    cancelText,
+    onOk,
+    onCancel,
+    icon,
     okButtonProps,
     cancelButtonProps,
     extraClassName,
@@ -44,8 +50,13 @@ const SubModal = React.forwardRef((props, ref) => {
   const modalRef = useRef();
   const multiRef = useMultipleRefs(ref, modalRef);
   const [active, setActive] = useState(true);
-  const [content, setContent] = useState(
-    {header: null, title: null, body: null, okText: null, cancelText: null});
+  const [content, setContent] = useState({
+    header: null,
+    title: null,
+    body: null,
+    okText: null,
+    cancelText: null
+  });
   const okBtnRef = useRef(null);
 
   const modalHeader = useMemo(() => {
@@ -83,12 +94,16 @@ const SubModal = React.forwardRef((props, ref) => {
     onCancel && onCancel(e);
   });
 
-  useImperativeHandle(multiRef, () => ({
-    close: handleCancel,
-    update: (data) => {
-      setContent(pre => ({...pre, ...data}));
-    },
-  }), [handleCancel]);
+  useImperativeHandle(
+    multiRef,
+    () => ({
+      close: handleCancel,
+      update: (data) => {
+        setContent((pre) => ({ ...pre, ...data }));
+      }
+    }),
+    [handleCancel]
+  );
 
   const iconInfo = useMemo(() => {
     if (!isNil(icon)) {
@@ -96,15 +111,15 @@ const SubModal = React.forwardRef((props, ref) => {
     }
     switch (infoType) {
       case InfoType.info:
-        return <IconInfo size="large"/>;
+        return <IconInfo size="large" />;
       case InfoType.warning:
-        return <IconWarning size="large"/>;
+        return <IconWarning size="large" />;
       case InfoType.error:
-        return <IconError size="large"/>;
+        return <IconError size="large" />;
       case InfoType.success:
-        return <IconOk size="large"/>;
+        return <IconOk size="large" />;
       case InfoType.confirm:
-        return <IconQuestion size="large"/>;
+        return <IconQuestion size="large" />;
       default:
         return null;
     }
@@ -117,56 +132,58 @@ const SubModal = React.forwardRef((props, ref) => {
   const okProps = content.okButtonProps || okButtonProps;
   const cancelProps = content.cancelButtonProps || cancelButtonProps;
 
-  return <Modal active={active}
-                type={type}
-                extraClassName={`${extraClassName ? extraClassName : ""} ${compact ? "compact" : ""}`}
-                onCancel={handleCancel}
-                {...otherProps}>
-    {modalHeader}
-    <Modal.Body>
-      <div className={`body-content`}>
-        {
-          hasIcon && <div className={`icon-col ${iconColorClass[infoType]}`}>
-            {iconInfo}
+  return (
+    <Modal
+      active={active}
+      type={type}
+      extraClassName={`${extraClassName ? extraClassName : ''} ${compact ? 'compact' : ''}`}
+      onCancel={handleCancel}
+      {...otherProps}
+    >
+      {modalHeader}
+      <Modal.Body>
+        <div className={`body-content`}>
+          {hasIcon && <div className={`icon-col ${iconColorClass[infoType]}`}>{iconInfo}</div>}
+          <div className={`content`}>
+            {nonNil(modalTitle) && <div className="title">{modalTitle}</div>}
+            {nonNil(modalDesc) && <div className="details">{modalDesc}</div>}
           </div>
-        }
-        <div className={`content`}>
-          {nonNil(modalTitle) && <div className='title'>{modalTitle}</div>}
-          {nonNil(modalDesc) && <div className='details'>{modalDesc}</div>}
         </div>
-      </div>
-    </Modal.Body>
-    {compact && <Divider/>}
-    {
-      (nonNil(okText) || nonNil(cancelText)) &&
-      <Modal.Footer compact={!compact && denseFooter}>
-        {
-          compact &&
-          <ButtonGroup block size="large">
-            {okBtnText && <Button color="blue" inverted hasBox={false} onClick={handleOk}{...okProps}>OK</Button>}
-            {okBtnText && cancelBtnText && <Divider direction="vertical"/>}
-            {cancelBtnText && <Button hasBox={false} onClick={handleCancel} {...cancelProps}>NO</Button>}
-          </ButtonGroup>
-        }
+      </Modal.Body>
+      {compact && <Divider />}
+      {(nonNil(okText) || nonNil(cancelText)) && (
+        <Modal.Footer compact={!compact && denseFooter}>
+          {compact && (
+            <ButtonGroup block size="large">
+              {okBtnText && (
+                <Button color="blue" inverted hasBox={false} onClick={handleOk} {...okProps}>
+                  OK
+                </Button>
+              )}
+              {okBtnText && cancelBtnText && <Divider direction="vertical" />}
+              {cancelBtnText && (
+                <Button hasBox={false} onClick={handleCancel} {...cancelProps}>
+                  NO
+                </Button>
+              )}
+            </ButtonGroup>
+          )}
 
-        {
-          !compact && nonNil(okText) &&
-          <Button hasMinWidth={true} color="blue" ref={okBtnRef} onClick={handleOk} {...okProps}>
-            {okBtnText}
-          </Button>
-        }
+          {!compact && nonNil(okText) && (
+            <Button hasMinWidth={true} color="blue" ref={okBtnRef} onClick={handleOk} {...okProps}>
+              {okBtnText}
+            </Button>
+          )}
 
-        {
-          !compact && nonNil(cancelText) &&
-          <Button hasMinWidth={true} onClick={handleCancel}  {...cancelProps}>
-            {cancelBtnText}
-          </Button>
-        }
-
-      </Modal.Footer>
-    }
-
-  </Modal>;
+          {!compact && nonNil(cancelText) && (
+            <Button hasMinWidth={true} onClick={handleCancel} {...cancelProps}>
+              {cancelBtnText}
+            </Button>
+          )}
+        </Modal.Footer>
+      )}
+    </Modal>
+  );
 });
 
 const modalMap = new Map();
@@ -174,14 +191,20 @@ const modalMap = new Map();
 const show = (infoType, config) => {
   const container = createContainer();
   const ref = React.createRef(null);
-  const modal = <SubModal ref={ref} callback={() => {
-    execute(() => {
-      modalMap.delete(container.id);
-      ReactDOM.render(null, container.container);
-      container.remove();
-    }, 400);
-
-  }} infoType={infoType} {...config} />;
+  const modal = (
+    <SubModal
+      ref={ref}
+      callback={() => {
+        execute(() => {
+          modalMap.delete(container.id);
+          ReactDOM.render(null, container.container);
+          container.remove();
+        }, 400);
+      }}
+      infoType={infoType}
+      {...config}
+    />
+  );
   modalMap.set(container.id, ref);
 
   //CSSTransition not working for ReactDOM.render, todo
@@ -194,7 +217,7 @@ const show = (infoType, config) => {
     },
     close: () => {
       ref.current && ref.current.close();
-    },
+    }
   };
 };
 
@@ -214,8 +237,8 @@ SubModal.propTypes = {
   onCancel: PropTypes.func,
   icon: PropTypes.node,
   okButtonProps: PropTypes.object,
-  cancelButtonProps: PropTypes.object,
-}
+  cancelButtonProps: PropTypes.object
+};
 
 export default {
   info(config) {
@@ -235,7 +258,7 @@ export default {
   },
 
   compact(config) {
-    return show(InfoType.confirm, {...config, compact: true});
+    return show(InfoType.confirm, { ...config, compact: true });
   },
 
   closeAll(delay = 100) {
@@ -246,5 +269,5 @@ export default {
         }
       }, delay);
     }
-  },
+  }
 };

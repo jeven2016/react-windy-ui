@@ -1,15 +1,15 @@
-import React, {useMemo, useRef, useState} from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import {EventListener, NavbarFixedTypes} from '../common/Constants';
+import { EventListener, NavbarFixedTypes } from '../common/Constants';
 import clsx from 'clsx';
-import {NavbarContext} from '../common/Context';
+import { NavbarContext } from '../common/Context';
 import useInternalState from '../common/useInternalState';
-import useMediaQuery, {Responsive} from '../media_query/UseMediaQuery';
+import useMediaQuery, { Responsive } from '../media_query/UseMediaQuery';
 import useEventCallback from '../common/useEventCallback';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import useEvent from '../common/UseEvent';
-import {getScrollTop, isNil} from '../Utils';
-import {animated, useSpring} from 'react-spring';
+import { getScrollTop, isNil } from '../Utils';
+import { animated, useSpring } from 'react-spring';
 
 const Navbar = React.forwardRef((props, ref) => {
   const {
@@ -35,15 +35,15 @@ const Navbar = React.forwardRef((props, ref) => {
   const navRef = useRef();
   const multiRef = useMultipleRefs(ref, navRef);
   const preScrollTop = useRef(null);
-  const [hide, setHide] = useState(false);//whether to hide while scrolling the window
+  const [hide, setHide] = useState(false); //whether to hide while scrolling the window
 
-  const {matches: smallWindow} = useMediaQuery(mediaQuery, mediaQueryWindow);
+  const { matches: smallWindow } = useMediaQuery(mediaQuery, mediaQueryWindow);
 
   const [expandList, setExpand] = useInternalState({
     props,
     stateName: 'expand',
     defaultState: defaultExpand,
-    state: expand,
+    state: expand
   });
 
   const toggleList = useEventCallback((e) => {
@@ -63,8 +63,7 @@ const Navbar = React.forwardRef((props, ref) => {
       const scrollTop = getScrollTop(mediaQueryWindow);
 
       //detect if the window is scrolling to bottom
-      const scrollToBottom = isNil(preScrollTop.current) ||
-        (scrollTop > preScrollTop.current);
+      const scrollToBottom = isNil(preScrollTop.current) || scrollTop > preScrollTop.current;
 
       //hide the navbar if the window scrolled to bottom for a distance
       if (scrollToBottom && scrollTop > rect.height + 10) {
@@ -83,8 +82,7 @@ const Navbar = React.forwardRef((props, ref) => {
   //add event listener to window for window scrolling
   useEvent(EventListener.scroll, handleScroll, hideOnScroll, mediaQueryWindow);
 
-  let fixedType = useMemo(() => NavbarFixedTypes.find(f => f === fixed),
-    [fixed]);
+  let fixedType = useMemo(() => NavbarFixedTypes.find((f) => f === fixed), [fixed]);
 
   let clsName = clsx(extraClassName, className, {
     [type]: type,
@@ -93,14 +91,17 @@ const Navbar = React.forwardRef((props, ref) => {
     'with-border': hasBorder,
     'auto-hide': autoHideList,
     expand: expandList,
-    'small-window': smallWindow,
+    'small-window': smallWindow
   });
 
-  const springConfig = useMemo(() => ({
-    from: {transform: hide ? 'translateY(-130%)' : 'translateY( 0%)'},
-    to: {transform: hide ? 'translateY(-130%)' : 'translateY(0%)'},
-    config: {clamp: true, mass: 1, tesion: 100, friction: 15},
-  }), [hide]);
+  const springConfig = useMemo(
+    () => ({
+      from: { transform: hide ? 'translateY(-130%)' : 'translateY( 0%)' },
+      to: { transform: hide ? 'translateY(-130%)' : 'translateY(0%)' },
+      config: { clamp: true, mass: 1, tesion: 100, friction: 15 }
+    }),
+    [hide]
+  );
   const sprProps = useSpring(springConfig);
 
   return (
@@ -111,12 +112,18 @@ const Navbar = React.forwardRef((props, ref) => {
         toggleList: toggleList,
         type: type,
         hasItemBackground,
-        hasBar,
-      }}>
-      <animated.ul className={clsName} style={{
-        ...style,
-        ...sprProps,
-      }} ref={multiRef}{...otherProps}>
+        hasBar
+      }}
+    >
+      <animated.ul
+        className={clsName}
+        style={{
+          ...style,
+          ...sprProps
+        }}
+        ref={multiRef}
+        {...otherProps}
+      >
         {children}
       </animated.ul>
     </NavbarContext.Provider>
@@ -126,7 +133,7 @@ const Navbar = React.forwardRef((props, ref) => {
 Navbar.propTypes = {
   className: PropTypes.string, //the class name of button
   extraClassName: PropTypes.string, //the class name of button
-  type: PropTypes.oneOf(['primary', 'normal']),   //it can only be blank or 'button' and it has nothing to do with native html type
+  type: PropTypes.oneOf(['primary', 'normal']), //it can only be blank or 'button' and it has nothing to do with native html type
   fixed: PropTypes.oneOf(['top', 'bottom']), //fixed top or bottom
   hideOnScroll: PropTypes.bool,
   hasBox: PropTypes.bool,
@@ -138,7 +145,7 @@ Navbar.propTypes = {
   onExpand: PropTypes.func,
   hasItemBackground: PropTypes.bool,
   mediaQuery: PropTypes.string,
-  mediaQueryWindow: PropTypes.object,
+  mediaQueryWindow: PropTypes.object
 };
 
 export default Navbar;

@@ -1,9 +1,9 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import TreeItem from './TreeItem';
 import clsx from 'clsx';
-import {TreeContext} from '../common/Context';
-import {convertToArray, isNil, nonNil} from '../Utils';
+import { TreeContext } from '../common/Context';
+import { convertToArray, isNil, nonNil } from '../Utils';
 import {
   CheckedStatus,
   getNode,
@@ -11,11 +11,11 @@ import {
   mergeChildren,
   parseChildren,
   RootId,
-  updateChildrenStatus,
+  updateChildrenStatus
 } from './TreeCommon';
 import Loader from '../Loader';
-import useInternalState, {useOptionalState} from "../common/useInternalState";
-import useEventCallback from "../common/useEventCallback";
+import useInternalState, { useOptionalState } from '../common/useInternalState';
+import useEventCallback from '../common/useEventCallback';
 
 /**
  * Tree Component
@@ -25,7 +25,7 @@ const Tree = React.forwardRef((props, ref) => {
   const {
     showLoading = true,
     loadJsonData,
-    loader = <Loader type="primary" size="small" active/>,
+    loader = <Loader type="primary" size="small" active />,
     jsonData,
     autoCheckLeaves = true,
     multiSelect = false,
@@ -56,25 +56,27 @@ const Tree = React.forwardRef((props, ref) => {
     props,
     stateName: 'selectedItems',
     defaultState: convertToArray(defaultSelectedItems),
-    state: convertToArray(selectedItems),
+    state: convertToArray(selectedItems)
   });
 
   const [currentExpandedItems, setExpendedItems, isExpendControl] = useInternalState({
     props,
     stateName: 'expandedItems',
     defaultState: convertToArray(defaultExpandedItems),
-    state: convertToArray(expandedItems),
+    state: convertToArray(expandedItems)
   });
 
   const [currentCheckedItems, set, customCheck] = useInternalState({
     props,
     stateName: 'checkedItems',
     defaultState: convertToArray(defaultCheckedItems),
-    state: convertToArray(checkedItems),
+    state: convertToArray(checkedItems)
   });
 
-  const initTreeData = useMemo(() => parseChildren(customData, children, jsonData),
-    [children, jsonData, customData]);
+  const initTreeData = useMemo(
+    () => parseChildren(customData, children, jsonData),
+    [children, jsonData, customData]
+  );
 
   //init a map to record the items should be marked as checked for customized items
   const checkedItemMap = useMemo(() => {
@@ -104,10 +106,9 @@ const Tree = React.forwardRef((props, ref) => {
     let selectedIds;
 
     if (selected) {
-      selectedIds = multiSelect ? [
-        ...currentSelectedItems.filter(i => i !== id), id] : [id];
+      selectedIds = multiSelect ? [...currentSelectedItems.filter((i) => i !== id), id] : [id];
     } else {
-      selectedIds = [...currentSelectedItems.filter(i => i !== id)];
+      selectedIds = [...currentSelectedItems.filter((i) => i !== id)];
     }
 
     setSelectedItems(selectedIds);
@@ -132,8 +133,8 @@ const Tree = React.forwardRef((props, ref) => {
         setLoadingIds(newIds);
 
         const data = await loadJsonData(id, e);
-        setLoadingIds(prevState => [...prevState.filter(val => val !== id)]);//clear loading status
-        const newJsonData = {...jsonData};
+        setLoadingIds((prevState) => [...prevState.filter((val) => val !== id)]); //clear loading status
+        const newJsonData = { ...jsonData };
 
         mergeChildren(newJsonData, data, id);
         const newTreeData = parseChildren(true, children, newJsonData);
@@ -150,7 +151,7 @@ const Tree = React.forwardRef((props, ref) => {
 
       expandedIds = [...currentExpandedItems, id];
     } else {
-      expandedIds = [...currentExpandedItems.filter(elem => elem !== id)];
+      expandedIds = [...currentExpandedItems.filter((elem) => elem !== id)];
     }
     setExpendedItems(expandedIds);
     onExpand && onExpand(expandedIds);
@@ -168,7 +169,7 @@ const Tree = React.forwardRef((props, ref) => {
 
     if (!customCheck) {
       //update the store and refresh the tree
-      setTreeStatus(map)
+      setTreeStatus(map);
     }
 
     const checkedIds = [];
@@ -201,14 +202,16 @@ const Tree = React.forwardRef((props, ref) => {
     checkItem: checkHandler,
     treeStatus: realTreeStatus,
     treeData: treeConfig,
-    highlightLine,
+    highlightLine
   };
 
-  return <TreeContext.Provider value={ctx}>
-    <div className={clsName} {...otherProps} ref={ref}>
-      {createNodes()}
-    </div>
-  </TreeContext.Provider>;
+  return (
+    <TreeContext.Provider value={ctx}>
+      <div className={clsName} {...otherProps} ref={ref}>
+        {createNodes()}
+      </div>
+    </TreeContext.Provider>
+  );
 });
 
 Tree.propTypes = {
@@ -232,7 +235,7 @@ Tree.propTypes = {
   highlightLine: PropTypes.bool,
   onSelect: PropTypes.func,
   onCheck: PropTypes.func,
-  onExpand: PropTypes.func,
+  onExpand: PropTypes.func
 };
 
 Tree.TreeItem = TreeItem;

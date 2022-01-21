@@ -1,21 +1,21 @@
-import React, {useCallback, useRef} from 'react';
+import React, { useCallback, useRef } from 'react';
 import Mask from './Mask';
 import clsx from 'clsx';
 import useEvent from './common/UseEvent';
-import {EventListener} from './common/Constants';
-import {animated, useTransition} from 'react-spring';
+import { EventListener } from './common/Constants';
+import { animated, useTransition } from 'react-spring';
 import useMultipleRefs from './common/UseMultipleRefs';
-import {IconList} from './Icons';
+import { IconList } from './Icons';
 import Card from './card';
 import Divider from './divider';
 import * as PropTypes from 'prop-types';
-import {validate} from './Utils';
+import { validate } from './Utils';
 
 const Position = {
   left: 'left',
   right: 'right',
   top: 'top',
-  bottom: 'bottom',
+  bottom: 'bottom'
 };
 
 /**
@@ -29,7 +29,7 @@ const Drawer = React.forwardRef((props, ref) => {
     onChange,
     hasMask = true,
     hasAnchor = false,
-    anchor = <IconList/>,
+    anchor = <IconList />,
     autoClose = true,
     position = Position.left,
     children,
@@ -38,92 +38,118 @@ const Drawer = React.forwardRef((props, ref) => {
     style,
     ...otherProps
   } = props;
-  validate(Position.hasOwnProperty(position),
-    `The position '${position}' is not acceptable.`);
+  validate(Position.hasOwnProperty(position), `The position '${position}' is not acceptable.`);
 
   const dwRef = useRef(null);
   const multiRef = useMultipleRefs(ref, dwRef);
 
-  const close = useCallback((e) => {
-    if (!autoClose) {
-      return;
-    }
-    onChange && onChange(false, e);
-  }, [autoClose, onChange]);
+  const close = useCallback(
+    (e) => {
+      if (!autoClose) {
+        return;
+      }
+      onChange && onChange(false, e);
+    },
+    [autoClose, onChange]
+  );
 
   // register window click event listener if no mask displays
-  useEvent(EventListener.click, (e) => {
-    if (!active) {
-      return;
-    }
-    if (!dwRef.current.contains(e.target)) {
-      close(e);
-    }
-
-  }, !hasMask);
+  useEvent(
+    EventListener.click,
+    (e) => {
+      if (!active) {
+        return;
+      }
+      if (!dwRef.current.contains(e.target)) {
+        close(e);
+      }
+    },
+    !hasMask
+  );
 
   let clsName = clsx(extraClassName, className, {
-    [position]: position,
+    [position]: position
   });
 
   const transition = useTransition(active, {
     key: active,
-    config: {clamp: true, mass: 1, tesion: 100, friction: 15},
-    from: {display: 'none', [position]: '-100%'},
-    enter: item => async next => {
-      await next({display: ''});
-      await next({[position]: '0%'});
+    config: { clamp: true, mass: 1, tesion: 100, friction: 15 },
+    from: { display: 'none', [position]: '-100%' },
+    enter: (item) => async (next) => {
+      await next({ display: '' });
+      await next({ [position]: '0%' });
     },
-    leave: item => async next => {
-      await next({[position]: '-100%'});
-      await next({display: 'none'});
-    },
+    leave: (item) => async (next) => {
+      await next({ [position]: '-100%' });
+      await next({ display: 'none' });
+    }
   });
 
-  const clickAnchorHandler = useCallback((e) => {
-    onChange && onChange(true, e);
-  }, [onChange]);
+  const clickAnchorHandler = useCallback(
+    (e) => {
+      onChange && onChange(true, e);
+    },
+    [onChange]
+  );
 
   const showAnchor = hasAnchor && !active;
   const anchorTransition = useTransition(!active, {
     key: active,
-    config: {clamp: true, mass: 1, tesion: 100, friction: 15},
-    from: {opacity: 1, transform: 'scale(0.5)'},
-    enter: {opacity: 1, transform: 'scale(1)'},
-    leave: {opacity: 1, transform: 'scale(0.5)'},
+    config: { clamp: true, mass: 1, tesion: 100, friction: 15 },
+    from: { opacity: 1, transform: 'scale(0.5)' },
+    enter: { opacity: 1, transform: 'scale(1)' },
+    leave: { opacity: 1, transform: 'scale(0.5)' }
   });
 
-  return <>
-    {
-      showAnchor &&
-      anchorTransition((tranStyles, item) => item &&
-        <animated.div style={tranStyles}
-                      className={`mask-anchor ${position}`}
-                      onClick={clickAnchorHandler}>
-          {anchor}
-        </animated.div>)
-    }
+  return (
+    <>
+      {showAnchor &&
+        anchorTransition(
+          (tranStyles, item) =>
+            item && (
+              <animated.div
+                style={tranStyles}
+                className={`mask-anchor ${position}`}
+                onClick={clickAnchorHandler}
+              >
+                {anchor}
+              </animated.div>
+            )
+        )}
 
-    {hasMask && <Mask active={active} onClick={close}/>}
+      {hasMask && <Mask active={active} onClick={close} />}
 
-    {
-      transition((tranStyles, item) => {
-        return item && <animated.div className={clsName}
-                                     style={{...style, ...tranStyles}}
-                                     ref={multiRef} {...otherProps}>
-          <Card>
-            {header && <><Card.Header>{header}</Card.Header><Divider/></>}
-            <Card.Body>
-              {children}
-            </Card.Body>
+      {transition((tranStyles, item) => {
+        return (
+          item && (
+            <animated.div
+              className={clsName}
+              style={{ ...style, ...tranStyles }}
+              ref={multiRef}
+              {...otherProps}
+            >
+              <Card>
+                {header && (
+                  <>
+                    <Card.Header>{header}</Card.Header>
+                    <Divider />
+                  </>
+                )}
+                <Card.Body>{children}</Card.Body>
 
-            {footer && <><Divider/><Card.Footer>{footer}</Card.Footer></>}
-          </Card>
-        </animated.div>;
-      })
-    }
-
-  </>;
+                {footer && (
+                  <>
+                    <Divider />
+                    <Card.Footer>{footer}</Card.Footer>
+                  </>
+                )}
+              </Card>
+            </animated.div>
+          )
+        );
+      })}
+    </>
+  );
 });
 
 Drawer.propTypes = {
@@ -138,7 +164,7 @@ Drawer.propTypes = {
   position: PropTypes.string,
   header: PropTypes.node,
   footer: PropTypes.node,
-  style: PropTypes.object,
+  style: PropTypes.object
 };
 
 export default Drawer;

@@ -1,11 +1,13 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
-import {isColorValue, isNil} from './Utils';
+import { isColorValue, isNil } from './Utils';
 import * as PropTypes from 'prop-types';
-import {animated, useSpring} from 'react-spring';
+import { animated, useSpring } from 'react-spring';
 
 const BadgeType = {
-  normal: 'normal', dot: 'dot', tag: 'tag',
+  normal: 'normal',
+  dot: 'dot',
+  tag: 'tag'
 };
 
 const Color = {
@@ -14,7 +16,7 @@ const Color = {
   gray: 'gray',
   warning: 'warning',
   error: 'error',
-  dark: 'dark',
+  dark: 'dark'
 };
 
 const Badge = React.forwardRef((props, ref) => {
@@ -38,33 +40,38 @@ const Badge = React.forwardRef((props, ref) => {
 
   let contentBackground = useMemo(() => {
     if (isCustomColor) {
-      return {background: color};
+      return { background: color };
     }
     return {};
   }, [isCustomColor, color]);
 
   let clsName = clsx(extraClassName, className, {
     [type]: type,
-    [colorType]: colorType,
+    [colorType]: colorType
   });
 
   let badgeContent = body;
   let chd = children;
   if (type === BadgeType.tag) {
-    badgeContent = <>{body}{chd}</>;
+    badgeContent = (
+      <>
+        {body}
+        {chd}
+      </>
+    );
     chd = null;
   }
-  const {x} = useSpring({
-    from: {x: 0},
+  const { x } = useSpring({
+    from: { x: 0 },
     x: internalShake ? 1 : 0,
-    config: {duration: shakeDuration},
+    config: { duration: shakeDuration }
   });
 
   useEffect(() => {
     let timer = null;
     if (shake && active) {
       timer = setInterval(() => {
-        setShake(prev => !prev);
+        setShake((prev) => !prev);
       }, shakeDuration * 2);
     }
 
@@ -77,16 +84,22 @@ const Badge = React.forwardRef((props, ref) => {
 
   return (
     <div className={clsName} {...otherProps}>
-      <animated.div className="content" style={{
-        ...contentStyle,
-        transform: x.to({
-          range: [0, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 1],
-          output: [1, 0.97, 0.9, 1.3, 0.9, 1.3, 1.03, 1],
-        }).to(val => type === BadgeType.tag
-          ? `scale(${val})`
-          : `translate(50%, -50%) scale(${val})`),
-        display: active ? 'inline-flex' : 'none', ...contentBackground,
-      }}>
+      <animated.div
+        className="content"
+        style={{
+          ...contentStyle,
+          transform: x
+            .to({
+              range: [0, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 1],
+              output: [1, 0.97, 0.9, 1.3, 0.9, 1.3, 1.03, 1]
+            })
+            .to((val) =>
+              type === BadgeType.tag ? `scale(${val})` : `translate(50%, -50%) scale(${val})`
+            ),
+          display: active ? 'inline-flex' : 'none',
+          ...contentBackground
+        }}
+      >
         {badgeContent}
       </animated.div>
       {chd}
@@ -103,7 +116,7 @@ Badge.propTypes = {
   active: PropTypes.bool,
   shake: PropTypes.bool,
   shakeDuration: PropTypes.number,
-  contentStyle: PropTypes.object,
+  contentStyle: PropTypes.object
 };
 
 export default Badge;
