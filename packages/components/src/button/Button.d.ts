@@ -49,7 +49,10 @@ interface BaseButtonProps {
 
 export type ButtonProps = BaseButtonProps & Omit<React.AnchorHTMLAttributes<any>, 'type'>;
 
-const Button: React.ForwardRefRenderFunction<any, ButtonProps>;
+// declare const Button: React.ForwardRefRenderFunction<ButtonProps, any> = (
+//   props,
+//   ref
+// ): JSX.Element => {};
 
-export default Button;
-// export default function Button(props: ButtonProps): JSX.Element;
+// export default Button;
+export default function Button(props: ButtonProps, any): JSX.Element | null;

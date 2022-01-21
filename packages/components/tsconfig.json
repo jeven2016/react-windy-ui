@@ -21,11 +21,6 @@
     "noEmit": false,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
   },
   "include": [
     "src/**/*.ts",
