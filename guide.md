@@ -17,6 +17,17 @@ react-windy-ui> yarn install
 
 ```
 
+### Failed to install from nexus
+add npm bearer token realm in nexus's Realms page  
+
+```javascript
+yarn cache clean --froce
+rm -rf node_modules
+
+rm -rf ~/.yarnrc
+rm -rf ~/.npmrc
+```
+
 
 ## Start Documentation
 ```

@@ -1,10 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 
 export type ButtonSize = 'large' | 'medium' | 'small';
 export type ButtonShape = 'circle' | 'round';
 
-const Types = tuple('button', 'reset', 'submit', 'a');
-export type ButtonType = typeof Types[number];
+// const Types = tuple('button', 'reset', 'submit', 'a');
+export type ButtonType = 'button' | 'reset' | 'submit' | 'a';
 
 interface BaseButtonProps {
   children?: React.ReactNode;
@@ -35,13 +35,6 @@ interface BaseButtonProps {
   loading?: boolean;
   leftLoader?: boolean;
   loader?: React.ReactNode;
-
-  disabled?: boolean;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
-  loading?: boolean;
-  leftLoader?: boolean;
-  loader?: React.ReactNode;
 }
 
 // export type ButtonProps = BaseButtonProps &
@@ -49,7 +42,10 @@ interface BaseButtonProps {
 
 export type ButtonProps = BaseButtonProps & Omit<React.AnchorHTMLAttributes<any>, 'type'>;
 
-const Button: React.ForwardRefRenderFunction<any, ButtonProps>;
+// declare const Button: React.ForwardRefRenderFunction<ButtonProps, any> = (
+//   props,
+//   ref
+// ): JSX.Element => {};
 
-export default Button;
-// export default function Button(props: ButtonProps): JSX.Element;
+// export default Button;
+export default function Button(props: ButtonProps, any);
