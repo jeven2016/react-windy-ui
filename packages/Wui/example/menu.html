@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="fa/css/font-awesome.min.css" rel="stylesheet">
+  <link href="../dist/default/wui-modern-0.5.1.css" rel="stylesheet">
+  <script src="jquery-3.1.0.js" type="application/javascript"></script>
+  <style type="text/css">
+    .area-example {
+      margin: 10px auto;
+      padding: 20px;
+    }
+
+  </style>
+
+  <script language="JavaScript">
+    function toggleMenu(link) {
+      $(link).parentsUntil('.submenu').parent().toggleClass('active');
+    }
+
+    $(function() {
+      $('#submenuBtn').click(function() {
+        $('#submenu2').toggleClass('close');
+      });
+    });
+  </script>
+</head>
+<body>
+<div class="area-example">
+  Menu示例：<br/><br/>
+
+  <ul class="menu with-box global-with-border" style="width:15rem;height:15rem">
+    <li class="menu-header with-bar with-box"><i class="icon fa fa-calendar-times-o"></i>Background
+    </li>
+    <li class="divider"></li>
+    <ul class="menu-list">
+      <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem"><a href="#">Item1</a></li>
+      <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item2</li>
+      <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item3</li>
+    </ul>
+  </ul>
+
+  <div>
+    menu-row with items
+    <ul class="menu menu-row with-box global-with-border" style="height:15rem">
+      <ul class="menu-list">
+        <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem"><a href="#">Item1</a></li>
+        <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item2</li>
+        <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item3</li>
+      </ul>
+    </ul>
+  </div>
+
+  <div>
+    menu-row with direct submenu
+    <ul class="menu menu-row with-box global-with-border" style="width:15rem;height:15rem">
+      <div class="submenu direct-child">
+        <div class="menu-header" style="padding-left: 2.5rem">submenu</div>
+        <ul class="menu-list">
+          <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem"><a href="#">Item1</a></li>
+          <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item2</li>
+          <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item3</li>
+        </ul>
+      </div>
+    </ul>
+  </div>
+
+  <div>
+    menu-row only list
+    <ul class="menu menu-row global-with-border" >
+      <ul class="menu-list">
+        <li class="menu-item  with-bg " style="padding-left: 2.5rem"><a href="#">Item1</a></li>
+        <li class="menu-item  with-bg " style="padding-left: 2.5rem">Item2</li>
+        <li class="menu-item  with-bg " style="padding-left: 2.5rem">Item3</li>
+      </ul>
+    </ul>
+  </div>
+
+
+  <div>
+    menu-row with direct submenu and grandchildren
+    <ul class="menu menu-row with-box global-with-border" style="width:15rem;">
+      <div class="submenu direct-child">
+        <div class="menu-header" style="padding-left: 2.5rem">submenu</div>
+        <ul class="menu-list">
+          <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem"><a href="#">Item1</a></li>
+          <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item2</li>
+          <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item3</li>
+          <div class="submenu non-direct-child">
+            <div class="menu-header" style="padding-left: 2.5rem">submenu</div>
+            <ul class="menu-list">
+              <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem"><a href="#">Item1</a></li>
+              <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item2</li>
+              <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item3</li>
+            </ul>
+          </div>
+        </ul>
+      </div>
+    </ul>
+  </div>
+
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <div>
+    menu-row with popup-menu
+    <ul class="menu menu-row popup-menu global-with-border" style="width:15rem;">
+      <div class="submenu direct-child">
+        <div class="menu-header" style="padding-left: 2.5rem">submenu</div>
+        <ul class="menu-list">
+          <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem"><a href="#">Item1</a></li>
+          <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item2</li>
+          <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item3</li>
+          <div class="submenu non-direct-child">
+            <div class="menu-header" style="padding-left: 2.5rem">submenu</div>
+            <ul class="menu-list">
+              <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem"><a href="#">Item1</a></li>
+              <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item2</li>
+              <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item3</li>
+            </ul>
+          </div>
+        </ul>
+      </div>
+      <div class="submenu direct-child">
+        <div class="menu-header" style="padding-left: 2.5rem">submenu</div>
+        <ul class="menu-list">
+          <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem"><a href="#">Item1</a></li>
+          <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item2</li>
+          <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item3</li>
+          <div class="submenu non-direct-child">
+            <div class="menu-header" style="padding-left: 2.5rem">submenu</div>
+            <ul class="menu-list">
+              <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem"><a href="#">Item1</a></li>
+              <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item2</li>
+              <li class="menu-item  with-bg with-box" style="padding-left: 2.5rem">Item3</li>
+            </ul>
+          </div>
+        </ul>
+      </div>
+    </ul>
+  </div>
+
+
+
+  <br/>
+
+  <ul class="menu menu-column simple" style="width:15rem;height:15rem">
+    <li class="menu-header">Header</li>
+    <ul class="menu-list">
+      <li class="menu-item with-box" style="padding-left: 2.5rem"><a href="#"> Item1</a></li>
+      <li class="menu-item with-box" style="padding-left: 2.5rem">Item2</li>
+      <li class="menu-item with-box" style="padding-left: 2.5rem">Item3</li>
+    </ul>
+  </ul>
+
+  <ul class="menu menu-column">
+    <li class="menu-header">Disabled Menu</li>
+    <ul class="menu-list">
+      <li class="menu-item disabled">Item1</li>
+      <li class="menu-item disabled">Item2</li>
+      <li class="menu-item disabled">Item3</li>
+    </ul>
+  </ul>
+
+  <button id="submenuBtn">Toggle</button>
+  <div class="menu menu-column primary with-box" style="width:15rem;">
+    <div class="menu-header">Main menu</div>
+    <div class="menu-list">
+      <div class="menu-item disabled" style="padding-left: 2.5rem">Item1</div>
+      <div class="menu-item" style="padding-left: 2.5rem">Item2</div>
+      <div class="menu-item active" style="padding-left: 2.5rem">Item3</div>
+      <div class="menu-item " style="padding-left: 2.5rem">Item4</div>
+      <div class="submenu">
+        <div class="menu-header" style="padding-left: 2.5rem">submenu</div>
+        <div class="menu-list">
+          <li class="menu-item" style="padding-left: 3.5rem">Item2</li>
+          <li class="menu-item " style="padding-left: 3.5rem">Item3</li>
+          <li class="menu-item " style="padding-left: 3.5rem">Item4</li>
+          <div class="submenu" id="submenu2">
+            <div class="menu-header" style="padding-left: 3.5rem">submenu2</div>
+            <div class="menu-list">
+              <li class="menu-item" style="padding-left: 4.5rem">Item2</li>
+              <li class="menu-item " style="padding-left: 4.5rem">Item3</li>
+              <li class="menu-item " style="padding-left: 4.5rem">Item4</li>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="menu menu-column global-with-border  primary with-box" style="width:15rem;">
+    <div class="submenu">
+      <div class="menu-header"><i class="icon fa fa-calendar-times-o"></i>Main menu</div>
+      <div class="menu-list">
+        <div class="menu-item disabled" style="padding-left: 2.5rem">Item1
+        </div>
+        <div class="menu-item" style="padding-left: 2.5rem">Item2
+        </div>
+        <div class="menu-item active" style="padding-left: 2.5rem">Item3
+        </div>
+        <div class="menu-item " style="padding-left: 2.5rem">Item4
+        </div>
+      </div>
+    </div>
+    <div class="submenu">
+      <div class="menu-header"><i class="icon fa fa-calendar-times-o"></i>Main menu2</div>
+      <div class="menu-list">
+        <div class="menu-item disabled" style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>Item1
+        </div>
+        <div class="menu-item" style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>Item2
+        </div>
+        <div class="menu-item active" style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>Item3
+        </div>
+        <div class="menu-item " style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>Item4
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="menu menu-column global-with-border  dark" style="width:15rem;">
+    <div class="submenu">
+      <div class="menu-header"><i class="icon fa fa-calendar-times-o"></i>Main menu</div>
+      <div class="menu-list">
+        <div class="menu-item disabled" style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>Item1
+        </div>
+        <div class="menu-item" style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>Item2
+        </div>
+        <div class="menu-item active" style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>Item3
+        </div>
+        <div class="menu-item" style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>Item4
+        </div>
+      </div>
+    </div>
+    <div class="submenu">
+      <div class="menu-header"><i class="icon fa fa-calendar-times-o"></i>Main menu2</div>
+      <div class="menu-list">
+        <div class="menu-item" style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>Item1
+        </div>
+        <div class="menu-item" style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>Item2
+        </div>
+        <div class="menu-item" style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>Item3
+        </div>
+        <div class="menu-item" style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>Item4
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ul class="simple menu menu-row" style="margin-top:1rem">
+    <ul class="submenu">
+      <li class="menu-header"><i class="icon fa fa-calendar-times-o"></i>
+        <a href="#" onclick="toggleMenu(this)">Introduction</a></li>
+      <div class="menu-list">
+        <li class="menu-item disabled" style="padding-left: 2.5rem">Install
+        </li>
+        <li class="menu-item" style="padding-left: 2.5rem">Basic
+        </li>
+        <li class="menu-item active" style="padding-left: 2.5rem">Components
+        </li>
+        <li class="menu-item" style="padding-left: 2.5rem">Advance
+        </li>
+      </div>
+    </ul>
+    <ul class="submenu">
+      <li class="menu-header"><i class="icon fa fa-calendar-times-o"></i>
+        <a href="#" onclick="toggleMenu(this)">Main
+          menu2</a></li>
+      <ul class="menu-list">
+        <li class="menu-item" style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>2Item
+        </li>
+        <li class="menu-item" style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>2Item2
+        </li>
+        <li class="menu-item" style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>2Item3
+        </li>
+        <li class="menu-item" style="padding-left: 2.5rem"><i
+            class="icon fa fa-calendar-times-o"></i>Item4
+        </li>
+      </ul>
+    </ul>
+  </ul>
+
+  <br/><br/>
+  <ul class="menu global-with-border  primary menu-row block">
+    <ul class="menu-list">
+      <li class="menu-item with-bar with-bg with-box">Home</li>
+      <li class="menu-item with-bar with-bg with-box">Store</li>
+      <li class="menu-item with-bar with-bg with-box">Shopping</li>
+      <li class="menu-item right with-bar with-bg with-box">
+        Item aligns right
+      </li>
+    </ul>
+  </ul>
+
+  <br/><br/>
+  <ul class="menu global-with-border  menu-row block">
+    <ul class="menu-list">
+      <li class="menu-item left">Item aligns left</li>
+      <div class="divider vertical"></div>
+      <li class="menu-item text ok hover">Home</li>
+      <div class="divider vertical"></div>
+      <li class="menu-item with-box">Store</li>
+      <div class="divider vertical"></div>
+      <li class="menu-item with-bg">Shopping</li>
+    </ul>
+  </ul>
+
+  <br/><br/>
+  <ul class="menu global-with-border  menu-row block">
+    <ul class="menu-list">
+      <li class="menu-item left">Testtt</li>
+      <div class="divider vertical"></div>
+      <li class="menu-item text ok hover">Home</li>
+      <ul class="submenu global-with-border show">
+        <li class="menu-header">Header</li>
+        <ul class="menu-list">
+          <li class="menu-item left">Item aligns left</li>
+          <div class="divider vertical"></div>
+          <li class="menu-item text ok hover">Home</li>
+          <ul class="submenu global-with-border show">
+            <li class="menu-header">Header3</li>
+            <ul class="menu-list">
+              <li class="menu-item left">Item aligns left</li>
+              <div class="divider vertical"></div>
+              <li class="menu-item text ok hover">Home</li>
+            </ul>
+          </ul>
+        </ul>
+      </ul>
+    </ul>
+  </ul>
+
+</div>
+<div style="height:50rem;">
+
+</div>
+</body>
+</html>

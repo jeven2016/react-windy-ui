@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="../dist/default/wui-modern-0.5.1.css" rel="stylesheet">
+  <script src="jquery-3.1.0.js" type="application/javascript"></script>
+  <link href="fa/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    .area-example {
+      margin: 10px auto;
+      padding: 20px;
+    }
+
+    .list-container {
+      position: relative;
+      padding: 10px;
+    }
+
+
+  </style>
+
+  <script language="JavaScript">
+    $(function () {
+      $(".dropdown > .info").click(function (evt) {
+        $(this).parent().toggleClass("active");
+      });
+
+    });
+  </script>
+</head>
+<body>
+<div class="area-example">
+  <div class="title">
+    Input示例:
+  </div>
+  <input type="text" class="input medium" placeholder="input..."/>
+  <button class="button">Button</button>
+  <br/><br/>
+  <div>
+    <input type="text" class="input large" placeholder="large..."/>
+    <button class="large button">Big Button</button>
+  </div>
+  <br/>
+  <input type="text" class="input medium" placeholder="medium..."/>
+  <button class="button">Button</button>
+  <br/>
+  <input type="text" class="input small" placeholder="small..."/>
+  <button class="small button">Button</button>
+  <br/>
+  <input type="text" class="input simple" placeholder="simple input..."/>
+  <br/><br/>
+  <div type="text" class="icon-input large">
+    <input type="text" class="input" placeholder="large icon input..."/>
+    <i class="fa fa-search icon"></i>
+  </div>
+  <div type="text" class="icon-input medium">
+    <input type="text" class="input" placeholder="medium icon input..."/>
+    <i class="fa fa-search icon"></i>
+  </div>
+  <div type="text" class="icon-input small">
+    <input type="text" class="input" placeholder="small icon input..."/>
+    <i class="fa fa-search icon"></i>
+  </div>
+  <div type="text" class="icon-input left-icon">
+    <input type="text" class="input" placeholder="icon input..."/>
+    <i class="fa fa-search icon"></i>
+  </div>
+  <br/>
+  <br/>
+  <div type="text" class="large icon-input left-icon">
+    <input type="text" class="input" placeholder="large input..."/>
+    <i class="fa fa-search icon"></i>
+  </div>
+  <div type="text" class="medium icon-input left-icon">
+    <input type="text" class="input" placeholder="medium input..."/>
+    <i class="fa fa-search icon"></i>
+  </div>
+  <div type="text" class="small icon-input left-icon">
+    <input type="text" class="input" placeholder="small input..."/>
+    <i class="fa fa-search icon"></i>
+  </div>
+  <br/>
+  <br/>
+  <div class="input-group">
+    <div class="label">$</div>
+    <input type="text" class="input " placeholder="input..."/>
+    <div class="label">
+      <i class="fa fa-calculator"></i>
+    </div>
+  </div>
+
+  <div class="input-group large">
+    <div class="label">$</div>
+    <input type="text" class="input " placeholder="input large^..."/>
+    <div class="label">
+      <i class="fa fa-calculator"></i>
+    </div>
+  </div>
+  <button class="Button">Button</button>
+  <br/>
+  <br/>
+  <div class="input-group">
+    <div type="text" class=" icon-input left-icon">
+      <input type="text" class="input" placeholder="icon input..."/>
+      <i class="fa fa-search icon"></i>
+    </div>
+    <div class="label">
+      <i class="fa fa-calculator"></i>
+    </div>
+  </div>
+  <div class="input-group">
+    <div class="label">
+      Money
+    </div>
+    <div type="text" class=" icon-input left-icon">
+      <input type="text" class="input" placeholder="icon input..."/>
+      <svg class="svg icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path
+            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+      </svg>
+    </div>
+    <div class="label">
+      <i class="fa fa-calculator"></i>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <div class="input-group">
+    <div class="label">$</div>
+    <div class="label">
+      <i class="fa fa-calculator"></i>
+    </div>
+    <input type="text" class="input " placeholder="input..."/>
+  </div>
+  <br/>
+  <br/>
+  <div class="input-group">
+    <button type="button" class="label button">Button</button>
+    <input type="text" class="input " placeholder="input..."/>
+    <div class="label">
+      <i class="fa fa-weibo"></i>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <div class="input-group">
+    <button type="button" class="label button primary">Button</button>
+    <input type="text" class=" input " placeholder="input..."/>
+    <button type="button" class="label button">Button</button>
+    <div class="label">
+      <i class="fa fa-calculator"></i>
+    </div>
+    <button type="button" class="label button">Button</button>
+  </div>
+  <br/>
+  <br/>
+  <div class="input-group block">
+    <div class="label">$</div>
+    <input type="text" class="input " placeholder="input..."/>
+    <div class="label">
+      <i class="fa fa-calculator"></i>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <div class="input-group block">
+    <div class="label">
+      <input type="radio"/>
+    </div>
+    <input type="text" class="input " placeholder="input..."/>
+  </div>
+  <br/><br/>
+
+  <input type="text" class="input block" placeholder="input block..."/>
+
+  <br/>
+  <br/>
+  <div class="input-group block">
+    <div class=" inset button-dropdown">
+      <div class="title">
+        <button class="button outline green">
+          Dropdown
+        </button>
+      </div>
+      <ul class="menu">
+        <li class="item disabled" data-value="0">Item1</li>
+        <li class="divider"></li>
+        <li class="item disabled" data-value="1">Item2</li>
+        <li class="divider"></li>
+        <li class="item disabled" data-value="2">Item4</li>
+      </ul>
+    </div>
+    <div class="label">
+      <i class="fa fa-calculator"></i>
+    </div>
+    <div class=" inset button-dropdown">
+      <div class="title">
+        <button class="button green">
+          Dropdown
+        </button>
+      </div>
+      <ul class="menu">
+        <li class="item disabled" data-value="0">Item1</li>
+        <li class="divider"></li>
+        <li class="item disabled" data-value="1">Item2</li>
+        <li class="divider"></li>
+        <li class="item disabled" data-value="2">Item4</li>
+      </ul>
+    </div>
+    <div class=" inset button-dropdown">
+      <div class="title">
+        <button class="button">
+          Dropdown
+        </button>
+      </div>
+      <ul class="menu">
+        <li class="item disabled" data-value="0">Item1</li>
+        <li class="divider"></li>
+        <li class="item disabled" data-value="1">Item2</li>
+        <li class="divider"></li>
+        <li class="item disabled" data-value="2">Item4</li>
+      </ul>
+    </div>
+    <input type="text" class="input  " placeholder="input..."/>
+    <div class="label">
+      <i class="fa fa-calculator"></i>
+    </div>
+    <div class=" inset button-dropdown">
+      <div class="title">
+        <button class="button">
+          Dropdown
+        </button>
+      </div>
+      <ul class="menu right">
+        <li class="item disabled" data-value="0">Item1</li>
+        <li class="divider"></li>
+        <li class="item disabled" data-value="1">Item2</li>
+        <li class="divider"></li>
+        <li class="item disabled" data-value="2">Item4</li>
+      </ul>
+    </div>
+  </div>
+  <br/><br/>
+
+  <div class="input-group block">
+    <div class="label">
+      <i class="fa fa-calculator"></i>
+    </div>
+    <input type="text" class="input  " placeholder="input..."/>
+    <input type="text" class="input  " placeholder="input..."/>
+    <div class="label">
+      <i class="fa fa-calculator"></i>
+    </div>
+  </div>
+
+
+  <br/><br/>
+  <div class="input-group block">
+    <div class=" inset dropdown">
+      <div class="info">Country</div>
+      <div class="menu">
+        <div class="item" data-value="0">China</div>
+        <div class="item" data-value="1">USA</div>
+        <a class="item" data-value="1" href="#"> Link</a>
+        <div class="item" data-value="2">Russian</div>
+      </div>
+    </div>
+    <div class="label">
+      <i class="fa fa-calculator"></i>
+    </div>
+    <input type="text" class="input  " placeholder="input..."/>
+    <div class=" inset dropdown">
+      <div class="info">Country</div>
+      <div class="menu">
+        <div class="item" data-value="0">China</div>
+        <div class="item" data-value="1">USA</div>
+        <a class="item" data-value="1" href="#"> Link</a>
+        <div class="item" data-value="2">Russian</div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+<input type="number" class="input"/>
+<input type="date" class="input"/>
+<input type="datetime" class="input"/>
+<input type="color" class="input"/>
+
+<br/><br/>
+
+
+<br/>
+
+<div style="margin-top: 50px">
+
+</div>
+
+
+</body>
+</html>

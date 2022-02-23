@@ -1,0 +1,93 @@
+.badge {
+  position: relative;
+  display: inline-flex;
+  background: transparent;
+  opacity: .8;
+
+  &.tag, &.normal, &.dot {
+
+    > .content {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+      color: $white;
+      border-radius: 1rem;
+    }
+  }
+
+  &.tag {
+    > .content {
+      line-height: 1rem;
+      font-size: 0.875rem;
+      padding: 0.25em 0.5em;
+    }
+  }
+
+  &.normal, &.dot {
+    > .content {
+      z-index: map_get($z-index, 'overlay');
+      position: absolute;
+      font-size: 0.75rem;
+      padding: 0 0.25rem;
+      top: 0;
+      right: 0;
+      color: $white;
+      height: 1.25rem;
+      min-width: 1.25rem;
+    }
+  }
+
+
+  &.dot {
+    > .content {
+      height: 0.5rem;
+      min-width: 0.5rem;
+    }
+  }
+
+  &.ok {
+    > .content {
+      background: $green;
+    }
+  }
+
+  &.gray {
+    > .content {
+      background: $light-gray;
+      color: $text-color;
+    }
+  }
+
+  &.info {
+    > .content {
+      background: $blue;
+    }
+  }
+
+  &.warning {
+    > .content {
+      background: $yellow;
+    }
+  }
+
+  &.error {
+    > .content {
+      background: $red;
+    }
+  }
+
+  &.dark {
+    > .content {
+      background: $black;
+    }
+  }
+
+  &.with-box {
+    box-shadow: none;
+
+    > .content {
+      box-shadow: $default-box-shadow;
+    }
+  }
+}

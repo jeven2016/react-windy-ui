@@ -1,0 +1,78 @@
+.checkbox, .radio {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  vertical-align: middle;
+  cursor: pointer;
+
+  &.left {
+    flex-direction: row-reverse;
+  }
+
+  &.right {
+    flex-direction: row;
+  }
+
+  &.top {
+    flex-direction: column-reverse;
+  }
+
+  &.bottom {
+    flex-direction: column;
+  }
+
+  &:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+
+  &.checked {
+    > .icon {
+      color: $blue;
+    }
+  }
+
+
+  &.unchecked {
+    > .icon {
+      color: $gray;
+    }
+  }
+
+  //add a hidden input in order to fire the onFocus/onXXX events
+  > .hidden-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: inherit;
+    z-index: 1; //使input获得事件，避免svg获取到点击事件
+  }
+
+  > .icon {
+    font-size: 1.5rem;
+    vertical-align: -0.15rem;
+    width: 1em;
+    height: 1em;
+    position: relative;
+    transition: background .5s;
+  }
+
+  > .label {
+    font-size: 1em;
+    padding: 0 0.25rem;
+  }
+
+  @include add-disabled-conf;
+
+  @include focus-active2 {
+    > .icon {
+      color: lighten($blue, 10%);
+    }
+  }
+
+  @include make-special-check('ok', $text-ok-color);
+  @include make-special-check('warning', $text-warning-color);
+  @include make-special-check('error', $text-error-color);
+}

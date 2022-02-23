@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="fa/css/font-awesome.min.css" rel="stylesheet">
+  <link href="../dist/default/wui-modern-0.5.1.css" rel="stylesheet">
+  <script src="jquery-3.1.0.js" type="application/javascript"></script>
+  <style type="text/css">
+      .area-example {
+          margin: 10px auto;
+          padding: 20px;
+          overflow: auto;
+      }
+
+  </style>
+
+  <script language="JavaScript">
+    $(function() {
+      $('.card .card-header').click(function() {
+        var card = $(this).parents('.card').children('.accordion-content');
+        card.toggleClass('active');
+        card.siblings('.card-header').toggleClass('active');
+
+      });
+
+    });
+  </script>
+</head>
+<body>
+
+<div class="area-example">
+  <div class="collapse with-border global-with-box">
+    <div class="card with-width block global-with-border">
+      <div class="collapse-header  card-header gray">
+        <div class="header-row">
+          <div class="inner left-icon-column">
+            <div class="icon-column expand">
+              <svg class="svg icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M0 0h24v24H0V0z" fill="none"></path>
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path>
+              </svg>
+            </div>
+            <div class="header-info ">Header1</div>
+          </div>
+        </div>
+      </div>
+      <div class="collapse-panel" value="1" style="height: 80px; opacity: 1; max-height: 80px;">
+        <div class="inner-container">
+          <div style="padding: 1rem;">This is a panel....<br>This is a panel....<br></div>
+        </div>
+      </div>
+    </div>
+    <div class="card with-width block global-with-border">
+      <div class="collapse-header collapsed card-header gray">
+        <div class="header-row">
+          <div class="inner left-icon-column">
+            <div class="icon-column">
+              <svg class="svg icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M0 0h24v24H0V0z" fill="none"></path>
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path>
+              </svg>
+            </div>
+            <div class="header-info ">Header2</div>
+          </div>
+        </div>
+      </div>
+      <div class="collapse-panel" value="2" style="height: 0px; opacity: 0; max-height: 0px;">
+        <div class="inner-container">
+          <div style="padding: 1rem;">This is a panel....<br>This is a panel....<br></div>
+        </div>
+      </div>
+    </div>
+    <div class="card with-width block global-with-border">
+      <div class="collapse-header collapsed card-header gray">
+        <div class="header-row">
+          <div class="inner left-icon-column">
+            <div class="icon-column">
+              <svg class="svg icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M0 0h24v24H0V0z" fill="none"></path>
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path>
+              </svg>
+            </div>
+            <div class="header-info ">Header3</div>
+          </div>
+        </div>
+      </div>
+      <div class="collapse-panel" value="3" style="height: 0px; opacity: 0; max-height: 0px;">
+        <div class="inner-container">
+          <div style="padding: 1rem;">This is a panel....<br>This is a panel....<br></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

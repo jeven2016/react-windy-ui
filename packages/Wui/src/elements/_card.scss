@@ -1,0 +1,166 @@
+
+.card {
+  @include make-inline-flex;
+  flex-direction: $card-flex-direction;
+  //flex-wrap: wrap;
+  //flex-wrap: $card-flex-wrap; //todo: confirm: 设置成wrap后，会出现card-row高度比子元素的高度高太多的问题
+  @include border-radius($card-border-radius);
+  transition: $card-transition;
+  //background-color: $card-background-color;
+
+  &.with-width {
+    width: $card-width;
+  }
+
+  &.scale {
+    &:hover {
+      transform: scale(1.1);
+      transform-origin: center;
+      //z-index only work on position relative, absolute & fixed.
+      z-index: map-get($z-index, 'one');
+      position: relative;
+    }
+  }
+
+  &.rise {
+    &:hover {
+      transform: translateY(-1rem);
+      transform-origin: center;
+      z-index: map-get($z-index, 'widget');
+      position: relative;
+    }
+  }
+
+  > div {
+    &:first-child {
+      border-top-left-radius: $card-inner-border-radius;
+      border-top-right-radius: $card-inner-border-radius;
+
+      &.card-img {
+        > .img {
+          border-top-left-radius: $card-inner-border-radius;
+          border-top-right-radius: $card-inner-border-radius;
+        }
+      }
+    }
+
+    &:last-child {
+      border-bottom-left-radius: $card-inner-border-radius;
+      border-bottom-right-radius: $card-inner-border-radius;
+
+      &.card-img {
+        > .img, > .overlay-title {
+          border-bottom-left-radius: $card-inner-border-radius;
+          border-bottom-right-radius: $card-inner-border-radius;
+        }
+      }
+    }
+
+    &:not(:first-child):not(:last-child) {
+      @include border-radius(0);
+    }
+  }
+
+
+  .card-header {
+    padding: $card-header-padding;
+    //@include border-radius($card-inner-border-radius $card-inner-border-radius 0 0);
+
+    .title {
+      font-weight: map_get($font-weight, 'normal');
+    }
+
+    &.gray {
+      background: $card-header-background-color;
+    }
+  }
+
+  .card-row {
+    padding: $card-row-padding;
+  }
+
+  .card-body {
+    padding: $card-body-padding;
+  }
+
+  .card-footer {
+    padding: $card-footer-padding;
+  }
+
+  .card-img {
+    position: relative;
+
+    //set min-height as a workaround for IE11, to fix image auto height bug.
+    min-height: 1px; // https://github.com/philipwalton/flexbugs/issues/75
+
+
+    > .img {
+      display: block;
+      width: 100%;
+      transition: transform .3s;
+    }
+
+    &.with-scale {
+      overflow: hidden;
+
+      &:hover {
+        > .img {
+          transform: scale(1.2);
+        }
+      }
+    }
+
+    > .overlay-title {
+      display: $card-overlay-title-display;
+      padding: $card-body-padding;
+      position: $card-overlay-title-position;
+      color: $white;
+      bottom: 0;
+      width: $card-overlay-title-width;
+      background-color: $card-overlay-title-background-color;
+
+      &:hover {
+        text-shadow: 1px 1px 2px #333, 0 0 25px $white, 0 0 5px $blue;;
+      }
+    }
+
+  }
+
+  .card-curtain {
+    position: relative;
+    flex: 1 1 100%;
+    overflow: hidden;
+
+    &.close {
+      > :not(.curtain-mask) {
+        filter: blur(4px) grayscale(0.6);
+      }
+    }
+
+    .curtain-mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      z-index: map_get($z-index, 'mask');
+      overflow: hidden;
+
+      &.dark {
+        background: rgba(0, 0, 0, .6);
+      }
+    }
+  }
+
+  &.block {
+    display: flex;
+    flex: 1 1 0;
+
+    .card-body, {
+      flex: 1 1 0;
+      flex-wrap: wrap;
+    }
+  }
+}

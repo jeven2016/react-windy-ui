@@ -1,0 +1,23 @@
+.pop-confirm {
+
+  > .pop-row {
+    @include make-flex-center;
+
+    > .icon-column {
+      padding-right: .5rem;
+      color: $yellow;
+    }
+
+    > .pop-body {
+      //line-height: 1.5;
+      flex: 1 1 auto;
+    }
+  }
+
+  > .pop-footer {
+    @include make-flex;
+    flex: 1 1 100%;
+    margin-top: .5rem;
+    justify-content: flex-end;
+  }
+}

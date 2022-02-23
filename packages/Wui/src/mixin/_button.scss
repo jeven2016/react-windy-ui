@@ -1,0 +1,197 @@
+@function get-text-color($name) {
+  @return if($name == 'gray' or $name== 'gray-darker' or $name=='light-gray', $text-color, $white)
+}
+
+@mixin generate-btn($bg-color, $font-color) {
+  background: $bg-color;
+  color: $font-color;
+}
+
+@mixin enable-active($bg-color,
+                      $font-color,
+                      $box-shadow-color: lighten($bg-color,$default-box-shadow-color-increase-ratio-active),
+                      $darken-color-1: darken($bg-color, $default-bg-color-increase-ratio),
+                      $active-color: darken($bg-color, $default-bg-color-increase-ratio-active)) {
+
+  //once the button is disabled, focus and active won't be triggered, only hover needs to be handled
+  &:not(:disabled) {
+    &:focus, &:hover {
+      color: $font-color;
+      background: $darken-color-1;
+    }
+
+    &:focus, &.active {
+      box-shadow: 0 0 0 0.2rem $box-shadow-color;
+      z-index: map_get($z-index, "one");
+    }
+
+    &:active {
+      background: $active-color;
+    }
+
+    &.active {
+      color: $font-color;
+      background: lighten($bg-color, $default-bg-color-increase-ratio);
+    }
+
+  }
+}
+
+@mixin generate-hover($bg-color, $font-color, $box-color, $has-box) {
+  color: $font-color;
+  background: $bg-color;
+
+  &.with-outline-bg {
+    background: $bg-color;
+    color: $font-color;
+    box-shadow: 0 0 0 .2rem lighten($bg-color, $default-box-shadow-color-increase-ratio-active), 0 0 0 1px $bg-color inset;
+    z-index: map_get($z-index, "widget");
+  }
+
+  &.no-outline-bg {
+    background: transparent;
+    color: $bg-color;
+    box-shadow: 0 0 0 1px $box-color inset;
+    z-index: map_get($z-index, "widget");
+  }
+}
+
+@mixin enable-outline-active($bg-color, $font-color) {
+  //once the button is disabled, focus and active won't be triggered, only hover needs to be handled
+  $darken-color-1: darken($bg-color, $default-bg-color-increase-ratio);
+  $active-color: darken($bg-color, $default-bg-color-increase-ratio-active);
+  $box-color: lighten($bg-color, $default-box-shadow-color-increase-ratio-active);
+
+  &:not(:disabled) {
+    &:hover {
+      color: $font-color;
+      background: $bg-color;
+      z-index: map_get($z-index, "widget");
+
+      &.with-outline-bg {
+        background: $bg-color;
+        color: $font-color;
+      }
+
+      &.no-outline-bg {
+        background: transparent;
+        color: $bg-color;
+        box-shadow: 0 0 0 1px $darken-color-1 inset;
+        z-index: map_get($z-index, "widget");
+      }
+
+      &.inverted-outline {
+        box-shadow: 0 0 0 2px $darken-color-1 inset;
+      }
+    }
+
+    &:focus {
+      color: $font-color;
+      background: $bg-color;
+      z-index: map_get($z-index, "widget");
+
+      &.with-outline-bg {
+        background: $bg-color;
+        color: $font-color;
+        box-shadow: 0 0 0 .2rem $box-color, 0 0 0 1px $bg-color inset;
+      }
+
+      &.no-outline-bg {
+        background: transparent;
+        color: $bg-color;
+        box-shadow: 0 0 0 .2rem $box-color, 0 0 0 1px $bg-color inset;
+      }
+
+      &.inverted-outline {
+        box-shadow: 0 0 0 .2rem $box-color, 0 0 0 1px $bg-color inset;
+      }
+
+      &.without-box {
+        box-shadow: 0 0 0 1px $bg-color inset;
+      }
+    }
+
+    &:active {
+      box-shadow: 0 0 0 .2rem $box-color, 0 0 0 1px $bg-color inset;
+      z-index: map_get($z-index, "widget");
+      background: $active-color;
+
+      &.no-outline-bg {
+        background: transparent;
+        color: $bg-color;
+        box-shadow: 0 0 0 .2rem $box-color, 0 0 0 1px $bg-color inset;
+      }
+
+      &.inverted-outline {
+        box-shadow: 0 0 0 .2rem $box-color, 0 0 0 1px $bg-color inset;
+        text-shadow: $text-shadow-light;
+      }
+
+      &.without-box {
+        box-shadow: 0 0 0 1px $bg-color inset;
+      }
+
+    }
+
+    &.active {
+      color: $font-color;
+      background: lighten($bg-color, $default-bg-color-increase-ratio);
+      z-index: map_get($z-index, "widget");
+
+      &.no-outline-bg {
+        background: transparent;
+        color: $bg-color;
+        box-shadow: 0 0 0 .2rem $box-color, 0 0 0 1px $bg-color inset;
+
+      }
+
+      &.with-outline-bg {
+        box-shadow: 0 0 0 .2rem $box-color, 0 0 0 1px $bg-color inset;
+      }
+
+      &.inverted-outline {
+        box-shadow: 0 0 0 .2rem $box-color, 0 0 0 1px $bg-color inset;
+        text-shadow: $text-shadow-light;
+      }
+
+      &.without-box {
+        box-shadow: 0 0 0 1px $bg-color inset;
+      }
+    }
+  }
+
+}
+
+/**
+* set the group's border radius property
+ */
+@mixin group-border-radius($dr-radius:0) {
+  &:not(:first-child) {
+    @include border-radius-variable(top, left, 0);
+    @include border-radius-variable(bottom, left, 0);
+  }
+
+  &:not(:last-child) {
+    @include border-radius-variable(top, right, 0);
+    @include border-radius-variable(bottom, right, 0);
+  }
+}
+
+@mixin first-button {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  //border-right-width: 1px !important;
+}
+
+@mixin last-button {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  border-left-width: 0;
+}
+
+@mixin middle-button {
+  border-radius: 0;
+  //border-right-width: 1px !important;
+  border-left-width: 0;
+}
+

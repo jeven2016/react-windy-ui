@@ -1,0 +1,125 @@
+$popover-arrow-width: .75rem;
+$popover-arrow-height: .75rem;
+$popover-half-height: math.div($popover-arrow-height , 2);
+
+
+.popover {
+  position: relative;
+  border-radius: $default-border-radius;
+
+  > .card {
+    position: relative;
+
+    > .card-body {
+      min-height: 1rem;
+    }
+  }
+
+  > .popover-arrow {
+    position: absolute;
+    display: inline-block;
+    width: $popover-arrow-width;
+    height: $popover-arrow-height;
+
+    z-index: map_get($z-index, 'one');
+    background: $popover-arrow-background;
+
+    &.with-box {
+      box-shadow: -2px -2px 5px rgba(0, 0, 0, 0.07);
+    }
+
+    &.top {
+      bottom: -$popover-half-height;
+      transform: rotate(-135deg);
+
+      &.with-border {
+        border-left: $default-border;
+        border-top: $default-border;
+      }
+
+      &.center {
+        left: 50%;
+        margin-left: -$popover-half-height;
+      }
+
+      &.top-left {
+        left: 1rem;
+      }
+
+      &.top-right {
+        right: 1rem;
+      }
+    }
+
+    &.bottom {
+      top: -$popover-half-height;
+      transform: rotate(45deg);
+
+      &.with-border {
+        border-left: $default-border;
+        border-top: $default-border;
+      }
+
+      &.center {
+        left: 50%;
+        margin-left: -$popover-half-height;
+      }
+
+      &.bottom-left {
+        left: 1rem;
+      }
+
+      &.bottom-right {
+        right: 1rem;
+      }
+    }
+
+    &.left {
+      right: -$popover-half-height;
+      transform: rotate(135deg);
+
+      &.with-border {
+        border-left: $default-border;
+        border-top: $default-border;
+      }
+
+      &.center {
+        top: 50%;
+        margin-top: -$popover-half-height;
+      }
+
+      &.left-bottom {
+        top: 1rem;
+      }
+
+      &.left-top {
+        bottom: 1rem;
+      }
+    }
+
+
+    &.right {
+      left: -$popover-half-height;
+      transform: rotate(-45deg);
+
+      &.with-border {
+        border-left: $default-border;
+        border-top: $default-border;
+      }
+
+      &.center {
+        top: 50%;
+        margin-top: -$popover-half-height;
+      }
+
+      &.right-bottom {
+        top: 1rem;
+      }
+
+      &.right-top {
+        bottom: 1rem;
+      }
+    }
+
+  }
+}

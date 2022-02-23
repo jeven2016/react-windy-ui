@@ -1,0 +1,64 @@
+%tree-focus {
+  @include focus2 {
+    color: $tree-hover-color;
+  }
+  @include add-disabled-conf(false) {
+    color: $text-disabled-color;
+  }
+}
+
+.tree {
+  display: block;
+  position: relative;
+
+  .tree-item {
+
+    > .tree-title {
+      @include make-header('title');
+
+      .icon-extra-column {
+        @include make-inline-flex-center {
+          flex: 0 0 auto;
+          margin-right: 0.25rem;
+        }
+      }
+
+      > .title-row {
+        > .inner {
+
+          > .title-info {
+            > .label-info {
+              //padding: 0.25rem;
+              &.active {
+                background: $tree-item-label-info-active-background;
+                color: $tree-item-label-info-active-color;
+              }
+            }
+          }
+
+          &.whole-line {
+            z-index: 2;
+          }
+        }
+      }
+    }
+
+
+    > .tree-panel {
+      overflow: hidden;
+      margin-left: 1.75rem;
+    }
+  }
+
+  .item-bg {
+    padding: 0.25rem 0;
+    background: $tree-item-bg-background;
+    line-height: 1.5rem;
+    user-select: none;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 1;
+  }
+
+}

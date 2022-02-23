@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="fa/css/font-awesome.min.css" rel="stylesheet">
+  <link href="../dist/default/wui-modern-0.5.1.css" rel="stylesheet">
+  <style type="text/css">
+    .area-example {
+      margin: 10px auto;
+      padding: 20px;
+      overflow: auto;
+    }
+
+    .row {
+      border: 1px solid rgba(86, 61, 124, 0.2);
+    }
+
+    .row > div[class^=col-] {
+      background-color: #ccc;
+      /*padding: 0.75rem;*/
+      border: 1px solid rgba(86, 61, 124, 0.2);
+      background-color: rgba(86, 61, 124, 0.15);
+    }
+
+
+  </style>
+</head>
+<body>
+<div class="area-example">
+
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-8 col-lg-10 col-xl-11">col-12 col-sm-6 col-md-8 col-lg-10
+      col-xl-11
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-1">col-12 col-sm-6 col-md-4 col-lg-2
+      col-xl-1
+    </div>
+
+  </div>
+
+  <br/><br/>
+
+  <div class="row">
+    <div class="col-6">col-6</div>
+    <div class="col-6">col-6</div>
+  </div>
+  <div class="row">
+    <div class="col-4">col-4</div>
+    <div class="col-4">col-4</div>
+    <div class="col-4">col-4</div>
+  </div>
+  <div class="row">
+    <div class="col-3">col-3</div>
+    <div class="col-3">col-3</div>
+    <div class="col-3">col-3</div>
+    <div class="col-3">col-3</div>
+  </div>
+
+  <br/><br/>
+  <div class="row">
+    <div class="col-4">col-4</div>
+    <div class="col-4 offset-4">col-4</div>
+  </div>
+  <div class="row">
+    <div class="col-3 offset-3">col-3</div>
+    <div class="col-3 offset-3">col-3</div>
+  </div>
+  <div class="row">
+    <div class="col-4 offset-4">col-4</div>
+  </div>
+
+
+  <br/><br/>
+  <div class="row justify-start">
+    <div class="col-5">col-5</div>
+    <div class="col-5">col-5</div>
+  </div>
+  <div class="row justify-center">
+    <div class="col-5">col-5</div>
+    <div class="col-5">col-5</div>
+  </div>
+  <div class="row justify-end">
+    <div class="col-5">col-5</div>
+    <div class="col-5">col-5</div>
+  </div>
+  <div class="row justify-around">
+    <div class="col-5">col-5</div>
+    <div class="col-5">col-5</div>
+  </div>
+  <div class="row justify-between">
+    <div class="col-5">col-5</div>
+    <div class="col-5">col-5</div>
+  </div>
+  <div class="row justify-evenly">
+    <div class="col-5">col-5</div>
+    <div class="col-5">col-5</div>
+  </div>
+
+
+  <br/><br/>
+  <div class="row justify-around align-start" style="height:100px">
+    <div class="col-3" style="height: 80px"></div>
+    <div class="col-3" style="height: 40px"></div>
+    <div class="col-3" style="height: 60px"></div>
+  </div>
+
+  <div class="row justify-around align-center" style="height:100px">
+    <div class="col-3" style="height: 80px"></div>
+    <div class="col-3" style="height: 40px"></div>
+    <div class="col-3" style="height: 60px"></div>
+  </div>
+  <div class="row justify-around align-end" style="height:100px">
+    <div class="col-3" style="height: 80px"></div>
+    <div class="col-3" style="height: 40px"></div>
+    <div class="col-3" style="height: 60px"></div>
+  </div>
+
+  <br/><br/>
+  <div class="row justify-around">
+    <div class="col-3 order-3">First</div>
+    <div class="col-3 order-1">Second</div>
+    <div class="col-3 order-2">Last</div>
+  </div>
+
+  <br/><br/>
+  <div class="row">
+    <div class="col-md-4">.col-md-4</div>
+    <div class="col-md-4">.col-md-4</div>
+  </div>
+  <br/><br/>
+  <div class="row">
+    <div class="col-md-4">.col-md-4</div>
+    <div class="col-md-4 offset-md-4">.col-md-4 .offset-md-4</div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 offset-md-3">.col-md-3 .offset-md-3</div>
+    <div class="col-md-3 offset-md-3">.col-md-3 .offset-md-3</div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 offset-md-3">.col-md-6 .offset-md-3</div>
+  </div>
+
+  <br/><br/>
+  <div class="row">
+    <div class="col-sm-9">
+      Level 1: .col-sm-9
+
+      <div class="row">
+        <div class="col-8 col-sm-6">
+          Level 2: .col-8 .col-sm-6
+        </div>
+        <div class="col-4 col-sm-6">
+          Level 2: .col-4 .col-sm-6
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

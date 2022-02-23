@@ -1,0 +1,33 @@
+.space-row {
+  display: inline-flex;
+
+  &.block {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 100%;
+  }
+
+  &.column {
+    flex-direction: column;
+
+    > .space-item {
+      display: flex;
+      flex: 1 1 100%;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  &.wrap {
+    flex-wrap: wrap;
+  }
+
+  > .space-item {
+    display: inline-flex;
+
+    &.block {
+      display: flex;
+      flex: 1 1 100%;
+    }
+  }
+}

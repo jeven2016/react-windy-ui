@@ -1,0 +1,19 @@
+.divider {
+  display: block;
+  width: 100%;
+  position: relative;
+  height: 1px;
+  background: $divider-background;
+
+  &.inverted {
+    background: #fff;
+  }
+
+  &.vertical {
+    border-left: 1px #ccc solid;
+    height: 100%;
+    width: 0;
+    background: inherit;
+  }
+
+}

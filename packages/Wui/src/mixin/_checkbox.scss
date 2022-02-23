@@ -1,0 +1,17 @@
+@mixin make-special-check($type, $color) {
+  &.check-#{$type} {
+
+    color: $color;
+
+    > .icon {
+      color: $color;
+    }
+
+    @include focus-active2 {
+      > .icon {
+        color: $color;
+      }
+    }
+
+  }
+}

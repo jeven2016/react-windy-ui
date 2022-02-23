@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="fa/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../dist/default/wui-modern-0.5.1.css" rel="stylesheet">
+    <script src="jquery-3.1.0.js" type="application/javascript"></script>
+    <style type="text/css">
+        .area-example {
+            margin: 10px auto;
+            padding: 20px;
+        }
+    </style>
+
+    <script language="JavaScript">
+        (function ($) {
+            $.fn.searchSelect = function () {
+                $(this).each(function () {
+                    var container = this;
+                    if (!container) {
+                        return;
+                    }
+                    $('.content', container).click(function (e) {
+                        var text = $('.info-text', this);
+                        text.focus();
+                        $('>.menu', container).show();
+
+                        $('>.menu li[class~=item]', container).each(function () {
+                            $(this).click(function () {
+                                $('>.menu', container).hide();
+                            })
+                        })
+                    });
+                })
+            }
+        })(jQuery);
+
+    </script>
+</head>
+<body>
+<div class="area-example">
+    <h1>Search Select 示例</h1>
+    <br/>
+
+    <div style="display:inline-block;width:400px">
+        <div id="search-select" class="search select">
+            <div class="content">
+                <div class="tag"><span class="text">one</span><i class="icon fa fa-close"></i></div>
+                <input type="text" class="input" placeholder="select..."/>
+            </div>
+            <ul class="menu">
+                <li class="input-item">
+                    <div type="text" class="icon-input block">
+                        <input type="text" class=" input" placeholder="Search"/>
+                        <i class="fa fa-search icon"></i>
+                    </div>
+                </li>
+                <li class="divider"></li>
+                <li class="item text align-left" data-value="One">One</li>
+                <li class="divider"></li>
+                <li class="item text align-left" data-value="One">Two</li>
+                <li class="divider"></li>
+                <li class="item text align-left" data-value="There">There</li>
+                <li class="divider"></li>
+            </ul>
+
+        </div>
+        An example of this special widget.
+    </div>
+
+
+</div>
+
+<script language="javascript">
+    $("#search-select").searchSelect();
+</script>
+
+</body>
+</html>
