@@ -1,0 +1,19 @@
+@mixin make-inline-block {
+  position: relative;
+  display: inline-block;
+
+  @content;
+}
+
+@mixin only-inline-block {
+  display: inline-block;
+
+  @content;
+}
+
+@mixin make-block($position:relative) {
+  position: $position;
+  display: block;
+
+  @content;
+}

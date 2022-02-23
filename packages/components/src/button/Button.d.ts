@@ -1,12 +1,13 @@
-import * as React from 'react';
+import React from 'react';
+import { ButtonType, Size, ButtonShape } from '../generic';
 
-export type ButtonSize = 'large' | 'medium' | 'small';
-export type ButtonShape = 'circle' | 'round';
+export type AnchorBtnProps = {
+  href: string;
+  target?: string;
+} & BaseButtonProps &
+  Omit<React.AnchorHTMLAttributes<any>, 'type'>;
 
-// const Types = tuple('button', 'reset', 'submit', 'a');
-export type ButtonType = 'button' | 'reset' | 'submit' | 'a';
-
-interface BaseButtonProps {
+export interface BaseButtonProps {
   children?: React.ReactNode;
   className?: string;
   extraClassName?: string;
@@ -16,7 +17,7 @@ interface BaseButtonProps {
   color?: string;
   directRef?: Function | React.RefAttributes<HTMLElement>;
   active?: boolean;
-  size?: ButtonSize;
+  size?: Size;
   outline?: boolean;
   circle?: boolean;
   hasMinWidth?: boolean;
@@ -37,15 +38,7 @@ interface BaseButtonProps {
   loader?: React.ReactNode;
 }
 
-// export type ButtonProps = BaseButtonProps &
-//   Omit<React.AnchorHTMLAttributes<any>, 'type' | 'onClick'>;
+export type ButtonProps = Partial<BaseButtonProps & AnchorBtnProps>;
 
-export type ButtonProps = BaseButtonProps & Omit<React.AnchorHTMLAttributes<any>, 'type'>;
-
-// declare const Button: React.ForwardRefRenderFunction<ButtonProps, any> = (
-//   props,
-//   ref
-// ): JSX.Element => {};
-
-// export default Button;
-export default function Button(props: ButtonProps, any);
+const Button: React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<HTMLElement>>;
+export default Button;

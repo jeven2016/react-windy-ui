@@ -1,17 +1,4 @@
-declare module 'Tmodule' {
-  export interface MyInt {
-    (): string;
-  }
-
-  export interface NewInt {
-    new (): string;
-  }
-
-  export type Size = 'large' | 'small';
-}
-
-declare module 'Module2' {
-  import { NewInt, Size } from 'Tmodule';
-
-  export const size: Size;
-}
+export { default as Avatar } from './Avatar';
+export { default as AvatarGroup } from './AvatarGroup';
+export * from './Avatar';
+export * from './AvatarGroup';

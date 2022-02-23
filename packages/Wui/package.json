@@ -1,0 +1,48 @@
+{
+  "name": "wui",
+  "version": "0.7.0",
+  "description": "A new web UI framework built on CSS3 and SASS.",
+  "scripts": {
+    "build": "../../node_modules/gulp/bin/gulp.js",
+    "copy": "../../node_modules/gulp/bin/gulp.js copy-default-theme-file",
+    "buildThemes": "../../node_modules/gulp/bin/gulp.js buildThemes",
+    "watch": "../../node_modules/gulp/bin/gulp.js watch-copy-default",
+    "clean": "../../node_modules/gulp/bin/gulp.js clean",
+    "analyze": "../../node_modules/analyze-css/bin/analyze-css.js --file dist/default/wui.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeven2016/wheel-ui.git"
+  },
+  "keywords": [
+    "Wui",
+    "wui",
+    "react-windy-ui"
+  ],
+  "author": "Jeven Wang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jeven2016/wheel-ui/issues"
+  },
+  "homepage": "https://github.com/jeven2016/wheel-ui#readme",
+  "devDependencies": {
+    "better-console": "^1.0.1",
+    "cssnano": "^4.1.10",
+    "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-header": "^2.0.9",
+    "gulp-if": "^3.0.0",
+    "gulp-notify": "^3.2.0",
+    "gulp-postcss": "^8.0.0",
+    "gulp-print": "^5.0.2",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^5.0.0",
+    "gulp-sass-glob": "^1.1.0",
+    "gulp-wait": "0.0.2",
+    "gulp-watch": "^5.0.1",
+    "merge-stream": "^2.0.0",
+    "minimist": "^1.2.0",
+    "sass": "^1.45.0"
+  }
+}

@@ -1,0 +1,13 @@
+.dropdown-menu {
+
+  > .popup-content {
+    > .menu {
+      .menu-item {
+        @include active3 {
+          color: $dp-menu-item-color;
+          background-color: $dp-menu-item-background-color;
+        }
+      }
+    }
+  }
+}

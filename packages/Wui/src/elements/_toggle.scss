@@ -1,0 +1,156 @@
+
+.toggle-container {
+  display: inline-flex;
+  justify-content: center;
+
+  &.block {
+    display: flex;
+    flex: 1 1 100%;
+  }
+}
+
+.toggle-button {
+  flex-grow: 1;
+  background: transparent;
+  outline: none;
+  border: none;
+  vertical-align: middle;
+  cursor: pointer;
+
+  &.with-info {
+    flex: 0 0 auto;
+  }
+
+  @include add-disabled-conf;
+}
+
+.toggle {
+  position: relative;
+  @include make-flex();
+  flex: 1 1 100%;
+  font-weight: map_get($font-weight, 'bold');
+  transition: all .3s;
+  vertical-align: middle;
+  min-width: 3.5rem;
+
+  .bar {
+    display: inline-flex;
+    align-items: center;
+    margin: 0.25rem 0;
+    padding: 0 0.5rem 0 1.8rem;
+    height: 1rem;
+    width: 100%;
+    transition: background .2s ease, box-shadow .2s ease, border .2s ease;
+
+    @include border-radius(1.5rem);
+  }
+
+
+  .ball {
+    color: $text-color;
+    position: absolute;
+    top: 0;
+    right: 0;
+    @include make-inline-flex-center;
+    height: 1.5rem;
+    width: 1.5rem;
+    @include border-radius(50%);
+    box-shadow: $default-box-shadow;
+    text-align: center;
+    transition: background .3s linear, box-shadow .3s linear;
+  }
+
+  &.on {
+    .bar {
+      background: $blue
+    }
+
+    .ball {
+      background: $white;
+      border: 1px solid $blue;
+      box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  &.off {
+    .bar {
+      background: $toggle-off-bar-background;
+    }
+
+    .ball {
+      border: 1px solid rgba(0, 0, 0, .5);
+      box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.4);
+      background: $white;
+      color: rgba(0, 0, 0, .5);
+    }
+  }
+
+  &.secondary, &.primary {
+    @include border-radius;
+    padding: 0.25rem;
+    align-items: center;
+    font-size: 0.75rem;
+    line-height: 1.5rem;
+    overflow: hidden;
+
+    > .info {
+      color: $white;
+      min-height: 1.5rem;
+      display: flex;
+      align-items: center;
+      transition: margin .2s ease;
+    }
+
+    .ball {
+      position: absolute;
+      width: 1.5rem;
+      height: 1.5rem;
+      line-height: 1.5rem;
+      top: 50%;
+      border: none;
+      background: $white;
+      @include border-radius;
+      box-shadow: none;
+    }
+
+    &.on {
+      background: $blue;
+      //box-shadow: 0 0 2px 1px #007affba;
+      justify-content: flex-start;
+
+      > .info {
+        margin: 0 1.75rem 0 .5rem;
+      }
+    }
+
+    &.off {
+      background: $toggle-secondary-primary-background;
+      //box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.4);
+      justify-content: flex-end;
+
+      > .info {
+        margin: 0 .5rem 0 1.75rem;
+      }
+    }
+
+  }
+
+  &.primary {
+    border-radius: 1.5rem;
+
+    > .ball {
+      border-radius: 50%;
+    }
+  }
+
+}
+
+.toggle-label {
+  flex-grow: 1;
+  font-weight: map_get($font-weight, 'normal');
+  transition: color .3s;
+
+  &.on {
+    color: $primary;
+  }
+}

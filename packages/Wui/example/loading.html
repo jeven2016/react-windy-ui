@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="fa/css/font-awesome.min.css" rel="stylesheet">
+  <link href="../dist/default/wui-modern-0.5.1.css" rel="stylesheet">
+  <script src="jquery-3.1.0.js" type="application/javascript"></script>
+  <style type="text/css">
+    body {
+      /*background-color: #ccc;*/
+    }
+
+    .area-example {
+      margin: 10px auto;
+      padding: 20px;
+      overflow: auto;
+    }
+
+  </style>
+
+  <script language="javascript">
+    $(function () {
+
+    });
+
+    function show(loaderId) {
+      $('#' + loaderId).toggleClass('active');
+    }
+
+    function showInline(cntId, loaderId) {
+      $('#' + cntId).css('display', '');
+      $('#' + loaderId).toggleClass('active');
+    }
+  </script>
+</head>
+<body>
+<div class="area-example">
+  <button class="button" onclick="show('loader1')">
+    Normal Loader
+  </button>
+  <button class="button disabled" onclick="show('loader2')">
+    Large Loader
+    <div class="loader small secondary">
+      <div class="content">
+        <div class="segment1">
+          <div class="item"></div>
+        </div>
+        <div class="segment2">
+          <div class="item"></div>
+        </div>
+        <div class="segment3">
+          <div class="item"></div>
+        </div>
+        <div class="segment4">
+          <div class="item"></div>
+        </div>
+        <div class="segment5">
+          <div class="item"></div>
+        </div>
+        <div class="segment6">
+          <div class="item"></div>
+        </div>
+        <div class="segment7">
+          <div class="item"></div>
+        </div>
+        <div class="segment8">
+          <div class="item"></div>
+        </div>
+        <div class="segment9">
+          <div class="item"></div>
+        </div>
+        <div class="segment10">
+          <div class="item"></div>
+        </div>
+        <div class="segment11">
+          <div class="item"></div>
+        </div>
+        <div class="segment12">
+          <div class="item"></div>
+        </div>
+      </div>
+    </div>
+  </button>
+  <button class="button" onclick="show('loader3')">
+    Small Loader
+  </button>
+
+  <div class="loader primary normal" id="loader1">
+    <div class="content"></div>
+  </div>
+  <div class="loader primary large" id="loader2">
+    <div class="content"></div>
+  </div>
+  <div class="loader primary small" id="loader3">
+    <div class="content"></div>
+
+  </div>
+
+
+  <div class="loader normal secondary">
+    <div class="content">
+      <div class="segment1">
+        <div class="item"></div>
+      </div>
+      <div class="segment2">
+        <div class="item"></div>
+      </div>
+      <div class="segment3">
+        <div class="item"></div>
+      </div>
+      <div class="segment4">
+        <div class="item"></div>
+      </div>
+      <div class="segment5">
+        <div class="item"></div>
+      </div>
+      <div class="segment6">
+        <div class="item"></div>
+      </div>
+      <div class="segment7">
+        <div class="item"></div>
+      </div>
+      <div class="segment8">
+        <div class="item"></div>
+      </div>
+      <div class="segment9">
+        <div class="item"></div>
+      </div>
+      <div class="segment10">
+        <div class="item"></div>
+      </div>
+      <div class="segment11">
+        <div class="item"></div>
+      </div>
+      <div class="segment12">
+        <div class="item"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="loader normal third">
+    <div class="content">
+      <div class="segment1">
+        <div class="item"></div>
+      </div>
+      <div class="segment2">
+        <div class="item"></div>
+      </div>
+      <div class="segment3">
+        <div class="item"></div>
+      </div>
+      <div class="segment4">
+        <div class="item"></div>
+      </div>
+      <div class="segment5">
+        <div class="item"></div>
+      </div>
+      <div class="segment6">
+        <div class="item"></div>
+      </div>
+      <div class="segment7">
+        <div class="item"></div>
+      </div>
+      <div class="segment8">
+        <div class="item"></div>
+      </div>
+      <div class="segment9">
+        <div class="item"></div>
+      </div>
+      <div class="segment10">
+        <div class="item"></div>
+      </div>
+      <div class="segment11">
+        <div class="item"></div>
+      </div>
+      <div class="segment12">
+        <div class="item"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="loader normal small">
+    <div class="content">
+      <div class="segment1">
+        <div class="item"></div>
+      </div>
+      <div class="segment2">
+        <div class="item"></div>
+      </div>
+      <div class="segment3">
+        <div class="item"></div>
+      </div>
+      <div class="segment4">
+        <div class="item"></div>
+      </div>
+      <div class="segment5">
+        <div class="item"></div>
+      </div>
+      <div class="segment6">
+        <div class="item"></div>
+      </div>
+      <div class="segment7">
+        <div class="item"></div>
+      </div>
+      <div class="segment8">
+        <div class="item"></div>
+      </div>
+      <div class="segment9">
+        <div class="item"></div>
+      </div>
+      <div class="segment10">
+        <div class="item"></div>
+      </div>
+      <div class="segment11">
+        <div class="item"></div>
+      </div>
+      <div class="segment12">
+        <div class="item"></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="width:200px;height:200px; background-color:gray ">
+    <div class="loader normal  primary white">
+      <div class="content">
+        <div class="segment1">
+          <div class="item"></div>
+        </div>
+        <div class="segment2">
+          <div class="item"></div>
+        </div>
+        <div class="segment3">
+          <div class="item"></div>
+        </div>
+        <div class="segment4">
+          <div class="item"></div>
+        </div>
+        <div class="segment5">
+          <div class="item"></div>
+        </div>
+        <div class="segment6">
+          <div class="item"></div>
+        </div>
+        <div class="segment7">
+          <div class="item"></div>
+        </div>
+        <div class="segment8">
+          <div class="item"></div>
+        </div>
+        <div class="segment9">
+          <div class="item"></div>
+        </div>
+        <div class="segment10">
+          <div class="item"></div>
+        </div>
+        <div class="segment11">
+          <div class="item"></div>
+        </div>
+        <div class="segment12">
+          <div class="item"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="loader large third">
+    <div class="content">
+      <div class="segment1">
+        <div class="item"></div>
+      </div>
+      <div class="segment2">
+        <div class="item"></div>
+      </div>
+      <div class="segment3">
+        <div class="item"></div>
+      </div>
+      <div class="segment4">
+        <div class="item"></div>
+      </div>
+      <div class="segment5">
+        <div class="item"></div>
+      </div>
+      <div class="segment6">
+        <div class="item"></div>
+      </div>
+      <div class="segment7">
+        <div class="item"></div>
+      </div>
+      <div class="segment8">
+        <div class="item"></div>
+      </div>
+      <div class="segment9">
+        <div class="item"></div>
+      </div>
+      <div class="segment10">
+        <div class="item"></div>
+      </div>
+      <div class="segment11">
+        <div class="item"></div>
+      </div>
+      <div class="segment12">
+        <div class="item"></div>
+      </div>
+    </div>
+    <div class="info">
+      Loading
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+2016-12-08:
+1. 圆形button, large,small 不生效；  --ok
+2. 圆形button显示icon不居中。
+3. button group如果block显示时，使用a和button的显示不一样
+4. button group add-ons  多个色彩的按钮组合时，需要添加clear-border,且高度与其他的类型不一致  -- ok
+5. button group没有最小宽带，如果文字少些显示的宽带不一致
+
+2016-12-09:
+1. bootstrap 多个input在一个div里时会有margin-top设置，wui没有，边缘会重叠。
+2. input group， large,small 不生效
+3. input group, focus边框没有变色
+4. input group 左边多个label时没有右边border
+5. input group 与dropdown集成的问题
+6. primary button 没有边框
+
+2016-12-11:
+1. .input.large, .button.large  内部由于继承了input的line-height，导致高度不一样  --ok
+
+2016-12-15:
+1. body 的font-size更改后，button大小无变化: 试试white-space: nowrap;
+
+2016-12-16:
+1. 出现两处css定义： .input.medium, .button.medium， html {  -- ok
+
+2016-12-20:
+1. mixin中的变量需要排查，有些没有使用到：_common.scss, core/*,
+
+2017-10-11
+1. large＆small input 右侧的提示icon显示没有垂直居中
+
+todo:
+1. 比较http://amazeui.org/getting-started
+http://frozenui.github.io/components.html#
+http://semantic-ui.com/elements/button.html
+找出更好的设计
+
+2. flexbox 改造，取消浮动布局  --- 》 only support IE10+
+
+
+INFO:
+1. background
+    background-clip指定了背景可以覆盖到什么范围。
+    background-origin指定了背景从什么位置开始。
+
+
+1. 2016-12-12: version 0.5.1
+    1. add text font smoothing.
+
+3. 2017-1-13:
+    border-color 需要统一
+
+4. table, 响应式布局
+
+5. menu-> list : add open and active class
+
+specification:
+
+Button:
+    1. 默认:padding: 上下0.5rem, 左右1rem,  Button 整体高度为2rem, 行高为1.25rem
+        Large: padding- 上下0.75rem, 左右1.5rem
+        Small: padding- 上下0.25rem, 左右0.5rem
+    2. 同级的button之间：
+        对于非block,button, 从第二个button开始设置margin-left: 0.5rem
+        对于block button, 从第二个起设置margin-top:0.5rem
+
+
+new:
+多级目录@import得在src下放置，否则会报错。？？
+
+@keyframes btn-box-shadow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(153,53,200,0.2)
+  }
+  100%{
+    box-shadow: 0 0 0 0.6em rgba(153,53,200,0)
+  }
+}
+animation: btn-box-shadow .6s;
+
+2021-4-21:
+* normalize.css , set font-size: 100% for input, text.
+this causes text-field's label cannot align with input. So change to rem.
+* enhance
+Never go more then 3 levels deep.
+Ensure the CSS output is clean and reusable.
+Use nesting when it makes sense to, not as a default option.
+
+2021-12-19:
+* Replace node-sass with dart sass since node-sass hasn't support the latest node version v16

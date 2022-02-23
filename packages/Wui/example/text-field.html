@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="../dist/default/wui-modern-0.5.1.css" rel="stylesheet">
+  <script src="jquery-3.1.0.js" type="application/javascript"></script>
+  <link href="fa/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    .area-example {
+      margin: 10px auto;
+      padding: 20px;
+    }
+
+    .list-container {
+      position: relative;
+      padding: 10px;
+    }
+
+
+  </style>
+</head>
+<body>
+
+
+<div class="area-example">
+  <strong>Outline:</strong>
+  <div class="text-field outline">
+    <span class="tf-label">Username</span>
+    <input class="tf-input"/>
+  </div>
+
+  <div class="text-field outline show">
+    <span class="tf-label">Username</span>
+    <input class="tf-input" placeholder="Username"/>
+  </div>
+</div>
+
+<div class="area-example">
+  <div class="text-field outline show focused">
+    <span class="tf-label">Username</span>
+    <input class="tf-input" placeholder="Username"/>
+  </div>
+
+
+  <div class="text-field outline show disabled">
+    <span class="tf-label">disabled</span>
+    <input class="tf-input" value="Hello World" disabled/>
+  </div>
+
+  <div class="text-field outline show focused disabled">
+    <span class="tf-label">disabled</span>
+    <input class="tf-input" value="Hello World" disabled/>
+  </div>
+
+</div>
+
+
+<div class="area-example">
+  <strong>Normal:</strong><br/>
+  <div class="text-field underline">
+    <span class="tf-label">Username</span>
+    <input class="tf-input"/>
+  </div>
+
+  <div class="text-field underline show">
+    <span class="tf-label">Username</span>
+    <input class="tf-input" value="Username"/>
+  </div>
+
+  <div class="text-field underline show focused with-bottom-bar">
+    <span class="tf-label">Username</span>
+    <input class="tf-input " value="Username"/>
+  </div>
+
+</div>
+
+<div class="area-example">
+  <div class="text-field underline show focused with-bottom-bar disabled">
+    <span class="tf-label">Username</span>
+    <input class="tf-input " value="Username" disabled/>
+  </div>
+
+  <div class="text-field underline show disabled">
+    <span class="tf-label">Username</span>
+    <input class="tf-input " value="Username" disabled/>
+  </div>
+</div>
+
+
+<div class="area-example">
+  <strong>Size:</strong><br/>
+  <div class="text-field outline show focused small">
+    <span class="tf-label">Username</span>
+    <input class="tf-input" placeholder="Username"/>
+  </div>
+
+  <div class="text-field outline show focused normal">
+    <span class="tf-label">Username</span>
+    <input class="tf-input" placeholder="Username"/>
+  </div>
+
+  <div class="text-field outline show focused large">
+    <span class="tf-label">Username</span>
+    <input class="tf-input" placeholder="Username"/>
+  </div>
+</div>
+
+<div class="area-example">
+  <div class="text-field underline show focused small">
+    <span class="tf-label">Username</span>
+    <input class="tf-input" placeholder="Username"/>
+  </div>
+
+  <div class="text-field underline show focused normal">
+    <span class="tf-label">Username</span>
+    <input class="tf-input" placeholder="Username"/>
+  </div>
+
+  <div class="text-field underline show focused large">
+    <span class="tf-label">Username</span>
+    <input class="tf-input" placeholder="Username"/>
+  </div>
+</div>
+
+
+<div class="area-example">
+  <strong>with Input:</strong><br/>
+  <div class="text-field outline show focused small">
+    <span class="tf-label">Username</span>
+
+    <div class="tf-input-wrapper">
+      <div class="tf-col left">KG</div>
+      <input class="tf-input"/>
+      <div class="tf-col right">KG</div>
+    </div>
+  </div>
+
+  <div class="text-field outline show focused">
+    <span class="tf-label">Username</span>
+
+    <div class="tf-input-wrapper">
+      <div class="tf-col left">KG</div>
+      <input class="tf-input"/>
+      <div class="tf-col right">KG</div>
+    </div>
+  </div>
+
+  <div class="text-field outline show focused large">
+    <span class="tf-label">Username</span>
+
+    <div class="tf-input-wrapper">
+      <div class="tf-col left">KG</div>
+      <input class="tf-input"/>
+      <div class="tf-col right">KG</div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<div class="area-example">
+  <div class="text-field underline show focused small block">
+    <span class="tf-label">Username</span>
+
+    <div class="tf-input-wrapper">
+      <div class="tf-col left">KG</div>
+      <input class="tf-input"/>
+      <div class="tf-col right">KG</div>
+    </div>
+  </div>
+
+  <div class="text-field underline show focused block">
+    <span class="tf-label">Username</span>
+
+    <div class="tf-input-wrapper">
+      <div class="tf-col left">KG</div>
+      <input class="tf-input"/>
+      <div class="tf-col right">KG</div>
+    </div>
+  </div>
+
+  <div class="text-field underline show focused large block">
+    <span class="tf-label">Username</span>
+
+    <div class="tf-input-wrapper">
+      <input class="tf-input"/>
+      <div class="tf-col right">KG</div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="area-example">
+  <strong>No label:</strong><br/>
+
+  <div class="text-field underline show focused with-bottom-bar">
+    <div class="tf-input-wrapper">
+      <div class="tf-col left">Username:</div>
+      <input class="tf-input"/>
+      <div class="tf-col right">KG</div>
+    </div>
+  </div>
+
+  <div class="text-field  underline show focused with-bottom-bar">
+    <div class="tf-input-wrapper">
+      <div class="row">
+        <div class="col-3">Name:</div>
+        <div class="col-9"><input class="tf-input"/></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

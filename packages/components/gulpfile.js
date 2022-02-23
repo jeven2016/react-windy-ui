@@ -1,21 +1,22 @@
 //add type: 'module' into package.json to support ES syntax
-import rimraf from 'rimraf';
+var rimraf = require('rimraf');
 
-import gulp from 'gulp';
-import path from 'path';
-import { spawn } from 'child_process';
+var gulp = require('gulp');
+var path = require('path');
+var spawn = require('child_process').spawn;
 
 function shell(commandLine, cb) {
-  const [cmd, ...rest] = commandLine.split(' ');
-  const options = {
+  const cmds = commandLine.split(' ');
+  const command = cmds.shift();
+  var options = {
     cwd: process.cwd(),
     env: process.env,
     stdio: [0, 1, 2],
     shell: true
   };
-  const child = spawn(cmd, rest, options);
+  var child = spawn(command, cmds, options);
 
-  let result = '';
+  var result = '';
 
   child.stdout &&
     child.stdout.on('data', (data) => {
@@ -36,10 +37,14 @@ gulp.task('build:js', (cb) => {
   shell(`yarn cross-env NODE_ENV=production ./node_modules/.bin/babel src/ --out-dir dist`, cb);
 });
 
+gulp.task('tsc', (cb) => {
+  shell(`tsc`, cb);
+});
+
 gulp.task('copy:tsd', () => gulp.src('src/**/*.d.ts').pipe(gulp.dest('dist')));
 
-const themPath = process.cwd().replace('/components', '') + '/Wui/dist/**/*.min.css';
+const themPath = process.cwd().replace('/components', '') + '/Wui/dist/**/*.css';
 gulp.task('copy:theme', () => gulp.src(themPath).pipe(gulp.dest('dist')));
 
 //compile components
-gulp.task('build', gulp.series('clean:dist', 'build:js', 'copy:tsd', 'copy:theme'));
+gulp.task('build', gulp.series('clean:dist', 'tsc', 'build:js', 'copy:tsd', 'copy:theme'));

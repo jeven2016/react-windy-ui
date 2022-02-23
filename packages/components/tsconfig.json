@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -17,26 +13,17 @@
     "noImplicitAny": false,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "noEmit": false,
+    "noEmit": true, //no js generated, ts just used for check
     "noEmitOnError": false,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "baseUrl": ".",
-    "outDir": "./ts/",
 
     // Ensure that .d.ts files are created by tsc, but not .js files
-//    "declaration": true,
-//    "emitDeclarationOnly": true,
+    //    "declaration": true,
+    //    "emitDeclarationOnly": true,
     // Ensure that Babel can safely transpile files in the TypeScript project
     "isolatedModules": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.d.ts",
-    "src/index.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", "src/index.d.ts"],
+  "exclude": ["node_modules", "dist"]
 }

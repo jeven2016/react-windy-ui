@@ -1,0 +1,429 @@
+%tab-ctrl {
+  @include make-inline-flex-center;
+  color: $gray;
+  font-size: 1.5em;
+  font-weight: map_get($font-weight, 'normal');
+  height: 2rem;
+  width: 2rem;
+  position: absolute;
+  cursor: pointer;
+
+  @include focus2 {
+    color: $blue;
+  }
+
+  @include add-disabled-conf;
+}
+
+@mixin secondary-card-item($l-tab-item-radius) {
+  border: $default-border;
+  border-radius: $l-tab-item-radius;
+  background: $tabs-secondary-card-item-background;
+}
+
+.tabs {
+  display: flex;
+
+  .tab-panel {
+    padding: .75rem 1.25rem;
+  }
+
+  &.top {
+    flex-direction: column;
+  }
+
+  &.bottom {
+    flex-direction: column-reverse;
+  }
+
+  &.left {
+    flex-direction: row;
+  }
+
+  &.right {
+    flex-direction: row-reverse;
+  }
+
+  &.left, &.right {
+    > .tab {
+      flex: 0 0;
+    }
+
+    > .tab-panel {
+      flex: 1;
+    }
+  }
+
+}
+
+.tab {
+  @include make-flex;
+  position: relative;
+
+  .card-wrapper {
+    display: flex;
+  }
+
+  &.horizontal {
+    flex-direction: row;
+
+    &.scrollable {
+      &.with-btn {
+        padding: 0 2rem;
+      }
+    }
+
+    .tab-pre, .tab-next {
+      height: 100%;
+    }
+
+    &.with-border {
+      &.top {
+        border-bottom: $default-border;
+
+        &.secondary-card {
+          .tab-item {
+            @include secondary-card-item($default-border-radius $default-border-radius 0 0);
+
+            &.active {
+              background: $tabs-secondary-card-item-background-active;
+              border-bottom: $tabs-secondary-card-item-border-active;
+            }
+          }
+
+          .tab-container {
+            margin-bottom: -1px;
+          }
+        }
+      }
+
+      &.bottom {
+        border-top: $default-border;
+
+        &.secondary-card {
+          .tab-item {
+            @include secondary-card-item(0 0 $default-border-radius $default-border-radius);
+
+            &.active {
+              background: $tabs-secondary-card-item-background-active;
+              border-top: $tabs-secondary-card-item-border-active;
+            }
+          }
+
+          .tab-container {
+            margin-top: -1px;
+          }
+        }
+      }
+    }
+
+    .tab-item {
+      margin-right: 2px;
+    }
+
+  }
+
+  &.vertical {
+    flex-direction: column;
+    display: inline-flex;
+
+    &.scrollable {
+      &.with-btn {
+        padding: 2rem 0;
+      }
+    }
+
+    .tab-pre, .tab-next {
+      width: 100%;
+    }
+
+    &.with-border {
+
+      &.right {
+        border-left: $default-border;
+
+        &.secondary-card {
+          .tab-item {
+            @include secondary-card-item(0 $default-border-radius $default-border-radius 0);
+
+            &.active {
+              background: $tabs-secondary-card-item-background-active;
+              border-left: $tabs-secondary-card-item-border-active;
+            }
+          }
+
+          .tab-container {
+            margin-left: -1px;
+          }
+
+        }
+      }
+
+      &.left {
+        border-right: $default-border;
+
+        &.secondary-card {
+          .tab-item {
+            @include secondary-card-item($default-border-radius 0 0 $default-border-radius);
+
+            &.active {
+              background: $tabs-secondary-card-item-background-active;
+              border-right: $tabs-secondary-card-item-border-active;
+            }
+          }
+
+          .tab-container {
+            margin-right: -1px;
+          }
+        }
+      }
+    }
+
+    .tab-item {
+      margin-bottom: 3px;
+    }
+  }
+
+
+  &.tab-card {
+    .tab-item {
+      z-index: 2;
+    }
+  }
+
+  .tab-pre {
+    @extend %tab-ctrl;
+
+    &.horizontal {
+      left: 0;
+      top: 0;
+    }
+
+    &.vertical {
+      left: 0;
+      top: 0;
+      height: 2rem;
+      width: 100%;
+    }
+  }
+
+  .tab-next {
+    @extend %tab-ctrl;
+
+    &.horizontal {
+      right: 0;
+      top: 0;
+    }
+
+    &.vertical {
+      bottom: 0;
+      left: 0;
+      height: 2rem;
+      width: 100%;
+    }
+
+  }
+
+  .tab-container {
+    overflow: hidden;
+    white-space: nowrap;
+    flex: 1;
+
+    &.top {
+      margin-bottom: -1px;
+    }
+
+    &.bottom {
+      margin-top: -1px;
+    }
+
+    &.left {
+      margin-right: -1px;
+    }
+
+    &.right {
+      margin-left: -1px;
+    }
+
+    > .tab-scroll {
+      @include make-inline-flex;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+
+      &.vertical {
+        flex-direction: column;
+      }
+
+      &.equal-width {
+        display: flex;
+
+        &.vertical {
+          height: 100%;
+        }
+
+        > .tab-item {
+          flex: 1 1 auto;
+
+          > .item-label {
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+
+  .tab-item {
+    @include make-menu-item(true, 0.5rem 1rem, false);
+    min-width: 2rem;
+    flex-shrink: 0;
+    color: $tabs-item-color;
+
+    > .item-label {
+      display: inline-flex;
+      flex: 1 0 auto;
+
+      > .item-cnt {
+        @include make-flex-center {
+          flex: 1 1 100%;
+          flex-direction: column;
+          padding: .5rem 0;
+          font-weight: map-get($font-weight, 'normal');
+        }
+      }
+    }
+
+    > .item-icon {
+      display: inline-flex;
+      padding-left: 0.75rem;
+      flex: 0 0 1em;
+
+      @include focus2 {
+        color: $red;
+        text-shadow: 0 3px 10px lighten($red, 20%);
+      }
+
+      @include add-disabled-conf;
+    }
+  }
+
+  .tab-bar {
+    position: absolute;
+
+    &.horizontal {
+      &.top {
+        top: -1px;
+        border-top: 3px solid $primary;
+
+        &.tab-card {
+          background: $tabs-horizontal-tab-card-background;
+          top: unset;
+          bottom: -1px;
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+          border-top: none;
+
+          &.with-border {
+            border-top: 3px solid $primary;
+            border-left: $default-border;
+            border-right: $default-border;
+          }
+
+          &.one-border {
+            border-left: none;
+            border-right: none;
+            border-radius: 0;
+            border-top: 3px solid $primary;
+          }
+        }
+      }
+
+      &.bottom {
+        bottom: -1px;
+        border-bottom: 3px solid $primary;
+
+        &.tab-card {
+          border-bottom: none;
+          background: $white;
+          top: -1px;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+
+          &.with-border {
+            border-bottom: 3px solid $primary;
+            border-left: $default-border;
+            border-right: $default-border;
+          }
+
+          &.one-border {
+            border-left: none;
+            border-right: none;
+            border-radius: 0;
+            border-bottom: 3px solid $primary;
+          }
+        }
+      }
+    }
+
+
+    &.vertical {
+      width: 2px;
+
+      &.right {
+        left: calc(100% - 1px);
+        border-left: 3px solid $primary;
+        margin-left: -1px;
+
+        &.tab-card {
+          background: $white;
+          right: unset;
+          border-left: none;
+          left: -1px;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+
+          &.with-border {
+            border-top: $default-border;
+            border-bottom: $default-border;
+            border-right: 3px solid $primary;
+          }
+
+          &.one-border {
+            border-right: 3px solid $primary;
+            border-top: none;
+            border-bottom: none;
+            border-radius: 0;
+          }
+        }
+      }
+
+      &.left {
+        left: -1px;
+        border-left: none;
+        margin-right: -1px;
+
+        &.tab-card {
+          background: $white;
+          right: -1px;
+          left: unset;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+
+          &.with-border {
+            border-top: $default-border;
+            border-bottom: $default-border;
+            border-left: 3px solid $primary;
+          }
+
+          &.one-border {
+            border-top: none;
+            border-bottom: none;
+            border-radius: 0;
+            border-left: 3px solid $primary;
+          }
+        }
+      }
+
+    }
+  }
+}

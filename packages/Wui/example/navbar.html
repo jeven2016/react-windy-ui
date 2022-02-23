@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="fa/css/font-awesome.min.css" rel="stylesheet">
+  <link href="../dist/default/wui-modern-0.5.1.css" rel="stylesheet">
+  <script src="jquery-3.1.0.js" type="application/javascript"></script>
+  <style type="text/css">
+    .area-example {
+      margin: 10px auto;
+      /*padding: 20px;*/
+    }
+
+    .example-container {
+      padding: 0 10px;
+    }
+
+    body {
+      /*background-color: gray;*/
+    }
+
+
+  </style>
+
+  <script language="JavaScript">
+    $(function () {
+      $('.dropdown > .info').click(function (evt) {
+        $(this).parent().toggleClass('active');
+      });
+
+      $("#switch-btn").click(function () {
+        $(this).parent('.navbar').children(".list").toogleClass("expand");
+      });
+
+    });
+  </script>
+</head>
+<body>
+<br/>
+<div class="area-example">
+  Navbar示例：<br/><br/>
+
+  <div class="example-container">
+    <ul class="navbar">
+      <li class="title">
+        <i class="fa fa-car"></i>
+        <span style="margin-left:0.25rem">Titlett</span>
+      </li>
+      <ul class="list">
+        <li class="item">Item</li>
+        <li class="item active">Item</li>
+        <li class="item ">
+          <div class="simple dropdown link  ">
+            <div class="info">Country</div>
+            <div class="menu">
+              <div class="list">
+                <div class="item" data-value="0">China</div>
+                <div class="item" data-value="1">USA</div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="item ">
+          <div class="dropdown">
+            <div class="info">Country</div>
+            <div class="menu">
+              <div class="list">
+                <div class="item" data-value="0">China</div>
+                <div class="item" data-value="1">USA</div>
+                <div class="item" data-value="2">Russian</div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="item">
+          <div class="button-dropdown">
+            <button class="button primary">Button</button>
+            <ul class="menu">
+              <div class="list">
+                <li class="divider"></li>
+                <li class="item" data-value="0">Item1</li>
+                <li class="divider"></li>
+                <li class="item" data-value="1">Item2</li>
+                <li class="divider"></li>
+                <li class="item" data-value="2">Item4</li>
+              </div>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </ul>
+    <br/>
+
+    <ul class="navbar primary">
+      <li class="title"> Title</li>
+      <ul class="list">
+        <li class="item">Item</li>
+        <li class="item active">Item</li>
+        <li class="item ">
+          <div class="simple dropdown  ">
+            <div class="info">Country</div>
+            <div class="menu">
+              <div class="list">
+                <div class="item" data-value="0">China</div>
+                <div class="item" data-value="1">USA</div>
+                <a class="item" data-value="1" href="#"> Link</a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </ul>
+    <ul class="navbar primary bg-color-black">
+      <li class="title"> Title</li>
+      <ul class="list">
+        <li class="item with-bar with-bg">Item</li>
+        <li class="item with-bar with-bg">Item</li>
+        <li class="item with-bar with-bg">Item</li>
+        <li class="item with-bar with-bg">Item</li>
+        <li class="item with-bar with-bg active">Item</li>
+      </ul>
+    </ul>
+    <br/>
+
+    <ul class="navbar">
+      <li class="title"> Title</li>
+      <ul class="list">
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg active">Item</li>
+      </ul>
+    </ul>
+    <br/>
+
+    <ul class="navbar primary">
+      <li class="title"> Title</li>
+      <ul class="list">
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg active">Item</li>
+      </ul>
+    </ul>
+    <br/>
+
+    <ul class="navbar primary bg-color-brown">
+      <li class="title"> Title</li>
+      <ul class="list">
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg active">Item</li>
+      </ul>
+    </ul>
+
+    <ul class="navbar primary bg-color-purple">
+      <li class="title"> Title</li>
+      <ul class="list">
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg">Item</li>
+        <li class="item with-bg active">Item</li>
+        <li class="item"><input type="text" class="input element" placeholder="input..."/></li>
+      </ul>
+    </ul>
+    <br/>
+
+    <ul class="navbar">
+      <li class="title"> Title</li>
+      <ul class="list ">
+        <li class="item with-bar with-bg ">Item</li>
+        <li class="item with-bar with-bg ">Item</li>
+        <li class="item with-bar with-bg ">Item</li>
+      </ul>
+    </ul>
+    <br/>
+
+    <ul class="navbar ">
+      <li class="title"> Title</li>
+      <ul class="list">
+        <li class="item">Item</li>
+        <li class="item">Item</li>
+        <li class="item">Item</li>
+        <li class="item">
+          <button class="button">Button</button>
+        </li>
+        <li class="item ">
+          <input type="text" class="input" placeholder="input..."/>
+
+        </li>
+        <li class="item ">
+          <div class="input-group">
+            <div class="label">
+              <i class="fa fa-calculator"></i>
+            </div>
+            <input type="text" class="input element" placeholder="input..."/>
+            <div class="label">
+              <i class="fa fa-calculator"></i>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </ul>
+    <br/>
+
+    <div class="navbar primary ">
+      <div class="title">
+        <button class="button navbar-switch" id="switch-btn">
+          <i class="fa fa-align-justify"></i>
+        </button>
+        Title
+      </div>
+
+      <div class="list">
+        <div class="item">Item</div>
+        <div class="item">Item</div>
+        <div class="item">Item</div>
+        <div class="item">
+          <button class="button">Button</button>
+        </div>
+        <div class="item  pull-right">
+          <button class="button outline red">Button</button>
+          <button class="button  green">Button</button>
+        </div>
+      </div>
+
+    </div>
+    <br/>
+
+
+  </div>
+
+  <div style="margin-top: 50px">
+
+  </div>
+
+  <ul class="primary navbar fixed bottom">
+    <li class="title"> Title</li>
+    <ul class="list">
+      <li class="item">Item</li>
+      <li class="item">Item</li>
+    </ul>
+  </ul>
+
+  <ul class="  primary navbar fixed top" style="height:5rem;font-size:2rem">
+    <li class="title">
+      <i class="fa fa-car"></i>
+      <span style="margin-left:0.25rem">Title</span>
+    </li>
+    <ul class="list align-right">
+      <li class="item block with-bg">Item</li>
+      <li class="item block with-bg">Item2</li>
+    </ul>
+  </ul>
+
+</div>
+</div>
+
+<br/><br/>
+
+</body>
+</html>

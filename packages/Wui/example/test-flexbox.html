@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flex box</title>
+    <style type="text/css">
+        .container {
+            display: flex;
+            flex-stepDirection: row;
+            background: yellow;
+            width: 100%;
+            margin: 0;
+            height: 300px;
+            margin-bottom: 1rem;
+        }
+
+        .vertical {
+            flex-stepDirection: column;
+        }
+
+        .container > .left {
+            flex-grow: 1;
+            flex-wrap: wrap; /*flex : 1 wrap*/
+
+            background-color: green;
+            text-align: center;
+            color: white;
+            vertical-align: middle;
+        }
+
+        .container > .content {
+            flex-grow: 1;
+            flex-wrap: wrap; /*flex : 1 wrap*/
+
+            background-color: blue;
+            text-align: center;
+            color: white;
+            vertical-align: middle;
+        }
+
+        .container > .right {
+            flex-grow: 1;
+            flex-wrap: wrap; /*flex : 1 wrap*/
+
+            background-color: brown;
+            text-align: center;
+            color: white;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="left">Left</div>
+    <div class="content">Content</div>
+    <div class="right">Right</div>
+</div>
+
+<div class="container">
+    <div class="left">Left</div>
+    <div class="content">Content</div>
+    <div class="right">Right</div>
+    <div class="left">Left</div>
+    <div class="content">Content Content</div>
+    <div class="right">Right</div>
+    <div class="left">Left</div>
+    <div class="content">Content</div>
+    <div class="right">Right</div>
+    <div class="left">Left</div>
+    <div class="content">Content</div>
+    <div class="right">Right</div>
+</div>
+
+<div class="container vertical">
+    <div class="left">Left</div>
+    <div class="content">Content</div>
+    <div class="right">Right</div>
+</div>
+
+
+</body>
+</html>

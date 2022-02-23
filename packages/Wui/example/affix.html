@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="fa/css/font-awesome.min.css" rel="stylesheet">
+  <link href="../dist/default/wui-modern-0.5.1.css" rel="stylesheet">
+  <script src="jquery-3.1.0.js" type="application/javascript"></script>
+  <style type="text/css">
+    body {
+      /*background-color: #ccc;*/
+      height: 1000px;
+    }
+
+    .area-example {
+      margin: 20px auto;
+      padding: 20px;
+      overflow: auto;
+    }
+  </style>
+
+  <script language="javascript">
+    $(function() {
+      window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+          window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+      var start = null;
+      var ele = document.getElementById('test');
+      var progress = 0;
+
+      function step(timestamp) {
+        progress += 1;
+        ele.style.width = progress + '%';
+        ele.innerHTML = progress + '%';
+        if (progress < 100) {
+          requestAnimationFrame(step);
+        }
+      }
+
+      requestAnimationFrame(step);
+      document.getElementById('run').addEventListener('click', function() {
+        ele.style.width = '1px';
+        progress = 0;
+        requestAnimationFrame(step);
+      }, false);
+    });
+  </script>
+</head>
+<body>
+<div class="area-example">
+  <button id="run">Run</button>
+  <br/>
+
+  <span id="test" style="background: red">&nbsp;</span>
+
+</div>
+
+
+</body>
+</html>

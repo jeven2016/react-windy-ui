@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="fa/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../dist/default/wui-modern-0.5.1.css" rel="stylesheet">
+    <script src="jquery-3.1.0.js" type="application/javascript"></script>
+    <style type="text/css">
+        .area-example {
+            margin: 10px auto;
+            padding: 20px;
+        }
+
+        .week-item {
+            width: 2rem;
+            display: inline-block;
+            float: left;
+            background-color: #1f64a5;
+            border: 1px solid #2f782f;
+        }
+    </style>
+
+    <script language="JavaScript">
+        (function ($) {
+            $.fn.calendar = function () {
+
+            }
+        })(jQuery);
+
+    </script>
+</head>
+<body>
+<div class="area-example">
+    <h1>Time 示例</h1>
+    <br/>
+
+
+    <div type="text" class="large icon-input">
+        <input type="text" class="input" placeholder="H:M:S"/>
+        <i class="fa fa-clock-o icon"></i>
+        <div class="time">
+            <div class="hour">
+                <ul class="menu">
+                    <li class="item ">00</li>
+                    <li class="item ">01</li>
+                    <li class="item ">02</li>
+                    <li class="item ">03</li>
+                    <li class="item ">04</li>
+                    <li class="item ">05</li>
+                    <li class="item ">06</li>
+                    <li class="item ">07</li>
+                    <li class="item ">08</li>
+                    <li class="item ">09</li>
+                    <li class="item ">10</li>
+                    <li class="item ">11</li>
+                    <li class="item ">12</li>
+                    <li class="item ">13</li>
+                    <li class="item ">14</li>
+                    <li class="item ">15</li>
+                    <li class="item ">16</li>
+                    <li class="item ">17</li>
+                    <li class="item ">18</li>
+                    <li class="item ">19</li>
+                    <li class="item ">20</li>
+                    <li class="item ">21</li>
+                    <li class="item ">22</li>
+                    <li class="item ">23</li>
+                </ul>
+            </div>
+            <div class="minute">
+                <ul class="menu">
+                    <li class="item ">00</li>
+                    <li class="item ">01</li>
+                    <li class="item ">02</li>
+                    <li class="item ">03</li>
+                    <li class="item ">04</li>
+                    <li class="item ">05</li>
+                    <li class="item ">06</li>
+                    <li class="item ">07</li>
+                    <li class="item ">08</li>
+                    <li class="item ">09</li>
+                    <li class="item ">10</li>
+                    <li class="item ">11</li>
+                    <li class="item ">12</li>
+                    <li class="item ">13</li>
+                    <li class="item ">14</li>
+                    <li class="item ">15</li>
+                    <li class="item ">16</li>
+                    <li class="item ">17</li>
+                    <li class="item ">18</li>
+                    <li class="item ">19</li>
+                    <li class="item ">20</li>
+                    <li class="item ">21</li>
+                    <li class="item ">22</li>
+                    <li class="item ">23</li>
+                    <li class="item ">24</li>
+                    <li class="item ">25</li>
+                    <li class="item ">26</li>
+                    <li class="item ">27</li>
+                    <li class="item ">28</li>
+                    <li class="item ">29</li>
+                    <li class="item ">30</li>
+                    <li class="item ">31</li>
+                    <li class="item ">32</li>
+                    <li class="item ">33</li>
+                    <li class="item ">34</li>
+                    <li class="item ">35</li>
+                    <li class="item ">36</li>
+                    <li class="item ">37</li>
+                    <li class="item ">38</li>
+                    <li class="item ">39</li>
+                    <li class="item ">40</li>
+                    <li class="item ">41</li>
+                    <li class="item ">42</li>
+                    <li class="item ">43</li>
+                    <li class="item ">44</li>
+                    <li class="item ">45</li>
+                    <li class="item ">46</li>
+                    <li class="item ">47</li>
+                    <li class="item ">48</li>
+                    <li class="item ">49</li>
+                    <li class="item ">50</li>
+                    <li class="item ">51</li>
+                    <li class="item ">52</li>
+                    <li class="item ">53</li>
+                    <li class="item ">54</li>
+                    <li class="item ">55</li>
+                    <li class="item ">56</li>
+                    <li class="item ">57</li>
+                    <li class="item ">58</li>
+                    <li class="item ">59</li>
+                </ul>
+            </div>
+            <div class="second">
+                <ul class="menu">
+                    <li class="item ">00</li>
+                    <li class="item ">01</li>
+                    <li class="item ">02</li>
+                    <li class="item ">03</li>
+                    <li class="item ">04</li>
+                    <li class="item ">05</li>
+                    <li class="item ">06</li>
+                    <li class="item ">07</li>
+                    <li class="item ">08</li>
+                    <li class="item ">09</li>
+                    <li class="item ">10</li>
+                    <li class="item ">11</li>
+                    <li class="item ">12</li>
+                    <li class="item ">13</li>
+                    <li class="item ">14</li>
+                    <li class="item ">15</li>
+                    <li class="item ">16</li>
+                    <li class="item ">17</li>
+                    <li class="item ">18</li>
+                    <li class="item ">19</li>
+                    <li class="item ">20</li>
+                    <li class="item ">21</li>
+                    <li class="item ">22</li>
+                    <li class="item ">23</li>
+                    <li class="item ">24</li>
+                    <li class="item ">25</li>
+                    <li class="item ">26</li>
+                    <li class="item ">27</li>
+                    <li class="item ">28</li>
+                    <li class="item ">29</li>
+                    <li class="item ">30</li>
+                    <li class="item ">31</li>
+                    <li class="item ">32</li>
+                    <li class="item ">33</li>
+                    <li class="item ">34</li>
+                    <li class="item ">35</li>
+                    <li class="item ">36</li>
+                    <li class="item ">37</li>
+                    <li class="item ">38</li>
+                    <li class="item ">39</li>
+                    <li class="item ">40</li>
+                    <li class="item ">41</li>
+                    <li class="item ">42</li>
+                    <li class="item ">43</li>
+                    <li class="item ">44</li>
+                    <li class="item ">45</li>
+                    <li class="item ">46</li>
+                    <li class="item ">47</li>
+                    <li class="item ">48</li>
+                    <li class="item ">49</li>
+                    <li class="item ">50</li>
+                    <li class="item ">51</li>
+                    <li class="item ">52</li>
+                    <li class="item ">53</li>
+                    <li class="item ">54</li>
+                    <li class="item ">55</li>
+                    <li class="item ">56</li>
+                    <li class="item ">57</li>
+                    <li class="item ">58</li>
+                    <li class="item ">59</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="date-time-picker" style="margin-top:300px;display:block">
+        <div type="text" class="date-container icon-input">
+            <input type="text" class="input" placeholder="YYYY/MM/DD"/>
+            <i class="fa fa-calendar icon"></i>
+            <div class="data-picker">
+                <div class="title">
+                    <a class="year-info" href="#">2017</a>
+                    <div class="detail-info">
+                        Thu, Sep 21
+                    </div>
+                </div>
+                <div class="info">
+                    <span class="previous"><button class="button">&lt;</button></span>
+                    <span class="content">September 2017</span>
+                    <span class="next"><button class="button">&gt;</button></span>
+                </div>
+                <table class="data-picker-table">
+                    <thead>
+                    <tr>
+                        <th>S</th>
+                        <th>M</th>
+                        <th>T</th>
+                        <th>W</th>
+                        <th>T</th>
+                        <th>F</th>
+                        <th>S</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <button class="button">1</button>
+                        </td>
+                        <td>
+                            <button class="button">2</button>
+                        </td>
+                        <td>
+                            <button class="button">3</button>
+                        </td>
+                        <td>
+                            <button class="button">4</button>
+                        </td>
+                        <td>
+                            <button class="button">5</button>
+                        </td>
+                        <td>
+                            <button class="button">6</button>
+                        </td>
+                        <td>
+                            <button class="button">7</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button class="button">8</button>
+                        </td>
+                        <td>
+                            <button class="button">9</button>
+                        </td>
+                        <td>
+                            <button class="button">10</button>
+                        </td>
+                        <td>
+                            <button class="button">11</button>
+                        </td>
+                        <td>
+                            <button class="button">12</button>
+                        </td>
+                        <td>
+                            <button class="button">13</button>
+                        </td>
+                        <td>
+                            <button class="button">14</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button class="button">15</button>
+                        </td>
+                        <td>
+                            <button class="button">16</button>
+                        </td>
+                        <td>
+                            <button class="button">17</button>
+                        </td>
+                        <td>
+                            <button class="button">18</button>
+                        </td>
+                        <td>
+                            <button class="button">19</button>
+                        </td>
+                        <td>
+                            <button class="button">20</button>
+                        </td>
+                        <td>
+                            <button class="button">21</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button class="button">22</button>
+                        </td>
+                        <td>
+                            <button class="button">23</button>
+                        </td>
+                        <td>
+                            <button class="button">24</button>
+                        </td>
+                        <td>
+                            <button class="button">25</button>
+                        </td>
+                        <td>
+                            <button class="button">26</button>
+                        </td>
+                        <td>
+                            <button class="button">27</button>
+                        </td>
+                        <td>
+                            <button class="button">28</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button class="button">29</button>
+                        </td>
+                        <td>
+                            <button class="button">30</button>
+                        </td>
+                        <td>
+                            <button class="button">31</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="footer">
+                    <button class="button primary">OK</button>
+                    <button class="button">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <div type="text" class="time-container large icon-input">
+            <input type="text" class="input" placeholder="H:M:S"/>
+            <i class="fa fa-clock-o icon"></i>
+            <div class="time">
+                <div class="hour">
+                    <ul class="menu">
+                        <li class="item ">00</li>
+                        <li class="item ">01</li>
+                        <li class="item ">02</li>
+                        <li class="item ">03</li>
+                        <li class="item ">04</li>
+                        <li class="item ">05</li>
+                        <li class="item ">06</li>
+                        <li class="item ">07</li>
+                        <li class="item ">08</li>
+                        <li class="item ">09</li>
+                        <li class="item ">10</li>
+                        <li class="item ">11</li>
+                        <li class="item ">12</li>
+                        <li class="item ">13</li>
+                        <li class="item ">14</li>
+                        <li class="item ">15</li>
+                        <li class="item ">16</li>
+                        <li class="item ">17</li>
+                        <li class="item ">18</li>
+                        <li class="item ">19</li>
+                        <li class="item ">20</li>
+                        <li class="item ">21</li>
+                        <li class="item ">22</li>
+                        <li class="item ">23</li>
+                    </ul>
+                </div>
+                <div class="minute">
+                    <ul class="menu">
+                        <li class="item ">00</li>
+                        <li class="item ">01</li>
+                        <li class="item ">02</li>
+                        <li class="item ">03</li>
+                        <li class="item ">04</li>
+                        <li class="item ">05</li>
+                        <li class="item ">06</li>
+                        <li class="item ">07</li>
+                        <li class="item ">08</li>
+                        <li class="item ">09</li>
+                        <li class="item ">10</li>
+                        <li class="item ">11</li>
+                        <li class="item ">12</li>
+                        <li class="item ">13</li>
+                        <li class="item ">14</li>
+                        <li class="item ">15</li>
+                        <li class="item ">16</li>
+                        <li class="item ">17</li>
+                        <li class="item ">18</li>
+                        <li class="item ">19</li>
+                        <li class="item ">20</li>
+                        <li class="item ">21</li>
+                        <li class="item ">22</li>
+                        <li class="item ">23</li>
+                        <li class="item ">24</li>
+                        <li class="item ">25</li>
+                        <li class="item ">26</li>
+                        <li class="item ">27</li>
+                        <li class="item ">28</li>
+                        <li class="item ">29</li>
+                        <li class="item ">30</li>
+                        <li class="item ">31</li>
+                        <li class="item ">32</li>
+                        <li class="item ">33</li>
+                        <li class="item ">34</li>
+                        <li class="item ">35</li>
+                        <li class="item ">36</li>
+                        <li class="item ">37</li>
+                        <li class="item ">38</li>
+                        <li class="item ">39</li>
+                        <li class="item ">40</li>
+                        <li class="item ">41</li>
+                        <li class="item ">42</li>
+                        <li class="item ">43</li>
+                        <li class="item ">44</li>
+                        <li class="item ">45</li>
+                        <li class="item ">46</li>
+                        <li class="item ">47</li>
+                        <li class="item ">48</li>
+                        <li class="item ">49</li>
+                        <li class="item ">50</li>
+                        <li class="item ">51</li>
+                        <li class="item ">52</li>
+                        <li class="item ">53</li>
+                        <li class="item ">54</li>
+                        <li class="item ">55</li>
+                        <li class="item ">56</li>
+                        <li class="item ">57</li>
+                        <li class="item ">58</li>
+                        <li class="item ">59</li>
+                    </ul>
+                </div>
+                <div class="second">
+                    <ul class="menu">
+                        <li class="item ">00</li>
+                        <li class="item ">01</li>
+                        <li class="item ">02</li>
+                        <li class="item ">03</li>
+                        <li class="item ">04</li>
+                        <li class="item ">05</li>
+                        <li class="item ">06</li>
+                        <li class="item ">07</li>
+                        <li class="item ">08</li>
+                        <li class="item ">09</li>
+                        <li class="item ">10</li>
+                        <li class="item ">11</li>
+                        <li class="item ">12</li>
+                        <li class="item ">13</li>
+                        <li class="item ">14</li>
+                        <li class="item ">15</li>
+                        <li class="item ">16</li>
+                        <li class="item ">17</li>
+                        <li class="item ">18</li>
+                        <li class="item ">19</li>
+                        <li class="item ">20</li>
+                        <li class="item ">21</li>
+                        <li class="item ">22</li>
+                        <li class="item ">23</li>
+                        <li class="item ">24</li>
+                        <li class="item ">25</li>
+                        <li class="item ">26</li>
+                        <li class="item ">27</li>
+                        <li class="item ">28</li>
+                        <li class="item ">29</li>
+                        <li class="item ">30</li>
+                        <li class="item ">31</li>
+                        <li class="item ">32</li>
+                        <li class="item ">33</li>
+                        <li class="item ">34</li>
+                        <li class="item ">35</li>
+                        <li class="item ">36</li>
+                        <li class="item ">37</li>
+                        <li class="item ">38</li>
+                        <li class="item ">39</li>
+                        <li class="item ">40</li>
+                        <li class="item ">41</li>
+                        <li class="item ">42</li>
+                        <li class="item ">43</li>
+                        <li class="item ">44</li>
+                        <li class="item ">45</li>
+                        <li class="item ">46</li>
+                        <li class="item ">47</li>
+                        <li class="item ">48</li>
+                        <li class="item ">49</li>
+                        <li class="item ">50</li>
+                        <li class="item ">51</li>
+                        <li class="item ">52</li>
+                        <li class="item ">53</li>
+                        <li class="item ">54</li>
+                        <li class="item ">55</li>
+                        <li class="item ">56</li>
+                        <li class="item ">57</li>
+                        <li class="item ">58</li>
+                        <li class="item ">59</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+</html>

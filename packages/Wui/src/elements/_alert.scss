@@ -1,0 +1,359 @@
+$animation-timeout: .2s;
+
+
+//@keyframes active-alert {
+//  from {
+//    opacity: 0;
+//    transform: scaleY(0);
+//  }
+//  to {
+//    opacity: 1;
+//    transform: scaleY(1);
+//  }
+//}
+//
+//
+//@keyframes inactive-alert {
+//  from {
+//    visibility: visible;
+//    opacity: 1;
+//    transform: scaleY(1);
+//  }
+//  to {
+//    visibility: hidden;
+//    opacity: 0;
+//    transform: scaleY(0);
+//    height: 0 !important;
+//  }
+//}
+
+.alert {
+  @include make-flex {
+    position: relative; //在alert-container(fixed)下出现位置偏移，因此移除
+    flex: 1 0 100%;
+    flex-flow: row nowrap;
+    padding: 0.75rem 1rem;
+    border-radius: $default-border-radius;
+    margin-bottom: 0.5rem;
+    //box-shadow: $alert-shadow;
+  }
+
+  //
+  //&.active {
+  //  visibility: visible;
+  //  animation: active-alert $animation-timeout ease-in-out;
+  //}
+  //
+  //
+  //&.inactive {
+  //  animation: inactive-alert $animation-timeout ease-in-out;
+  //  animation-fill-mode: forwards;
+  //}
+
+  &.filled {
+    color: white;
+    font-weight: 500;
+
+    > .alert-icon {
+      color: $white !important;
+    }
+  }
+
+  &.normal {
+    display: inline-flex;
+    min-width: 20rem;
+  }
+
+  &.block {
+    display: flex;
+    flex: 1 1 100%;
+  }
+
+  &.with-title {
+    > .alert-close {
+      align-items: flex-start;
+    }
+  }
+
+  > .alert-content {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column wrap;
+
+    > .title {
+      font-weight: 500;
+    }
+  }
+
+  > .alert-icon {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex: 0 0 auto;
+    padding-right: 0.75rem;
+    font-size: 1.5rem;
+  }
+
+  > .alert-close {
+    padding: 0;
+    opacity: .6;
+    background: transparent !important;
+    border: none !important;
+    flex: 0 0 1em;
+
+    @include only-focus {
+      opacity: 1;
+      //background: transparent!important;
+    }
+  }
+
+  &.alert-info {
+    background: $alert-info-background;
+    border: $alert-info-border;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+
+    &.with-left-border {
+      border-left-color: $alert-info-border-left-color;
+      border-left-width: 0.5rem;
+    }
+
+    > .alert-icon {
+      color: $blue;
+    }
+
+    &.filled {
+      border: none;
+      background: $alert-info-filled-background;
+    }
+
+    &:focus, &:hover {
+      box-shadow: $alert-info-box-shadow;
+    }
+  }
+
+
+  &.alert-simple, &.alert-mini {
+    border: $alert-simple-border;
+    //box-shadow: $alert-shadow;
+    background: $alert-simple-background;
+
+    > .alert-close {
+      align-items: flex-start;
+    }
+
+    > .alert-icon {
+      color: $blue;
+    }
+  }
+
+  &.alert-simple {
+    > .alert-content {
+      > .body {
+        min-height: 4rem;
+      }
+    }
+  }
+
+  &.alert-ok {
+    background: $alert-ok-background;
+    border: $alert-ok-border;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+
+    &.with-left-border {
+      border-left-color: $alert-ok-border-left-color;
+      border-left-width: 0.5rem;
+    }
+
+    > .alert-icon {
+      color: $green;
+    }
+
+    &.filled {
+      border: none;
+      background: $alert-ok-filled-background;
+    }
+
+    &:focus, &:hover {
+      box-shadow: $alert-ok-box-shadow;
+    }
+  }
+
+
+  &.alert-warning {
+    background: $alert-warning-background;
+    border: $alert-warning-border;
+
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+
+    &.with-left-border {
+      border-left-color: $alert-warning-border-left-color;
+      border-left-width: 0.5rem;
+    }
+
+    > .alert-icon {
+      color: lighten($brown, 10%);
+    }
+
+    &.filled {
+      border: none;
+      background: $alert-warning-filled-background;
+    }
+
+    &:focus, &:hover {
+      box-shadow: $alert-warning-box-shadow;
+    }
+  }
+
+
+  &.alert-error {
+    background: $alert-error-background;
+    border: $alert-error-border;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+
+    &.with-left-border {
+      border-left-color: $alert-error-border-left-color;
+      border-left-width: 0.5rem;
+    }
+
+    > .alert-icon {
+      color: darken(#e8818a, 20%);
+    }
+
+    &.filled {
+      border: none;
+      background: $alert-error-filled-background;
+    }
+
+
+    &:focus, &:hover {
+      box-shadow: $alert-error-box-shadow;
+    }
+  }
+}
+
+//------------------------------- Container ---------------------------------
+
+/*
+$container-offset: 1.5rem;
+
+@keyframes tl-active-alert {
+  from {
+    left: calc(-100% + 1.5vw);
+  }
+  to {
+    left: $container-offset;
+  }
+}
+
+@keyframes tl-inactive-alert {
+  from {
+    left: $container-offset;
+  }
+  to {
+    left: calc(-100% + 1.5vw);
+  }
+}
+
+@keyframes tr-active-alert {
+  from {
+    right: calc(-100%);
+  }
+  to {
+    right: 0;
+  }
+}
+
+@keyframes tr-inactive-alert {
+  from {
+    right: 0;
+  }
+  to {
+    right: calc(-100%);
+  }
+}
+
+
+%r-movement {
+  > .alert.active {
+    animation: tr-active-alert $animation-timeout linear;
+    animation-fill-mode: forwards;
+  }
+
+  > .alert.inactive {
+    animation: tr-inactive-alert $animation-timeout linear;
+    animation-fill-mode: forwards;
+  }
+}
+
+%l-movement {
+  > .alert.active {
+    animation: tl-active-alert $animation-timeout linear;
+    animation-fill-mode: forwards;
+  }
+
+  > .alert.inactive {
+    animation: tl-inactive-alert $animation-timeout linear;
+    animation-fill-mode: forwards;
+  }
+}*/
+
+.alert-container {
+  position: fixed;
+  display: flex;
+  flex-flow: row wrap;
+  z-index: map_get($z-index, 'top');
+  width: 97%;
+
+  > .alert {
+    box-shadow: $alert-container-box-shadow;
+  }
+
+  @include adapter-width('min-width', map-get($bs-layout, 'sm')) {
+    &.alert-container-width-sm {
+
+      width: 22.5rem;
+    }
+  }
+
+  &.top-center {
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+  }
+
+  /*
+    &.top-left {
+      top: $container-offset;
+      left: $container-offset;
+
+      @extend %l-movement;
+    }
+
+    &.top-right {
+      top: $container-offset;
+      right: $container-offset;
+
+      @extend %r-movement;
+    }
+
+    &.bottom-left {
+      bottom: $container-offset;
+      left: $container-offset;
+
+      @extend %l-movement;
+    }
+
+    &.bottom-right {
+      bottom: $container-offset;
+      right: $container-offset;
+
+      @extend %r-movement;
+    }*/
+
+}
+
+
+

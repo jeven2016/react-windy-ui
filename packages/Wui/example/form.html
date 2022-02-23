@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="fa/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../dist/default/wui-modern-0.5.1.css" rel="stylesheet">
+    <script src="jquery-3.1.0.js" type="application/javascript"></script>
+    <style type="text/css">
+        .area-example {
+            margin: 10px auto;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .form-area-example {
+            width: 800px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            display: block;
+        }
+    </style>
+
+    <script language="JavaScript">
+
+    </script>
+</head>
+<body>
+<div class="area-example">
+    Form示例：<br/><br/>
+
+    <div class="form-area-example">
+        独占行的Form<br/><br/>
+        <form class="form">
+            <div class="form-item">
+                <label>输入框:</label>
+                <input type="text" class="input form-line" placeholder="请输入"/>
+                <div class="info text comment">This is a form example...</div>
+            </div>
+            <div class="form-item">
+                <label>输入框:</label>
+                <input type="text" class="input form-line" placeholder="请输入"/>
+                <div class="info text comment">This is a form example...</div>
+            </div>
+
+            <div class="form-item">
+                <button class="button">OK</button>
+                <button class="button">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <br/>
+    <div class="form-area-example">
+        行内Form<br/><br/>
+        <form class="form">
+            <div class="form-item inline">
+                <label>Username:</label>
+                <input type="text" class="input" placeholder="Username"/>
+                <label>Password:</label>
+                <input type="text" class="input" placeholder="Password"/>
+                <button class="primary button">Sign In</button>
+            </div>
+        </form>
+    </div>
+
+    <br/>
+    <div class="form-area-example">
+        列对齐的Form<br/><br/>
+        <form class="form">
+            <div class="form-item row">
+                <label class="col-xs-12 col-md-4">Username:</label>
+                <div class="col-xs-12 col-md-8">
+                    <input type="text" class="input form-line input-ok" placeholder="Username"/>
+                </div>
+            </div>
+            <div class="form-item row">
+                <label class="col-xs-12 col-md-4">Username:</label>
+                <div class="col-xs-12 col-md-8">
+                    <input type="text" class="input form-line input-warning" placeholder="Username"/>
+                </div>
+            </div>
+            <div class="form-item row">
+                <label class="col-xs-12 col-md-4">Username:</label>
+                <div class="col-xs-12 col-md-8">
+                    <input type="text" class="input form-line input-error" placeholder="Username"/>
+                </div>
+            </div>
+            <div class="form-item row">
+                <label class="col-xs-12 col-md-4">Username:</label>
+                <div class="col-xs-12 col-md-8">
+                    <input type="text" class="input form-line" placeholder="Username"/>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <br/>
+    <div class="form-area-example">
+        列对齐的Form<br/><br/>
+        <form class="form">
+            <div class="form-item row">
+                <label class="col-xs-12 col-md-4 label-col">Username:</label>
+                <div class="col-xs-12 col-md-8">
+                    <div type="text" class="icon-input block input-ok">
+                        <input type="text" class="input" placeholder="icon input..."/>
+                        <i class="fa fa-check icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="form-item row">
+                <label class="col-xs-12 col-md-4 label-col">Username:</label>
+                <div class="col-xs-12 col-md-8">
+                    <div type="text" class="icon-input block input-warning">
+                        <input type="text" class="input" placeholder="icon input..."/>
+                        <i class="fa fa-warning icon"></i>
+                    </div>
+                    <div class="info text warning">This is a warning message.</div>
+                </div>
+
+            </div>
+            <div class="form-item row">
+                <label class="col-xs-12 col-md-4 label-col">Username:</label>
+                <div class="col-xs-12 col-md-8">
+                    <div class="col-xs-12 col-md-8">
+                        <div type="text" class="icon-input block input-error">
+                            <input type="text" class="input" placeholder="icon input..."/>
+                            <i class="fa fa-close icon"></i>
+                        </div>
+                        <div class="info text error">This is a error message.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-item row">
+                <label class="col-xs-12 col-md-4 label-col">Username:</label>
+                <div class="col-xs-12 col-md-8">
+                    <input type="text" class="input form-line" placeholder="Username"/>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+</body>
+</html>

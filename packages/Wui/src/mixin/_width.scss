@@ -1,0 +1,28 @@
+@mixin limit-width($property, $sm-width,$md-width,$lg-width,$xg-width) {
+
+  @include adapter-width('min-width', map-get($bs-layout, 'sm')) {
+    @if $sm-width {
+      ＆.width-sm {
+        $property: $sm-width;
+      }
+    }
+
+    @if $md-width {
+      ＆.width-md {
+        $property: $md-width;
+      }
+    }
+
+    @if $lg-width {
+      ＆.width-lg {
+        $property: $lg-width;
+      }
+    }
+
+    @if $xg-width {
+      ＆.width-xl {
+        $property: $xg-width;
+      }
+    }
+  }
+}

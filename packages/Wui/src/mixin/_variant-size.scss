@@ -1,0 +1,78 @@
+%large {
+  font-size: map-get($font-size, 'large');
+  padding: $elem-large-padding;
+}
+
+%medium {
+  font-size: map-get($font-size, 'normal');
+  padding: $elem-default-padding;
+}
+
+%small {
+  font-size: map-get($font-size, 'small');
+  padding: $elem-small-padding;
+}
+
+@mixin variant-size() {
+  &.large {
+    @extend %large;
+  }
+
+  &.medium {
+    @extend %medium;
+  }
+
+  &.small {
+    @extend %small;
+  }
+}
+
+@mixin input-variant-size() {
+  &.large {
+    @extend %large;
+    @content;
+
+   /* &:not(.textarea):not(within-group) {
+      height: $input-large-height;
+    }*/
+  }
+
+  &.medium {
+    @extend %medium;
+    @content
+
+  /*  &:not(.textarea):not(within-group) {
+      height: $input-height;
+    }*/
+  }
+
+  &.small {
+    @extend %small;
+    @content;
+
+   /* &:not(.textarea):not(within-group) {
+      height: $input-small-height;
+    }*/
+  }
+}
+
+@mixin button-group-variant-size() {
+  &.large {
+    > .button {
+      @extend %large;
+    }
+  }
+
+  &.medium {
+    > .button {
+      @extend %medium;
+    }
+  }
+
+  &.small {
+    > .button {
+      @extend %small;
+    }
+  }
+
+}
