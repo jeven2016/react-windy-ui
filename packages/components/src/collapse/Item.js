@@ -75,8 +75,7 @@ const Item = React.forwardRef((props, ref) => {
           hasBackground={hasBackground}
           onClick={clickHeader}
           style={{ position: 'relative' }}
-          {...bind}
-        >
+          {...bind}>
           <div className={`header-row`}>
             <div className={innerClsName}>
               {iconContent}
@@ -106,7 +105,7 @@ Item.propTypes = {
   disabled: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   hasBackground: PropTypes.bool,
-  moreItems: PropTypes.arrayOf(PropTypes.node)
+  moreItems: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
 };
 
 export default Item;

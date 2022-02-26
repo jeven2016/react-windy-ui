@@ -1,13 +1,11 @@
-import { Size } from '../generic';
+import { DivProps, Size } from '../generic';
 import React from 'react';
 
-export type Shape = 'circle' | 'square' | 'round';
+export type AvatarShape = 'circle' | 'square' | 'round';
 
-export interface AvatarProps {
-  className?: string;
-  extraClassName?: string;
+export type AvatarProps = {
   size?: Size;
-  shape?: Shape;
+  shape?: AvatarShape;
   src?: string; //image src
   alt?: string;
   style?: React.CSSProperties;
@@ -16,7 +14,7 @@ export interface AvatarProps {
   isAccessory?: boolean;
   accessory?: React.ReactNode;
   accessoryStyle?: React.CSSProperties;
-}
+} & DivProps<HTMLDivElement>;
 
-const Avatar: React.ForwardRefExoticComponent<AvatarProps & React.RefAttributes<HTMLElement>>;
+declare const Avatar: React.ForwardRefExoticComponent<AvatarProps>;
 export default Avatar;

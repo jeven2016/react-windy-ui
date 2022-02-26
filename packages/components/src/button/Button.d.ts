@@ -1,16 +1,13 @@
 import React from 'react';
-import { ButtonType, Size, ButtonShape } from '../generic';
+import { ButtonType, Size, ButtonShape, ClassNameRefProps } from '../generic';
 
 export type AnchorBtnProps = {
   href: string;
   target?: string;
-} & BaseButtonProps &
-  Omit<React.AnchorHTMLAttributes<any>, 'type'>;
+} & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'type'>;
 
-export interface BaseButtonProps {
+export type BaseButtonProps = {
   children?: React.ReactNode;
-  className?: string;
-  extraClassName?: string;
   nativeType?: ButtonType;
   type?: string;
   block?: boolean;
@@ -36,9 +33,9 @@ export interface BaseButtonProps {
   loading?: boolean;
   leftLoader?: boolean;
   loader?: React.ReactNode;
-}
+} & ClassNameRefProps<HTMLButtonElement>;
 
 export type ButtonProps = Partial<BaseButtonProps & AnchorBtnProps>;
 
-const Button: React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<HTMLElement>>;
+const Button: React.ForwardRefExoticComponent<ButtonProps>;
 export default Button;

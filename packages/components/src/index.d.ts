@@ -1,8 +1,24 @@
 export type { ButtonProps } from './button';
 export { default as Button } from './button';
 
-export { default as Avatar } from './Avatar';
-export * from './Avatar';
+export type { AvatarProps, AvatarGroupProps } from './avatar';
+export { default as Avatar } from './avatar';
 
-export { default as AvatarGroup } from './AvatarGroup';
-export * from './AvatarGroup';
+export type {
+  CardProps,
+  BodyProps,
+  FooterProps,
+  HeaderProps,
+  RowProps,
+  OverlayTitleProps,
+  CardImageProps,
+  ImageProps,
+  CurtainProps
+} from './card';
+export { default as Card } from './card';
+
+export type { CarouselProps } from './carousel';
+export { default as Carousel } from './carousel';
+
+export type { CollapseProps, CollapsePanelProps, ItemProps } from './carousel';
+export { default as Collapse } from './collapse';
