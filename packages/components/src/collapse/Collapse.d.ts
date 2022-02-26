@@ -1,4 +1,4 @@
-import { DivProps } from 'react-windy-ui/dist/generic';
+import { DivProps } from '../generic';
 import React from 'react';
 import Item from './Item';
 import CollapsePanel from './CollapsePanel';

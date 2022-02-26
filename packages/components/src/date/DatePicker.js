@@ -170,8 +170,7 @@ const DatePicker = React.forwardRef((props, ref) => {
         customizedDate: customized,
         type,
         hasFooter
-      }}
-    >
+      }}>
       {inline ? (
         React.cloneElement(popupBody, { ref: ref, ...rest })
       ) : (
@@ -199,7 +198,6 @@ DatePicker.propTypes = {
   popupType: PropTypes.oneOf(Object.keys(PopupType)),
   type: PropTypes.oneOf(Object.keys(PickerPanel)),
   minYear: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  // icon: PropTypes.node,
   format: PropTypes.object,
   disabled: PropTypes.bool,
   hasFooter: PropTypes.bool,

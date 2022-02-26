@@ -6,6 +6,7 @@ export type ButtonType = 'button' | 'reset' | 'submit' | 'a';
 export type TriggerType = 'hover' | 'click';
 
 export type ClassNameRefProps<P> = {
+  children?: React.ReactNode;
   className?: string;
   extraClassName?: string;
 } & React.RefAttributes<P>;
