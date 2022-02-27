@@ -1,5 +1,5 @@
 import React from 'react';
-import { ClassNameRefProps, DivProps } from '../generic';
+import { ClassNameRefProps, CommonProps } from '../generic';
 import Curtain from './Curtain';
 
 export type CardProps = {
@@ -8,14 +8,14 @@ export type CardProps = {
   hasBorder?: boolean;
   hasBox?: boolean;
   hasWidth?: boolean;
-} & DivProps<HTMLDivElement>;
+} & CommonProps<HTMLDivElement>;
 
-export type BodyProps = DivProps<HTMLDivElement>;
-export type FooterProps = DivProps<HTMLDivElement>;
-export type HeaderProps = DivProps<HTMLDivElement>;
-export type RowProps = DivProps<HTMLDivElement>;
-export type OverlayTitleProps = DivProps<HTMLDivElement>;
-export type CardImageProps = { autoScale?: boolean } & DivProps<HTMLDivElement>;
+export type BodyProps = CommonProps<HTMLDivElement>;
+export type FooterProps = CommonProps<HTMLDivElement>;
+export type HeaderProps = CommonProps<HTMLDivElement>;
+export type RowProps = CommonProps<HTMLDivElement>;
+export type OverlayTitleProps = CommonProps<HTMLDivElement>;
+export type CardImageProps = { autoScale?: boolean } & CommonProps<HTMLDivElement>;
 export type ImageProps = ClassNameRefProps<HTMLImageElement> &
   React.ImgHTMLAttributes<HTMLImageElement>;
 

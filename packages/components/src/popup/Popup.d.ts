@@ -1,4 +1,4 @@
-import { DivProps } from '../generic';
+import { CommonProps } from '../generic';
 import React, { MouseEvent } from 'react';
 
 export type PopupProps = {
@@ -24,7 +24,7 @@ export type PopupProps = {
   animationFunc?: (active: boolean) => boolean;
   position?: string;
   autoClose?: boolean;
-} & Omit<DivProps<HTMLDivElement>, 'onChange'>;
+} & Omit<CommonProps<HTMLDivElement>, 'onChange'>;
 
 declare const Popup: React.ForwardRefExoticComponent<PopupProps>;
 export default Popup;

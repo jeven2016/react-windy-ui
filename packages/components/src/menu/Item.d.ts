@@ -1,4 +1,4 @@
-import { DivProps } from '../generic';
+import { CommonProps } from '../generic';
 import React, { MouseEvent } from 'react';
 
 export type MenuItemProps = {
@@ -13,7 +13,7 @@ export type MenuItemProps = {
   onClick?: (id: string | number, e: MouseEvent) => void;
   customizedChildren?: boolean;
   level?: number;
-} & Omit<DivProps<HTMLDivElement>, 'onClick'>;
+} & Omit<CommonProps<HTMLDivElement>, 'onClick'>;
 
 declare const Item: React.ForwardRefExoticComponent<MenuItemProps>;
 export default Item;

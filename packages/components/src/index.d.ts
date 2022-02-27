@@ -37,3 +37,12 @@ export { default as Dropdown } from './dropdown';
 
 export type { MenuItemProps, MenuGroupProps, SubMenuProps, MenuProps } from './menu';
 export { default as Menu } from './menu';
+
+export type { TypographyProps } from './typography';
+export { default as Typography } from './typography';
+
+export type { ToggleProps } from './toggle';
+export { default as Toggle } from './toggle';
+
+export type { ColProps, GridRowProps } from './grid';
+export { Col, Row } from './grid';

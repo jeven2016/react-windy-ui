@@ -1,4 +1,4 @@
-import { DivProps, Size } from '../generic';
+import { CommonProps, Size } from '../generic';
 import React from 'react';
 
 export type AvatarShape = 'circle' | 'square' | 'round';
@@ -14,7 +14,7 @@ export type AvatarProps = {
   isAccessory?: boolean;
   accessory?: React.ReactNode;
   accessoryStyle?: React.CSSProperties;
-} & DivProps<HTMLDivElement>;
+} & CommonProps<HTMLDivElement>;
 
 declare const Avatar: React.ForwardRefExoticComponent<AvatarProps>;
 export default Avatar;

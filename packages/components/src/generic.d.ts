@@ -11,4 +11,9 @@ export type ClassNameRefProps<P> = {
   extraClassName?: string;
 } & React.RefAttributes<P>;
 
-export type DivProps<P> = ClassNameRefProps<P> & React.HTMLAttributes<HTMLDivElement>;
+export type CommonProps<P> = ClassNameRefProps<P> & React.HTMLAttributes<P>;
+
+export type ElementProps = ClassNameRefProps<HTMLElement> & React.HTMLAttributes<HTMLElement>;
+
+export type JustifyType = 'start' | 'end' | 'center' | 'around' | 'between' | 'evenly';
+export type AlignType = 'start' | 'end' | 'center';

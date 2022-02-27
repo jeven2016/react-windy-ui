@@ -1,5 +1,5 @@
 import React from 'react';
-import { DivProps } from '../generic';
+import { CommonProps } from '../generic';
 
 export type SubMenuProps = {
   id?: number | string;
@@ -7,7 +7,7 @@ export type SubMenuProps = {
   header?: React.ReactNode;
   icon?: React.ReactNode;
   disabled?: boolean;
-} & DivProps<HTMLDivElement>;
+} & CommonProps<HTMLDivElement>;
 
 declare const SubMenu: React.ForwardRefExoticComponent<SubMenuProps>;
 export default SubMenu;
