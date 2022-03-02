@@ -17,3 +17,20 @@ export type ElementProps = ClassNameRefProps<HTMLElement> & React.HTMLAttributes
 
 export type JustifyType = 'start' | 'end' | 'center' | 'around' | 'between' | 'evenly';
 export type AlignType = 'start' | 'end' | 'center';
+
+export type PositionType =
+  | 'top'
+  | 'topLeft'
+  | 'topRight'
+  | 'bottom'
+  | 'bottomLeft'
+  | 'bottomRight'
+  | 'left'
+  | 'leftTop'
+  | 'leftBottom'
+  | 'right'
+  | 'rightTop'
+  | 'rightBottom';
+
+export type ModalInfoType = 'info' | 'warning' | 'error' | 'success' | 'confirm';
+export type ModalType = 'primary' | 'secondary' | 'fullWindow' | 'simple';

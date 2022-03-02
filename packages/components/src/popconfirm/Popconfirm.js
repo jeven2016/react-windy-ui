@@ -72,14 +72,13 @@ const PopConfirm = React.forwardRef((props, ref) => {
       body={bodyCnt}
       position={position}
       autoWidth={true}
-      {...otherProps}
-    >
+      {...otherProps}>
       {children}
     </Popover>
   );
 });
 
-Popover.propTypes = {
+PopConfirm.propTypes = {
   extraClassName: PropTypes.string,
   className: PropTypes.string,
   body: PropTypes.node,

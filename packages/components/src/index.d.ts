@@ -1,3 +1,5 @@
+import PopConfirm from './popconfirm';
+
 export type { ButtonProps } from './button';
 export { default as Button } from './button';
 
@@ -46,3 +48,12 @@ export { default as Toggle } from './toggle';
 
 export type { ColProps, GridRowProps } from './grid';
 export { Col, Row } from './grid';
+
+export type { ModalProps } from './modal';
+export { default as Modal } from './modal';
+
+export type { PopConfirmProps } from './popconfirm';
+export { default as PopConfirm } from './popconfirm';
+
+export type { ProgressType, ProgressProps } from './progress';
+export { default as Progress } from './progress';

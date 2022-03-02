@@ -138,8 +138,7 @@ const SubModal = React.forwardRef((props, ref) => {
       type={type}
       extraClassName={`${extraClassName ? extraClassName : ''} ${compact ? 'compact' : ''}`}
       onCancel={handleCancel}
-      {...otherProps}
-    >
+      {...otherProps}>
       {modalHeader}
       <Modal.Body>
         <div className={`body-content`}>
@@ -240,7 +239,7 @@ SubModal.propTypes = {
   cancelButtonProps: PropTypes.object
 };
 
-export default {
+const MethodDefinition = {
   info(config) {
     return show(InfoType.info, config);
   },
@@ -271,3 +270,5 @@ export default {
     }
   }
 };
+
+export default MethodDefinition;
