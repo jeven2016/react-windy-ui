@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import clsx from 'clsx';
 import { isBlank, isColorValue, nonNil } from '../Utils';
-import Tooltip from '../Tooltip';
+import Tooltip from '../tooltip';
 import * as PropTypes from 'prop-types';
 
 const Typography = React.forwardRef((props, ref) => {

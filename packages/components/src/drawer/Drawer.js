@@ -1,15 +1,15 @@
 import React, { useCallback, useRef } from 'react';
-import Mask from './Mask';
+import Mask from '../Mask';
 import clsx from 'clsx';
-import useEvent from './common/UseEvent';
-import { EventListener } from './common/Constants';
+import useEvent from '../common/UseEvent';
+import { EventListener } from '../common/Constants';
 import { animated, useTransition } from 'react-spring';
-import useMultipleRefs from './common/UseMultipleRefs';
-import { IconList } from './Icons';
-import Card from './card';
-import Divider from './divider';
+import useMultipleRefs from '../common/UseMultipleRefs';
+import { IconList } from '../Icons';
+import Card from '../card';
+import Divider from '../divider';
 import * as PropTypes from 'prop-types';
-import { validate } from './Utils';
+import { validate } from '../Utils';
 
 const Position = {
   left: 'left',
@@ -110,8 +110,7 @@ const Drawer = React.forwardRef((props, ref) => {
               <animated.div
                 style={tranStyles}
                 className={`mask-anchor ${position}`}
-                onClick={clickAnchorHandler}
-              >
+                onClick={clickAnchorHandler}>
                 {anchor}
               </animated.div>
             )
@@ -126,8 +125,7 @@ const Drawer = React.forwardRef((props, ref) => {
               className={clsName}
               style={{ ...style, ...tranStyles }}
               ref={multiRef}
-              {...otherProps}
-            >
+              {...otherProps}>
               <Card>
                 {header && (
                   <>

@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import Element from '../common/Element';
 import { RadioGroupContext } from '../common/Context';
 import Button from '../button';
-import ButtonGroup from '../ButtonGroup';
+import ButtonGroup from '../buttonGroup';
 
 /**
  * Radio Component

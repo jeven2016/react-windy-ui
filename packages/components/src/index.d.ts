@@ -100,3 +100,15 @@ export { default as Alert } from './alert';
 
 export type { NotificationCfg } from './notification';
 export { default as Notification } from './notification';
+
+export type { TooltipProps } from './tooltip';
+export { default as Tooltip } from './tooltip';
+
+export type { BreadcrumbProps, BreadcrumbItemProps } from './breadcrumb';
+export { default as Breadcrumb } from './breadcrumb';
+
+export type { ButtonGroupProps } from './buttonGroup';
+export { default as ButtonGroup } from './buttonGroup';
+
+export type { DrawerProps } from './drawer';
+export { default as Drawer } from './drawer';

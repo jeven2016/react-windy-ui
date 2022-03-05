@@ -6,7 +6,7 @@ import { createContainer, execute, isNil, nonNil } from '../Utils';
 import { IconQuestion } from '../Icons';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import { ModalType } from './ModalUtils';
-import ButtonGroup from '../ButtonGroup';
+import ButtonGroup from '../buttonGroup';
 import Divider from '../divider';
 import useEventCallback from '../common/useEventCallback';
 import PropTypes from 'prop-types';

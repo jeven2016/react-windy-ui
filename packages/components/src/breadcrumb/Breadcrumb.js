@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { invoke, isFunction } from './Utils';
+import { invoke, isFunction } from '../Utils';
 
 const Item = (props) => {
   const {

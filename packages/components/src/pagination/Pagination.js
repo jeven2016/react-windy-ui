@@ -12,7 +12,7 @@ import { invoke, isBlank, isNil, isNumber } from '../Utils';
 import useInternalState from '../common/useInternalState';
 import InputGroup from '../InputGroup';
 import Input from '../Input';
-import Tooltip from '../Tooltip';
+import Tooltip from '../tooltip';
 import clsx from 'clsx';
 import useEventCallback from '../common/useEventCallback';
 import PropTypes from 'prop-types';

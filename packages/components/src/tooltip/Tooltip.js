@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
-import { PopupCtrlType, PositionClass } from './common/Constants';
+import { PopupCtrlType, PositionClass } from '../common/Constants';
 import clsx from 'clsx';
-import Popup from './popup/Popup';
+import Popup from '../popup/Popup';
 import * as PropTypes from 'prop-types';
-import { isColorValue, nonNil } from './Utils';
+import { isColorValue, nonNil } from '../Utils';
 
 const Tooltip = React.forwardRef((props, ref) => {
   const {
