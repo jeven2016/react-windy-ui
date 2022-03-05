@@ -4,7 +4,7 @@ import Element from '../common/Element';
 import { isNil, nonNil } from '../Utils';
 import Ripple from '../common/Ripple';
 import clsx from 'clsx';
-import Loader from '../Loader';
+import Loader from '../loader';
 
 const defaultRippleColor = {
   defaultButton: '#333',
@@ -129,8 +129,7 @@ const Button = React.forwardRef((props, ref) => {
       nativeType={nativeTypeDef.nativeElemType}
       {...nativeTypeDef.nativeBtnType}
       {...otherProps}
-      ref={ref}
-    >
+      ref={ref}>
       <span className="content-root">
         {isLoading && leftLoader && React.cloneElement(loader, { style: { marginRight: '.5em' } })}
         {isNil(leftIcon) && isNil(rightIcon) ? (

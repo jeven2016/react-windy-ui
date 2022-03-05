@@ -1,4 +1,4 @@
-import { CommonProps } from '../generic';
+import { CommonProps, PositionType } from '../generic';
 import React, { MouseEvent } from 'react';
 
 export type PopupProps = {
@@ -12,8 +12,8 @@ export type PopupProps = {
   offset?: number;
   ctrlNode?: React.ReactNode;
   body?: React.ReactNode;
-  ctrlRef?: React.Ref<any> | (() => void);
-  popupRef?: React.Ref<any> | (() => void);
+  ctrlRef?: React.Ref<any> | ((domTarget: HTMLElement) => void);
+  popupRef?: React.Ref<any> | ((domTarget: HTMLElement) => void);
   activeBy?: string;
   defaultActive?: boolean;
   active?: boolean;
@@ -22,7 +22,7 @@ export type PopupProps = {
   hidePopup?: boolean;
   delayClose?: number;
   animationFunc?: (active: boolean) => boolean;
-  position?: string;
+  position?: PositionType;
   autoClose?: boolean;
 } & Omit<CommonProps<HTMLDivElement>, 'onChange'>;
 

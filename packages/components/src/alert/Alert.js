@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { execute, isNil, nonNil, validate } from './Utils';
+import { execute, isNil, nonNil, validate } from '../Utils';
 import clsx from 'clsx';
-import { IconClear, IconError, IconInfo, IconOk, IconWarning } from './Icons';
+import { IconClear, IconError, IconInfo, IconOk, IconWarning } from '../Icons';
 import { animated, useTransition } from 'react-spring';
-import useInternalState from './common/useInternalState';
+import useInternalState from '../common/useInternalState';
 import * as PropTypes from 'prop-types';
-import Button from './button';
-import useEventCallback from './common/useEventCallback';
+import Button from '../button';
+import useEventCallback from '../common/useEventCallback';
 
 const AlertType = {
   simple: { clsName: 'alert-simple', icon: null },
@@ -104,8 +104,7 @@ const Alert = React.forwardRef((props, ref) => {
           className={clsName}
           {...otherProps}
           ref={ref}
-          style={{ ...style, ...extraProps }}
-        >
+          style={{ ...style, ...extraProps }}>
           {iconElem}
 
           <div className="alert-content">
@@ -123,8 +122,7 @@ const Alert = React.forwardRef((props, ref) => {
               hasRipple={false}
               style={closeStyle}
               extraClassName="alert-close"
-              {...(filled ? { color: 'white' } : {})}
-            >
+              {...(filled ? { color: 'white' } : {})}>
               <IconClear size="small" />
             </Button>
           ) : null}

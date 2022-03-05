@@ -1,13 +1,13 @@
 import React, { useCallback, useContext, useMemo } from 'react';
-import { createColorClsName, invoke, isNil, nonNil, preventEvent } from './Utils';
-import { IconRadioChecked, IconRadioUnChecked } from './Icons';
+import { createColorClsName, invoke, isNil, nonNil, preventEvent } from '../Utils';
+import { IconRadioChecked, IconRadioUnChecked } from '../Icons';
 import PropTypes from 'prop-types';
-import useInternalState from './common/useInternalState';
+import useInternalState from '../common/useInternalState';
 import clsx from 'clsx';
-import Element from './common/Element';
-import { RadioGroupContext } from './common/Context';
-import Button from './button';
-import ButtonGroup from './ButtonGroup';
+import Element from '../common/Element';
+import { RadioGroupContext } from '../common/Context';
+import Button from '../button';
+import ButtonGroup from '../ButtonGroup';
 
 /**
  * Radio Component
@@ -119,8 +119,7 @@ const Radio = React.forwardRef((props, ref) => {
           hasBox={false}
           initOutlineColor
           type="primary"
-          {...otherProps}
-        >
+          {...otherProps}>
           {children}
         </Button>
       );
@@ -132,8 +131,7 @@ const Radio = React.forwardRef((props, ref) => {
         disabled={disabled || ctx.disabled}
         {...otherProps}
         onClick={handleClick}
-        ref={ref}
-      >
+        ref={ref}>
         {realIcon}
         <input
           type="radio"

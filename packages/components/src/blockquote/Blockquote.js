@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
-import useElement from './common/useElement';
-import { adjustItems, JustifyContentType } from './common/Constants';
+import useElement from '../common/useElement';
+import { adjustItems, JustifyContentType } from '../common/Constants';
 import PropTypes from 'prop-types';
 
 const Header = React.forwardRef((props, ref) => useElement(props, ref, 'header'));

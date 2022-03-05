@@ -137,7 +137,11 @@ const Popup = React.forwardRef((props, ref) => {
       animationFunc
         ? animationFunc(activePopup)
         : {
-            from: { transform: 'translate3d(0px, 0px, 0px)', opacity: 0, disp: 0 },
+            from: {
+              transform: 'translate3d(0px, 0px, 0px)',
+              opacity: 0,
+              disp: 0
+            },
             to: {
               transform: transform.transform,
               opacity: activePopup ? 1 : 0,
@@ -420,7 +424,7 @@ Popup.propTypes = {
   hidePopup: PropTypes.bool,
   delayClose: PropTypes.number,
   animationFunc: PropTypes.func /*the returned object should have 'disp' property*/,
-  position: PropTypes.string,
+  position: PropTypes.oneOf(Object.values(PopupPosition)),
   autoClose: PropTypes.bool
 };
 

@@ -8,8 +8,8 @@ import getScrollbarWidth, {
   isNumber,
   validate
 } from '../Utils';
-import Checkbox from '../Checkbox';
-import Radio from '../Radio';
+import Checkbox from '../checkbox';
+import Radio from '../radio';
 import useInternalState from '../common/useInternalState';
 import { initStore } from '../common/Store';
 import { checkScrollBar, filterLeaves, SortOrder } from './TableUtils';
@@ -417,8 +417,7 @@ const Table = React.forwardRef((props, ref) => {
               style={{ maxHeight: bodyHeight }}
               className={'scroll-wrapper'}
               ref={scrollBodyRef}
-              onScroll={doScrollX}
-            >
+              onScroll={doScrollX}>
               {getDataTable(clsName, bodyStyle, others, false)}
             </div>
           </div>

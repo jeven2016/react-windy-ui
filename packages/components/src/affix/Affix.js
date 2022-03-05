@@ -1,11 +1,11 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { execute, invoke, isEqual, isNil } from './Utils';
-import { useEvent } from './index';
-import { EventListener } from './common/Constants';
+import { execute, invoke, isEqual, isNil } from '../Utils';
+import useEvent from '../common/UseEvent';
+import { EventListener } from '../common/Constants';
 import clsx from 'clsx';
-import useResizeObserver from './common/UseResizeObserver';
+import useResizeObserver from '../common/UseResizeObserver';
 import PropTypes from 'prop-types';
-import useEventCallback from './common/useEventCallback';
+import useEventCallback from '../common/useEventCallback';
 
 const Affix = React.forwardRef((props, ref) => {
   const {
@@ -70,7 +70,7 @@ const Affix = React.forwardRef((props, ref) => {
 
       if (!isEqual(nextStatus, status)) {
         setStatus(nextStatus);
-        execute(() => invoke(onChange, isAffixed), 100);
+        execute(() => invoke(onChange, isAffixed, e), 100);
       }
     },
     [disabled, isBottom, isTop, onChange, status, targetWindow.innerHeight, top]
@@ -109,7 +109,8 @@ Affix.propTypes = {
   style: PropTypes.object,
   children: PropTypes.node,
   block: PropTypes.bool,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  targetWindow: PropTypes.any
 };
 
 export default Affix;

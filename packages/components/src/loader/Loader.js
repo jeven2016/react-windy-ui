@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import { isNil } from './Utils';
-import Mask from './Mask';
+import { isNil } from '../Utils';
+import Mask from '../Mask';
 import clsx from 'clsx';
-import Modal from './modal';
+import Modal from '../modal';
 import PropTypes from 'prop-types';
 
 const ModalBodyStyle = {
@@ -142,8 +142,7 @@ const Loader = React.forwardRef((props, ref) => {
         type="secondary"
         hasDefaultWidth={hasDefaultWidth}
         hasMask={hasMask}
-        onCancel={onMaskClick}
-      >
+        onCancel={onMaskClick}>
         <Modal.Body>
           <div style={ModalBodyStyle}>{simpleBody}</div>
         </Modal.Body>

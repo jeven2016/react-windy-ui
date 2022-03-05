@@ -1,7 +1,7 @@
 import React, { useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import clsx from 'clsx';
 import { convertToArray, createContainer, execute, getContainer, isNil, random } from '../Utils';
-import Loader from '../Loader';
+import Loader from '../loader';
 import useMounted from '../common/UseUnmounted';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';

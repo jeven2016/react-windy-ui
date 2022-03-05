@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
-import { isColorValue, isNil } from './Utils';
+import { isColorValue, isNil } from '../Utils';
 import * as PropTypes from 'prop-types';
 import { animated, useSpring } from 'react-spring';
 
@@ -98,8 +98,7 @@ const Badge = React.forwardRef((props, ref) => {
             ),
           display: active ? 'inline-flex' : 'none',
           ...contentBackground
-        }}
-      >
+        }}>
         {badgeContent}
       </animated.div>
       {chd}

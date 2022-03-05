@@ -1,10 +1,10 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { IconChecked, IconCheckedIndeterminate, IconUnChecked } from './Icons';
-import Element from './common/Element';
+import { IconChecked, IconCheckedIndeterminate, IconUnChecked } from '../Icons';
+import Element from '../common/Element';
 import clsx from 'clsx';
-import useInternalState from './common/useInternalState';
-import { createColorClsName, preventEvent } from './Utils';
+import useInternalState from '../common/useInternalState';
+import { createColorClsName, preventEvent } from '../Utils';
 
 const Checkbox = React.forwardRef((props, ref) => {
   const {
@@ -99,8 +99,7 @@ const Checkbox = React.forwardRef((props, ref) => {
         disabled={disabled}
         {...otherProps}
         onClick={handleClick}
-        ref={ref}
-      >
+        ref={ref}>
         {realIcon}
         <input
           type="checkbox"
@@ -134,7 +133,7 @@ Checkbox.propTypes = {
   checkedColor: PropTypes.string,
   uncheckedColor: PropTypes.string,
   showIndeterminateState: PropTypes.bool,
-  iconIndeterminate: PropTypes.object,
+  iconIndeterminate: PropTypes.node,
   iconIndeterminateStyle: PropTypes.object
 };
 

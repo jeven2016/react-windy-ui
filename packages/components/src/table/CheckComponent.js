@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { includes, isNil } from '../Utils';
-import Checkbox from '../Checkbox';
+import Checkbox from '../checkbox';
 
 /**
  * A HOC component for checkbox, in order to interact with Store

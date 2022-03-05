@@ -21,10 +21,9 @@ export type ProgressProps = {
   loaderType?: string;
   loaderSize?: string;
   config?: ProgressType[];
-};
+} & CommonProps<HTMLDivElement>;
 
-interface RootComponent
-  extends React.ForwardRefExoticComponent<ProgressProps & CommonProps<HTMLDivElement>> {
+interface RootComponent extends React.ForwardRefExoticComponent<ProgressProps> {
   showTop: (props: ProgressProps) => void;
   closeTop: () => void;
 }

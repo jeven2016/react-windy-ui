@@ -13,7 +13,7 @@ import {
   RootId,
   updateChildrenStatus
 } from './TreeCommon';
-import Loader from '../Loader';
+import Loader from '../loader';
 import useInternalState, { useOptionalState } from '../common/useInternalState';
 import useEventCallback from '../common/useEventCallback';
 

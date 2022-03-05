@@ -34,3 +34,7 @@ export type PositionType =
 
 export type ModalInfoType = 'info' | 'warning' | 'error' | 'success' | 'confirm';
 export type ModalType = 'primary' | 'secondary' | 'fullWindow' | 'simple';
+
+export type Direction = 'horizontal' | 'vertical';
+
+export type FormErrorType = 'ok' | 'warning' | 'error' | '' | 'normal';

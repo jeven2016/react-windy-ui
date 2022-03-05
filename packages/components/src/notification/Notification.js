@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { createContainer, execute, isNil, isString, nonNil, validate } from './Utils';
-import Alert from './Alert';
+import { createContainer, execute, isNil, isString, nonNil, validate } from '../Utils';
+import Alert from '../alert';
 import { to, useTransition } from 'react-spring';
 
 const SizeStyle = {
