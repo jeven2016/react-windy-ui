@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { execute, isNil, nonNil, validate } from '../Utils';
 import clsx from 'clsx';
-import { IconClear, IconError, IconInfo, IconOk, IconWarning } from '../Icons';
+import { IconClear, IconError, IconInfo, IconOk, IconWarning } from '../icon';
 import { animated, useTransition } from 'react-spring';
 import useInternalState from '../common/useInternalState';
 import * as PropTypes from 'prop-types';

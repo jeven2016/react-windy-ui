@@ -1,11 +1,11 @@
 import React, { useCallback, useRef } from 'react';
-import Mask from '../Mask';
+import Mask from '../mask';
 import clsx from 'clsx';
 import useEvent from '../common/UseEvent';
 import { EventListener } from '../common/Constants';
 import { animated, useTransition } from 'react-spring';
 import useMultipleRefs from '../common/UseMultipleRefs';
-import { IconList } from '../Icons';
+import { IconList } from '../icon';
 import Card from '../card';
 import Divider from '../divider';
 import * as PropTypes from 'prop-types';

@@ -1,13 +1,13 @@
 import React, { useCallback, useContext, useMemo, useRef, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { EventListener, InputBorderType } from './common/Constants';
-import Element from './common/Element';
-import { getErrorClsName, isNil, nonNil, validate } from './Utils';
-import useMultipleRefs from './common/UseMultipleRefs';
-import { useEvent } from './index';
-import { IconPwdInvisible, IconPwdVisible } from './Icons';
-import { InputGroupContext } from './common/Context';
+import { EventListener, InputBorderType } from '../common/Constants';
+import Element from '../common/Element';
+import { getErrorClsName, isNil, nonNil, validate } from '../Utils';
+import useMultipleRefs from '../common/UseMultipleRefs';
+import { useEvent } from '../index';
+import { IconPwdInvisible, IconPwdVisible } from '../icon';
+import { InputGroupContext } from '../common/Context';
 
 /**
  * Input Component
@@ -126,8 +126,7 @@ const IconInput = React.forwardRef((props, ref) => {
       <span
         className={`icon-column right${disabled ? ' disabled' : ''}`}
         unselectable="on"
-        {...iconProps}
-      >
+        {...iconProps}>
         {node}
       </span>
     ));
@@ -148,8 +147,7 @@ const IconInput = React.forwardRef((props, ref) => {
         <span
           className={`icon-column ${disabled ? ' disabled' : ''}`}
           unselectable="on"
-          {...iconProps}
-        >
+          {...iconProps}>
           {icon}
         </span>
       )}

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import Popover from '../popover';
-import { IconWarning2 } from '../Icons';
+import { IconWarning2 } from '../icon';
 import Button from '../button';
 import { adjustItems, PopupPosition } from '../common/Constants';
 import clsx from 'clsx';

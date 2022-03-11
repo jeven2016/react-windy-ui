@@ -4,8 +4,8 @@ import Pagination from './pagination';
 //new
 import Button from './button/Button';
 import ButtonGroup from './buttonGroup';
-import Icon from './Icon';
-import InputGroup from './InputGroup.js';
+import Icon from './icon';
+import InputGroup from './inputGroup';
 import Navbar from './navbar';
 
 export { default as Dropdown } from './dropdown';
@@ -39,12 +39,12 @@ export { default as Tabs } from './tabs/Tabs';
 export { default as Carousel } from './carousel/Carousel';
 export { default as Affix } from './affix';
 export { default as useResizeObserver } from './common/UseResizeObserver';
-export { default as Tree } from './tree/Tree';
+export { default as Tree } from './tree';
 export { default as useLazyImport } from './common/UseLazyImport';
 export { default as Collapse } from './collapse/Collapse';
-export { default as Table } from './table/Table';
+export { default as Table } from './table';
 export { default as PopConfirm } from './popconfirm';
-export { default as Input } from './Input';
+export { default as Input } from './input';
 export { initStore, StoreContext } from './common/Store';
 export { default as useEventCallback } from './common/useEventCallback';
 export { default as usePrevious } from './common/UsePrevious';
@@ -58,37 +58,6 @@ export { default as Container } from './container';
 export { default as Typography } from './typography';
 export { default as Stepper } from './stepper';
 
-export {
-  IconInfo,
-  IconWarning,
-  IconError,
-  IconOk,
-  IconClear,
-  IconArrowLeft,
-  IconArrowRight,
-  IconArrowDown,
-  IconStar,
-  IconStarBorder,
-  IconStarHalf,
-  IconChecked,
-  IconUnChecked,
-  IconRadioUnChecked,
-  IconRadioChecked,
-  IconList,
-  IconSearch,
-  IconClear2,
-  IconHome,
-  IconCalendar,
-  IconChecked2,
-  IconTime,
-  IconNoData,
-  IconQuestion,
-  IconAccount,
-  IconLock,
-  IconEdit,
-  IconPwdVisible,
-  IconPwdInvisible,
-  IconArrowDropDown
-} from './Icons';
+export * from './icon';
 
 export { Button, ButtonGroup, Icon, InputGroup, Navbar, DatePicker, TimePicker, Pagination };

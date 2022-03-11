@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { IconArrowLeft, IconArrowUp } from '../Icons';
+import { IconArrowLeft, IconArrowUp } from '../icon';
 import clsx from 'clsx';
 import { TabsContext } from './TabsCommon';
 import PropTypes from 'prop-types';

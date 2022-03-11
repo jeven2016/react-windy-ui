@@ -6,12 +6,12 @@ import {
   IconLeftDoubleArrows,
   IconMore,
   IconRightDoubleArrows
-} from '../Icons';
+} from '../icon';
 import Select from '../select';
 import { invoke, isBlank, isNil, isNumber } from '../Utils';
 import useInternalState from '../common/useInternalState';
-import InputGroup from '../InputGroup';
-import Input from '../Input';
+import InputGroup from '../inputGroup/InputGroup';
+import Input from '../input';
 import Tooltip from '../tooltip';
 import clsx from 'clsx';
 import useEventCallback from '../common/useEventCallback';

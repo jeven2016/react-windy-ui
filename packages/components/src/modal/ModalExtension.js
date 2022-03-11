@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import Modal from './Modal';
 import { Button, IconError, IconInfo, IconOk, IconWarning } from '../index';
 import { createContainer, execute, isNil, nonNil } from '../Utils';
-import { IconQuestion } from '../Icons';
+import { IconQuestion } from '../icon';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import { ModalType } from './ModalUtils';
 import ButtonGroup from '../buttonGroup';

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { isNil } from '../Utils';
-import Mask from '../Mask';
+import Mask from '../mask';
 import clsx from 'clsx';
 import Modal from '../modal';
 import PropTypes from 'prop-types';

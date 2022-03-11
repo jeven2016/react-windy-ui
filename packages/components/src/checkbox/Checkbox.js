@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { IconChecked, IconCheckedIndeterminate, IconUnChecked } from '../Icons';
+import { IconChecked, IconCheckedIndeterminate, IconUnChecked } from '../icon';
 import Element from '../common/Element';
 import clsx from 'clsx';
 import useInternalState from '../common/useInternalState';

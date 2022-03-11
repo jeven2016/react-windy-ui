@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import useInternalState from '../common/useInternalState';
-import Mask from '../Mask';
+import Mask from '../mask';
 import clsx from 'clsx';
 import useEventCallback from '../common/useEventCallback';
 import useMultipleRefs from '../common/UseMultipleRefs';

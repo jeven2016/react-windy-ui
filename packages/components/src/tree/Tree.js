@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import TreeItem from './TreeItem';
 import clsx from 'clsx';
 import { TreeContext } from '../common/Context';
-import { convertToArray, isNil, nonNil } from '../Utils';
+import { convertToArray, isNil } from '../Utils';
 import {
   CheckedStatus,
   getNode,
@@ -34,7 +34,6 @@ const Tree = React.forwardRef((props, ref) => {
     extraClassName,
     checkable,
     defaultExpandedItems = [],
-    autoExpandParents = true,
     expandedItems,
     defaultSelectedItems = [],
     selectedItems,
@@ -59,7 +58,7 @@ const Tree = React.forwardRef((props, ref) => {
     state: convertToArray(selectedItems)
   });
 
-  const [currentExpandedItems, setExpendedItems, isExpendControl] = useInternalState({
+  const [currentExpandedItems, setExpendedItems] = useInternalState({
     props,
     stateName: 'expandedItems',
     defaultState: convertToArray(defaultExpandedItems),
@@ -154,7 +153,7 @@ const Tree = React.forwardRef((props, ref) => {
       expandedIds = [...currentExpandedItems.filter((elem) => elem !== id)];
     }
     setExpendedItems(expandedIds);
-    onExpand && onExpand(expandedIds);
+    onExpand && onExpand(expandedIds, e);
   });
 
   const checkHandler = useEventCallback((id, checked, e) => {
@@ -225,7 +224,6 @@ Tree.propTypes = {
   className: PropTypes.string,
   extraClassName: PropTypes.string,
   checkable: PropTypes.bool,
-  autoExpandParents: PropTypes.bool,
   defaultExpandedItems: PropTypes.any,
   expandedItems: PropTypes.any,
   defaultSelectedItems: PropTypes.any,

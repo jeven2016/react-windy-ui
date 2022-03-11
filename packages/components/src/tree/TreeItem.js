@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import clsx from 'clsx';
-import { IconArrowRightBlack, IconHome } from '../Icons';
+import { IconArrowRightBlack, IconHome } from '../icon';
 import Checkbox from '../checkbox';
 import { TreeContext } from '../common/Context';
 import CollapsePanel from '../collapse/CollapsePanel';

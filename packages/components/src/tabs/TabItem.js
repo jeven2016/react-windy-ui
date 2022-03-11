@@ -4,7 +4,7 @@ import { TabsContext } from './TabsCommon';
 import { isNil, nonNil, preventEvent } from '../Utils';
 import PropTypes from 'prop-types';
 import Ripple from '../common/Ripple';
-import { IconClear } from '../Icons';
+import { IconClear } from '../icon';
 
 const TabItem = React.forwardRef((props, ref) => {
   const rippleRef = useRef(null);
@@ -50,8 +50,7 @@ const TabItem = React.forwardRef((props, ref) => {
       className={clsName}
       ref={ref}
       onClick={() => !disabled && context.change(value)}
-      {...otherProps}
-    >
+      {...otherProps}>
       <div className="item-label">{children}</div>
       {isRemovable ? (
         <div className={deleteIconClsName} onClick={remove}>

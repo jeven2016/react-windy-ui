@@ -112,3 +112,19 @@ export { default as ButtonGroup } from './buttonGroup';
 
 export type { DrawerProps } from './drawer';
 export { default as Drawer } from './drawer';
+
+export { default as Icon } from './icon';
+export type { SvgProps } from './icon';
+export * from './icon';
+
+export type { PureInputProps, IconInputProps, PasswordProps } from './input';
+export { default as Input } from './input';
+
+export type { InputGroupProps, InputGroupLabelProps, InputGroupItemProps } from './inputGroup';
+export { default as InputGroup } from './inputGroup';
+
+export type { TreeProps, TreeItemProps } from './tree';
+export { default as Tree } from './tree';
+
+export type { TableProps } from './table';
+export { default as Table } from './table';

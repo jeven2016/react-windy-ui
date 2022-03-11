@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import clsx from 'clsx';
 import { StepperContext } from '../common/Context';
-import { IconChecked2, IconClear, IconWarning2 } from '../Icons';
+import { IconChecked2, IconClear, IconWarning2 } from '../icon';
 import { Direction } from '../common/Constants';
 import { nonNil, validate } from '../Utils';
 import useInternalState from '../common/useInternalState';

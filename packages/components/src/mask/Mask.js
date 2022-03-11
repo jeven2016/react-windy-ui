@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import clsx from 'clsx';
-import useMultipleRefs from './common/UseMultipleRefs';
+import useMultipleRefs from '../common/UseMultipleRefs';
 import * as PropTypes from 'prop-types';
 import { animated, config, useTransition } from 'react-spring';
 
@@ -45,8 +45,7 @@ const Mask = React.forwardRef((props, ref) => {
               className={clsName}
               style={tranStyles}
               onClick={onClick}
-              {...otherProps}
-            >
+              {...otherProps}>
               {children}
             </animated.div>
           )

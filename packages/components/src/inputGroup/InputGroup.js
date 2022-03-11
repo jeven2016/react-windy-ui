@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { InputGroupContext } from './common/Context';
+import { InputGroupContext } from '../common/Context';
 
 /**
  * Input Group Component

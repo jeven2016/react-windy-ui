@@ -10,7 +10,7 @@ import YearsPanel from './YearsPanel';
 import YearRangesPanel from './YearRangesPanel';
 import MonthsPanel from './MonthsPanel';
 import DayPanel from './DayPanel';
-import { IconCalendar } from '../Icons';
+import { IconCalendar } from '../icon';
 import Wrapper from './Wrapper';
 import DateTimePanel from './DateTimePanel';
 import PropTypes from 'prop-types';

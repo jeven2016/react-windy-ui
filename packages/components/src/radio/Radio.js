@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import { createColorClsName, invoke, isNil, nonNil, preventEvent } from '../Utils';
-import { IconRadioChecked, IconRadioUnChecked } from '../Icons';
+import { IconRadioChecked, IconRadioUnChecked } from '../icon';
 import PropTypes from 'prop-types';
 import useInternalState from '../common/useInternalState';
 import clsx from 'clsx';

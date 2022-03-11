@@ -14,7 +14,7 @@ import {
   preventEvent
 } from '../Utils';
 import Element from '../common/Element';
-import { IconArrowDown, IconArrowUp, IconChecked2, IconClear, IconNoData } from '../Icons';
+import { IconArrowDown, IconArrowUp, IconChecked2, IconClear, IconNoData } from '../icon';
 import useInternalState from '../common/useInternalState';
 import { PopupCtrlType } from '../common/Constants';
 import clsx from 'clsx';

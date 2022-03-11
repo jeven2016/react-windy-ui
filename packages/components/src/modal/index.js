@@ -6,7 +6,7 @@ import { ModalContext } from '../common/Context';
 import { isNil } from '../Utils';
 import Element from '../common/Element';
 import ModelExtension from './ModalExtension';
-import { IconClear } from '../Icons';
+import { IconClear } from '../icon';
 
 const Body = React.forwardRef((props, ref) => {
   const context = useContext(ModalContext);

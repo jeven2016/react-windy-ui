@@ -5,7 +5,7 @@ import useEventCallback from '../common/useEventCallback';
 import { DateContext } from '../common/Context';
 import useInternalState from '../common/useInternalState';
 import { convertDate, getLocaleResources, PopupType } from './DateUtils';
-import { IconTime } from '../Icons';
+import { IconTime } from '../icon';
 import dayjs from 'dayjs';
 import { isBlank, nonNil, validate } from '../Utils';
 import { DataConfig } from './DateConfig';

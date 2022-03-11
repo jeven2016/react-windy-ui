@@ -10,7 +10,7 @@ import Divider from '../divider';
 import Button from '../button';
 import clsx from 'clsx';
 import Popover from '../popover';
-import { IconFilter } from '../Icons';
+import { IconFilter } from '../icon';
 
 const TableHead = React.forwardRef((props, ref) => {
   const {
@@ -93,7 +93,7 @@ const TableHead = React.forwardRef((props, ref) => {
 
       //don't set internal data if onSort is specified
       if (!isNil(onSort)) {
-        onSort(cell);
+        onSort(cell, e);
         return;
       }
 
