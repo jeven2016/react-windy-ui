@@ -128,3 +128,15 @@ export { default as Tree } from './tree';
 
 export type { TableProps } from './table';
 export { default as Table } from './table';
+
+export type { WidgetProps, FormMessageProps, FormLabelProps, FormItemProps } from './form';
+export { default as Form } from './form';
+
+export type {
+  LayoutHeaderProps,
+  LayoutSliderProps,
+  LayoutContentProps,
+  LayoutSplitProps,
+  LayoutFooterProps
+} from './layout';
+export { default as Layout } from './layout';
