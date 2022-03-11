@@ -5,7 +5,7 @@ import { includes, invoke, isNil, nonNil, preventEvent } from '../Utils';
 import { Action, getPaddingStyle } from './MenuUtils';
 import PropTypes from 'prop-types';
 import { animated, useSpring } from 'react-spring';
-import Tooltip from '../Tooltip';
+import Tooltip from '../tooltip';
 import { MenuType } from '../common/Constants';
 import Ripple from '../common/Ripple';
 import useEventCallback from '../common/useEventCallback';
@@ -159,8 +159,7 @@ const Item = React.forwardRef((props, ref) => {
       className={clsName}
       {...otherProps}
       onClick={clickHandler}
-      style={{ ...paddingStyle, ...style }}
-    >
+      style={{ ...paddingStyle, ...style }}>
       {content}
       {ctx.hasRipple && !isDisabled && <Ripple ref={rippleRef} color={ctx.rippleColor} />}
     </div>

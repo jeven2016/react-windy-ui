@@ -42,6 +42,8 @@ Enhance:
 - 弹出菜单，重新定位，当超出可视窗口; 宽度调整到不超出窗口的长度
 - validate参数校验出错后不整个页面崩溃
 - Typography支持文字折叠
+- PopConfirm中的restProps被合并至了 style中，比如设置id就没法成功(*)
+- 
 
 Doc:
 - Add new sample for Space's block attribute

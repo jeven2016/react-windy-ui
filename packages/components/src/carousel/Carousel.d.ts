@@ -1,4 +1,4 @@
-import { DivProps } from '../generic';
+import { CommonProps } from '../generic';
 import React from 'react';
 
 export type CarouselProps = {
@@ -11,7 +11,7 @@ export type CarouselProps = {
   onChange: (number) => void;
   interval?: number;
   disabled?: boolean;
-} & DivProps;
+} & CommonProps;
 
 const Carousel: React.ForwardRefExoticComponent<CarouselProps>;
 export default Carousel;

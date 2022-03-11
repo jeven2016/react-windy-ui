@@ -1,4 +1,4 @@
-import { DivProps } from 'react-windy-ui/dist/generic';
+import { CommonProps } from '../generic';
 import React from 'react';
 import Item from './Item';
 import CollapsePanel from './CollapsePanel';
@@ -15,7 +15,7 @@ export type CollapseProps = {
   iconPosition?: 'left' | 'right';
   hasRipple?: boolean;
   disabled?: boolean;
-} & DivProps<HTMLDivElement>;
+} & CommonProps<HTMLDivElement>;
 
 interface RootComponent extends React.ForwardRefExoticComponent<CollapseProps> {
   Item: typeof Item;

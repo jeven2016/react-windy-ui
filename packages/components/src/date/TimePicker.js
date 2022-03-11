@@ -5,10 +5,11 @@ import useEventCallback from '../common/useEventCallback';
 import { DateContext } from '../common/Context';
 import useInternalState from '../common/useInternalState';
 import { convertDate, getLocaleResources, PopupType } from './DateUtils';
-import { IconTime } from '../Icons';
+import { IconTime } from '../icon';
 import dayjs from 'dayjs';
 import { isBlank, nonNil, validate } from '../Utils';
 import { DataConfig } from './DateConfig';
+import PropTypes from 'prop-types';
 
 const TimePicker = React.forwardRef((props, ref) => {
   const {
@@ -92,8 +93,7 @@ const TimePicker = React.forwardRef((props, ref) => {
         dateFormat: format,
         placeholder,
         onChange: changeInput
-      }}
-    >
+      }}>
       {inline ? (
         popupBody
       ) : (
@@ -102,5 +102,18 @@ const TimePicker = React.forwardRef((props, ref) => {
     </DateContext.Provider>
   );
 });
+
+TimePicker.propTypes = {
+  time: PropTypes.string,
+  defaultTime: PropTypes.string,
+  format: PropTypes.string,
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func,
+  popupType: PropTypes.oneOf(Object.keys(PopupType.popup)),
+  locale: PropTypes.string,
+  config: PropTypes.object,
+  inline: PropTypes.bool,
+  icon: PropTypes.node
+};
 
 export default TimePicker;

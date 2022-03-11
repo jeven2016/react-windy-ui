@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import PropTypes from 'prop-types';
 
 const Body = React.forwardRef((props, ref) => {
   const { className = 'w-container-body', extraClassName, ...rest } = props;
@@ -29,6 +30,14 @@ const Container = React.forwardRef((props, ref) => {
     </div>
   );
 });
+
+Container.propTypes = {
+  className: PropTypes.string,
+  extraClassName: PropTypes.string,
+  children: PropTypes.node,
+  size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
+  autoAdjust: PropTypes.bool
+};
 
 Container.Body = Body;
 

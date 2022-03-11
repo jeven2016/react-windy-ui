@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 import { contains, convertToArray, isNil, max, validate } from '../Utils';
 import HeadCell from './HeadCell';
-import Checkbox from '../Checkbox';
-import Radio from '../Radio';
+import Checkbox from '../checkbox';
+import Radio from '../radio';
 import { SortOrder, traverse } from './TableUtils';
 import Card from '../card';
 import CheckComponent from './CheckComponent';
@@ -10,7 +10,7 @@ import Divider from '../divider';
 import Button from '../button';
 import clsx from 'clsx';
 import Popover from '../popover';
-import { IconFilter } from '../Icons';
+import { IconFilter } from '../icon';
 
 const TableHead = React.forwardRef((props, ref) => {
   const {
@@ -93,7 +93,7 @@ const TableHead = React.forwardRef((props, ref) => {
 
       //don't set internal data if onSort is specified
       if (!isNil(onSort)) {
-        onSort(cell);
+        onSort(cell, e);
         return;
       }
 
@@ -225,8 +225,7 @@ const TableHead = React.forwardRef((props, ref) => {
                 hasMinWidth={true}
                 color="primary"
                 onClick={(e) => filter(cell, e)}
-                style={{ marginLeft: '.5rem' }}
-              >
+                style={{ marginLeft: '.5rem' }}>
                 {okText}
               </Button>
             </Card.Footer>
@@ -247,8 +246,7 @@ const TableHead = React.forwardRef((props, ref) => {
           extraClassName="table-filter"
           onChange={(popActive) => !popActive && setActiveFilter(null)}
           body={list}
-          position="bottomRight"
-        >
+          position="bottomRight">
           <div className={filterCls} onClick={(e) => showFilter(cell, e)}>
             <IconFilter />
           </div>

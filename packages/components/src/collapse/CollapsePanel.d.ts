@@ -1,4 +1,4 @@
-import { DivProps } from '../generic';
+import { CommonProps } from '../generic';
 import React from 'react';
 
 export type CollapsePanelProps = {
@@ -8,7 +8,7 @@ export type CollapsePanelProps = {
   height?: number;
   heightIncrement?: number;
   autoScaleHeight?: boolean;
-} & DivProps<HTMLDivElement>;
+} & CommonProps<HTMLDivElement>;
 
 declare const CollapsePanel: React.ForwardRefExoticComponent<CollapsePanelProps>;
 export default CollapsePanel;

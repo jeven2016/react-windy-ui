@@ -14,7 +14,7 @@ import {
 } from './DateUtils';
 import Card from '../card';
 import DateTitle from './DateTitle';
-import { IconArrowLeft, IconArrowRight } from '../Icons';
+import { IconArrowLeft, IconArrowRight } from '../icon';
 import { DateContext } from '../common/Context';
 import dayjs from 'dayjs';
 import Divider from '../divider';
@@ -68,16 +68,14 @@ const YearsPanel = React.forwardRef((props, ref) => {
           <Col
             justify="center"
             key={`col-${year}`}
-            extraClassName={year > yearRange.end ? 'other-year' : null}
-          >
+            extraClassName={year > yearRange.end ? 'other-year' : null}>
             <Button
               hasBox={false}
               hasRipple={false}
               inverted={true}
               type={isGrayBtn(year) ? 'secondary' : 'primary'}
               active={checkActive(year)}
-              onClick={selectYear.bind(null, year)}
-            >
+              onClick={selectYear.bind(null, year)}>
               {year}
             </Button>
           </Col>

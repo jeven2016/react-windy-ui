@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useMemo, useRef } from 'react';
 import clsx from 'clsx';
-import { IconArrowLeft, IconArrowRight } from '../Icons';
+import { IconArrowLeft, IconArrowRight } from '../icon';
 import { animated, useSpring } from 'react-spring';
 import { MenuContext } from '../common/Context';
 import { getPaddingStyle, MenuDirection } from './MenuUtils';
@@ -76,8 +76,7 @@ const MenuHeader = React.forwardRef((props, ref) => {
         className="header-icon icon-arrow"
         style={{
           transform: springProps.rotation.to((r) => `rotate(${r}deg)`)
-        }}
-      >
+        }}>
         {arrowIcon}
       </animated.div>
     );
@@ -148,8 +147,7 @@ const MenuHeader = React.forwardRef((props, ref) => {
       onMouseEnter={meHandler}
       onMouseLeave={mlHandler}
       style={{ ...paddingStyle, ...style }}
-      {...others}
-    >
+      {...others}>
       {icon && <div className="header-icon">{icon}</div>}
       {cnt()}
       {ctx.hasRipple && !ctx.disabled && <Ripple ref={rippleRef} color={ctx.rippleColor} />}

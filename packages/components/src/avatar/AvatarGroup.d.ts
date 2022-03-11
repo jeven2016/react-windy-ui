@@ -1,6 +1,6 @@
 import { AvatarProps } from './Avatar';
 import React from 'react';
-import { DivProps } from '../generic';
+import { CommonProps } from '../generic';
 
 export type AvatarGroupProps = Partial<
   {
@@ -9,7 +9,7 @@ export type AvatarGroupProps = Partial<
     max?: number;
     extraAvatarStyle?: React.CSSProperties;
     extraAvatarProps?: AvatarProps;
-  } & DivProps<HTMLDivElement>
+  } & CommonProps<HTMLDivElement>
 >;
 
 declare const AvatarGroup: React.ForwardRefExoticComponent<AvatarGroupProps>;

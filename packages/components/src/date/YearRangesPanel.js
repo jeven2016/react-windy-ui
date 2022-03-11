@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useMemo } from 'react';
 import Card from '../card';
 import DateTitle from './DateTitle';
 import Button from '../button';
-import { IconArrowLeft, IconArrowRight } from '../Icons';
+import { IconArrowLeft, IconArrowRight } from '../icon';
 import Row from '../grid/Row';
 import Col from '../grid/Col';
 import { DateContext } from '../common/Context';
@@ -43,15 +43,13 @@ const YearRangesPanel = React.forwardRef((props, ref) => {
           <Col
             justify="center"
             key={`col-${year}`}
-            extraClassName={year >= yearRange.begin + 100 ? 'other-year' : null}
-          >
+            extraClassName={year >= yearRange.begin + 100 ? 'other-year' : null}>
             <Button
               inverted
               initOutlineColor
               hasBox={false}
               extraClassName="range-btn"
-              onClick={selectRange.bind(null, year)}
-            >
+              onClick={selectRange.bind(null, year)}>
               {year}-{year + 9}
             </Button>
           </Col>

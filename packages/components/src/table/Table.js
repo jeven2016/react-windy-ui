@@ -8,8 +8,8 @@ import getScrollbarWidth, {
   isNumber,
   validate
 } from '../Utils';
-import Checkbox from '../Checkbox';
-import Radio from '../Radio';
+import Checkbox from '../checkbox';
+import Radio from '../radio';
 import useInternalState from '../common/useInternalState';
 import { initStore } from '../common/Store';
 import { checkScrollBar, filterLeaves, SortOrder } from './TableUtils';
@@ -72,7 +72,7 @@ const Table = React.forwardRef((props, ref) => {
     defaultResetText = 'Reset',
     defaultFilterComparator = FilterComparator,
     // filteredItems, //[value]
-    onFilter,
+    // onFilter,
 
     scrollY = false,
     bodyHeight = 250, //number
@@ -417,8 +417,7 @@ const Table = React.forwardRef((props, ref) => {
               style={{ maxHeight: bodyHeight }}
               className={'scroll-wrapper'}
               ref={scrollBodyRef}
-              onScroll={doScrollX}
-            >
+              onScroll={doScrollX}>
               {getDataTable(clsName, bodyStyle, others, false)}
             </div>
           </div>
@@ -483,17 +482,17 @@ Table.propTypes = {
   checkedRows: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   highlightCheckedRow: PropTypes.bool,
   defaultSortComparator: PropTypes.func,
-  defaultSortOrder: PropTypes.string,
+  defaultSortOrder: PropTypes.oneOf(Object.keys(SortOrder)),
   onSort: PropTypes.func,
   sortOrder: PropTypes.shape({
     key: PropTypes.any,
-    order: PropTypes.string
+    order: PropTypes.oneOf(Object.keys(SortOrder))
   }),
   defaultOkText: PropTypes.string,
   defaultResetText: PropTypes.string,
   defaultFilterComparator: PropTypes.func,
   // filteredItems: PropTypes.arrayOf(PropTypes.string),
-  onFilter: PropTypes.func,
+  // onFilter: PropTypes.func,
   scrollY: PropTypes.bool,
   bodyHeight: PropTypes.number,
   scrollX: PropTypes.bool,

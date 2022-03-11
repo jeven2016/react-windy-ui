@@ -3,10 +3,10 @@ import * as ReactDOM from 'react-dom';
 import Modal from './Modal';
 import { Button, IconError, IconInfo, IconOk, IconWarning } from '../index';
 import { createContainer, execute, isNil, nonNil } from '../Utils';
-import { IconQuestion } from '../Icons';
+import { IconQuestion } from '../icon';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import { ModalType } from './ModalUtils';
-import ButtonGroup from '../ButtonGroup';
+import ButtonGroup from '../buttonGroup';
 import Divider from '../divider';
 import useEventCallback from '../common/useEventCallback';
 import PropTypes from 'prop-types';
@@ -138,8 +138,7 @@ const SubModal = React.forwardRef((props, ref) => {
       type={type}
       extraClassName={`${extraClassName ? extraClassName : ''} ${compact ? 'compact' : ''}`}
       onCancel={handleCancel}
-      {...otherProps}
-    >
+      {...otherProps}>
       {modalHeader}
       <Modal.Body>
         <div className={`body-content`}>
@@ -240,7 +239,7 @@ SubModal.propTypes = {
   cancelButtonProps: PropTypes.object
 };
 
-export default {
+const MethodDefinition = {
   info(config) {
     return show(InfoType.info, config);
   },
@@ -271,3 +270,5 @@ export default {
     }
   }
 };
+
+export default MethodDefinition;

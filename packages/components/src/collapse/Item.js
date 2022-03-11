@@ -3,7 +3,7 @@ import CollapsePanel from './CollapsePanel';
 import Card from '../card/Card';
 import { convertToArray, isNil, nonNil } from '../Utils';
 import { CollapseContext } from '../common/Context';
-import { IconArrowRight } from '../Icons';
+import { IconArrowRight } from '../icon';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import Ripple from '../common/Ripple';

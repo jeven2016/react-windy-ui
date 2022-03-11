@@ -6,7 +6,7 @@ import { EventListener } from '../common/Constants';
 import useEventCallback from '../common/useEventCallback';
 import { animated, useSpring } from 'react-spring';
 import { convertToArray, isBlank, isNil, nonNil, validate } from '../Utils';
-import { IconPwdInvisible, IconPwdVisible } from '../Icons';
+import { IconPwdInvisible, IconPwdVisible } from '../icon';
 import Select from '../select';
 import PropTypes from 'prop-types';
 import Element from '../common/Element';
@@ -146,8 +146,7 @@ const TextField = React.forwardRef((props, ref) => {
         disabled={disabled}
         block={block}
         size={size}
-        {...newProps}
-      >
+        {...newProps}>
         {React.Children.map(children, (chd, i) => {
           if (chd.type === optionType) {
             return <Select.Option {...chd.props} key={`opt-${i}`} />;

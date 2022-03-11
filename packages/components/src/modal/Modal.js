@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import useEvent from '../common/UseEvent';
 import { EventListener } from '../common/Constants';
 import { updateBodyStyle } from '../Utils';
-import Mask from '../Mask';
+import Mask from '../mask';
 import { animated, config, to, useSpring } from 'react-spring';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import PropTypes from 'prop-types';
@@ -115,8 +115,7 @@ const Modal = React.forwardRef((props, ref) => {
         onMove: null, //useMove(internalRef),
         onCancel: onCancel,
         autoOverflow
-      }}
-    >
+      }}>
       {hasMask && !isFullWindow && <Mask active={active} onClick={handleCancel} />}
       <animated.div className={clsName} ref={multiRef} style={modalStyle} {...otherProps}>
         {children}

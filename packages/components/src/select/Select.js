@@ -14,11 +14,11 @@ import {
   preventEvent
 } from '../Utils';
 import Element from '../common/Element';
-import { IconArrowDown, IconArrowUp, IconChecked2, IconClear, IconNoData } from '../Icons';
+import { IconArrowDown, IconArrowUp, IconChecked2, IconClear, IconNoData } from '../icon';
 import useInternalState from '../common/useInternalState';
 import { PopupCtrlType } from '../common/Constants';
 import clsx from 'clsx';
-import Loader from '../Loader';
+import Loader from '../loader';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import * as PropTypes from 'prop-types';
 import useEventCallback from '../common/useEventCallback';
@@ -405,8 +405,7 @@ const Select = React.forwardRef((props, ref) => {
                   className={`icon-column ${disabled ? 'disabled' : ''}`}
                   onClick={(e) => {
                     !disabled && removeItem(item.value, e);
-                  }}
-                >
+                  }}>
                   <IconClear size="small" />
                 </div>
               </span>
@@ -517,8 +516,7 @@ const Select = React.forwardRef((props, ref) => {
         hasBox={false}
         multiSelect={multiSelect}
         onSelect={selectHandler}
-        {...menuProps}
-      >
+        {...menuProps}>
         {finalItems}
       </Menu>
     );

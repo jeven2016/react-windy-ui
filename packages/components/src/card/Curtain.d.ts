@@ -1,4 +1,4 @@
-import { DivProps, TriggerType } from '../generic';
+import { CommonProps, TriggerType } from '../generic';
 import React from 'react';
 
 export type CurtainProps = {
@@ -10,7 +10,7 @@ export type CurtainProps = {
   onChange?: (any, MouseEvent) => void;
   closeContent?: React.ReactNode;
   darkMask?: boolean;
-} & DivProps<HTMLDivElement>;
+} & CommonProps<HTMLDivElement>;
 
 declare const Curtain: React.ForwardRefExoticComponent<CurtainProps>;
 export default Curtain;

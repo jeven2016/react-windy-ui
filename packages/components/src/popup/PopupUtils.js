@@ -1,6 +1,6 @@
-import Input from '../Input';
+import Input from '../input';
 import Dropdown from '../dropdown';
-import Tooltip from '../Tooltip';
+import Tooltip from '../tooltip';
 import TextField from '../textfield';
 
 /**

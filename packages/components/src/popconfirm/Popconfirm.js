@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import Popover from '../popover';
-import { IconWarning2 } from '../Icons';
+import { IconWarning2 } from '../icon';
 import Button from '../button';
 import { adjustItems, PopupPosition } from '../common/Constants';
 import clsx from 'clsx';
@@ -72,14 +72,13 @@ const PopConfirm = React.forwardRef((props, ref) => {
       body={bodyCnt}
       position={position}
       autoWidth={true}
-      {...otherProps}
-    >
+      {...otherProps}>
       {children}
     </Popover>
   );
 });
 
-Popover.propTypes = {
+PopConfirm.propTypes = {
   extraClassName: PropTypes.string,
   className: PropTypes.string,
   body: PropTypes.node,
