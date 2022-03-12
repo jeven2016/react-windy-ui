@@ -66,7 +66,7 @@ TabItem.propTypes = {
   className: PropTypes.string,
   extraClassName: PropTypes.string,
   disabled: PropTypes.bool,
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  value: PropTypes.any,
   removable: PropTypes.bool,
   hasRipple: PropTypes.bool
 };
