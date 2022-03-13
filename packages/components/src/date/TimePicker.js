@@ -93,7 +93,8 @@ const TimePicker = React.forwardRef((props, ref) => {
         dateFormat: format,
         placeholder,
         onChange: changeInput
-      }}>
+      }}
+    >
       {inline ? (
         popupBody
       ) : (

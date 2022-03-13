@@ -116,7 +116,8 @@ export default function DayPanel(props) {
                 inverted
                 circle
                 hasBox={false}
-                onClick={(e) => change(DateActionType.preYear, e)}>
+                onClick={(e) => change(DateActionType.preYear, e)}
+              >
                 <IconLeftDoubleArrows />
               </Button>
               <Button
@@ -124,7 +125,8 @@ export default function DayPanel(props) {
                 inverted
                 circle
                 hasBox={false}
-                onClick={(e) => change(DateActionType.preMonth, e)}>
+                onClick={(e) => change(DateActionType.preMonth, e)}
+              >
                 <IconArrowLeft />
               </Button>
             </span>
@@ -134,14 +136,16 @@ export default function DayPanel(props) {
                   extraClassName="range-btn"
                   inverted
                   hasBox={false}
-                  onClick={changeMonthPanel}>
+                  onClick={changeMonthPanel}
+                >
                   {locale.monthDetails[currDate.month()]}
                 </Button>
                 <Button
                   extraClassName="range-btn"
                   inverted
                   hasBox={false}
-                  onClick={changeYearPanel}>
+                  onClick={changeYearPanel}
+                >
                   {currDate.year()}
                 </Button>
               </span>,
@@ -155,7 +159,8 @@ export default function DayPanel(props) {
                 inverted
                 circle
                 hasBox={false}
-                onClick={(e) => change(DateActionType.nextMonth, e)}>
+                onClick={(e) => change(DateActionType.nextMonth, e)}
+              >
                 <IconArrowRight />
               </Button>
               <Button
@@ -163,7 +168,8 @@ export default function DayPanel(props) {
                 inverted
                 circle
                 hasBox={false}
-                onClick={(e) => change(DateActionType.nextYear, e)}>
+                onClick={(e) => change(DateActionType.nextYear, e)}
+              >
                 <IconRightDoubleArrows />
               </Button>
             </span>
@@ -195,7 +201,8 @@ export default function DayPanel(props) {
                 type="primary"
                 size="small"
                 inverted
-                onClick={(e) => change(DateActionType.today)}>
+                onClick={(e) => change(DateActionType.today)}
+              >
                 {locale.today}
               </Button>
             </div>

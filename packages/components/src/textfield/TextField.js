@@ -146,7 +146,8 @@ const TextField = React.forwardRef((props, ref) => {
         disabled={disabled}
         block={block}
         size={size}
-        {...newProps}>
+        {...newProps}
+      >
         {React.Children.map(children, (chd, i) => {
           if (chd.type === optionType) {
             return <Select.Option {...chd.props} key={`opt-${i}`} />;

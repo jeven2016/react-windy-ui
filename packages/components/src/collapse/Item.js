@@ -75,7 +75,8 @@ const Item = React.forwardRef((props, ref) => {
           hasBackground={hasBackground}
           onClick={clickHeader}
           style={{ position: 'relative' }}
-          {...bind}>
+          {...bind}
+        >
           <div className={`header-row`}>
             <div className={innerClsName}>
               {iconContent}

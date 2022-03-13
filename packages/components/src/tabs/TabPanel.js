@@ -15,6 +15,6 @@ const TabPanel = React.forwardRef((props, ref) => {
 TabPanel.propTypes = {
   className: PropTypes.string,
   extraClassName: PropTypes.string,
-  itemValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  itemValue: PropTypes.any
 };
 export default TabPanel;

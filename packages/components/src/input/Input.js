@@ -126,7 +126,8 @@ const IconInput = React.forwardRef((props, ref) => {
       <span
         className={`icon-column right${disabled ? ' disabled' : ''}`}
         unselectable="on"
-        {...iconProps}>
+        {...iconProps}
+      >
         {node}
       </span>
     ));
@@ -147,7 +148,8 @@ const IconInput = React.forwardRef((props, ref) => {
         <span
           className={`icon-column ${disabled ? ' disabled' : ''}`}
           unselectable="on"
-          {...iconProps}>
+          {...iconProps}
+        >
           {icon}
         </span>
       )}

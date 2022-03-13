@@ -99,7 +99,8 @@ const Checkbox = React.forwardRef((props, ref) => {
         disabled={disabled}
         {...otherProps}
         onClick={handleClick}
-        ref={ref}>
+        ref={ref}
+      >
         {realIcon}
         <input
           type="checkbox"

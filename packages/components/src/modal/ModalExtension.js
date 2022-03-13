@@ -138,7 +138,8 @@ const SubModal = React.forwardRef((props, ref) => {
       type={type}
       extraClassName={`${extraClassName ? extraClassName : ''} ${compact ? 'compact' : ''}`}
       onCancel={handleCancel}
-      {...otherProps}>
+      {...otherProps}
+    >
       {modalHeader}
       <Modal.Body>
         <div className={`body-content`}>

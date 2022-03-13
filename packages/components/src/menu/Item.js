@@ -159,7 +159,8 @@ const Item = React.forwardRef((props, ref) => {
       className={clsName}
       {...otherProps}
       onClick={clickHandler}
-      style={{ ...paddingStyle, ...style }}>
+      style={{ ...paddingStyle, ...style }}
+    >
       {content}
       {ctx.hasRipple && !isDisabled && <Ripple ref={rippleRef} color={ctx.rippleColor} />}
     </div>

@@ -68,14 +68,16 @@ const YearsPanel = React.forwardRef((props, ref) => {
           <Col
             justify="center"
             key={`col-${year}`}
-            extraClassName={year > yearRange.end ? 'other-year' : null}>
+            extraClassName={year > yearRange.end ? 'other-year' : null}
+          >
             <Button
               hasBox={false}
               hasRipple={false}
               inverted={true}
               type={isGrayBtn(year) ? 'secondary' : 'primary'}
               active={checkActive(year)}
-              onClick={selectYear.bind(null, year)}>
+              onClick={selectYear.bind(null, year)}
+            >
               {year}
             </Button>
           </Col>

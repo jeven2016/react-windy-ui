@@ -1,5 +1,7 @@
 import React from 'react';
 import useElement from '../common/useElement';
+import PropTypes from 'prop-types';
+import { Direction } from '../common/Constants';
 
 /**
  * Divider Component
@@ -15,5 +17,11 @@ const Divider = React.forwardRef((props, ref) => {
     : style;
   return useElement({ ...otherProps, style: sty }, ref, 'divider', { [direction]: direction });
 });
+
+Divider.propTypes = {
+  translucent: PropTypes.bool,
+  direction: PropTypes.oneOf(Object.keys(Direction)),
+  style: PropTypes.object
+};
 
 export default Divider;
