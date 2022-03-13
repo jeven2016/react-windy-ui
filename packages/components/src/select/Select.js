@@ -405,7 +405,8 @@ const Select = React.forwardRef((props, ref) => {
                   className={`icon-column ${disabled ? 'disabled' : ''}`}
                   onClick={(e) => {
                     !disabled && removeItem(item.value, e);
-                  }}>
+                  }}
+                >
                   <IconClear size="small" />
                 </div>
               </span>
@@ -516,7 +517,8 @@ const Select = React.forwardRef((props, ref) => {
         hasBox={false}
         multiSelect={multiSelect}
         onSelect={selectHandler}
-        {...menuProps}>
+        {...menuProps}
+      >
         {finalItems}
       </Menu>
     );

@@ -417,7 +417,8 @@ const Table = React.forwardRef((props, ref) => {
               style={{ maxHeight: bodyHeight }}
               className={'scroll-wrapper'}
               ref={scrollBodyRef}
-              onScroll={doScrollX}>
+              onScroll={doScrollX}
+            >
               {getDataTable(clsName, bodyStyle, others, false)}
             </div>
           </div>

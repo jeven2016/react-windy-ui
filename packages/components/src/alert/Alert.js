@@ -104,7 +104,8 @@ const Alert = React.forwardRef((props, ref) => {
           className={clsName}
           {...otherProps}
           ref={ref}
-          style={{ ...style, ...extraProps }}>
+          style={{ ...style, ...extraProps }}
+        >
           {iconElem}
 
           <div className="alert-content">
@@ -122,7 +123,8 @@ const Alert = React.forwardRef((props, ref) => {
               hasRipple={false}
               style={closeStyle}
               extraClassName="alert-close"
-              {...(filled ? { color: 'white' } : {})}>
+              {...(filled ? { color: 'white' } : {})}
+            >
               <IconClear size="small" />
             </Button>
           ) : null}

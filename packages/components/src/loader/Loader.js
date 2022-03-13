@@ -142,7 +142,8 @@ const Loader = React.forwardRef((props, ref) => {
         type="secondary"
         hasDefaultWidth={hasDefaultWidth}
         hasMask={hasMask}
-        onCancel={onMaskClick}>
+        onCancel={onMaskClick}
+      >
         <Modal.Body>
           <div style={ModalBodyStyle}>{simpleBody}</div>
         </Modal.Body>

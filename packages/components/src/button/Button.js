@@ -129,7 +129,8 @@ const Button = React.forwardRef((props, ref) => {
       nativeType={nativeTypeDef.nativeElemType}
       {...nativeTypeDef.nativeBtnType}
       {...otherProps}
-      ref={ref}>
+      ref={ref}
+    >
       <span className="content-root">
         {isLoading && leftLoader && React.cloneElement(loader, { style: { marginRight: '.5em' } })}
         {isNil(leftIcon) && isNil(rightIcon) ? (

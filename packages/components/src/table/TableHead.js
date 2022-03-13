@@ -225,7 +225,8 @@ const TableHead = React.forwardRef((props, ref) => {
                 hasMinWidth={true}
                 color="primary"
                 onClick={(e) => filter(cell, e)}
-                style={{ marginLeft: '.5rem' }}>
+                style={{ marginLeft: '.5rem' }}
+              >
                 {okText}
               </Button>
             </Card.Footer>
@@ -246,7 +247,8 @@ const TableHead = React.forwardRef((props, ref) => {
           extraClassName="table-filter"
           onChange={(popActive) => !popActive && setActiveFilter(null)}
           body={list}
-          position="bottomRight">
+          position="bottomRight"
+        >
           <div className={filterCls} onClick={(e) => showFilter(cell, e)}>
             <IconFilter />
           </div>

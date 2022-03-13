@@ -50,7 +50,8 @@ const TabItem = React.forwardRef((props, ref) => {
       className={clsName}
       ref={ref}
       onClick={() => !disabled && context.change(value)}
-      {...otherProps}>
+      {...otherProps}
+    >
       <div className="item-label">{children}</div>
       {isRemovable ? (
         <div className={deleteIconClsName} onClick={remove}>

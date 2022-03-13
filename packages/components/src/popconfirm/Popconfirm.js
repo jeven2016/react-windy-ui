@@ -72,7 +72,8 @@ const PopConfirm = React.forwardRef((props, ref) => {
       body={bodyCnt}
       position={position}
       autoWidth={true}
-      {...otherProps}>
+      {...otherProps}
+    >
       {children}
     </Popover>
   );
