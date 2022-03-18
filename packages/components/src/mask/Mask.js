@@ -45,7 +45,8 @@ const Mask = React.forwardRef((props, ref) => {
               className={clsName}
               style={tranStyles}
               onClick={onClick}
-              {...otherProps}>
+              {...otherProps}
+            >
               {children}
             </animated.div>
           )

@@ -13,6 +13,10 @@ const TriggerType = {
   click: 'click'
 };
 
+/**
+ * Curtain with Card
+ * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{}> & React.RefAttributes<unknown>>}
+ */
 const Curtain = React.forwardRef((props, ref) => {
   const {
     disabled = false,

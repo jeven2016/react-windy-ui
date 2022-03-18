@@ -76,7 +76,8 @@ const MenuHeader = React.forwardRef((props, ref) => {
         className="header-icon icon-arrow"
         style={{
           transform: springProps.rotation.to((r) => `rotate(${r}deg)`)
-        }}>
+        }}
+      >
         {arrowIcon}
       </animated.div>
     );
@@ -147,7 +148,8 @@ const MenuHeader = React.forwardRef((props, ref) => {
       onMouseEnter={meHandler}
       onMouseLeave={mlHandler}
       style={{ ...paddingStyle, ...style }}
-      {...others}>
+      {...others}
+    >
       {icon && <div className="header-icon">{icon}</div>}
       {cnt()}
       {ctx.hasRipple && !ctx.disabled && <Ripple ref={rippleRef} color={ctx.rippleColor} />}

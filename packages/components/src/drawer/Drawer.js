@@ -110,7 +110,8 @@ const Drawer = React.forwardRef((props, ref) => {
               <animated.div
                 style={tranStyles}
                 className={`mask-anchor ${position}`}
-                onClick={clickAnchorHandler}>
+                onClick={clickAnchorHandler}
+              >
                 {anchor}
               </animated.div>
             )
@@ -125,7 +126,8 @@ const Drawer = React.forwardRef((props, ref) => {
               className={clsName}
               style={{ ...style, ...tranStyles }}
               ref={multiRef}
-              {...otherProps}>
+              {...otherProps}
+            >
               <Card>
                 {header && (
                   <>

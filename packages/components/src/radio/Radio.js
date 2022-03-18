@@ -119,7 +119,8 @@ const Radio = React.forwardRef((props, ref) => {
           hasBox={false}
           initOutlineColor
           type="primary"
-          {...otherProps}>
+          {...otherProps}
+        >
           {children}
         </Button>
       );
@@ -131,7 +132,8 @@ const Radio = React.forwardRef((props, ref) => {
         disabled={disabled || ctx.disabled}
         {...otherProps}
         onClick={handleClick}
-        ref={ref}>
+        ref={ref}
+      >
         {realIcon}
         <input
           type="radio"

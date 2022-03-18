@@ -115,7 +115,8 @@ const Modal = React.forwardRef((props, ref) => {
         onMove: null, //useMove(internalRef),
         onCancel: onCancel,
         autoOverflow
-      }}>
+      }}
+    >
       {hasMask && !isFullWindow && <Mask active={active} onClick={handleCancel} />}
       <animated.div className={clsName} ref={multiRef} style={modalStyle} {...otherProps}>
         {children}

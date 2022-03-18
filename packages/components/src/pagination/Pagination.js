@@ -44,7 +44,8 @@ const PageButton = React.forwardRef((props, ref) => {
       onMouseLeave={blur}
       onFocus={focus}
       onBlur={blur}
-      {...buttonProps}>
+      {...buttonProps}
+    >
       {!showIcon && <IconMore />}
       {showIcon && arrowIcon}
     </Button>
@@ -125,7 +126,8 @@ const Pagination = React.forwardRef((props, ref) => {
           onClick={(e) => goTo(1, e)}
           active={currentPage === 1}
           type="primary"
-          {...buttonProps}>
+          {...buttonProps}
+        >
           <span className="page-text">1</span>
         </Button>
       </span>
@@ -143,7 +145,8 @@ const Pagination = React.forwardRef((props, ref) => {
           onClick={(e) => goTo(pageCount, e)}
           active={!isNil(pageCount) && currentPage === pageCount}
           type="primary"
-          {...buttonProps}>
+          {...buttonProps}
+        >
           <span className="page-text">{pageCount}</span>
         </Button>
       </span>
@@ -273,7 +276,8 @@ const Pagination = React.forwardRef((props, ref) => {
             disabled={currentPage <= 1}
             onClick={(e) => goTo(currentPage - 1, e)}
             type="primary"
-            {...buttonProps}>
+            {...buttonProps}
+          >
             {renderPre ? renderPre() : <IconArrowLeft />}
           </Button>
         </span>
@@ -293,7 +297,8 @@ const Pagination = React.forwardRef((props, ref) => {
             disabled={currentPage === pageCount}
             onClick={(e) => goTo(currentPage + 1, e)}
             type="primary"
-            {...buttonProps}>
+            {...buttonProps}
+          >
             {renderNext ? renderNext() : <IconArrowRight />}
           </Button>
         </span>
@@ -383,7 +388,8 @@ const Pagination = React.forwardRef((props, ref) => {
                 hasOutlineBackground={false}
                 onClick={(e) => goTo(item.value, e)}
                 type="primary"
-                {...buttonProps}>
+                {...buttonProps}
+              >
                 <span className="page-text">{item.value}</span>
               </Button>
             </span>
@@ -401,7 +407,8 @@ const Pagination = React.forwardRef((props, ref) => {
             size="small"
             compactMenu={compactMenu}
             block={false}
-            {...selectProps}>
+            {...selectProps}
+          >
             {pageRanges.map((value, index) => {
               const itemText = isNil(renderPageRanges)
                 ? `${value}`
