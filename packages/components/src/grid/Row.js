@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { adjustItems, AlignItemsType, JustifyContentType } from '../common/Constants';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -25,10 +25,13 @@ const Row = React.forwardRef((props, ref) => {
 
   const gutterX = gutter?.x;
   const gutterY = gutter?.y;
-  const validGutter = {
-    x: nonNil(gutterX) && isNumber(gutterX) ? gutterX : DefaultGutter.x,
-    y: nonNil(gutterY) && isNumber(gutterY) ? gutterY : DefaultGutter.y
-  };
+  const validGutter = useMemo(
+    () => ({
+      x: nonNil(gutterX) && isNumber(gutterX) ? gutterX : DefaultGutter.x,
+      y: nonNil(gutterY) && isNumber(gutterY) ? gutterY : DefaultGutter.y
+    }),
+    [gutterX, gutterY]
+  );
 
   const justifyCls = adjustItems(justify, align);
   const clsName = clsx(extraClassName, className, justifyCls);
@@ -40,8 +43,10 @@ const Row = React.forwardRef((props, ref) => {
           margin: `-${validGutter.y / 2}px -${validGutter.x / 2}px ${validGutter.y / 2}px`
         };
 
+  const ctxValue = useMemo(() => ({ rowGutter: validGutter }), [validGutter]);
+
   return (
-    <RowContext.Provider value={gutter}>
+    <RowContext.Provider value={ctxValue}>
       <div ref={ref} style={{ ...style, ...rowStyle }} className={clsName} {...otherProps}>
         {React.Children.map(children, (chd) => {
           if (chd && chd?.type === Col) {

@@ -15,7 +15,7 @@ export type LoaderProps = {
   hasBackground?: boolean;
   direction?: Direction;
   modalStyle?: React.CSSProperties;
-  global?: React.MouseEventHandler;
+  global?: boolean;
   onMaskClick?: () => void;
   hasDefaultWidth?: boolean; //only works with global type
 } & CommonProps<HTMLElement>;

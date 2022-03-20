@@ -1,0 +1,31 @@
+
+.wui-box {
+  @include make-inline-flex {
+    align-items: center;
+  }
+
+  &.wui-with-margin-bottom {
+    margin-bottom: 1rem;
+  }
+
+  &.wui-block {
+    display: flex;
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  > .wui-box-left,
+  > .wui-box-center,
+  > .wui-box-right {
+    @include make-flex-vertical-center
+  }
+
+  > .wui-box-center {
+    flex: 1 1 auto;
+  }
+
+  .wui-widest-item {
+    flex: 1 1 auto;
+  }
+
+}

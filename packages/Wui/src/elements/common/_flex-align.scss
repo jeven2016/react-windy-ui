@@ -1,9 +1,9 @@
 @mixin justify($position) {
-  justify-content: #{$position} !important;
+  justify-content: #{$position};
 }
 
 @mixin align($position) {
-  align-items: #{$position} !important;
+  align-items: #{$position};
 }
 
 

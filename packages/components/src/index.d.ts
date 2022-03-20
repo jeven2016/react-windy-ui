@@ -163,3 +163,6 @@ export type {
 export { default as Tabs } from './tabs';
 
 export { useTheme, CssThemeProvider } from './theme';
+
+export type { BoxProps } from './box';
+export { default as Box } from './box';

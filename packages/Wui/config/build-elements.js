@@ -46,6 +46,7 @@ var config = {
         avatar: true,
         list: true,
         skeleton: true,
+        box: true,
       },
     },
 
