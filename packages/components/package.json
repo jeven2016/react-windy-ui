@@ -6,7 +6,7 @@
     "type": "git",
     "url": "git://github.com/jeven2016/react-windy-ui.git"
   },
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "types": "dist/index.d.ts",
   "keywords": [
     "React",
@@ -53,6 +53,8 @@
     "child_process": "^1.0.2",
     "cross-env": "^7.0.3",
     "gulp": "^4.0.2",
+    "gulp-filter": "^7.0.0",
+    "gulp-rename": "^2.0.0",
     "lodash": "^4.17.21",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
@@ -70,6 +72,7 @@
   },
   "scripts": {
     "build": "yarn run format && ../../node_modules/gulp/bin/gulp.js build",
+    "copy:themes": "yarn run format && ../../node_modules/gulp/bin/gulp.js copy:themes",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,scss,json}' --config ./.prettierrc"
   },
   "babel": {

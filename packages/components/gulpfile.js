@@ -1,8 +1,9 @@
-//add type: 'module' into package.json to support ES syntax
 var rimraf = require('rimraf');
 
 var gulp = require('gulp');
 var path = require('path');
+var rename = require('gulp-rename');
+const filter = require('gulp-filter');
 var spawn = require('child_process').spawn;
 
 function shell(commandLine, cb) {
@@ -43,8 +44,19 @@ gulp.task('tsc', (cb) => {
 
 gulp.task('copy:tsd', () => gulp.src('src/**/*.d.ts').pipe(gulp.dest('dist')));
 
-const themPath = process.cwd().replace('/components', '') + '/Wui/dist/**/*.css';
-gulp.task('copy:theme', () => gulp.src(themPath).pipe(gulp.dest('dist')));
+const themPath = process.cwd().replace('/components', '') + '/wui/dist/**/*.css';
+gulp.task('copy:themes', () =>
+  gulp
+    .src(themPath)
+    .pipe(filter('*.min.css')) // filter the min files and not setting restore: true
+    .pipe(
+      rename(function (path) {
+        path.basename = path.basename.replace('.min', '');
+      })
+    )
+    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('../docs/public'))
+);
 
 //compile components
-gulp.task('build', gulp.series('clean:dist', 'tsc', 'build:js', 'copy:tsd', 'copy:theme'));
+gulp.task('build', gulp.series('clean:dist', 'tsc', 'build:js', 'copy:tsd', 'copy:themes'));

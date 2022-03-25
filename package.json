@@ -5,11 +5,12 @@
     "clean": "lerna clean",
     "start": "concurrently \"yarn run startDocs\" \"yarn run watch:wui\" ",
     "startDocs": "yarn run build:cmp && lerna --scope docs run start",
-    "build:docs": "yarn run build:cmp && lerna --scope docs run build",
-    "build:cmp": "yarn run build:wui && lerna --scope react-windy-ui run build",
+    "copy:themes": " lerna --scope react-windy-ui run copy:themes",
+    "build:docs": "yarn run build:cmp && lerna --scope docs run build ",
+    "build:cmp": "yarn run build:wui && lerna --scope react-windy-ui run build && yarn run copy:themes",
     "build:wui": "lerna --scope wui run build && lerna --scope wui run buildThemes",
-    "watch:wui": "lerna --scope wui run watch -- --buildAll=true --copyTo=/home/jujucom/Desktop/workspace/projects/react-windy-ui/packages/components/dist/",
-    "build:theme": "lerna --scope wui run buildThemes",
+    "watch:wui": "lerna --scope wui run watch -- --buildAll=true && yarn run copy:themes",
+    "build:themes": "lerna --scope wui run buildThemes",
     "publish": "cd packages/components && npm publish"
   },
   "workspaces": [

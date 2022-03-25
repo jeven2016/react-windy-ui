@@ -25,7 +25,7 @@ const Button = React.forwardRef((props, ref) => {
   });
 
   const {
-    className = 'button',
+    className = 'wui-button',
     nativeType = 'button',
     type,
     block = false,
