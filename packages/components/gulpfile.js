@@ -38,6 +38,7 @@ gulp.task('build:js', (cb) => {
   shell(`yarn cross-env NODE_ENV=production ./node_modules/.bin/babel src/ --out-dir dist`, cb);
 });
 
+// tsc检查
 gulp.task('tsc', (cb) => {
   shell(`tsc`, cb);
 });
