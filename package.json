@@ -9,7 +9,7 @@
     "build:docs": "yarn run build:cmp && lerna --scope docs run build ",
     "build:cmp": "yarn run build:wui && lerna --scope react-windy-ui run build && yarn run copy:themes",
     "build:wui": "lerna --scope wui run build && lerna --scope wui run buildThemes",
-    "watch:wui": "lerna --scope wui run watch -- --buildAll=true && yarn run copy:themes",
+    "watch:wui": "lerna --scope wui run watch -- --buildAll=true",
     "build:themes": "lerna --scope wui run buildThemes",
     "publish": "cd packages/components && npm publish"
   },

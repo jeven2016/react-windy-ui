@@ -6,6 +6,7 @@ var sass = require("gulp-sass")(require("sass"));
 var path = require("path");
 var del = require("del");
 var rimraf = require("rimraf");
+const filter = require("gulp-filter");
 
 // plugins
 var concat = require("gulp-concat");
@@ -186,12 +187,27 @@ gulp.task("buildThemes", function () {
   return merge(tskArray);
 });
 
+const themPath = process.cwd() + "dist";
+gulp.task("copy", () =>
+  gulp
+    .src(themPath)
+    .pipe(filter("*.min.css")) // filter the min files and not setting restore: true
+    .pipe(
+      rename(function (path) {
+        path.basename = path.basename.replace(".min", "");
+      })
+    )
+    .pipe(gulp.dest("../components/dist"))
+    .pipe(gulp.dest("../docs/public"))
+);
+
 gulp.task("watch", function () {
   console.log(params.buildAll);
   const tasks = ["default"];
   if (params.buildAll) {
     tasks.push("buildThemes");
   }
+  tasks.push("copy");
 
   return watch("src/**/*.scss", function () {
     gulp.series(tasks)();
