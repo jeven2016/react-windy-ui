@@ -201,9 +201,9 @@ gulp.task("copy", () =>
     .pipe(gulp.dest("../docs/public"))
 );
 
+//watch the changes of scss files and trigger building task
 gulp.task("watch", function () {
-  console.log(params.buildAll);
-  const tasks = ["default"];
+  var tasks = ["default"];
   if (params.buildAll) {
     tasks.push("buildThemes");
   }
