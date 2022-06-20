@@ -46,8 +46,9 @@ gulp.task('tsc', (cb) => {
 gulp.task('copy:tsd', () => gulp.src('src/**/*.d.ts').pipe(gulp.dest('dist')));
 
 const themPath = process.cwd().replace('/components', '') + '/wui/dist/**/*.css';
-gulp.task('copy:themes', () =>
-  gulp
+gulp.task('copy:themes', () => {
+  console.log('theme=' + themPath);
+  return gulp
     .src(themPath)
     .pipe(filter('*.min.css')) // filter the min files and not setting restore: true
     .pipe(
@@ -56,8 +57,8 @@ gulp.task('copy:themes', () =>
       })
     )
     .pipe(gulp.dest('dist'))
-    .pipe(gulp.dest('../docs/public'))
-);
+    .pipe(gulp.dest('../docs/public'));
+});
 
 //compile components
 gulp.task('build', gulp.series('clean:dist', 'tsc', 'build:js', 'copy:tsd', 'copy:themes'));

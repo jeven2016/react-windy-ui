@@ -187,13 +187,15 @@ gulp.task("buildThemes", function () {
   return merge(tskArray);
 });
 
-const themPath = process.cwd() + "dist";
+const themPath = process.cwd() + "/dist";
+console.log("source=" + themPath);
 gulp.task("copy", () =>
   gulp
     .src(themPath)
     .pipe(filter("*.min.css")) // filter the min files and not setting restore: true
     .pipe(
       rename(function (path) {
+        console.log("path=" + path);
         path.basename = path.basename.replace(".min", "");
       })
     )
@@ -210,6 +212,7 @@ gulp.task("watch", function () {
   tasks.push("copy");
 
   return watch("src/**/*.scss", function () {
+    console.log("~~~~~~~~~~~~~watch ~~~~~~~~~~~");
     gulp.series(tasks)();
   });
 });

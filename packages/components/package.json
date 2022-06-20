@@ -65,14 +65,14 @@
     "react-dom": ">=16.12.0"
   },
   "publishConfig": {
-    "registry": "http://localhost:8081/repository/npm-release/"
+    "registry": "https://registry.npmjs.org"
   },
   "release": {
     "publishDir": "dist"
   },
   "scripts": {
     "build": "yarn run format && ../../node_modules/gulp/bin/gulp.js build",
-    "copy:themes": "yarn run format && ../../node_modules/gulp/bin/gulp.js copy:themes",
+    "copy:themes": "../../node_modules/gulp/bin/gulp.js copy:themes",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,scss,json}' --config ./.prettierrc"
   },
   "babel": {
