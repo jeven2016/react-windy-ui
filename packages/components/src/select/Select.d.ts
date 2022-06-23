@@ -38,7 +38,7 @@ export type SelectProps = {
   loaderType?: string;
   loading?: boolean;
   compactMenu?: boolean;
-} & Omit<PopupProps, 'onSelect'>;
+} & Omit<PopupProps, 'onSelect' | 'onChange'>;
 
 export type SelectOptionProps = {
   value?: any;

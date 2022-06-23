@@ -15,7 +15,7 @@ export type PaginationProps = {
   defaultPageRange?: number;
   pageRange?: number;
   onChange?: (nextPage: number, limit: number, e: MouseEvent) => void;
-  onChangeRange?: (page: number, e: MouseEvent) => void;
+  onChangeRange?: (pageRange: number, e: MouseEvent) => void; //todo: change it to pageSize
   hasGo?: boolean;
   buttonProps?: ButtonProps;
   leftItems?: React.ReactNode[];
@@ -25,7 +25,7 @@ export type PaginationProps = {
   renderPre?: () => React.ReactNode;
   renderNext?: () => React.ReactNode;
   selectProps?: object; //todo select props;
-} & CommonProps<HTMLDivElement>;
+} & Omit<CommonProps<HTMLDivElement>, 'onChange'>;
 
 declare const Pagination: React.ForwardRefExoticComponent<PaginationProps>;
 

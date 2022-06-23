@@ -1,6 +1,6 @@
-import React from "react";
-import { ClassNameRefProps, CommonProps } from "../generic";
-import Curtain from "./Curtain";
+import React from 'react';
+import { ClassNameRefProps, CommonProps } from '../generic';
+import Curtain from './Curtain';
 
 export type CardProps = {
   block?: boolean;

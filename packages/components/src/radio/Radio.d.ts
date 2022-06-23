@@ -16,7 +16,7 @@ export type RadioProps = {
   uncheckedIcon?: React.ReactNode;
   errorType?: ErrorType;
 } & ButtonProps &
-  React.Attributes<HTMLDivElement>;
+  Omit<React.Attributes<HTMLDivElement>, 'onChange'>;
 
 export type RadioGroupProps = {
   defaultValue?: any;
@@ -25,7 +25,7 @@ export type RadioGroupProps = {
   disabled?: boolean;
   errorType?: ErrorType;
   button?: boolean;
-} & CommonProps<HTMLElement>; //todo inherit from ButtonGroup
+} & Omit<CommonProps<HTMLElement>, 'onChange'>; //todo inherit from ButtonGroup
 
 declare const RadioGroup: React.ForwardRefExoticComponent<RadioGroupProps>;
 export { RadioGroup };

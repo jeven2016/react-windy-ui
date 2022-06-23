@@ -80,10 +80,17 @@ export const updateBoxShadow = (
 };
 
 export const checkScrollBar = (scrollHeadRef) => {
-  const scrollWidth = scrollHeadRef.current.scrollWidth;
-  const offsetWidth = scrollHeadRef.current.offsetWidth;
-  const scrollLeft = scrollHeadRef.current.scrollLeft;
+  const scrollWidth = scrollHeadRef.current?.scrollWidth;
+  const offsetWidth = scrollHeadRef.current?.offsetWidth;
+  const scrollLeft = scrollHeadRef.current?.scrollLeft;
 
+  //fix bug: the above variables may be undefined while some cells are need to be 'fixed'
+  if (isNil(scrollWidth) || isNil(offsetWidth) || isNil(scrollLeft)) {
+    return {
+      isStartPostion: true,
+      isEndPostion: false
+    };
+  }
   const isStartPostion = scrollLeft <= 0;
   const isEndPostion = scrollWidth <= offsetWidth + scrollLeft;
 
