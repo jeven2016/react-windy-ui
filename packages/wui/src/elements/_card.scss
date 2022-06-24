@@ -153,7 +153,8 @@
 
   &.block {
     display: flex;
-    flex: 1 1 0;
+    flex: 1 1 auto;
+    width: 100%;
 
     .card-body {
       flex: 1 1 0;
