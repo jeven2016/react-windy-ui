@@ -1,76 +1,81 @@
-import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {
-  Button,
-  Card,
-  Col,
-  IconSearch,
-  Input,
-  Row,
-  Table,
-} from 'react-windy-ui';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { Button, Card, Col, IconSearch, Input, Row, Table } from 'react-windy-ui';
 
 const tableData = [
   {
     key: '1',
     name: 'Nanjing',
-    place: 'Zhonghua Gate',
+    place: 'Zhonghua Gate'
   },
   {
     key: '2',
     name: 'Nanjing',
-    place: 'Qinhuai River',
+    place: 'Qinhuai River'
   },
   {
     key: '3',
     name: 'Shanghai',
-    place: 'The Bund Shanghai',
+    place: 'The Bund Shanghai'
   },
   {
     key: '4',
     name: 'Shanghai',
-    place: 'Jade Buddha Temple',
+    place: 'Jade Buddha Temple'
   },
   {
     key: '5',
     name: 'Beijing',
-    place: 'Forbidden City',
+    place: 'Forbidden City'
   },
   {
     key: '6',
     name: 'Beijing',
-    place: 'Badaling Great Wall',
-  },
+    place: 'Badaling Great Wall'
+  }
 ];
 
-const Element = ({onSearch, tableProps}) => {
-//todo: the value always be cleared
+const Element = ({ onSearch, tableProps }) => {
+  //todo: the value always be cleared
   const [value, setValue] = useState('');
-  return <Card hasBox={false} block>
-    <Card.Header><h5>Enter the value to search:</h5></Card.Header>
-    <Card.Row>
-      <Input placeholder="Search Value" value={value}
-             onChange={e => {
-               setValue(e.target.value);
-             }}/>
-    </Card.Row>
-    <Card.Row>
-      <Row gutter={{x: 16, y: 0}}>
-        <Col xs={6} justify="center">
-          <Button block onClick={(e) => setValue('')}>Reset</Button>
-        </Col>
-        <Col xs={6} justify="center">
-          <Button type="primary" block onClick={() => {
-            //to close the popup
-            document.body.click();
-            onSearch(value);
-          }}>
-            <IconSearch/><span>Search</span>
-          </Button>
-        </Col>
-      </Row>
-    </Card.Row>
-
-  </Card>;
+  return (
+    <Card hasBox={false} block>
+      <Card.Header>
+        <h5>Enter the value to search:</h5>
+      </Card.Header>
+      <Card.Row>
+        <Input
+          placeholder="Search Value"
+          value={value}
+          onChange={(e) => {
+            setValue(e.target.value);
+          }}
+        />
+      </Card.Row>
+      <Card.Row>
+        <Row gutter={{ x: 16, y: 0 }}>
+          <Col xs={6} justify="center">
+            <Button block onClick={(e) => setValue('')}>
+              Reset
+            </Button>
+          </Col>
+          <Col xs={6} justify="center">
+            <Button
+              type="primary"
+              block
+              onClick={() => {
+                //to close the popup
+                document.body.click();
+                onSearch(value);
+              }}
+            >
+              <IconSearch />
+              <span>Search</span>
+            </Button>
+          </Col>
+        </Row>
+      </Card.Row>
+    </Card>
+  );
 };
 
 export default function Table7() {
@@ -78,71 +83,79 @@ export default function Table7() {
   const instanceRef = useRef(null);
 
   const onSearch = useCallback((value) => {
-    var newData = tableData.filter(d => d.name.includes(value));
+    var newData = tableData.filter((d) => d.name.includes(value));
     setData(newData);
   });
 
-  const cells = useMemo(() => [
-    {
-      head: 'ID',
-      paramName: 'key',
-      sortable: true,
-    },
-    {
-      head: 'City',
-      paramName: 'name',
-      filterable: true,
-      filterConfig: {
-        filterItems: [
-          {
-            text: '南京',
-            value: 'Nanjing',
-          },
-          {
-            text: '北京',
-            value: 'Beijing',
-          },
-          {
-            text: '上海',
-            value: 'Shanghai',
-          }],
+  const cells = useMemo(
+    () => [
+      {
+        head: 'ID',
+        paramName: 'key',
+        sortable: true
       },
-      elements: [
-        {
-          key: 'search',
-          head: <IconSearch/>,
-          body: ({tableProps}) => <Element tableProps={tableProps}
-                                           onSearch={onSearch}/>,
+      {
+        head: 'City',
+        paramName: 'name',
+        filterable: true,
+        filterConfig: {
+          filterItems: [
+            {
+              text: '南京',
+              value: 'Nanjing'
+            },
+            {
+              text: '北京',
+              value: 'Beijing'
+            },
+            {
+              text: '上海',
+              value: 'Shanghai'
+            }
+          ]
         },
-      ],
-    },
-    {
-      head: 'Place',
-      paramName: 'place',
-      filterable: true,
-      filterConfig: {
-        filterItems: [
+        elements: [
           {
-            text: '秦淮河',
-            value: 'Qinhuai',
-          },
-          {
-            text: '故宫',
-            value: 'Forbidden',
-          },
-          {
-            text: '外滩',
-            value: 'Bund',
-          }],
+            key: 'search',
+            head: <IconSearch />,
+            body: ({ tableProps }) => <Element tableProps={tableProps} onSearch={onSearch} />
+          }
+        ]
       },
-    },
-  ], [onSearch]);
+      {
+        head: 'Place',
+        paramName: 'place',
+        filterable: true,
+        filterConfig: {
+          filterItems: [
+            {
+              text: '秦淮河',
+              value: 'Qinhuai'
+            },
+            {
+              text: '故宫',
+              value: 'Forbidden'
+            },
+            {
+              text: '外滩',
+              value: 'Bund'
+            }
+          ]
+        }
+      }
+    ],
+    [onSearch]
+  );
 
-  return <>
-    <Table instanceRef={instanceRef}
-           loadData={data} cells={cells}
-           hover={true}
-           hasBorder={true}/>
-
-  </>;
+  return (
+    <>
+      <Table
+        instanceRef={instanceRef}
+        loadData={data}
+        cells={cells}
+        hover={true}
+        hasBorder={true}
+      />
+    </>
+  );
 }

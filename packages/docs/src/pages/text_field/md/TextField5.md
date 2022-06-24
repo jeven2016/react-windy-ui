@@ -1,8 +1,8 @@
---- 
+---
 order: 1
 type: sample
 zh_CN: 占据整行显示
-en_US:  Block Text Field 
+en_US: Block Text Field
 editUrl: $BASE/pages/text-field/md/TextField5.md
 ---
 

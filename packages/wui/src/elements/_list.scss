@@ -1,8 +1,7 @@
 .common-list {
-
   .list-header,
   .list-footer {
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
     color: $text-comment-color;
   }
 
@@ -45,7 +44,7 @@
       position: relative;
 
       &.normal {
-        padding: .5rem 1rem;
+        padding: 0.5rem 1rem;
       }
 
       &.with-ripple {
@@ -53,7 +52,7 @@
       }
 
       &.vertical {
-        padding: .75rem 1.25rem;
+        padding: 0.75rem 1.25rem;
       }
 
       &.compact {
@@ -86,19 +85,18 @@
             @include make-flex;
 
             + .list-line-content {
-              margin-top: .5rem;
+              margin-top: 0.5rem;
             }
 
             > .list-text {
-
               > .list-title {
                 font-weight: map-get($font-weight, 'light');
-                margin-bottom: .5rem;
+                margin-bottom: 0.5rem;
               }
 
               > .list-desc {
                 color: $text-comment-color;
-                font-size: .9rem;
+                font-size: 0.9rem;
               }
             }
           }
@@ -108,12 +106,12 @@
           @include make-flex;
 
           &.vertical {
-            margin-top: .5rem;
+            margin-top: 0.5rem;
           }
 
           > .list-action {
-            padding-left: .5rem;
-            padding-right: .5rem;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
 
             &:first-child {
               padding-left: 0;
@@ -141,7 +139,5 @@
         margin-left: 0 !important;
       }
     }
-
-
   }
 }

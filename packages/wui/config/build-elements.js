@@ -1,20 +1,20 @@
 var config = {
   scssFile: {
     elems: {
-      path: "src/elements",
+      path: 'src/elements',
       config: {
         blockquota: true,
         badge: true,
         checkbox: true,
         headings: true,
         input: true,
-        "text-field": true,
-        "input-group": true,
+        'text-field': true,
+        'input-group': true,
         popup: true,
         dropdown: true,
         drawer: true,
         button: true,
-        "button-group": true,
+        'button-group': true,
         card: true,
         layout: true,
         modal: true,
@@ -46,53 +46,48 @@ var config = {
         avatar: true,
         list: true,
         skeleton: true,
-        box: true,
-      },
+        box: true
+      }
     },
 
-    variableFile: "_variables.scss",
+    variableFile: '_variables.scss',
     base: {
-      path: "src/",
-      file: [
-        "_first.scss",
-        "_normalize.scss",
-        "_reset.scss",
-        "_variables.scss",
-      ],
+      path: 'src/',
+      file: ['_first.scss', '_normalize.scss', '_reset.scss', '_variables.scss']
     },
     mixin: {
-      path: "src/mixin",
+      path: 'src/mixin',
       file: [
-        "_common.scss",
-        "_button.scss",
-        "_disabled.scss",
-        "_display.scss",
-        "_variant-size.scss",
-        "_pseudo_class.scss",
-        "_layout.scss",
-        "_input.scss",
-        "_navbar.scss",
-        "_menu.scss",
-        "_table.scss",
-        "_align.scss",
-        "_border-radius.scss",
-        "_hover_focus_active.scss",
-        "_flex.scss",
-        "_child-margin.scss",
-        "_width.scss",
-        "_checkbox.scss",
-        "_text_field.scss",
-      ],
+        '_common.scss',
+        '_button.scss',
+        '_disabled.scss',
+        '_display.scss',
+        '_variant-size.scss',
+        '_pseudo_class.scss',
+        '_layout.scss',
+        '_input.scss',
+        '_navbar.scss',
+        '_menu.scss',
+        '_table.scss',
+        '_align.scss',
+        '_border-radius.scss',
+        '_hover_focus_active.scss',
+        '_flex.scss',
+        '_child-margin.scss',
+        '_width.scss',
+        '_checkbox.scss',
+        '_text_field.scss'
+      ]
     },
 
     themes: {
-      path: "src/themes",
+      path: 'src/themes'
     },
 
     common: {
-      path: "src/elements/common",
-    },
-  },
+      path: 'src/elements/common'
+    }
+  }
 };
 
 module.exports = config;

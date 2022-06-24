@@ -1,4 +1,3 @@
-
 .toggle-container {
   display: inline-flex;
   justify-content: center;
@@ -29,7 +28,7 @@
   @include make-flex();
   flex: 1 1 100%;
   font-weight: map_get($font-weight, 'bold');
-  transition: all .3s;
+  transition: all 0.3s;
   vertical-align: middle;
   min-width: 3.5rem;
 
@@ -40,11 +39,10 @@
     padding: 0 0.5rem 0 1.8rem;
     height: 1rem;
     width: 100%;
-    transition: background .2s ease, box-shadow .2s ease, border .2s ease;
+    transition: background 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
 
     @include border-radius(1.5rem);
   }
-
 
   .ball {
     color: $text-color;
@@ -57,12 +55,12 @@
     @include border-radius(50%);
     box-shadow: $default-box-shadow;
     text-align: center;
-    transition: background .3s linear, box-shadow .3s linear;
+    transition: background 0.3s linear, box-shadow 0.3s linear;
   }
 
   &.on {
     .bar {
-      background: $blue
+      background: $blue;
     }
 
     .ball {
@@ -78,14 +76,15 @@
     }
 
     .ball {
-      border: 1px solid rgba(0, 0, 0, .5);
+      border: 1px solid rgba(0, 0, 0, 0.5);
       box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.4);
       background: $white;
-      color: rgba(0, 0, 0, .5);
+      color: rgba(0, 0, 0, 0.5);
     }
   }
 
-  &.secondary, &.primary {
+  &.secondary,
+  &.primary {
     @include border-radius;
     padding: 0.25rem;
     align-items: center;
@@ -98,7 +97,7 @@
       min-height: 1.5rem;
       display: flex;
       align-items: center;
-      transition: margin .2s ease;
+      transition: margin 0.2s ease;
     }
 
     .ball {
@@ -119,7 +118,7 @@
       justify-content: flex-start;
 
       > .info {
-        margin: 0 1.75rem 0 .5rem;
+        margin: 0 1.75rem 0 0.5rem;
       }
     }
 
@@ -129,10 +128,9 @@
       justify-content: flex-end;
 
       > .info {
-        margin: 0 .5rem 0 1.75rem;
+        margin: 0 0.5rem 0 1.75rem;
       }
     }
-
   }
 
   &.primary {
@@ -142,13 +140,12 @@
       border-radius: 50%;
     }
   }
-
 }
 
 .toggle-label {
   flex-grow: 1;
   font-weight: map_get($font-weight, 'normal');
-  transition: color .3s;
+  transition: color 0.3s;
 
   &.on {
     color: $primary;

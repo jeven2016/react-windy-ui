@@ -1,6 +1,5 @@
 @mixin make-special-check($type, $color) {
   &.check-#{$type} {
-
     color: $color;
 
     > .icon {
@@ -12,6 +11,5 @@
         color: $color;
       }
     }
-
   }
 }

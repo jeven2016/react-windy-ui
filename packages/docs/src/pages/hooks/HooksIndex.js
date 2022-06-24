@@ -2,7 +2,7 @@ import React from 'react';
 import UseMediaQuery from './UseMediaQuery';
 
 const componentMapping = {
-  UseMediaQuery: <UseMediaQuery/>,
+  UseMediaQuery: <UseMediaQuery />
 };
 
 export default function HooksIndex(props) {

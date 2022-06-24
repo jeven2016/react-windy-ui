@@ -1,4 +1,5 @@
-.checkbox, .radio {
+.checkbox,
+.radio {
   display: inline-flex;
   position: relative;
   align-items: center;
@@ -31,7 +32,6 @@
     }
   }
 
-
   &.unchecked {
     > .icon {
       color: $gray;
@@ -56,7 +56,7 @@
     width: 1em;
     height: 1em;
     position: relative;
-    transition: background .5s;
+    transition: background 0.5s;
   }
 
   > .label {

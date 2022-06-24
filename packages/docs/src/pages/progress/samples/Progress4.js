@@ -1,12 +1,11 @@
 import React from 'react';
 
-import {Button, ButtonGroup, Progress} from 'react-windy-ui';
+import { Button, ButtonGroup, Progress } from 'react-windy-ui';
 
 export default function Progress4() {
-
   const showTop = () => {
     Progress.showTop({
-      style: {marginTop: '0px'},
+      style: { marginTop: '0px' },
       type: 'info',
 
       //optional parameters
@@ -14,7 +13,7 @@ export default function Progress4() {
       showLoading: false,
       initPercentValue: 5,
       incrementStart: 2,
-      incrementEnd: 4,
+      incrementEnd: 4
     });
   };
 
@@ -22,15 +21,12 @@ export default function Progress4() {
     Progress.closeTop();
   };
 
-  return <>
-    <ButtonGroup>
-      <Button onClick={showTop}>
-        Show
-      </Button>
-      <Button onClick={closeTop}>
-        Close
-      </Button>
-    </ButtonGroup>
-  </>;
-
+  return (
+    <>
+      <ButtonGroup>
+        <Button onClick={showTop}>Show</Button>
+        <Button onClick={closeTop}>Close</Button>
+      </ButtonGroup>
+    </>
+  );
 }

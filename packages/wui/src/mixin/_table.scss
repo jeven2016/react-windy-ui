@@ -4,7 +4,7 @@
   padding: 0.75rem;
 }
 
-@mixin set-border-width($left-bd-width,$top-bd-width,$right-bd-width,$bottom-bd-width) {
+@mixin set-border-width($left-bd-width, $top-bd-width, $right-bd-width, $bottom-bd-width) {
   @if $left-bd-width != null {
     border-left-width: $left-bd-width;
   }
@@ -17,5 +17,4 @@
   @if $bottom-bd-width != null {
     border-bottom-width: $bottom-bd-width;
   }
-
 }

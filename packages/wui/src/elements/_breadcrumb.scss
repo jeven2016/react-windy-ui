@@ -12,24 +12,25 @@
     border-radius: $default-border-radius;
   }
 
-  > .bc-divider, > .item {
+  > .bc-divider,
+  > .item {
     display: inline-flex;
     align-items: center;
     padding: 0.5rem 0 0.5rem 0.5rem;
   }
 
   > .item {
-
-    &:hover, &.active {
+    &:hover,
+    &.active {
       color: $blue;
     }
 
     > .icon {
-      &:first-child:not(:last-child), &:not(first-child):not(last-child) {
+      &:first-child:not(:last-child),
+      &:not(first-child):not(last-child) {
         margin-right: 0.25rem;
       }
     }
-
   }
 
   > .bc-divider {

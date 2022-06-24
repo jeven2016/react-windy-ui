@@ -1,4 +1,4 @@
---- 
+---
 order: 2
 type: sample
 zh_CN: 处理按钮的点击
@@ -7,7 +7,7 @@ editUrl: $BASE/pages/popconfirm/md/pc2.md
 ---
 
 +++ zh_CN
-提供onOk、onCancel回调函数，点击确认框按钮后处理对应的事件。
+提供 onOk、onCancel 回调函数，点击确认框按钮后处理对应的事件。
 
 +++ en_US
 popconfirm

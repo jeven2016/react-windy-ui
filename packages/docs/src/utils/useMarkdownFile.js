@@ -1,5 +1,5 @@
 import React from 'react';
-import {useLazyImport} from 'react-windy-ui';
+import { useLazyImport } from 'react-windy-ui';
 
 /**
  * Reading a particular text form a markdown file
@@ -7,11 +7,7 @@ import {useLazyImport} from 'react-windy-ui';
  * @param mapping  like: {title: 'TITLE'} => parse the text wrapped in '[TITLE_BEGIN_zh_CN]' and '[TITLE_END_zh_CN]'
  * @param language
  */
-const useMarkdownFile = ({
-                           importFunc,
-                           keys /*key: prefixInFile*/,
-                           language,
-                         }) => {
+const useMarkdownFile = ({ importFunc, keys /*key: prefixInFile*/, language }) => {
   const [data] = useLazyImport(importFunc, true);
 
   const result = new Map();
@@ -21,13 +17,9 @@ const useMarkdownFile = ({
       continue;
     }
 
-    const startKey = !language
-        ? `[${key}_BEGIN]`
-        : `[${key}_BEGIN_${language}]`;
+    const startKey = !language ? `[${key}_BEGIN]` : `[${key}_BEGIN_${language}]`;
 
-    const endKey = !language
-        ? `[${key}_END]`
-        : `[${key}_END_${language}]`;
+    const endKey = !language ? `[${key}_END]` : `[${key}_END_${language}]`;
 
     const startKeyIndex = data.indexOf(startKey);
     const endKeyIndex = data.indexOf(endKey);

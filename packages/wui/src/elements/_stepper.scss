@@ -64,8 +64,8 @@
       border-radius: 50%;
 
       &.w-dot {
-        width: .75rem;
-        height: .75rem;
+        width: 0.75rem;
+        height: 0.75rem;
         margin-top: 0.625rem;
 
         &.w-solid-dot {
@@ -90,7 +90,7 @@
       &.without-border {
         &.with-error {
           background: transparent;
-          color: $red
+          color: $red;
         }
 
         &.with-warning {
@@ -113,7 +113,7 @@
         &.with-error {
           border-color: $red;
           background: transparent;
-          color: $red
+          color: $red;
         }
 
         &.with-warning {
@@ -124,7 +124,7 @@
       }
 
       &.horizontal {
-        margin-right: .5rem;
+        margin-right: 0.5rem;
       }
 
       &.checked {
@@ -140,7 +140,6 @@
     > .w-step-content {
       @include make-inline-flex;
       flex-direction: column;
-
 
       > .w-step-title {
         line-height: 2rem;
@@ -168,7 +167,7 @@
           }
 
           > .w-step-subtitle {
-            color: $text-comment-color
+            color: $text-comment-color;
           }
         }
 
@@ -182,7 +181,7 @@
           }
 
           > .w-step-subtitle {
-            color: $text-comment-color
+            color: $text-comment-color;
           }
         }
 
@@ -191,8 +190,8 @@
         }
 
         > .w-step-subtitle {
-          margin-left: .5rem;
-          font-size: .9em;
+          margin-left: 0.5rem;
+          font-size: 0.9em;
           color: $gray;
         }
 
@@ -208,11 +207,11 @@
       }
 
       > .w-step-body {
-        font-size: .9em;
+        font-size: 0.9em;
         color: $gray;
 
         &.vertical-body {
-          padding-bottom: .5rem;
+          padding-bottom: 0.5rem;
         }
 
         &.checked {
@@ -239,7 +238,7 @@
       top: 0;
       width: 1px;
       height: 100%;
-      padding: 2.5rem 0 .5rem;
+      padding: 2.5rem 0 0.5rem;
 
       &::after {
         display: inline-block;
@@ -247,12 +246,12 @@
         width: 1px;
         height: 100%;
         background: $gray;
-        margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
       }
 
       &.with-dot {
         padding: 2rem 0 0;
-        left: .375rem;
+        left: 0.375rem;
 
         &::after {
           margin-bottom: 0;
@@ -317,5 +316,4 @@
 
     @include add-disabled-conf;
   }
-
 }

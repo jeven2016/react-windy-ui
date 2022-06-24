@@ -1,4 +1,4 @@
---- 
+---
 order: 2.1
 type: sample
 zh_CN: Icon 输入框的尺寸

@@ -1,8 +1,7 @@
 import React from 'react';
-import {Button, Notification} from 'react-windy-ui';
+import { Button, Notification } from 'react-windy-ui';
 
 export default function Notification5() {
-
   const sendMessage = () => {
     Notification.info({
       title: 'Simple Message',
@@ -14,13 +13,17 @@ export default function Notification5() {
       alertProps: {
         filled: true,
         style: {
-          background: 'black',
-        },
-      },
+          background: 'black'
+        }
+      }
     });
   };
 
-  return <>
-    <Button color="black" onClick={() => sendMessage()}>Message</Button>
-  </>;
+  return (
+    <>
+      <Button color="black" onClick={() => sendMessage()}>
+        Message
+      </Button>
+    </>
+  );
 }

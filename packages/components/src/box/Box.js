@@ -1,11 +1,7 @@
-import React from "react";
-import clsx from "clsx";
-import PropTypes from "prop-types";
-import {
-  adjustItems,
-  AlignItemsType,
-  JustifyContentType
-} from "../common/Constants";
+import React from 'react';
+import clsx from 'clsx';
+import PropTypes from 'prop-types';
+import { adjustItems, AlignItemsType, JustifyContentType } from '../common/Constants';
 
 /**
  * 1. margin top/bottom , left/right
@@ -15,7 +11,7 @@ import {
  */
 const Box = React.forwardRef((props, ref) => {
   const {
-    className = "wui-box",
+    className = 'wui-box',
     extraClassName,
     children,
     left,
@@ -24,14 +20,14 @@ const Box = React.forwardRef((props, ref) => {
     autoEllipsis = true,
     hasMarginBottom,
     block = false,
-    justify = "start",
-    align = "center",
-    justifyLeft = "start",
-    alignLeft = "center",
-    justifyCenter = "start",
-    alignCenter = "center",
-    justifyRight = "end",
-    alignRight = "center",
+    justify = 'start',
+    align = 'center',
+    justifyLeft = 'start',
+    alignLeft = 'center',
+    justifyCenter = 'start',
+    alignCenter = 'center',
+    justifyRight = 'end',
+    alignRight = 'center',
     hasPadding = true,
     growLeft,
     growRight,
@@ -41,28 +37,33 @@ const Box = React.forwardRef((props, ref) => {
 
   const justifyCls = adjustItems(justify, align);
   const clsName = clsx(justifyCls, extraClassName, className, {
-    "wui-with-margin-bottom": hasMarginBottom,
-    "wui-block": block,
-    "wui-normal": !block,
-    "wui-with-padding": hasPadding
+    'wui-with-margin-bottom': hasMarginBottom,
+    'wui-block': block,
+    'wui-normal': !block,
+    'wui-with-padding': hasPadding
   });
 
   const justifyCenterCls = adjustItems(justifyCenter, alignCenter);
-  const boxClsName = clsx("wui-box-center", {
+  const boxClsName = clsx('wui-box-center', {
     ellipsis: autoEllipsis,
     [justifyCls]: !left && !right && !center,
     [justifyCenterCls]: center,
-    "wui-flex-grow": growCenter
+    'wui-flex-grow': growCenter
   });
 
   const leftCls = buildCls(
-    clsx("wui-box-left", { "wui-flex-grow": growLeft ?? !center }),
-    left, justifyLeft, alignLeft);
+    clsx('wui-box-left', { 'wui-flex-grow': growLeft ?? !center }),
+    left,
+    justifyLeft,
+    alignLeft
+  );
 
   const rightCls = buildCls(
-    clsx("wui-box-right", { "wui-flex-grow": growRight ?? !center }), left,
+    clsx('wui-box-right', { 'wui-flex-grow': growRight ?? !center }),
+    left,
     justifyRight,
-    alignRight);
+    alignRight
+  );
 
   return (
     <div className={clsName} ref={ref} {...rest}>

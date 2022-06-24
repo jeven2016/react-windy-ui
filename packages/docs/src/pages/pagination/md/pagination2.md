@@ -1,4 +1,4 @@
---- 
+---
 order: 2
 type: sample
 zh_CN: 自行控制分页

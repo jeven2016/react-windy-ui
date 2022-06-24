@@ -33,7 +33,7 @@ const isBlank = (value) => value == null || /^\s*$/.test(value);
  */
 export const parseHeader = (markdownContent) => {
   let titleHeader = markdownContent.match(headerReg);
-  const result = {title: {}};
+  const result = { title: {} };
 
   if (titleHeader) {
     const params = titleHeader[1].trim();
@@ -105,83 +105,85 @@ export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
   const sourceCode = {};
 
   //parse the raw code
-  requireCode && requireCode.keys().forEach((filename) => {
-    const content = requireCode(filename);
-    let pureName = getPureName(filename);
-    if (isBlank(pureName)) {
-      return;
-    }
-    pureName = pureName.replace(/\.(jsx|js)/ig, '');
-    sourceCode[pureName] = content.default;
-  });
-
-  //parse the markdown files
-  requireMd && requireMd.keys().forEach((filename) => {
-    const content = requireMd(filename).default;
-    let pureName = getPureName(filename);
-    if (isBlank(pureName)) {
-      return;
-    }
-    pureName = pureName.replace(/\.md/g, '');
-    const title = parseHeader(content);
-    const body = {};
-
-    parseContent(content, 0, body);
-
-    //parse the code part
-    let code = body?.SampleCode;
-    let codeFileName;
-    if (code) {
-      if (/`{3}/.test(code)) {
-        code = code.replace(/`{3}(jsx|js)?/ig, '');
-      } else {
-        const values = code.split(':');
-        if (values && values.length >= 2) {
-          codeFileName = values[1].trim();
-          code = sourceCode[codeFileName];
-        }
-      }
-      delete body.SampleCode;
-    }
-
-    //only display this sample, the others should be ignored.
-    //this field is only internally used to debug some issues.
-    if (title.title.onlyVisible === 'true') {
-      visibleSampleName = pureName;
-    }
-
-    config[pureName] = {
-      ...title,
-      content: body,
-      code: code,
-      codeFileName,
-    };
-  });
-
-  //fill the react components into config
-  requireSamples && requireSamples.keys().forEach(jsFileName => {
-    const Comp = requireSamples(jsFileName).default;
-    let pureName = getPureName(jsFileName);
-    if (isBlank(pureName)) {
-      return;
-    }
-    pureName = pureName.replace(/\.js|\.jsx/g, '');
-
-    let found = false;
-    Object.keys(config).forEach(key => {
-      if (found) {
+  requireCode &&
+    requireCode.keys().forEach((filename) => {
+      const content = requireCode(filename);
+      let pureName = getPureName(filename);
+      if (isBlank(pureName)) {
         return;
       }
-      if (key.toLowerCase() === pureName.toLowerCase() ||
-        pureName === config[key].codeFileName) {
-        config[key].component = <Comp/>;
-        found = true;
-      }
+      pureName = pureName.replace(/\.(jsx|js)/gi, '');
+      sourceCode[pureName] = content.default;
     });
-  });
+
+  //parse the markdown files
+  requireMd &&
+    requireMd.keys().forEach((filename) => {
+      const content = requireMd(filename).default;
+      let pureName = getPureName(filename);
+      if (isBlank(pureName)) {
+        return;
+      }
+      pureName = pureName.replace(/\.md/g, '');
+      const title = parseHeader(content);
+      const body = {};
+
+      parseContent(content, 0, body);
+
+      //parse the code part
+      let code = body?.SampleCode;
+      let codeFileName;
+      if (code) {
+        if (/`{3}/.test(code)) {
+          code = code.replace(/`{3}(jsx|js)?/gi, '');
+        } else {
+          const values = code.split(':');
+          if (values && values.length >= 2) {
+            codeFileName = values[1].trim();
+            code = sourceCode[codeFileName];
+          }
+        }
+        delete body.SampleCode;
+      }
+
+      //only display this sample, the others should be ignored.
+      //this field is only internally used to debug some issues.
+      if (title.title.onlyVisible === 'true') {
+        visibleSampleName = pureName;
+      }
+
+      config[pureName] = {
+        ...title,
+        content: body,
+        code: code,
+        codeFileName
+      };
+    });
+
+  //fill the react components into config
+  requireSamples &&
+    requireSamples.keys().forEach((jsFileName) => {
+      const Comp = requireSamples(jsFileName).default;
+      let pureName = getPureName(jsFileName);
+      if (isBlank(pureName)) {
+        return;
+      }
+      pureName = pureName.replace(/\.js|\.jsx/g, '');
+
+      let found = false;
+      Object.keys(config).forEach((key) => {
+        if (found) {
+          return;
+        }
+        if (key.toLowerCase() === pureName.toLowerCase() || pureName === config[key].codeFileName) {
+          config[key].component = <Comp />;
+          found = true;
+        }
+      });
+    });
 
   //generate a component base on the code
-  Object.keys(config).forEach(key => {
+  Object.keys(config).forEach((key) => {
     const definition = config[key];
     if (definition.title?.type === 'sample') {
       if (!definition.component && definition.code) {
@@ -191,7 +193,7 @@ export const loadMdFiles = (requireMd, requireSamples, requireCode) => {
   });
 
   if (visibleSampleName) {
-    return {onlyVisibleSample: config[visibleSampleName]};
+    return { onlyVisibleSample: config[visibleSampleName] };
   }
 
   return config;

@@ -5,7 +5,7 @@
     top: 0;
     right: 0;
     bottom: -1px;
-    transition: box-shadow .3s;
+    transition: box-shadow 0.3s;
     content: '';
 
     @content;
@@ -21,13 +21,14 @@
   margin-bottom: $table-margin-bottom;
 
   &.scroll-head {
-
   }
 
   &.clear-border {
     border-width: 0 !important;
 
-    tr, th, td {
+    tr,
+    th,
+    td {
       border-width: 0 !important;
     }
   }
@@ -46,13 +47,14 @@
 
   .hl-tr {
     background: $table-hl-tr-background;
-    transition: background .3s;
+    transition: background 0.3s;
   }
 
   &.striped {
     @include set-border-width(0, 0, 0, 0);
 
-    th, td {
+    th,
+    td {
       @include set-border-width(0, 0, 0, $table-border-width);
     }
   }
@@ -60,7 +62,8 @@
   &.simple {
     border-width: 0;
 
-    th, td {
+    th,
+    td {
       @include set-border-width(0, 0, 0, $table-border-width);
       background-color: transparent;
     }
@@ -104,22 +107,22 @@
       > .td-content {
         display: flex;
         flex: 1 1 auto;
-        padding: .75rem;
+        padding: 0.75rem;
 
         &.sort-td {
           cursor: pointer;
         }
 
         > .sort-column {
-          margin-left: .75rem;
+          margin-left: 0.75rem;
           display: flex;
           flex-direction: column;
           justify-content: center;
 
           > .arrow-icon {
-            border-left: .35em solid transparent;
-            border-right: .35em solid transparent;
-            width: .35em;
+            border-left: 0.35em solid transparent;
+            border-right: 0.35em solid transparent;
+            width: 0.35em;
             color: $table-arrow-color;
 
             &.active {
@@ -127,26 +130,27 @@
             }
 
             &.up-arrow {
-              border-bottom: .35em solid;
+              border-bottom: 0.35em solid;
               border-top: 0;
             }
 
             &.down-arrow {
-              margin-top: .2rem;
-              border-top: .35em solid;
+              margin-top: 0.2rem;
+              border-top: 0.35em solid;
               border-bottom: 0;
             }
           }
         }
       }
 
-      > .filter, > .head-elem {
+      > .filter,
+      > .head-elem {
         display: flex;
         flex: 0 0 1em;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        padding: .25rem;
+        padding: 0.25rem;
 
         .icon {
           font-size: 1em;
@@ -162,7 +166,7 @@
         }
 
         &.with-items {
-          color: $blue
+          color: $blue;
         }
       }
     }
@@ -170,12 +174,12 @@
 
   td {
     @include make-cell;
-
   }
 
   &.hover {
     tbody > tr {
-      &:focus, &:hover {
+      &:focus,
+      &:hover {
         background: $table-row-hover-bg;
 
         > td.fixed-cell {
@@ -216,7 +220,6 @@
   z-index: map-get($z-index, one);
 
   &.right {
-
     @include after {
       left: 0;
       transform: translateX(-100%);
@@ -232,11 +235,11 @@
 
   &.with-cell-box {
     &.left:after {
-      box-shadow: inset 11px 0 9px -9px rgba(0, 0, 0, .2);
+      box-shadow: inset 11px 0 9px -9px rgba(0, 0, 0, 0.2);
     }
 
     &.right:after {
-      box-shadow: inset -11px 0 9px -9px rgba(0, 0, 0, .2);
+      box-shadow: inset -11px 0 9px -9px rgba(0, 0, 0, 0.2);
     }
   }
 }

@@ -1,4 +1,4 @@
---- 
+---
 order: 7
 type: sample
 zh_CN: 禁用RadioGroup
@@ -7,7 +7,7 @@ editUrl: $BASE/pages/radio/md/radio7.md
 ---
 
 +++ zh_CN
-将<Code>disabled</Code>设置为<Code>true</Code>后，将禁用对应的RadioGroup.
+将<Code>disabled</Code>设置为<Code>true</Code>后，将禁用对应的 RadioGroup.
 
 +++ en_US
 Radio

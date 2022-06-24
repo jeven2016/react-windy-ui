@@ -2,13 +2,12 @@
   $index: str-index($string, $search);
 
   @if $index {
-    @return str-slice($string, 1, $index - 1) + $replace
-     + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
   }
 
   @return $string;
 }
-
 
 @mixin linear-gradient($arguments...) {
   background: -webkit-linear-gradient($arguments...);
@@ -17,8 +16,7 @@
   background: linear-gradient($arguments...);
 }
 
-
-@mixin fixed($z-Index:100,$is-block:true, $width: 100%) {
+@mixin fixed($z-Index: 100, $is-block: true, $width: 100%) {
   position: fixed;
   z-index: $z-Index;
   @include border-radius(0);
@@ -34,11 +32,13 @@
 }
 
 //the $arrow-direction could be : up down left right;
-@mixin make-arrow($border,
-              $bdr-color:$border-default-color,
-              $margin: 0 0 0 0.2rem,
-              $pseudo-class-name: 'after',
-              $direction: map_get($arrow-direction, 'bottom')) {
+@mixin make-arrow(
+  $border,
+  $bdr-color: $border-default-color,
+  $margin: 0 0 0 0.2rem,
+  $pseudo-class-name: 'after',
+  $direction: map_get($arrow-direction, 'bottom')
+) {
   &:#{$pseudo-class-name} {
     content: '';
     width: 0;
@@ -47,7 +47,7 @@
     vertical-align: middle;
     display: inline-block;
     border: $border;
-    transition: transform .4s ease-in-out;
+    transition: transform 0.4s ease-in-out;
 
     @if ($direction == map_get($arrow-direction, 'down')) {
       border-top-color: $bdr-color;
@@ -62,23 +62,22 @@
       border-left-color: $bdr-color;
     }
 
-    @content
+    @content;
   }
 }
-
 
 //@$condition: format (key:'min-width', value:'xs' )
 @mixin media-query($condition) {
   @media screen and (map-get($condition, 'key'): map-get($condition, 'value')) {
-    @content
+    @content;
   }
 }
 
 //=================================================================================
 
-@mixin adapter-width($key,$value) {
+@mixin adapter-width($key, $value) {
   @media ($key: $value) {
-    @content
+    @content;
   }
 }
 

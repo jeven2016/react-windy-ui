@@ -49,15 +49,15 @@
       }
 
       > .navbar-switch:first-child {
-        margin: 0 .5rem 0 -0.5rem;
+        margin: 0 0.5rem 0 -0.5rem;
       }
 
       > .navbar-switch:last-child {
-        margin: 0 -0.5rem 0 .5rem;
+        margin: 0 -0.5rem 0 0.5rem;
       }
 
       > .title-info {
-        padding: 0 0.25rem
+        padding: 0 0.25rem;
       }
     }
   }
@@ -110,14 +110,16 @@
     }
 
     &.with-bar {
-      &.active, &:focus, &:hover {
+      &.active,
+      &:focus,
+      &:hover {
         //create the bottom border
         &:after {
           @include make-block(absolute) {
             left: 0;
             bottom: 0;
             content: '';
-            border-radius: .2rem;
+            border-radius: 0.2rem;
             height: $navbar-simple-item-link-border-height;
             width: $navbar-simple-item-link-border-width;
             background-color: $navbar-simple-item-link-background-colorh;
@@ -130,18 +132,20 @@
 
     &.with-bg {
       &.active {
-        background: rgba(0, 0, 0, .13);
+        background: rgba(0, 0, 0, 0.13);
       }
 
-      &:focus, &:hover {
-        background: rgba(0, 0, 0, .1);
+      &:focus,
+      &:hover {
+        background: rgba(0, 0, 0, 0.1);
       }
     }
 
-    &.active, &:focus, &:hover {
+    &.active,
+    &:focus,
+    &:hover {
       color: $navbar-item-active-color;
     }
-
   }
 
   &.fixed {
@@ -174,7 +178,6 @@
           order: 1;
         }
       }
-
     }
   }
 
@@ -190,7 +193,7 @@
 
       &.default {
         @include focus-active2 {
-          background: rgba(0, 0, 0, .1);
+          background: rgba(0, 0, 0, 0.1);
           color: $white;
         }
       }
@@ -199,17 +202,19 @@
     .navbar-item {
       color: $navbar-primary-item-color;
 
-      &.active, &:hover {
+      &.active,
+      &:hover {
         color: $navbar-primary-active-color;
       }
 
       &.with-bg {
         &.active {
-          background-color: rgba(255, 255, 255, .2);
+          background-color: rgba(255, 255, 255, 0.2);
         }
 
-        &:focus, &:hover {
-          background-color: rgba(255, 255, 255, .3);;
+        &:focus,
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.3);
         }
       }
 
@@ -219,11 +224,11 @@
         border: none;
 
         @include make-placeholder {
-          color: rgba(255, 255, 255, .4);
+          color: rgba(255, 255, 255, 0.4);
         }
 
         @include focus-active2 {
-          background: rgba(255, 255, 255, 0.30);
+          background: rgba(255, 255, 255, 0.3);
         }
       }
 
@@ -235,7 +240,7 @@
         }
 
         .icon-column {
-          color: rgba(255, 255, 255, .7);
+          color: rgba(255, 255, 255, 0.7);
         }
 
         @include focus-active2 {
@@ -246,7 +251,6 @@
       }
     }
   }
-
 }
 
 //@include media-query((key:'min-width', value: map-get($bs-layout, 'md'))) {

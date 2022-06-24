@@ -1,4 +1,4 @@
---- 
+---
 order: 12
 type: sample
 zh_CN: 部分校验

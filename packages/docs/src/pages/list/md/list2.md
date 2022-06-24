@@ -1,4 +1,4 @@
---- 
+---
 order: 1
 type: sample
 zh_CN: List的Simple类型
@@ -7,7 +7,7 @@ editUrl: $BASE/pages/list/md/list2.md
 ---
 
 +++ zh_CN
-默认情况下<Code>type为line</Code>, 当设置为<Code>simple</Code>时，您可以在List的Item内展现<Code>Icon</Code>， <Code>title</Code>， <Code>actions</Code>内容。
+默认情况下<Code>type 为 line</Code>, 当设置为<Code>simple</Code>时，您可以在 List 的 Item 内展现<Code>Icon</Code>， <Code>title</Code>， <Code>actions</Code>内容。
 
 +++ en_US
 List2

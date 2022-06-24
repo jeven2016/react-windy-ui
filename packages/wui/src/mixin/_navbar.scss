@@ -1,13 +1,13 @@
-@mixin make-navbar($bd-radius:$default-border-radius) {
+@mixin make-navbar($bd-radius: $default-border-radius) {
   @include make-flex {
     @include border-radius($bd-radius);
     background-color: $navbar-background-color;
     margin-bottom: $navbar-margin-bottom;
-    @content
+    @content;
   }
 }
 
-@mixin make-navbar-item($item-text-color:$text-color) {
+@mixin make-navbar-item($item-text-color: $text-color) {
   @include make-flex {
     line-height: $navbar-item-height;
     cursor: pointer;

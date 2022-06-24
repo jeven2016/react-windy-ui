@@ -26,10 +26,15 @@
   }
 
   > .card {
-
     .card-header {
       > .title {
-        @include make-arrow($default-arrow-border, $default-arrow-active-border, null, 'before', map_get($arrow-direction, 'right'));
+        @include make-arrow(
+          $default-arrow-border,
+          $default-arrow-active-border,
+          null,
+          'before',
+          map_get($arrow-direction, 'right')
+        );
       }
 
       &.active {
@@ -51,7 +56,5 @@
       border-bottom-right-radius: 0;
       border-bottom-width: 0;
     }
-
   }
-
 }

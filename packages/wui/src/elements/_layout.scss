@@ -39,9 +39,14 @@ $types: ('sm', 'md', 'lg', 'xl');
   //generate for others
   @each $col-type in $types {
     //once the screen width exceeds a specified value, apply the corresponding classes by checking min-width and media query
-    @include generate-media-grid-columns($grid-column-count,
-            "-"+$col-type+"-", (key:'min-width', value: map-get($bs-layout, $col-type)));
-
+    @include generate-media-grid-columns(
+      $grid-column-count,
+      '-' + $col-type + '-',
+      (
+        key: 'min-width',
+        value: map-get($bs-layout, $col-type)
+      )
+    );
   }
 
   @for $i from 1 through $grid-column-count {
@@ -50,7 +55,6 @@ $types: ('sm', 'md', 'lg', 'xl');
     }
   }
 }
-
 
 //----------------------------------------------------------------------------------------------
 .layout {
@@ -61,7 +65,8 @@ $types: ('sm', 'md', 'lg', 'xl');
   }
 
   > .layout-header {
-    > .navbar, > .menu {
+    > .navbar,
+    > .menu {
       border-radius: 0;
     }
   }
@@ -88,7 +93,8 @@ $types: ('sm', 'md', 'lg', 'xl');
   }
 }
 
-.layout-header, .layout-footer {
+.layout-header,
+.layout-footer {
   &.fixed {
     @include fixed(map_get($z-index, 'mask'), false);
 
@@ -129,7 +135,6 @@ $types: ('sm', 'md', 'lg', 'xl');
   background: $layout-slider-background;
 }
 
-
 .w-container {
   width: 100%;
   margin: 0 auto;
@@ -140,17 +145,25 @@ $types: ('sm', 'md', 'lg', 'xl');
 
   @each $col-type in $types {
     &.w-container-#{$col-type} {
-      @include media-query((key:'min-width', value: map-get($bs-layout, $col-type))) {
+      @include media-query(
+        (
+          key: 'min-width',
+          value: map-get($bs-layout, $col-type)
+        )
+      ) {
         max-width: map-get($bs-layout, $col-type);
       }
     }
 
     &.w-container-auto {
-      @include media-query((key:'min-width', value: map-get($bs-layout, $col-type))) {
+      @include media-query(
+        (
+          key: 'min-width',
+          value: map-get($bs-layout, $col-type)
+        )
+      ) {
         max-width: map-get($bs-layout, $col-type);
       }
     }
   }
-
 }
-

@@ -25,7 +25,7 @@
   display: flex;
 
   .tab-panel {
-    padding: .75rem 1.25rem;
+    padding: 0.75rem 1.25rem;
   }
 
   &.top {
@@ -44,7 +44,8 @@
     flex-direction: row-reverse;
   }
 
-  &.left, &.right {
+  &.left,
+  &.right {
     > .tab {
       flex: 0 0;
     }
@@ -53,7 +54,6 @@
       flex: 1;
     }
   }
-
 }
 
 .tab {
@@ -73,7 +73,8 @@
       }
     }
 
-    .tab-pre, .tab-next {
+    .tab-pre,
+    .tab-next {
       height: 100%;
     }
 
@@ -120,7 +121,6 @@
     .tab-item {
       margin-right: 2px;
     }
-
   }
 
   &.vertical {
@@ -133,12 +133,12 @@
       }
     }
 
-    .tab-pre, .tab-next {
+    .tab-pre,
+    .tab-next {
       width: 100%;
     }
 
     &.with-border {
-
       &.right {
         border-left: $default-border;
 
@@ -155,7 +155,6 @@
           .tab-container {
             margin-left: -1px;
           }
-
         }
       }
 
@@ -183,7 +182,6 @@
       margin-bottom: 3px;
     }
   }
-
 
   &.tab-card {
     .tab-item {
@@ -221,7 +219,6 @@
       height: 2rem;
       width: 100%;
     }
-
   }
 
   .tab-container {
@@ -287,7 +284,7 @@
         @include make-flex-center {
           flex: 1 1 100%;
           flex-direction: column;
-          padding: .5rem 0;
+          padding: 0.5rem 0;
           font-weight: map-get($font-weight, 'normal');
         }
       }
@@ -365,7 +362,6 @@
       }
     }
 
-
     &.vertical {
       width: 2px;
 
@@ -423,7 +419,6 @@
           }
         }
       }
-
     }
   }
 }

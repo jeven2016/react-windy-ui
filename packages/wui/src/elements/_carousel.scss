@@ -31,7 +31,6 @@
         height: 1.5rem;
         width: 0.1875rem;
       }
-
     }
 
     &.right {
@@ -46,26 +45,27 @@
       }
     }
 
-    > .circle, > .bar {
+    > .circle,
+    > .bar {
       cursor: pointer;
       margin: 0.25rem;
       background: $white;
-      opacity: .5;
+      opacity: 0.5;
 
       &.active {
         opacity: 1;
       }
 
       @include focus2 {
-        opacity: .75;
+        opacity: 0.75;
         transform: scale(1.3);
       }
     }
 
     > .circle {
       @include border-radius(50%);
-      width: .75rem;
-      height: .75rem;
+      width: 0.75rem;
+      height: 0.75rem;
     }
 
     > .bar {

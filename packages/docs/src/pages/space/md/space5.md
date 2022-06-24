@@ -1,4 +1,4 @@
---- 
+---
 order: 4
 type: sample
 zh_CN: 垂直方向的排列
@@ -12,4 +12,4 @@ editUrl: $BASE/pages/space/md/space5.md
 space5
 
 +++ SampleCode
-fileName: Space5  
+fileName: Space5

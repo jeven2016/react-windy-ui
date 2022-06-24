@@ -4,11 +4,11 @@ import HomeFooter from './HomeFooter';
 import MobileContent from './MobileContent';
 
 export default function Home() {
-
-  return <>
-    <HomeContent/>
-    <MobileContent/>
-    {/*<HomeFooter/>*/}
-  </>;
-
+  return (
+    <>
+      <HomeContent />
+      <MobileContent />
+      {/*<HomeFooter/>*/}
+    </>
+  );
 }

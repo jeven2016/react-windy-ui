@@ -1,8 +1,8 @@
 //for input-ok, input-warning, input-error
 @mixin make-special-text-field() {
-
   &.error-info {
-    &.ok, &.success {
+    &.ok,
+    &.success {
       &:not(.underline) {
         border-color: $success !important;
 
@@ -25,7 +25,6 @@
     }
 
     &.warning {
-
       &:not(.underline) {
         border-color: $warning !important;
 

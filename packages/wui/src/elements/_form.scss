@@ -5,7 +5,7 @@
     align-items: center;
 
     > .form-msg {
-      font-size: .9em;
+      font-size: 0.9em;
     }
   }
 
@@ -31,12 +31,11 @@
     }
 
     .label-col {
-
       > .required-left-col,
       > .required-right-col {
         color: $red;
         font-size: inherit;
-        margin-right: .25rem;
+        margin-right: 0.25rem;
       }
     }
 
@@ -63,12 +62,10 @@
         white-space: nowrap;
 
         > .label-col {
-          margin-right: .5rem;
+          margin-right: 0.5rem;
         }
       }
-
     }
-
 
     &.vertical {
       display: flex;
@@ -78,7 +75,7 @@
       > .label-col {
         overflow: hidden;
         white-space: nowrap;
-        margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
       }
     }
 
@@ -89,12 +86,12 @@
       //flex-direction: column;
 
       &:not(:last-child) {
-        margin-right: .5rem;
-        margin-bottom: .5rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
       }
 
       &:last-child {
-        margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
       }
 
       .form-line {
@@ -106,13 +103,12 @@
       }
 
       > .label-col {
-        margin-right: .5rem;
+        margin-right: 0.5rem;
         display: flex;
         align-items: center;
         height: 2.375rem;
       }
     }
-
   }
 
   .form-control {
@@ -124,18 +120,16 @@
   }
 }
 
-
 $label_types: ('sm', 'md', 'lg');
 
 @each $col-type in $label_types {
-
-  @include adapter-width('max-width', map-get($bs-layout, 'max_'+$col-type)) {
+  @include adapter-width('max-width', map-get($bs-layout, 'max_' + $col-type)) {
     .form {
       > .form-item {
         > .row:not(.message-row) {
           > .item-label {
             &.col-#{$col-type}-12 {
-              margin-bottom: .5rem;
+              margin-bottom: 0.5rem;
               justify-content: flex-start !important;
             }
           }
@@ -143,5 +137,4 @@ $label_types: ('sm', 'md', 'lg');
       }
     }
   }
-
 }

@@ -22,7 +22,7 @@
   &:not(:first-child) {
     > .border-info {
       margin-left: -1px;
-      margin-right: 0!important;
+      margin-right: 0 !important;
     }
   }
 
@@ -56,7 +56,6 @@
       &.button-dropdown > .title > .button {
         @include full-border-radius(0, $default-border-radius, 0, $default-border-radius);
       }
-
 
       &.button-group > .button-dropdown:last-child > .title > .button,
       &.icon-input > .input {
@@ -109,8 +108,6 @@
 
       @include border-radius($default-border-radius);
     }
-
-
   }
 
   &.normal {
@@ -128,6 +125,5 @@
     & > .expanded {
       @include flex-grow(1);
     }
-
   }
 }

@@ -1,4 +1,4 @@
---- 
+---
 order: 1
 type: sample
 zh_CN: 文本

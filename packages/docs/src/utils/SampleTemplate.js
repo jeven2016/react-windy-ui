@@ -95,20 +95,20 @@ export const getPackage = () => {
         description: 'demo for react-windy-ui ',
         dependencies: {
           'react-windy-ui': '^0.6.1',
-          'react': 'latest',
+          react: 'latest',
           'react-dom': 'latest',
-          "@fortawesome/fontawesome-svg-core": "^1.2.28",
-          "@fortawesome/free-brands-svg-icons": "^5.13.0",
-          "@fortawesome/free-regular-svg-icons": "^5.13.0",
-          "@fortawesome/free-solid-svg-icons": "^5.13.0",
-          "@fortawesome/react-fontawesome": "^0.1.9",
+          '@fortawesome/fontawesome-svg-core': '^1.2.28',
+          '@fortawesome/free-brands-svg-icons': '^5.13.0',
+          '@fortawesome/free-regular-svg-icons': '^5.13.0',
+          '@fortawesome/free-solid-svg-icons': '^5.13.0',
+          '@fortawesome/react-fontawesome': '^0.1.9'
         },
         devDependencies: {
-          'react-scripts': 'latest',
+          'react-scripts': 'latest'
         },
         main: 'index.js',
-        scripts: 'react start',
-      },
-    },
+        scripts: 'react start'
+      }
+    }
   };
 };

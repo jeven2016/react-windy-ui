@@ -1,11 +1,11 @@
 import React from 'react';
-import {Pagination} from 'react-windy-ui';
+import { Pagination } from 'react-windy-ui';
 
 export default function Pagination1_1() {
-
-  return <>
-    <div className="doc doc-row">
-      <Pagination
+  return (
+    <>
+      <div className="doc doc-row">
+        <Pagination
           pageCount={50}
           defaultPage={5}
           hasPageRange={true}
@@ -16,10 +16,10 @@ export default function Pagination1_1() {
           }}
           hasGo
           onChange={(nextPage, pageRange) => {
-            console.log(
-                `current page is ${nextPage}, page range is ${pageRange}`);
+            console.log(`current page is ${nextPage}, page range is ${pageRange}`);
           }}
-      />
-    </div>
-  </>;
+        />
+      </div>
+    </>
+  );
 }

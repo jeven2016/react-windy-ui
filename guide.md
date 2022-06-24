@@ -1,32 +1,31 @@
 ## Clone this project
 
 ```js
-git
-clone
-projectURL
+git;
+clone;
+projectURL;
 
 //switch to correct branch
-react - windy - ui > git
-checkout
-x.x.x
+react - windy - ui > git;
+checkout;
+x.x.x;
 
 //checkout submodule
-react - windy - ui > git
-submodule
-init
-react - windy - ui > git
-submodule
-update
+react - windy - ui > git;
+submodule;
+init;
+react - windy - ui > git;
+submodule;
+update;
 
-//switch to correct branch for wui 
-react - windy - ui / packages / Wui > git
-checkout
-x.x.x
+//switch to correct branch for wui
+react - windy - ui / packages / Wui > git;
+checkout;
+x.x.x;
 
 //install in root directory
-react - windy - ui > yarn
-install
-
+react - windy - ui > yarn;
+install;
 ```
 
 ### Failed to install from nexus
@@ -49,7 +48,7 @@ rm -rf ~/.npmrc
 
 ## Publish a new version to NPM
 
-* create a new branch
+- create a new branch
 
 1. create branches for wui and root projects
 2. ensure the branches create have been push before changing version: git push origin x.x.x
@@ -74,11 +73,11 @@ change the main part to :
  yarn run build:cmp
 ```
 
-* Npm login and then publish
+- Npm login and then publish
 
 ```javascript
  npm login
- 
+
  yarn run publish
 ```
 
@@ -94,25 +93,25 @@ change the main part to :
 ## Build a css theme file
 
 ```js
-yarn run build:theme 
+yarn run build:theme
 
 ```
 
 ## For development
 
-* start the docs project as above step mentioned   
+- start the docs project as above step mentioned  
   Note: a background task is running to watch the changes of scss files and it will build and copy a css file into
   components/dist directory.
 
 ```js
-yarn
-run
-watch:wui
+yarn;
+run;
+watch: wui;
 ```
 
 ## Develop a theme
 
-* modify the packages.json in root directory
+- modify the packages.json in root directory
 
 Change the following line:
 
@@ -130,7 +129,7 @@ ensure it is replaced by this line:
 "lerna --scope wui run buildRwuiThemes && cp packages/wui/dist/wui-dark.min.css packages/components/wui.css",
 ```
 
-* update the watch task  
+- update the watch task  
   Ensure the theme paramter is specified with your new theme name
 
 ```javascript
@@ -168,7 +167,7 @@ yarn workspace react-windy-ui add react-use-gesture
 modify in package.json or publish it explicitly by command arguments --registry
 
 ```javascript
-public: 
+public:
 https://registry.npmjs.org/
 
 private:

@@ -1,5 +1,8 @@
-@mixin active($background-color,$text-color) {
-  &:focus, &:hover, &:active, &.active {
+@mixin active($background-color, $text-color) {
+  &:focus,
+  &:hover,
+  &:active,
+  &.active {
     background-color: $background-color;
     color: $text-color;
 
@@ -9,9 +12,11 @@
 }
 
 @mixin active-content() {
-  &:focus, &:hover, &:active, &.active {
+  &:focus,
+  &:hover,
+  &:active,
+  &.active {
     //if the content part is passed into this mixin.
     @content;
   }
 }
-

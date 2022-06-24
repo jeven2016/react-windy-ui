@@ -1,4 +1,4 @@
---- 
+---
 order: 4.1
 type: sample
 zh_CN: 自定义选中的显示

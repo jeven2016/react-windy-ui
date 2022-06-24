@@ -1,7 +1,7 @@
 import React from 'react';
-import {Button} from 'react-windy-ui';
+import { Button } from 'react-windy-ui';
 import LZString from 'lz-string';
-import {getHtml, getIndexContent, getPackage, getScss} from './SampleTemplate';
+import { getHtml, getIndexContent, getPackage, getScss } from './SampleTemplate';
 
 function addParam(form, name, value) {
   const input = document.createElement('input');
@@ -16,18 +16,18 @@ const runCode = (code) => {
     files: {
       ...getPackage(),
       'index.js': {
-        content: getIndexContent(),
+        content: getIndexContent()
       },
       'index.html': {
-        content: getHtml(),
+        content: getHtml()
       },
       'Sample.js': {
-        content: code,
+        content: code
       },
-      'sample.scss':{
-        content: getScss(),
+      'sample.scss': {
+        content: getScss()
       }
-    },
+    }
   };
 
   const params = LZString.compressToBase64(JSON.stringify(paramObject));
@@ -47,15 +47,17 @@ const runCode = (code) => {
 };
 
 export default function SandboxButton(props) {
-  const {
-    code,
-  } = props;
-  return <Button inverted circle size="small"
-                 onClick={() => code && runCode(code)}>
-    <svg className="icon svg" style={{fontSize: '1em'}}
-         viewBox="0 0 1024 1024" fill="currentColor">
-      <path
-          d="M755 140.3l0.5-0.3h0.3L512 0 268.3 140h-0.3l0.8 0.4L68.6 256v512L512 1024l443.4-256V256L755 140.3z m-30 506.4v171.2L548 920.1V534.7L883.4 341v215.7l-158.4 90z m-584.4-90.6V340.8L476 534.4v385.7L300 818.5V646.7l-159.4-90.6zM511.7 280l171.1-98.3 166.3 96-336.9 194.5-337-194.6 165.7-95.7L511.7 280z"></path>
-    </svg>
-  </Button>;
+  const { code } = props;
+  return (
+    <Button inverted circle size="small" onClick={() => code && runCode(code)}>
+      <svg
+        className="icon svg"
+        style={{ fontSize: '1em' }}
+        viewBox="0 0 1024 1024"
+        fill="currentColor"
+      >
+        <path d="M755 140.3l0.5-0.3h0.3L512 0 268.3 140h-0.3l0.8 0.4L68.6 256v512L512 1024l443.4-256V256L755 140.3z m-30 506.4v171.2L548 920.1V534.7L883.4 341v215.7l-158.4 90z m-584.4-90.6V340.8L476 534.4v385.7L300 818.5V646.7l-159.4-90.6zM511.7 280l171.1-98.3 166.3 96-336.9 194.5-337-194.6 165.7-95.7L511.7 280z"></path>
+      </svg>
+    </Button>
+  );
 }

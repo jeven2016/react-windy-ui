@@ -11,7 +11,7 @@
   @content;
 }
 
-@mixin make-block($position:relative) {
+@mixin make-block($position: relative) {
   position: $position;
   display: block;
 

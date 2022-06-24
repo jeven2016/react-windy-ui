@@ -6,8 +6,8 @@
 
   .page-input {
     text-align: center;
-    padding-left: .25rem;
-    padding-right: .25rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
   }
 
   > .select {
@@ -27,8 +27,11 @@
     align-items: center;
     justify-content: center;
 
-    &:not(:last-child), + .icon-input, + .go-item, + .simple-content {
-      margin-right: .5rem;
+    &:not(:last-child),
+    + .icon-input,
+    + .go-item,
+    + .simple-content {
+      margin-right: 0.5rem;
     }
 
     > .button {
@@ -37,7 +40,7 @@
       padding: 0;
 
       > .page-text {
-        padding: 0 .25rem;
+        padding: 0 0.25rem;
       }
     }
   }
@@ -53,18 +56,19 @@
   }
 
   > .go-item {
-    margin-left: .5rem;
+    margin-left: 0.5rem;
     width: 7rem;
     height: 100%;
     color: $text-color;
 
-    > .input-group, .input {
+    > .input-group,
+    .input {
       height: 100% !important;
     }
 
     .input {
-      border-radius: .25rem;
-      margin-left: .5rem;
+      border-radius: 0.25rem;
+      margin-left: 0.5rem;
     }
 
     .button {
@@ -81,14 +85,14 @@
       font-size: 1.25rem;
       height: 100% !important;
       width: 3rem;
-      margin-right: .25rem;
+      margin-right: 0.25rem;
       text-align: center;
     }
 
     > .label {
       font-size: 1.25rem;
       color: $pagination-simple-content-label-color;
-      margin: 0 .25rem;
+      margin: 0 0.25rem;
     }
   }
 }

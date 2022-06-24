@@ -2,10 +2,11 @@
   position: relative;
   display: inline-flex;
   background: transparent;
-  opacity: .8;
+  opacity: 0.8;
 
-  &.tag, &.normal, &.dot {
-
+  &.tag,
+  &.normal,
+  &.dot {
     > .content {
       display: inline-flex;
       justify-content: center;
@@ -24,7 +25,8 @@
     }
   }
 
-  &.normal, &.dot {
+  &.normal,
+  &.dot {
     > .content {
       z-index: map_get($z-index, 'overlay');
       position: absolute;
@@ -37,7 +39,6 @@
       min-width: 1.25rem;
     }
   }
-
 
   &.dot {
     > .content {

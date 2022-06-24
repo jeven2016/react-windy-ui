@@ -1,4 +1,3 @@
-
 %body-spacing {
   min-height: 2rem;
   padding: 1.5rem;
@@ -20,9 +19,13 @@
   @include border-radius($dialog-border-radius);
   box-shadow: $dialog-box-shadow;
 
-  @include limit-width("max-width", $dialog-content-width-sm, $dialog-content-width-md,
-          $dialog-content-width-lg, $dialog-content-width-xg);
-
+  @include limit-width(
+    'max-width',
+    $dialog-content-width-sm,
+    $dialog-content-width-md,
+    $dialog-content-width-lg,
+    $dialog-content-width-xg
+  );
 
   &.center {
     top: 50%;
@@ -53,7 +56,8 @@
       color: $dialog-icon-color;
       cursor: pointer;
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         color: $dialog-icon-color-hover;
       }
     }
@@ -93,19 +97,17 @@
     }
   }
 
-
   > .footer {
     @include make-flex {
       justify-content: flex-end;
     }
     @include full-border-radius(0, 0, $dialog-inner-border-radius, $dialog-inner-border-radius);
-    padding: .75rem 1.5rem;
+    padding: 0.75rem 1.5rem;
 
     &.compact-footer {
       padding: 0 1.5rem 1.5rem;
     }
   }
-
 
   &.simple {
     border-width: 0;
@@ -113,7 +115,9 @@
     color: $white;
     background-color: transparent;
 
-    > .header, > .body, > .footer {
+    > .header,
+    > .body,
+    > .footer {
       border-width: 0;
       border-radius: 0;
       color: inherit;
@@ -121,7 +125,8 @@
 
     > .header {
       > .title {
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           text-shadow: $text-shadow;
         }
       }
@@ -129,7 +134,8 @@
       > .icon {
         color: $white;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           color: $white;
           text-shadow: $text-shadow;
         }
@@ -139,7 +145,6 @@
     > .footer {
       background: transparent;
     }
-
   }
 
   &.primary {
@@ -149,7 +154,8 @@
       @include full-border-radius($dialog-inner-border-radius, $dialog-inner-border-radius, 0, 0);
 
       > .title {
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           text-shadow: $text-shadow;
         }
       }
@@ -157,7 +163,8 @@
       > .icon {
         color: $white;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           color: $white;
           text-shadow: $text-shadow;
         }
@@ -167,7 +174,6 @@
     }
 
     > .body {
-
     }
 
     > .footer {
@@ -183,7 +189,9 @@
     height: 100%;
     border-radius: 0;
 
-    > .header, > .footer, > .body {
+    > .header,
+    > .footer,
+    > .body {
       border-radius: 0;
     }
   }
@@ -214,9 +222,6 @@
       .button:last-child {
         border-bottom-right-radius: 1.5rem !important;
       }
-
     }
   }
 }
-
-

@@ -1,5 +1,6 @@
 .border-info {
-  &.ok, &.success {
+  &.ok,
+  &.success {
     border-color: $success !important;
 
     &.icon-input,

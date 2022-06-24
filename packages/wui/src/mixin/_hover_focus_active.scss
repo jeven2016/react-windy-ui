@@ -21,7 +21,6 @@
   }
 }
 
-
 @mixin active() {
   &:not(:disabled):not(.disabled):active,
   &.active:not(:disabled):not(.disabled) {
@@ -62,13 +61,15 @@
 }
 
 @mixin only-focus() {
-  &:focus, &:hover {
+  &:focus,
+  &:hover {
     @content;
   }
 }
 
 @mixin only-active() {
-  &:active, &.active {
+  &:active,
+  &.active {
     @content;
   }
 }

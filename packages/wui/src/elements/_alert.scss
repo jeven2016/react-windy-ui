@@ -1,5 +1,4 @@
-$animation-timeout: .2s;
-
+$animation-timeout: 0.2s;
 
 //@keyframes active-alert {
 //  from {
@@ -96,7 +95,7 @@ $animation-timeout: .2s;
 
   > .alert-close {
     padding: 0;
-    opacity: .6;
+    opacity: 0.6;
     background: transparent !important;
     border: none !important;
     flex: 0 0 1em;
@@ -127,13 +126,14 @@ $animation-timeout: .2s;
       background: $alert-info-filled-background;
     }
 
-    &:focus, &:hover {
+    &:focus,
+    &:hover {
       box-shadow: $alert-info-box-shadow;
     }
   }
 
-
-  &.alert-simple, &.alert-mini {
+  &.alert-simple,
+  &.alert-mini {
     border: $alert-simple-border;
     //box-shadow: $alert-shadow;
     background: $alert-simple-background;
@@ -175,11 +175,11 @@ $animation-timeout: .2s;
       background: $alert-ok-filled-background;
     }
 
-    &:focus, &:hover {
+    &:focus,
+    &:hover {
       box-shadow: $alert-ok-box-shadow;
     }
   }
-
 
   &.alert-warning {
     background: $alert-warning-background;
@@ -202,11 +202,11 @@ $animation-timeout: .2s;
       background: $alert-warning-filled-background;
     }
 
-    &:focus, &:hover {
+    &:focus,
+    &:hover {
       box-shadow: $alert-warning-box-shadow;
     }
   }
-
 
   &.alert-error {
     background: $alert-error-background;
@@ -228,8 +228,8 @@ $animation-timeout: .2s;
       background: $alert-error-filled-background;
     }
 
-
-    &:focus, &:hover {
+    &:focus,
+    &:hover {
       box-shadow: $alert-error-box-shadow;
     }
   }
@@ -314,7 +314,6 @@ $container-offset: 1.5rem;
 
   @include adapter-width('min-width', map-get($bs-layout, 'sm')) {
     &.alert-container-width-sm {
-
       width: 22.5rem;
     }
   }
@@ -352,8 +351,4 @@ $container-offset: 1.5rem;
 
       @extend %r-movement;
     }*/
-
 }
-
-
-

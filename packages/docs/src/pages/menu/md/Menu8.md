@@ -1,4 +1,4 @@
---- 
+---
 order: 8
 type: sample
 zh_CN: 嵌套子菜单
@@ -8,9 +8,9 @@ editUrl: $BASE/pages/menu/md/Menu8.md
 ---
 
 +++ zh_CN
-在Menu中添加子菜单<Code>SubMenu</Code>, 显示层级关系的菜单。另外，记得给每个<Code>SubMenu</Code>添加一个不重复的<Code>id</Code>。
-每个菜单只能有一个Menu根节点, 并且<Code>SubMenu</Code>只能在Menu下嵌套添加。
- 
+在 Menu 中添加子菜单<Code>SubMenu</Code>, 显示层级关系的菜单。另外，记得给每个<Code>SubMenu</Code>添加一个不重复的<Code>id</Code>。
+每个菜单只能有一个 Menu 根节点, 并且<Code>SubMenu</Code>只能在 Menu 下嵌套添加。
+
 +++ en_US
 Menu8
 

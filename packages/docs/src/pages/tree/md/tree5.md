@@ -1,4 +1,4 @@
---- 
+---
 order: 5
 type: sample
 zh_CN: 使用JSON数据生成Tree
@@ -8,7 +8,7 @@ editUrl: $BASE/pages/tree/md/tree5.md
 ---
 
 +++ zh_CN
-可以通过<Code>jsonData</Code>属性，使用JSON数据生成一颗完整的树。
+可以通过<Code>jsonData</Code>属性，使用 JSON 数据生成一颗完整的树。
 
 +++ en_US
 Tree

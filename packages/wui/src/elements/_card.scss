@@ -1,4 +1,3 @@
-
 .card {
   @include make-inline-flex;
   flex-direction: $card-flex-direction;
@@ -49,7 +48,8 @@
       border-bottom-right-radius: $card-inner-border-radius;
 
       &.card-img {
-        > .img, > .overlay-title {
+        > .img,
+        > .overlay-title {
           border-bottom-left-radius: $card-inner-border-radius;
           border-bottom-right-radius: $card-inner-border-radius;
         }
@@ -60,7 +60,6 @@
       @include border-radius(0);
     }
   }
-
 
   .card-header {
     padding: $card-header-padding;
@@ -93,11 +92,10 @@
     //set min-height as a workaround for IE11, to fix image auto height bug.
     min-height: 1px; // https://github.com/philipwalton/flexbugs/issues/75
 
-
     > .img {
       display: block;
       width: 100%;
-      transition: transform .3s;
+      transition: transform 0.3s;
     }
 
     &.with-scale {
@@ -120,10 +118,9 @@
       background-color: $card-overlay-title-background-color;
 
       &:hover {
-        text-shadow: 1px 1px 2px #333, 0 0 25px $white, 0 0 5px $blue;;
+        text-shadow: 1px 1px 2px #333, 0 0 25px $white, 0 0 5px $blue;
       }
     }
-
   }
 
   .card-curtain {
@@ -149,7 +146,7 @@
       overflow: hidden;
 
       &.dark {
-        background: rgba(0, 0, 0, .6);
+        background: rgba(0, 0, 0, 0.6);
       }
     }
   }
@@ -158,7 +155,7 @@
     display: flex;
     flex: 1 1 0;
 
-    .card-body, {
+    .card-body {
       flex: 1 1 0;
       flex-wrap: wrap;
     }

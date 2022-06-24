@@ -1,10 +1,9 @@
-
 .text-field {
   @include make-inline-flex {
     position: relative;
     flex-direction: column;
     justify-content: center;
-    transition: box-shadow .15s;
+    transition: box-shadow 0.15s;
   }
 
   &.block {
@@ -18,12 +17,12 @@
     pointer-events: none;
     position: absolute;
     z-index: map_get($z-index, 'widget');
-    transition: font-size .2s, color .2s;
+    transition: font-size 0.2s, color 0.2s;
     will-change: font-size, color, top, transform;
   }
 
   .tf-required {
-    margin-left: .25rem;
+    margin-left: 0.25rem;
     pointer-events: none;
   }
 
@@ -57,21 +56,21 @@
     .tf-col {
       @include make-flex-vertical-center {
         &.right {
-          padding: 0 0 0 .25rem;
+          padding: 0 0 0 0.25rem;
         }
 
         &.left {
-          padding: 0 .25rem 0 0;
+          padding: 0 0.25rem 0 0;
         }
       }
     }
 
     .tf-col.right {
-      padding: 0 0 0 .25rem;
+      padding: 0 0 0 0.25rem;
     }
 
     .tf-col.left {
-      padding: 0 .25rem 0 0;
+      padding: 0 0.25rem 0 0;
     }
   }
 
@@ -89,12 +88,13 @@
     border: none;
     box-shadow: none;
 
-    &:focus, &:hover, &.active {
+    &:focus,
+    &:hover,
+    &.active {
       border: none;
       box-shadow: none;
     }
   }
-
 }
 
 .text-field.outline {
@@ -102,7 +102,6 @@
   border: 1px solid;
   border-radius: $default-border-radius;
   border-color: $gray;
-
 
   > .tf-label {
     position: absolute;
@@ -117,8 +116,8 @@
 
   &.show {
     > .tf-label {
-      font-size: .75rem;
-      padding: 0 .25rem;
+      font-size: 0.75rem;
+      padding: 0 0.25rem;
       background: $tf-label-show;
       color: $tf-label-color;
 
@@ -137,14 +136,14 @@
           color: $blue;
         }
       }
-
     }
   }
 
   &.small {
     height: 2.5rem;
 
-    > .tf-input, > .tf-input-wrapper {
+    > .tf-input,
+    > .tf-input-wrapper {
       font-size: map-get($font-size, 'normal');
     }
   }
@@ -152,7 +151,8 @@
   &.large {
     height: 4rem;
 
-    > .tf-input, > .tf-input-wrapper {
+    > .tf-input,
+    > .tf-input-wrapper {
       font-size: map-get($font-size, 'xlarge');
     }
 
@@ -169,12 +169,14 @@
     left: 0;
     color: $tf-underline-label-color;
 
-    + .tf-input, + .tf-input-wrapper {
+    + .tf-input,
+    + .tf-input-wrapper {
       margin-top: 1rem;
     }
   }
 
-  > .tf-input, > .tf-input-wrapper {
+  > .tf-input,
+  > .tf-input-wrapper {
     //width: 100%;
     padding: 0.5rem 0;
     border-bottom: 1px solid $gray;
@@ -182,11 +184,10 @@
 
   &.show {
     > .tf-label {
-      font-size: .75rem;
+      font-size: 0.75rem;
     }
 
     &.focused {
-
       &:not(.error-info) {
         &.with-bottom-bar {
           @include simple-bottom-bar;
@@ -196,18 +197,19 @@
           color: $blue;
         }
       }
-
     }
   }
 
   &.small {
-    > .tf-input, > .tf-input-wrapper {
+    > .tf-input,
+    > .tf-input-wrapper {
       font-size: map-get($font-size, 'normal');
     }
   }
 
   &.large {
-    > .tf-input, > .tf-input-wrapper {
+    > .tf-input,
+    > .tf-input-wrapper {
       font-size: map-get($font-size, 'xlarge');
     }
 
@@ -216,7 +218,6 @@
     }
   }
 }
-
 
 .text-field {
   @include make-special-text-field;

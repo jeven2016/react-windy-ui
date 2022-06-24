@@ -1,7 +1,7 @@
 import React from 'react';
-import {Tabs} from 'react-windy-ui';
-import {faHeart, faHome, faPhone} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { Tabs } from 'react-windy-ui';
+import { faHeart, faHome, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 /*
 
@@ -35,32 +35,33 @@ The class defined in your scss file:
 const IconStyle = {
   marginBottom: '.5rem',
   fontSize: '1.5rem'
-}
+};
 
 export default function Tabs8() {
-
-  return <>
-    <Tabs equalWidth={true} extraClassName="extra-tab">
-      <Tabs.Items>
-        <Tabs.TabItem value="Item1">
-          <Tabs.ItemContent>
-            <FontAwesomeIcon icon={faHome} style={IconStyle}/>
-            Home
-          </Tabs.ItemContent>
-        </Tabs.TabItem>
-        <Tabs.TabItem value="Item2">
-          <Tabs.ItemContent>
-            <FontAwesomeIcon icon={faPhone} style={IconStyle}/>
-            PHONE
-          </Tabs.ItemContent>
-        </Tabs.TabItem>
-        <Tabs.TabItem value="Item3">
-          <Tabs.ItemContent>
-            <FontAwesomeIcon icon={faHeart} style={IconStyle}/>
-            GIFT
-          </Tabs.ItemContent>
-        </Tabs.TabItem>
-      </Tabs.Items>
-    </Tabs>
-  </>;
+  return (
+    <>
+      <Tabs equalWidth={true} extraClassName="extra-tab">
+        <Tabs.Items>
+          <Tabs.TabItem value="Item1">
+            <Tabs.ItemContent>
+              <FontAwesomeIcon icon={faHome} style={IconStyle} />
+              Home
+            </Tabs.ItemContent>
+          </Tabs.TabItem>
+          <Tabs.TabItem value="Item2">
+            <Tabs.ItemContent>
+              <FontAwesomeIcon icon={faPhone} style={IconStyle} />
+              PHONE
+            </Tabs.ItemContent>
+          </Tabs.TabItem>
+          <Tabs.TabItem value="Item3">
+            <Tabs.ItemContent>
+              <FontAwesomeIcon icon={faHeart} style={IconStyle} />
+              GIFT
+            </Tabs.ItemContent>
+          </Tabs.TabItem>
+        </Tabs.Items>
+      </Tabs>
+    </>
+  );
 }

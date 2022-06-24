@@ -1,4 +1,3 @@
-
 .wui-box {
   align-items: stretch;
 
@@ -14,7 +13,6 @@
     &:first-child:not(:last-child) {
       margin-right: 1rem;
     }
-
   }
 
   &.wui-with-margin-bottom {
@@ -34,5 +32,4 @@
   .wui-widest-item {
     flex: 1 1 auto;
   }
-
 }

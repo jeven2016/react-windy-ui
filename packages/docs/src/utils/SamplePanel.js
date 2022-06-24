@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useContext, useMemo, useRef, useState } from 'react';
 import {
   Button,
   Card,
@@ -14,16 +8,16 @@ import {
   IconEdit,
   Row,
   Tooltip,
-  useEvent,
-} from "react-windy-ui";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCode, faCopy } from "@fortawesome/free-solid-svg-icons";
-import markdown from "./Markdown";
-import Hcode from "./Hcode";
-import SandboxButton from "./SandboxButton";
-import { getEditUrl, QuickManuContext } from "./DocUtils";
-import { EventListener } from "react-windy-ui/src/common/Constants";
-import { DocThemeContext } from "../common/DocConstants";
+  useEvent
+} from 'react-windy-ui';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCode, faCopy } from '@fortawesome/free-solid-svg-icons';
+import markdown from './Markdown';
+import Hcode from './Hcode';
+import SandboxButton from './SandboxButton';
+import { getEditUrl, QuickManuContext } from './DocUtils';
+import { EventListener } from 'react-windy-ui/src/common/Constants';
+import { DocThemeContext } from '../common/DocConstants';
 
 /**
  * With markdownOptions , you can directly load a react component in markdwon file
@@ -76,13 +70,7 @@ export default function SamplePanel(props) {
 
   return (
     <>
-      <Card
-        block
-        hasBorder={true}
-        hasBox={false}
-        ref={ref}
-        style={{ marginBottom: "3rem" }}
-      >
+      <Card block hasBorder={true} hasBox={false} ref={ref} style={{ marginBottom: '3rem' }}>
         <Card.Row extraClassName={`doc title-row ${theme}`}>
           <Row align="center">
             <Col col={6}>
@@ -90,7 +78,7 @@ export default function SamplePanel(props) {
                 <TitleMarkDwon />
                 {realEditUrl && (
                   <Tooltip body="Edit">
-                    <span style={{ color: "rgb(158, 155, 155)" }}>
+                    <span style={{ color: 'rgb(158, 155, 155)' }}>
                       <Button
                         inverted
                         circle
@@ -106,19 +94,11 @@ export default function SamplePanel(props) {
                 )}
               </div>
             </Col>
-            <Col
-              col={6}
-              style={{ display: "flex", justifyContent: "flex-end" }}
-            >
+            <Col col={6} style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <div>
                 <Tooltip body="Source code">
-                  <span style={{ color: "rgb(158, 155, 155)" }}>
-                    <Button
-                      inverted
-                      circle
-                      size="small"
-                      onClick={() => setCollapse((pre) => !pre)}
-                    >
+                  <span style={{ color: 'rgb(158, 155, 155)' }}>
+                    <Button inverted circle size="small" onClick={() => setCollapse((pre) => !pre)}>
                       <FontAwesomeIcon icon={faCode} />
                     </Button>
                   </span>
@@ -127,8 +107,8 @@ export default function SamplePanel(props) {
                 <Tooltip body="Run in CodeSandbox">
                   <span
                     style={{
-                      color: "rgb(158, 155, 155)",
-                      marginLeft: ".25rem",
+                      color: 'rgb(158, 155, 155)',
+                      marginLeft: '.25rem'
                     }}
                   >
                     <SandboxButton code={code} />
@@ -138,8 +118,8 @@ export default function SamplePanel(props) {
                 <Tooltip body="Copy code">
                   <span
                     style={{
-                      color: "rgb(158, 155, 155)",
-                      marginLeft: ".25rem",
+                      color: 'rgb(158, 155, 155)',
+                      marginLeft: '.25rem'
                     }}
                   >
                     <Button inverted circle size="small">

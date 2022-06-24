@@ -1,4 +1,4 @@
---- 
+---
 order: 2
 type: sample
 zh_CN: 显示的位置
@@ -7,7 +7,7 @@ editUrl: $BASE/pages/tooltip/md/tooltip2.md
 ---
 
 +++ zh_CN
-建议Tooltip在四个方位显示，因此您可以设置为<Code>top</Code>,<Code>bottom</Code>,<Code>left</Code>,<Code>right</Code>
+建议 Tooltip 在四个方位显示，因此您可以设置为<Code>top</Code>,<Code>bottom</Code>,<Code>left</Code>,<Code>right</Code>
 
 +++ en_US
 tooltip

@@ -39,7 +39,7 @@
     top: 0;
 
     @include make-before {
-      left: -.5rem;
+      left: -0.5rem;
       width: 50%;
       height: 50%;
     }
@@ -50,7 +50,7 @@
     left: 0;
 
     @include make-before {
-      top: -.5rem;
+      top: -0.5rem;
       width: 100%;
       height: 50%;
     }

@@ -1,7 +1,6 @@
-$popover-arrow-width: .75rem;
-$popover-arrow-height: .75rem;
-$popover-half-height: math.div($popover-arrow-height , 2);
-
+$popover-arrow-width: 0.75rem;
+$popover-arrow-height: 0.75rem;
+$popover-half-height: math.div($popover-arrow-height, 2);
 
 .popover {
   position: relative;
@@ -97,7 +96,6 @@ $popover-half-height: math.div($popover-arrow-height , 2);
       }
     }
 
-
     &.right {
       left: -$popover-half-height;
       transform: rotate(-45deg);
@@ -120,6 +118,5 @@ $popover-half-height: math.div($popover-arrow-height , 2);
         bottom: 1rem;
       }
     }
-
   }
 }

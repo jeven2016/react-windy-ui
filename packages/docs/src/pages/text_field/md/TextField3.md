@@ -1,8 +1,8 @@
---- 
+---
 order: 1
 type: sample
 zh_CN: 添加额外内容
-en_US:  Text Field 
+en_US: Text Field
 editUrl: $BASE/pages/text-field/md/TextField3.md
 ---
 

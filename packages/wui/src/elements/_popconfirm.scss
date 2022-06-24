@@ -1,10 +1,9 @@
 .pop-confirm {
-
   > .pop-row {
     @include make-flex-center;
 
     > .icon-column {
-      padding-right: .5rem;
+      padding-right: 0.5rem;
       color: $yellow;
     }
 
@@ -17,7 +16,7 @@
   > .pop-footer {
     @include make-flex;
     flex: 1 1 100%;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
     justify-content: flex-end;
   }
 }

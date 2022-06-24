@@ -1,11 +1,11 @@
 .button-group {
   @include make-inline-flex;
   flex-wrap: $btn-group-flex-wrap;
-  vertical-align: middle;// for horizontal alignment, multiple button groups placed in same div
+  vertical-align: middle; // for horizontal alignment, multiple button groups placed in same div
 
   > .button {
     @include group-border-radius($btn-group-border-radius);
-    height: auto!important;
+    height: auto !important;
 
     + .button {
       margin-left: 0;
@@ -36,13 +36,15 @@
     margin: 0 !important;
 
     &:first-child {
-      > .button, > .title > .button {
+      > .button,
+      > .title > .button {
         @include first-button;
       }
     }
 
     &:last-child {
-      > .button, > .title > .button {
+      > .button,
+      > .title > .button {
         @include last-button;
       }
     }
@@ -91,7 +93,9 @@
         border-bottom-width: 0;
         @include border-radius(0);
 
-        &:focus, &:hover, &:active {
+        &:focus,
+        &:hover,
+        &:active {
           border-left-width: $btn-group-border-width;
           border-right-width: $btn-group-border-width;
         }

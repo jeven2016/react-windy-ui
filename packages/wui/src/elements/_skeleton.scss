@@ -1,11 +1,10 @@
 .skeleton {
-
   .skeleton-item {
     height: 1rem;
     background: $skeleton-background;
     background-size: 300% 100%;
     animation: skeleton-animation 1.2s ease infinite;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
 
     &:not(:first-child) {
       margin-top: 1rem;

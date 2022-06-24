@@ -4,8 +4,9 @@
   opacity: $btn-not-allowed-opacity !important;
 }
 
-@mixin add-disabled-conf($append-sibling:true) {
-  &:disabled, &.disabled {
+@mixin add-disabled-conf($append-sibling: true) {
+  &:disabled,
+  &.disabled {
     @extend %not-allowed;
     @if not $append-sibling {
       @content;

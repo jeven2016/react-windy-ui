@@ -16,7 +16,7 @@
       }
     }
 
-    &.disabled{
+    &.disabled {
       @include add-disabled-conf;
     }
   }
@@ -45,7 +45,6 @@
     }
   }
 }
-
 
 .collapse-panel {
   overflow: hidden;

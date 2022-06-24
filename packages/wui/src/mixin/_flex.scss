@@ -10,22 +10,22 @@
     align-items: center;
     justify-content: center;
   }
-  @content
+  @content;
 }
 
 @mixin make-flex-vertical-center() {
   @include make-flex {
     align-items: center;
   }
-  @content
+  @content;
 }
 
-@mixin make-inline-flex-center($_align-items: center, $_justify-content:center) {
+@mixin make-inline-flex-center($_align-items: center, $_justify-content: center) {
   @include make-inline-flex {
     align-items: $_align-items;
     justify-content: $_justify-content;
   }
-  @content
+  @content;
 }
 
 @mixin make-inline-flex() {

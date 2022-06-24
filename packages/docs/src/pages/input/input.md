@@ -1,65 +1,68 @@
 ----------- Title ------------
 [TITLE_BEGIN_zh_CN]
-## 输入框 Input   
-在一个表单里，输入框也是最常使用的组件。Windy UI中的输入框组件主要有以下几种类型：
+
+## 输入框 Input
+
+在一个表单里，输入框也是最常使用的组件。Windy UI 中的输入框组件主要有以下几种类型：
 
 - 大、中、小三种尺寸的输入框
 - 能够嵌入图标的输入框
-- 可以将多个控件组合在一起显示的Input Group组件
-[TITLE_END_zh_CN]
+- 可以将多个控件组合在一起显示的 Input Group 组件
+  [TITLE_END_zh_CN]
 
 [TITLE_BEGIN_en_US]
 [TITLE_END_en_US]
 
 ----------- Footer ------------
 [FOOTER_BEGIN_zh_CN]
+
 ## API
-* Input的属性如下所示：
 
-| 属性 | 名称 | 类型 | 默认值 | 描述 |
-| --- | --- | --- | --- | --- |
-| ref | Input Dom对象的引用 | function \| ref | - | 当需要获取到按钮的dom对象时可设置此属性 |
-| className | 样式名称 | string | button |  |
-| extraClassName | 额外添加的样式名称 | string | - |  |
-| borderType | 边框类型 | string | - | 值可以为：ok, warning, error |
-| type | Input的类型 | string | - | 值可以是：text, textarea, password, file等html中关于input可设置的类型 |
-| block | 将Input宽度设置为100%的行宽 | boolean | `false` |  |
-| size | Input的尺寸 | string | medium | 值可以是: large, medium, small或者不设置 |
-| disabled | 是否禁用此Input | boolean | false |  |
-| onClick/onXX | Input的各类回调函数 | function | - | 比如onFocus, onBlur等 |
+- Input 的属性如下所示：
 
+| 属性           | 名称                           | 类型            | 默认值  | 描述                                                                       |
+| -------------- | ------------------------------ | --------------- | ------- | -------------------------------------------------------------------------- |
+| ref            | Input Dom 对象的引用           | function \| ref | -       | 当需要获取到按钮的 dom 对象时可设置此属性                                  |
+| className      | 样式名称                       | string          | button  |                                                                            |
+| extraClassName | 额外添加的样式名称             | string          | -       |                                                                            |
+| borderType     | 边框类型                       | string          | -       | 值可以为：ok, warning, error                                               |
+| type           | Input 的类型                   | string          | -       | 值可以是：text, textarea, password, file 等 html 中关于 input 可设置的类型 |
+| block          | 将 Input 宽度设置为 100%的行宽 | boolean         | `false` |                                                                            |
+| size           | Input 的尺寸                   | string          | medium  | 值可以是: large, medium, small 或者不设置                                  |
+| disabled       | 是否禁用此 Input               | boolean         | false   |                                                                            |
+| onClick/onXX   | Input 的各类回调函数           | function        | -       | 比如 onFocus, onBlur 等                                                    |
 
-* IconInput的属性如下所示：
+- IconInput 的属性如下所示：
 
-| 属性 | 名称 | 类型 | 默认值 | 描述 |
-| --- | --- | --- | --- | --- |
-| ref | 根节点Dom对象的引用 | function \| ref | - | 当需要获取到根节点的dom对象时可设置此属性 |
-| className | 样式名称 | string | button |  |
-| extraClassName | 额外添加的样式名称 | string | - | 比如设置为’aClass bClass', 按钮的实际样式是'aClass bClass button' |
-| block | 将宽度设置为100%的行宽 | boolean | `false` |  |
-| size | 尺寸 | string | medium | 值可以是: large, medium, small或者不设置 |
-| disabled | 是否禁用此Input | boolean | false |  |
+| 属性           | 名称                    | 类型            | 默认值  | 描述                                                              |
+| -------------- | ----------------------- | --------------- | ------- | ----------------------------------------------------------------- |
+| ref            | 根节点 Dom 对象的引用   | function \| ref | -       | 当需要获取到根节点的 dom 对象时可设置此属性                       |
+| className      | 样式名称                | string          | button  |                                                                   |
+| extraClassName | 额外添加的样式名称      | string          | -       | 比如设置为’aClass bClass', 按钮的实际样式是'aClass bClass button' |
+| block          | 将宽度设置为 100%的行宽 | boolean         | `false` |                                                                   |
+| size           | 尺寸                    | string          | medium  | 值可以是: large, medium, small 或者不设置                         |
+| disabled       | 是否禁用此 Input        | boolean         | false   |                                                                   |
 
+- InputGroup 的属性如下所示：
 
-* InputGroup的属性如下所示：
-
-| 属性 | 名称 | 类型 | 默认值 | 描述 |
-| --- | --- | --- | --- | --- |
-| ref | 根节点Dom对象的引用 | function \| ref | - | 当需要获取到根节点的dom对象时可设置此属性 |
-| className | 样式名称 | string | button |  |
-| extraClassName | 额外添加的样式名称 | string | - | 比如设置为’aClass bClass', 按钮的实际样式是'aClass bClass button' |
-| block | 将宽度设置为100%的行宽 | boolean | `false` |  |
-| size | 尺寸 | string | medium | 值可以是: large, medium, small或者不设置 |
-
+| 属性           | 名称                    | 类型            | 默认值  | 描述                                                              |
+| -------------- | ----------------------- | --------------- | ------- | ----------------------------------------------------------------- |
+| ref            | 根节点 Dom 对象的引用   | function \| ref | -       | 当需要获取到根节点的 dom 对象时可设置此属性                       |
+| className      | 样式名称                | string          | button  |                                                                   |
+| extraClassName | 额外添加的样式名称      | string          | -       | 比如设置为’aClass bClass', 按钮的实际样式是'aClass bClass button' |
+| block          | 将宽度设置为 100%的行宽 | boolean         | `false` |                                                                   |
+| size           | 尺寸                    | string          | medium  | 值可以是: large, medium, small 或者不设置                         |
 
 [FOOTER_END_zh_CN]
 
 [FOOTER_BEGIN_en_US]
 [FOOTER_END_en_US]
 
------------------------------------
+---
+
 [SampleInput1_BEGIN_zh_CN]
-### 示例1: 大、中、小三种输入框  
+
+### 示例 1: 大、中、小三种输入框
 
 <fieldset class="doc desc">
   <legend>提示</legend>
@@ -70,27 +73,33 @@
 
 ```jsx
 import React from 'react';
-import {Input} from 'react-windy-ui';
+import { Input } from 'react-windy-ui';
 
 export default function SampleInput1(props) {
-  return <>
-    <Input placeholder="default"/>
-    <br/> <br/>
-    <Input placeholder="large input" size='large'/>
-    <br/> <br/>
-    <Input placeholder="medium input" size='medium'/>
-    <br/> <br/>
-    <Input placeholder="small input" size='small'/>
-  </>;
+  return (
+    <>
+      <Input placeholder="default" />
+      <br /> <br />
+      <Input placeholder="large input" size="large" />
+      <br /> <br />
+      <Input placeholder="medium input" size="medium" />
+      <br /> <br />
+      <Input placeholder="small input" size="small" />
+    </>
+  );
 }
 ```
+
 [SampleInput1_END_zh_CN]
 
 [SampleInput1_BEGIN_en_US]
 [SampleInput1_END_en_US]
------------------------------------
+
+---
+
 [SampleInput2_BEGIN_zh_CN]
-### 示例2: 在输入框中显示图标
+
+### 示例 2: 在输入框中显示图标
 
 <fieldset class="doc desc">
   <legend>提示</legend>
@@ -102,30 +111,32 @@ export default function SampleInput1(props) {
 
 ```jsx
 import React from 'react';
-import {Input, IconSearch} from 'react-windy-ui';
+import { Input, IconSearch } from 'react-windy-ui';
 
 export default function SampleInput2(props) {
-  return <>
-    <div>
-      <Input.IconInput>
-        <Input placeholder="This is a input"/>
-        <IconSearch/>
-      </Input.IconInput>
-    </div>
-    <div style={{marginTop: '1rem'}}>
-      <Input.IconInput size="medium" leftIcon>
-        <Input placeholder="This is a input"/>
-        <IconSearch/>
-      </Input.IconInput>
-    </div>
+  return (
+    <>
+      <div>
+        <Input.IconInput>
+          <Input placeholder="This is a input" />
+          <IconSearch />
+        </Input.IconInput>
+      </div>
+      <div style={{ marginTop: '1rem' }}>
+        <Input.IconInput size="medium" leftIcon>
+          <Input placeholder="This is a input" />
+          <IconSearch />
+        </Input.IconInput>
+      </div>
 
-    <div style={{marginTop: '1rem'}}>
-      <Input.IconInput size="large" leftIcon>
-        <Input placeholder="This is a input"/>
-        <IconSearch/>
-      </Input.IconInput>
-    </div>
-  </>;
+      <div style={{ marginTop: '1rem' }}>
+        <Input.IconInput size="large" leftIcon>
+          <Input placeholder="This is a input" />
+          <IconSearch />
+        </Input.IconInput>
+      </div>
+    </>
+  );
 }
 ```
 
@@ -134,9 +145,11 @@ export default function SampleInput2(props) {
 [SampleInput2_BEGIN_en_US]
 [SampleInput2_END_en_US]
 
------------------------------------
+---
+
 [SampleInput3_BEGIN_zh_CN]
-### 示例3: 不同的类型
+
+### 示例 3: 不同的类型
 
 <fieldset class="doc desc">
   <legend>提示</legend>
@@ -149,17 +162,19 @@ export default function SampleInput2(props) {
 
 ```jsx
 import React from 'react';
-import {Input} from 'react-windy-ui';
+import { Input } from 'react-windy-ui';
 
 export default function SampleInput3(props) {
-  return <>
-    <div>
-      <Input block type="textarea" rows="5" cols="20" placeholder="type=textarea"/>
-    </div>
-    <div style={{marginTop: '1rem'}}>
-      <Input type="number" placeholder="type=number"/>
-    </div>
-  </>;
+  return (
+    <>
+      <div>
+        <Input block type="textarea" rows="5" cols="20" placeholder="type=textarea" />
+      </div>
+      <div style={{ marginTop: '1rem' }}>
+        <Input type="number" placeholder="type=number" />
+      </div>
+    </>
+  );
 }
 ```
 
@@ -168,10 +183,12 @@ export default function SampleInput3(props) {
 [SampleInput3_BEGIN_en_US]
 [SampleInput3_END_en_US]
 
+---
 
------------------------------------
 [SampleInput4_BEGIN_zh_CN]
-### 示例4: Input Group
+
+### 示例 4: Input Group
+
 <fieldset class="doc desc">
   <legend>提示</legend>
   <div class="doc desc-area">
@@ -181,29 +198,31 @@ export default function SampleInput3(props) {
 
 ```jsx
 import React from 'react';
-import {Input, InputGroup} from 'react-windy-ui';
+import { Input, InputGroup } from 'react-windy-ui';
 
 export default function SampleInput4(props) {
-  return <>
-    <div className="doc doc-row">
-      <InputGroup size="small">
-        <InputGroup.Label>$</InputGroup.Label>a
-        <Input placeholder="money......"/>
-      </InputGroup>
-    </div>
-    <div className="doc doc-row">
-      <InputGroup size="medium">
-        <InputGroup.Label>$</InputGroup.Label>
-        <Input placeholder="money......"/>
-      </InputGroup>
-    </div>
-    <div className="doc doc-row">
-      <InputGroup size="large">
-        <InputGroup.Label>$</InputGroup.Label>
-        <Input placeholder="money......"/>
-      </InputGroup>
-    </div>
-  </>;
+  return (
+    <>
+      <div className="doc doc-row">
+        <InputGroup size="small">
+          <InputGroup.Label>$</InputGroup.Label>a
+          <Input placeholder="money......" />
+        </InputGroup>
+      </div>
+      <div className="doc doc-row">
+        <InputGroup size="medium">
+          <InputGroup.Label>$</InputGroup.Label>
+          <Input placeholder="money......" />
+        </InputGroup>
+      </div>
+      <div className="doc doc-row">
+        <InputGroup size="large">
+          <InputGroup.Label>$</InputGroup.Label>
+          <Input placeholder="money......" />
+        </InputGroup>
+      </div>
+    </>
+  );
 }
 ```
 
@@ -211,9 +230,13 @@ export default function SampleInput4(props) {
 
 [SampleInput4_BEGIN_en_US]
 [SampleInput4_END_en_US]
------------------------------------
+
+---
+
 [SampleInput5_BEGIN_zh_CN]
-### 示例5: Input Group整行显示
+
+### 示例 5: Input Group 整行显示
+
 <fieldset class="doc desc">
   <legend>提示</legend>
   <div class="doc desc-area">
@@ -224,54 +247,53 @@ export default function SampleInput4(props) {
 
 ```jsx
 import React from 'react';
-import {Input} from 'react-windy-ui';
-import {IconSearch, InputGroup, Checkbox,Button, Loader} from 'react-windy-ui';
+import { Input } from 'react-windy-ui';
+import { IconSearch, InputGroup, Checkbox, Button, Loader } from 'react-windy-ui';
 
 export default function SampleInput5(props) {
-  return <>
-    <div className="doc doc-row">
-      <Input block placeholder="Username"/>
-    </div>
-    <div className="doc doc-row">
-      <Input.IconInput block>
-        <Input placeholder="Searching"/>
-        <i className="svg icon">
-          <Loader size="small" active={true}/>
-        </i>
-
-      </Input.IconInput>
-    </div>
-    <div className="doc doc-row">
-      <InputGroup block>
-        <InputGroup.Label>$</InputGroup.Label>
-        <Input placeholder="money......"/>
-        <InputGroup.Label>
-          <Checkbox/>
-        </InputGroup.Label>
-      </InputGroup>
-    </div>
-    <div className="doc doc-row">
-      <InputGroup block>
-        <Button color="green">Search</Button>
-        <Input placeholder="place......"/>
-        <Input placeholder="next......"/>
-        <Button color="blue">Go</Button>
-        <InputGroup.Label>
-          ---
-        </InputGroup.Label>
-      </InputGroup>
-    </div>
-    <div className="doc doc-row">
-      <InputGroup block>
-        <Input.IconInput leftIcon>
-          <Input placeholder="This is a input"/>
-          <IconSearch/>
+  return (
+    <>
+      <div className="doc doc-row">
+        <Input block placeholder="Username" />
+      </div>
+      <div className="doc doc-row">
+        <Input.IconInput block>
+          <Input placeholder="Searching" />
+          <i className="svg icon">
+            <Loader size="small" active={true} />
+          </i>
         </Input.IconInput>
-        <Button color="green">Search</Button>
-        <Input placeholder="next......"/>
-      </InputGroup>
-    </div>
-  </>;
+      </div>
+      <div className="doc doc-row">
+        <InputGroup block>
+          <InputGroup.Label>$</InputGroup.Label>
+          <Input placeholder="money......" />
+          <InputGroup.Label>
+            <Checkbox />
+          </InputGroup.Label>
+        </InputGroup>
+      </div>
+      <div className="doc doc-row">
+        <InputGroup block>
+          <Button color="green">Search</Button>
+          <Input placeholder="place......" />
+          <Input placeholder="next......" />
+          <Button color="blue">Go</Button>
+          <InputGroup.Label>---</InputGroup.Label>
+        </InputGroup>
+      </div>
+      <div className="doc doc-row">
+        <InputGroup block>
+          <Input.IconInput leftIcon>
+            <Input placeholder="This is a input" />
+            <IconSearch />
+          </Input.IconInput>
+          <Button color="green">Search</Button>
+          <Input placeholder="next......" />
+        </InputGroup>
+      </div>
+    </>
+  );
 }
 ```
 
@@ -279,10 +301,13 @@ export default function SampleInput5(props) {
 
 [SampleInput5_BEGIN_en_US]
 [SampleInput5_END_en_US]
------------------------------------
+
+---
 
 [SampleInput6_BEGIN_zh_CN]
-### 示例5: 禁用输入框
+
+### 示例 5: 禁用输入框
+
 <fieldset class="doc desc">
   <legend>提示</legend>
   <div class="doc desc-area">
@@ -292,38 +317,39 @@ export default function SampleInput5(props) {
 
 ```jsx
 import React from 'react';
-import {Checkbox, Input, InputGroup, Loader} from 'react-windy-ui';
+import { Checkbox, Input, InputGroup, Loader } from 'react-windy-ui';
 
 export default function SampleInput6(props) {
-  return <>
-    <div className="doc doc-row">
-      <Input disabled placeholder="Username"/>
-    </div>
-    <div className="doc doc-row">
-      <Input.IconInput block disabled>
-        <Input placeholder="Searching"/>
-        <i className="svg icon">
-          <Loader size="small" active={true}/>
-        </i>
-
-      </Input.IconInput>
-    </div>
-    <div className="doc doc-row">
-      <InputGroup block>
-        <InputGroup.Label>$</InputGroup.Label>
-        <Input disabled placeholder="money......"/>
-        <InputGroup.Label>
-          <Checkbox disabled value={true}/>
-        </InputGroup.Label>
-      </InputGroup>
-    </div>
-  </>;
+  return (
+    <>
+      <div className="doc doc-row">
+        <Input disabled placeholder="Username" />
+      </div>
+      <div className="doc doc-row">
+        <Input.IconInput block disabled>
+          <Input placeholder="Searching" />
+          <i className="svg icon">
+            <Loader size="small" active={true} />
+          </i>
+        </Input.IconInput>
+      </div>
+      <div className="doc doc-row">
+        <InputGroup block>
+          <InputGroup.Label>$</InputGroup.Label>
+          <Input disabled placeholder="money......" />
+          <InputGroup.Label>
+            <Checkbox disabled value={true} />
+          </InputGroup.Label>
+        </InputGroup>
+      </div>
+    </>
+  );
 }
 ```
+
 [SampleInput6_END_zh_CN]
 
 [SampleInput6_BEGIN_en_US]
 [SampleInput6_END_en_US]
------------------------------------
 
-
+---

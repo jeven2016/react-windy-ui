@@ -1,4 +1,4 @@
---- 
+---
 order: 14
 type: sample
 zh_CN: 禁用SubMenu和Item
@@ -7,7 +7,7 @@ editUrl: $BASE/pages/menu/md/Menu14.md
 ---
 
 +++ zh_CN
-SubMenu和Item都支持<Code>disabled</Code>属性，你可以设置为<Code>true</Code>后禁用。
+SubMenu 和 Item 都支持<Code>disabled</Code>属性，你可以设置为<Code>true</Code>后禁用。
 
 +++ en_US
 Menu14

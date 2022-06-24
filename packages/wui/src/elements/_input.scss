@@ -1,5 +1,5 @@
 %input-active-base {
-  z-index: map_get($z-index, "one");
+  z-index: map_get($z-index, 'one');
   position: relative;
 
   &:not(.simple-input) {
@@ -17,11 +17,11 @@
         left: 0;
         top: calc(100%);
         content: '';
-        height: 0.1875rem;;
-        width: 100%;;
+        height: 0.1875rem;
+        width: 100%;
         background: $input-border-active-color;
-        transition: width 0.3s;;
-        animation: change-width-smoothly 0.3s;;
+        transition: width 0.3s;
+        animation: change-width-smoothly 0.3s;
         z-index: 1;
       }
     }
@@ -56,7 +56,7 @@
         height: 2px;
         width: 100%;
         background: $input-border-active-color;
-        transition: width 0.3s;;
+        transition: width 0.3s;
         animation: change-width-smoothly 0.3s forwards;
         z-index: 1;
       }
@@ -101,7 +101,8 @@
     border-right: $input-simple-border-right;
     transition: $input-simple-transition;
 
-    &:active, &:focus {
+    &:active,
+    &:focus {
       border-bottom-width: 2px;
       box-shadow: $input-simple-box-shadow;
     }
@@ -114,7 +115,6 @@
     }
   }
 }
-
 
 textarea.input {
   max-width: 100%;
@@ -133,7 +133,8 @@ textarea.input {
     @extend %input-active-base;
   }
 
-  &.block, & > .input {
+  &.block,
+  & > .input {
     @include make-flex {
       width: $input-block-width;
     }
@@ -150,14 +151,15 @@ textarea.input {
     cursor: $icon-input-icon-cursor;
     width: auto;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       &:not(.disabled) {
         color: $input-border-active-color;
       }
     }
 
     &.right {
-      margin: 0 0 0 .5rem !important;
+      margin: 0 0 0 0.5rem !important;
     }
   }
 
@@ -166,7 +168,7 @@ textarea.input {
     padding: $elem-large-padding;
 
     > .icon-column:not(.right) {
-      margin: 0 0 0 .5rem;
+      margin: 0 0 0 0.5rem;
     }
   }
 
@@ -174,7 +176,7 @@ textarea.input {
     padding: $elem-default-padding;
 
     > .icon-column:not(.right) {
-      margin: 0 0 0 .5rem;
+      margin: 0 0 0 0.5rem;
     }
   }
 
@@ -182,7 +184,7 @@ textarea.input {
     padding: $elem-small-padding;
 
     > .icon-column:not(.right) {
-      margin: 0 0 0 .5rem;
+      margin: 0 0 0 0.5rem;
     }
   }
 
@@ -191,26 +193,24 @@ textarea.input {
 
     &.large {
       > .icon-column:not(.right) {
-        margin: 0 .5rem 0 0;
+        margin: 0 0.5rem 0 0;
       }
     }
 
     &.medium {
       > .icon-column:not(.right) {
-        margin: 0 .5rem 0 0;
+        margin: 0 0.5rem 0 0;
       }
     }
 
-
     &.small {
       > .icon-column:not(.right) {
-        margin: 0 .5rem 0 0;
+        margin: 0 0.5rem 0 0;
       }
     }
   }
 
   @include add-disabled-conf;
-
 }
 
 @include make-special-input('ok', $text-ok-color);

@@ -37,7 +37,7 @@
   }
 
   &.active {
-    z-index: map_get($z-index, "one");
+    z-index: map_get($z-index, 'one');
 
     &.with-select-box {
       box-shadow: $input-box-shadow;
@@ -73,20 +73,17 @@
       align-items: center;
 
       &.placeholder {
-        color: $text-comment-color
+        color: $text-comment-color;
       }
     }
-
   }
 
   > .icon-column {
-    margin-right: -.25rem;
+    margin-right: -0.25rem;
   }
 }
 
-
 .select-menu {
-
   .menu {
     .menu-item {
       &:not(.disabled).active {
@@ -97,7 +94,7 @@
         margin: 0;
 
         + .item-info {
-          padding-left: .5rem;
+          padding-left: 0.5rem;
         }
       }
     }
@@ -140,7 +137,8 @@
   }
 
   .item-row {
-    > .left, > .right {
+    > .left,
+    > .right {
       flex: 0 1 1em;
       @include make-flex-center;
     }
@@ -154,7 +152,7 @@
 
 .select-multiple {
   @extend %select-base;
-  padding: 0 .25rem;
+  padding: 0 0.25rem;
 
   > .select-multiple-content {
     display: flex;
@@ -164,14 +162,14 @@
 
     > .placeholder-text {
       color: $input-placeholder-color;
-      padding: 0 .5rem;
+      padding: 0 0.5rem;
     }
 
     > .multi-item {
       margin: 0.125rem 0.25rem 0.125rem 0;
       @include make-flex-vertical-center;
       @include border-radius();
-      padding: .25rem;
+      padding: 0.25rem;
       background: $select-multi-item-background;
       border: $select-multi-item-border;
     }
@@ -205,5 +203,4 @@
       @include add-disabled-conf;
     }
   }
-
 }

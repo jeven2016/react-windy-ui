@@ -16,13 +16,14 @@
 //for input-ok, input-warning, input-error
 @mixin make-special-input($type, $color) {
   .input-#{$type} {
-
-    &.input, &.icon-input > .input {
+    &.input,
+    &.icon-input > .input {
       border-color: $color;
     }
 
     &.input {
-      &:active, &:focus {
+      &:active,
+      &:focus {
         box-shadow: $input-special-active-box-shadow-partial rgba($color, 0.24);
       }
     }
@@ -33,7 +34,8 @@
 
     &.icon-input {
       > .input {
-        &:active, &:focus {
+        &:active,
+        &:focus {
           box-shadow: $input-special-active-box-shadow-partial rgba($color, 0.24);
 
           ~ .icon {

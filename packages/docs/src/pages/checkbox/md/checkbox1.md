@@ -1,4 +1,4 @@
---- 
+---
 order: 1
 type: sample
 zh_CN: 简单示例
@@ -7,7 +7,7 @@ editUrl: $BASE/pages/checkbox/md/checkbox1.md
 ---
 
 +++ zh_CN
-Checkbox的一个简单示例，可以设置label属性去显示提示文字。
+Checkbox 的一个简单示例，可以设置 label 属性去显示提示文字。
 
 +++ en_US
 ck1

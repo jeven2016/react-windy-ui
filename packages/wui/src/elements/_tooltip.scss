@@ -1,5 +1,5 @@
-$tooltip-arrow-width: .4rem;
-$tooltip-arrow-height: .4rem;
+$tooltip-arrow-width: 0.4rem;
+$tooltip-arrow-height: 0.4rem;
 $tooltip-half-height: math.div($tooltip-arrow-height, 2);
 $tooltip-arrow-spacing: 1rem;
 
@@ -9,7 +9,7 @@ $tooltip-arrow-spacing: 1rem;
   background: #5b5656;
   color: $white;
   font-size: 0.8rem;
-  font-weight: map_get($font-weight, "normal");
+  font-weight: map_get($font-weight, 'normal');
   padding: 0.25rem 0.5rem;
   line-height: 1.5;
   min-width: 2rem;
@@ -82,7 +82,6 @@ $tooltip-arrow-spacing: 1rem;
       }
     }
 
-
     &.right {
       left: -$tooltip-half-height;
       transform: rotate(-45deg);
@@ -100,6 +99,5 @@ $tooltip-arrow-spacing: 1rem;
         bottom: $tooltip-arrow-spacing;
       }
     }
-
   }
 }

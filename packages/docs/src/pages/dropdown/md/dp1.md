@@ -1,4 +1,4 @@
---- 
+---
 order: 1
 type: sample
 zh_CN: 简单示例
@@ -7,7 +7,7 @@ editUrl: $BASE/pages/dropdown/md/dp1.md
 ---
 
 +++ zh_CN
-点击文本、Button后弹出菜单。
+点击文本、Button 后弹出菜单。
 
 +++ en_US
 Dp1

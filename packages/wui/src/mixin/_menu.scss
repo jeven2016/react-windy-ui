@@ -1,13 +1,17 @@
 //normal menu
-@mixin make-menu-item($display-flex:true, $item-padding: $menu-item-padding, $has-line-height: true) {
+@mixin make-menu-item(
+  $display-flex: true,
+  $item-padding: $menu-item-padding,
+  $has-line-height: true
+) {
   @if $display-flex {
-    @include make-flex-vertical-center ;
+    @include make-flex-vertical-center;
   } @else {
-    @include make-inline-flex-center ;
+    @include make-inline-flex-center;
   }
   position: relative;
 
-  @if($has-line-height){
+  @if ($has-line-height) {
     //line-height: $menu-item-line-height;
   }
   padding: $item-padding;
@@ -43,4 +47,3 @@
     background-color: transparent;
   }
 }
-

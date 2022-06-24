@@ -47,13 +47,14 @@
   }
 
   @each $name, $color in $colors {
-    &.#{"" + $name} {
+    &.#{'' + $name} {
       color: $color !important;
 
       &-hover {
         color: inherit !important;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           color: $color !important;
         }
 
@@ -62,6 +63,5 @@
         }
       }
     }
-
   }
 }

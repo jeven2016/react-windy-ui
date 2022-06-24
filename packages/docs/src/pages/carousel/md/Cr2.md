@@ -1,4 +1,4 @@
---- 
+---
 order: 2
 type: sample
 zh_CN: 显示图片

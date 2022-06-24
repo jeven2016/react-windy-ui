@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Divider, Select} from 'react-windy-ui';
+import React, { useState } from 'react';
+import { Divider, Select } from 'react-windy-ui';
 
 export default function Select6() {
   const [active, setActive] = useState(false);
@@ -18,24 +18,27 @@ export default function Select6() {
     setValue(val);
   };
 
-  return <>
-    <div className="doc doc-row space">
-      <Select activeBy="click"
-              value={value}
-              active={active}
-              onActiveChange={change}
-              onSelect={select}>
-        <Select.Option value={0}>Won't close1</Select.Option>
-        <Divider/>
-        <Select.Option value={1}>Close</Select.Option>
-        <Divider/>
-        <Select.Option value={2}>Won't close2</Select.Option>
-        <Divider/>
-        <Select.Option value={3}>Won't close3</Select.Option>
-        <Divider/>
-        <Select.Option value={4}>Won't close4</Select.Option>
-      </Select>
-    </div>
-  </>;
-
+  return (
+    <>
+      <div className="doc doc-row space">
+        <Select
+          activeBy="click"
+          value={value}
+          active={active}
+          onActiveChange={change}
+          onSelect={select}
+        >
+          <Select.Option value={0}>Won't close1</Select.Option>
+          <Divider />
+          <Select.Option value={1}>Close</Select.Option>
+          <Divider />
+          <Select.Option value={2}>Won't close2</Select.Option>
+          <Divider />
+          <Select.Option value={3}>Won't close3</Select.Option>
+          <Divider />
+          <Select.Option value={4}>Won't close4</Select.Option>
+        </Select>
+      </div>
+    </>
+  );
 }

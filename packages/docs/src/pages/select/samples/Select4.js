@@ -1,5 +1,5 @@
-import React, {useMemo, useState} from 'react';
-import {Select} from 'react-windy-ui';
+import React, { useMemo, useState } from 'react';
+import { Select } from 'react-windy-ui';
 
 export default function Select4() {
   //the item count
@@ -7,9 +7,9 @@ export default function Select4() {
 
   //generate the items for selection
   const items = useMemo(() => {
-    return [...Array(count).keys()].map((key, index) =>
-      <Select.Option key={key} value={key}>{`Option ${key}`}</Select.Option>,
-    );
+    return [...Array(count).keys()].map((key, index) => (
+      <Select.Option key={key} value={key}>{`Option ${key}`}</Select.Option>
+    ));
   }, [count]);
 
   const [itemList, setItemList] = useState(items);
@@ -30,27 +30,29 @@ export default function Select4() {
 
     setTimeout(() => {
       //filter a list of items
-      let list = items.filter(
-        item => {
-          return item.props.children.toLowerCase().includes(value.toLowerCase());
-        });
+      let list = items.filter((item) => {
+        return item.props.children.toLowerCase().includes(value.toLowerCase());
+      });
       setItemList(list);
       setLoading(false);
     }, 1000);
   };
 
-  return <>
-    <div className="doc doc-row space">
-      <Select popupBodyStyle={{height: '20rem', overflow: 'auto'}}
-              activeBy="hover"
-              defaultValue={0}
-              searchable
-              loading={loading}
-              onSearch={search}
-              onSelect={(val) => console.log(`You just selected ${val}`)}>
-        {itemList}
-      </Select>
-    </div>
-  </>;
-
+  return (
+    <>
+      <div className="doc doc-row space">
+        <Select
+          popupBodyStyle={{ height: '20rem', overflow: 'auto' }}
+          activeBy="hover"
+          defaultValue={0}
+          searchable
+          loading={loading}
+          onSearch={search}
+          onSelect={(val) => console.log(`You just selected ${val}`)}
+        >
+          {itemList}
+        </Select>
+      </div>
+    </>
+  );
 }

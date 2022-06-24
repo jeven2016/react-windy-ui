@@ -32,25 +32,23 @@
     @extend %large;
     @content;
 
-   /* &:not(.textarea):not(within-group) {
+    /* &:not(.textarea):not(within-group) {
       height: $input-large-height;
     }*/
   }
 
   &.medium {
     @extend %medium;
-    @content
-
-  /*  &:not(.textarea):not(within-group) {
+    @content /*  &:not(.textarea):not(within-group) {
       height: $input-height;
-    }*/
+    }*/;
   }
 
   &.small {
     @extend %small;
     @content;
 
-   /* &:not(.textarea):not(within-group) {
+    /* &:not(.textarea):not(within-group) {
       height: $input-small-height;
     }*/
   }
@@ -74,5 +72,4 @@
       @extend %small;
     }
   }
-
 }
