@@ -1,5 +1,5 @@
 import React from 'react';
-import { CommonProps } from '../generic';
+import { AlignType, CommonProps, JustifyType } from '../generic';
 
 export type BoxProps = {
   className?: string;
@@ -11,6 +11,8 @@ export type BoxProps = {
   hasMarginBottom?: boolean;
   block?: PropTypes.bool;
   autoEllipsis?: PropTypes.bool;
+  justify?: JustifyType;
+  align?: AlignType;
 } & CommonProps<HTMLDivElement>;
 
 const Box: React.ForwardRefExoticComponent<BoxProps>;

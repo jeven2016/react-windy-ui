@@ -46,3 +46,7 @@
     @include align(center);
   }
 }
+
+.wui-flex-grow {
+  flex: 1 1 auto;
+}

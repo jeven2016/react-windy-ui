@@ -31,8 +31,8 @@ var global = {
     " * Version - <%= pkg.version %>",
     " * Licensed under the MIT license - http://opensource.org/licenses/MIT",
     " * Copyright (c) <%= new Date().getFullYear() %> <%= pkg.author %>",
-    " */\n",
-  ].join("\n"),
+    " */\n"
+  ].join("\n")
 };
 
 var scssDirs = buildConfig.scssFile;
@@ -41,7 +41,7 @@ var scssDirs = buildConfig.scssFile;
 var params = minimist(process.argv.slice(2), {
   string: ["copyTo"],
   boolean: [],
-  default: { copyTo: null },
+  default: { copyTo: null }
 });
 
 function solveFileName(file) {
@@ -61,7 +61,7 @@ function getFileNames(prefix, file) {
     if (file.length === 0) {
       invalidFile(file);
     }
-    return file.map(function (item) {
+    return file.map(function(item) {
       return prefix + item;
     });
   }
@@ -86,7 +86,7 @@ function getFiles(dirConfig) {
 
   var elemConfig = dirConfig.config;
   var fileList = [];
-  fs.readdirSync(dirConfig.path).forEach(function (fileName) {
+  fs.readdirSync(dirConfig.path).forEach(function(fileName) {
     if (!fileName.endsWith(".scss")) {
       console.log("The directory is ignored:" + fileName);
       return;
@@ -112,22 +112,21 @@ function getFiles(dirConfig) {
   return fileList;
 }
 
-gulp.task("clean", function () {
+gulp.task("clean", function() {
   return del([global.dist + "**"]);
 });
 
-gulp.task("addDefaultHeader", function () {
-  return gulp
-    .src("dist/*.css")
+gulp.task("addDefaultHeader", function() {
+  return gulp.src("dist/*.css")
     .pipe(header(global.banner, { pkg: pkg }))
     .pipe(gulp.dest(global.dist + "default"));
 });
 
-gulp.task("cleanUncompressedFiles", function (cb) {
+gulp.task("cleanUncompressedFiles", function(cb) {
   return rimraf("dist/!(wui*.min.css", cb);
 });
 
-gulp.task("buildDefault", function () {
+gulp.task("buildDefault", function() {
   console.info(">>>>  Begin to compile the default theme................");
   var scssFiles = getFiles(scssDirs.base)
     .concat(getFiles(scssDirs.mixin))
@@ -137,8 +136,7 @@ gulp.task("buildDefault", function () {
   console.info("The following files will be compiled:");
   console.info(scssFiles);
 
-  return gulp
-    .src(scssFiles)
+  return gulp.src(scssFiles)
     .pipe(sassGlob())
     .pipe(concat(global.name + ".scss"))
     .pipe(sass.sync().on("error", sass.logError))
@@ -149,17 +147,16 @@ gulp.task("buildDefault", function () {
 });
 
 function getFolders(dir) {
-  return fs.readdirSync(dir).filter(function (file) {
+  return fs.readdirSync(dir).filter(function(file) {
     return fs.statSync(path.join(dir, file)).isDirectory();
   });
 }
 
-gulp.task("buildThemes", function () {
+gulp.task("buildThemes", function() {
   console.info(">>>>  Begin to compile themes................");
-  var tskArray = getFolders(scssDirs.themes.path).map(function (dirName) {
-    var variableFile = path
-      .join(scssDirs.themes.path, dirName, scssDirs.variableFile)
-      .toString();
+  var tskArray = getFolders(scssDirs.themes.path).map(function(dirName) {
+    var variableFile = path.join(scssDirs.themes.path, dirName,
+      scssDirs.variableFile).toString();
 
     var scssFiles = getFiles(scssDirs.base)
       .concat(variableFile)
@@ -172,8 +169,7 @@ gulp.task("buildThemes", function () {
     );
     console.info(scssFiles);
 
-    return gulp
-      .src(scssFiles)
+    return gulp.src(scssFiles)
       .pipe(wait(2000))
       .pipe(sassGlob())
       .pipe(concat(global.name + "-" + dirName + ".css"))
@@ -187,32 +183,31 @@ gulp.task("buildThemes", function () {
   return merge(tskArray);
 });
 
-const themPath = process.cwd() + "/dist";
-console.log("source=" + themPath);
-gulp.task("copy", () =>
-  gulp
-    .src(themPath)
-    .pipe(filter("*.min.css")) // filter the min files and not setting restore: true
-    .pipe(
-      rename(function (path) {
-        console.log("path=" + path);
-        path.basename = path.basename.replace(".min", "");
-      })
-    )
-    .pipe(gulp.dest("../components/dist"))
-    .pipe(gulp.dest("../docs/public"))
+const themPath = process.cwd() + "/dist/**.css";
+console.log("themPath=" + themPath);
+
+gulp.task("copy", () => {
+    console.log("themPath=" + themPath);
+    return gulp.src(themPath).pipe(
+      filter("*.min.css")) // filter the min files and not setting restore: true
+      .pipe(
+        rename(function(path) {
+          path.basename = path.basename.replace(".min", "");
+        })
+      ).pipe(gulp.dest("../components/dist")).pipe(gulp.dest("../docs/public"));
+  }
 );
 
 //watch the changes of scss files and trigger building task
-gulp.task("watch", function () {
-  var tasks = ["default"];
+gulp.task("watch", function() {
+  var tasks = ["default", "buildThemes"];
   if (params.buildAll) {
     tasks.push("buildThemes");
   }
   tasks.push("copy");
 
-  return watch("src/**/*.scss", function () {
-    console.log("~~~~~~~~~~~~~watch ~~~~~~~~~~~");
+  return watch("src/**/*.scss", function() {
+    console.log(">> update watched");
     gulp.series(tasks)();
   });
 });

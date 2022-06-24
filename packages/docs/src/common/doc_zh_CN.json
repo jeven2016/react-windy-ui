@@ -59,13 +59,13 @@
   "doc.menu.breadcrumb": "面包屑 Breadcrumb",
   "doc.menu.card": "卡片 Card",
   "doc.menu.layout": "布局 Layout",
+  "doc.menu.box": "盒子 Box",
   "doc.menu.utilsIndex": "工具",
   "doc.menu.hooks": "Hooks",
   "doc.menu.theme": "皮肤",
   "doc.menu.icons": "图标库",
   "doc.menu.classes": "辅助样式",
   "doc.menu.functions": "函数工具",
-
   "doc.themes.default": "默认皮肤",
   "doc.themes.dark": "黑色皮肤"
 }
