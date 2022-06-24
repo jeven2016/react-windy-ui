@@ -1,10 +1,16 @@
-import React from 'react';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
+import React from "react";
+import clsx from "clsx";
+import PropTypes from "prop-types";
 
+/**
+ * 1. margin top/bottom , left/right
+ * 2. align left/right, justify
+ * 3. two equals columns
+ * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{}> & React.RefAttributes<unknown>>}
+ */
 const Box = React.forwardRef((props, ref) => {
   const {
-    className = 'wui-box',
+    className = "wui-box",
     extraClassName,
     children,
     left,
@@ -16,11 +22,11 @@ const Box = React.forwardRef((props, ref) => {
     ...rest
   } = props;
   const clsName = clsx(extraClassName, className, {
-    'wui-with-margin-bottom': hasMarginBottom,
-    'wui-block': block
+    "wui-with-margin-bottom": hasMarginBottom,
+    "wui-block": block
   });
 
-  const boxClsName = clsx('wui-box-center', {
+  const boxClsName = clsx("wui-box-center", {
     ellipsis: autoEllipsis
   });
   return (

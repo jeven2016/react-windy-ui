@@ -1,6 +1,6 @@
-import React from 'react';
-import { CommonProps } from '../generic';
-import { ButtonProps } from '../button';
+import React from "react";
+import { CommonProps, JustifyType } from "../generic";
+import { ButtonProps } from "../button";
 
 export type PaginationProps = {
   siblingCount?: number;
@@ -25,7 +25,8 @@ export type PaginationProps = {
   renderPre?: () => React.ReactNode;
   renderNext?: () => React.ReactNode;
   selectProps?: object; //todo select props;
-} & Omit<CommonProps<HTMLDivElement>, 'onChange'>;
+  justify?: JustifyType;
+} & Omit<CommonProps<HTMLDivElement>, "onChange">;
 
 declare const Pagination: React.ForwardRefExoticComponent<PaginationProps>;
 
