@@ -1,5 +1,5 @@
-import React from "react";
-import { AlignType, CommonProps, JustifyType } from "../generic";
+import React from 'react';
+import { AlignType, CommonProps, JustifyType } from '../generic';
 
 export type BoxProps = {
   className?: string;
