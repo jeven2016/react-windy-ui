@@ -4,19 +4,28 @@ import { Box, Button, Input } from "react-windy-ui";
 const boxStyle = {
   background: "#eee"
 };
-export default function Box1() {
+export default function Box3() {
   return (
     <>
       <div>
-        <Box block style={{ ...boxStyle, width: "50%" }}
+        <Box style={boxStyle}
+             block
              left={<Button>Left</Button>}
-             right={<Button>Right</Button>} />
+             justifyLeft="end"
+             right={<Button>Right</Button>}
+             justifyRight="start"
+        />
+
+
         <Box
           block
           style={boxStyle}
           left={<Button>Left</Button>}
+          justifyLeft="end"
           right={<Button>Right</Button>}
-          center={<Input style={{ margin: "0 .5rem" }} />}
+          justifyRight="start"
+          center={<span>Center</span>}
+          justifyCenter="center"
         />
       </div>
     </>

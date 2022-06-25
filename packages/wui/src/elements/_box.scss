@@ -29,6 +29,18 @@
     }
   }
 
+  > .wui-box-left {
+    padding-right: .25rem;
+  }
+
+  > .wui-box-right {
+    padding-left: .25rem;
+  }
+
+  > .wui-box-center {
+    padding: 0 .25rem;
+  }
+
   .wui-widest-item {
     flex: 1 1 auto;
   }
