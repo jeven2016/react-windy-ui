@@ -52,18 +52,18 @@
 
 .mask-anchor {
   position: fixed;
-  padding: 0.75rem 1rem;
-  box-shadow: $default-box-shadow;
+  padding: 0.25rem .5rem;
+  box-shadow: $mask-anchor-box-shadow;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 0.5rem;
   cursor: pointer;
-  background: $white;
+  background: $mask-anchor-background;
   z-index: map_get($z-index, 'overlay');
 
   @include focus-active2 {
-    color: $primary;
+    color: $mask-anchor-active-font-color;
   }
 
   &.left {

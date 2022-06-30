@@ -4,28 +4,18 @@ import { Pagination } from 'react-windy-ui';
 export default function Pagination5() {
   return (
     <>
-      <div className="doc doc-row space" style={{ width: '400px' }}>
+      <div className="doc doc-row">
         <Pagination pageCount={10} simple />
       </div>
-
-      {/* <div className="doc doc-row space" style={{width: '400px'}}>
-      <Pagination pageCount={10} simple hasGo={true}
-                  onChange={(page) => console.log(page)}/>
-    </div>*/}
-
       <div
-        className="doc doc-row space"
         style={{
-          background: '#E3E3E5',
-          padding: '1rem'
-        }}
-      >
+          background: '#E3E3E5'
+        }}>
         <div
           style={{
             padding: '.5rem 0.5rem',
             background: 'white'
-          }}
-        >
+          }}>
           <Pagination
             pageCount={10}
             simple

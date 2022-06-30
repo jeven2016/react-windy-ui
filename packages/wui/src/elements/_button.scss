@@ -59,21 +59,21 @@
     }
   }
 
-  + .button {
+  + .wui-button:not(.block) {
     margin-left: 0.5rem;
   }
 
-  //&.default {
-  //  //by default, the background is transparent,
-  //  //for mouse hover, the background is $light-gray
-  //  @include generate-btn($btn-default-background-color, inherit);
-  //  @include enable-active($btn-default-background-color, $text-color, lighten($default-border-color, 10%), $light-gray, $light-gray);
-  //  border: 1px solid $default-border-color;
-  //
-  //  &.inverted {
-  //    border: none;
-  //  }
-  //}
+  &.default {
+    //by default, the background is transparent,
+    //for mouse hover, the background is $light-gray
+    @include generate-btn($btn-default-background-color, $btn-default-font-color);
+    @include enable-active($btn-default-background-color, $btn-default-active-font-color, lighten($default-border-color, 10%), $light-gray, $light-gray);
+    border: 1px solid $default-border-color;
+
+    &.inverted {
+      border: none;
+    }
+  }
 
   //other buttons
   @each $name, $color in $btn-colors {

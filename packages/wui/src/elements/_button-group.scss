@@ -3,11 +3,11 @@
   flex-wrap: $btn-group-flex-wrap;
   vertical-align: middle; // for horizontal alignment, multiple button groups placed in same div
 
-  > .button {
+  > .wui-button {
     @include group-border-radius($btn-group-border-radius);
     height: auto !important;
 
-    + .button {
+    + .wui-button:not(.block) {
       margin-left: 0;
     }
 
@@ -26,7 +26,7 @@
   }
 
   &.horizontal {
-    > .button:not(:first-child) {
+    > .wui-button:not(:first-child) {
       margin-left: $btn-group-buttons-margin-left;
       border-left: none !important;
     }
@@ -36,23 +36,23 @@
     margin: 0 !important;
 
     &:first-child {
-      > .button,
-      > .title > .button {
+      > .wui-button,
+      > .title > .wui-button {
         @include first-button;
       }
     }
 
     &:last-child {
-      > .button,
-      > .title > .button {
+      > .wui-button,
+      > .title > .wui-button {
         @include last-button;
       }
     }
 
     &:not(:first-child):not(:last-child) {
       //for button and dropdown's button
-      > .button,
-      > .title > .button {
+      > .wui-button,
+      > .title > .wui-button {
         @include middle-button;
       }
     }
@@ -65,7 +65,7 @@
     //display:table-cell 以表格单元格的形式呈现，可看做td标签。
     //table-cell同样会被其他属性破坏，例如float, position:absolute，
     //所以，在使用display:table-cell与float:left或是position:absolute属性尽量不用同时使用。
-    > .button {
+    > .wui-button {
       flex-grow: 1;
     }
   }
@@ -73,7 +73,7 @@
   &.vertical {
     flex-direction: column;
 
-    > .button {
+    > .wui-button {
       display: block;
       width: 100%;
 

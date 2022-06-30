@@ -7,6 +7,7 @@ const SampleBtn10 = () => {
     <>
       <Toggle onChange={(value) => setDisabled(value)} />
       <br />
+      <br />
       <Button color="purple" disabled={disabled} onClick={() => {}}>
         Button
       </Button>
