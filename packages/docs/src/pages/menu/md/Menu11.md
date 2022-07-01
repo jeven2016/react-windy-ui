@@ -1,4 +1,4 @@
---- 
+---
 order: 11
 type: sample
 zh_CN: 分组
@@ -7,7 +7,7 @@ editUrl: $BASE/pages/menu/md/Menu11.md
 ---
 
 +++ zh_CN
-在SubMenu中，可以使用<Code>Group</Code>将多个Item组合归类。
+在 SubMenu 中，可以使用<Code>Group</Code>将多个 Item 组合归类。
 
 +++ en_US
 Menu11

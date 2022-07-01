@@ -1,4 +1,4 @@
---- 
+---
 order: 8
 type: sample
 zh_CN: 完整的多选示例

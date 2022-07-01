@@ -1,12 +1,12 @@
 {
   "name": "react-windy-ui",
-  "version": "0.7.0",
+  "version": "0.7.1-rc5",
   "description": "A modern web UI framework based on React",
   "repository": {
     "type": "git",
     "url": "git://github.com/jeven2016/react-windy-ui.git"
   },
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "types": "dist/index.d.ts",
   "keywords": [
     "React",
@@ -53,6 +53,8 @@
     "child_process": "^1.0.2",
     "cross-env": "^7.0.3",
     "gulp": "^4.0.2",
+    "gulp-filter": "^7.0.0",
+    "gulp-rename": "^2.0.0",
     "lodash": "^4.17.21",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
@@ -63,14 +65,14 @@
     "react-dom": ">=16.12.0"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org"
   },
   "release": {
     "publishDir": "dist"
   },
   "scripts": {
-    "build": "yarn run format && ../../node_modules/gulp/bin/gulp.js build",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,scss,json}' --config ./.prettierrc"
+    "build": "../../node_modules/gulp/bin/gulp.js build",
+    "copy:themes": "../../node_modules/gulp/bin/gulp.js copy:themes"
   },
   "babel": {
     "presets": [

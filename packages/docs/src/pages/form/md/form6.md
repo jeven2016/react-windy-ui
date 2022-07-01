@@ -1,4 +1,4 @@
---- 
+---
 order: 6
 type: sample
 zh_CN: 关联属性的校验

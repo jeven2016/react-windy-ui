@@ -5,6 +5,7 @@ import Curtain from './Curtain';
 export type CardProps = {
   block?: boolean;
   autoScale?: boolean;
+  rise?: boolean;
   hasBorder?: boolean;
   hasBox?: boolean;
   hasWidth?: boolean;

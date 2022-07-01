@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table} from 'react-windy-ui';
+import { Table } from 'react-windy-ui';
 
 const data = [
   {
@@ -9,7 +9,7 @@ const data = [
     building: 'Building 1',
     door: 'Door 1',
     desc: 'Description',
-    actions: 'Delete',
+    actions: 'Delete'
   },
   {
     key: 2,
@@ -18,7 +18,7 @@ const data = [
     building: 'Building 2',
     door: 'Door 2',
     desc: 'Description',
-    actions: 'Delete',
+    actions: 'Delete'
   },
   {
     key: 3,
@@ -27,7 +27,7 @@ const data = [
     building: 'Building 3',
     door: 'Door 3',
     desc: 'Description',
-    actions: 'Delete',
+    actions: 'Delete'
   },
   {
     key: 4,
@@ -36,7 +36,7 @@ const data = [
     building: 'Building 4',
     door: 'Door 4',
     desc: 'Description',
-    actions: 'Delete',
+    actions: 'Delete'
   },
   {
     key: 5,
@@ -45,7 +45,7 @@ const data = [
     building: 'Building 5',
     door: 'Door 5',
     desc: 'Description',
-    actions: 'Delete',
+    actions: 'Delete'
   },
   {
     key: 6,
@@ -54,8 +54,8 @@ const data = [
     building: 'Building 6',
     door: 'Door 6',
     desc: 'Description',
-    actions: 'Delete',
-  },
+    actions: 'Delete'
+  }
 ];
 
 const cells = [
@@ -71,17 +71,18 @@ const cells = [
       filterItems: [
         {
           text: '南京',
-          value: 'Nanjing',
+          value: 'Nanjing'
         },
         {
           text: '北京',
-          value: 'Beijing',
+          value: 'Beijing'
         },
         {
           text: '上海',
-          value: 'Shanghai',
-        }],
-    },
+          value: 'Shanghai'
+        }
+      ]
+    }
   },
   {
     key: 'details',
@@ -92,7 +93,7 @@ const cells = [
         head: 'Name',
         paramName: 'name',
         sortable: true,
-        width: '100',
+        width: '100'
       },
       {
         key: 'Address',
@@ -103,7 +104,7 @@ const cells = [
             head: 'City',
             paramName: 'city',
             sortable: true,
-            width: '100',
+            width: '100'
           },
           {
             key: 'block',
@@ -114,42 +115,44 @@ const cells = [
                 head: 'Building',
                 paramName: 'building',
                 sortable: true,
-                width: '120',
+                width: '120'
               },
               {
                 key: 'door',
                 head: 'Door',
                 paramName: 'door',
-                width: '120',
-              },
-            ],
-          },
-
-        ],
-
-      },
-    ],
+                width: '120'
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
 
   {
     key: 'desc',
     head: 'Description',
-    paramName: 'desc',
+    paramName: 'desc'
   },
 
   {
     head: 'Action',
     paramName: 'actions',
     width: '150px',
-    fixed: 'right',
-  },
+    fixed: 'right'
+  }
 ];
 
 export default function Table10() {
-  return <Table loadData={data}
-                cells={cells}
-                hover={true}
-                scrollY={true}
-                scrollX={true}
-                bodyWidth={1200}/>;
+  return (
+    <Table
+      loadData={data}
+      cells={cells}
+      hover={true}
+      scrollY={true}
+      scrollX={true}
+      bodyWidth={1200}
+    />
+  );
 }

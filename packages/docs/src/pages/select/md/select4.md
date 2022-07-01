@@ -1,4 +1,4 @@
---- 
+---
 order: 4
 type: sample
 zh_CN: 自定义搜索

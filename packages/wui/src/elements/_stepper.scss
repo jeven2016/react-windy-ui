@@ -1,0 +1,319 @@
+.w-stepper {
+  @include make-flex {
+    flex: 1 1 100%;
+    overflow: hidden;
+  }
+
+  &.vertical {
+    flex-direction: column;
+
+    > .w-step {
+      padding-left: 0 !important;
+      min-height: 4rem;
+    }
+  }
+
+  > .w-step {
+    @include make-flex;
+    justify-content: flex-start;
+    flex: 1 1 0;
+    overflow: hidden;
+    position: relative;
+
+    > .w-step-single-connector {
+      position: absolute;
+      top: 1rem;
+      transform: translate3d(0, -50%, 0);
+      height: 1px;
+      background: $gray;
+
+      &.normal {
+        left: calc(-50% + 1.5rem);
+        right: calc(50% + 1.5rem);
+      }
+
+      &.w-dot-connector {
+        left: calc(-50% + 0.75rem);
+        right: calc(50% + 0.75rem);
+      }
+
+      &.active {
+        background: $blue;
+      }
+    }
+
+    &.horizontal {
+      &:not(:first-child) {
+        padding-left: 1rem;
+      }
+    }
+
+    &.vertical-step {
+      flex-direction: column;
+      align-items: center;
+      overflow: unset;
+    }
+
+    > .w-step-icon {
+      @include make-flex-center;
+      flex-shrink: 0;
+      flex-grow: 0;
+      width: 2rem;
+      height: 2rem;
+      color: $gray;
+      border-radius: 50%;
+
+      &.w-dot {
+        width: 0.75rem;
+        height: 0.75rem;
+        margin-top: 0.625rem;
+
+        &.w-solid-dot {
+          &:not(.active) {
+            background: $gray;
+          }
+
+          &.checked:not(.gray-dot) {
+            background: $blue;
+          }
+
+          &.with-error {
+            background: $red;
+          }
+
+          &.with-warning {
+            background: $yellow;
+          }
+        }
+      }
+
+      &.without-border {
+        &.with-error {
+          background: transparent;
+          color: $red;
+        }
+
+        &.with-warning {
+          background: transparent;
+          color: $yellow;
+        }
+      }
+
+      &.with-border {
+        border: 1px solid $gray;
+
+        &.checked {
+          border-color: $blue;
+        }
+
+        &.active {
+          border-color: $blue;
+        }
+
+        &.with-error {
+          border-color: $red;
+          background: transparent;
+          color: $red;
+        }
+
+        &.with-warning {
+          border-color: $yellow;
+          background: transparent;
+          color: $yellow;
+        }
+      }
+
+      &.horizontal {
+        margin-right: 0.5rem;
+      }
+
+      &.checked {
+        color: $blue;
+      }
+
+      &.active {
+        background: $blue;
+        color: $white;
+      }
+    }
+
+    > .w-step-content {
+      @include make-inline-flex;
+      flex-direction: column;
+
+      > .w-step-title {
+        line-height: 2rem;
+        position: relative;
+        @include make-inline-flex;
+        padding-right: 1rem;
+        align-self: baseline; //for column, the width is 100% by default, so reset it to baseline for proper width
+
+        &.vertical-step {
+          padding-right: 0;
+          align-self: center;
+        }
+
+        &.active {
+          > .w-step-connector {
+            background: $blue;
+          }
+
+          > .w-step-title-info {
+            color: $blue;
+          }
+
+          > .w-step-title-info {
+            color: unset;
+          }
+
+          > .w-step-subtitle {
+            color: $text-comment-color;
+          }
+        }
+
+        &.checked {
+          > .w-step-connector {
+            background: $blue;
+          }
+
+          > .w-step-title-info {
+            color: unset;
+          }
+
+          > .w-step-subtitle {
+            color: $text-comment-color;
+          }
+        }
+
+        > .w-step-title-info {
+          color: $gray;
+        }
+
+        > .w-step-subtitle {
+          margin-left: 0.5rem;
+          font-size: 0.9em;
+          color: $gray;
+        }
+
+        > .w-step-connector {
+          position: absolute;
+          left: 100%;
+          top: 50%;
+          transform: translate3d(0, -50%, 0);
+          height: 1px;
+          background: $gray;
+          width: 300px;
+        }
+      }
+
+      > .w-step-body {
+        font-size: 0.9em;
+        color: $gray;
+
+        &.vertical-body {
+          padding-bottom: 0.5rem;
+        }
+
+        &.checked {
+          color: $text-comment-color;
+        }
+
+        &.active {
+          color: unset;
+        }
+
+        &.with-error {
+          color: $red;
+        }
+
+        &.with-warning {
+          color: $yellow;
+        }
+      }
+    }
+
+    .w-step-vertical-connector {
+      position: absolute;
+      left: 1rem;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      padding: 2.5rem 0 0.5rem;
+
+      &::after {
+        display: inline-block;
+        content: '';
+        width: 1px;
+        height: 100%;
+        background: $gray;
+        margin-bottom: 0.5rem;
+      }
+
+      &.with-dot {
+        padding: 2rem 0 0;
+        left: 0.375rem;
+
+        &::after {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    &.with-error {
+      color: $red;
+    }
+
+    &.with-warning {
+      color: $yellow;
+    }
+
+    &.clickable {
+      cursor: pointer;
+      //opacity: .6;
+
+      &.visible {
+        opacity: 1;
+
+        .w-step-title-info,
+        .w-step-subtitle,
+        .w-step-body {
+          color: $blue !important;
+        }
+
+        .w-step-icon {
+          &.with-border:not(.active) {
+            border-color: $blue !important;
+            color: $blue !important;
+          }
+
+          &.without-border {
+            background: $blue !important;
+            color: $white !important;
+          }
+        }
+      }
+
+      @include focus2_no_active {
+        .w-step-title-info,
+        .w-step-subtitle,
+        .w-step-body {
+          color: $blue;
+        }
+
+        .w-step-icon {
+          &.with-border:not(.active) {
+            border-color: $blue !important;
+            color: $blue !important;
+          }
+
+          &.without-border {
+            background: $blue !important;
+            color: $white !important;
+          }
+        }
+      }
+    }
+
+    @include add-disabled-conf;
+  }
+}

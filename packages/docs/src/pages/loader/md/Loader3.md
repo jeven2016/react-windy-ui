@@ -1,4 +1,4 @@
---- 
+---
 order: 3
 type: sample
 zh_CN: Button中的Icon
@@ -7,7 +7,7 @@ editUrl: $BASE/pages/loader/md/loader3.md
 ---
 
 +++ zh_CN
-在Button中显示Loader。 
+在 Button 中显示 Loader。
 
 +++ en_US
 Loader3

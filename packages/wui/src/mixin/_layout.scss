@@ -1,0 +1,22 @@
+// Generate grid columns with media query definition
+@mixin generate-media-grid-columns($colCount, $type, $condition) {
+  @include media-query($condition) {
+    @include generate-grid-columns($colCount, $type, false);
+  }
+}
+
+// Generate the corresponding columns via specific arguments
+@mixin generate-grid-columns($colCount, $type, $extend-column-setting: true) {
+  @for $i from 1 through $colCount {
+    & > .col#{$type}#{$i} {
+      flex: 0 0 percentage(math.div($i, ($colCount)));
+      max-width: percentage(math.div($i, ($colCount)));
+    }
+  }
+
+  @for $i from 1 to $colCount {
+    & > .offset#{$type}#{$i} {
+      margin-left: percentage(math.div($i, ($colCount)));
+    }
+  }
+}

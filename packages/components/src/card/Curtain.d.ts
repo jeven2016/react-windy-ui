@@ -10,7 +10,7 @@ export type CurtainProps = {
   onChange?: (any, MouseEvent) => void;
   closeContent?: React.ReactNode;
   darkMask?: boolean;
-} & CommonProps<HTMLDivElement>;
+} & Omit<CommonProps<HTMLDivElement>, 'onChange'>;
 
 declare const Curtain: React.ForwardRefExoticComponent<CurtainProps>;
 export default Curtain;

@@ -1,0 +1,51 @@
+.collapse {
+  border-radius: $default-border-radius;
+
+  .inner-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .collapse-header {
+    @include make-header('header', 0) {
+      > .icon-column {
+        &.expand {
+          transform: rotate(90deg);
+        }
+      }
+    }
+
+    &.disabled {
+      @include add-disabled-conf;
+    }
+  }
+
+  &.with-border {
+    > .card {
+      border-radius: $default-border-radius;
+      border: $default-border;
+      overflow: hidden;
+
+      &:not(:last-of-type) {
+        border-bottom: 0;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      &:not(:first-of-type) {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+
+      > .collapse-header {
+        margin-bottom: -1px;
+        border-bottom: $default-border;
+      }
+    }
+  }
+}
+
+.collapse-panel {
+  overflow: hidden;
+}

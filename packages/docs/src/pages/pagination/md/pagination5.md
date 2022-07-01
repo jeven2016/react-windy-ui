@@ -1,4 +1,4 @@
---- 
+---
 order: 5
 type: sample
 zh_CN: 简化版

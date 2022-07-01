@@ -10,7 +10,7 @@ export type ListItemProps = {
   moreElements?: React.ReactNode | React.ReactNode[];
   hasRipple?: boolean;
   rippleColor?: string;
-} & CommonProps<HTMLDivElement>;
+} & Omit<CommonProps<HTMLDivElement>, 'title'>;
 
 declare const Item: React.ForwardRefExoticComponent<ListItemProps>;
 

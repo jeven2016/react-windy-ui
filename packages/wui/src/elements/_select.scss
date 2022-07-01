@@ -1,0 +1,206 @@
+%select-base {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  border: $input-border;
+  @include border-radius($input-border-radius);
+  outline: $input-outline;
+  line-height: $input-line-height;
+  -webkit-appearance: none;
+  transition: $default-transition;
+  //font-size: $input-font-size;
+  outline: $input-outline;
+  min-height: 1.5em;
+  position: relative;
+
+  &.block {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  @include add-disabled-conf;
+
+  @include focus-active2 {
+    border: 1px solid $primary;
+
+    &.ok {
+      box-shadow: $input-special-active-box-shadow-partial rgba($green, 0.24);
+    }
+
+    &.warning {
+      box-shadow: $input-special-active-box-shadow-partial rgba($yellow, 0.24);
+    }
+
+    &.error {
+      box-shadow: $input-special-active-box-shadow-partial rgba($red, 0.24);
+    }
+  }
+
+  &.active {
+    z-index: map_get($z-index, 'one');
+
+    &.with-select-box {
+      box-shadow: $input-box-shadow;
+      border: 1px solid $primary;
+    }
+  }
+}
+
+.select-input {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  outline: $input-outline;
+  line-height: $input-line-height;
+  -webkit-appearance: none;
+  transition: $default-transition;
+  //font-size: $input-font-size;
+  outline: none;
+  border: none;
+  background: $input-background;
+  color: $input-color;
+}
+
+.select {
+  @extend %select-base;
+  @include input-variant-size();
+
+  > .select-info {
+    flex: 1 1 auto;
+
+    > .select-content {
+      display: flex;
+      align-items: center;
+
+      &.placeholder {
+        color: $text-comment-color;
+      }
+    }
+  }
+
+  > .icon-column {
+    margin-right: -0.25rem;
+  }
+}
+
+.select-menu {
+  .menu {
+    .menu-item {
+      &:not(.disabled).active {
+        background: $select-menu-item-active;
+      }
+
+      > .icon-column {
+        margin: 0;
+
+        + .item-info {
+          padding-left: 0.5rem;
+        }
+      }
+    }
+  }
+
+  &.non-compact {
+    .menu {
+      .menu-item {
+        padding: 0.5rem 1rem !important;
+        min-width: unset;
+      }
+    }
+  }
+
+  &.compact {
+    .menu {
+      .menu-item {
+        padding: 0.5rem !important;
+        min-width: unset;
+      }
+    }
+  }
+
+  .no-data {
+    background: $select-menu-no-data-background;
+    flex-direction: column;
+    padding: 1rem;
+    @include border-radius;
+    @include make-flex-center;
+
+    > .no-data-icon {
+      font-size: 2em;
+      color: $gray;
+    }
+
+    > .no-data-label {
+      font-size: 1em;
+      color: $gray;
+    }
+  }
+
+  .item-row {
+    > .left,
+    > .right {
+      flex: 0 1 1em;
+      @include make-flex-center;
+    }
+
+    > .center {
+      flex: 1 0 auto;
+      padding: 0 0.25rem;
+    }
+  }
+}
+
+.select-multiple {
+  @extend %select-base;
+  padding: 0 0.25rem;
+
+  > .select-multiple-content {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+
+    > .placeholder-text {
+      color: $input-placeholder-color;
+      padding: 0 0.5rem;
+    }
+
+    > .multi-item {
+      margin: 0.125rem 0.25rem 0.125rem 0;
+      @include make-flex-vertical-center;
+      @include border-radius();
+      padding: 0.25rem;
+      background: $select-multi-item-background;
+      border: $select-multi-item-border;
+    }
+
+    > .select-input {
+      padding-left: 0;
+      padding-right: 0;
+      width: 1.5em;
+      min-width: 0.5rem;
+      max-width: 100%;
+      //font-size: .8rem;
+      border: none;
+      box-shadow: none !important;
+      outline: 0;
+      margin: 0 0.25rem;
+
+      @include input-variant-size {
+        padding-right: 0;
+        padding-left: 0;
+      }
+
+      @include add-disabled-conf;
+    }
+
+    > .search-text-detector {
+      position: absolute;
+      opacity: 0;
+      left: 0;
+      top: 0;
+
+      @include add-disabled-conf;
+    }
+  }
+}

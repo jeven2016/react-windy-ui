@@ -15,7 +15,7 @@ export type CollapseProps = {
   iconPosition?: 'left' | 'right';
   hasRipple?: boolean;
   disabled?: boolean;
-} & CommonProps<HTMLDivElement>;
+} & Omit<CommonProps<HTMLDivElement>, 'onChange'>;
 
 interface RootComponent extends React.ForwardRefExoticComponent<CollapseProps> {
   Item: typeof Item;

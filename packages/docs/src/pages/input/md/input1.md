@@ -1,7 +1,7 @@
---- 
+---
 order: 1
 type: sample
-zh_CN: 输入框的尺寸 
+zh_CN: 输入框的尺寸
 en_US: Size
 editUrl: $BASE/pages/input/md/input1.md
 ---

@@ -1,4 +1,4 @@
---- 
+---
 order: 3
 type: sample
 zh_CN: 指示器属性设置

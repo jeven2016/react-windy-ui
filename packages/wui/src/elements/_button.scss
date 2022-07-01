@@ -1,0 +1,196 @@
+.base-btn {
+  @include make-inline-flex-center();
+  padding: $btn-default-padding;
+  cursor: $btn-cursor;
+  outline: $btn-outline;
+  line-height: $btn-line-height;
+  text-align: $btn-text-align;
+  text-decoration: $btn-text-decoration;
+  vertical-align: $btn-cicle-vertical-align;
+  @include border-radius($btn-border-radius);
+  //overflow: $btn-overflow;
+  -webkit-tap-highlight-color: transparent;
+  //-webkit-appearance: button; //issue: Border-Radius doesn't work in link button on Chrome
+  -webkit-appearance: none;
+  appearance: none;
+  transition: $btn-transition;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+
+  &.min-width {
+    min-width: $btn-min-width;
+  }
+
+  // button can be disabled
+  @include add-disabled-conf;
+}
+
+.wui-button {
+  @extend .base-btn;
+  border: none;
+  transition: background 0.3s, box-shadow 0.3s;
+
+  > .content-root {
+    @include make-flex {
+      justify-content: inherit;
+      align-items: inherit;
+    }
+
+    > .left-content {
+      margin-right: 0.5rem;
+    }
+
+    > .right-content {
+      margin-left: 0.5rem;
+    }
+  }
+
+  &.with-outline-bg {
+  }
+
+  &.without-border {
+    border-color: transparent !important;
+  }
+
+  &.without-box {
+    &:not(.outline) {
+      box-shadow: none !important;
+    }
+  }
+
+  + .wui-button:not(.block) {
+    margin-left: 0.5rem;
+  }
+
+  &.default {
+    //by default, the background is transparent,
+    //for mouse hover, the background is $light-gray
+    @include generate-btn($btn-default-background-color, $btn-default-font-color);
+    @include enable-active($btn-default-background-color, $btn-default-active-font-color, lighten($default-border-color, 10%), $light-gray, $light-gray);
+    border: 1px solid $default-border-color;
+
+    &.inverted {
+      border: none;
+    }
+  }
+
+  //other buttons
+  @each $name, $color in $btn-colors {
+    &.#{'' + $name} {
+      &.normal {
+        color: get-text-color($name); //todo
+        background: $color;
+        @include enable-active($color, get-text-color($name));
+      }
+
+      &.inverted {
+        @include generate-btn(transparent, inherit);
+        @include enable-active($color, $white);
+      }
+    }
+  }
+
+  &.outline {
+    @each $name, $color in $btn-colors {
+      &.#{'' + $name} {
+        @include generate-btn(transparent, $color);
+
+        &.with-outline-bg {
+          box-shadow: 0 0 0 2px darken($color, $default-color-increase-ratio) inset;
+        }
+
+        &.with-default-color {
+          color: $btn-default-text-color;
+          box-shadow: 0 0 0 1px darken($default-border-color, $default-color-increase-ratio) inset;
+        }
+
+        &.inverted-outline {
+          color: $white;
+          box-shadow: 0 0 0 2px darken($white, $default-color-increase-ratio) inset;
+        }
+
+        @include enable-outline-active($color, $white);
+      }
+    }
+  }
+
+  //同级的block button，margin-top:0.5rem
+  &.block {
+    @include make-flex {
+      flex: 1 1 100%;
+      width: 100%;
+    }
+
+    + .block {
+      margin-top: $btn-margin-top-button;
+    }
+  }
+
+  &.round {
+    @include border-radius($btn-round-border-radius);
+  }
+
+  &.circle {
+    @include flex-center(inline-flex);
+
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding: 0;
+    overflow: visible;
+    @include border-radius($btn-circle-border-radius);
+
+    &:not(.only-icon) {
+      &.medium {
+        width: $btn-cicle-width;
+        height: $btn-cicle-height;
+      }
+
+      &.small {
+        width: 1.8125rem;
+        height: 1.8125rem;
+      }
+
+      &.large {
+        width: 2.875rem;
+        height: 2.875rem;
+      }
+    }
+  }
+
+  &.only-icon {
+    &.with-circle-icon {
+      border-radius: 50%;
+    }
+
+    &.medium {
+      //padding: .5rem;
+      width: 2rem;
+      height: 2rem;
+    }
+
+    &.small {
+      width: 1.8125rem;
+      height: 1.8125rem;
+    }
+
+    &.large {
+      //padding: .75rem;
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+
+  @include variant-size();
+
+  > .loader {
+    @include child-margin(0.5rem);
+
+    &.third,
+    &.secondary {
+      &.small {
+        vertical-align: -0.25rem;
+      }
+    }
+  }
+}

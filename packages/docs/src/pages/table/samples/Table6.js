@@ -1,38 +1,38 @@
-import React, {useRef} from 'react';
-import {Button, Table} from 'react-windy-ui';
+import React, { useRef } from 'react';
+import { Button, Table } from 'react-windy-ui';
 
 const loadData = () => {
   return [
     {
       key: '1',
       name: 'Nanjing',
-      place: 'Zhonghua Gate',
+      place: 'Zhonghua Gate'
     },
     {
       key: '2',
       name: 'Nanjing',
-      place: 'Qinhuai River',
+      place: 'Qinhuai River'
     },
     {
       key: '3',
       name: 'Shanghai',
-      place: 'The Bund Shanghai',
+      place: 'The Bund Shanghai'
     },
     {
       key: '4',
       name: 'Shanghai',
-      place: 'Jade Buddha Temple',
+      place: 'Jade Buddha Temple'
     },
     {
       key: '5',
       name: 'Beijing',
-      place: 'Forbidden City',
+      place: 'Forbidden City'
     },
     {
       key: '6',
       name: 'Beijing',
-      place: 'Badaling Great Wall',
-    },
+      place: 'Badaling Great Wall'
+    }
   ];
 };
 
@@ -40,7 +40,7 @@ const cells = [
   {
     head: 'ID',
     paramName: 'key',
-    sortable: true,
+    sortable: true
   },
   {
     head: 'City',
@@ -50,16 +50,17 @@ const cells = [
       filterItems: [
         {
           text: '南京',
-          value: 'Nanjing',
+          value: 'Nanjing'
         },
         {
           text: '北京',
-          value: 'Beijing',
+          value: 'Beijing'
         },
         {
           text: '上海',
-          value: 'Shanghai',
-        }],
+          value: 'Shanghai'
+        }
+      ],
       resetText: '重 置',
       okText: '确 定',
       onFilter: (filterValues, rowData) => {
@@ -69,8 +70,8 @@ const cells = [
           }
         }
         return false;
-      },
-    },
+      }
+    }
   },
   {
     head: 'Place',
@@ -80,37 +81,36 @@ const cells = [
       filterItems: [
         {
           text: '秦淮河',
-          value: 'Qinhuai',
+          value: 'Qinhuai'
         },
         {
           text: '故宫',
-          value: 'Forbidden',
+          value: 'Forbidden'
         },
         {
           text: '外滩',
-          value: 'Bund',
-        }],
-    },
-  },
+          value: 'Bund'
+        }
+      ]
+    }
+  }
 ];
 
 export default function Table6() {
   const instanceRef = useRef(null);
 
-  return <>
-    <Button onClick={() => instanceRef.current.clearSort()}>
-      Clear Sort
-    </Button>
-    <Button onClick={() => instanceRef.current.clearFilter()}>
-      Clear Filter
-    </Button>
-    <Button onClick={() => instanceRef.current.clearAll()}>
-      Clear All
-    </Button>
-    <Table instanceRef={instanceRef}
-           loadData={loadData} cells={cells}
-           hover={true}
-           hasBorder={true}/>
-
-  </>;
+  return (
+    <>
+      <Button onClick={() => instanceRef.current.clearSort()}>Clear Sort</Button>
+      <Button onClick={() => instanceRef.current.clearFilter()}>Clear Filter</Button>
+      <Button onClick={() => instanceRef.current.clearAll()}>Clear All</Button>
+      <Table
+        instanceRef={instanceRef}
+        loadData={loadData}
+        cells={cells}
+        hover={true}
+        hasBorder={true}
+      />
+    </>
+  );
 }

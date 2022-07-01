@@ -1,8 +1,8 @@
---- 
+---
 order: 1
 type: sample
 zh_CN: 选择框
-en_US:  Select 
+en_US: Select
 editUrl: $BASE/pages/text-field/md/TextField6.md
 ---
 

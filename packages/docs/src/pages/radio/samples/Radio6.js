@@ -1,25 +1,21 @@
-import React, {useState} from 'react';
-import {Radio, RadioGroup} from 'react-windy-ui';
+import React, { useState } from 'react';
+import { Radio, RadioGroup } from 'react-windy-ui';
 
 export default function Radio6() {
-  const [value, setValue] = useState("one");
-  return <>
-    <div className="doc doc-row">
+  const [value, setValue] = useState('one');
+  return (
+    <>
       <div className="doc doc-row">
-        <RadioGroup value={value} onChange={(val) => setValue(val)}>
-          <Radio value="one">
-            one
-          </Radio>
+        <div className="doc doc-row">
+          <RadioGroup value={value} onChange={(val) => setValue(val)}>
+            <Radio value="one">one</Radio>
 
-          <Radio value="two">
-            two
-          </Radio>
+            <Radio value="two">two</Radio>
 
-          <Radio value="three">
-            three
-          </Radio>
-        </RadioGroup>
+            <Radio value="three">three</Radio>
+          </RadioGroup>
+        </div>
       </div>
-    </div>
-  </>;
+    </>
+  );
 }

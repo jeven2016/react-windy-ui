@@ -51,7 +51,6 @@ const useEvent = (
     //only support IE >=11 and other modern browsers
     const isSupportedBrowser = elemNode && elemNode.addEventListener;
     if (!isSupportedBrowser) {
-      console.log(isSupportedBrowser);
       return;
     }
     listener = (event) => handlerRef.current(event);

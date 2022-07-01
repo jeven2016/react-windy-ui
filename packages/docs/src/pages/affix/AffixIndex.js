@@ -6,8 +6,5 @@ const requireCode = require.context('!raw-loader!./samples', false, /.js$/);
 const requireJs = require.context('./samples', false, /.js$/);
 
 export default function AffixIndex() {
-  return <DocPage2
-    requireMd={requireMd}
-    requireJs={requireJs}
-    requireCode={requireCode}/>;
+  return <DocPage2 requireMd={requireMd} requireJs={requireJs} requireCode={requireCode} />;
 }

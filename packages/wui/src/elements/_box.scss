@@ -1,0 +1,47 @@
+.wui-box {
+  align-items: stretch;
+
+  &.wui-with-padding {
+    padding: $elem-large-padding;
+  }
+
+  &.wui-normal {
+    @include make-inline-flex {
+      align-items: center;
+    }
+
+    &:first-child:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+
+  &.wui-with-margin-bottom {
+    margin-bottom: 1rem;
+  }
+
+  &.wui-block {
+    display: flex;
+    flex: 1 1 100%;
+    width: 100%;
+
+    &:first-child:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+
+  > .wui-box-left {
+    padding-right: .25rem;
+  }
+
+  > .wui-box-right {
+    padding-left: .25rem;
+  }
+
+  > .wui-box-center {
+    padding: 0 .25rem;
+  }
+
+  .wui-widest-item {
+    flex: 1 1 auto;
+  }
+}

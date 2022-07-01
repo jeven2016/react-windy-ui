@@ -1,5 +1,4 @@
 const MenuConfig = {
-
   start: 'doc.menu.start',
   basic: {
     type: 'subMenu',
@@ -18,7 +17,7 @@ const MenuConfig = {
       datepicker: 'doc.menu.datepicker',
       timepicker: 'doc.menu.timepicker',
       form: 'doc.menu.form',
-      affix: 'doc.menu.affix',
+      affix: 'doc.menu.affix'
     }
   },
 
@@ -33,7 +32,7 @@ const MenuConfig = {
       popConfirm: 'doc.menu.popConfirm',
       tooltip: 'doc.menu.tooltip',
       modal: 'doc.menu.modal',
-      drawer: 'doc.menu.drawer',
+      drawer: 'doc.menu.drawer'
     }
   },
   info: {
@@ -46,7 +45,7 @@ const MenuConfig = {
       alert: 'doc.menu.alert',
       notification: 'doc.menu.notification',
       loader: 'doc.menu.loader',
-      progress: 'doc.menu.progress',
+      progress: 'doc.menu.progress'
     }
   },
   data: {
@@ -65,7 +64,7 @@ const MenuConfig = {
       table: 'doc.menu.table',
       pagination: 'doc.menu.pagination',
       typography: 'doc.menu.typography',
-      stepper: 'doc.menu.stepper',
+      stepper: 'doc.menu.stepper'
     }
   },
   layout: {
@@ -82,6 +81,7 @@ const MenuConfig = {
       breadcrumb: 'doc.menu.breadcrumb',
       card: 'doc.menu.card',
       layout: 'doc.menu.layout',
+      box: 'doc.menu.box'
     }
   },
 
@@ -95,7 +95,7 @@ const MenuConfig = {
       theme: 'doc.menu.theme',
       icons: 'doc.menu.icons',
       classes: 'doc.menu.classes',
-      functions: 'doc.menu.functions',
+      functions: 'doc.menu.functions'
     }
   }
 };

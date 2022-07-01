@@ -1,4 +1,4 @@
---- 
+---
 order: 9
 type: sample
 zh_CN: 自定义展开节点
@@ -6,10 +6,10 @@ en_US: Sample
 editUrl: $BASE/pages/tree/md/tree9.md
 ---
 
-+++ zh_CN   
++++ zh_CN  
  对于<Code>defaultExpandedItems</Code>属性，其只控制初始显示，即第一次显示时使用，当后续在界面点击时可再次展开或折叠对应的子树。
-     而<Code>expandedItems</Code>则有些特殊，一旦设置该属性后，控件内部无法自行展开或折叠。要想切换状态必须提供一个<Code>onExpand</Code>
-     回调函数，并自行控制需要展开的<Code>TreeItem</Code>。  
+而<Code>expandedItems</Code>则有些特殊，一旦设置该属性后，控件内部无法自行展开或折叠。要想切换状态必须提供一个<Code>onExpand</Code>
+回调函数，并自行控制需要展开的<Code>TreeItem</Code>。
 
 <br/>  
 <Blockquote hasBackground hasBox>  

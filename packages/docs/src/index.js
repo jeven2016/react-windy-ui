@@ -8,16 +8,16 @@ import * as serviceWorker from './serviceWorker';
 // import 'react-windy-ui/dist/wui.css';
 import './style/doc.scss';
 import DocHome from './DocHome';
-import {HashRouter as Router} from 'react-router-dom';
-import {library} from '@fortawesome/fontawesome-svg-core';
-import {CssThemeProvider} from "react-windy-ui";
+import { HashRouter as Router } from 'react-router-dom';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { CssThemeProvider } from 'react-windy-ui';
 
 library.add();
 
 const themeMap = {
   default: `wui.css`,
   dark: `wui-dark.css`
-}
+};
 
 //{<!-- https://reactjs.org/docs/strict-mode.html -->}
 //When we use useState, component 2 time render.
@@ -26,12 +26,12 @@ const themeMap = {
 // https://reactjs.org/docs/strict-mode.html
 ReactDOM.render(
   // <React.StrictMode>
-  <CssThemeProvider defaultTheme='default' themeMap={themeMap}>
+  <CssThemeProvider defaultTheme="default" themeMap={themeMap}>
     <Router>
-      <DocHome/>
+      <DocHome />
     </Router>
   </CssThemeProvider>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

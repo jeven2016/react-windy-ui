@@ -1,0 +1,129 @@
+//$elements: (">.label", ">.button", ">.button-dropdown", ".dropdown", ".input", ".icon-input");
+%item {
+  align-self: stretch;
+  @include make-flex-center {
+    line-height: $input-group-label-line-height;
+    @include input-variant-size();
+  }
+
+  &.auto-scale {
+    flex: 1 1 auto;
+    width: 1%;
+  }
+
+  &.no-scale {
+    flex: 0 1 auto;
+  }
+}
+
+%reset-child {
+  //for sample From6
+  //for various error, the non-first child should represent all borders in this input group in form
+  &:not(:first-child) {
+    > .border-info {
+      margin-left: -1px;
+      margin-right: 0 !important;
+    }
+  }
+
+  > * {
+    flex: 1 1 auto;
+    width: 1%;
+    align-self: stretch;
+  }
+
+  &:first-child:not(:last-child) {
+    > * {
+      @include full-border-radius($default-border-radius, 0, $default-border-radius, 0);
+      margin-right: $input-group-element-margin-right;
+
+      &.button-dropdown > .title > .button,
+      &.icon-input > .input {
+        @include full-border-radius($default-border-radius, 0, $default-border-radius, 0);
+      }
+
+      &.button-group > .button:last-child,
+      &.button-group > .button-dropdown:last-child > .title > .button {
+        @include border-radius(0);
+      }
+    }
+  }
+
+  &:last-child:not(:first-child) {
+    > * {
+      @include full-border-radius(0, $default-border-radius, 0, $default-border-radius);
+
+      &.button-dropdown > .title > .button {
+        @include full-border-radius(0, $default-border-radius, 0, $default-border-radius);
+      }
+
+      &.button-group > .button-dropdown:last-child > .title > .button,
+      &.icon-input > .input {
+        @include full-border-radius(0, $default-border-radius, 0, $default-border-radius);
+      }
+
+      &.button-group > .button:first-child {
+        @include border-radius(0);
+      }
+    }
+  }
+
+  &:not(:first-child):not(:last-child) {
+    > * {
+      @include border-radius(0);
+      margin-right: $input-group-element-margin-right;
+
+      &.button-dropdown > .title > .button,
+      &.button-group > .button,
+      &.button-group > .button-dropdown:last-child > .title > .button,
+      &.icon-input > .input {
+        @include border-radius(0);
+      }
+    }
+  }
+}
+
+.input-group {
+  @include make-inline-flex-center(stretch);
+  vertical-align: middle;
+
+  > .item {
+    @extend %item;
+  }
+
+  & > .label {
+    @extend %item;
+    flex: 0 1 auto;
+
+    > .content {
+      display: flex;
+      border: $input-border;
+      align-items: center;
+      justify-content: center;
+      padding: $input-group-label-padding;
+
+      &.with-bg {
+        background-color: $input-label-background-color;
+      }
+
+      @include border-radius($default-border-radius);
+    }
+  }
+
+  &.normal {
+    > .item,
+    > .label {
+      @extend %reset-child;
+    }
+  }
+
+  &.block {
+    @include make-flex {
+      width: 100%;
+    }
+
+    & > .expanded {
+      @include flex-grow(1);
+    }
+  }
+}

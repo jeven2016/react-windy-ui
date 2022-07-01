@@ -11,7 +11,7 @@ export type CarouselProps = {
   onChange: (number) => void;
   interval?: number;
   disabled?: boolean;
-} & CommonProps;
+} & Omit<CommonProps, 'onChange'>;
 
 const Carousel: React.ForwardRefExoticComponent<CarouselProps>;
 export default Carousel;

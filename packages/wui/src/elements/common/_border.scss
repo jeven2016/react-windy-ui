@@ -1,0 +1,41 @@
+.border-info {
+  &.ok,
+  &.success {
+    border-color: $success !important;
+
+    &.icon-input,
+    &.input,
+    &.select-input,
+    &.select-multiple {
+      @include focus-active2 {
+        box-shadow: $border-info-ok;
+      }
+    }
+  }
+
+  &.warning {
+    border-color: $warning !important;
+
+    &.icon-input,
+    &.input,
+    &.select-input,
+    &.select-multiple {
+      @include focus-active2 {
+        box-shadow: $border-info-warning;
+      }
+    }
+  }
+
+  &.error {
+    border-color: $danger !important;
+
+    &.icon-input,
+    &.input,
+    &.select-input,
+    &.select-multiple {
+      @include focus-active2 {
+        box-shadow: $border-info-error;
+      }
+    }
+  }
+}

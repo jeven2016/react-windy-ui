@@ -5,12 +5,14 @@
     "clean": "lerna clean",
     "start": "concurrently \"yarn run startDocs\" \"yarn run watch:wui\" ",
     "startDocs": "yarn run build:cmp && lerna --scope docs run start",
-    "build:docs": "yarn run build:cmp && lerna --scope docs run build",
-    "build:cmp": "yarn run build:wui && lerna --scope react-windy-ui run build",
+    "copy:themes": " lerna --scope react-windy-ui run copy:themes",
+    "build:docs": "yarn run build:cmp && lerna --scope docs run build ",
+    "build:cmp": "yarn run build:wui && lerna --scope react-windy-ui run build && yarn run copy:themes",
     "build:wui": "lerna --scope wui run build && lerna --scope wui run buildThemes",
-    "watch:wui": "lerna --scope wui run watch -- --buildAll=true --copyTo=/home/jujucom/Desktop/workspace/projects/react-windy-ui/packages/components/dist/",
-    "build:theme": "lerna --scope wui run buildThemes",
-    "publish": "cd packages/components && npm publish"
+    "watch:wui": "lerna --scope wui run watch -- --buildAll=true",
+    "build:themes": "lerna --scope wui run buildThemes",
+    "publish": "cd packages/components && npm publish",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,scss,json}' --config ./.prettierrc"
   },
   "workspaces": [
     "packages/*"
@@ -85,7 +87,10 @@
     "webpack": "4.44.2",
     "webpack-dev-server": "3.11.1",
     "webpack-manifest-plugin": "2.2.0",
-    "workbox-webpack-plugin": "5.1.4"
+    "workbox-webpack-plugin": "5.1.4",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.5.1"
   },
   "devDependencies": {
     "copy-and-watch": "^0.1.5",
@@ -147,6 +152,17 @@
   "babel": {
     "presets": [
       "react-app"
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "src/**/*.{html,css,scss,md,json}": [
+      "prettier --write",
+      "git add"
     ]
   }
 }

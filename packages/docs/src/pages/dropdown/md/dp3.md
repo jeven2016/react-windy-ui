@@ -1,4 +1,4 @@
---- 
+---
 order: 3
 type: sample
 zh_CN: 组合使用
@@ -7,7 +7,7 @@ editUrl: $BASE/pages/dropdown/md/dp3.md
 ---
 
 +++ zh_CN
-Dropdown还可以与<Code>ButtonGroup</Code>、<Code>InputGroup</Code>一起组合使用。
+Dropdown 还可以与<Code>ButtonGroup</Code>、<Code>InputGroup</Code>一起组合使用。
 
 +++ en_US
 Dp3

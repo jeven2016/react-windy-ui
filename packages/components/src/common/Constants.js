@@ -97,7 +97,8 @@ export const JustifyContentType = {
 export const AlignItemsType = {
   start: 'align-start',
   end: 'align-end',
-  center: 'align-center'
+  center: 'align-center',
+  stretch: 'stretch'
 };
 
 export function adjustItems(

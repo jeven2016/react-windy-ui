@@ -1,5 +1,5 @@
-import React, {useRef} from 'react';
-import {Button, Modal} from 'react-windy-ui';
+import React, { useRef } from 'react';
+import { Button, Modal } from 'react-windy-ui';
 
 export default function Modal10() {
   const timerRef = useRef(null);
@@ -12,7 +12,7 @@ export default function Modal10() {
       onOk: () => {
         clearInterval(timerRef.current);
         timerRef.current = null;
-      },
+      }
     });
 
     let i = 0;
@@ -30,14 +30,16 @@ export default function Modal10() {
         header: `Waiting for ${seconds} seconds`,
         title: 'A timer is running',
         body: `There are ${seconds - i + 1} second(s) left.`,
-        okText: `${seconds - i + 1} second(s)`,
+        okText: `${seconds - i + 1} second(s)`
       });
     }, 1000);
-
   };
 
-  return <>
-    <Button type="primary" onClick={open}>Open</Button>
-
-  </>;
+  return (
+    <>
+      <Button type="primary" onClick={open}>
+        Open
+      </Button>
+    </>
+  );
 }

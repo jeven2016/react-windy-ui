@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Pagination} from 'react-windy-ui';
+import React, { useState } from 'react';
+import { Pagination } from 'react-windy-ui';
 
 export default function Pagination2() {
   const totalRecords = 1000;
@@ -9,16 +9,17 @@ export default function Pagination2() {
 
   const handlePageChange = (nextPage, pageRange, e) => {
     setPage(nextPage);
-  }
+  };
 
   const handleRangeChange = (nextPageRange) => {
     setPageRange(nextPageRange);
     setPageCount(totalRecords / nextPageRange);
-  }
+  };
 
-  return <>
-    <div className="doc doc-row">
-      <Pagination
+  return (
+    <>
+      <div className="doc doc-row">
+        <Pagination
           pageCount={pageCount}
           page={page}
           hasPageRange={true}
@@ -26,7 +27,9 @@ export default function Pagination2() {
           pageRange={pageRange}
           onChangeRange={handleRangeChange}
           hasGo
-          onChange={handlePageChange}/>
-    </div>
-  </>;
+          onChange={handlePageChange}
+        />
+      </div>
+    </>
+  );
 }

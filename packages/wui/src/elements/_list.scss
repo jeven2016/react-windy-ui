@@ -1,0 +1,143 @@
+.common-list {
+  .list-header,
+  .list-footer {
+    padding: 0.5rem 1rem;
+    color: $text-comment-color;
+  }
+
+  .list-icon {
+    min-width: 3.5rem;
+    @include make-flex;
+  }
+
+  .list-text {
+    flex: 1 1 0;
+  }
+
+  .list-content {
+    @include make-flex;
+    flex: 1 1 100%;
+  }
+
+  .list-actions {
+    color: $text-comment-color;
+  }
+
+  .list-action {
+    @include make-flex-center;
+
+    //&:not(:first-child) {
+    //  margin-left: .5rem;
+    //}
+  }
+
+  .list-title {
+    width: 100%;
+  }
+
+  .list-lines {
+    > .list-item {
+      @include make-flex;
+      line-height: 1.5rem;
+      overflow: hidden;
+      flex-direction: row;
+      position: relative;
+
+      &.normal {
+        padding: 0.5rem 1rem;
+      }
+
+      &.with-ripple {
+        cursor: pointer;
+      }
+
+      &.vertical {
+        padding: 0.75rem 1.25rem;
+      }
+
+      &.compact {
+        padding: 0;
+      }
+
+      > .list-icon,
+      > .list-text,
+      > .list-actions {
+        @include make-flex;
+        align-items: center;
+      }
+
+      > .list-content {
+        &.vertical {
+          flex-direction: column;
+          order: 1;
+
+          + .list-more {
+            margin-left: 2.5rem;
+          }
+        }
+
+        > .list-details {
+          flex: 1 1 0;
+          @include make-flex;
+          flex-direction: column;
+
+          > .list-line {
+            @include make-flex;
+
+            + .list-line-content {
+              margin-top: 0.5rem;
+            }
+
+            > .list-text {
+              > .list-title {
+                font-weight: map-get($font-weight, 'light');
+                margin-bottom: 0.5rem;
+              }
+
+              > .list-desc {
+                color: $text-comment-color;
+                font-size: 0.9rem;
+              }
+            }
+          }
+        }
+
+        > .list-actions {
+          @include make-flex;
+
+          &.vertical {
+            margin-top: 0.5rem;
+          }
+
+          > .list-action {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+
+            &:first-child {
+              padding-left: 0;
+            }
+          }
+        }
+      }
+
+      > .list-more {
+        order: 2;
+      }
+    }
+  }
+}
+
+@include adapter-width('max-width', map-get($bs-layout, 'md')) {
+  .common-list {
+    .list-item.vertical {
+      flex-direction: column;
+
+      .list-more {
+        order: 0;
+        margin-bottom: 1rem;
+        @include make-flex-center;
+        margin-left: 0 !important;
+      }
+    }
+  }
+}

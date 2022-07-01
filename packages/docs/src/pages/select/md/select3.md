@@ -1,4 +1,4 @@
---- 
+---
 order: 3
 type: sample
 zh_CN: 显示搜索中状态

@@ -1,4 +1,4 @@
---- 
+---
 order: 1.1
 type: sample
 zh_CN: 设置初始显示页

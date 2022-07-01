@@ -1,4 +1,4 @@
---- 
+---
 order: 1.2
 type: sample
 zh_CN: 在Option中显示Icon

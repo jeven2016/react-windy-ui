@@ -1,0 +1,9 @@
+@mixin child-margin($magin-value) {
+  &:first-child:not(:last-child) {
+    margin-right: $magin-value;
+  }
+
+  &:last-child:not(:first-child) {
+    margin-left: $magin-value;
+  }
+}

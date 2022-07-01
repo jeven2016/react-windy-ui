@@ -16,6 +16,7 @@ import Tooltip from '../tooltip';
 import clsx from 'clsx';
 import useEventCallback from '../common/useEventCallback';
 import PropTypes from 'prop-types';
+import { adjustItems, JustifyContentType } from '../common/Constants';
 
 const PageButton = React.forwardRef((props, ref) => {
   const { left = true, onClick, buttonProps } = props;
@@ -78,6 +79,7 @@ const Pagination = React.forwardRef((props, ref) => {
     renderPre,
     renderNext,
     selectProps,
+    justify = 'start',
     ...otherProps
   } = props;
 
@@ -333,7 +335,8 @@ const Pagination = React.forwardRef((props, ref) => {
     return null;
   }
 
-  const clsName = clsx(extraClassName, className);
+  const justifyCls = adjustItems(justify);
+  const clsName = clsx(extraClassName, className, justifyCls);
 
   if (simple) {
     const displayPage = isBlank(currentPage) ? 1 : currentPage;
@@ -472,7 +475,8 @@ Pagination.propTypes = {
   compactMenu: PropTypes.bool,
   renderPre: PropTypes.func,
   renderNext: PropTypes.func,
-  selectProps: PropTypes.object
+  selectProps: PropTypes.object,
+  justify: PropTypes.oneOf(Object.keys(JustifyContentType))
 };
 
 export default Pagination;

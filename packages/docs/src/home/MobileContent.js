@@ -1,10 +1,9 @@
 import React from 'react';
 
 export default function MobileContent() {
-
-  return <>
-
-    {/* <div className="doc normal-panel">
+  return (
+    <>
+      {/* <div className="doc normal-panel">
       <Row>
         <Col xsOffset={1} xs={10} smOffset={2} sm={8}
              style={{
@@ -17,7 +16,6 @@ export default function MobileContent() {
         </Col>
       </Row>
     </div>*/}
-
-  </>;
-
+    </>
+  );
 }

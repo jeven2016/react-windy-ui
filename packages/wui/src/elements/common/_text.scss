@@ -1,0 +1,67 @@
+//Text classes
+.text {
+  &.disabled {
+    @extend %not-allowed;
+  }
+
+  &.underline {
+    text-decoration: underline;
+  }
+
+  &.italic {
+    font-style: italic;
+  }
+
+  &.deleted {
+    text-decoration: line-through;
+  }
+
+  &.bold {
+    font-weight: map-get($font-weight, 'bold');
+  }
+
+  &.strong {
+    > strong {
+      font-weight: map-get($font-weight, 'normal');
+    }
+  }
+
+  &.ellipsis {
+    display: block;
+  }
+
+  &.comment {
+    color: $text-comment-color !important;
+  }
+
+  &.ok {
+    color: $text-ok-color !important;
+  }
+
+  &.warning {
+    color: $text-warning-color !important;
+  }
+
+  &.error {
+    color: $text-error-color !important;
+  }
+
+  @each $name, $color in $colors {
+    &.#{'' + $name} {
+      color: $color !important;
+
+      &-hover {
+        color: inherit !important;
+
+        &:hover,
+        &:focus {
+          color: $color !important;
+        }
+
+        &.active {
+          color: darken($color, 5%) !important;
+        }
+      }
+    }
+  }
+}

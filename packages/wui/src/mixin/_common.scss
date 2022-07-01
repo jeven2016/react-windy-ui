@@ -1,0 +1,88 @@
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+@mixin linear-gradient($arguments...) {
+  background: -webkit-linear-gradient($arguments...);
+  background: -o-linear-gradient($arguments...);
+  background: -moz-linear-gradient($arguments...);
+  background: linear-gradient($arguments...);
+}
+
+@mixin fixed($z-Index: 100, $is-block: true, $width: 100%) {
+  position: fixed;
+  z-index: $z-Index;
+  @include border-radius(0);
+  box-shadow: $navbar-fixed-box-shadow;
+
+  @if $is-block {
+    display: block;
+  }
+
+  @if $width != null {
+    width: $width;
+  }
+}
+
+//the $arrow-direction could be : up down left right;
+@mixin make-arrow(
+  $border,
+  $bdr-color: $border-default-color,
+  $margin: 0 0 0 0.2rem,
+  $pseudo-class-name: 'after',
+  $direction: map_get($arrow-direction, 'bottom')
+) {
+  &:#{$pseudo-class-name} {
+    content: '';
+    width: 0;
+    height: 0;
+    margin: $margin;
+    vertical-align: middle;
+    display: inline-block;
+    border: $border;
+    transition: transform 0.4s ease-in-out;
+
+    @if ($direction == map_get($arrow-direction, 'down')) {
+      border-top-color: $bdr-color;
+    }
+    @if ($direction == map_get($arrow-direction, 'up')) {
+      border-bottom-color: $bdr-color;
+    }
+    @if ($direction == map_get($arrow-direction, 'left')) {
+      border-right-color: $bdr-color;
+    }
+    @if ($direction == map_get($arrow-direction, 'right')) {
+      border-left-color: $bdr-color;
+    }
+
+    @content;
+  }
+}
+
+//@$condition: format (key:'min-width', value:'xs' )
+@mixin media-query($condition) {
+  @media screen and (map-get($condition, 'key'): map-get($condition, 'value')) {
+    @content;
+  }
+}
+
+//=================================================================================
+
+@mixin adapter-width($key, $value) {
+  @media ($key: $value) {
+    @content;
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+%block-level {
+  display: block;
+  position: relative;
+}

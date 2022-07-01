@@ -14,7 +14,7 @@ export type ColProps = {
   lgOffset?: number;
   xlOffset?: number;
   order?: number;
-  gutter?: { x: number; y: number };
+  gutter?: { x?: number; y?: number };
   flexCol?: boolean;
   justify?: JustifyType;
   align?: AlignType;

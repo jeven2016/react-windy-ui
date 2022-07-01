@@ -1,4 +1,4 @@
---- 
+---
 order: 7
 type: sample
 zh_CN: ItemContent

@@ -1,0 +1,60 @@
+.accordion {
+  @include make-inline-flex {
+    flex-flow: column;
+  }
+
+  &.block {
+    @include make-flex {
+      width: 100%;
+
+      > .card {
+        width: 100%;
+        display: block;
+      }
+    }
+  }
+
+  .accordion-content {
+    max-height: $ad-max-height;
+    overflow: $ad-overflow;
+    transition: $ad-transition;
+
+    &.active {
+      display: block;
+      max-height: $ad-active-max-height;
+    }
+  }
+
+  > .card {
+    .card-header {
+      > .title {
+        @include make-arrow(
+          $default-arrow-border,
+          $default-arrow-active-border,
+          null,
+          'before',
+          map_get($arrow-direction, 'right')
+        );
+      }
+
+      &.active {
+        > .title:before {
+          transform: $ad-card-card-header-active-title-transform;
+          transition: $ad-card-card-header-active-title-transition;
+        }
+      }
+    }
+
+    &:not(:first-child) {
+      margin-left: 0;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    &:not(:last-child) {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-width: 0;
+    }
+  }
+}

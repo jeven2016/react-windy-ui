@@ -1,0 +1,17 @@
+.affix {
+  &.affix-fixed {
+    position: fixed;
+    z-index: map_get($z-index, 'overlay');
+  }
+
+  &.block {
+    width: 100%;
+    left: 0;
+  }
+}
+
+.affix-container {
+  &.block {
+    width: 100%;
+  }
+}

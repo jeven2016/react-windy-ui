@@ -1,0 +1,140 @@
+.form {
+  .message-row {
+    min-height: 1.8em;
+    display: flex;
+    align-items: center;
+
+    > .form-msg {
+      font-size: 0.9em;
+    }
+  }
+
+  &.inline {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .form-item {
+    display: flex;
+    min-height: 2rem;
+
+    .button.block + .block {
+      margin-top: 0;
+    }
+
+    .item-label {
+      display: flex;
+      align-items: center;
+
+      @extend .ellipsis;
+    }
+
+    .label-col {
+      > .required-left-col,
+      > .required-right-col {
+        color: $red;
+        font-size: inherit;
+        margin-right: 0.25rem;
+      }
+    }
+
+    .form-line {
+      width: $form-form-item-form-line-width;
+    }
+
+    .info {
+      @include make-block;
+      line-height: $form-form-item-info-line-height;
+      margin: $form-form-item-info-margin;
+    }
+
+    &.horizontal {
+      flex: 1 1 100%;
+      flex-direction: column;
+
+      .widget-col {
+        flex-direction: column;
+      }
+
+      .item-label {
+        overflow: hidden;
+        white-space: nowrap;
+
+        > .label-col {
+          margin-right: 0.5rem;
+        }
+      }
+    }
+
+    &.vertical {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 100%;
+
+      > .label-col {
+        overflow: hidden;
+        white-space: nowrap;
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    &.inline {
+      //display: inline-flex;
+      //min-height: unset;
+      align-items: flex-start;
+      //flex-direction: column;
+
+      &:not(:last-child) {
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      &:last-child {
+        margin-bottom: 0.5rem;
+      }
+
+      .form-line {
+        width: auto;
+      }
+
+      > .button {
+        vertical-align: top;
+      }
+
+      > .label-col {
+        margin-right: 0.5rem;
+        display: flex;
+        align-items: center;
+        height: 2.375rem;
+      }
+    }
+  }
+
+  .form-control {
+    &.radio-group,
+    &.radio,
+    &.checkbox {
+      line-height: 2.25;
+    }
+  }
+}
+
+$label_types: ('sm', 'md', 'lg');
+
+@each $col-type in $label_types {
+  @include adapter-width('max-width', map-get($bs-layout, 'max_' + $col-type)) {
+    .form {
+      > .form-item {
+        > .row:not(.message-row) {
+          > .item-label {
+            &.col-#{$col-type}-12 {
+              margin-bottom: 0.5rem;
+              justify-content: flex-start !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

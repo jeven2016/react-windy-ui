@@ -1,4 +1,4 @@
---- 
+---
 order: 6
 type: sample
 zh_CN: 禁用状态
@@ -7,7 +7,7 @@ editUrl: $BASE/pages/dropdown/md/dp6.md
 ---
 
 +++ zh_CN  
-将<Code>disabled</Code>设置为<Code>true</Code>后，将禁用Dropdown。
+将<Code>disabled</Code>设置为<Code>true</Code>后，将禁用 Dropdown。
 
 +++ en_US
 Dp6

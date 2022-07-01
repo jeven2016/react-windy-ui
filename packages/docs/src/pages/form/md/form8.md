@@ -1,4 +1,4 @@
---- 
+---
 order: 8
 type: sample
 zh_CN: 使用watch函数

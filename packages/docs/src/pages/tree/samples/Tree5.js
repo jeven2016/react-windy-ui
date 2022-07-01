@@ -1,5 +1,5 @@
 import React from 'react';
-import {Tree} from 'react-windy-ui';
+import { Tree } from 'react-windy-ui';
 
 export default function Tree5() {
   const jsonData = {
@@ -13,10 +13,9 @@ export default function Tree5() {
         children: [
           {
             id: 'Child-1-1-1',
-            label: 'Child-1-1-1',
-          },
-        ],
-
+            label: 'Child-1-1-1'
+          }
+        ]
       },
       {
         id: 'Child-1-2',
@@ -25,16 +24,16 @@ export default function Tree5() {
         children: [
           {
             id: 'Child-1-2-1',
-            label: 'Child-1-2-1',
-          },
-        ],
-
-      },
-    ],
-
+            label: 'Child-1-2-1'
+          }
+        ]
+      }
+    ]
   };
 
-  return <>
-    <Tree jsonData={jsonData}/>
-  </>;
+  return (
+    <>
+      <Tree jsonData={jsonData} />
+    </>
+  );
 }

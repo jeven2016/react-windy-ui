@@ -6,7 +6,7 @@ import useEventCallback from '../common/useEventCallback';
 
 const Switch = React.forwardRef((props, ref) => {
   const {
-    className = 'button navbar-switch',
+    className = 'wui-button primary navbar-switch',
     extraClassName,
     onClick,
     circle = true,
