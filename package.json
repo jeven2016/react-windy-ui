@@ -12,7 +12,7 @@
     "watch:wui": "lerna --scope wui run watch -- --buildAll=true",
     "build:themes": "lerna --scope wui run buildThemes",
     "publish": "cd packages/components && npm publish",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,scss,css,json}' --config ./.prettierrc"
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,scss,json}' --config ./.prettierrc"
   },
   "workspaces": [
     "packages/*"
