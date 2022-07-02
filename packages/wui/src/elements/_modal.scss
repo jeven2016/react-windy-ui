@@ -20,11 +20,11 @@
   box-shadow: $dialog-box-shadow;
 
   @include limit-width(
-    'max-width',
-    $dialog-content-width-sm,
-    $dialog-content-width-md,
-    $dialog-content-width-lg,
-    $dialog-content-width-xg
+                  'max-width',
+                  $dialog-content-width-sm,
+                  $dialog-content-width-md,
+                  $dialog-content-width-lg,
+                  $dialog-content-width-xg
   );
 
   &.center {
@@ -210,16 +210,16 @@
       background: transparent;
       padding: 0;
 
-      .button {
+      .wui-button {
         border-radius: 0;
         border: none;
       }
 
-      .button:first-child {
+      .wui-button:first-child {
         border-bottom-left-radius: 1.5rem !important;
       }
 
-      .button:last-child {
+      .wui-button:last-child {
         border-bottom-right-radius: 1.5rem !important;
       }
     }
