@@ -1,5 +1,5 @@
-import React from 'react';
-import { AlignType, CommonProps, JustifyType } from '../generic';
+import React from "react";
+import { AlignType, CommonProps, JustifyType } from "../generic";
 
 export type BoxProps = {
   className?: string;
@@ -13,16 +13,16 @@ export type BoxProps = {
   autoEllipsis?: boolean;
   justify?: JustifyType;
   align?: AlignType;
-  justifyLeft: JustifyType;
-  alignLeft: AlignType;
-  justifyCenter: JustifyType;
-  alignCenter: AlignType;
-  justifyRight: JustifyType;
-  alignRight: AlignType;
-  hasPadding: boolean;
-  growLeft: boolean;
-  growRight: boolean;
-  growCenter: boolean;
+  justifyLeft?: JustifyType;
+  alignLeft?: AlignType;
+  justifyCenter?: JustifyType;
+  alignCenter?: AlignType;
+  justifyRight?: JustifyType;
+  alignRight?: AlignType;
+  hasPadding?: boolean;
+  growLeft?: boolean;
+  growRight?: boolean;
+  growCenter?: boolean;
 } & CommonProps<HTMLDivElement>;
 
 const Box: React.ForwardRefExoticComponent<BoxProps>;
