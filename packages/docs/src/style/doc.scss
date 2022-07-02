@@ -17,7 +17,7 @@ $title-background: #252323;
 
 body {
   font: 1rem/1.5 -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
-  'Microsoft Yahei';
+    'Microsoft Yahei';
   letter-spacing: 0.03em;
 }
 
@@ -68,10 +68,10 @@ body {
       > .navbar {
         &:not(.affix-fixed) {
           background: radial-gradient(
-                          circle at left top,
-                          rgba(99, 65, 249, 0.9) 15%,
-                          rgba(10, 95, 248, 0.9) 50%,
-                          rgba(33, 180, 212, 0.9) 85%
+            circle at left top,
+            rgba(99, 65, 249, 0.9) 15%,
+            rgba(10, 95, 248, 0.9) 50%,
+            rgba(33, 180, 212, 0.9) 85%
           );
           //background: radial-gradient(circle at left top,
           //        rgba(129, 38, 96, 0.9) 15%,
@@ -158,10 +158,10 @@ body {
     height: 100vh;
     width: 100%;
     background: radial-gradient(
-                    circle at left top,
-                    rgba(98, 72, 213, 0.9) 15%,
-                    rgba(12, 63, 153, 0.9) 50%,
-                    rgba(38, 16, 135, 0.9) 85%
+      circle at left top,
+      rgba(98, 72, 213, 0.9) 15%,
+      rgba(12, 63, 153, 0.9) 50%,
+      rgba(38, 16, 135, 0.9) 85%
     );
     //background: radial-gradient(circle at left top,
     //        rgba(129, 38, 96, 0.9) 15%,

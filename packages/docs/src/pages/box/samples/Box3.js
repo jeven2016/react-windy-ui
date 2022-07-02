@@ -1,21 +1,21 @@
-import React from "react";
-import { Box, Button, Input } from "react-windy-ui";
+import React from 'react';
+import { Box, Button, Input } from 'react-windy-ui';
 
 const boxStyle = {
-  background: "#eee"
+  background: '#eee'
 };
 export default function Box3() {
   return (
     <>
       <div>
-        <Box style={boxStyle}
-             block
-             left={<Button>Left</Button>}
-             justifyLeft="end"
-             right={<Button>Right</Button>}
-             justifyRight="start"
+        <Box
+          style={boxStyle}
+          block
+          left={<Button>Left</Button>}
+          justifyLeft="end"
+          right={<Button>Right</Button>}
+          justifyRight="start"
         />
-
 
         <Box
           block

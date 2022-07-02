@@ -49,7 +49,7 @@ $menu-dark-disabled-menu-item-color: #1d1d1d;
 $menu-inner-container-background: #1d1d1d;
 $menu-popup-list-background: #1d1d1d;
 $menu-popup-list-box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.18),
-0px 1px 1px 0px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  0px 1px 1px 0px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 $menu-item-active-with-bg: #1d1d1d;
 $menu-item-focus-with-bg: #1d1d1d;
 $menu-dark-background-color: #1d1d1d;
@@ -106,17 +106,17 @@ $date-picker-day-button-active-background: lighten($content-background, 3%);
 $time-picker-background: $popup-background;
 $time-picker-color: $text-color;
 $time-picker-tp-mask-background: linear-gradient(
-                180deg,
-                rgba(71, 71, 71, 0.25),
-                rgba(71, 71, 71, 0.3)
-),
-linear-gradient(0deg, rgba(71, 71, 71, 0.3), rgba(71, 71, 71, 0.25));
+    180deg,
+    rgba(71, 71, 71, 0.25),
+    rgba(71, 71, 71, 0.3)
+  ),
+  linear-gradient(0deg, rgba(71, 71, 71, 0.3), rgba(71, 71, 71, 0.25));
 
 //modal
 $dialog-content-background-color: $popup-background;
 $dialog-primary-footer-background: $popup-background;
 $dialog-box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.18), 0px 1px 1px 0px rgba(0, 0, 0, 0.15),
-0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 $dialog-header-primary-background-color: $popup-background;
 $dialog-primary-header-border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 $dialog-primary-header-border-top: 1px solid rgba(255, 255, 255, 0.15);
@@ -161,10 +161,10 @@ $progress-bar-background: rgba(255, 255, 255, 0.2);
 
 //skeleton
 $skeleton-background: linear-gradient(
-                90deg,
-                rgba(80, 80, 80, 80) 23%,
-                rgba(40, 40, 40, 100) 40%,
-                rgba(29, 29, 29, 100) 60%
+  90deg,
+  rgba(80, 80, 80, 80) 23%,
+  rgba(40, 40, 40, 100) 40%,
+  rgba(29, 29, 29, 100) 60%
 );
 
 //navbar
