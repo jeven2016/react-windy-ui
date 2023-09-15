@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "0.7.1",
+  "version": "0.7.1-rc9",
   "license": "MIT",
   "dependencies": {
     "@hookform/error-message": "^2.0.0",
