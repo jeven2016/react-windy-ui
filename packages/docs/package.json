@@ -42,8 +42,8 @@
     "scroll-to-element": "^2.0.3"
   },
   "scripts": {
-    "start": "node ../../scripts/start.js",
-    "build": "node ../../scripts/build.js"
+    "start": "node --openssl-legacy-provider ../../scripts/start.js",
+    "build": "node --openssl-legacy-provider ../../scripts/build.js"
   },
   "eslintConfig": {
     "extends": [
