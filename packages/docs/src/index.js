@@ -3,7 +3,7 @@ import 'react-app-polyfill/stable';
 import 'core-js';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import * as serviceWorker from './serviceWorker';
 // import 'react-windy-ui/dist/wui.css';
 import './style/doc.scss';
@@ -24,14 +24,15 @@ const themeMap = {
 //That’s what Strict Mode does. It calls render phase code twice in development so that you can notice if it performs unexpected side effects. In production, there would be only one call.
 // https://github.com/facebook/react/issues/18422
 // https://reactjs.org/docs/strict-mode.html
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(
   // <React.StrictMode>
   <CssThemeProvider defaultTheme="default" themeMap={themeMap}>
     <Router>
       <DocHome />
     </Router>
-  </CssThemeProvider>,
-  document.getElementById('root')
+  </CssThemeProvider>
 );
 
 // If you want your app to work offline and load faster, you can change
