@@ -95,7 +95,7 @@
   }
   position: relative;
   line-height: $menu-item-line-height;
-  height: $menu-item-height;
+  height: $menu-item-line-height;
   padding: $item-padding;
   //todo: the dropdown list failed to represent this due to the overflow is set for menu-item
   //overflow: $menu-item-overflow;
