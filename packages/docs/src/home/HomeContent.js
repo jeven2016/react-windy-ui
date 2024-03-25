@@ -79,14 +79,7 @@ export default function HomeContent() {
             <div className="line foot-line">
               <Row>
                 <Col col={12} flexCol style={{ fontSize: '.8rem' }}>
-                  <a
-                    href="https://beian.miit.gov.cn/"
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{ marginRight: '1rem' }}
-                  >
-                    苏ICP备18064205号
-                  </a>
+
 
                   {/*<Popover position="top" autoWidth body={<div>*/}
                   {/*  <p>Haha, you're so kind. </p>*/}

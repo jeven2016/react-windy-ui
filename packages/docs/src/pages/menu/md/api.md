@@ -17,7 +17,7 @@ editUrl: $BASE/pages/menu/md/api.md
 
 - 请给 SubMenu、Item 设置一个在 Menu 内不重复的**id**。这个 id 在菜单折叠展示或 Item 选中时需要用到。
 - 请给 SubMenu 的配置一个 header，这样子菜单才会显示对应的头部区域
-</Blockquote>
+  </Blockquote>
 
 - <Code>Menu</Code>
 
@@ -69,12 +69,12 @@ editUrl: $BASE/pages/menu/md/api.md
 
 - <Code>Group</Code>
 
-| 属性           | 名称                  | 类型            | 默认值     | 描述                                        |
-| -------------- | --------------------- | --------------- | ---------- | ------------------------------------------- |
-| ref            | 根节点 Dom 对象的引用 | function \| ref | -          | 当需要获取到根节点的 dom 对象时可设置此属性 |
-| className      | 样式名称              | string          | menu-group |                                             |
-| extraClassName | 额外添加的样式名称    | string          | -          |                                             |
-| header         | 分组的抬头显示        | react node      | -          |                                             |
+| 属性             | 名称            | 类型         | 默认值        | 描述  |
+|----------------|---------------|------------|------------|-----|
+| ref            | 根节点 Dom 对象的引用 | function \ | ref        | -   | 当需要获取到根节点的 dom 对象时可设置此属性 |
+| className      | 样式名称          | string     | menu-group |     |
+| extraClassName | 额外添加的样式名称     | string     | -          |     |
+| header         | 分组的抬头显示       | react node | -          |     |
 
 - <Code>Item</Code>
 

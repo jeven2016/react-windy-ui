@@ -10,12 +10,14 @@ export default function Pagination5() {
       <div
         style={{
           background: '#E3E3E5'
-        }}>
+        }}
+      >
         <div
           style={{
             padding: '.5rem 0.5rem',
             background: 'white'
-          }}>
+          }}
+        >
           <Pagination
             pageCount={10}
             simple
