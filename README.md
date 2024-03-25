@@ -1,6 +1,6 @@
 ## Documentation
 
-For documentation, please refer to this link: `http://super666.cn`
+For documentation, please refer to this link: `http://wui.super666.xyz`
 
 ## React Windy UI
 
