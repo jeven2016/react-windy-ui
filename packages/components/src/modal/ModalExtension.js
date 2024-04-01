@@ -2,7 +2,7 @@ import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from
 import * as ReactDOM from 'react-dom';
 import Modal from './Modal';
 import { Button, IconError, IconInfo, IconOk, IconWarning } from '../index';
-import { createContainer, execute, isNil, nonNil } from '../Utils';
+import { createContainer, execute, isNil, nonNil, renderDom } from '../Utils';
 import { IconQuestion } from '../icon';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import { ModalType } from './ModalUtils';
@@ -197,7 +197,7 @@ const show = (infoType, config) => {
       callback={() => {
         execute(() => {
           modalMap.delete(container.id);
-          ReactDOM.render(null, container.container);
+          renderDom(null, container.container);
           container.remove();
         }, 400);
       }}

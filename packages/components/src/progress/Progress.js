@@ -1,6 +1,14 @@
 import React, { useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import clsx from 'clsx';
-import { convertToArray, createContainer, execute, getContainer, isNil, random } from '../Utils';
+import {
+  convertToArray,
+  createContainer,
+  execute,
+  getContainer,
+  isNil,
+  random,
+  renderDom
+} from '../Utils';
 import Loader from '../loader';
 import useMounted from '../common/UseUnmounted';
 import ReactDOM from 'react-dom';
@@ -196,11 +204,10 @@ Progress.showTop = (props = {}) => {
   let containerObj = createContainer('wui-progress');
   const key = 'pn-' + random(1000, 10000);
 
+  const pg = <ProgressNotifier ref={currentRef} key={key} {...newProps} />;
+
   //assign a key to always render a new progress component
-  ReactDOM.render(
-    <ProgressNotifier ref={currentRef} key={key} {...newProps} />,
-    containerObj.container
-  );
+  renderDom(pg, containerObj.container);
 };
 
 Progress.closeTop = () => {

@@ -1,5 +1,10 @@
-# 0.7.1
+# 0.8.1
+- Enhancement
+  - Supports react 17 and react 18+
+  - Add properties of Progress into d.ts file
+  - Update the default height of breadcrumb
 
+# 0.7.1
 - Issues fixed
 
   - todo: Row: cannot make Col be stretch while flex-start is set by default

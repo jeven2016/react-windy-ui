@@ -15,6 +15,7 @@ import round from 'lodash/round';
 
 import { PopupPosition } from './common/Constants';
 import clsx from 'clsx';
+import ReactDOM from 'react-dom';
 
 export const DefaultColor = {
   ripple: {
@@ -414,4 +415,13 @@ export const preventEvent = (evt) => {
   }
   evt.preventDefault();
   evt.stopPropagation();
+};
+
+export const renderDom = (component, container) => {
+  const createRoot = ReactDOM['createRoot'];
+  if (createRoot) {
+    createRoot(container).render(component);
+  } else {
+    ReactDOM.render(component, container);
+  }
 };

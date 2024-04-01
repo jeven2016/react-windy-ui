@@ -1,46 +1,40 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import PropTypes from "prop-types";
-import SubMenu from "./SubMenu";
-import Item from "./Item";
-import clsx from "clsx";
-import Group from "./Group";
-import BaseMenu from "./BaseMenu";
-import { MenuContext } from "../common/Context";
-import { Action, fillLevel, MenuDirection, MenuType } from "./MenuUtils";
-import useMultipleRefs from "../common/UseMultipleRefs";
-import {
-  convertToArray,
-  execute,
-  includes,
-  isCustomized,
-  isNil
-} from "../Utils";
-import { adjustItems, EventListener } from "../common/Constants";
-import { initStore } from "../common/Store";
-import useEvent from "../common/UseEvent";
-import useEventCallback from "../common/useEventCallback";
-import usePrevious from "../common/UsePrevious";
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+import SubMenu from './SubMenu';
+import Item from './Item';
+import clsx from 'clsx';
+import Group from './Group';
+import BaseMenu from './BaseMenu';
+import { MenuContext } from '../common/Context';
+import { Action, fillLevel, MenuDirection, MenuType } from './MenuUtils';
+import useMultipleRefs from '../common/UseMultipleRefs';
+import { convertToArray, execute, includes, isCustomized, isNil } from '../Utils';
+import { adjustItems, EventListener } from '../common/Constants';
+import { initStore } from '../common/Store';
+import useEvent from '../common/UseEvent';
+import useEventCallback from '../common/useEventCallback';
+import usePrevious from '../common/UsePrevious';
 
 /**
  * Menu Component
  */
 const Menu = React.forwardRef((props, ref) => {
-  console.log("loading menu");
+  console.log('loading menu');
   const {
-    className = "menu",
+    className = 'menu',
     extraClassName,
     hasBox = true,
     hasBorderRadius = true,
     hasArrow = true,
     collapsable = true,
-    justify = "start",
+    justify = 'start',
     direction = MenuDirection.vertical.key,
-    type = "normal",
+    type = 'normal',
     popupSubMenu = false,
     children,
     autoIndent = true,
     initIndent = 1.5,
-    indentUnit = "rem",
+    indentUnit = 'rem',
     indentation = 2,
     groupInitIndent = 1,
     groupIndentation = 1.25,
@@ -53,12 +47,12 @@ const Menu = React.forwardRef((props, ref) => {
     defaultOpenedMenus,
     openedMenus,
     onOpenedMenu, //invoked by opening / closing submenu
-    primaryBarPosition = "right", //'left' or 'right
+    primaryBarPosition = 'right', //'left' or 'right
     selectable = true,
     hasRipple = true,
     rippleColor = {
-      dark: "#fff",
-      defaultColor: "#ccc"
+      dark: '#fff',
+      defaultColor: '#ccc'
     },
     ...otherProps
   } = props;
@@ -70,8 +64,8 @@ const Menu = React.forwardRef((props, ref) => {
   const defaultOpenList = convertToArray(defaultOpenedMenus);
   const preExpandList = useRef(defaultOpenList); //previous expanded submenus ( non-popup submenus)
 
-  const customActive = isCustomized(props, "activeItems");
-  const customOpen = isCustomized(props, "openedMenus");
+  const customActive = isCustomized(props, 'activeItems');
+  const customOpen = isCustomized(props, 'openedMenus');
   const preTimeoutRef = useRef(null); //previous close timer
 
   //init a internal store for defaultXXXX fields
@@ -84,33 +78,28 @@ const Menu = React.forwardRef((props, ref) => {
 
   //while the field is not customized, the store would be changed in Item and then the memorized data would get
   //outdated data, so remove the useMemo()
-  const realActiveItems = () => (customActive ?
-    activeItems :
-    store.getState().activeItemsList);
-  const realOpenList = () => (customOpen ?
-    openedMenus :
-    store.getState().openList);
+  const realActiveItems = () => (customActive ? activeItems : store.getState().activeItemsList);
+  const realOpenList = () => (customOpen ? openedMenus : store.getState().openList);
 
   const preCompact = usePrevious(compact);
   const prePopupSubMenu = usePrevious(popupSubMenu);
 
   // for handling the menu switched from compact/popup to other type
   useEffect(() => {
-      //it the menu is changed to compact or popup submenu, no submenus should pop up meanwhile
-      if ((!preCompact && compact) || (!prePopupSubMenu && popupSubMenu)) {
-        store.setState({ openList: [] });
-      }
+    //it the menu is changed to compact or popup submenu, no submenus should pop up meanwhile
+    if ((!preCompact && compact) || (!prePopupSubMenu && popupSubMenu)) {
+      store.setState({ openList: [] });
+    }
 
-      //changed from compact/popup submenu to normal menu
-      if ((preCompact && !compact) || (prePopupSubMenu && !popupSubMenu)) {
-        //revert to previous open list
-        const pre = preExpandList.current;
-        if (pre) {
-          store.setState({ openList: pre });
-        }
+    //changed from compact/popup submenu to normal menu
+    if ((preCompact && !compact) || (prePopupSubMenu && !popupSubMenu)) {
+      //revert to previous open list
+      const pre = preExpandList.current;
+      if (pre) {
+        store.setState({ openList: pre });
       }
-    },
-    [compact, popupSubMenu, preCompact, preExpandList, prePopupSubMenu, store]);
+    }
+  }, [compact, popupSubMenu, preCompact, preExpandList, prePopupSubMenu, store]);
 
   const isPopup = popupSubMenu || compact;
 
@@ -129,7 +118,7 @@ const Menu = React.forwardRef((props, ref) => {
   //2. show last expanded menus while switching to other other menu types
   useEvent(
     EventListener.click,
-    function() {
+    function () {
       //clicking the document will cause the opened popup submenu to be closed
       if (isPopup && realOpenList().length > 0) {
         store.setState({ openList: [] });
@@ -175,9 +164,7 @@ const Menu = React.forwardRef((props, ref) => {
     let nextList = [id];
     const list = realActiveItems();
     if (multiSelect) {
-      nextList = list.includes(id) ?
-        [...list.filter((item) => item !== id)] :
-        [...list, id];
+      nextList = list.includes(id) ? [...list.filter((item) => item !== id)] : [...list, id];
     }
 
     if (!customActive) {
@@ -250,7 +237,7 @@ const Menu = React.forwardRef((props, ref) => {
       }
 
       //delay 50 mills to notify the open list is changed
-      preTimeoutRef.current = execute(function() {
+      preTimeoutRef.current = execute(function () {
         preTimeoutRef.current = null;
         if (!customOpen) {
           notifyChanges();
@@ -332,16 +319,12 @@ Menu.propTypes = {
   onClickItem: PropTypes.func,
   multiSelect: PropTypes.bool,
   compact: PropTypes.bool,
-  defaultActiveItems: PropTypes.oneOfType(
-    [PropTypes.string, PropTypes.number, PropTypes.array]),
-  activeItems: PropTypes.oneOfType(
-    [PropTypes.string, PropTypes.number, PropTypes.array]),
-  defaultOpenedMenus: PropTypes.oneOfType(
-    [PropTypes.string, PropTypes.number, PropTypes.array]),
-  openedMenus: PropTypes.oneOfType(
-    [PropTypes.string, PropTypes.number, PropTypes.array]),
+  defaultActiveItems: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
+  activeItems: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
+  defaultOpenedMenus: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
+  openedMenus: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
   onOpenedMenu: PropTypes.func,
-  primaryBarPosition: PropTypes.oneOf(["left", "right"]),
+  primaryBarPosition: PropTypes.oneOf(['left', 'right']),
   selectable: PropTypes.bool,
   hasRipple: PropTypes.bool,
   rippleColor: PropTypes.shape({

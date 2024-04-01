@@ -3,7 +3,8 @@
   flex-wrap: wrap;
   position: relative;
   list-style: none;
-  align-items: center;
+  align-items: stretch;
+  line-height: 3rem;
   margin-bottom: 1rem;
   color: $bd-color;
 
@@ -16,7 +17,7 @@
   > .item {
     display: inline-flex;
     align-items: center;
-    padding: 0.5rem 0 0.5rem 0.5rem;
+    padding: 0 0.25rem;
   }
 
   > .item {

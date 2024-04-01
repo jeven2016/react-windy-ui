@@ -32,10 +32,10 @@ const Col = React.forwardRef((props, ref) => {
   const realGutter = nonNil(gutter) ? gutter : rowGutter;
 
   [col, xs, sm, md, lg, xl, xsOffset, smOffset, mdOffset, lgOffset, xlOffset].forEach((value) => {
-    if (nonNil(value) && !inRange(value, 1, 13)) {
+    if (nonNil(value) && !inRange(value, 0, 13)) {
       throw new Error(
         'The value of col/xs/sm/md/lg/xl/xsOffset/smOffset/mdOffset' +
-          '/lgOffset/xlOffset, should be in a integer range [1,12].'
+          '/lgOffset/xlOffset, should be in a integer range [0,12].'
       );
     }
   });

@@ -10,6 +10,10 @@ export type ProgressType = {
 export type ProgressProps = {
   active?: boolean;
   percentValue?: number;
+  initPercentValue?: number;
+  incrementStart?: number;
+  incrementEnd?: number;
+
   type?: string;
   hasStripe?: boolean;
   hasAnimation?: boolean;

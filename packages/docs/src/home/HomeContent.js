@@ -79,8 +79,6 @@ export default function HomeContent() {
             <div className="line foot-line">
               <Row>
                 <Col col={12} flexCol style={{ fontSize: '.8rem' }}>
-
-
                   {/*<Popover position="top" autoWidth body={<div>*/}
                   {/*  <p>Haha, you're so kind. </p>*/}
                   {/*  <p>Appreciate to access this project.</p>*/}

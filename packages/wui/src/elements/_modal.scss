@@ -20,11 +20,11 @@
   box-shadow: $dialog-box-shadow;
 
   @include limit-width(
-                  'max-width',
-                  $dialog-content-width-sm,
-                  $dialog-content-width-md,
-                  $dialog-content-width-lg,
-                  $dialog-content-width-xg
+    'max-width',
+    $dialog-content-width-sm,
+    $dialog-content-width-md,
+    $dialog-content-width-lg,
+    $dialog-content-width-xg
   );
 
   &.center {

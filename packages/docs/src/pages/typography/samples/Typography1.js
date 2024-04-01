@@ -1,5 +1,5 @@
-import React from "react";
-import { Typography } from "react-windy-ui";
+import React from 'react';
+import { Typography } from 'react-windy-ui';
 
 export default function Typography1() {
   return (
