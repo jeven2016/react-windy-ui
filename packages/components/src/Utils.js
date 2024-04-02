@@ -217,7 +217,7 @@ export const createContainer = (id) => {
   }
 
   const remove = () => {
-    root.remove();
+    document.querySelector(`#${id}`)?.remove();
   };
 
   return {

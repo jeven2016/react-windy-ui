@@ -138,8 +138,7 @@ const SubModal = React.forwardRef((props, ref) => {
       type={type}
       extraClassName={`${extraClassName ? extraClassName : ''} ${compact ? 'compact' : ''}`}
       onCancel={handleCancel}
-      {...otherProps}
-    >
+      {...otherProps}>
       {modalHeader}
       <Modal.Body>
         <div className={`body-content`}>
@@ -208,7 +207,7 @@ const show = (infoType, config) => {
   modalMap.set(container.id, ref);
 
   //CSSTransition not working for ReactDOM.render, todo
-  ReactDOM.render(modal, container.container);
+  renderDom(modal, container.container);
 
   return {
     ref: ref,
