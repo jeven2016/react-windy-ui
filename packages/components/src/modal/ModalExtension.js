@@ -1,5 +1,4 @@
 import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
-import * as ReactDOM from 'react-dom';
 import Modal from './Modal';
 import { Button, IconError, IconInfo, IconOk, IconWarning } from '../index';
 import { createContainer, execute, isNil, nonNil, renderDom } from '../Utils';
@@ -196,7 +195,6 @@ const show = (infoType, config) => {
       callback={() => {
         execute(() => {
           modalMap.delete(container.id);
-          renderDom(null, container.container);
           container.remove();
         }, 400);
       }}

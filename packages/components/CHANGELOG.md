@@ -1,4 +1,8 @@
 # 0.8.1
+- Issues fixed
+  - Modal.Confirm/Info/...: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node
+
+
 - Enhancement
   - Supports react 17 and react 18+
   - Add properties of Progress into d.ts file

@@ -15,7 +15,6 @@ import round from 'lodash/round';
 
 import { PopupPosition } from './common/Constants';
 import clsx from 'clsx';
-import ReactDOM from 'react-dom';
 
 export const DefaultColor = {
   ripple: {
@@ -208,7 +207,7 @@ export const createContainer = (id) => {
   if (isNil(id)) {
     id = `windy-${random(100, 10000)}`;
   }
-  let root = document.querySelector(`#${id}`);
+  let root = document.getElementById(`#${id}`);
 
   if (!root) {
     root = document.createElement('div');
@@ -217,7 +216,7 @@ export const createContainer = (id) => {
   }
 
   const remove = () => {
-    document.querySelector(`#${id}`)?.remove();
+    document.getElementById(id)?.remove();
   };
 
   return {
@@ -417,11 +416,14 @@ export const preventEvent = (evt) => {
   evt.stopPropagation();
 };
 
+export const isReact18Plus = () => parseInt(React.version) >= 18;
+
 export const renderDom = (component, container) => {
-  const createRoot = ReactDOM['createRoot'];
-  if (createRoot) {
-    createRoot(container).render(component);
+  if (isReact18Plus) {
+    const render = require('react-dom/client').createRoot;
+    render(container).render(component);
   } else {
-    ReactDOM.render(component, container);
+    const reactDom = require('react-dom');
+    reactDom.render(component, container);
   }
 };
