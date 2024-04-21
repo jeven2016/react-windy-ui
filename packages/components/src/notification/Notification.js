@@ -203,7 +203,9 @@ const send = (type, cfg) => {
     : { key: key, type: type, ...DEFAULT_CONFIG, ...cfg };
 
   let proxy = proxyMap.get(msg.position);
-  if (!proxy) {
+  if (proxy) {
+    proxy.add(msg);
+  } else {
     proxy = new Proxy();
     proxyMap.set(msg.position, proxy);
     let containerObj = createContainer('notify-' + msg.position);
@@ -220,9 +222,22 @@ const send = (type, cfg) => {
       />,
       containerObj.container
     );
-    proxy.add(msg);
-  } else {
-    proxy.add(msg);
+
+    const addFun = () => {
+      const ok = proxy.initialized();
+      if (ok) {
+        proxy.add(msg);
+      }
+      return ok;
+    };
+
+    //if the container is in rendering meanwhile the add function is not set,
+    //delay to add message into queue
+    execute(() => {
+      if (!addFun()) {
+        execute(addFun, 200);
+      }
+    }, 100);
   }
 };
 
