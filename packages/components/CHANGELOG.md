@@ -3,7 +3,7 @@
   - Modal.Confirm/Info/...: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node
   - The value of textarea cannot be populated into form data 
   - Notification: the first message failed to display dues to method Proxy.add() hasn't been initialized yet
-
+  - TS: RadioGroupProps didn't extend ButtonGroupProps
 
 - Enhancement
   - Supports react 18+

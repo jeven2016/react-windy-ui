@@ -2,6 +2,7 @@ import { ButtonProps } from '../button';
 import { ErrorType } from '../../dist/stepper/Stepper';
 import React, { MouseEvent } from 'react';
 import { CommonProps } from '../generic';
+import { ButtonGroupProps } from '../buttonGroup';
 
 export type RadioProps = {
   checked?: boolean;
@@ -25,7 +26,8 @@ export type RadioGroupProps = {
   disabled?: boolean;
   errorType?: ErrorType;
   button?: boolean;
-} & Omit<CommonProps<HTMLElement>, 'onChange'>; //todo inherit from ButtonGroup
+} & ButtonGroupProps &
+  Omit<CommonProps<HTMLElement>, 'onChange'>; //todo inherit from ButtonGroup
 
 declare const RadioGroup: React.ForwardRefExoticComponent<RadioGroupProps>;
 export { RadioGroup };
