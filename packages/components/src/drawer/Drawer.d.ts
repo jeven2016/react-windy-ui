@@ -5,7 +5,7 @@ export type DrawerPosition = 'left' | 'right' | 'top' | 'bottom';
 
 export type DrawerProps = {
   active?: boolean;
-  onChange?: (active?: boolean, e: MouseEvent) => void;
+  onChange?: (active: boolean, e: MouseEvent) => void;
   hasMask?: boolean;
   hasAnchor?: boolean;
   anchor?: React.ReactNode;

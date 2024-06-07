@@ -3,12 +3,15 @@
   - Modal.Confirm/Info/...: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node
   - The value of textarea cannot be populated into form data 
   - Notification: the first message failed to display dues to method Proxy.add() hasn't been initialized yet
-  - TS: RadioGroupProps didn't extend ButtonGroupProps
+  - TS: RadioGroupProps didn't extend the ButtonGroupProps
+  - TS: PopConfirmProps didn't extend the PopoverProps
+  - Drawer: drawer is invisible while 'hasMask' is false [TODO]
 
 - Enhancement
   - Supports react 18+
   - Add properties of Progress into d.ts file
   - Update the default height of breadcrumb
+  - Table: specify the key column as needed [TODO]
 
 # 0.7.1
 - Issues fixed

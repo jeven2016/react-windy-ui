@@ -1,6 +1,7 @@
 import { CommonProps, JustifyType, PositionType } from '../generic';
 import React, { MouseEvent } from 'react';
 import { ButtonProps } from '../button';
+import { PopoverProps } from '../popover';
 
 export type PopConfirmProps = {
   body?: React.ReactNode;
@@ -13,7 +14,8 @@ export type PopConfirmProps = {
   icon?: React.ReactNode;
   justifyFooter?: JustifyType;
   position?: PositionType;
-} & CommonProps<HTMLDivElement>;
+} & PopoverProps &
+  CommonProps<HTMLDivElement>;
 
 declare const PopConfirm: React.ForwardRefExoticComponent<PopConfirmProps>;
 export default PopConfirm;
