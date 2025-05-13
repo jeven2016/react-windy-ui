@@ -15,7 +15,6 @@ import round from 'lodash/round';
 
 import { PopupPosition } from './common/Constants';
 import clsx from 'clsx';
-import React from 'react';
 
 export const DefaultColor = {
   ripple: {
@@ -195,8 +194,7 @@ export const validate = (condition, message, ignore) => {
 };
 
 export const getContainer = (id) => {
-  let root = document.querySelector(`#${id}`);
-  return root;
+  return document.querySelector(`#${id}`);
 };
 
 /**
