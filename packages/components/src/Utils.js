@@ -15,6 +15,7 @@ import round from 'lodash/round';
 
 import { PopupPosition } from './common/Constants';
 import clsx from 'clsx';
+import React from 'react';
 
 export const DefaultColor = {
   ripple: {
@@ -416,12 +417,18 @@ export const preventEvent = (evt) => {
   evt.stopPropagation();
 };
 
-export const isReact18Plus = () => parseInt(React.version) >= 18;
+export const isReact18Plus = () => React.version >= 18;
 
 export const renderDom = (component, container) => {
-  if (isReact18Plus) {
-    const render = require('react-dom/client').createRoot;
-    render(container).render(component);
+  const ver18Plus = isReact18Plus();
+  console.log('version', ver18Plus, React.version);
+  if (ver18Plus) {
+    try {
+      const render = require('react-dom/client').createRoot;
+      render(container).render(component);
+    } catch (e){
+      console.log("unexpected error", e);
+    }
   } else {
     const reactDom = require('react-dom');
     reactDom.render(component, container);

@@ -13,7 +13,6 @@
     "markdown-to-jsx": "^6.11.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hook-form": "^6.15.5",
     "react-scripts": "4.0.3",
     "react-virtualized": "^9.22.3",
     "web-vitals": "^1.1.2"
@@ -34,7 +33,6 @@
     "react-frame-component": "^4.1.2",
     "react-intl-universal": "^2.0.3",
     "react-router-dom": "^5.0.1",
-    "react-spring": "^8.0.27",
     "react-swipeable-views": "^0.13.0",
     "react-swipeable-views-utils": "^0.13.7",
     "react-syntax-highlighter": "^12.2.1",

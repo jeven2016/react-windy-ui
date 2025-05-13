@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useLayoutEffect, useMemo } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 import { loadMdFiles } from './parseMd';
 import { isNil } from 'lodash';
 import { compiler } from 'markdown-to-jsx';
@@ -64,7 +64,7 @@ export default function DocPage2(props) {
   //update the QuickManu on right side
   const ctx = useContext(QuickManuContext);
   const { quickManuStore } = ctx;
-  useLayoutEffect(() => {
+  useEffect(() => {
     const menuList = [];
     result.forEach(({ key, data }) => {
       const text = data.title[locale];
