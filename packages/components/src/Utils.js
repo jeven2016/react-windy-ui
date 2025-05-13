@@ -417,24 +417,7 @@ export const preventEvent = (evt) => {
   evt.stopPropagation();
 };
 
-export const isReact18Plus = () => React.version >= 18;
-
 export const renderDom = (component, container) => {
-  const ver18Plus = isReact18Plus();
-  console.log('version', ver18Plus, React.version);
-  if (ver18Plus) {
-    try {
-      const render = require('react-dom/client').createRoot;
-      render(container).render(component);
-    } catch (e) {
-      console.log('unexpected error', e);
-    }
-  } else {
-    try {
-      const reactDom = require('react-dom');
-      reactDom.render(component, container);
-    } catch (e) {
-      console.log('unexpected error', e);
-    }
-  }
+  const render = require('react-dom/client').createRoot;
+  render(container).render(component);
 };

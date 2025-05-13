@@ -14,7 +14,6 @@ const Hcode = React.forwardRef((props, ref) => {
   }, []);
 
   return (
-    <>
       <SyntaxHighlighter
         ref={ref}
         customStyle={{ fontSize: '.8rem', ...style }}
@@ -27,7 +26,6 @@ const Hcode = React.forwardRef((props, ref) => {
       >
         {children}
       </SyntaxHighlighter>
-    </>
   );
 });
 export default Hcode;
