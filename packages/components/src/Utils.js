@@ -426,11 +426,15 @@ export const renderDom = (component, container) => {
     try {
       const render = require('react-dom/client').createRoot;
       render(container).render(component);
-    } catch (e){
-      console.log("unexpected error", e);
+    } catch (e) {
+      console.log('unexpected error', e);
     }
   } else {
-    const reactDom = require('react-dom');
-    reactDom.render(component, container);
+    try {
+      const reactDom = require('react-dom');
+      reactDom.render(component, container);
+    } catch (e) {
+      console.log('unexpected error', e);
+    }
   }
 };

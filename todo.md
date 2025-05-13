@@ -63,7 +63,7 @@ Other:
 * react-spring interpolate function
 
 ```shell
-import {interpolate} from 'react-spring';
+import {interpolate} from '@react-spring/web';
 
  transform: interpolate([
       nonNil(xyz) ? xyz.interpolate((x, y, z) => `translate3D(${x}, ${y},${z})`) : -1,

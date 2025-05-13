@@ -5,7 +5,7 @@ import useEvent from '../common/UseEvent';
 import { EventListener } from '../common/Constants';
 import { updateBodyStyle } from '../Utils';
 import Mask from '../mask';
-import { animated, config, to, useSpring } from 'react-spring';
+import { animated, config, to, useSpring } from '@react-spring/web';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import PropTypes from 'prop-types';
 import useEventCallback from '../common/useEventCallback';

@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useMemo, useRef } from 'react';
 import clsx from 'clsx';
 import { IconArrowLeft, IconArrowRight } from '../icon';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring } from '@react-spring/web';
 import { MenuContext } from '../common/Context';
 import { getPaddingStyle, MenuDirection } from './MenuUtils';
 import PropTypes from 'prop-types';

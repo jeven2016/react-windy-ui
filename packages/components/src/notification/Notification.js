@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createContainer, execute, isNil, isString, nonNil, renderDom, validate } from '../Utils';
 import Alert from '../alert';
-import { to, useTransition } from 'react-spring';
+import { to, useTransition } from '@react-spring/web';
 
 const SizeStyle = {
   small: 'alert-container-width-sm'

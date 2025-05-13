@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Spring, animated } from 'react-spring';
+import { Spring, animated } from '@react-spring/web';
 import { validate } from '../Utils';
 
 const IconSize = ['large', 'medium', 'small'];

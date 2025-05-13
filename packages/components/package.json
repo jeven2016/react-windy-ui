@@ -37,7 +37,7 @@
     "dayjs": "^1.10.5",
     "prop-types": "^15.7.2",
     "react-hook-form": "^7.11.1",
-    "react-spring": "^9.2.3",
+    "@react-spring/web": "^9.7.2",
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",
     "resize-observer-polyfill": "^1.5.1",

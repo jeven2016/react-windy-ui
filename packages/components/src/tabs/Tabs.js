@@ -14,7 +14,7 @@ import {
 import { Direction, EventListener } from '../common/Constants';
 import { getRect, isNil } from '../Utils';
 import TabBar from './TabBar';
-import { animated, Spring } from 'react-spring';
+import { animated, Spring } from '@react-spring/web';
 import NextBtn from './NextBtn';
 import PreBtn from './PreBtn';
 import { useEvent } from '../index';

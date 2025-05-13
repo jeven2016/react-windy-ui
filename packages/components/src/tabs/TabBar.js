@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import clsx from 'clsx';
-import { Spring, animated } from 'react-spring';
+import { Spring, animated } from '@react-spring/web';
 import { barAnimationConfig, handleProps, reversePosition, TabsContext } from './TabsCommon';
 import useEventCallback from '../common/useEventCallback';
 import PropTypes from 'prop-types';

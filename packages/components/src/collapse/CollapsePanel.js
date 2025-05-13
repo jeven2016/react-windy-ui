@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react';
 import clsx from 'clsx';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring } from '@react-spring/web';
 
 import useResizeObserver from '../common/UseResizeObserver';
 import { isNil, nonNil } from '../Utils';

@@ -9,7 +9,7 @@ import useEventCallback from '../common/useEventCallback';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import useEvent from '../common/UseEvent';
 import { getScrollTop, isNil } from '../Utils';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring } from '@react-spring/web';
 
 const Navbar = React.forwardRef((props, ref) => {
   const {

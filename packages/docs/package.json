@@ -11,8 +11,8 @@
     "dayjs": "^1.8.34",
     "lz-string": "^1.4.4",
     "markdown-to-jsx": "^6.11.4",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-scripts": "4.0.3",
     "react-virtualized": "^9.22.3",
     "web-vitals": "^1.1.2"

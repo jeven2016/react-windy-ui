@@ -1,5 +1,5 @@
 import React, { useCallback, useImperativeHandle, useState } from 'react';
-import { animated, useTransition } from 'react-spring';
+import { animated, useTransition } from '@react-spring/web';
 import useEventCallback from './useEventCallback';
 import { random } from '../Utils';
 

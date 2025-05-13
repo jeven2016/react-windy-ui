@@ -220,7 +220,7 @@ Progress.closeTop = () => {
   execute(() => {
     let container = getContainer('wui-progress');
     if (container) {
-      ReactDOM.unmountComponentAtNode(container);
+      container.parentNode.removeChild(container);
     }
   }, 500);
 };

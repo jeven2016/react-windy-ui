@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
 import { isColorValue, isNil } from '../Utils';
 import * as PropTypes from 'prop-types';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring } from '@react-spring/web';
 
 const BadgeType = {
   normal: 'normal',

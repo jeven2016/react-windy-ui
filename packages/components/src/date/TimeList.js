@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring } from '@react-spring/web';
 import { createTimeItems } from './DateUtils';
 import { useGesture } from '@use-gesture/react';
 import useMultipleRefs from '../common/UseMultipleRefs';

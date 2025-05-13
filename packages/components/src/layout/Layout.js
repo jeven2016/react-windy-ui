@@ -5,7 +5,7 @@ import Slider from './Slider';
 import Content from './Content';
 import Split from './Split';
 import Footer from './Footer';
-import { Spring, animated } from 'react-spring';
+import { Spring, animated } from '@react-spring/web';
 import { isNil } from '../Utils';
 import PropTypes from 'prop-types';
 

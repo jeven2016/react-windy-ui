@@ -3,7 +3,7 @@ import Mask from '../mask';
 import clsx from 'clsx';
 import useEvent from '../common/UseEvent';
 import { EventListener } from '../common/Constants';
-import { animated, useTransition } from 'react-spring';
+import { animated, useTransition } from '@react-spring/web';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import { IconList } from '../icon';
 import Card from '../card';

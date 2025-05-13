@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import Collapse from '../collapse/Collapse';
 import clsx from 'clsx';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring } from '@react-spring/web';
 import { SubMenuDirection } from './MenuUtils';
 import { MenuContext } from '../common/Context';
 import usePrevious from '../common/UsePrevious';

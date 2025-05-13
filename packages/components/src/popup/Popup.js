@@ -2,7 +2,7 @@ import React, { useCallback, useImperativeHandle, useMemo, useRef } from 'react'
 import ReactDOM from 'react-dom';
 import useContainer from '../common/UseContainer';
 import { ContainerId, EventListener, PopupCtrlType, PopupPosition } from '../common/Constants';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring } from '@react-spring/web';
 import { execute, isNil, isString, place } from '../Utils';
 import useMultipleRefs from '../common/UseMultipleRefs';
 import useResizeObserver from '../common/UseResizeObserver';

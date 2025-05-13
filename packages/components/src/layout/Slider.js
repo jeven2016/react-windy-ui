@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { animated, Spring } from 'react-spring';
+import { animated, Spring } from '@react-spring/web';
 import { isNil, isNumber } from '../Utils';
 import PropTypes from 'prop-types';
 

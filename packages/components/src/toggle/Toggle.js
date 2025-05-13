@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { isNil, isObject } from '../Utils';
 import clsx from 'clsx';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring } from '@react-spring/web';
 import PropTypes from 'prop-types';
 import useInternalState from '../common/useInternalState';
 

@@ -4,7 +4,7 @@ import { MenuContext } from '../common/Context';
 import { includes, invoke, isNil, nonNil, preventEvent } from '../Utils';
 import { Action, getPaddingStyle } from './MenuUtils';
 import PropTypes from 'prop-types';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring } from '@react-spring/web';
 import Tooltip from '../tooltip';
 import { MenuType } from '../common/Constants';
 import Ripple from '../common/Ripple';
